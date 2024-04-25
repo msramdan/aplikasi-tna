@@ -20,7 +20,7 @@
                                         <div class="bg-overlay"></div>
                                         <div class="position-relative h-100 d-flex flex-column">
                                             <div class="mt-auto">
-                                                <div class="mb-2">
+                                                <div class="mb-3">
                                                     <i class="ri-double-quotes-l display-4 text-success"></i>
                                                 </div>
                                                 <div id="qoutescarouselIndicators" class="carousel slide"
@@ -40,7 +40,8 @@
                                                                 design, easy for customization. Thanks very much! "</p>
                                                         </div>
                                                         <div class="carousel-item">
-                                                            <p class="fs-15 fst-italic">" The Application is really great"</p>
+                                                            <p class="fs-15 fst-italic">" The Application is really great"
+                                                            </p>
                                                         </div>
                                                         {{-- <div class="carousel-item">
                                                             <p class="fs-15 fst-italic">" Great! Clean code, clean
@@ -63,8 +64,8 @@
                                         <div class="mt-4">
                                             <form class="user" method="POST" action="{{ route('login') }}">
                                                 @csrf
-                                                <div class="mb-2">
-                                                    <label for="email" style="margin-bottom: 4px" class="form-label">Email</label>
+                                                <div class="mb-3">
+                                                    <label for="email" class="form-label">Email</label>
                                                     <input type="text"
                                                         class="form-control @error('email') is-invalid @enderror"
                                                         id="email" name="email"
@@ -74,8 +75,8 @@
                                                     @enderror
                                                 </div>
 
-                                                <div class="mb-2">
-                                                    <label class="form-label" style="margin-bottom: 4px"  for="password">Password</label>
+                                                <div class="mb-3">
+                                                    <label class="form-label" for="password">Password</label>
                                                     <input type="password"
                                                         class="form-control @error('password') is-invalid @enderror"
                                                         placeholder="Enter password" id="password" name="password">
@@ -84,27 +85,28 @@
                                                     @enderror
                                                 </div>
 
-                                                <div class="mb-3">
-                                                    <label class="form-label" style="margin-bottom: 4px"  for="password">Tahun</label>
-                                                    <select class="form-select" id="year" name="year">
-                                                        <option value="2024">2024</option>
-                                                        <option value="2025">2025</option>
-                                                        <option value="2026">2026</option>
-                                                    </select>
-                                                    @error('tahun')
-                                                        <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-
-
-                                                <div class="mb-2">
-                                                    {!! NoCaptcha::display() !!}
-                                                    {!! NoCaptcha::renderJs() !!}
-                                                    @error('g-recaptcha-response')
-                                                        <span class="text-danger" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="year">Tahun</label>
+                                                            <select class="form-select" id="year" name="year">
+                                                                <option value="2024">2024</option>
+                                                                <option value="2025">2025</option>
+                                                                <option value="2026">2026</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="mb-3" style="width: 100%">
+                                                            {!! NoCaptcha::display() !!}
+                                                            {!! NoCaptcha::renderJs() !!}
+                                                            @error('g-recaptcha-response')
+                                                                <span class="text-danger" role="alert">
+                                                                    {{ $message }}
+                                                                </span>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div class="form-check ">
                                                     <div class="float-end">
