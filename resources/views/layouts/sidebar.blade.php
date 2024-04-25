@@ -62,15 +62,6 @@
                     @endcanany
                 @endif
             @endforeach
-
-            @if (Auth::user()->roles->first()->hospital_id != null)
-                <li class="nav-item">
-                    <a class="nav-link menu-link {{ Route::currentRouteName() == 'hospitals.edit' ? ' active' : '' }}"
-                        href="{{ route('hospitals.edit', Auth::user()->roles->first()->hospital_id) }}">
-                        <i data-feather="tool"></i> <span data-key="t-widgets">Setting Apps</span>
-                    </a>
-                </li>
-            @endif
         </ul>
     </div>
 </div>

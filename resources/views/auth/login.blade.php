@@ -40,9 +40,7 @@
                                                                 design, easy for customization. Thanks very much! "</p>
                                                         </div>
                                                         <div class="carousel-item">
-                                                            <p class="fs-15 fst-italic">" The Application is really great
-                                                                with
-                                                                an amazing customer support."</p>
+                                                            <p class="fs-15 fst-italic">" The Application is really great"</p>
                                                         </div>
                                                         {{-- <div class="carousel-item">
                                                             <p class="fs-15 fst-italic">" Great! Clean code, clean
