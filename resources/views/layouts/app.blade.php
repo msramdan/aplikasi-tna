@@ -21,10 +21,38 @@
                                 <span></span>
                             </span>
                         </button>
-
+                        <form class="app-search d-none d-md-block">
+                            <div class="position-relative">
+                                <select class="form-select" aria-label="Default select example">
+                                    <option value="2024">2024</option>
+                                    <option value="2025">2025</option>
+                                    <option value="2026">2026</option>
+                                </select>
+                            </div>
+                        </form>
                     </div>
 
+                    {{-- ramdan --}}
                     <div class="d-flex align-items-center">
+                        <div class="dropdown d-md-none topbar-head-dropdown header-item">
+                            <button type="button"
+                                class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle shadow-none"
+                                id="page-header-search-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                                <i class="bx bx-search fs-22"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
+                                aria-labelledby="page-header-search-dropdown" style="">
+                                <form class="p-3">
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option value="2024">2024</option>
+                                        <option value="2025">2025</option>
+                                        <option value="2026">2026</option>
+                                    </select>
+                                </form>
+                            </div>
+                        </div>
+
 
                         <div class="dropdown ms-1 topbar-head-dropdown header-item">
                             @switch(app()->getLocale())
@@ -118,9 +146,11 @@
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     <i class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i>
-                                    <span class="align-middle" data-key="t-logout">{{ trans('navbar.logout') }}</span>
+                                    <span class="align-middle"
+                                        data-key="t-logout">{{ trans('navbar.logout') }}</span>
                                 </a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                    class="d-none">
                                     @csrf
                                 </form>
 
