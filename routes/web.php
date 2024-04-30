@@ -23,3 +23,4 @@ Route::get('/dashboard', function () {
 });
 
 Route::resource('campuses', App\Http\Controllers\CampusController::class)->middleware('auth');
+Route::resource('ruang-kelas', App\Http\Controllers\RuangKelasController::class)->middleware('auth');

@@ -60,9 +60,9 @@ class CampusController extends Controller
      */
     public function store(StoreCampusRequest $request)
     {
-        
+
         Campus::create($request->validated());
-        Alert::toast('The campus was created successfully.', 'success');
+        Alert::toast('The kampus was created successfully.', 'success');
         return redirect()->route('campuses.index');
 
     }
@@ -98,9 +98,9 @@ class CampusController extends Controller
      */
     public function update(UpdateCampusRequest $request, Campus $campus)
     {
-        
+
         $campus->update($request->validated());
-        Alert::toast('The campus was updated successfully.', 'success');
+        Alert::toast('The kampus was updated successfully.', 'success');
         return redirect()
             ->route('campuses.index');
     }
@@ -115,10 +115,10 @@ class CampusController extends Controller
     {
         try {
             $campus->delete();
-            Alert::toast('The campus was deleted successfully.', 'success');
+            Alert::toast('The kampus was deleted successfully.', 'success');
             return redirect()->route('campuses.index');
         } catch (\Throwable $th) {
-            Alert::toast('The campus cant be deleted because its related to another table.', 'error');
+            Alert::toast('The kampus cant be deleted because its related to another table.', 'error');
             return redirect()->route('campuses.index');
         }
     }

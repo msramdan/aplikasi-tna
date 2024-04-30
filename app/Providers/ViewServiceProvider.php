@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Campus;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Permission\Models\Role;
+
 
 class ViewServiceProvider extends ServiceProvider
 {
@@ -29,6 +31,13 @@ class ViewServiceProvider extends ServiceProvider
             $data = Role::select('id', 'name')->get();
             return $view->with(
                 'roles',
+                $data
+            );
+        });
+        View::composer(['ruang-kelas.create', 'ruang-kelas.edit'], function ($view) {
+            $data = Campus::select('id', 'nama_kampus')->get();
+            return $view->with(
+                'campuses',
                 $data
             );
         });

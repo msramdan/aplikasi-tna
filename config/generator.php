@@ -116,7 +116,8 @@ return [
             'role & permission view',
             'user view',
             'setting app view',
-            'campus view'
+            'campus view',
+            'ruang kelas view'
         ],
         'menus' => [
             [
@@ -124,16 +125,23 @@ return [
                 'icon' => '<i data-feather="list"></i>',
                 'route' => null,
                 'uri' => [
-                    'campuses*'
+                    'campuses*',
+                    'ruang-kelas*'
                 ],
                 'permissions' => [
-                    'campus view'
+                    'campus view',
+                    'ruang kelas view'
                 ],
                 'submenus' => [
                     [
                         'title' => 'Kampus',
                         'route' => '/campuses',
                         'permission' => 'campus view'
+                    ],
+                    [
+                        'title' => 'Ruang Kelas',
+                        'route' => '/ruang-kelas',
+                        'permission' => 'ruang kelas view'
                     ]
                 ]
             ]
