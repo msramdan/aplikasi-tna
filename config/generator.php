@@ -109,55 +109,85 @@ return [
      * This code below always changes when you use a generator and maybe you must lint or format the code.
      */
     'sidebars' => [
-        [
-            'header' => 'Utilities',
-            'permissions' => [
-                'setting view',
-                'role & permission view',
-                'user view',
-                'setting app view'
-            ],
-            'menus' => [
-                [
-                    'title' => 'Utilities',
-                    'icon' => '<i data-feather="settings"></i>',
-                    'route' => null,
-                    'uri' => [
-                        'settings*',
-                        'users*',
-                        'roles*',
-                        'setting-apps*'
+    [
+        'header' => 'Master',
+        'permissions' => [
+            'setting view',
+            'role & permission view',
+            'user view',
+            'setting app view',
+            'campus view'
+        ],
+        'menus' => [
+            [
+                'title' => 'Master Data',
+                'icon' => '<i data-feather="list"></i>',
+                'route' => null,
+                'uri' => [
+                    'campuses*'
+                ],
+                'permissions' => [
+                    'campus view'
+                ],
+                'submenus' => [
+                    [
+                        'title' => 'Kampus',
+                        'route' => '/campuses',
+                        'permission' => 'campus view'
+                    ]
+                ]
+            ]
+        ]
+    ],
+    [
+        'header' => 'Utilities',
+        'permissions' => [
+            'setting view',
+            'role & permission view',
+            'user view',
+            'setting app view'
+        ],
+        'menus' => [
+            [
+                'title' => 'Utilities',
+                'icon' => '<i data-feather="settings"></i>',
+                'route' => null,
+                'uri' => [
+                    'settings*',
+                    'users*',
+                    'roles*',
+                    'setting-apps*'
+                ],
+                'permissions' => [
+                    'setting view',
+                    'role & permission view',
+                    'user view',
+                    'setting app view'
+                ],
+                'submenus' => [
+                    [
+                        'title' => 'Settings App',
+                        'route' => '/settings',
+                        'permission' => 'setting view'
                     ],
-                    'permissions' => [
-                        'setting view',
-                        'role & permission view',
-                        'user view',
-                        'setting app view'
+                    [
+                        'title' => 'Users',
+                        'route' => '/users',
+                        'permission' => 'user view'
                     ],
-                    'submenus' => [
-                        [
-                            'title' => 'Settings App',
-                            'route' => '/settings',
-                            'permission' => 'setting view'
-                        ],
-                        [
-                            'title' => 'Users',
-                            'route' => '/users',
-                            'permission' => 'user view'
-                        ],
-                        [
-                            'title' => 'Roles & permissions',
-                            'route' => '/roles',
-                            'permission' => 'role & permission view'
-                        ],
-                        [
-                            'title' => 'Setting Apps',
-                            'route' => '/setting-apps',
-                            'permission' => 'setting app view'
-                        ]
+                    [
+                        'title' => 'Roles & permissions',
+                        'route' => '/roles',
+                        'permission' => 'role & permission view'
+                    ],
+                    [
+                        'title' => 'Setting Apps',
+                        'route' => '/setting-apps',
+                        'permission' => 'setting app view'
                     ]
                 ]
             ]
         ]
     ]
+]
 ];

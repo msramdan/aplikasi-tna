@@ -182,5 +182,5 @@ return [
             ]
         ],
         ['group' => 'setting apps', 'access' => ['setting app view', 'setting app edit']],
-    ],
-];
+  ['group' => 'campuses', 'access' => ['campus view', 'campus create', 'campus edit', 'campus delete']], 
+		],];

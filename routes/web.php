@@ -21,3 +21,5 @@ Route::middleware(['auth', 'web'])->group(function () {
 Route::get('/dashboard', function () {
     return redirect()->route('dashboard');
 });
+
+Route::resource('campuses', App\Http\Controllers\CampusController::class)->middleware('auth');
