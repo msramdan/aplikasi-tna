@@ -44,7 +44,7 @@ class RuangKelasController extends Controller
                     return $row->campus ? $row->campus->nama_kampus : '';
                 })
                 ->addColumn('status', function ($row) {
-                    if ($row->campus == 'Available') {
+                    if ($row->status == 'Available') {
                         return '<span class="badge bg-success">Available</span>';
                     } else {
                         return '<span class="badge bg-danger">Not available</span>';
