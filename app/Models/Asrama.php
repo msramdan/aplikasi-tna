@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Asrama extends Model
 {
     use HasFactory;
+    protected $table = 'asrama';
 
     /**
      * The attributes that are mass assignable.

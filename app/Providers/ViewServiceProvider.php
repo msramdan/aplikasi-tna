@@ -34,12 +34,21 @@ class ViewServiceProvider extends ServiceProvider
                 $data
             );
         });
-        View::composer(['ruang-kelas.create', 'ruang-kelas.edit', 'asramas.create', 'asramas.edit'], function ($view) {
+        View::composer(['ruang-kelas.create', 'ruang-kelas.edit'], function ($view) {
             $data = Campus::select('id', 'nama_kampus')->get();
             return $view->with(
                 'campuses',
                 $data
             );
         });
+
+        View::composer(['asramas.create', 'asramas.edit'], function ($view) {
+            $data = Campus::select('id', 'nama_kampus')->get();
+            return $view->with(
+                'campuses',
+                $data
+            );
+        });
+
     }
 }

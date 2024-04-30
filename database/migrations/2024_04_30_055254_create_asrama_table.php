@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('asramas', function (Blueprint $table) {
+        Schema::create('asrama', function (Blueprint $table) {
             $table->id();
             $table->foreignId('campus_id')->nullable()->constrained('campuses')->restrictOnUpdate()->nullOnDelete();
 			$table->string('nama_asrama', 150);
 			$table->integer('kuota');
 			$table->enum('status', ['Available', 'Not available']);
-			$table->string('keterangan');
+			$table->text('keterangan');
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('asramas');
+        Schema::dropIfExists('asrama');
     }
 };

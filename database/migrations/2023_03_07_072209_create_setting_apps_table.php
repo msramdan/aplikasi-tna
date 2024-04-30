@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('setting_apps', function (Blueprint $table) {
             $table->id();
-            $table->string('aplication_name', 200);
-            $table->string('logo', 255);
-            $table->string('favicon', 255);
+            $table->string('aplication_name', 150);
+            $table->string('logo', 200);
+            $table->string('favicon', 200);
             $table->timestamps();
         });
     }

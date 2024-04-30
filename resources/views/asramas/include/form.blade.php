@@ -3,11 +3,10 @@
         <label for="campus-id">{{ __('Kampus') }}</label>
         <select class="form-control @error('campus_id') is-invalid @enderror" name="campus_id" id="campus-id" required>
             <option value="" selected disabled>-- {{ __('Select kampus') }} --</option>
-
             @foreach ($campuses as $campus)
                 <option value="{{ $campus->id }}"
                     {{ isset($asrama) && $asrama->campus_id == $campus->id ? 'selected' : (old('campus_id') == $campus->id ? 'selected' : '') }}>
-                    {{ $campus->id }}
+                    {{ $campus->nama_kampus }}
                 </option>
             @endforeach
         </select>

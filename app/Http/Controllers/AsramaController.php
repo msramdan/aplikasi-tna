@@ -74,7 +74,6 @@ class AsramaController extends Controller
      */
     public function store(StoreAsramaRequest $request)
     {
-
         Asrama::create($request->validated());
         Alert::toast('The asrama was created successfully.', 'success');
         return redirect()->route('asramas.index');
@@ -88,7 +87,7 @@ class AsramaController extends Controller
      */
     public function show(Asrama $asrama)
     {
-        $asrama->load('campus:id,id');
+        $asrama->load('campus:id,nama_kampus');
 
         return view('asramas.show', compact('asrama'));
     }
@@ -101,7 +100,7 @@ class AsramaController extends Controller
      */
     public function edit(Asrama $asrama)
     {
-        $asrama->load('campus:id,id');
+        $asrama->load('campus:id,nama_kampus');
 
         return view('asramas.edit', compact('asrama'));
     }
