@@ -6,8 +6,8 @@
 
             @foreach ($campuses as $campus)
                 <option value="{{ $campus->id }}"
-                    {{ isset($ruangKela) && $ruangKela->campus_id == $campus->id ? 'selected' : (old('campus_id') == $campus->id ? 'selected' : '') }}>
-                    {{ $campus->nama_kampus }}
+                    {{ isset($asrama) && $asrama->campus_id == $campus->id ? 'selected' : (old('campus_id') == $campus->id ? 'selected' : '') }}>
+                    {{ $campus->id }}
                 </option>
             @endforeach
         </select>
@@ -19,12 +19,12 @@
     </div>
 
     <div class="col-md-6 mb-2">
-        <label for="nama-kela">{{ __('Nama Kelas') }}</label>
-        <input type="text" name="nama_kelas" id="nama-kela"
-            class="form-control @error('nama_kelas') is-invalid @enderror"
-            value="{{ isset($ruangKela) ? $ruangKela->nama_kelas : old('nama_kelas') }}"
-            placeholder="{{ __('Nama Kelas') }}" required />
-        @error('nama_kelas')
+        <label for="nama-asrama">{{ __('Nama Asrama') }}</label>
+        <input type="text" name="nama_asrama" id="nama-asrama"
+            class="form-control @error('nama_asrama') is-invalid @enderror"
+            value="{{ isset($asrama) ? $asrama->nama_asrama : old('nama_asrama') }}"
+            placeholder="{{ __('Nama Asrama') }}" required />
+        @error('nama_asrama')
             <span class="text-danger">
                 {{ $message }}
             </span>
@@ -33,8 +33,7 @@
     <div class="col-md-6 mb-2">
         <label for="kuotum">{{ __('Kuota') }}</label>
         <input type="number" name="kuota" id="kuotum" class="form-control @error('kuota') is-invalid @enderror"
-            value="{{ isset($ruangKela) ? $ruangKela->kuota : old('kuota') }}" placeholder="{{ __('Kuota') }}"
-            required />
+            value="{{ isset($asrama) ? $asrama->kuota : old('kuota') }}" placeholder="{{ __('Kuota') }}" required />
         @error('kuota')
             <span class="text-danger">
                 {{ $message }}
@@ -42,14 +41,14 @@
         @enderror
     </div>
     <div class="col-md-6 mb-2">
-        <label for="status">{{ __('Status') }}</label>
-        <select class="form-select" name="status" aria-label="Default select example">
-            <option value="" selected disabled>-- {{ __('Select status') }} --</option>
+        <label for="status-asrama">{{ __('Status Asrama') }}</label>
+        <select class="form-control @error('status') is-invalid @enderror" name="status" id="status-asrama" required>
+            <option value="" selected disabled>-- {{ __('Select status asrama') }} --</option>
             <option value="Available"
-                {{ isset($ruangKela) && $ruangKela->status == 'Available' ? 'selected' : (old('status') == 'Available' ? 'selected' : '') }}>
+                {{ isset($asrama) && $asrama->status == 'Available' ? 'selected' : (old('status') == 'Available' ? 'selected' : '') }}>
                 Available</option>
             <option value="Not available"
-                {{ isset($ruangKela) && $ruangKela->status == 'Not available' ? 'selected' : (old('status') == 'Not available' ? 'selected' : '') }}>
+                {{ isset($asrama) && $asrama->status == 'Not available' ? 'selected' : (old('status') == 'Not available' ? 'selected' : '') }}>
                 Not available</option>
         </select>
         @error('status')
@@ -63,7 +62,7 @@
         <div class="form-group">
             <label for="keterangan">{{ __('Keterangan') }}</label>
             <textarea name="keterangan" id="keterangan" class="form-control @error('keterangan') is-invalid @enderror"
-                placeholder="{{ __('Keterangan') }}" required>{{ isset($ruangKela) ? $ruangKela->keterangan : old('keterangan') }}</textarea>
+                placeholder="{{ __('Keterangan') }}" required>{{ isset($asrama) ? $asrama->keterangan : old('keterangan') }}</textarea>
             @error('keterangan')
                 <span class="text-danger">
                     {{ $message }}

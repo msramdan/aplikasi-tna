@@ -184,5 +184,6 @@ return [
         ['group' => 'setting apps', 'access' => ['setting app view', 'setting app edit']],
         ['group' => 'campuses', 'access' => ['campus view', 'campus create', 'campus edit', 'campus delete']],
         ['group' => 'ruang kelas', 'access' => ['ruang kelas view', 'ruang kelas create', 'ruang kelas edit', 'ruang kelas delete']],
+        ['group' => 'asramas', 'access' => ['asrama view', 'asrama create', 'asrama edit', 'asrama delete']],
     ],
 ];

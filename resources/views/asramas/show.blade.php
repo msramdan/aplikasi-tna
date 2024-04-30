@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('Detail of Ruang kelas'))
+@section('title', __('Detail of Asrama'))
 
 @section('content')
         <div class="page-body">
@@ -8,13 +8,13 @@
                     <div class="page-header" style="margin-top: 5px">
                         <div class="row">
                             <div class="col-sm-6">
-                                <h3>{{ __('Ruang kelas') }}</h3>
+                                <h3>{{ __('Asrama') }}</h3>
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item">
                                         <a href="/">Dashboard</a>
                                     </li>
                                     <li class="breadcrumb-item">
-                                        <a href="{{ route('ruang-kelas.index') }}">{{ __('Ruang kelas') }}</a>
+                                        <a href="{{ route('asramas.index') }}">{{ __('Asrama') }}</a>
                                     </li>
                                     <li class="breadcrumb-item active" aria-current="page">
                                         {{ __('Detail') }}
@@ -35,31 +35,31 @@
                                         <table class="table table-hover table-striped">
                                             <tr>
                                         <td class="fw-bold">{{ __('Campus') }}</td>
-                                        <td>{{ $ruangKela->campus ? $ruangKela->campus->nama_kampus : '' }}</td>
+                                        <td>{{ $asrama->campus ? $asrama->campus->id : '' }}</td>
                                     </tr>
 									<tr>
-                                            <td class="fw-bold">{{ __('Nama Kelas') }}</td>
-                                            <td>{{ $ruangKela->nama_kelas }}</td>
+                                            <td class="fw-bold">{{ __('Nama Asrama') }}</td>
+                                            <td>{{ $asrama->nama_asrama }}</td>
                                         </tr>
 									<tr>
                                             <td class="fw-bold">{{ __('Kuota') }}</td>
-                                            <td>{{ $ruangKela->kuota }}</td>
+                                            <td>{{ $asrama->kuota }}</td>
                                         </tr>
 									<tr>
-                                            <td class="fw-bold">{{ __('Status') }}</td>
-                                            <td>{{ $ruangKela->status }}</td>
+                                            <td class="fw-bold">{{ __('Status Asrama') }}</td>
+                                            <td>{{ $asrama->status }}</td>
                                         </tr>
 									<tr>
                                             <td class="fw-bold">{{ __('Keterangan') }}</td>
-                                            <td>{{ $ruangKela->keterangan }}</td>
+                                            <td>{{ $asrama->keterangan }}</td>
                                         </tr>
                                             <tr>
                                                 <td class="fw-bold">{{ __('Created at') }}</td>
-                                                <td>{{ $ruangKela->created_at->format('d/m/Y H:i') }}</td>
+                                                <td>{{ $asrama->created_at->format('d/m/Y H:i') }}</td>
                                             </tr>
                                             <tr>
                                                 <td class="fw-bold">{{ __('Updated at') }}</td>
-                                                <td>{{ $ruangKela->updated_at->format('d/m/Y H:i') }}</td>
+                                                <td>{{ $asrama->updated_at->format('d/m/Y H:i') }}</td>
                                             </tr>
                                         </table>
                                     </div>

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('Ruang kelas'))
+@section('title', __('Asrama'))
 
 @section('content')
                 <div class="page-content">
@@ -8,11 +8,11 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                <h4 class="mb-sm-0">{{ __('Ruang kelas') }}</h4>
+                                <h4 class="mb-sm-0">{{ __('Asrama') }}</h4>
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
                                         <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
-                                    <li class="breadcrumb-item active">{{ __('Ruang kelas') }}</li>
+                                    <li class="breadcrumb-item active">{{ __('Asrama') }}</li>
                                     </ol>
                                 </div>
 
@@ -23,9 +23,9 @@
                 <div class="col-sm-12">
                     <div class="card">
                     <div class="card-header">
-                            @can('ruang kelas create')
-                                <a href="{{ route('ruang-kelas.create') }}" class="btn btn-md btn-primary"> <i
-                                        class="mdi mdi-plus"></i> {{ __('Create a new ruang kelas') }}</a>
+                            @can('asrama create')
+                                <a href="{{ route('asramas.create') }}" class="btn btn-md btn-primary"> <i
+                                        class="mdi mdi-plus"></i> {{ __('Create a new asrama') }}</a>
                             @endcan
                         </div>
 
@@ -35,10 +35,10 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>{{ __('Kampus') }}</th>
-											<th>{{ __('Nama Kelas') }}</th>
+                                            <th>{{ __('Campus') }}</th>
+											<th>{{ __('Nama Asrama') }}</th>
 											<th>{{ __('Kuota') }}</th>
-											<th>{{ __('Status') }}</th>
+											<th>{{ __('Status Asrama') }}</th>
 											<th>{{ __('Keterangan') }}</th>
                                             <th>{{ __('Action') }}</th>
                                         </tr>
@@ -59,7 +59,7 @@
         $('#data-table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('ruang-kelas.index') }}",
+            ajax: "{{ route('asramas.index') }}",
             columns: [
                 {
                     data: 'DT_RowIndex',
@@ -72,8 +72,8 @@
                     name: 'campus.nama_kampus'
                 },
 				{
-                    data: 'nama_kelas',
-                    name: 'nama_kelas',
+                    data: 'nama_asrama',
+                    name: 'nama_asrama',
                 },
 				{
                     data: 'kuota',

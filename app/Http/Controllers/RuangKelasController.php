@@ -34,13 +34,24 @@ class RuangKelasController extends Controller
                 })->addColumn('updated_at', function ($row) {
                     return $row->updated_at->format('d M Y H:i:s');
                 })
-
+                ->addColumn('kuota', function ($row) {
+                    return $row->kuota . ' Peserta';
+                })
                 ->addColumn('keterangan', function ($row) {
                     return str($row->keterangan)->limit(100);
                 })
                 ->addColumn('campus', function ($row) {
                     return $row->campus ? $row->campus->nama_kampus : '';
-                })->addColumn('action', 'ruang-kelas.include.action')
+                })
+                ->addColumn('status', function ($row) {
+                    if ($row->campus == 'Available') {
+                        return '<span class="badge bg-success">Available</span>';
+                    } else {
+                        return '<span class="badge bg-danger">Not available</span>';
+                    }
+                })
+                ->rawColumns(['status', 'action'])
+                ->addColumn('action', 'ruang-kelas.include.action')
                 ->toJson();
         }
 

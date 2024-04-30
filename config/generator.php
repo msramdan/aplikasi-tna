@@ -117,7 +117,8 @@ return [
             'user view',
             'setting app view',
             'campus view',
-            'ruang kelas view'
+            'ruang kelas view',
+            'asrama view'
         ],
         'menus' => [
             [
@@ -126,11 +127,13 @@ return [
                 'route' => null,
                 'uri' => [
                     'campuses*',
-                    'ruang-kelas*'
+                    'ruang-kelas*',
+                    'asramas*'
                 ],
                 'permissions' => [
                     'campus view',
-                    'ruang kelas view'
+                    'ruang kelas view',
+                    'asrama view'
                 ],
                 'submenus' => [
                     [
@@ -142,6 +145,11 @@ return [
                         'title' => 'Ruang Kelas',
                         'route' => '/ruang-kelas',
                         'permission' => 'ruang kelas view'
+                    ],
+                    [
+                        'title' => 'Asrama',
+                        'route' => '/asramas',
+                        'permission' => 'asrama view'
                     ]
                 ]
             ]
