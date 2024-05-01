@@ -33,8 +33,8 @@
 
                         <div class="card-body">
                             <div class="table-responsive p-1">
-                                <table class="table table-bordered" id="data-table" width="100%">
-                                    <thead>
+                                <table class="table table-striped" id="data-table" width="100%">
+                                    <thead class="table-dark">
                                         <tr>
                                             <th>#</th>
                                             <th>{{ trans('utilities/users/index.avatar') }}</th>
