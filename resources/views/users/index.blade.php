@@ -33,7 +33,7 @@
 
                         <div class="card-body">
                             <div class="table-responsive p-1">
-                                <table class="table table-striped" id="data-table" width="100%">
+                                <table class="table table-bordered" id="data-table" width="100%">
                                     <thead>
                                         <tr>
                                             <th>#</th>

@@ -30,9 +30,9 @@
                         </div>
 
                         <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-sm" id="data-table">
-                                    <thead>
+                            <div class="table-responsive p-1">
+                                <table class="table table-bordered" id="data-table">
+                                    <thead class="table-gray">
                                         <tr>
                                             <th>#</th>
                                             <th>{{ __('Nama Kampus') }}</th>
