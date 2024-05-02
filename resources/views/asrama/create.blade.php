@@ -15,7 +15,7 @@
                                         <a href="/">Dashboard</a>
                                     </li>
                                     <li class="breadcrumb-item">
-                                        <a href="{{ route('asramas.index') }}">{{ __('Asrama') }}</a>
+                                        <a href="{{ route('asrama.index') }}">{{ __('Asrama') }}</a>
                                     </li>
                                     <li class="breadcrumb-item active" aria-current="page">
                                         {{ __('Create') }}
@@ -30,11 +30,11 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            <form action="{{ route('asramas.store') }}" method="POST">
+                            <form action="{{ route('asrama.store') }}" method="POST">
                                 @csrf
                                 @method('POST')
 
-                                @include('asramas.include.form')
+                                @include('asrama.include.form')
 
                                 <a href="{{ url()->previous() }}" class="btn btn-secondary"><i class="mdi mdi-arrow-left-thin"></i> {{ __('Back') }}</a>
 

@@ -45,7 +45,7 @@
                                                     @foreach ($menu['submenus'] as $submenu)
                                                         @can($submenu['permission'])
                                                             <li class="nav-item">
-                                                                <a href="{{ route(str($submenu['route'])->remove('/')->plural() . '.index') }}"
+                                                                <a href="{{ route(str($submenu['route'])->remove('/'). '.index') }}"
                                                                     class="nav-link {{ set_active($submenu['route']) }}"
                                                                     data-key="t-calendar">
                                                                     {{ __($submenu['title']) }} </a>

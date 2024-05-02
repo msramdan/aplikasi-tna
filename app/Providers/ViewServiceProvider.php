@@ -42,7 +42,7 @@ class ViewServiceProvider extends ServiceProvider
             );
         });
 
-        View::composer(['asramas.create', 'asramas.edit'], function ($view) {
+        View::composer(['asrama.create', 'asrama.edit'], function ($view) {
             $data = Campus::select('id', 'nama_kampus')->get();
             return $view->with(
                 'campuses',

@@ -24,5 +24,5 @@ Route::get('/dashboard', function () {
 
 Route::resource('campuses', App\Http\Controllers\CampusController::class)->middleware('auth');
 Route::resource('ruang-kelas', App\Http\Controllers\RuangKelasController::class)->middleware('auth');
-
-Route::resource('asramas', App\Http\Controllers\AsramaController::class)->middleware('auth');
+Route::resource('asrama', App\Http\Controllers\AsramaController::class)->middleware('auth');
+Route::resource('kompetensi', App\Http\Controllers\KompetensiController::class)->middleware('auth');

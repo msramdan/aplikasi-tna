@@ -25,9 +25,9 @@ class AsramaController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $asramas = Asrama::with('campus:id,nama_kampus');
+            $asrama = Asrama::with('campus:id,nama_kampus');
 
-            return DataTables::of($asramas)
+            return DataTables::of($asrama)
                 ->addIndexColumn()
                 ->addColumn('created_at', function ($row) {
                     return $row->created_at->format('d M Y H:i:s');
@@ -49,11 +49,11 @@ class AsramaController extends Controller
                     }
                 })
                 ->rawColumns(['status','action'])
-                ->addColumn('action', 'asramas.include.action')
+                ->addColumn('action', 'asrama.include.action')
                 ->toJson();
         }
 
-        return view('asramas.index');
+        return view('asrama.index');
     }
 
     /**
@@ -63,7 +63,7 @@ class AsramaController extends Controller
      */
     public function create()
     {
-        return view('asramas.create');
+        return view('asrama.create');
     }
 
     /**
@@ -76,7 +76,7 @@ class AsramaController extends Controller
     {
         Asrama::create($request->validated());
         Alert::toast('The asrama was created successfully.', 'success');
-        return redirect()->route('asramas.index');
+        return redirect()->route('asrama.index');
     }
 
     /**
@@ -89,7 +89,7 @@ class AsramaController extends Controller
     {
         $asrama->load('campus:id,nama_kampus');
 
-        return view('asramas.show', compact('asrama'));
+        return view('asrama.show', compact('asrama'));
     }
 
     /**
@@ -102,7 +102,7 @@ class AsramaController extends Controller
     {
         $asrama->load('campus:id,nama_kampus');
 
-        return view('asramas.edit', compact('asrama'));
+        return view('asrama.edit', compact('asrama'));
     }
 
     /**
@@ -118,7 +118,7 @@ class AsramaController extends Controller
         $asrama->update($request->validated());
         Alert::toast('The asrama was updated successfully.', 'success');
         return redirect()
-            ->route('asramas.index');
+            ->route('asrama.index');
     }
 
     /**
@@ -132,10 +132,10 @@ class AsramaController extends Controller
         try {
             $asrama->delete();
             Alert::toast('The asrama was deleted successfully.', 'success');
-            return redirect()->route('asramas.index');
+            return redirect()->route('asrama.index');
         } catch (\Throwable $th) {
             Alert::toast('The asrama cant be deleted because its related to another table.', 'error');
-            return redirect()->route('asramas.index');
+            return redirect()->route('asrama.index');
         }
     }
 }

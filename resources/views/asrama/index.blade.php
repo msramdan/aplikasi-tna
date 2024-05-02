@@ -24,7 +24,7 @@
                     <div class="card">
                     <div class="card-header">
                             @can('asrama create')
-                                <a href="{{ route('asramas.create') }}" class="btn btn-md btn-primary"> <i
+                                <a href="{{ route('asrama.create') }}" class="btn btn-md btn-primary"> <i
                                         class="mdi mdi-plus"></i> {{ __('Create a new asrama') }}</a>
                             @endcan
                         </div>
@@ -59,7 +59,7 @@
         $('#data-table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('asramas.index') }}",
+            ajax: "{{ route('asrama.index') }}",
             columns: [
                 {
                     data: 'DT_RowIndex',

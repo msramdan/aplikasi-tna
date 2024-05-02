@@ -118,7 +118,8 @@ return [
             'setting app view',
             'campus view',
             'ruang kelas view',
-            'asrama view'
+            'asrama view',
+            'kompetensi view'
         ],
         'menus' => [
             [
@@ -128,14 +129,21 @@ return [
                 'uri' => [
                     'campuses*',
                     'ruang-kelas*',
-                    'asramas*'
+                    'asrama*',
+                    // 'kompetensi*'
                 ],
                 'permissions' => [
                     'campus view',
                     'ruang kelas view',
-                    'asrama view'
+                    'asrama view',
+                    // 'kompetensi view'
                 ],
                 'submenus' => [
+                    [
+                        'title' => 'Kamus Kompetensi',
+                        'route' => '/kompetensi',
+                        'permission' => 'kompetensi view'
+                    ],
                     [
                         'title' => 'Kampus',
                         'route' => '/campuses',
@@ -148,7 +156,7 @@ return [
                     ],
                     [
                         'title' => 'Asrama',
-                        'route' => '/asramas',
+                        'route' => '/asrama',
                         'permission' => 'asrama view'
                     ]
                 ]
