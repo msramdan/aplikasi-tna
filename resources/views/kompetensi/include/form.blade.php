@@ -14,10 +14,10 @@
     <div class="col-md-6">
         <div class="form-group">
             <label for="deksripsi-kompetensi">{{ __('Deksripsi Kompetensi') }}</label>
-            <textarea name="deksripsi_kompetensi" id="deksripsi-kompetensi"
+            <input type="text" name="deksripsi_kompetensi" id="deksripsi-kompetensi"
                 class="form-control @error('deksripsi_kompetensi') is-invalid @enderror"
-                placeholder="{{ __('Deksripsi Kompetensi') }}" required>{{ isset($kompetensi) ? $kompetensi->deksripsi_kompetensi : old('deksripsi_kompetensi') }}</textarea>
-            @error('deksripsi_kompetensi')
+                value="{{ isset($kompetensi) ? $kompetensi->deksripsi_kompetensi : old('deksripsi_kompetensi') }}"
+                placeholder="{{ __('Deksripsi Kompetensi') }}" required /> @error('deksripsi_kompetensi')
                 <span class="text-danger">
                     {{ $message }}
                 </span>

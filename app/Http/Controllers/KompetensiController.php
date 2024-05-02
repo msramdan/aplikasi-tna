@@ -6,6 +6,7 @@ use App\Models\Kompetensi;
 use App\Http\Requests\{StoreKompetensiRequest, UpdateKompetensiRequest};
 use Yajra\DataTables\Facades\DataTables;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\DB;
 
 class KompetensiController extends Controller
 {
@@ -29,10 +30,10 @@ class KompetensiController extends Controller
 
             return DataTables::of($kompetensi)
                 ->addIndexColumn()
-                ->addColumn('deksripsi_kompetensi', function($row){
+                ->addColumn('deksripsi_kompetensi', function ($row) {
                     return str($row->deksripsi_kompetensi)->limit(100);
                 })
-				->addColumn('action', 'kompetensi.include.action')
+                ->addColumn('action', 'kompetensi.include.action')
                 ->toJson();
         }
 
@@ -57,11 +58,39 @@ class KompetensiController extends Controller
      */
     public function store(StoreKompetensiRequest $request)
     {
+        // Mulai transaksi database
+        DB::beginTransaction();
 
-        Kompetensi::create($request->validated());
-        Alert::toast('The kompetensi was created successfully.', 'success');
-        return redirect()->route('kompetensi.index');
+        try {
+            // Buat record untuk Kompetensi
+            $kompetensi = Kompetensi::create($request->validated());
 
+            // Buat record untuk setiap detail kompetensi
+            $details = [];
+            for ($i = 1; $i <= 5; $i++) {
+                $details[] = [
+                    'kompetensi_id' => $kompetensi->id,
+                    'level' => $request->input('level_' . $i),
+                    'deskripsi_level' => $request->input('deskripsi_level_' . $i),
+                    'indikator_perilaku' => $request->input('indikator_perilaku_' . $i)
+                ];
+            }
+            DB::table('kompetensi_detail')->insert($details);
+
+            // Commit transaksi jika semuanya berhasil
+            DB::commit();
+
+            // Tampilkan pesan sukses
+            Alert::toast('The kompetensi was created successfully.', 'success');
+            return redirect()->route('kompetensi.index');
+        } catch (\Exception $e) {
+            // Rollback transaksi jika terjadi kesalahan
+            DB::rollBack();
+
+            // Tampilkan pesan kesalahan
+            Alert::error('Failed to create kompetensi. Please try again later.');
+            return redirect()->back()->withInput();
+        }
     }
 
     /**

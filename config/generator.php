@@ -130,13 +130,13 @@ return [
                     'campuses*',
                     'ruang-kelas*',
                     'asrama*',
-                    // 'kompetensi*'
+                    'kompetensi*'
                 ],
                 'permissions' => [
                     'campus view',
                     'ruang kelas view',
                     'asrama view',
-                    // 'kompetensi view'
+                    'kompetensi view'
                 ],
                 'submenus' => [
                     [
