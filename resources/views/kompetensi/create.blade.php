@@ -50,41 +50,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <th scope="row">1
-                                                <input type="hidden" name="level_1" value="1" readonly>
-                                            </th>
-                                            <td><input type="text" class="form-control" name="deskripsi_level_1" required></td>
-                                            <td><input type="text" class="form-control" name="indikator_perilaku_1" required></td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2
-                                                <input type="hidden" name="level_2" value="2" readonly>
-                                            </th>
-                                            <td><input type="text" class="form-control" name="deskripsi_level_2" required></td>
-                                            <td><input type="text" class="form-control" name="indikator_perilaku_2" required></td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">3
-                                                <input type="hidden" name="level_3" value="3" readonly>
-                                            </th>
-                                            <td><input type="text" class="form-control" name="deskripsi_level_3" required></td>
-                                            <td><input type="text" class="form-control" name="indikator_perilaku_3" required></td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">4
-                                                <input type="hidden" name="level_4" value="4" readonly>
-                                            </th>
-                                            <td><input type="text" class="form-control" name="deskripsi_level_4" required></td>
-                                            <td><input type="text" class="form-control" name="indikator_perilaku_4" required></td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">5
-                                                <input type="hidden" name="level_5" value="5" readonly>
-                                            </th>
-                                            <td><input type="text" class="form-control" name="deskripsi_level_5" required></td>
-                                            <td><input type="text" class="form-control" name="indikator_perilaku_5" required></td>
-                                        </tr>
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            <tr>
+                                                <th scope="row">{{ $i }}
+                                                    <input type="hidden" name="level[]" value="{{ $i }}" readonly>
+                                                </th>
+                                                <td><input type="text" class="form-control" name="deskripsi_level[]" required></td>
+                                                <td><input type="text" class="form-control" name="indikator_perilaku[]" required></td>
+                                            </tr>
+                                        @endfor
                                     </tbody>
                                 </table>
                             </div>

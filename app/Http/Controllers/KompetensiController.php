@@ -7,6 +7,7 @@ use App\Http\Requests\{StoreKompetensiRequest, UpdateKompetensiRequest};
 use Yajra\DataTables\Facades\DataTables;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class KompetensiController extends Controller
 {
@@ -70,9 +71,9 @@ class KompetensiController extends Controller
             for ($i = 1; $i <= 5; $i++) {
                 $details[] = [
                     'kompetensi_id' => $kompetensi->id,
-                    'level' => $request->input('level_' . $i),
-                    'deskripsi_level' => $request->input('deskripsi_level_' . $i),
-                    'indikator_perilaku' => $request->input('indikator_perilaku_' . $i)
+                    'level' => $request->input('level')[$i - 1],
+                    'deskripsi_level' => $request->input('deskripsi_level')[$i - 1],
+                    'indikator_perilaku' => $request->input('indikator_perilaku')[$i - 1]
                 ];
             }
             DB::table('kompetensi_detail')->insert($details);
@@ -112,7 +113,10 @@ class KompetensiController extends Controller
      */
     public function edit(Kompetensi $kompetensi)
     {
-        return view('kompetensi.edit', compact('kompetensi'));
+        $kompetensiDetail = DB::table('kompetensi_detail')
+                    ->where('kompetensi_id', $kompetensi->id)
+                    ->get();
+        return view('kompetensi.edit', compact('kompetensi','kompetensiDetail'));
     }
 
     /**
@@ -125,7 +129,18 @@ class KompetensiController extends Controller
     public function update(UpdateKompetensiRequest $request, Kompetensi $kompetensi)
     {
 
-        $kompetensi->update($request->validated());
+        $kompetensi = $kompetensi->update($request->validated());
+
+        // Update data pada tabel kompetensi_detail
+        foreach ($request->kompetensi_detail_id as $index => $detailId) {
+            DB::table('kompetensi_detail')
+                ->where('id', $detailId)
+                ->update([
+                    'deskripsi_level' => $request->deskripsi_level[$index],
+                    'indikator_perilaku' => $request->indikator_perilaku[$index],
+                ]);
+        }
+
         Alert::toast('The kompetensi was updated successfully.', 'success');
         return redirect()
             ->route('kompetensi.index');
@@ -146,6 +161,30 @@ class KompetensiController extends Controller
         } catch (\Throwable $th) {
             Alert::toast('The kompetensi cant be deleted because its related to another table.', 'error');
             return redirect()->route('kompetensi.index');
+        }
+    }
+
+    public function detailKompetensi(Request $request)
+    {
+        // Mengambil id dari request
+        $id = $request->id;
+
+        try {
+            // Mengambil data kompetensi_detail berdasarkan kompetensi_id
+            $kompetensiDetail = DB::table('kompetensi_detail')
+                ->where('kompetensi_id', $id)
+                ->get();
+
+            if ($kompetensiDetail->isNotEmpty()) {
+                // Jika data ditemukan, kembalikan respons dengan data tersebut
+                return response()->json(['success' => true, 'data' => $kompetensiDetail]);
+            } else {
+                // Jika data tidak ditemukan, kembalikan respons dengan pesan kesalahan
+                return response()->json(['success' => false, 'message' => 'Data kompetensi tidak ditemukan'], 404);
+            }
+        } catch (\Exception $e) {
+            // Jika terjadi kesalahan, kembalikan respons dengan pesan kesalahan
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
     }
 }

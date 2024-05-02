@@ -1,8 +1,9 @@
 <td>
-    <a href="" class="btn btn-info btn-sm" title="Detail Kompetensi">
-        <i class="mdi mdi-format-list-bulleted"></i>
-    </a>
-
+    <button type="button" class="btn btn-info btn-sm btn-detail-kompetensi"
+    data-id="{{ $model->id }}"
+    data-nama_kompetensi="{{ $model->nama_kompetensi }}"
+    data-deksripsi_kompetensi="{{ $model->deksripsi_kompetensi }}"
+    ><i class="mdi mdi-format-list-bulleted"></i></button>
     @can('kompetensi edit')
         <a href="{{ route('kompetensi.edit', $model->id) }}" class="btn btn-success btn-sm">
             <i class="mdi mdi-pencil"></i>

@@ -53,31 +53,20 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td><input type="text" class="form-control"></td>
-                                            <td><input type="text" class="form-control"></td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2</th>
-                                            <td><input type="text" class="form-control"></td>
-                                            <td><input type="text" class="form-control"></td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">3</th>
-                                            <td><input type="text" class="form-control"></td>
-                                            <td><input type="text" class="form-control"></td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">4</th>
-                                            <td><input type="text" class="form-control"></td>
-                                            <td><input type="text" class="form-control"></td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">5</th>
-                                            <td><input type="text" class="form-control"></td>
-                                            <td><input type="text" class="form-control"></td>
-                                        </tr>
+                                        @foreach ($kompetensiDetail as $index => $detail)
+                                            <tr>
+                                                <th scope="row">{{ $index + 1 }}
+                                                    <input type="hidden" name="kompetensi_detail_id[]"
+                                                        value="{{ $detail->id }}" readonly>
+                                                    <input type="hidden" name="level[]" value="{{ $detail->level }}"
+                                                        readonly>
+                                                </th>
+                                                <td><input type="text" class="form-control" name="deskripsi_level[]"
+                                                        value="{{ $detail->deskripsi_level }}" required></td>
+                                                <td><input type="text" class="form-control" name="indikator_perilaku[]"
+                                                        value="{{ $detail->indikator_perilaku }}" required></td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

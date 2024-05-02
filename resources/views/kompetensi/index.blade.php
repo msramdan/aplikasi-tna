@@ -3,6 +3,49 @@
 @section('title', __('kompetensi'))
 
 @section('content')
+    <style>
+        #loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            /* Transparan white background */
+            z-index: 1000;
+            text-align: center;
+        }
+
+        .loading-spinner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+
+    <div id="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -31,6 +74,41 @@
         </div>
     </div>
 
+    <div class="modal fade" id="modalDetailKompetensi" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Detail Kompetensi</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <hr>
+
+                <div class="modal-body">
+                    <table class="table" style="text-align: justify">
+                        <tbody>
+                            <tr>
+                                <th scope="row">Nama Kompetensi</th>
+                                <td>:</td>
+                                <td><span id="modalDetailKompetensiNama"></span></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Deksripsi Kompetensi</th>
+                                <td>:</td>
+                                <td><span id="modalDetailKompetensiDeskripsi"></span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="modal-body-detail" style="text-align: justify">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="page-content">
         <div class="container-fluid">
@@ -88,31 +166,91 @@
 
 @push('js')
     <script>
-        $('#data-table').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: "{{ route('kompetensi.index') }}",
-            columns: [{
-                    data: 'DT_RowIndex',
-                    name: 'DT_RowIndex',
-                    orderable: false,
-                    searchable: false
-                },
-                {
-                    data: 'nama_kompetensi',
-                    name: 'nama_kompetensi',
-                },
-                {
-                    data: 'deksripsi_kompetensi',
-                    name: 'deksripsi_kompetensi',
-                },
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
-                    searchable: false
+        $(document).ready(function() {
+            $('#data-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('kompetensi.index') }}",
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex',
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: 'nama_kompetensi',
+                        name: 'nama_kompetensi',
+                    },
+                    {
+                        data: 'deksripsi_kompetensi',
+                        name: 'deksripsi_kompetensi',
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    }
+                ],
+
+                drawCallback: function() {
+                    $('.btn-detail-kompetensi').click(function() {
+                        var id = $(this).data('id');
+                        var nama_kompetensi = $(this).data('nama_kompetensi');
+                        var deksripsi_kompetensi = $(this).data('deksripsi_kompetensi');
+                        var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                        $('#loading-overlay').show();
+                        $.ajax({
+                            type: "GET",
+                            url: '{{ route('detailKompetensi') }}',
+                            data: {
+                                id: id,
+                                _token: csrfToken
+                            },
+                            success: function(response) {
+                                $('#loading-overlay').hide();
+                                $('#modalDetailKompetensi').modal('show');
+                                $('#modalDetailKompetensiNama').text(nama_kompetensi);
+                                $('#modalDetailKompetensiDeskripsi').text(deksripsi_kompetensi);
+
+                                // Mendefinisikan variabel untuk menyimpan HTML tabel
+                                var tableHtml =
+                                    '<div class="table-responsive p-1"><table class="table table-striped">';
+                                tableHtml += '<thead>';
+                                tableHtml += '<tr>';
+                                tableHtml += '<th>Level</th>';
+                                tableHtml += '<th>Deskripsi Level</th>';
+                                tableHtml += '<th>Indikator Perilaku</th>';
+                                tableHtml += '</tr>';
+                                tableHtml += '</thead>';
+                                tableHtml += '<tbody></div>';
+
+                                // Iterasi melalui data dan membangun baris-baris tabel
+                                $.each(response.data, function(index, item) {
+                                    tableHtml += '<tr>';
+                                    tableHtml += '<td>' + item.level +
+                                        '</td>';
+                                    tableHtml += '<td>' + item
+                                        .deskripsi_level + '</td>';
+                                    tableHtml += '<td>' + item
+                                        .indikator_perilaku + '</td>';
+                                    tableHtml += '</tr>';
+                                });
+
+                                tableHtml += '</tbody>';
+                                tableHtml += '</table>';
+
+                                // Menambahkan HTML tabel ke dalam modal body
+                                $('.modal-body-detail').html(tableHtml);
+                            },
+                            error: function(error) {
+                                console.error('Error:', error);
+                            },
+                        });
+
+                    });
                 }
-            ],
+            });
         });
     </script>
 @endpush

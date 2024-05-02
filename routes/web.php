@@ -26,3 +26,6 @@ Route::resource('campuses', App\Http\Controllers\CampusController::class)->middl
 Route::resource('ruang-kelas', App\Http\Controllers\RuangKelasController::class)->middleware('auth');
 Route::resource('asrama', App\Http\Controllers\AsramaController::class)->middleware('auth');
 Route::resource('kompetensi', App\Http\Controllers\KompetensiController::class)->middleware('auth');
+Route::controller(App\Http\Controllers\KompetensiController::class)->group(function () {
+    Route::get('/detailKompetensi', 'detailKompetensi')->name('detailKompetensi');
+});
