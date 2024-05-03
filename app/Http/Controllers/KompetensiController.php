@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kompetensi;
-use App\Http\Requests\{StoreKompetensiRequest, UpdateKompetensiRequest};
+use App\Http\Requests\{ImportKompetensiRequest,StoreKompetensiRequest, UpdateKompetensiRequest};
 use Yajra\DataTables\Facades\DataTables;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use App\Exports\ExportKompetensi;
+use App\Imports\ImportKompetensi;
+use Maatwebsite\Excel\Facades\Excel;
 
 class KompetensiController extends Controller
 {
@@ -31,8 +34,8 @@ class KompetensiController extends Controller
 
             return DataTables::of($kompetensi)
                 ->addIndexColumn()
-                ->addColumn('deksripsi_kompetensi', function ($row) {
-                    return str($row->deksripsi_kompetensi)->limit(100);
+                ->addColumn('deskripsi_kompetensi', function ($row) {
+                    return str($row->deskripsi_kompetensi)->limit(100);
                 })
                 ->addColumn('action', 'kompetensi.include.action')
                 ->toJson();
@@ -114,9 +117,9 @@ class KompetensiController extends Controller
     public function edit(Kompetensi $kompetensi)
     {
         $kompetensiDetail = DB::table('kompetensi_detail')
-                    ->where('kompetensi_id', $kompetensi->id)
-                    ->get();
-        return view('kompetensi.edit', compact('kompetensi','kompetensiDetail'));
+            ->where('kompetensi_id', $kompetensi->id)
+            ->get();
+        return view('kompetensi.edit', compact('kompetensi', 'kompetensiDetail'));
     }
 
     /**
@@ -186,5 +189,19 @@ class KompetensiController extends Controller
             // Jika terjadi kesalahan, kembalikan respons dengan pesan kesalahan
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
+    }
+
+    public function exportKompetensi()
+    {
+        $date = date('d-m-Y');
+        $nameFile = 'Kamus kompetensi ' . $date;
+        return Excel::download(new ExportKompetensi(), $nameFile . '.xlsx');
+    }
+
+    public function importKompetensi(ImportKompetensiRequest $request)
+    {
+        Excel::import(new ImportKompetensi, $request->file('import_kompetensi'));
+        Alert::toast('Kamus kompetensi has been successfully imported.', 'success');
+        return back();
     }
 }

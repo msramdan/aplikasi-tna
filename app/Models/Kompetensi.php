@@ -15,14 +15,14 @@ class Kompetensi extends Model
      *
      * @var string[]
      */
-    protected $fillable = ['nama_kompetensi', 'deksripsi_kompetensi'];
+    protected $fillable = ['nama_kompetensi', 'deskripsi_kompetensi'];
 
     /**
      * The attributes that should be cast.
      *
      * @var string[]
      */
-    protected $casts = ['nama_kompetensi' => 'string', 'deksripsi_kompetensi' => 'string', 'created_at' => 'datetime:d/m/Y H:i', 'updated_at' => 'datetime:d/m/Y H:i'];
+    protected $casts = ['nama_kompetensi' => 'string', 'deskripsi_kompetensi' => 'string', 'created_at' => 'datetime:d/m/Y H:i', 'updated_at' => 'datetime:d/m/Y H:i'];
 
 
 

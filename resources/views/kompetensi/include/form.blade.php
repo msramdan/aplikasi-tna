@@ -13,11 +13,11 @@
     </div>
     <div class="col-md-6">
         <div class="form-group">
-            <label for="deksripsi-kompetensi">{{ __('Deksripsi Kompetensi') }}</label>
-            <input type="text" name="deksripsi_kompetensi" id="deksripsi-kompetensi"
-                class="form-control @error('deksripsi_kompetensi') is-invalid @enderror"
-                value="{{ isset($kompetensi) ? $kompetensi->deksripsi_kompetensi : old('deksripsi_kompetensi') }}"
-                placeholder="{{ __('Deksripsi Kompetensi') }}" required /> @error('deksripsi_kompetensi')
+            <label for="deksripsi-kompetensi">{{ __('Deskripsi Kompetensi') }}</label>
+            <input type="text" name="deskripsi_kompetensi" id="deksripsi-kompetensi"
+                class="form-control @error('deskripsi_kompetensi') is-invalid @enderror"
+                value="{{ isset($kompetensi) ? $kompetensi->deskripsi_kompetensi : old('deskripsi_kompetensi') }}"
+                placeholder="{{ __('Deskripsi Kompetensi') }}" required /> @error('deskripsi_kompetensi')
                 <span class="text-danger">
                     {{ $message }}
                 </span>

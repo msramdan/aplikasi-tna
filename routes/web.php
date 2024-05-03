@@ -28,4 +28,6 @@ Route::resource('asrama', App\Http\Controllers\AsramaController::class)->middlew
 Route::resource('kompetensi', App\Http\Controllers\KompetensiController::class)->middleware('auth');
 Route::controller(App\Http\Controllers\KompetensiController::class)->group(function () {
     Route::get('/detailKompetensi', 'detailKompetensi')->name('detailKompetensi');
+    Route::get('/exportKompetensi', 'exportKompetensi')->name('exportKompetensi');
+    Route::post('/importKompetensi', 'importKompetensi')->name('importKompetensi');
 });

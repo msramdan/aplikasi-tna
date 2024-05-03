@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('kompetensi', function (Blueprint $table) {
             $table->id();
             $table->string('nama_kompetensi', 255);
-			$table->text('deksripsi_kompetensi');
+			$table->text('deskripsi_kompetensi');
             $table->timestamps();
         });
     }

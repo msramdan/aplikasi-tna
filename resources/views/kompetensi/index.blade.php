@@ -54,14 +54,15 @@
                     <h5 class="modal-title" id="exampleModalLabel">Import Kompetensi</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form method="POST" action="" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('importKompetensi') }}" enctype="multipart/form-data">
                     <div class="modal-body">
                         @csrf
                         <div class="mb-3">
-                            <input type="file" class="form-control" id="import_sparepart" name="import_sparepart"
-                                aria-describedby="import_sparepart" accept=".xlsx" required>
-                            <div id="downloadFormat" class="form-text"> <a href="#"><i class="fa fa-download"
-                                        aria-hidden="true"></i> Unduh Format</a>
+                            <input type="file" class="form-control" id="import_kompetensi" name="import_kompetensi"
+                                aria-describedby="import_kompetensi" accept=".xlsx" required>
+                            <div id="downloadFormat" class="form-text"> <a
+                                    href="{{ asset('format_import/format_import_kompetensi.xlsx') }}"><i
+                                        class="fa fa-download" aria-hidden="true"></i> Unduh Format</a>
                             </div>
                         </div>
                     </div>
@@ -93,7 +94,7 @@
                                 <td><span id="modalDetailKompetensiNama"></span></td>
                             </tr>
                             <tr>
-                                <th scope="row">Deksripsi Kompetensi</th>
+                                <th scope="row">Deskripsi Kompetensi</th>
                                 <td>:</td>
                                 <td><span id="modalDetailKompetensiDeskripsi"></span></td>
                             </tr>
@@ -127,6 +128,17 @@
                 </div>
             </div>
             <div class="row">
+                @if (count($errors) > 0)
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Failed!</strong>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+
+
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="card-header">
@@ -138,8 +150,10 @@
                                     {{ __('Import') }}
                                 </button>
                             @endcan
-                            <a href="{{ route('kompetensi.create') }}" class="btn btn-md btn-success"> <i
-                                    class="mdi mdi-file-excel"></i> {{ __('Export') }}</a>
+                            <button id="btnExport" class="btn btn-success">
+                                <i class='fas fa-file-excel'></i>
+                                {{ __('Export') }}
+                            </button>
                         </div>
 
                         <div class="card-body">
@@ -149,7 +163,7 @@
                                         <tr>
                                             <th>#</th>
                                             <th>{{ __('Nama Kompetensi') }}</th>
-                                            <th>{{ __('Deksripsi Kompetensi') }}</th>
+                                            <th>{{ __('Deskripsi Kompetensi') }}</th>
                                             <th>{{ __('Action') }}</th>
                                         </tr>
                                     </thead>
@@ -165,6 +179,7 @@
 
 
 @push('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.all.min.js"></script>
     <script>
         $(document).ready(function() {
             $('#data-table').DataTable({
@@ -182,8 +197,8 @@
                         name: 'nama_kompetensi',
                     },
                     {
-                        data: 'deksripsi_kompetensi',
-                        name: 'deksripsi_kompetensi',
+                        data: 'deskripsi_kompetensi',
+                        name: 'deskripsi_kompetensi',
                     },
                     {
                         data: 'action',
@@ -197,7 +212,7 @@
                     $('.btn-detail-kompetensi').click(function() {
                         var id = $(this).data('id');
                         var nama_kompetensi = $(this).data('nama_kompetensi');
-                        var deksripsi_kompetensi = $(this).data('deksripsi_kompetensi');
+                        var deskripsi_kompetensi = $(this).data('deskripsi_kompetensi');
                         var csrfToken = $('meta[name="csrf-token"]').attr('content');
                         $('#loading-overlay').show();
                         $.ajax({
@@ -210,8 +225,10 @@
                             success: function(response) {
                                 $('#loading-overlay').hide();
                                 $('#modalDetailKompetensi').modal('show');
-                                $('#modalDetailKompetensiNama').text(nama_kompetensi);
-                                $('#modalDetailKompetensiDeskripsi').text(deksripsi_kompetensi);
+                                $('#modalDetailKompetensiNama').text(
+                                    nama_kompetensi);
+                                $('#modalDetailKompetensiDeskripsi').text(
+                                    deskripsi_kompetensi);
 
                                 // Mendefinisikan variabel untuk menyimpan HTML tabel
                                 var tableHtml =
@@ -252,5 +269,56 @@
                 }
             });
         });
+    </script>
+
+    <script>
+        $(document).on('click', '#btnExport', function(event) {
+            event.preventDefault();
+            exportData();
+
+        });
+
+        var exportData = function() {
+            var url = '/exportKompetensi';
+            $.ajax({
+                url: url,
+                type: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                },
+                data: {},
+                xhrFields: {
+                    responseType: 'blob'
+                },
+                beforeSend: function() {
+                    Swal.fire({
+                        title: 'Please Wait !',
+                        html: 'Sedang melakukan proses export data', // add html attribute if you want or remove
+                        allowOutsideClick: false,
+                        onBeforeOpen: () => {
+                            Swal.showLoading()
+                        },
+                    });
+                },
+                success: function(data) {
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(data);
+                    var nameFile = 'Kamus kompetensi.xlsx'
+                    console.log(nameFile)
+                    link.download = nameFile;
+                    link.click();
+                    swal.close()
+                },
+                error: function(data) {
+                    console.log(data)
+                    Swal.fire({
+                        icon: 'error',
+                        title: "Data export failed",
+                        text: "Please check",
+                        allowOutsideClick: false,
+                    })
+                }
+            });
+        }
     </script>
 @endpush

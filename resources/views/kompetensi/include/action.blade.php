@@ -2,7 +2,7 @@
     <button type="button" class="btn btn-info btn-sm btn-detail-kompetensi"
     data-id="{{ $model->id }}"
     data-nama_kompetensi="{{ $model->nama_kompetensi }}"
-    data-deksripsi_kompetensi="{{ $model->deksripsi_kompetensi }}"
+    data-deskripsi_kompetensi="{{ $model->deskripsi_kompetensi }}"
     ><i class="mdi mdi-format-list-bulleted"></i></button>
     @can('kompetensi edit')
         <a href="{{ route('kompetensi.edit', $model->id) }}" class="btn btn-success btn-sm">

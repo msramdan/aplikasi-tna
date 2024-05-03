@@ -25,7 +25,7 @@ class UpdateKompetensiRequest extends FormRequest
     {
         return [
             'nama_kompetensi' => 'required|string|max:255',
-			'deksripsi_kompetensi' => 'required|string',
+			'deskripsi_kompetensi' => 'required|string',
         ];
     }
 }

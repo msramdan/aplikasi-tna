@@ -39,7 +39,7 @@
                                         </tr>
 									<tr>
                                             <td class="fw-bold">{{ __('Deksripsi Kompetensi') }}</td>
-                                            <td>{{ $kompetensi->deksripsi_kompetensi }}</td>
+                                            <td>{{ $kompetensi->deskripsi_kompetensi }}</td>
                                         </tr>
                                             <tr>
                                                 <td class="fw-bold">{{ __('Created at') }}</td>
