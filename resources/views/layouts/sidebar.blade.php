@@ -24,7 +24,7 @@
                                     @can($menu['permission'])
                                         <li class="nav-item ">
                                             <a class="nav-link menu-link {{ set_active($menu['route']) }}"
-                                                href="{{ route(str($menu['route'])->remove('/')->plural() . '.index') }}">
+                                                href="{{ route(str($menu['route'])->remove('/'). '.index') }}">
                                                 {!! $menu['icon'] !!}
                                                 <span data-key="t-widgets">{{ __($menu['title']) }}</span>
                                             </a>

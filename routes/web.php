@@ -31,3 +31,6 @@ Route::controller(App\Http\Controllers\KompetensiController::class)->group(funct
     Route::get('/exportKompetensi', 'exportKompetensi')->name('exportKompetensi');
     Route::post('/importKompetensi', 'importKompetensi')->name('importKompetensi');
 });
+
+Route::resource('kalender-pembelajaran', App\Http\Controllers\KalenderPembelajaranController::class)->middleware('auth');
+Route::resource('reporting', App\Http\Controllers\ReportingController::class)->middleware('auth');

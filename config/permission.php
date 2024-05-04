@@ -186,5 +186,7 @@ return [
         ['group' => 'ruang kelas', 'access' => ['ruang kelas view', 'ruang kelas create', 'ruang kelas edit', 'ruang kelas delete']],
         ['group' => 'asrama', 'access' => ['asrama view', 'asrama create', 'asrama edit', 'asrama delete']],
         ['group' => 'kompetensi', 'access' => ['kompetensi view', 'kompetensi create', 'kompetensi edit', 'kompetensi delete']],
+        ['group' => 'kalender pembelajaran', 'access' => ['kalender pembelajaran view', 'kalender pembelajaran create', 'kalender pembelajaran edit', 'kalender pembelajaran delete']],
+        ['group' => 'reporting', 'access' => ['reporting view', 'reporting create', 'reporting edit', 'reporting delete']],
     ],
 ];
