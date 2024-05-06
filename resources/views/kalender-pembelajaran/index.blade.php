@@ -36,6 +36,14 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Daftar Pembelajaran</h5>
+                            <ul id="eventList"></ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -45,13 +53,30 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="eventModalLabel">Detail Acara</h5>
+                    <h5 class="modal-title" id="eventModalLabel">Detail pembelajaran</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p id="eventTitle"></p>
-                    <p id="eventDate"></p>
-                    <p id="eventDescription"></p>
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th scope="row">Judul</th>
+                                <td id="eventTitle"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Tanggal mulai</th>
+                                <td id="eventDateStart"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Tanggal selesai</th>
+                                <td id="eventDateEnd"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Deksripsi</th>
+                                <td id="eventDescription"></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -70,68 +95,38 @@
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
                 events: [{
-                        title: 'Pelatihan akuntansi',
-                        start: '2024-05-01',
-                        end: '2024-05-02',
-                        allDay: true,
+                        title: 'Pelatihan akuntansi 1',
+                        start: '2024-05-06T00:00:00',
+                        end: '2024-05-06T23:59:59',
+                        description: 'Deskripsi Event 1'
+                    },
+                    {
+                        title: 'Pelatihan akuntansi 2',
+                        start: '2024-05-06T00:00:00',
+                        end: '2024-05-06T23:59:59',
+                        description: 'Deskripsi Event 1'
+                    },
+                    {
+                        title: 'Pelatihan akuntansi 3',
+                        start: '2024-05-06T00:00:00',
+                        end: '2024-05-06T23:59:59',
                         description: 'Deskripsi Event 1'
                     },
                     {
                         title: 'Pelatihan IT',
-                        start: '2024-05-05',
-                        end: '2024-05-07',
-                        allDay: true,
-                        description: 'Deskripsi Pelatihan IT'
-                    },
-                    {
-                        title: 'Pelatihan Programmer 1',
-                        start: '2024-05-05',
-                        end: '2024-05-07',
-                        allDay: true,
-                        description: 'Deskripsi Pelatihan Programmer 1'
-                    },
-                    {
-                        title: 'Pelatihan Programmer 2',
-                        start: '2024-05-05',
-                        end: '2024-05-07',
-                        allDay: true,
-                        description: 'Deskripsi Pelatihan Programmer 2'
-                    },
-                    {
-                        title: 'Pelatihan Programmer 3',
-                        start: '2024-05-05',
-                        end: '2024-05-07',
-                        allDay: true,
-                        description: 'Deskripsi Pelatihan Programmer 3'
-                    },
-                    {
-                        title: 'Pelatihan Programmer 4',
-                        start: '2024-05-05',
-                        end: '2024-05-07',
-                        allDay: true,
-                        description: 'Deskripsi Pelatihan Programmer 4'
-                    },
-                    {
-                        title: 'Pelatihan Programmer 5',
-                        start: '2024-05-05',
-                        end: '2024-05-07',
-                        allDay: true,
-                        description: 'Deskripsi Pelatihan Programmer 5'
-                    },
-                    {
-                        title: 'Pelatihan Programmer 6',
-                        start: '2024-05-08',
-                        end: '2024-05-10',
-                        allDay: true,
-                        description: 'Deskripsi Pelatihan Programmer 6'
+                        start: '2024-05-10T00:00:00',
+                        end: '2024-05-11T23:59:59',
+                        description: 'Deskripsi Event 1'
                     }
                 ],
                 editable: true,
                 eventClick: function(info) {
                     // Set nilai modal sesuai dengan acara yang diklik
                     document.getElementById('eventTitle').innerText = info.event.title;
-                    document.getElementById('eventDate').innerText = info.event.start
-                        .toLocaleDateString();
+                    document.getElementById('eventDateStart').innerText = moment(info.event.start)
+                        .format("YYYY-MM-DD");
+                    document.getElementById('eventDateEnd').innerText = moment(info.event.end)
+                        .format("YYYY-MM-DD");
                     document.getElementById('eventDescription').innerText = info.event.extendedProps
                         .description;
 
@@ -140,6 +135,17 @@
                     modal.show();
                 },
                 dayMaxEventRows: true, // Membuat tombol "more"
+                dateClick: function(info) {
+                    var clickedDate = info.date;
+                    var eventsOnDate = calendar.getEvents().filter(function(event) {
+                        return moment(clickedDate).isBetween(event.start, event.end, null,
+                            '[]');
+                    });
+                    var eventList = eventsOnDate.map(function(event) {
+                        return "<li>" + event.title + "</li>";
+                    });
+                    document.getElementById('eventList').innerHTML = eventList.join("");
+                }
             });
             calendar.render();
         });
