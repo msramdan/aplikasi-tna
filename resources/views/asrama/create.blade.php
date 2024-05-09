@@ -47,3 +47,10 @@
         </div>
     </div>
 @endsection
+@push('js')
+    <script>
+        $(document).ready(function() {
+            $('.select2-form').select2();
+        });
+    </script>
+@endpush

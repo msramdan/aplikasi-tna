@@ -1,7 +1,8 @@
 <div class="row mb-2">
     <div class="col-md-6 mb-2">
         <label for="campus-id">{{ __('Kampus') }}</label>
-        <select class="form-control @error('campus_id') is-invalid @enderror" name="campus_id" id="campus-id" required>
+        <select class="form-control select2-form @error('campus_id') is-invalid @enderror" name="campus_id" id="campus-id"
+            required>
             <option value="" selected disabled>-- {{ __('Select kampus') }} --</option>
             @foreach ($campuses as $campus)
                 <option value="{{ $campus->id }}"
@@ -41,7 +42,8 @@
     </div>
     <div class="col-md-6 mb-2">
         <label for="status-asrama">{{ __('Status Asrama') }}</label>
-        <select class="form-control @error('status') is-invalid @enderror" name="status" id="status-asrama" required>
+        <select class="form-control select2-form @error('status') is-invalid @enderror" name="status"
+            id="status-asrama" required>
             <option value="" selected disabled>-- {{ __('Select status asrama') }} --</option>
             <option value="Available"
                 {{ isset($asrama) && $asrama->status == 'Available' ? 'selected' : (old('status') == 'Available' ? 'selected' : '') }}>

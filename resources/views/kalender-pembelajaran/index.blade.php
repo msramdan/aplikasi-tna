@@ -32,6 +32,17 @@
                 <div class="col-sm-6">
                     <div class="card">
                         <div class="card-body">
+                            <div class="col-md-4">
+                                <div class="input-group mb-4">
+                                    <select name="equipment_id" id="equipment_id" class="form-control select2-form">
+                                        <option value="">All Type</option>
+                                        <option value="">RM</option>
+                                        <option value="">START</option>
+                                        <option value="">PNBP</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <hr>
                             <div id='calendar'></div>
                         </div>
                     </div>
@@ -89,6 +100,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
         integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        $(document).ready(function() {
+            $('.select2-form').select2();
+        });
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
