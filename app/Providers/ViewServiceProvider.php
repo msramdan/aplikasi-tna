@@ -44,7 +44,7 @@ class ViewServiceProvider extends ServiceProvider
             );
         });
 
-        View::composer(['ruang-kelas.create', 'ruang-kelas.edit'], function ($view) {
+        View::composer(['ruang-kelas.create', 'ruang-kelas.edit', 'asrama.create', 'asrama.edit'], function ($view) {
             $data = Lokasi::select('id', 'nama_lokasi')->get();
             return $view->with(
                 'lokasis',

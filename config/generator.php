@@ -112,17 +112,11 @@ return [
     [
         'header' => 'Master',
         'permissions' => [
-            'setting view',
-            'role & permission view',
-            'user view',
-            'setting app view',
-            'campus view',
-            'ruang kelas view',
-            'asrama view',
             'kompetensi view',
             'kota view',
             'lokasi view',
-            'ruang kelas view'
+            'ruang kelas view',
+            'asrama view'
         ],
         'menus' => [
             [
@@ -139,7 +133,8 @@ return [
                     'kompetensi view',
                     'kota view',
                     'lokasi view',
-                    'ruang kelas view'
+                    'ruang kelas view',
+                    'asrama view'
                 ],
                 'submenus' => [
                     [
@@ -161,6 +156,11 @@ return [
                         'title' => 'Ruang kelas',
                         'route' => '/ruang-kelas',
                         'permission' => 'ruang kelas view'
+                    ],
+                    [
+                        'title' => 'Asrama',
+                        'route' => '/asrama',
+                        'permission' => 'asrama view'
                     ]
                 ]
             ]

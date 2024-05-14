@@ -34,3 +34,4 @@ Route::resource('reporting', App\Http\Controllers\ReportingController::class)->m
 Route::resource('kota', App\Http\Controllers\KotaController::class)->middleware('auth');
 Route::resource('lokasi', App\Http\Controllers\LokasiController::class)->middleware('auth');
 Route::resource('ruang-kelas', App\Http\Controllers\RuangKelasController::class)->middleware('auth');
+Route::resource('asrama', App\Http\Controllers\AsramaController::class)->middleware('auth');
