@@ -70,8 +70,8 @@
                     name: 'nama_kelas',
                 },
                 {
-                    data: 'lokasi',
-                    name: 'lokasi.id'
+                    data: 'nama_lokasi',
+                    name: 'nama_lokasi'
                 },
                 {
                     data: 'kuota',

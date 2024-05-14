@@ -5,10 +5,10 @@
             id="kota-id" required>
             <option value="" selected disabled>-- {{ __('Select kota') }} --</option>
 
-            @foreach ($kotas as $kotum)
-                <option value="{{ $kotum->id }}"
-                    {{ isset($lokasi) && $lokasi->kota_id == $kotum->id ? 'selected' : (old('kota_id') == $kotum->id ? 'selected' : '') }}>
-                    {{ $kotum->nama_kota }}
+            @foreach ($kotas as $kota)
+                <option value="{{ $kota->id }}"
+                    {{ isset($lokasi) && $lokasi->kota_id == $kota->id ? 'selected' : (old('kota_id') == $kota->id ? 'selected' : '') }}>
+                    {{ $kota->nama_kota }}
                 </option>
             @endforeach
         </select>

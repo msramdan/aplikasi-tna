@@ -34,8 +34,8 @@
                                     <div class="table-responsive">
                                         <table class="table table-hover table-striped">
                                             <tr>
-                                        <td class="fw-bold">{{ __('Kotum') }}</td>
-                                        <td>{{ $lokasi->kotum ? $lokasi->kotum->id : '' }}</td>
+                                        <td class="fw-bold">{{ __('kota') }}</td>
+                                        <td>{{ $lokasi->kota ? $lokasi->kota->id : '' }}</td>
                                     </tr>
 									<tr>
                                             <td class="fw-bold">{{ __('Type') }}</td>

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\kota;
+use App\Models\Kota;
 use App\Http\Requests\{StorekotaRequest, UpdatekotaRequest};
 use Yajra\DataTables\Facades\DataTables;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -58,13 +58,11 @@ class KotaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorekotaRequest $request)
+    public function store(StoreKotaRequest $request)
     {
-
-        kota::create($request->validated());
+        Kota::create($request->validated());
         Alert::toast('The kota was created successfully.', 'success');
         return redirect()->route('kota.index');
-
     }
 
     /**
@@ -73,7 +71,7 @@ class KotaController extends Controller
      * @param  \App\Models\kota  $kota
      * @return \Illuminate\Http\Response
      */
-    public function show(kota $kota)
+    public function show(Kota $kota)
     {
         return view('kota.show', compact('kota'));
     }
@@ -84,8 +82,9 @@ class KotaController extends Controller
      * @param  \App\Models\kota  $kota
      * @return \Illuminate\Http\Response
      */
-    public function edit(kota $kota)
+    public function edit($id)
     {
+        $kota = Kota::findOrFail($id);
         return view('kota.edit', compact('kota'));
     }
 
@@ -96,13 +95,14 @@ class KotaController extends Controller
      * @param  \App\Models\kota  $kota
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatekotaRequest $request, kota $kota)
+    public function update(UpdateKotaRequest $request, $id)
     {
-
+        $kota = Kota::findOrFail($id);
         $kota->update($request->validated());
+
         Alert::toast('The kota was updated successfully.', 'success');
-        return redirect()
-            ->route('kota.index');
+
+        return redirect()->route('kota.index');
     }
 
     /**
@@ -111,15 +111,17 @@ class KotaController extends Controller
      * @param  \App\Models\kota  $kota
      * @return \Illuminate\Http\Response
      */
-    public function destroy(kota $kota)
+    public function destroy($id)
     {
         try {
+            $kota = Kota::findOrFail($id);
             $kota->delete();
+
             Alert::toast('The kota was deleted successfully.', 'success');
-            return redirect()->route('kota.index');
         } catch (\Throwable $th) {
-            Alert::toast('The kota cant be deleted because its related to another table.', 'error');
-            return redirect()->route('kota.index');
+            Alert::toast('The kota cannot be deleted because it is related to another table.', 'error');
         }
+
+        return redirect()->route('kota.index');
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\RuangKelas;
 use App\Http\Requests\{StoreRuangKelasRequest, UpdateRuangKelasRequest};
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class RuangKelasController extends Controller
@@ -25,21 +26,17 @@ class RuangKelasController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $ruangKelas = RuangKelas::with('lokasi:id');
-
+            $ruangKelas = DB::table('ruang_kelas')
+                ->leftJoin('lokasi', 'ruang_kelas.lokasi_id', '=', 'lokasi.id')
+                ->select('ruang_kelas.*', 'lokasi.nama_lokasi')
+                ->get();
             return DataTables::of($ruangKelas)
                 ->addIndexColumn()
-                ->addColumn('created_at', function ($row) {
-                    return $row->created_at->format('d M Y H:i:s');
-                })->addColumn('updated_at', function ($row) {
-                    return $row->updated_at->format('d M Y H:i:s');
-                })
-
-                ->addColumn('keterangan', function($row){
+                ->addColumn('keterangan', function ($row) {
                     return str($row->keterangan)->limit(100);
                 })
-				->addColumn('lokasi', function ($row) {
-                    return $row->lokasi ? $row->lokasi->id : '';
+                ->addColumn('nama_lokasi', function ($row) {
+                    return $row->nama_lokasi;
                 })->addColumn('action', 'ruang-kelas.include.action')
                 ->toJson();
         }
@@ -67,9 +64,8 @@ class RuangKelasController extends Controller
     {
 
         RuangKelas::create($request->validated());
-        Alert::toast('The ruangKela was created successfully.', 'success');
+        Alert::toast('The ruang kelas was created successfully.', 'success');
         return redirect()->route('ruang-kelas.index');
-
     }
 
     /**
@@ -78,11 +74,11 @@ class RuangKelasController extends Controller
      * @param  \App\Models\RuangKela  $ruangKela
      * @return \Illuminate\Http\Response
      */
-    public function show(RuangKelas $ruangKela)
+    public function show(RuangKelas $ruangKelas)
     {
-        $ruangKela->load('lokasi:id');
+        $ruangKelas->load('lokasi:id');
 
-		return view('ruang-kelas.show', compact('ruangKela'));
+        return view('ruang-kelas.show', compact('ruangKelas'));
     }
 
     /**
@@ -91,13 +87,11 @@ class RuangKelasController extends Controller
      * @param  \App\Models\RuangKela  $ruangKela
      * @return \Illuminate\Http\Response
      */
-    public function edit(RuangKelas $ruangKela)
+    public function edit($id)
     {
-        $ruangKela->load('lokasi:id');
-
-		return view('ruang-kelas.edit', compact('ruangKela'));
+        $ruangKelas = RuangKelas::findOrFail($id);
+        return view('ruang-kelas.edit', compact('ruangKelas'));
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -105,30 +99,29 @@ class RuangKelasController extends Controller
      * @param  \App\Models\RuangKela  $ruangKela
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateRuangKelasRequest $request, RuangKelas $ruangKela)
+    public function update(UpdateRuangKelasRequest $request, $id)
     {
-
-        $ruangKela->update($request->validated());
-        Alert::toast('The ruangKela was updated successfully.', 'success');
-        return redirect()
-            ->route('ruang-kelas.index');
+        $ruangKelas = RuangKelas::findOrFail($id);
+        $ruangKelas->update($request->validated());
+        Alert::toast('The ruang kelas was updated successfully.', 'success');
+        return redirect()->route('ruang-kelas.index');
     }
-
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\RuangKela  $ruangKela
      * @return \Illuminate\Http\Response
      */
-    public function destroy(RuangKelas $ruangKela)
+    public function destroy($id)
     {
         try {
-            $ruangKela->delete();
-            Alert::toast('The ruangKela was deleted successfully.', 'success');
-            return redirect()->route('ruang-kelas.index');
+            $ruangKelas = RuangKelas::findOrFail($id);
+            $ruangKelas->delete();
+            Alert::toast('The ruang kelas was deleted successfully.', 'success');
         } catch (\Throwable $th) {
-            Alert::toast('The ruangKela cant be deleted because its related to another table.', 'error');
-            return redirect()->route('ruang-kelas.index');
+            Alert::toast('The ruang kelas cannot be deleted because it is related to another table.', 'error');
         }
+
+        return redirect()->route('ruang-kelas.index');
     }
 }

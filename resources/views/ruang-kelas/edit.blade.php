@@ -32,7 +32,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            <form action="{{ route('ruang-kelas.update', $ruangKela->id) }}" method="POST">
+                            <form action="{{ route('ruang-kelas.update', $ruangKelas->id) }}" method="POST">
                                 @csrf
                                 @method('PUT')
 
