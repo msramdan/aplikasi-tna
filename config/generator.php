@@ -109,128 +109,135 @@ return [
      * This code below always changes when you use a generator and maybe you must lint or format the code.
      */
     'sidebars' => [
-        [
-            'header' => 'Master',
-            'permissions' => [
-                'setting view',
-                'role & permission view',
-                'user view',
-                'setting app view',
-                'campus view',
-                'ruang kelas view',
-                'asrama view',
-                'kompetensi view',
-                'kota view'
-            ],
-            'menus' => [
-                [
-                    'title' => 'Master Data',
-                    'icon' => '<i data-feather="list"></i>',
-                    'route' => null,
-                    'uri' => [
-                        'kompetensi*',
-                        'kota*'
+    [
+        'header' => 'Master',
+        'permissions' => [
+            'setting view',
+            'role & permission view',
+            'user view',
+            'setting app view',
+            'campus view',
+            'ruang kelas view',
+            'asrama view',
+            'kompetensi view',
+            'kota view',
+            'lokasi view'
+        ],
+        'menus' => [
+            [
+                'title' => 'Master Data',
+                'icon' => '<i data-feather="list"></i>',
+                'route' => null,
+                'uri' => [
+                    'kompetensi*',
+                    'kota*'
+                ],
+                'permissions' => [
+                    'kompetensi view',
+                    'kota view',
+                    'lokasi view'
+                ],
+                'submenus' => [
+                    [
+                        'title' => 'Kamus Kompetensi',
+                        'route' => '/kompetensi',
+                        'permission' => 'kompetensi view'
                     ],
-                    'permissions' => [
-                        'kompetensi view',
-                        'kota view'
+                    [
+                        'title' => 'Daftar kota',
+                        'route' => '/kota',
+                        'permission' => 'kota view'
                     ],
-                    'submenus' => [
-                        [
-                            'title' => 'Kamus Kompetensi',
-                            'route' => '/kompetensi',
-                            'permission' => 'kompetensi view'
-                        ],
-                        [
-                            'title' => 'Daftar kota',
-                            'route' => '/kota',
-                            'permission' => 'kota view'
-                        ]
+                    [
+                        'title' => 'lokasi',
+                        'route' => '/lokasi',
+                        'permission' => 'lokasi view'
                     ]
                 ]
             ]
+        ]
+    ],
+    [
+        'header' => 'Kalender Pembelajaran',
+        'permissions' => [
+            'kalender pembelajaran view'
         ],
-        [
-            'header' => 'Kalender Pembelajaran',
-            'permissions' => [
-                'kalender pembelajaran view'
-            ],
-            'menus' => [
-                [
-                    'title' => 'Kalender Pembelajaran',
-                    'icon' => '<i data-feather="calendar"></i>',
-                    'route' => '/kalender-pembelajaran',
-                    'permission' => 'kalender pembelajaran view',
-                    'permissions' => [],
-                    'submenus' => []
-                ]
+        'menus' => [
+            [
+                'title' => 'Kalender Pembelajaran',
+                'icon' => '<i data-feather="calendar"></i>',
+                'route' => '/kalender-pembelajaran',
+                'permission' => 'kalender pembelajaran view',
+                'permissions' => [],
+                'submenus' => []
             ]
+        ]
+    ],
+    [
+        'header' => 'Reporting',
+        'permissions' => [
+            'reporting view'
         ],
-        [
-            'header' => 'Reporting',
-            'permissions' => [
-                'reporting view'
-            ],
-            'menus' => [
-                [
-                    'title' => 'Reporting',
-                    'icon' => '<i data-feather="book"></i>',
-                    'route' => '/reporting',
-                    'permission' => 'reporting view',
-                    'permissions' => [],
-                    'submenus' => []
-                ]
+        'menus' => [
+            [
+                'title' => 'Reporting',
+                'icon' => '<i data-feather="book"></i>',
+                'route' => '/reporting',
+                'permission' => 'reporting view',
+                'permissions' => [],
+                'submenus' => []
             ]
+        ]
+    ],
+    [
+        'header' => 'Utilities',
+        'permissions' => [
+            'setting view',
+            'role & permission view',
+            'user view',
+            'setting app view'
         ],
-        [
-            'header' => 'Utilities',
-            'permissions' => [
-                'setting view',
-                'role & permission view',
-                'user view',
-                'setting app view'
-            ],
-            'menus' => [
-                [
-                    'title' => 'Utilities',
-                    'icon' => '<i data-feather="settings"></i>',
-                    'route' => null,
-                    'uri' => [
-                        'settings*',
-                        'users*',
-                        'roles*',
-                        'setting-apps*'
+        'menus' => [
+            [
+                'title' => 'Utilities',
+                'icon' => '<i data-feather="settings"></i>',
+                'route' => null,
+                'uri' => [
+                    'settings*',
+                    'users*',
+                    'roles*',
+                    'setting-apps*'
+                ],
+                'permissions' => [
+                    'setting view',
+                    'role & permission view',
+                    'user view',
+                    'setting app view'
+                ],
+                'submenus' => [
+                    [
+                        'title' => 'Settings App',
+                        'route' => '/settings',
+                        'permission' => 'setting view'
                     ],
-                    'permissions' => [
-                        'setting view',
-                        'role & permission view',
-                        'user view',
-                        'setting app view'
+                    [
+                        'title' => 'Users',
+                        'route' => '/users',
+                        'permission' => 'user view'
                     ],
-                    'submenus' => [
-                        [
-                            'title' => 'Settings App',
-                            'route' => '/settings',
-                            'permission' => 'setting view'
-                        ],
-                        [
-                            'title' => 'Users',
-                            'route' => '/users',
-                            'permission' => 'user view'
-                        ],
-                        [
-                            'title' => 'Roles & permissions',
-                            'route' => '/roles',
-                            'permission' => 'role & permission view'
-                        ],
-                        [
-                            'title' => 'Setting Apps',
-                            'route' => '/setting-apps',
-                            'permission' => 'setting app view'
-                        ]
+                    [
+                        'title' => 'Roles & permissions',
+                        'route' => '/roles',
+                        'permission' => 'role & permission view'
+                    ],
+                    [
+                        'title' => 'Setting Apps',
+                        'route' => '/setting-apps',
+                        'permission' => 'setting app view'
                     ]
                 ]
             ]
         ]
     ]
+]
 ];

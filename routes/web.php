@@ -32,3 +32,5 @@ Route::controller(App\Http\Controllers\KompetensiController::class)->group(funct
 Route::resource('kalender-pembelajaran', App\Http\Controllers\KalenderPembelajaranController::class)->middleware('auth');
 Route::resource('reporting', App\Http\Controllers\ReportingController::class)->middleware('auth');
 Route::resource('kota', App\Http\Controllers\KotaController::class)->middleware('auth');
+
+Route::resource('lokasi', App\Http\Controllers\LokasiController::class)->middleware('auth');

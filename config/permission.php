@@ -186,5 +186,5 @@ return [
         ['group' => 'kalender pembelajaran', 'access' => ['kalender pembelajaran view', 'kalender pembelajaran create', 'kalender pembelajaran edit', 'kalender pembelajaran delete']],
         ['group' => 'reporting', 'access' => ['reporting view', 'reporting create', 'reporting edit', 'reporting delete']],
         ['group' => 'kota', 'access' => ['kota view', 'kota create', 'kota edit', 'kota delete']],
-    ],
-];
+  ['group' => 'lokasi', 'access' => ['lokasi view', 'lokasi create', 'lokasi edit', 'lokasi delete']],
+		],];

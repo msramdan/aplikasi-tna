@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\Campus;
+use App\Models\Kota;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Permission\Models\Role;
@@ -34,21 +34,12 @@ class ViewServiceProvider extends ServiceProvider
                 $data
             );
         });
-        View::composer(['ruang-kelas.create', 'ruang-kelas.edit'], function ($view) {
-            $data = Campus::select('id', 'nama_kampus')->get();
+        View::composer(['lokasi.create', 'lokasi.edit'], function ($view) {
+            $data = Kota::select('id', 'nama_kota')->get();
             return $view->with(
-                'campuses',
+                'kotas',
                 $data
             );
         });
-
-        View::composer(['asrama.create', 'asrama.edit'], function ($view) {
-            $data = Campus::select('id', 'nama_kampus')->get();
-            return $view->with(
-                'campuses',
-                $data
-            );
-        });
-
     }
 }
