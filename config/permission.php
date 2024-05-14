@@ -189,5 +189,6 @@ return [
         ['group' => 'lokasi', 'access' => ['lokasi view', 'lokasi create', 'lokasi edit', 'lokasi delete']],
         ['group' => 'ruang kelass', 'access' => ['ruang kelas view', 'ruang kelas create', 'ruang kelas edit', 'ruang kelas delete']],
         ['group' => 'asrama', 'access' => ['asrama view', 'asrama create', 'asrama edit', 'asrama delete']],
+        ['group' => 'topik', 'access' => ['topik view', 'topik create', 'topik edit', 'topik delete']],
     ],
 ];

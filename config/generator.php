@@ -116,7 +116,8 @@ return [
             'kota view',
             'lokasi view',
             'ruang kelas view',
-            'asrama view'
+            'asrama view',
+            'topik view'
         ],
         'menus' => [
             [
@@ -127,20 +128,27 @@ return [
                     'kompetensi*',
                     'kota*',
                     'lokasi*',
-                    'ruang-kelas*'
+                    'ruang-kelas*',
+                    'topik*'
                 ],
                 'permissions' => [
                     'kompetensi view',
                     'kota view',
                     'lokasi view',
                     'ruang kelas view',
-                    'asrama view'
+                    'asrama view',
+                    'topik view'
                 ],
                 'submenus' => [
                     [
                         'title' => 'Kamus Kompetensi',
                         'route' => '/kompetensi',
                         'permission' => 'kompetensi view'
+                    ],
+                    [
+                        'title' => 'Topik pembelajaran',
+                        'route' => '/topik',
+                        'permission' => 'topik view'
                     ],
                     [
                         'title' => 'Daftar kota',
