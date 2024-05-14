@@ -3,9 +3,11 @@
 namespace App\Providers;
 
 use App\Models\Kota;
+use App\Models\Lokasi;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Permission\Models\Role;
+
 
 
 class ViewServiceProvider extends ServiceProvider
@@ -38,6 +40,14 @@ class ViewServiceProvider extends ServiceProvider
             $data = Kota::select('id', 'nama_kota')->get();
             return $view->with(
                 'kotas',
+                $data
+            );
+        });
+
+        View::composer(['ruang-kelas.create', 'ruang-kelas.edit'], function ($view) {
+            $data = Lokasi::select('id', 'nama_lokasi')->get();
+            return $view->with(
+                'lokasis',
                 $data
             );
         });

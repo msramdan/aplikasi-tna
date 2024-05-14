@@ -1,13 +1,14 @@
 <div class="row mb-2">
     <div class="col-md-6 mb-2">
         <label for="kota-id">{{ __('Kota') }}</label>
-        <select class="form-control js-example-basic-multiple @error('kota_id') is-invalid @enderror" name="kota_id" id="kota-id" required>
+        <select class="form-control js-example-basic-multiple @error('kota_id') is-invalid @enderror" name="kota_id"
+            id="kota-id" required>
             <option value="" selected disabled>-- {{ __('Select kota') }} --</option>
 
             @foreach ($kotas as $kotum)
                 <option value="{{ $kotum->id }}"
                     {{ isset($lokasi) && $lokasi->kota_id == $kotum->id ? 'selected' : (old('kota_id') == $kotum->id ? 'selected' : '') }}>
-                    {{ $kotum->id }}
+                    {{ $kotum->nama_kota }}
                 </option>
             @endforeach
         </select>
@@ -20,7 +21,8 @@
 
     <div class="col-md-6 mb-2">
         <label for="type">{{ __('Type') }}</label>
-        <select class="form-control js-example-basic-multiple @error('type') is-invalid @enderror" name="type" id="type" required>
+        <select class="form-control js-example-basic-multiple @error('type') is-invalid @enderror" name="type"
+            id="type" required>
             <option value="" selected disabled>-- {{ __('Select type') }} --</option>
             <option value="Kampus"
                 {{ isset($lokasi) && $lokasi->type == 'Kampus' ? 'selected' : (old('type') == 'Kampus' ? 'selected' : '') }}>

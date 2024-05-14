@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateLokasiRequest extends FormRequest
+class UpdateRuangKelaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,11 @@ class UpdateLokasiRequest extends FormRequest
     public function rules()
     {
         return [
-            'kota_id' => 'required|exists:App\models\kota,id',
-			'type' => 'required|in:Kampus,Hotel',
-			'nama_lokasi' => 'required|string|max:250',
+            'nama_kelas' => 'required|string|max:150',
+			'lokasi_id' => 'required|exists:App\Models\Lokasi,id',
+			'kuota' => 'required|numeric',
+			'status_ruang_kelas' => 'required|in:Available,Not available',
+			'keterangan' => 'required|string',
         ];
     }
 }

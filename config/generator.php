@@ -121,7 +121,8 @@ return [
             'asrama view',
             'kompetensi view',
             'kota view',
-            'lokasi view'
+            'lokasi view',
+            'ruang kelas view'
         ],
         'menus' => [
             [
@@ -130,12 +131,15 @@ return [
                 'route' => null,
                 'uri' => [
                     'kompetensi*',
-                    'kota*'
+                    'kota*',
+                    'lokasi*',
+                    'ruang-kelas*'
                 ],
                 'permissions' => [
                     'kompetensi view',
                     'kota view',
-                    'lokasi view'
+                    'lokasi view',
+                    'ruang kelas view'
                 ],
                 'submenus' => [
                     [
@@ -149,9 +153,14 @@ return [
                         'permission' => 'kota view'
                     ],
                     [
-                        'title' => 'lokasi',
+                        'title' => 'Lokasi',
                         'route' => '/lokasi',
                         'permission' => 'lokasi view'
+                    ],
+                    [
+                        'title' => 'Ruang kelas',
+                        'route' => '/ruang-kelas',
+                        'permission' => 'ruang kelas view'
                     ]
                 ]
             ]

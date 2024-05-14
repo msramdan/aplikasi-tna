@@ -54,7 +54,7 @@
                                             <div class="flex-grow-1 overflow-hidden">
                                                 <p class="text-uppercase fw-medium text-muted text-truncate mb-0">
                                                     <a href="" style="color: #A8AAB5" role="button"
-                                                        id="btn_equipment_modal">Total ruang kelas</a>
+                                                        id="btn_equipment_modal">Total ruang kelass</a>
                                                 </p>
                                             </div>
                                         </div>
@@ -180,13 +180,13 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- grafik ruang kelas dan Asrama --}}
+                        {{-- grafik ruang kelass dan Asrama --}}
                         <div class="row">
                             <div class="col-xl-6 col-md-6">
                                 <div class="card" style="height: 450px">
                                     <div class="card-header align-items-center d-flex">
                                         <h4 class="card-title mb-0 flex-grow-1">
-                                            Status ruang kelas berdasarkan status
+                                            Status ruang kelass berdasarkan status
                                         </h4>
                                     </div>
 

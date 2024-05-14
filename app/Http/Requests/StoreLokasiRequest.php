@@ -24,7 +24,7 @@ class StoreLokasiRequest extends FormRequest
     public function rules()
     {
         return [
-            'kota_id' => 'required|exists:App\Models\Kotum,id',
+            'kota_id' => 'required|exists:App\models\kota,id',
 			'type' => 'required|in:Kampus,Hotel',
 			'nama_lokasi' => 'required|string|max:250',
         ];
