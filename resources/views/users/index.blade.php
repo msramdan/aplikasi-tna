@@ -41,7 +41,7 @@
                                             <th>{{ trans('utilities/users/index.name') }}</th>
                                             <th>{{ trans('utilities/users/index.role') }}</th>
                                             <th>{{ trans('utilities/users/index.email') }}</th>
-                                            <th>{{ trans('utilities/users/index.action') }}</th>
+                                            <th>{{ __('Action') }}</th>
                                         </tr>
                                     </thead>
                                 </table>

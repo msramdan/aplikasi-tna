@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('Roles'))
+@section('title', __('Jadwal Kap Tahunan'))
 
 @section('content')
     <div class="page-content">
@@ -8,12 +8,11 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">{{ trans('utilities/rolepermission/index.head') }}</h4>
+                        <h4 class="mb-sm-0">{{ __('Jadwal Kap Tahunan') }}</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">
-                                    {{ trans('utilities/rolepermission/index.head') }}</li>
+                                <li class="breadcrumb-item active">{{ __('Jadwal Kap Tahunan') }}</li>
                             </ol>
                         </div>
 
@@ -21,21 +20,24 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-sm-12">
                     <div class="card">
                         <div class="card-header">
-                            @can('role & permission view')
-                                <a href="{{ route('roles.create') }}" class="btn btn-md btn-primary"> <i
-                                        class="mdi mdi-plus"></i> {{ trans('utilities/rolepermission/index.create') }}</a>
+                            @can('jadwal kap tahunan create')
+                                <a href="{{ route('jadwal-kap-tahunans.create') }}" class="btn btn-md btn-primary"> <i
+                                        class="mdi mdi-plus"></i> {{ __('Create a new jadwal kap tahunan') }}</a>
                             @endcan
                         </div>
+
                         <div class="card-body">
                             <div class="table-responsive p-1">
-                                <table class="table table-striped" id="data-table" width="100%">
+                                <table class="table table-striped" id="data-table">
                                     <thead class="table-dark">
                                         <tr>
                                             <th>#</th>
-                                            <th>{{ trans('utilities/rolepermission/index.name') }}</th>
+                                            <th>{{ __('Tahun') }}</th>
+                                            <th>{{ __('Tanggal Mulai') }}</th>
+                                            <th>{{ __('Tanggal Selesai') }}</th>
                                             <th>{{ __('Action') }}</th>
                                         </tr>
                                     </thead>
@@ -45,20 +47,34 @@
                     </div>
                 </div>
             </div>
-            </section>
         </div>
-    @endsection
-    @push('js')
-        <script>
-            let columns = [{
+    </div>
+@endsection
+
+
+@push('js')
+    <script>
+        $('#data-table').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('jadwal-kap-tahunans.index') }}",
+            columns: [{
                     data: 'DT_RowIndex',
                     name: 'DT_RowIndex',
                     orderable: false,
                     searchable: false
                 },
                 {
-                    data: 'name',
-                    name: 'name'
+                    data: 'tahun',
+                    name: 'tahun',
+                },
+                {
+                    data: 'tanggal_mulai',
+                    name: 'tanggal_mulai',
+                },
+                {
+                    data: 'tanggal_selesai',
+                    name: 'tanggal_selesai',
                 },
                 {
                     data: 'action',
@@ -66,20 +82,7 @@
                     orderable: false,
                     searchable: false
                 }
-            ];
-            var table = $('#data-table').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: {
-                    url: "{{ route('roles.index') }}",
-                    data: function(s) {
-                        s.hospital_id = $('select[name=hospital_id] option').filter(':selected').val()
-                    }
-                },
-                columns: columns
-            })
-            $('#hospital_id').change(function() {
-                table.draw();
-            })
-        </script>
-    @endpush
+            ],
+        });
+    </script>
+@endpush

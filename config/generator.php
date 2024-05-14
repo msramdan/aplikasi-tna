@@ -109,152 +109,160 @@ return [
      * This code below always changes when you use a generator and maybe you must lint or format the code.
      */
     'sidebars' => [
-    [
-        'header' => 'Master',
-        'permissions' => [
-            'kompetensi view',
-            'kota view',
-            'lokasi view',
-            'ruang kelas view',
-            'asrama view',
-            'topik view'
-        ],
-        'menus' => [
-            [
-                'title' => 'Master Data',
-                'icon' => '<i data-feather="list"></i>',
-                'route' => null,
-                'uri' => [
-                    'kompetensi*',
-                    'kota*',
-                    'lokasi*',
-                    'ruang-kelas*',
-                    'topik*'
-                ],
-                'permissions' => [
-                    'kompetensi view',
-                    'kota view',
-                    'lokasi view',
-                    'ruang kelas view',
-                    'asrama view',
-                    'topik view'
-                ],
-                'submenus' => [
-                    [
-                        'title' => 'Kamus Kompetensi',
-                        'route' => '/kompetensi',
-                        'permission' => 'kompetensi view'
+        [
+            'header' => 'Master',
+            'permissions' => [
+                'kompetensi view',
+                'kota view',
+                'lokasi view',
+                'ruang kelas view',
+                'asrama view',
+                'topik view'
+            ],
+            'menus' => [
+                [
+                    'title' => 'Master Data',
+                    'icon' => '<i data-feather="list"></i>',
+                    'route' => null,
+                    'uri' => [
+                        'kompetensi*',
+                        'kota*',
+                        'lokasi*',
+                        'ruang-kelas*',
+                        'topik*'
                     ],
-                    [
-                        'title' => 'Topik pembelajaran',
-                        'route' => '/topik',
-                        'permission' => 'topik view'
+                    'permissions' => [
+                        'kompetensi view',
+                        'kota view',
+                        'lokasi view',
+                        'ruang kelas view',
+                        'asrama view',
+                        'topik view'
                     ],
-                    [
-                        'title' => 'Daftar kota',
-                        'route' => '/kota',
-                        'permission' => 'kota view'
-                    ],
-                    [
-                        'title' => 'Lokasi',
-                        'route' => '/lokasi',
-                        'permission' => 'lokasi view'
-                    ],
-                    [
-                        'title' => 'Ruang kelas',
-                        'route' => '/ruang-kelas',
-                        'permission' => 'ruang kelas view'
-                    ],
-                    [
-                        'title' => 'Asrama',
-                        'route' => '/asrama',
-                        'permission' => 'asrama view'
+                    'submenus' => [
+                        [
+                            'title' => 'Kamus Kompetensi',
+                            'route' => '/kompetensi',
+                            'permission' => 'kompetensi view'
+                        ],
+                        [
+                            'title' => 'Topik pembelajaran',
+                            'route' => '/topik',
+                            'permission' => 'topik view'
+                        ],
+                        [
+                            'title' => 'Daftar kota',
+                            'route' => '/kota',
+                            'permission' => 'kota view'
+                        ],
+                        [
+                            'title' => 'Lokasi',
+                            'route' => '/lokasi',
+                            'permission' => 'lokasi view'
+                        ],
+                        [
+                            'title' => 'Ruang kelas',
+                            'route' => '/ruang-kelas',
+                            'permission' => 'ruang kelas view'
+                        ],
+                        [
+                            'title' => 'Asrama',
+                            'route' => '/asrama',
+                            'permission' => 'asrama view'
+                        ]
                     ]
                 ]
             ]
-        ]
-    ],
-    [
-        'header' => 'Kalender Pembelajaran',
-        'permissions' => [
-            'kalender pembelajaran view'
         ],
-        'menus' => [
-            [
-                'title' => 'Kalender Pembelajaran',
-                'icon' => '<i data-feather="calendar"></i>',
-                'route' => '/kalender-pembelajaran',
-                'permission' => 'kalender pembelajaran view',
-                'permissions' => [],
-                'submenus' => []
+        [
+            'header' => 'Kalender Pembelajaran',
+            'permissions' => [
+                'kalender pembelajaran view'
+            ],
+            'menus' => [
+                [
+                    'title' => 'Kalender Pembelajaran',
+                    'icon' => '<i data-feather="calendar"></i>',
+                    'route' => '/kalender-pembelajaran',
+                    'permission' => 'kalender pembelajaran view',
+                    'permissions' => [],
+                    'submenus' => []
+                ]
             ]
-        ]
-    ],
-    [
-        'header' => 'Reporting',
-        'permissions' => [
-            'reporting view'
         ],
-        'menus' => [
-            [
-                'title' => 'Reporting',
-                'icon' => '<i data-feather="book"></i>',
-                'route' => '/reporting',
-                'permission' => 'reporting view',
-                'permissions' => [],
-                'submenus' => []
+        [
+            'header' => 'Reporting',
+            'permissions' => [
+                'reporting view'
+            ],
+            'menus' => [
+                [
+                    'title' => 'Reporting',
+                    'icon' => '<i data-feather="book"></i>',
+                    'route' => '/reporting',
+                    'permission' => 'reporting view',
+                    'permissions' => [],
+                    'submenus' => []
+                ]
             ]
-        ]
-    ],
-    [
-        'header' => 'Utilities',
-        'permissions' => [
-            'setting view',
-            'role & permission view',
-            'user view',
-            'setting app view'
         ],
-        'menus' => [
-            [
-                'title' => 'Utilities',
-                'icon' => '<i data-feather="settings"></i>',
-                'route' => null,
-                'uri' => [
-                    'settings*',
-                    'users*',
-                    'roles*',
-                    'setting-apps*'
-                ],
-                'permissions' => [
-                    'setting view',
-                    'role & permission view',
-                    'user view',
-                    'setting app view'
-                ],
-                'submenus' => [
-                    [
-                        'title' => 'Settings App',
-                        'route' => '/settings',
-                        'permission' => 'setting view'
+        [
+            'header' => 'Utilities',
+            'permissions' => [
+                'setting view',
+                'role & permission view',
+                'user view',
+                'setting app view',
+                'jadwal kap tahunan view'
+            ],
+            'menus' => [
+                [
+                    'title' => 'Utilities',
+                    'icon' => '<i data-feather="settings"></i>',
+                    'route' => null,
+                    'uri' => [
+                        'settings*',
+                        'users*',
+                        'roles*',
+                        'setting-apps*',
+                        'jadwal-kap-tahunans*'
                     ],
-                    [
-                        'title' => 'Users',
-                        'route' => '/users',
-                        'permission' => 'user view'
+                    'permissions' => [
+                        'setting view',
+                        'role & permission view',
+                        'user view',
+                        'setting app view',
+                        'jadwal kap tahunan view'
                     ],
-                    [
-                        'title' => 'Roles & permissions',
-                        'route' => '/roles',
-                        'permission' => 'role & permission view'
-                    ],
-                    [
-                        'title' => 'Setting Apps',
-                        'route' => '/setting-apps',
-                        'permission' => 'setting app view'
+                    'submenus' => [
+                        [
+                            'title' => 'Settings App',
+                            'route' => '/settings',
+                            'permission' => 'setting view'
+                        ],
+                        [
+                            'title' => 'Users',
+                            'route' => '/users',
+                            'permission' => 'user view'
+                        ],
+                        [
+                            'title' => 'Roles & permissions',
+                            'route' => '/roles',
+                            'permission' => 'role & permission view'
+                        ],
+                        [
+                            'title' => 'Jadwal KAP Tahunan',
+                            'route' => '/jadwal-kap-tahunans',
+                            'permission' => 'jadwal kap tahunan view'
+                        ],
+                        [
+                            'title' => 'Setting Apps',
+                            'route' => '/setting-apps',
+                            'permission' => 'setting app view'
+                        ]
                     ]
                 ]
             ]
         ]
     ]
-]
 ];
