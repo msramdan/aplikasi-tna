@@ -22,9 +22,6 @@ Route::get('/dashboard', function () {
     return redirect()->route('dashboard');
 });
 
-Route::resource('campuses', App\Http\Controllers\CampusController::class)->middleware('auth');
-Route::resource('ruang-kelas', App\Http\Controllers\RuangKelasController::class)->middleware('auth');
-Route::resource('asrama', App\Http\Controllers\AsramaController::class)->middleware('auth');
 Route::resource('kompetensi', App\Http\Controllers\KompetensiController::class)->middleware('auth');
 Route::controller(App\Http\Controllers\KompetensiController::class)->group(function () {
     Route::get('/detailKompetensi', 'detailKompetensi')->name('detailKompetensi');
@@ -34,3 +31,4 @@ Route::controller(App\Http\Controllers\KompetensiController::class)->group(funct
 
 Route::resource('kalender-pembelajaran', App\Http\Controllers\KalenderPembelajaranController::class)->middleware('auth');
 Route::resource('reporting', App\Http\Controllers\ReportingController::class)->middleware('auth');
+Route::resource('kota', App\Http\Controllers\KotaController::class)->middleware('auth');

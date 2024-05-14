@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCampusRequest extends FormRequest
+class StorekotaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class StoreCampusRequest extends FormRequest
     public function rules()
     {
         return [
-            'nama_kampus' => 'required|string|max:150',
+            'nama_kota' => 'required|string|max:150',
         ];
     }
 }

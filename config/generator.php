@@ -119,7 +119,8 @@ return [
                 'campus view',
                 'ruang kelas view',
                 'asrama view',
-                'kompetensi view'
+                'kompetensi view',
+                'kota view'
             ],
             'menus' => [
                 [
@@ -127,16 +128,12 @@ return [
                     'icon' => '<i data-feather="list"></i>',
                     'route' => null,
                     'uri' => [
-                        'campuses*',
-                        'ruang-kelas*',
-                        'asrama*',
-                        'kompetensi*'
+                        'kompetensi*',
+                        'kota*'
                     ],
                     'permissions' => [
-                        'campus view',
-                        'ruang kelas view',
-                        'asrama view',
-                        'kompetensi view'
+                        'kompetensi view',
+                        'kota view'
                     ],
                     'submenus' => [
                         [
@@ -145,19 +142,9 @@ return [
                             'permission' => 'kompetensi view'
                         ],
                         [
-                            'title' => 'Kampus',
-                            'route' => '/campuses',
-                            'permission' => 'campus view'
-                        ],
-                        [
-                            'title' => 'Ruang Kelas',
-                            'route' => '/ruang-kelas',
-                            'permission' => 'ruang kelas view'
-                        ],
-                        [
-                            'title' => 'Asrama',
-                            'route' => '/asrama',
-                            'permission' => 'asrama view'
+                            'title' => 'Daftar kota',
+                            'route' => '/kota',
+                            'permission' => 'kota view'
                         ]
                     ]
                 ]

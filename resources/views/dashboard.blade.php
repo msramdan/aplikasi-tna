@@ -133,7 +133,7 @@
                                     <div class="card-header align-items-center d-flex">
                                         <h4 class="card-title mb-0 flex-grow-1">
                                             <a href="" role="button" class="text-dark"
-                                                id="btn_wo_by_status_modal">Usulan pelatihan berdasarkan Sumber data</a>
+                                                id="btn_wo_by_status_modal">Usulan pelatihan berdasarkan sumber dana</a>
                                         </h4>
                                     </div>
 
@@ -150,8 +150,7 @@
                                     <div class="card-header align-items-center d-flex">
                                         <h4 class="card-title mb-0 flex-grow-1">
                                             <a href="" role="button" class="text-dark"
-                                                id="btn_wo_by_category_modal">Usulan pelatihan berdasarkan BPKP vs APIP
-                                                Lainya</a>
+                                                id="btn_wo_by_category_modal">Usulan pelatihan berdasarkan peserta</a>
                                         </h4>
                                     </div>
 

@@ -1,12 +1,12 @@
 <td>
-    @can('ruang kelas edit')
-        <a href="{{ route('ruang-kelas.edit', $model->id) }}" class="btn btn-success btn-sm">
+    @can('kota edit')
+        <a href="{{ route('kota.edit', $model->id) }}" class="btn btn-success btn-sm">
             <i class="mdi mdi-pencil"></i>
         </a>
     @endcan
 
-    @can('ruang kelas delete')
-        <form action="{{ route('ruang-kelas.destroy', $model->id) }}" method="post" class="d-inline"
+    @can('kota delete')
+        <form action="{{ route('kota.destroy', $model->id) }}" method="post" class="d-inline"
             onsubmit="return confirm('Are you sure to delete this record?')">
             @csrf
             @method('delete')

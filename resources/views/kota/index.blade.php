@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('Kampus'))
+@section('title', __('kota'))
 
 @section('content')
     <div class="page-content">
@@ -8,11 +8,11 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">{{ __('Kampus') }}</h4>
+                        <h4 class="mb-sm-0">{{ __('kota') }}</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
-                                <li class="breadcrumb-item active">{{ __('Kampus') }}</li>
+                                <li class="breadcrumb-item active">{{ __('kota') }}</li>
                             </ol>
                         </div>
 
@@ -23,9 +23,9 @@
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="card-header">
-                            @can('campus create')
-                                <a href="{{ route('campuses.create') }}" class="btn btn-md btn-primary"> <i
-                                        class="mdi mdi-plus"></i> {{ __('Create a new kampus') }}</a>
+                            @can('kota create')
+                                <a href="{{ route('kota.create') }}" class="btn btn-md btn-primary"> <i
+                                        class="mdi mdi-plus"></i> {{ __('Create a new kota') }}</a>
                             @endcan
                         </div>
 
@@ -35,7 +35,7 @@
                                     <thead class="table-dark">
                                         <tr>
                                             <th>#</th>
-                                            <th>{{ __('Nama Kampus') }}</th>
+                                            <th>{{ __('Nama Kota') }}</th>
                                             <th>{{ __('Action') }}</th>
                                         </tr>
                                     </thead>
@@ -55,7 +55,7 @@
         $('#data-table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('campuses.index') }}",
+            ajax: "{{ route('kota.index') }}",
             columns: [{
                     data: 'DT_RowIndex',
                     name: 'DT_RowIndex',
@@ -63,8 +63,8 @@
                     searchable: false
                 },
                 {
-                    data: 'nama_kampus',
-                    name: 'nama_kampus',
+                    data: 'nama_kota',
+                    name: 'nama_kota',
                 },
                 {
                     data: 'action',
