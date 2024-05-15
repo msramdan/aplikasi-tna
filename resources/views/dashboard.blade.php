@@ -29,14 +29,14 @@
                                             <div class="flex-grow-1 overflow-hidden">
                                                 <p class="text-uppercase fw-medium text-muted text-truncate mb-0">
                                                     <a href="" style="color: #A8AAB5" role="button"
-                                                        id="btn_work_order_modal">Total kampus</a>
+                                                        id="btn_work_order_modal">Total lokasi</a>
                                                 </p>
                                             </div>
                                         </div>
                                         <div class="d-flex align-items-end justify-content-between mt-4">
                                             <div>
                                                 <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value"
-                                                        data-target="100"></span></h4>
+                                                        data-target="{{ $totalLokasi }}"></span></h4>
                                             </div>
                                             <div class="avatar-sm flex-shrink-0">
                                                 <span class="avatar-title bg-warning rounded fs-3">
@@ -54,14 +54,14 @@
                                             <div class="flex-grow-1 overflow-hidden">
                                                 <p class="text-uppercase fw-medium text-muted text-truncate mb-0">
                                                     <a href="" style="color: #A8AAB5" role="button"
-                                                        id="btn_equipment_modal">Total ruang kelass</a>
+                                                        id="btn_equipment_modal">Total ruang kelas</a>
                                                 </p>
                                             </div>
                                         </div>
                                         <div class="d-flex align-items-end justify-content-between mt-4">
                                             <div>
                                                 <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value"
-                                                        data-target="100"></span></h4>
+                                                        data-target="{{ $totalKelas }}"></span></h4>
                                             </div>
                                             <div class="avatar-sm flex-shrink-0">
                                                 <span class="avatar-title bg-success rounded fs-3">
@@ -86,7 +86,7 @@
                                         <div class="d-flex align-items-end justify-content-between mt-4">
                                             <div>
                                                 <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value"
-                                                        data-target="100"></span>
+                                                        data-target="{{ $totalAsrama }}"></span>
                                                 </h4>
                                             </div>
                                             <div class="avatar-sm flex-shrink-0">
@@ -112,7 +112,7 @@
                                         <div class="d-flex align-items-end justify-content-between mt-4">
                                             <div>
                                                 <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value"
-                                                        data-target="100"></span>
+                                                        data-target="{{$totalUser}}"></span>
                                                 </h4>
                                             </div>
                                             <div class="avatar-sm flex-shrink-0">
