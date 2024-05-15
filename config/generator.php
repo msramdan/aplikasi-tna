@@ -129,7 +129,8 @@ return [
                         'kota*',
                         'lokasi*',
                         'ruang-kelas*',
-                        'topik*'
+                        'topik*',
+                        'asrama*'
                     ],
                     'permissions' => [
                         'kompetensi view',

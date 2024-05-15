@@ -23,6 +23,44 @@
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="input-group mb-4">
+                                        <select name="tahun" id="tahun" class="form-control select2-form">
+                                            @php
+                                                $startYear = 2023;
+                                                $currentYear = date('Y');
+                                                $endYear = $currentYear + 1;
+                                            @endphp
+                                            @foreach (range($startYear, $endYear) as $year)
+                                                <option value="{{ $year }}">
+                                                    {{ $year }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="input-group mb-4">
+                                        <select name="sumber_dana" id="sumber_dana" class="form-control select2-form">
+                                            <option value="">All sumber dana</option>
+                                            <option value="">RM</option>
+                                            <option value="">START</option>
+                                            <option value="">PNBP</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="input-group mb-4">
+                                        <select name="peserta" id="peserta" class="form-control select2-form">
+                                            <option value="">All peserta</option>
+                                            <option value="">BPKP</option>
+                                            <option value="">APIP</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
                         </div>
                     </div>
                 </div>
@@ -32,5 +70,4 @@
 @endsection
 
 @push('js')
-
 @endpush

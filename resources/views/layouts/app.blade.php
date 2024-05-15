@@ -21,7 +21,7 @@
                                 <span></span>
                             </span>
                         </button>
-                        <form class="app-search d-none d-md-block">
+                        {{-- <form class="app-search d-none d-md-block">
                             <div class="position-relative">
                                 <select class="form-select" aria-label="Default select example">
                                     <option value="2024">2024</option>
@@ -29,7 +29,7 @@
                                     <option value="2026">2026</option>
                                 </select>
                             </div>
-                        </form>
+                        </form> --}}
                     </div>
 
                     {{-- ramdan --}}

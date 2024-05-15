@@ -84,7 +84,7 @@
                                                     @enderror
                                                 </div>
 
-                                                <div class="mb-3">
+                                                {{-- <div class="mb-3">
                                                     <label class="form-label" style="margin-bottom: 4px"  for="password">Tahun</label>
                                                     <select class="form-select" id="year" name="year">
                                                         <option value="2024">2024</option>
@@ -94,7 +94,7 @@
                                                     @error('tahun')
                                                         <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
-                                                </div>
+                                                </div> --}}
 
 
                                                 <div class="mb-2">
