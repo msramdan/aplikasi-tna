@@ -51,17 +51,17 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Import Kompetensi</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Import Topik Pembelajaran</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form method="POST" action="{{ route('importKompetensi') }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('importTopik') }}" enctype="multipart/form-data">
                     <div class="modal-body">
                         @csrf
                         <div class="mb-3">
-                            <input type="file" class="form-control" id="import_kompetensi" name="import_kompetensi"
-                                aria-describedby="import_kompetensi" accept=".xlsx" required>
+                            <input type="file" class="form-control" id="import_topik" name="import_topik"
+                                aria-describedby="import_topik" accept=".xlsx" required>
                             <div id="downloadFormat" class="form-text"> <a
-                                    href="{{ asset('format_import/format_import_kompetensi.xlsx') }}"><i
+                                    href="{{ asset('format_import/format_import_topik_pembelajaran.xlsx') }}"><i
                                         class="fa fa-download" aria-hidden="true"></i> Unduh Format</a>
                             </div>
                         </div>
@@ -177,7 +177,7 @@
         });
 
         var exportData = function() {
-            var url = '/exportKompetensi';
+            var url = '/exportTopik';
             $.ajax({
                 url: url,
                 type: 'GET',
@@ -201,7 +201,7 @@
                 success: function(data) {
                     var link = document.createElement('a');
                     link.href = window.URL.createObjectURL(data);
-                    var nameFile = 'Kamus kompetensi.xlsx'
+                    var nameFile = 'Topik pembelajaran.xlsx'
                     console.log(nameFile)
                     link.download = nameFile;
                     link.click();

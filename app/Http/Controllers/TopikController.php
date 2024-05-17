@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Topik;
-use App\Http\Requests\{StoreTopikRequest, UpdateTopikRequest};
+use App\Http\Requests\{StoreTopikRequest, UpdateTopikRequest,ImportTopikRequest};
 use Yajra\DataTables\Facades\DataTables;
 use RealRashid\SweetAlert\Facades\Alert;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ExportTopikPembelajaran;
+use App\Imports\ImportTopik;
+
 
 class TopikController extends Controller
 {
@@ -121,5 +125,19 @@ class TopikController extends Controller
             Alert::toast('The topik cant be deleted because its related to another table.', 'error');
             return redirect()->route('topik.index');
         }
+    }
+
+    public function exportTopik()
+    {
+        $date = date('d-m-Y');
+        $nameFile = 'Topik pembelajaran ' . $date;
+        return Excel::download(new ExportTopikPembelajaran(), $nameFile . '.xlsx');
+    }
+
+    public function importTopik(ImportTopikRequest $request)
+    {
+        Excel::import(new ImportTopik, $request->file('import_topik'));
+        Alert::toast('Topik pembelajaran has been successfully imported.', 'success');
+        return back();
     }
 }

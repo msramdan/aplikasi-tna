@@ -36,5 +36,8 @@ Route::resource('lokasi', App\Http\Controllers\LokasiController::class)->middlew
 Route::resource('ruang-kelas', App\Http\Controllers\RuangKelasController::class)->middleware('auth');
 Route::resource('asrama', App\Http\Controllers\AsramaController::class)->middleware('auth');
 Route::resource('topik', App\Http\Controllers\TopikController::class)->middleware('auth');
-
+Route::controller(App\Http\Controllers\TopikController::class)->group(function () {
+    Route::get('/exportTopik', 'exportTopik')->name('exportTopik');
+    Route::post('/importTopik', 'importTopik')->name('importTopik');
+});
 Route::resource('jadwal-kap-tahunans', App\Http\Controllers\JadwalKapTahunanController::class)->middleware('auth');
