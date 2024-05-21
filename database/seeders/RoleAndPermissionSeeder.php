@@ -32,5 +32,33 @@ class RoleAndPermissionSeeder extends Seeder
         $userAdmin = User::first();
         $userAdmin->assignRole('Super Admin');
         $roleAdmin->givePermissionTo(Permission::all());
+
+        // Admin Unit
+        $roleAdminUnit = Role::create([
+            'name' => 'Admin Unit'
+        ]);
+        $permissionAdminUnit = [
+            'kalender pembelajaran view',
+            'kalender pembelajaran create',
+            'kalender pembelajaran edit',
+            'kalender pembelajaran delete'
+        ];
+        foreach ($permissionAdminUnit as $permission) {
+            $roleAdminUnit->givePermissionTo($permission);
+        }
+
+        // User biasa
+        $roleUser = Role::create([
+            'name' => 'User'
+        ]);
+        $permissionUser = [
+            'kalender pembelajaran view',
+            'kalender pembelajaran create',
+            'kalender pembelajaran edit',
+            'kalender pembelajaran delete'
+        ];
+        foreach ($permissionUser as $permission) {
+            $roleUser->givePermissionTo($permission);
+        }
     }
 }
