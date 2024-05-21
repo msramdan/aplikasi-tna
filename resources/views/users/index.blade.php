@@ -24,13 +24,12 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
-                        <div class="card-header">
-                            @can('user create')
+                        @can('user create')
+                            <div class="card-header">
                                 <a href="{{ route('users.create') }}" class="btn btn-md btn-primary"> <i
                                         class="mdi mdi-plus"></i> {{ trans('utilities/users/index.create') }}</a>
-                            @endcan
-                        </div>
-
+                            </div>
+                        @endcan
                         <div class="card-body">
                             <div class="table-responsive p-1">
                                 <table class="table table-striped" id="data-table" width="100%">

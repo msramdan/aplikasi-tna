@@ -40,7 +40,8 @@
                                                                 design, easy for customization. Thanks very much! "</p>
                                                         </div>
                                                         <div class="carousel-item">
-                                                            <p class="fs-15 fst-italic">" The Application is really great"</p>
+                                                            <p class="fs-15 fst-italic">" The Application is really great"
+                                                            </p>
                                                         </div>
                                                         {{-- <div class="carousel-item">
                                                             <p class="fs-15 fst-italic">" Great! Clean code, clean
@@ -64,7 +65,8 @@
                                             <form class="user" method="POST" action="{{ route('login') }}">
                                                 @csrf
                                                 <div class="mb-2">
-                                                    <label for="email" style="margin-bottom: 4px" class="form-label">Email</label>
+                                                    <label for="email" style="margin-bottom: 4px"
+                                                        class="form-label">Email</label>
                                                     <input type="text"
                                                         class="form-control @error('email') is-invalid @enderror"
                                                         id="email" name="email"
@@ -75,7 +77,8 @@
                                                 </div>
 
                                                 <div class="mb-2">
-                                                    <label class="form-label" style="margin-bottom: 4px"  for="password">Password</label>
+                                                    <label class="form-label" style="margin-bottom: 4px"
+                                                        for="password">Password</label>
                                                     <input type="password"
                                                         class="form-control @error('password') is-invalid @enderror"
                                                         placeholder="Enter password" id="password" name="password">
@@ -107,11 +110,6 @@
                                                     @enderror
                                                 </div>
                                                 <div class="form-check ">
-                                                    <div class="float-end">
-                                                        <a href="{{ route('password.request') }}" class="text-muted">Forgot
-                                                            password?</a>
-                                                    </div>
-
                                                     <input class="form-check-input" type="checkbox" value=""
                                                         id="auth-remember-check" onclick="myFunction()">
                                                     <label class="form-check-label" for="auth-remember-check">Show

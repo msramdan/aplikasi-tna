@@ -23,12 +23,12 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
-                        <div class="card-header">
-                            @can('role & permission view')
+                        @can('role & permission create')
+                            <div class="card-header">
                                 <a href="{{ route('roles.create') }}" class="btn btn-md btn-primary"> <i
                                         class="mdi mdi-plus"></i> {{ trans('utilities/rolepermission/index.create') }}</a>
-                            @endcan
-                        </div>
+                            </div>
+                        @endcan
                         <div class="card-body">
                             <div class="table-responsive p-1">
                                 <table class="table table-striped" id="data-table" width="100%">

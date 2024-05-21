@@ -167,7 +167,7 @@ return [
             'group' => 'users',
             'access' => [
                 'user view',
-                'user create',
+                // 'user create',
                 'user edit',
                 'user delete',
             ]
@@ -176,7 +176,7 @@ return [
             'group' => 'roles & permissions',
             'access' => [
                 'role & permission view',
-                'role & permission create',
+                // 'role & permission create',
                 'role & permission edit',
                 'role & permission delete',
             ]
@@ -190,5 +190,6 @@ return [
         ['group' => 'ruang kelass', 'access' => ['ruang kelas view', 'ruang kelas create', 'ruang kelas edit', 'ruang kelas delete']],
         ['group' => 'asrama', 'access' => ['asrama view', 'asrama create', 'asrama edit', 'asrama delete']],
         ['group' => 'topik', 'access' => ['topik view', 'topik create', 'topik edit', 'topik delete']],
-  ['group' => 'jadwal kap tahunans', 'access' => ['jadwal kap tahunan view', 'jadwal kap tahunan create', 'jadwal kap tahunan edit', 'jadwal kap tahunan delete']], 
-		],];
+        ['group' => 'jadwal kap tahunans', 'access' => ['jadwal kap tahunan view', 'jadwal kap tahunan create', 'jadwal kap tahunan edit', 'jadwal kap tahunan delete']],
+    ],
+];
