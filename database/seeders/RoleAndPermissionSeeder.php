@@ -28,23 +28,20 @@ class RoleAndPermissionSeeder extends Seeder
                 Permission::create(['name' => $access]);
             }
         }
-
-        // $userAdmin = User::first();
-        // $userAdmin->assignRole('Super Admin');
-        // $roleAdmin->givePermissionTo(Permission::all());
+        $roleAdmin->givePermissionTo(Permission::all());
 
         // Admin Unit
         $roleAdminUnit = Role::create([
             'name' => 'Admin Unit'
         ]);
         $permissionAdminUnit = [
-            'kalender pembelajaran view',
-            'kalender pembelajaran create',
-            'kalender pembelajaran edit',
-            'kalender pembelajaran delete'
+            'reporting view',
+            'reporting create',
+            'reporting edit',
+            'reporting delete'
         ];
-        foreach ($permissionAdminUnit as $permission) {
-            $roleAdminUnit->givePermissionTo($permission);
+        foreach ($permissionAdminUnit as $x) {
+            $roleAdminUnit->givePermissionTo($x);
         }
 
         // User biasa
@@ -57,8 +54,8 @@ class RoleAndPermissionSeeder extends Seeder
             'kalender pembelajaran edit',
             'kalender pembelajaran delete'
         ];
-        foreach ($permissionUser as $permission) {
-            $roleUser->givePermissionTo($permission);
+        foreach ($permissionUser as $y) {
+            $roleUser->givePermissionTo($y);
         }
     }
 }

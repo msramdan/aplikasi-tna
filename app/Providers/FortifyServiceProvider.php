@@ -27,11 +27,6 @@ class FortifyServiceProvider extends ServiceProvider
         //
     }
 
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
     public function boot()
     {
         Fortify::authenticateUsing(function (Request $request) {
@@ -40,10 +35,12 @@ class FortifyServiceProvider extends ServiceProvider
                 'password' => 'required',
                 'g-recaptcha-response' => 'required|captcha',
             ]);
-            $response = Http::post('https://api-stara.bpkp.go.id/api/auth/login', [
-                'username' => 'Adi Lesmana',
-                'password' => 'GIACorpu@1326',
+            $endpointStara = config('stara.endpoint') . '/auth/login';
+            $response = Http::post($endpointStara, [
+                'username' => $request->username,
+                'password' => $request->password,
             ]);
+
             if ($response->successful()) {
                 $data = $response->json();
                 $user = User::where('user_nip', $data['data']['user_info']['user_nip'])->first();
@@ -72,7 +69,7 @@ class FortifyServiceProvider extends ServiceProvider
 
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
         RateLimiter::for('login', function (Request $request) {
-            return Limit::perMinute(5)->by($request->username . $request->ip());
+            return Limit::perMinute(10)->by($request->username . $request->ip());
         });
 
         Fortify::loginView(function () {
