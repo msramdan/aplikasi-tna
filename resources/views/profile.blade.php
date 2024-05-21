@@ -32,24 +32,9 @@
                                 enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
-
-                                <div class="form-group  mb-3">
-                                    <label for="email">{{ trans('profile.email') }}</label>
-                                    <input type="email" name="email"
-                                        class="form-control @error('email', 'updateProfileInformation') is-invalid @enderror"
-                                        id="email" placeholder="{{ trans('profile.email') }}"
-                                        value="{{ old('email') ?? auth()->user()->email }}" required>
-
-                                    @error('email', 'updateProfileInformation')
-                                        <span class="text-danger">
-                                            {{ $message }}
-                                        </span>
-                                    @enderror
-                                </div>
-
                                 <div class="form-group  mb-3">
                                     <label for="name">{{ trans('profile.name') }}</label>
-                                    <input type="text" name="name"
+                                    <input type="text" name="name" readonly
                                         class="form-control  @error('name', 'updateProfileInformation') is-invalid @enderror"
                                         id="name" placeholder="{{ trans('profile.name') }}"
                                         value="{{ old('name') ?? auth()->user()->name }}" required>
@@ -60,7 +45,20 @@
                                     @enderror
                                 </div>
 
+                                <div class="form-group  mb-3">
+                                    <label for="email">{{ trans('profile.email') }}</label>
+                                    <input type="email" name="email" readonly
+                                        class="form-control @error('email', 'updateProfileInformation') is-invalid @enderror"
+                                        id="email" placeholder="{{ trans('profile.email') }}"
+                                        value="{{ old('email') ?? auth()->user()->email }}" required>
 
+                                    @error('email', 'updateProfileInformation')
+                                        <span class="text-danger">
+                                            {{ $message }}
+                                        </span>
+                                    @enderror
+                                </div>
+{{--
                                 <div class="form-group  mb-3">
                                     <label for="no_hp">{{ trans('profile.phone') }}</label>
                                     <input type="text" name="no_hp"
@@ -72,18 +70,16 @@
                                             {{ $message }}
                                         </span>
                                     @enderror
-                                </div>
-
-
+                                </div> --}}
 
                                 <div class="row">
-                                    <div class="col-md-3">
+                                    <div class="col-md-3  text-center ">
                                         <div class="avatar avatar-xl mb-3">
                                             @if (auth()->user()->avatar == null)
-                                                <img src="https://www.gravatar.com/avatar/{{ md5(strtolower(trim(auth()->user()->email))) }}&s=500"
+                                                <img class="img-thumbnail" src="https://www.gravatar.com/avatar/{{ md5(strtolower(trim(auth()->user()->email))) }}&s=500"
                                                     alt="Avatar">
                                             @else
-                                                <img src="{{ asset('uploads/images/avatars/' . auth()->user()->avatar) }}"
+                                                <img class="img-thumbnail"  src="{{ asset('uploads/images/avatars/' . auth()->user()->avatar) }}"
                                                     alt="Avatar" style="width: 120px">
                                             @endif
                                         </div>
@@ -106,57 +102,6 @@
                                 </div>
 
                                 <button type="submit" class="btn btn-primary">{{ trans('profile.update') }}</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {{-- Password --}}
-            <div class="row">
-                <div class="col-md-3">
-                    <h4>{{ trans('profile.change-password') }}</h4>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <form method="POST" action="{{ route('user-password.update') }}">
-                                @csrf
-                                @method('put')
-                                <div class="form-group  mb-3">
-                                    <label for="password">{{ trans('profile.current-password') }}</label>
-                                    <input type="password" name="current_password"
-                                        class="form-control @error('current_password', 'updatePassword') is-invalid @enderror"
-                                        id="password" placeholder="{{ trans('profile.current-password') }}" required>
-                                    @error('current_password', 'updatePassword')
-                                        <span class="text-danger">
-                                            {{ $message }}
-                                        </span>
-                                    @enderror
-                                </div>
-
-                                <div class="form-group  mb-3">
-                                    <label for="password">{{ trans('profile.new-password') }}</label>
-                                    <input type="password" name="password"
-                                        class="form-control @error('password', 'updatePassword') is-invalid @enderror"
-                                        id="password" placeholder="{{ trans('profile.new-password') }}" required>
-                                    @error('password', 'updatePassword')
-                                        <span class="text-danger">
-                                            {{ $message }}
-                                        </span>
-                                    @enderror
-                                </div>
-
-                                <div class="form-group  mb-3">
-                                    <label for="password_confirmation">{{ trans('profile.confirm-password') }}</label>
-                                    <input type="password" class="form-control" id="password_confirmation"
-                                        name="password_confirmation" placeholder="{{ trans('profile.confirm-password') }}"
-                                        required>
-                                </div>
-
-                                <button type="submit"
-                                    class="btn btn-primary">{{ trans('profile.change-password') }}</button>
                             </form>
                         </div>
                     </div>
