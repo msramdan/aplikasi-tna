@@ -27,13 +27,11 @@ class SettingAppController extends Controller
     {
         $settingApp = SettingApp::findOrFail(1)->first();
         $users = User::orderBy('name', 'ASC')->get();
-
         return view('setting-apps.edit', compact('settingApp', 'users'));
     }
 
     public function update(Request $request, $id)
     {
-
         $setting_app = SettingApp::findOrFail($id);
         if ($request->file('logo') != null || $request->file('logo') != '') {
             Storage::disk('local')->delete('public/img/setting_app/' . $setting_app->logo);

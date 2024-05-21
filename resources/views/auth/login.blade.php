@@ -65,13 +65,12 @@
                                             <form class="user" method="POST" action="{{ route('login') }}">
                                                 @csrf
                                                 <div class="mb-2">
-                                                    <label for="email" style="margin-bottom: 4px"
-                                                        class="form-label">Email</label>
+                                                    <label for="username" style="margin-bottom: 4px"
+                                                        class="form-label">Username</label>
                                                     <input type="text"
-                                                        class="form-control @error('email') is-invalid @enderror"
-                                                        id="email" name="email"
-                                                        placeholder="Enter your email : admin@example.com">
-                                                    @error('email')
+                                                        class="form-control @error('username') is-invalid @enderror"
+                                                        id="username" name="username" placeholder="Enter your username">
+                                                    @error('username')
                                                         <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
@@ -99,15 +98,13 @@
                                                     @enderror
                                                 </div> --}}
 
-
                                                 <div class="mb-2">
                                                     {!! NoCaptcha::display() !!}
                                                     {!! NoCaptcha::renderJs() !!}
                                                     @error('g-recaptcha-response')
                                                         <span class="text-danger" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
+                                                            {{ $message }}
+                                                        @enderror
                                                 </div>
                                                 <div class="form-check ">
                                                     <input class="form-check-input" type="checkbox" value=""
