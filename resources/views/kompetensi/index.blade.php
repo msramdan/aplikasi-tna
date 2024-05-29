@@ -162,7 +162,7 @@
                                     <thead class="table-dark">
                                         <tr>
                                             <th>#</th>
-                                            <th>{{ __('Nama Kompetensi') }}</th>
+                                            <th>{{ __('Nama Kompetensi edit') }}</th>
                                             <th>{{ __('Deskripsi Kompetensi') }}</th>
                                             <th>{{ __('Action') }}</th>
                                         </tr>

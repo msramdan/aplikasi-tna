@@ -35,8 +35,8 @@
                                     <thead class="table-dark">
                                         <tr>
                                             <th>#</th>
-                                            <th>{{ __('Nama Asrama') }}</th>
-                                            <th>{{ __('Lokasi') }}</th>
+                                            <th>{{ trans('master-data/asrama/index.nama_asrama') }}</th>
+                                            <th>{{ trans('master-data/asrama/index.lokasi') }}</th>
                                             <th>{{ __('Kuota') }}</th>
                                             <th>{{ __('Starus Asrama') }}</th>
                                             <th>{{ __('Keterangan') }}</th>
