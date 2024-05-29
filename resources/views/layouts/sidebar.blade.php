@@ -46,7 +46,7 @@
                 </div>
             </li>
 
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link menu-link" href="#sidebarMultilevel" data-bs-toggle="collapse" role="button"
                     aria-expanded="false" aria-controls="sidebarMultilevel">
                     <i class="fa fa-tag"></i> <span data-key="t-multi-level">Setting Tagging</span>
@@ -55,8 +55,17 @@
                     <ul class="nav nav-sm flex-column">
 
                         <li class="nav-item">
+                            <a href="" class="nav-link" role="button"
+                                aria-expanded="false" aria-controls="sidebarApip" data-key="t-level-1.2"> Tag
+                                Pembelajaran & Kompetensi
+                            </a>
+                        </li>
+
+
+                        <li class="nav-item">
                             <a href="#sidebarBpkp" class="nav-link" data-bs-toggle="collapse" role="button"
-                                aria-expanded="false" aria-controls="sidebarBpkp" data-key="t-level-1.2"> BPKP
+                                aria-expanded="false" aria-controls="sidebarBpkp" data-key="t-level-1.2"> Tag
+                                Kompetensi - IK
                             </a>
                             <div class="collapse menu-dropdown" id="sidebarBpkp">
                                 <ul class="nav nav-sm flex-column">
@@ -141,15 +150,58 @@
 
                     </ul>
                 </div>
-            </li>
-
-
+            </li> --}}
 
             <li class="nav-item">
-                <a class="nav-link menu-link" href="{{ route('kalender-pembelajaran.index') }}">
-                    <i class="fa fa-calendar"></i> <span data-key="t-widgets">Kalender pembelejaran</span>
+                <a class="nav-link menu-link" href="#sidebarMultilevel" data-bs-toggle="collapse" role="button"
+                    aria-expanded="false" aria-controls="sidebarMultilevel">
+                    <i class="fa fa-tag"></i> <span data-key="t-multi-level">Setting Tagging</span>
                 </a>
+                <div class="collapse menu-dropdown" id="sidebarMultilevel">
+                    <ul class="nav nav-sm flex-column">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-key="t-level-1.1"> Tag Pembelajaran & Kompetensi
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#sidebarAccount" class="nav-link" data-bs-toggle="collapse" role="button"
+                                aria-expanded="false" aria-controls="sidebarAccount" data-key="t-level-1.2"> Tag
+                                Kompetensi & IK
+                            </a>
+                            <div class="collapse menu-dropdown" id="sidebarAccount">
+                                <ul class="nav nav-sm flex-column">
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link" data-key="t-level-2.1"> Renstra
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link" data-key="t-level-2.1"> APP
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link" data-key="t-level-2.1"> APEP
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link" data-key="t-level-2.1"> APIP
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </li>
+            @can(['kalender pembelajaran view'])
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{ route('kalender-pembelajaran.index') }}">
+                        <i class="fa fa-calendar"></i> <span data-key="t-widgets">Kalender pembelejaran</span>
+                    </a>
+                </li>
+            @endcan
             <li class="nav-item">
                 <a class="nav-link menu-link" href="{{ route('reporting.index') }}">
                     <i class="fa fa-book"></i> <span data-key="t-widgets">Reporting</span>
