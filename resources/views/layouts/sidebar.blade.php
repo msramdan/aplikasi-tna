@@ -9,7 +9,6 @@
                     <i class="fa fa-home"></i> <span data-key="t-widgets">Dashboard</span>
                 </a>
             </li>
-
             @canany(['kompetensi view', 'topik view', 'kota view', 'lokasi view', 'ruang kelas view', 'asrama view'])
                 @php
                     $isMasterDataActive =
@@ -120,6 +119,23 @@
                                     </li>
                                 </ul>
                             </div>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link menu-link" href="#sidebarPengajuanKap" data-bs-toggle="collapse" role="button"
+                    aria-expanded="false" aria-controls="sidebarPengajuanKap">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                    <span data-key="t-forms">Pengajuan KAP</span>
+                </a>
+                <div class="collapse menu-dropdown" id="sidebarPengajuanKap">
+                    <ul class="nav nav-sm flex-column">
+                        <li class="nav-item">
+                            <a href="" class="nav-link" data-key="t-basic-elements">Tahunan</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link" data-key="t-basic-elements">Insidentil</a>
                         </li>
                     </ul>
                 </div>
