@@ -198,7 +198,7 @@
             @can(['kalender pembelajaran view'])
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{ route('kalender-pembelajaran.index') }}">
-                        <i class="fa fa-calendar"></i> <span data-key="t-widgets">Kalender pembelejaran</span>
+                        <i class="fa fa-calendar"></i> <span data-key="t-widgets">Kalender pembelajaran</span>
                     </a>
                 </li>
             @endcan
