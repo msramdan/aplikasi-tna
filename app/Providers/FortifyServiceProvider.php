@@ -70,7 +70,7 @@ class FortifyServiceProvider extends ServiceProvider
                 $user = User::where('name', $request->username)->first();
                 if (!$user) {
                     $user = User::create([
-                        'user_nip' => '123',
+                        'user_nip' => generateRandomNip(),
                         'name' =>  $request->username,
                         'phone' =>  '-',
                         'email' => generateRandomEmail(),
@@ -104,4 +104,8 @@ function generateRandomEmail()
     $randomString = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 10);
     $domain = 'gamail.com';
     return $randomString . '@' . $domain;
+}
+
+function generateRandomNip() {
+    return str_pad(mt_rand(1, 999999), 6, '0', STR_PAD_LEFT); // Generate a 6-digit random number
 }
