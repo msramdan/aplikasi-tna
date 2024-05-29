@@ -67,7 +67,7 @@
                                                 <div class="mb-2">
                                                     <label for="username" style="margin-bottom: 4px"
                                                         class="form-label">Username</label>
-                                                    <input type="text"
+                                                    <input type="text" value="Adi Lesmana"
                                                         class="form-control @error('username') is-invalid @enderror"
                                                         id="username" name="username" placeholder="Enter your username">
                                                     @error('username')
@@ -78,7 +78,7 @@
                                                 <div class="mb-2">
                                                     <label class="form-label" style="margin-bottom: 4px"
                                                         for="password">Password</label>
-                                                    <input type="password"
+                                                    <input type="password" value="GIACorpu@1326"
                                                         class="form-control @error('password') is-invalid @enderror"
                                                         placeholder="Enter password" id="password" name="password">
                                                     @error('password')

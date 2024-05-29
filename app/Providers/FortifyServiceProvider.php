@@ -35,23 +35,47 @@ class FortifyServiceProvider extends ServiceProvider
                 'password' => 'required',
                 'g-recaptcha-response' => 'required|captcha',
             ]);
-            $endpointStara = config('stara.endpoint') . '/auth/login';
-            $response = Http::post($endpointStara, [
-                'username' => $request->username,
-                'password' => $request->password,
-            ]);
+            if (config('stara.is_hit')) {
+                $endpointStara = config('stara.endpoint') . '/auth/login';
+                $response = Http::post($endpointStara, [
+                    'username' => $request->username,
+                    'password' => $request->password,
+                ]);
 
-            if ($response->successful()) {
-                $data = $response->json();
-                $user = User::where('user_nip', $data['data']['user_info']['user_nip'])->first();
+                if ($response->successful()) {
+                    $data = $response->json();
+                    $user = User::where('user_nip', $data['data']['user_info']['user_nip'])->first();
+                    if (!$user) {
+                        $user = User::create([
+                            'user_nip' => $data['data']['user_info']['user_nip'],
+                            'name' =>  $data['data']['user_info']['name'],
+                            'phone' =>  $data['data']['user_info']['nomorhp'],
+                            'email' =>  $data['data']['user_info']['email'],
+                            'jabatan' =>  $data['data']['user_info']['jabatan'],
+                            'nama_unit' =>  $data['data']['user_info']['namaunit']
+                        ]);
+                        $role = Role::where('id', 3)->first();
+                        if ($role) {
+                            $user->assignRole($role);
+                        } else {
+                            dd('Role not found');
+                        }
+                    }
+                    return $user;
+                }
+                throw ValidationException::withMessages([
+                    Fortify::username() => [trans('auth.failed')],
+                ]);
+            } else {
+                $user = User::where('name', $request->username)->first();
                 if (!$user) {
                     $user = User::create([
-                        'user_nip' => $data['data']['user_info']['user_nip'],
-                        'name' =>  $data['data']['user_info']['name'],
-                        'phone' =>  $data['data']['user_info']['nomorhp'],
-                        'email' =>  $data['data']['user_info']['email'],
-                        'jabatan' =>  $data['data']['user_info']['jabatan'],
-                        'nama_unit' =>  $data['data']['user_info']['namaunit']
+                        'user_nip' => '123',
+                        'name' =>  $request->username,
+                        'phone' =>  '-',
+                        'email' =>  '-',
+                        'jabatan' =>  '-',
+                        'nama_unit' =>  '-'
                     ]);
                     $role = Role::where('id', 3)->first();
                     if ($role) {
@@ -62,9 +86,6 @@ class FortifyServiceProvider extends ServiceProvider
                 }
                 return $user;
             }
-            throw ValidationException::withMessages([
-                Fortify::username() => [trans('auth.failed')],
-            ]);
         });
 
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
