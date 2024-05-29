@@ -46,112 +46,6 @@
                 </div>
             </li>
 
-            {{-- <li class="nav-item">
-                <a class="nav-link menu-link" href="#sidebarMultilevel" data-bs-toggle="collapse" role="button"
-                    aria-expanded="false" aria-controls="sidebarMultilevel">
-                    <i class="fa fa-tag"></i> <span data-key="t-multi-level">Setting Tagging</span>
-                </a>
-                <div class="collapse menu-dropdown" id="sidebarMultilevel">
-                    <ul class="nav nav-sm flex-column">
-
-                        <li class="nav-item">
-                            <a href="" class="nav-link" role="button"
-                                aria-expanded="false" aria-controls="sidebarApip" data-key="t-level-1.2"> Tag
-                                Pembelajaran & Kompetensi
-                            </a>
-                        </li>
-
-
-                        <li class="nav-item">
-                            <a href="#sidebarBpkp" class="nav-link" data-bs-toggle="collapse" role="button"
-                                aria-expanded="false" aria-controls="sidebarBpkp" data-key="t-level-1.2"> Tag
-                                Kompetensi - IK
-                            </a>
-                            <div class="collapse menu-dropdown" id="sidebarBpkp">
-                                <ul class="nav nav-sm flex-column">
-                                    <li class="nav-item">
-                                        <a href="#sidebarRenstra" class="nav-link" data-bs-toggle="collapse"
-                                            role="button" aria-expanded="false" aria-controls="sidebarRenstra"
-                                            data-key="t-level-2.2">
-                                            Renstra
-                                        </a>
-                                        <div class="collapse menu-dropdown" id="sidebarRenstra">
-                                            <ul class="nav nav-sm flex-column">
-                                                <li class="nav-item">
-                                                    <a href="#" class="nav-link" data-key="t-level-3.1">Tag
-                                                        Pembelajaran - Kompetensi </a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a href="#" class="nav-link" data-key="t-level-3.2"> Tag
-                                                        Kompetensi - IK </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-
-                                    <li class="nav-item">
-                                        <a href="#sidebarAPP" class="nav-link" data-bs-toggle="collapse" role="button"
-                                            aria-expanded="false" aria-controls="sidebarAPP" data-key="t-level-2.2">
-                                            APP
-                                        </a>
-                                        <div class="collapse menu-dropdown" id="sidebarAPP">
-                                            <ul class="nav nav-sm flex-column">
-                                                <li class="nav-item">
-                                                    <a href="#" class="nav-link" data-key="t-level-3.1">Tag
-                                                        Pembelajaran - Kompetensi </a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a href="#" class="nav-link" data-key="t-level-3.2"> Tag
-                                                        Kompetensi - IK </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-
-                                    <li class="nav-item">
-                                        <a href="#sidebarAPEP" class="nav-link" data-bs-toggle="collapse"
-                                            role="button" aria-expanded="false" aria-controls="sidebarAPEP"
-                                            data-key="t-level-2.2"> APEP
-                                        </a>
-                                        <div class="collapse menu-dropdown" id="sidebarAPEP">
-                                            <ul class="nav nav-sm flex-column">
-                                                <li class="nav-item">
-                                                    <a href="#" class="nav-link" data-key="t-level-3.1">Tag
-                                                        Pembelajaran - Kompetensi </a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a href="#" class="nav-link" data-key="t-level-3.2"> Tag
-                                                        Kompetensi - IK </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="#sidebarApip" class="nav-link" data-bs-toggle="collapse" role="button"
-                                aria-expanded="false" aria-controls="sidebarApip" data-key="t-level-1.2"> APIP
-                            </a>
-                            <div class="collapse menu-dropdown" id="sidebarApip">
-                                <ul class="nav nav-sm flex-column">
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link" data-key="t-level-3.1">Tag
-                                            Pembelajaran - Kompetensi </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link" data-key="t-level-3.2"> Tag
-                                            Kompetensi - IK </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-
-                    </ul>
-                </div>
-            </li> --}}
-
             <li class="nav-item">
                 <a class="nav-link menu-link" href="#sidebarMultilevel" data-bs-toggle="collapse" role="button"
                     aria-expanded="false" aria-controls="sidebarMultilevel">
@@ -195,6 +89,25 @@
                     </ul>
                 </div>
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link menu-link" href="#sidebarPengajuanKap" data-bs-toggle="collapse" role="button"
+                    aria-expanded="false" aria-controls="sidebarPengajuanKap">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                    <span data-key="t-forms">Pengajuan KAP</span>
+                </a>
+                <div class="collapse menu-dropdown" id="sidebarPengajuanKap">
+                    <ul class="nav nav-sm flex-column">
+                        <li class="nav-item">
+                            <a href="" class="nav-link" data-key="t-basic-elements">Tahunan</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link" data-key="t-basic-elements">Insidentil</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
             @can(['kalender pembelajaran view'])
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{ route('kalender-pembelajaran.index') }}">
