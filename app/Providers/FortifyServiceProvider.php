@@ -73,7 +73,7 @@ class FortifyServiceProvider extends ServiceProvider
                         'user_nip' => '123',
                         'name' =>  $request->username,
                         'phone' =>  '-',
-                        'email' =>  '-',
+                        'email' => generateRandomEmail(),
                         'jabatan' =>  '-',
                         'nama_unit' =>  '-'
                     ]);
@@ -97,4 +97,11 @@ class FortifyServiceProvider extends ServiceProvider
             return view('auth.login');
         });
     }
+}
+
+function generateRandomEmail()
+{
+    $randomString = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 10);
+    $domain = 'gamail.com';
+    return $randomString . '@' . $domain;
 }
