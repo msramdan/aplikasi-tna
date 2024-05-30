@@ -1,16 +1,14 @@
 <?php
+
 return [
-    'head' => 'Vendors Category',
-    'welcome' => 'Welcome,',
-    'wo_total' => 'Total Work Order',
-    'euip_total' => 'Total Equiment',
-    'employee_total' => 'Total Employee',
-    'vendor_total' => 'Total Vendor',
-    'total_status_wo' => 'Total Wo By Status',
-    'total_category_wo' => 'Total Wo By Category',
-    'total_type_wo' => 'Total WO By Type',
-    'op_sparepat' => 'Opname Sparepart',
-    'stock_in_sparepat' => 'Stock In Sparepart',
-    'stock_out_sparepat' => 'Stock Out Sparepart',
-    'location_employee_vendor' => 'Location Employee & Vendor',
+    'welcome' => 'Welcome',
+    'total_location' => 'Total Locations',
+    'total_classrooms' => 'Total Classrooms',
+    'total_dormitories' => 'Total Dormitories',
+    'total_users' => 'Total Users',
+    'training_by_funding_source' => 'Training Proposals by Funding Source',
+    'training_by_participants' => 'Training Proposals by Participants',
+    'training_by_status' => 'Training Proposals by Status',
+    'classroom_status_by_status' => 'Classroom Status by Status',
+    'dormitory_status_by_status' => 'Dormitory Status by Status',
 ];
