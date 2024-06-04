@@ -14,7 +14,7 @@
                         aria-expanded="" aria-controls="sidebarMasterData">
                         <i class="fa fa-list"></i> <span data-key="t-forms">Master data</span>
                     </a>
-                    <div class="collapse menu-dropdown {{ set_show(['kompetensi*', 'topik*', 'kota*', 'lokasi*', 'ruang-kelas*','asrama*']) }}"
+                    <div class="collapse menu-dropdown {{ set_show(['kompetensi*', 'topik*', 'kota*', 'lokasi*', 'ruang-kelas*', 'asrama*']) }}"
                         id="sidebarMasterData">
                         <ul class="nav nav-sm flex-column">
                             @can('kompetensi view')
@@ -59,50 +59,49 @@
                 </li>
             @endcanany
 
-            <li class="nav-item">
-                <a class="nav-link menu-link" href="#sidebarMultilevel" data-bs-toggle="collapse" role="button"
-                    aria-expanded="" aria-controls="sidebarMultilevel">
-                    <i class="fa fa-tag"></i> <span data-key="t-multi-level">Setting Tagging</span>
-                </a>
-                <div class="collapse menu-dropdown" id="sidebarMultilevel">
-                    <ul class="nav nav-sm flex-column">
-                        <li class="nav-item">
-                            <a href="{{ route('tagging-pembelajaran-kompetensi.index') }}"
-                                class="nav-link {{ Request::is('tagging*') ? 'active' : '' }}"
-                                data-key="t-level-1.1">Tag Pembelajaran & Kompetensi</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#sidebarAccount" class="nav-link {{ Request::is('tagging*') ? 'active' : '' }}"
-                                data-bs-toggle="collapse" role="button" aria-expanded="" aria-controls="sidebarAccount"
-                                data-key="t-level-1.2">Tag Kompetensi & IK</a>
-                            <div class="collapse menu-dropdown" id="sidebarAccount">
-                                <ul class="nav nav-sm flex-column">
-                                    <li class="nav-item">
-                                        <a href="#"
-                                            class="nav-link {{ Request::is('tagging*') ? 'active' : '' }}"
-                                            data-key="t-level-2.1">Renstra</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#"
-                                            class="nav-link {{ Request::is('tagging*') ? 'active' : '' }}"
-                                            data-key="t-level-2.1">APP</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#"
-                                            class="nav-link {{ Request::is('tagging*') ? 'active' : '' }}"
-                                            data-key="t-level-2.1">APEP</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#"
-                                            class="nav-link {{ Request::is('tagging*') ? 'active' : '' }}"
-                                            data-key="t-level-2.1">APIP</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </li>
+            @canany(['tagging pembelajaran kompetensi view'])
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarMultilevel" data-bs-toggle="collapse" role="button"
+                        aria-expanded="" aria-controls="sidebarMultilevel">
+                        <i class="fa fa-tag"></i> <span data-key="t-multi-level">Setting Tagging</span>
+                    </a>
+                    <div class="collapse menu-dropdown {{ set_show(['tagging-pembelajaran-kompetensi*']) }}"
+                        id="sidebarMultilevel">
+                        <ul class="nav nav-sm flex-column">
+                            @can('tagging pembelajaran kompetensi view')
+                                <li class="nav-item">
+                                    <a href="{{ route('tagging-pembelajaran-kompetensi.index') }}"
+                                        class="nav-link {{ set_active(['tagging-pembelajaran-kompetensi*']) }}"
+                                        data-key="t-level-1.1">Tag Pembelajaran & Kompetensi</a>
+                                </li>
+                            @endcan
+
+
+                            <li class="nav-item">
+                                <a href="#sidebarAccount" class="nav-link" data-bs-toggle="collapse" role="button"
+                                    aria-expanded="" aria-controls="sidebarAccount" data-key="t-level-1.2">Tag Kompetensi &
+                                    IK</a>
+                                <div class="collapse menu-dropdown" id="sidebarAccount">
+                                    <ul class="nav nav-sm flex-column">
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link " data-key="t-level-2.1">Renstra</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link " data-key="t-level-2.1">APP</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link " data-key="t-level-2.1">APEP</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link " data-key="t-level-2.1">APIP</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            @endcanany
 
             <li class="nav-item">
                 <a class="nav-link menu-link" href="#sidebarPengajuanKap" data-bs-toggle="collapse" role="button"
