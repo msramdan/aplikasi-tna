@@ -14,7 +14,7 @@
                         aria-expanded="" aria-controls="sidebarMasterData">
                         <i class="fa fa-list"></i> <span data-key="t-forms">Master data</span>
                     </a>
-                    <div class="collapse menu-dropdown {{ set_show(['kompetensi*', 'topik*', 'kota*', 'lokasi*', 'ruang-kelas*']) }}"
+                    <div class="collapse menu-dropdown {{ set_show(['kompetensi*', 'topik*', 'kota*', 'lokasi*', 'ruang-kelas*','asrama*']) }}"
                         id="sidebarMasterData">
                         <ul class="nav nav-sm flex-column">
                             @can('kompetensi view')
