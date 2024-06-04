@@ -206,6 +206,11 @@
                                         data-key="t-basic-elements">Jadwal KAP Tahunan</a>
                                 </li>
                             @endcan
+                            <li class="nav-item">
+                                <a href="{{route('activity_log.index')}}"
+                                    class="nav-link {{ Request::is('activity_log*') ? 'active' : '' }}"
+                                    data-key="t-basic-elements">Activity Log</a>
+                            </li>
                             @can('setting app view')
                                 <li class="nav-item">
                                     <a href="{{ route('setting-apps.index') }}"

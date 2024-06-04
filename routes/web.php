@@ -6,8 +6,9 @@ use App\Http\Controllers\{
     UserController,
     ProfileController,
     RoleAndPermissionController,
+    ActivityLogController,
+    LocalizationController
 };
-use App\Http\Controllers\LocalizationController;
 
 //route switch bahasa
 Route::get('/localization/{language}', [LocalizationController::class, 'switch'])->name('localization.switch');
@@ -41,3 +42,7 @@ Route::controller(App\Http\Controllers\TopikController::class)->group(function (
     Route::post('/importTopik', 'importTopik')->name('importTopik');
 });
 Route::resource('jadwal-kap-tahunans', App\Http\Controllers\JadwalKapTahunanController::class)->middleware('auth');
+// activity log
+Route::controller(ActivityLogController::class)->group(function () {
+    Route::get('/activity_log', 'index')->name('activity_log.index');
+});
