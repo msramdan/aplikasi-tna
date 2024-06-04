@@ -36,7 +36,7 @@ class SettingApp extends Model
         if (isset(Auth::user()->name)) {
             $user = Auth::user()->name;
         } else {
-            $user = "Super Admin";
+            $user = "System";
         }
         return "Setting apps {$eventName} By {$user}";
     }

@@ -33,7 +33,7 @@ class User extends Authenticatable
         if (isset(Auth::user()->name)) {
             $user = Auth::user()->name;
         } else {
-            $user = "Super Admin";
+            $user = "System";
         }
         return "User " . $this->name . " {$eventName} By "  . $user;
     }
