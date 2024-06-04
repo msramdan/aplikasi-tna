@@ -4,21 +4,40 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
+use Illuminate\Support\Facades\Auth;
 
 class SettingApp extends Model
 {
     use HasFactory;
+    use LogsActivity;
+    protected $table = 'setting_apps';
+    protected static $logUnguarded = true;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var string[]
-     */
-    protected $fillable = ['aplication_name', 'logo', 'favicon', 'phone', 'email', 'address', 'url_wa_gateway', 'notif_wa', 'api_key_wa_gateway', 'bot_telegram', 'paper_qr_code', 'work_order_has_access_approval_users_id'];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var string[]
-     */
+    protected $fillable = [
+        'aplication_name',
+        'logo',
+        'favicon'
+    ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName('log_setting_app')
+            ->logOnly(['aplication_name', 'logo', 'favicon'])
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs();
+    }
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        if (isset(Auth::user()->name)) {
+            $user = Auth::user()->name;
+        } else {
+            $user = "System";
+        }
+        return "Setting apps {$eventName} By {$user}";
+    }
 }

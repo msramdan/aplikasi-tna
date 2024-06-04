@@ -9,16 +9,35 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Spatie\Permission\Traits\HasRoles;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
+use Illuminate\Support\Facades\Auth;
+
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, TwoFactorAuthenticatable, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, TwoFactorAuthenticatable, HasRoles, LogsActivity;
+    protected static $logUnguarded = true;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var string[]
-     */
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName('log_users')
+            ->logOnly(['user_nip', 'name', 'phone', 'email', 'jabatan', 'nama_unit', 'avatar'])
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs();
+    }
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        if (isset(Auth::user()->name)) {
+            $user = Auth::user()->name;
+        } else {
+            $user = "System";
+        }
+        return "User " . $this->name . " {$eventName} By "  . $user;
+    }
+
     protected $fillable = [
         'user_nip',
         'name',
