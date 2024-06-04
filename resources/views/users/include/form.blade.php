@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-6 mb-3">
+    <div class="col-md-12 mb-3">
         <div class="form-group">
             <label for="name">{{ trans('utilities/users/form.name') }}</label>
             <input readonly type="text" name="name" id="name"
@@ -14,7 +14,7 @@
         </div>
     </div>
 
-    <div class="col-md-6 mb-3">
+    <div class="col-md-12 mb-3">
         <div class="form-group">
             <label for="email">{{ trans('utilities/users/form.email') }}</label>
             <input readonly type="email" name="email" id="email"
@@ -29,7 +29,7 @@
         </div>
     </div>
     @isset($user)
-        <div class="col-md-4 mb-3">
+        <div class="col-md-12 mb-3">
             <div class="form-group">
                 <label for="role">{{ __('Role') }}</label>
                 <select class="form-select js-example-basic-multiple" name="role" id="role" class="form-control"
@@ -50,20 +50,20 @@
         </div>
     @endisset
     @isset($user)
-        <div class="col-md-2 text-center mb-3">
+        <div class="col-md-4 text-center mb-3">
             <div class="avatar avatar-xl">
                 @if ($user->avatar == null)
                     <img class="img-thumbnail"
                         src="https://www.gravatar.com/avatar/{{ md5(strtolower(trim($user->email))) }}&s=450"
-                        alt="avatar">
+                        alt="avatar" >
                 @else
                     <img style="70px" class="img-thumbnail" src="{{ asset("uploads/images/avatars/$user->avatar") }}"
-                        alt="avatar">
+                        alt="avatar" >
                 @endif
             </div>
         </div>
 
-        <div class="col-md-6 mb-3">
+        <div class="col-md-8 mb-3">
             <div class="form-group">
                 <label for="avatar">{{ trans('utilities/users/form.avatar') }}</label>
                 <input type="file" name="avatar" class="form-control @error('avatar') is-invalid @enderror"
