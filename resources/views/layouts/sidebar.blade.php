@@ -67,7 +67,8 @@
                 <div class="collapse menu-dropdown" id="sidebarMultilevel">
                     <ul class="nav nav-sm flex-column">
                         <li class="nav-item">
-                            <a href="{{route('tagging-pembelajaran-kompetensi.index')}}" class="nav-link {{ Request::is('tagging*') ? 'active' : '' }}"
+                            <a href="{{ route('tagging-pembelajaran-kompetensi.index') }}"
+                                class="nav-link {{ Request::is('tagging*') ? 'active' : '' }}"
                                 data-key="t-level-1.1">Tag Pembelajaran & Kompetensi</a>
                         </li>
                         <li class="nav-item">

@@ -13,11 +13,24 @@ use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 use Illuminate\Support\Facades\Auth;
 
-
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, TwoFactorAuthenticatable, HasRoles, LogsActivity;
-    protected static $logUnguarded = true;
+    protected static $logFillable = true;
+    protected $fillable = [
+        'user_nip',
+        'name',
+        'phone',
+        'email',
+        'jabatan',
+        'nama_unit',
+        'avatar'
+    ];
+
+    protected $casts = [
+        'created_at' => 'datetime:d/m/Y H:i',
+        'updated_at' => 'datetime:d/m/Y H:i',
+    ];
 
     public function getActivitylogOptions(): LogOptions
     {
@@ -37,19 +50,4 @@ class User extends Authenticatable
         }
         return "User " . $this->name . " {$eventName} By "  . $user;
     }
-
-    protected $fillable = [
-        'user_nip',
-        'name',
-        'phone',
-        'email',
-        'jabatan',
-        'nama_unit',
-        'avatar'
-    ];
-
-    protected $casts = [
-        'created_at' => 'datetime:d/m/Y H:i',
-        'updated_at' => 'datetime:d/m/Y H:i',
-    ];
 }
