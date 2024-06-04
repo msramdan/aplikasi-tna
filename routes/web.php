@@ -41,3 +41,4 @@ Route::controller(App\Http\Controllers\TopikController::class)->group(function (
     Route::post('/importTopik', 'importTopik')->name('importTopik');
 });
 Route::resource('jadwal-kap-tahunans', App\Http\Controllers\JadwalKapTahunanController::class)->middleware('auth');
+Route::resource('tagging-pembelajaran-kompetensi', App\Http\Controllers\TaggingPembelajaranKompetensiController::class)->middleware('auth');

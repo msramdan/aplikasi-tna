@@ -38,7 +38,7 @@
                                 <li class="nav-item">
                                     <a href="{{ route('topik.index') }}"
                                         class="nav-link {{ Request::is('topik*') ? 'active' : '' }}"
-                                        data-key="t-basic-elements">Pembelajaran</a>
+                                        data-key="t-basic-elements">Topik Pembelajaran</a>
                                 </li>
                             @endcan
                             @can('kota view')
@@ -86,7 +86,7 @@
                 <div class="collapse menu-dropdown {{ $isTaggingActive ? 'show' : '' }}" id="sidebarMultilevel">
                     <ul class="nav nav-sm flex-column">
                         <li class="nav-item">
-                            <a href="#" class="nav-link {{ Request::is('tagging*') ? 'active' : '' }}"
+                            <a href="{{route('tagging-pembelajaran-kompetensi.index')}}" class="nav-link {{ Request::is('tagging*') ? 'active' : '' }}"
                                 data-key="t-level-1.1">Tag Pembelajaran & Kompetensi</a>
                         </li>
                         <li class="nav-item">

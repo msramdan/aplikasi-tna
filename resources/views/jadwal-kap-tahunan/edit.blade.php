@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('Create Jadwal Kap Tahunan'))
+@section('title', __('Edit Jadwal Kap Tahunan'))
 
 @section('content')
     <div class="page-content">
@@ -15,10 +15,10 @@
                                     <a href="/">Dashboard</a>
                                 </li>
                                 <li class="breadcrumb-item">
-                                    <a href="{{ route('jadwal-kap-tahunans.index') }}">{{ __('Jadwal Kap Tahunan') }}</a>
+                                    <a href="{{ route('jadwal-kap-tahunan.index') }}">{{ __('Jadwal Kap Tahunan') }}</a>
                                 </li>
                                 <li class="breadcrumb-item active" aria-current="page">
-                                    {{ __('Create') }}
+                                    {{ __('Edit') }}
                                 </li>
                             </ol>
                         </div>
@@ -30,17 +30,17 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            <form action="{{ route('jadwal-kap-tahunans.store') }}" method="POST">
+                            <form action="{{ route('jadwal-kap-tahunan.update', $jadwalKapTahunan->id) }}" method="POST">
                                 @csrf
-                                @method('POST')
+                                @method('PUT')
 
-                                @include('jadwal-kap-tahunans.include.form')
+                                @include('jadwal-kap-tahunan.include.form')
 
                                 <a href="{{ url()->previous() }}" class="btn btn-secondary"><i
                                         class="mdi mdi-arrow-left-thin"></i> {{ __('Back') }}</a>
 
                                 <button type="submit" class="btn btn-primary"><i class="mdi mdi-content-save"></i>
-                                    {{ __('Save') }}</button>
+                                    {{ __('Update') }}</button>
                             </form>
                         </div>
                     </div>

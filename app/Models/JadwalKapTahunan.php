@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class JadwalKapTahunan extends Model
 {
     use HasFactory;
+    protected $table = 'jadwal_kap_tahunan';
 
     /**
      * The attributes that are mass assignable.
@@ -23,6 +24,6 @@ class JadwalKapTahunan extends Model
      */
     protected $casts = ['tahun' => 'integer', 'tanggal_mulai' => 'date:d/m/Y', 'tanggal_selesai' => 'date:d/m/Y', 'created_at' => 'datetime:d/m/Y H:i', 'updated_at' => 'datetime:d/m/Y H:i'];
 
-    
+
 
 }

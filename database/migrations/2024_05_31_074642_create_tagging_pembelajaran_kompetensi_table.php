@@ -13,11 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('jadwal_kap_tahunans', function (Blueprint $table) {
+        Schema::create('tagging_pembelajaran_kompetensi', function (Blueprint $table) {
             $table->id();
-            $table->year('tahun');
-			$table->date('tanggal_mulai');
-			$table->date('tanggal_selesai');
+            $table->foreignId('topik_id')->constrained('topik')->restrictOnUpdate()->cascadeOnDelete();
+			$table->foreignId('kompetensi_id')->constrained('kompetensi')->restrictOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jadwal_kap_tahunans');
+        Schema::dropIfExists('tagging_pembelajaran_kompetensi');
     }
 };

@@ -35,11 +35,11 @@ class JadwalKapTahunanController extends Controller
                     return $row->updated_at->format('d M Y H:i:s');
                 })
 
-                ->addColumn('action', 'jadwal-kap-tahunans.include.action')
+                ->addColumn('action', 'jadwal-kap-tahunan.include.action')
                 ->toJson();
         }
 
-        return view('jadwal-kap-tahunans.index');
+        return view('jadwal-kap-tahunan.index');
     }
 
     /**
@@ -49,7 +49,7 @@ class JadwalKapTahunanController extends Controller
      */
     public function create()
     {
-        return view('jadwal-kap-tahunans.create');
+        return view('jadwal-kap-tahunan.create');
     }
 
     /**
@@ -60,10 +60,10 @@ class JadwalKapTahunanController extends Controller
      */
     public function store(StoreJadwalKapTahunanRequest $request)
     {
-        
+
         JadwalKapTahunan::create($request->validated());
         Alert::toast('The jadwalKapTahunan was created successfully.', 'success');
-        return redirect()->route('jadwal-kap-tahunans.index');
+        return redirect()->route('jadwal-kap-tahunan.index');
 
     }
 
@@ -75,7 +75,7 @@ class JadwalKapTahunanController extends Controller
      */
     public function show(JadwalKapTahunan $jadwalKapTahunan)
     {
-        return view('jadwal-kap-tahunans.show', compact('jadwalKapTahunan'));
+        return view('jadwal-kap-tahunan.show', compact('jadwalKapTahunan'));
     }
 
     /**
@@ -86,7 +86,7 @@ class JadwalKapTahunanController extends Controller
      */
     public function edit(JadwalKapTahunan $jadwalKapTahunan)
     {
-        return view('jadwal-kap-tahunans.edit', compact('jadwalKapTahunan'));
+        return view('jadwal-kap-tahunan.edit', compact('jadwalKapTahunan'));
     }
 
     /**
@@ -98,11 +98,11 @@ class JadwalKapTahunanController extends Controller
      */
     public function update(UpdateJadwalKapTahunanRequest $request, JadwalKapTahunan $jadwalKapTahunan)
     {
-        
+
         $jadwalKapTahunan->update($request->validated());
         Alert::toast('The jadwalKapTahunan was updated successfully.', 'success');
         return redirect()
-            ->route('jadwal-kap-tahunans.index');
+            ->route('jadwal-kap-tahunan.index');
     }
 
     /**
@@ -116,10 +116,10 @@ class JadwalKapTahunanController extends Controller
         try {
             $jadwalKapTahunan->delete();
             Alert::toast('The jadwalKapTahunan was deleted successfully.', 'success');
-            return redirect()->route('jadwal-kap-tahunans.index');
+            return redirect()->route('jadwal-kap-tahunan.index');
         } catch (\Throwable $th) {
             Alert::toast('The jadwalKapTahunan cant be deleted because its related to another table.', 'error');
-            return redirect()->route('jadwal-kap-tahunans.index');
+            return redirect()->route('jadwal-kap-tahunan.index');
         }
     }
 }

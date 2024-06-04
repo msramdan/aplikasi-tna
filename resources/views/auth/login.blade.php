@@ -56,11 +56,19 @@
 
                                 <div class="col-lg-6">
                                     <div class="p-lg-5 p-4">
-                                        <div>
+                                        {{-- <div>
                                             <h5 class="text-primary">Welcome Back !</h5>
                                             <p class="text-muted">Sign in to continue to Application.</p>
-                                        </div>
-
+                                        </div> --}}
+                                        <center>
+                                            @if (setting_web()->logo != null)
+                                                <img class="mb-2" style="width: 250px" src="{{ Storage::url('public/img/setting_app/') . setting_web()->logo }}"
+                                                    alt="">
+                                            @endif
+                                            <div>
+                                                <p class="text-muted">Sign in to continue to Application.</p>
+                                            </div>
+                                        </center>
                                         <div class="mt-4">
                                             <form class="user" method="POST" action="{{ route('login') }}">
                                                 @csrf

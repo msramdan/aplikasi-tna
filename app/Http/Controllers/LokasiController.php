@@ -29,12 +29,6 @@ class LokasiController extends Controller
 
             return DataTables::of($lokasi)
                 ->addIndexColumn()
-                ->addColumn('created_at', function ($row) {
-                    return $row->created_at->format('d M Y H:i:s');
-                })->addColumn('updated_at', function ($row) {
-                    return $row->updated_at->format('d M Y H:i:s');
-                })
-
                 ->addColumn('kota', function ($row) {
                     return $row->kota ? $row->kota->nama_kota : '';
                 })->addColumn('action', 'lokasi.include.action')
