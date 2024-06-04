@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('jadwal_kap_tahunans', function (Blueprint $table) {
+        Schema::create('jadwal_kap_tahunan', function (Blueprint $table) {
             $table->id();
             $table->year('tahun');
 			$table->date('tanggal_mulai');
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jadwal_kap_tahunans');
+        Schema::dropIfExists('jadwal_kap_tahunan');
     }
 };

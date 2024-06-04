@@ -44,5 +44,5 @@ Route::controller(App\Http\Controllers\TopikController::class)->group(function (
 Route::resource('jadwal-kap-tahunans', App\Http\Controllers\JadwalKapTahunanController::class)->middleware('auth');
 // activity log
 Route::controller(ActivityLogController::class)->group(function () {
-    Route::get('/activity_log', 'index')->name('activity_log.index');
+    Route::get('/activity-log', 'index')->name('activity-log.index');
 });

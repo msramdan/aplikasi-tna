@@ -92,7 +92,7 @@
             const table = $('#dataTable').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('activity_log.index') }}",
+                ajax: "{{ route('activity-log.index') }}",
                 columns: columns,
                 order: [
                     [1, 'asc']

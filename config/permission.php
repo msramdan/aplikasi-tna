@@ -191,5 +191,6 @@ return [
         ['group' => 'asrama', 'access' => ['asrama view', 'asrama create', 'asrama edit', 'asrama delete']],
         ['group' => 'topik', 'access' => ['topik view', 'topik create', 'topik edit', 'topik delete']],
         ['group' => 'jadwal kap tahunans', 'access' => ['jadwal kap tahunan view', 'jadwal kap tahunan create', 'jadwal kap tahunan edit', 'jadwal kap tahunan delete']],
+        ['group' => 'activity log', 'access' => ['activity log view']],
     ],
 ];

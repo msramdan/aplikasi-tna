@@ -4,68 +4,53 @@
         <ul class="navbar-nav" id="navbar-nav">
             <li class="menu-title"><span data-key="t-menu">Main menu</span></li>
             <li class="nav-item">
-                <a class="nav-link menu-link {{ Request::is('dashboard') ? 'active' : '' }}"
-                    href="{{ route('dashboard') }}">
+                <a class="nav-link menu-link {{ set_active('dashboard') }}" href="{{ route('dashboard') }}">
                     <i class="fa fa-home"></i> <span data-key="t-widgets">Dashboard</span>
                 </a>
             </li>
             @canany(['kompetensi view', 'topik view', 'kota view', 'lokasi view', 'ruang kelas view', 'asrama view'])
-                @php
-                    $isMasterDataActive =
-                        Request::is('kompetensi*') ||
-                        Request::is('topik*') ||
-                        Request::is('kota*') ||
-                        Request::is('lokasi*') ||
-                        Request::is('ruang-kelas*') ||
-                        Request::is('asrama*');
-                @endphp
                 <li class="nav-item">
-                    <a class="nav-link menu-link {{ $isMasterDataActive ? 'active' : '' }}" href="#sidebarMasterData"
-                        data-bs-toggle="collapse" role="button"
-                        aria-expanded="{{ $isMasterDataActive ? 'true' : 'false' }}" aria-controls="sidebarMasterData">
+                    <a class="nav-link menu-link" href="#sidebarMasterData" data-bs-toggle="collapse" role="button"
+                        aria-expanded="" aria-controls="sidebarMasterData">
                         <i class="fa fa-list"></i> <span data-key="t-forms">Master data</span>
                     </a>
-                    <div class="collapse menu-dropdown {{ $isMasterDataActive ? 'show' : '' }}" id="sidebarMasterData">
+                    <div class="collapse menu-dropdown {{ set_show(['kompetensi*', 'topik*', 'kota*', 'lokasi*', 'ruang-kelas*']) }}"
+                        id="sidebarMasterData">
                         <ul class="nav nav-sm flex-column">
                             @can('kompetensi view')
                                 <li class="nav-item">
-                                    <a href="{{ route('kompetensi.index') }}"
-                                        class="nav-link {{ Request::is('kompetensi*') ? 'active' : '' }}"
+                                    <a href="{{ route('kompetensi.index') }}" class="nav-link {{ set_active(['kompetensi*']) }}"
                                         data-key="t-basic-elements">Kamus kompetensi</a>
                                 </li>
                             @endcan
                             @can('topik view')
                                 <li class="nav-item">
-                                    <a href="{{ route('topik.index') }}"
-                                        class="nav-link {{ Request::is('topik*') ? 'active' : '' }}"
+                                    <a href="{{ route('topik.index') }}" class="nav-link {{ set_active(['topik*']) }}"
                                         data-key="t-basic-elements">Pembelajaran</a>
                                 </li>
                             @endcan
                             @can('kota view')
                                 <li class="nav-item">
-                                    <a href="{{ route('kota.index') }}"
-                                        class="nav-link {{ Request::is('kota*') ? 'active' : '' }}"
+                                    <a href="{{ route('kota.index') }}" class="nav-link {{ set_active(['kota*']) }}"
                                         data-key="t-basic-elements">Daftar kota</a>
                                 </li>
                             @endcan
                             @can('lokasi view')
                                 <li class="nav-item">
-                                    <a href="{{ route('lokasi.index') }}"
-                                        class="nav-link {{ Request::is('lokasi*') ? 'active' : '' }}"
+                                    <a href="{{ route('lokasi.index') }}" class="nav-link {{ set_active(['lokasi*']) }}"
                                         data-key="t-basic-elements">Lokasi</a>
                                 </li>
                             @endcan
                             @can('ruang kelas view')
                                 <li class="nav-item">
                                     <a href="{{ route('ruang-kelas.index') }}"
-                                        class="nav-link {{ Request::is('ruang-kelas*') ? 'active' : '' }}"
-                                        data-key="t-basic-elements">Ruang Kelas</a>
+                                        class="nav-link {{ set_active(['ruang-kelas*']) }}" data-key="t-basic-elements">Ruang
+                                        Kelas</a>
                                 </li>
                             @endcan
                             @can('asrama view')
                                 <li class="nav-item">
-                                    <a href="{{ route('asrama.index') }}"
-                                        class="nav-link {{ Request::is('asrama*') ? 'active' : '' }}"
+                                    <a href="{{ route('asrama.index') }}" class="nav-link {{ set_active(['asrama*']) }}"
                                         data-key="t-basic-elements">Asrama</a>
                                 </li>
                             @endcan
@@ -74,16 +59,12 @@
                 </li>
             @endcanany
 
-            @php
-                $isTaggingActive = Request::is('tagging*');
-            @endphp
             <li class="nav-item">
-                <a class="nav-link menu-link {{ $isTaggingActive ? 'active' : '' }}" href="#sidebarMultilevel"
-                    data-bs-toggle="collapse" role="button" aria-expanded="{{ $isTaggingActive ? 'true' : 'false' }}"
-                    aria-controls="sidebarMultilevel">
+                <a class="nav-link menu-link" href="#sidebarMultilevel" data-bs-toggle="collapse" role="button"
+                    aria-expanded="" aria-controls="sidebarMultilevel">
                     <i class="fa fa-tag"></i> <span data-key="t-multi-level">Setting Tagging</span>
                 </a>
-                <div class="collapse menu-dropdown {{ $isTaggingActive ? 'show' : '' }}" id="sidebarMultilevel">
+                <div class="collapse menu-dropdown" id="sidebarMultilevel">
                     <ul class="nav nav-sm flex-column">
                         <li class="nav-item">
                             <a href="#" class="nav-link {{ Request::is('tagging*') ? 'active' : '' }}"
@@ -91,11 +72,9 @@
                         </li>
                         <li class="nav-item">
                             <a href="#sidebarAccount" class="nav-link {{ Request::is('tagging*') ? 'active' : '' }}"
-                                data-bs-toggle="collapse" role="button"
-                                aria-expanded="{{ $isTaggingActive ? 'true' : 'false' }}"
-                                aria-controls="sidebarAccount" data-key="t-level-1.2">Tag Kompetensi & IK</a>
-                            <div class="collapse menu-dropdown {{ $isTaggingActive ? 'show' : '' }}"
-                                id="sidebarAccount">
+                                data-bs-toggle="collapse" role="button" aria-expanded="" aria-controls="sidebarAccount"
+                                data-key="t-level-1.2">Tag Kompetensi & IK</a>
+                            <div class="collapse menu-dropdown" id="sidebarAccount">
                                 <ul class="nav nav-sm flex-column">
                                     <li class="nav-item">
                                         <a href="#"
@@ -123,6 +102,7 @@
                     </ul>
                 </div>
             </li>
+
             <li class="nav-item">
                 <a class="nav-link menu-link" href="#sidebarPengajuanKap" data-bs-toggle="collapse" role="button"
                     aria-expanded="false" aria-controls="sidebarPengajuanKap">
@@ -140,9 +120,10 @@
                     </ul>
                 </div>
             </li>
+
             @can('kalender pembelajaran view')
                 <li class="nav-item">
-                    <a class="nav-link menu-link {{ Request::is('kalender-pembelajaran*') ? 'active' : '' }}"
+                    <a class="nav-link menu-link {{ set_active('kalender-pembelajaran*') }}"
                         href="{{ route('kalender-pembelajaran.index') }}">
                         <i class="fa fa-calendar"></i> <span data-key="t-widgets">Kalender pembelajaran</span>
                     </a>
@@ -151,70 +132,56 @@
 
             @can('reporting view')
                 <li class="nav-item">
-                    <a class="nav-link menu-link {{ Request::is('reporting*') ? 'active' : '' }}"
-                        href="{{ route('reporting.index') }}">
+                    <a class="nav-link menu-link {{ set_active('reporting*') }}" href="{{ route('reporting.index') }}">
                         <i class="fa fa-book"></i> <span data-key="t-widgets">Reporting</span>
                     </a>
                 </li>
             @endcan
 
-            @php
-                $isUtilitiesActive =
-                    Request::is('users*') ||
-                    Request::is('roles*') ||
-                    Request::is('jadwal-kap-tahunans*') ||
-                    Request::is('setting-apps*');
-            @endphp
-
             @canany([
                 'user view',
-                'user edit',
                 'role & permission view',
-                'role & permission edit',
-                'jadwal kap tahunan
-                view',
-                'jadwal kap tahunan edit',
+                'jadwal kap tahunan view',
                 'setting app view',
-                'setting app edit',
+                'activity
+                log',
                 ])
                 <li class="nav-item">
-                    <a class="nav-link menu-link {{ $isUtilitiesActive ? 'active' : '' }}" href="#sidebarUtilities"
-                        data-bs-toggle="collapse" role="button"
-                        aria-expanded="{{ $isUtilitiesActive ? 'true' : 'false' }}" aria-controls="sidebarUtilities">
+                    <a class="nav-link menu-link collapsed" href="#sidebarUtilities" data-bs-toggle="collapse"
+                        role="button" aria-expanded="" aria-controls="sidebarUtilities">
                         <i class="fa fa-cogs"></i> <span data-key="t-forms">Utilities</span>
                     </a>
-                    <div class="collapse menu-dropdown {{ $isUtilitiesActive ? 'show' : '' }}" id="sidebarUtilities">
+                    <div class="collapse menu-dropdown {{ set_show(['users*', 'roles*', 'jadwal-kap-tahunans*', 'activity-log*', 'setting-apps*']) }}"
+                        id="sidebarUtilities">
                         <ul class="nav nav-sm flex-column">
                             @can('user view')
                                 <li class="nav-item">
-                                    <a href="{{ route('users.index') }}"
-                                        class="nav-link {{ Request::is('users*') ? 'active' : '' }}"
+                                    <a href="{{ route('users.index') }}" class="nav-link {{ set_active(['users*']) }}"
                                         data-key="t-basic-elements">User</a>
                                 </li>
                             @endcan
                             @can('role & permission view')
                                 <li class="nav-item">
-                                    <a href="{{ route('roles.index') }}"
-                                        class="nav-link {{ Request::is('roles*') ? 'active' : '' }}"
+                                    <a href="{{ route('roles.index') }}" class="nav-link {{ set_active(['roles*']) }}"
                                         data-key="t-basic-elements">Role & Permissions</a>
                                 </li>
                             @endcan
                             @can('jadwal kap tahunan view')
                                 <li class="nav-item">
                                     <a href="{{ route('jadwal-kap-tahunans.index') }}"
-                                        class="nav-link {{ Request::is('jadwal-kap-tahunans*') ? 'active' : '' }}"
+                                        class="nav-link {{ set_active(['jadwal-kap-tahunans*']) }}"
                                         data-key="t-basic-elements">Jadwal KAP Tahunan</a>
                                 </li>
                             @endcan
                             <li class="nav-item">
-                                <a href="{{route('activity_log.index')}}"
-                                    class="nav-link {{ Request::is('activity_log*') ? 'active' : '' }}"
+                                <a href="{{ route('activity-log.index') }}"
+                                    class="nav-link {{ set_active(['activity-log*']) }}"
                                     data-key="t-basic-elements">Activity Log</a>
                             </li>
                             @can('setting app view')
                                 <li class="nav-item">
                                     <a href="{{ route('setting-apps.index') }}"
-                                        class="nav-link {{ Request::is('setting-apps*') ? 'active' : '' }}"
+                                        class="nav-link {{ set_active(['setting-apps*']) }}"
                                         data-key="t-basic-elements">Setting App</a>
                                 </li>
                             @endcan
