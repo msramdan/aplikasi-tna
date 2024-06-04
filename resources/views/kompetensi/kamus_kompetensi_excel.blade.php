@@ -1,12 +1,12 @@
 <table>
     <thead>
         <tr>
-            <th style="background-color:#D3D3D3 ">No</th>
-            <th style="background-color:#D3D3D3 ">Nama kompetensi</th>
-            <th style="background-color:#D3D3D3 ">Deksripsi kompetensi</th>
-            <th style="background-color:#D3D3D3 ">Level</th>
-            <th style="background-color:#D3D3D3 ">Deskripsi level</th>
-            <th style="background-color:#D3D3D3 ">Indikator perilaku</th>
+            <th style="background-color:#D3D3D3 ">{{ trans('kamus_kompetensi_excel.no') }}</th>
+            <th style="background-color:#D3D3D3 ">{{ trans('kamus_kompetensi_excel.nama_kompetensi') }}</th>
+            <th style="background-color:#D3D3D3 ">{{ trans('kamus_kompetensi_excel.deskripsi_kompetensi') }}</th>
+            <th style="background-color:#D3D3D3 ">{{ trans('kamus_kompetensi_excel.level') }}</th>
+            <th style="background-color:#D3D3D3 ">{{ trans('kamus_kompetensi_excel.deskripsi_level') }}</th>
+            <th style="background-color:#D3D3D3 ">{{ trans('kamus_kompetensi_excel.indikator_perilaku') }}</th>
         </tr>
     </thead>
     <tbody>

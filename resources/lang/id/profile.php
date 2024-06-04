@@ -1,14 +1,11 @@
 <?php
+
 return [
-    'email' => 'Alamat email',
+    'profile' => 'Profil',
+    'data' => 'Data Profil',
     'name' => 'Nama',
-    'phone' => 'Nomor Telepon',
+    'email' => 'Email',
+    'phone' => 'No. HP',
     'avatar' => 'Avatar',
-    'profile' => 'Profil Pengguna',
-    'data' => 'Data Pengguna',
-    'change-password' => 'Ganti Kata Sandi',
-    'current-password' => 'Kata Sandi Saat Ini',
-    'new-password' => 'Kata Sandi Baru',
-    'confirm-password' => 'Konfirmasi Sandi',
-    'update' => 'Perbarui Data',
+    'update' => 'Perbarui Profil',
 ];
