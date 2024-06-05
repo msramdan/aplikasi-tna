@@ -17,6 +17,9 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, TwoFactorAuthenticatable, HasRoles, LogsActivity;
     protected static $logFillable = true;
+
+
+
     protected $fillable = [
         'user_nip',
         'name',

@@ -5,8 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\{StoreUserRequest, UpdateUserRequest};
 use App\Models\User;
 use Yajra\DataTables\Facades\DataTables;
-use Image;
 use RealRashid\SweetAlert\Facades\Alert;
+use Spatie\Activitylog\Models\Activity;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Permission\Models\Role;
+use Auth;
+use Image;
 
 class UserController extends Controller
 {
@@ -52,22 +56,12 @@ class UserController extends Controller
         return view('users.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         return view('users.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreUserRequest $request)
     {
         $attr = $request->validated();
@@ -98,12 +92,6 @@ class UserController extends Controller
         return redirect()->route('users.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
     public function show(User $user)
     {
         $user->load('roles:id,name');
@@ -111,12 +99,6 @@ class UserController extends Controller
         return view('users.show', compact('user'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
     public function edit(User $user)
     {
         $user->load('roles:id,name');
@@ -124,22 +106,14 @@ class UserController extends Controller
         return view('users.edit', compact('user'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
     public function update(UpdateUserRequest $request, User $user)
     {
         $attr = $request->validated();
 
         if ($request->file('avatar') && $request->file('avatar')->isValid()) {
-
             $filename = $request->file('avatar')->hashName();
 
-            // if folder dont exist, then create folder
+            // if folder don't exist, then create folder
             if (!file_exists($folder = public_path($this->avatarPath))) {
                 mkdir($folder, 0777, true);
             }
@@ -151,8 +125,7 @@ class UserController extends Controller
             })->save(public_path($this->avatarPath) . $filename);
 
             // delete old avatar from storage
-            if ($user->avatar != null && file_exists($oldAvatar = public_path($this->avatarPath .
-                $user->avatar))) {
+            if ($user->avatar != null && file_exists($oldAvatar = public_path($this->avatarPath . $user->avatar))) {
                 unlink($oldAvatar);
             }
 
@@ -161,29 +134,45 @@ class UserController extends Controller
             $attr['avatar'] = $user->avatar;
         }
 
-        switch (is_null($request->password)) {
-            case true:
-                unset($attr['password']);
-                break;
-            default:
-                $attr['password'] = bcrypt($request->password);
-                break;
+        if (is_null($request->password)) {
+            unset($attr['password']);
+        } else {
+            $attr['password'] = bcrypt($request->password);
+        }
+
+        // Convert $request->role to an array if it's a string
+        $newRoles = is_array($request->role) ? $request->role : explode(',', $request->role);
+
+        // Fetch the user's current roles
+        $oldRoles = $user->roles->pluck('name')->toArray();
+
+        // Convert role IDs to names
+        $newRoleNames = Role::whereIn('id', $newRoles)->pluck('name')->toArray();
+
+        // Log changes if the role is different
+        if ($oldRoles !== $newRoleNames) {
+            activity()
+                ->useLog('log_user') // Set custom log name
+                ->causedBy(auth()->user())
+                ->performedOn($user)
+                ->withProperties([
+                    'old' => ['roles' => $oldRoles],
+                    'new' => ['roles' => $newRoleNames],
+                ])
+                ->event('updated') // Set event name
+                ->log("User {$user->name} role updated"); // Custom log message
         }
 
         $user->update($attr);
 
-        $user->syncRoles($request->role);
+        // Sync roles
+        $user->syncRoles($newRoleNames);
 
         Alert::toast('The user was updated successfully.', 'success');
         return redirect()->route('users.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy(User $user)
     {
         if ($user->avatar != null && file_exists($oldAvatar = public_path($this->avatarPath . $user->avatar))) {

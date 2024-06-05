@@ -44,16 +44,6 @@
                     </span>
                 @enderror
             </div>
-
-            <div class="col-12 mb-3">
-                <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
-                    <label class="form-check-label" for="flexSwitchCheckChecked">Is Hit E-Sakip ?</label>
-                </div>
-                <div class="alert alert-primary" role="alert">
-                    A simple primary alert—check it out!
-                </div>
-            </div>
         </div>
     </div>
 </div>
