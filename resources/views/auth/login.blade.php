@@ -45,11 +45,17 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+
                     <center>
                         <h5 class="modal-title text-center mb-4" id="otpModalLabel"><strong style="font-size: 24px;">Verifikasi OTP</strong></h5>
                         <p class="text-center mt-2">OTP berhasil dikirim ke email Anda.</p>
-                        <p class="text-center" style="margin-top: -15px"><b>{{ substr(session('otp_email'), 0, 2) . str_repeat("*", strpos(session('otp_email'), "@") - 2) . substr(session('otp_email'), strpos(session('otp_email'), "@") - 2) }}</b></p>
+                        @if (null !== session('otp_email'))
+                            <p class="text-center" style="margin-top: -15px"><b>{{ substr(session('otp_email'), 0, 2) . str_repeat("*", strpos(session('otp_email'), "@") - 2) . substr(session('otp_email'), strpos(session('otp_email'), "@") - 2) }}</b></p>
+                        @else
+                            <p class="text-center" style="margin-top: -15px"><b>Email tidak tersedia.</b></p>
+                        @endif
                     </center>
+
 
                     @if (session('otp_error'))
                         <div class="alert alert-danger">
