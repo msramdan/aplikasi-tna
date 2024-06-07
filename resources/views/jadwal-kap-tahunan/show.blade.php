@@ -14,7 +14,7 @@
                                         <a href="/">Dashboard</a>
                                     </li>
                                     <li class="breadcrumb-item">
-                                        <a href="{{ route('jadwal-kap-tahunans.index') }}">{{ __('Jadwal Kap Tahunans') }}</a>
+                                        <a href="{{ route('jadwal-kap-tahunan.index') }}">{{ __('Jadwal Kap Tahunans') }}</a>
                                     </li>
                                     <li class="breadcrumb-item active" aria-current="page">
                                         {{ __('Detail') }}

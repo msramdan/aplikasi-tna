@@ -151,7 +151,7 @@
                         role="button" aria-expanded="" aria-controls="sidebarUtilities">
                         <i class="fa fa-cogs"></i> <span data-key="t-forms">Utilities</span>
                     </a>
-                    <div class="collapse menu-dropdown {{ set_show(['users*', 'roles*', 'jadwal-kap-tahunans*', 'activity-log*', 'setting-apps*']) }}"
+                    <div class="collapse menu-dropdown {{ set_show(['users*', 'roles*', 'jadwal-kap-tahunan*', 'activity-log*', 'setting-apps*']) }}"
                         id="sidebarUtilities">
                         <ul class="nav nav-sm flex-column">
                             @can('user view')
@@ -168,8 +168,8 @@
                             @endcan
                             @can('jadwal kap tahunan view')
                                 <li class="nav-item">
-                                    <a href="{{ route('jadwal-kap-tahunans.index') }}"
-                                        class="nav-link {{ set_active(['jadwal-kap-tahunans*']) }}"
+                                    <a href="{{ route('jadwal-kap-tahunan.index') }}"
+                                        class="nav-link {{ set_active(['jadwal-kap-tahunan*']) }}"
                                         data-key="t-basic-elements">Jadwal KAP Tahunan</a>
                                 </li>
                             @endcan

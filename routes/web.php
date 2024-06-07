@@ -41,7 +41,7 @@ Route::controller(App\Http\Controllers\TopikController::class)->group(function (
     Route::get('/exportTopik', 'exportTopik')->name('exportTopik');
     Route::post('/importTopik', 'importTopik')->name('importTopik');
 });
-Route::resource('jadwal-kap-tahunans', App\Http\Controllers\JadwalKapTahunanController::class)->middleware('auth');
+Route::resource('jadwal-kap-tahunan', App\Http\Controllers\JadwalKapTahunanController::class)->middleware('auth');
 Route::resource('tagging-pembelajaran-kompetensi', App\Http\Controllers\TaggingPembelajaranKompetensiController::class)->middleware('auth');
 // activity log
 Route::controller(ActivityLogController::class)->group(function () {

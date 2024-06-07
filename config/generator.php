@@ -233,7 +233,7 @@ return [
                     'users*',
                     'roles*',
                     'setting-apps*',
-                    'jadwal-kap-tahunans*'
+                    'jadwal-kap-tahunan*'
                 ],
                 'permissions' => [
                     'setting view',
@@ -260,7 +260,7 @@ return [
                     ],
                     [
                         'title' => 'Jadwal KAP Tahunan',
-                        'route' => '/jadwal-kap-tahunans',
+                        'route' => '/jadwal-kap-tahunan',
                         'permission' => 'jadwal kap tahunan view'
                     ],
                     [
