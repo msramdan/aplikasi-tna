@@ -19,6 +19,7 @@
 
 <body>
     @yield('content')
+    <script type="text/javascript" src="//code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{ asset('material/assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('material/assets/libs/simplebar/simplebar.min.js') }}"></script>
     <script src="{{ asset('material/assets/libs/node-waves/waves.min.js') }}"></script>
@@ -36,7 +37,7 @@
             }
         }
     </script>
-
+    @stack('js')
 </body>
 
 </html>

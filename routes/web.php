@@ -9,6 +9,7 @@ use App\Http\Controllers\{
     ActivityLogController,
     LocalizationController
 };
+use App\Http\Controllers\Auth\OtpController;
 
 //route switch bahasa
 Route::get('/localization/{language}', [LocalizationController::class, 'switch'])->name('localization.switch');
@@ -47,3 +48,4 @@ Route::resource('tagging-pembelajaran-kompetensi', App\Http\Controllers\TaggingP
 Route::controller(ActivityLogController::class)->group(function () {
     Route::get('/activity-log', 'index')->name('activity-log.index');
 });
+Route::post('/verify-otp', [OtpController::class, 'verifyOtp'])->name('verify-otp');
