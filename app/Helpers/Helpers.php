@@ -35,9 +35,10 @@ if (!function_exists('set_active')) {
         }
     }
 }
-
-function setting_web()
-{
-    $setting = DB::table('setting_apps')->first();
-    return $setting;
+if (!function_exists('setting_web')) {
+    function setting_web()
+    {
+        $setting = DB::table('setting_apps')->first();
+        return $setting;
+    }
 }
