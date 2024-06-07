@@ -32,11 +32,19 @@ class FortifyServiceProvider extends ServiceProvider
     public function boot()
     {
         Fortify::authenticateUsing(function (Request $request) {
+            // Remove session and cached OTP
+            $userId = session('otp_user_id');
+            session()->forget('otp_user_id');
+            if ($userId) {
+                Cache::forget('otp_' . $userId);
+            }
+
             $request->validate([
                 'username' => 'required',
                 'password' => 'required',
-                'g-recaptcha-response' => 'required|captcha',
+                // 'g-recaptcha-response' => 'required|captcha',
             ]);
+
             $endpointStara = config('stara.endpoint') . '/auth/login';
             $response = Http::post($endpointStara, [
                 'username' => $request->username,
@@ -49,11 +57,11 @@ class FortifyServiceProvider extends ServiceProvider
                 if (!$user) {
                     $user = User::create([
                         'user_nip' => $data['data']['user_info']['user_nip'],
-                        'name' =>  $data['data']['user_info']['name'],
-                        'phone' =>  $data['data']['user_info']['nomorhp'],
-                        'email' =>  $data['data']['user_info']['email'],
-                        'jabatan' =>  $data['data']['user_info']['jabatan'],
-                        'nama_unit' =>  $data['data']['user_info']['namaunit']
+                        'name' => $data['data']['user_info']['name'],
+                        'phone' => $data['data']['user_info']['nomorhp'],
+                        'email' => $data['data']['user_info']['email'],
+                        'jabatan' => $data['data']['user_info']['jabatan'],
+                        'nama_unit' => $data['data']['user_info']['namaunit']
                     ]);
                     $role = Role::where('id', 3)->first();
                     if ($role) {
@@ -75,6 +83,7 @@ class FortifyServiceProvider extends ServiceProvider
 
                 return $user;
             }
+
             throw ValidationException::withMessages([
                 Fortify::username() => [trans('auth.failed')],
             ]);

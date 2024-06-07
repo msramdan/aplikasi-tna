@@ -14,7 +14,7 @@
         color: #000;
         background-color: transparent;
         width: 17%;
-        height: 60px;
+        height: 75px;
         text-align: center;
         outline: none;
         padding: 1rem 1rem;
@@ -38,10 +38,10 @@
 
     <!-- Modal -->
     <div class="modal fade" id="otpModal" tabindex="-1" aria-labelledby="otpModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="otpModalLabel">OTP Verification</h5>
+                    <h5 class="modal-title" id="otpModalLabel">Verifikasi OTP</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -66,7 +66,7 @@
                             <span style="color: red; font-size:10px">* OTP dikirim via email</span>
                         </div>
                         <div class="mt-4">
-                            <button type="submit" class="btn btn-success w-100">Verify</button>
+                            <button type="submit" class="btn btn-success w-100">Submit</button>
                         </div>
                     </form>
                 </div>
