@@ -33,7 +33,7 @@ class Lokasi extends Model
     {
         return LogOptions::defaults()
             ->useLogName('log_lokasi')
-            ->logOnly(['nama_lokasi'])
+            ->logOnly(['nama_lokasi','kota_id','type'])
             ->logOnlyDirty()
             ->dontSubmitEmptyLogs();
     }
