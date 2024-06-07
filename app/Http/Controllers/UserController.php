@@ -157,7 +157,7 @@ class UserController extends Controller
                 ->performedOn($user)
                 ->withProperties([
                     'old' => ['roles' => $oldRoles],
-                    'new' => ['roles' => $newRoleNames],
+                    'attributes' => ['roles' => $newRoleNames],
                 ])
                 ->event('updated') // Set event name
                 ->log("User {$user->name} role updated"); // Custom log message

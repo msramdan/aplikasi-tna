@@ -10,53 +10,52 @@ use App\Http\Controllers\Controller;
 
 class ActivityLogController extends Controller
 {
+
     public function __construct()
     {
         $this->middleware('permission:activity log view')->only('index');
     }
 
+
     public function index()
     {
         if (request()->ajax()) {
-            $query = ActivityLog::with('user')
-                ->where('log_name', 'log_user')
-                ->orderBy('id', 'DESC')
-                ->get();
-
+            $query = ActivityLog::with('user')->orderBy('id', 'DESC')->get();
             return DataTables::of($query)
                 ->addIndexColumn()
                 ->addColumn('causer', function ($row) {
-                    return $row->user ? $row->user->name : '-';
+                    if ($row->user) {
+                        return $row->user->name;
+                    } else {
+                        return '-';
+                    }
+
                 })
                 ->addColumn('new_value', function ($row) {
-                    $array = json_decode($row->properties, true);
-                    $items = [];
-
-                    if (isset($array['new'])) {
-                        if (isset($array['new']['roles'])) {
-                            $items['roles'] = $array['new']['roles'][0]; // Menampilkan 1 data dari array roles
-                        }
-                        if (isset($array['new']['avatar'])) {
-                            $items['avatar'] = $array['new']['avatar'];
+                    $array =  json_decode($row->properties);
+                    $items = array();
+                    foreach ($array as $key => $value) {
+                        if ($key == 'attributes') {
+                            foreach ($value as $r => $b) {
+                                $items[$r] = $b;
+                            }
                         }
                     }
-
-                    return empty($items) ? '-' : json_encode($items, JSON_PRETTY_PRINT);
+                    $hasil =  json_encode(($items), JSON_PRETTY_PRINT);
+                    return $hasil;
                 })
                 ->addColumn('old_value', function ($row) {
-                    $array = json_decode($row->properties, true);
-                    $items = [];
-
-                    if (isset($array['old'])) {
-                        if (isset($array['old']['roles'])) {
-                            $items['roles'] = $array['old']['roles'][0]; // Menampilkan 1 data dari array roles
-                        }
-                        if (isset($array['old']['avatar'])) {
-                            $items['avatar'] = $array['old']['avatar'];
+                    $array =  json_decode($row->properties);
+                    $items = array();
+                    foreach ($array as $key => $value) {
+                        if ($key == 'old') {
+                            foreach ($value as $r => $b) {
+                                $items[$r] = $b;
+                            }
                         }
                     }
-
-                    return empty($items) ? '-' : json_encode($items, JSON_PRETTY_PRINT);
+                    $hasil =  json_encode(($items), JSON_PRETTY_PRINT);
+                    return $hasil;
                 })
                 ->addColumn('created_at', function ($row) {
                     return $row->created_at->format('d M Y H:i:s');
@@ -64,7 +63,9 @@ class ActivityLogController extends Controller
                 ->addColumn('time', function ($row) {
                     return Carbon::parse($row->created_at)->diffForHumans();
                 })
+                // ->rawColumns([ 'old_value'])
                 ->make(true);
+            // ->toJson();
         }
         return view('activity_log.index');
     }
