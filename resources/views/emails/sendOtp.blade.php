@@ -63,7 +63,7 @@
 <body>
     <div class="container">
         <div class="logo">
-            <img src="" alt="Interna TNA">
+            <img src="https://evdigi.id/assets/assets/img/user/File-240425-6f20287618.png" alt="Interna TNA">
         </div>
         <div class="content">
             <h2>Kode OTP Anda</h2>

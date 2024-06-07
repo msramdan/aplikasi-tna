@@ -20,8 +20,10 @@
         padding: 1rem 1rem;
         margin: 0 1px;
         font-size: 24px;
+        margin: 5px;
         border: 1px solid rgba(0, 0, 0, 0.3);
         border-radius: .5rem;
+
         color: rgba(0, 0, 0, 0.5);
     }
 
@@ -36,15 +38,19 @@
 
 @section('content')
 
-    <!-- Modal -->
     <div class="modal fade" id="otpModal" tabindex="-1" aria-labelledby="otpModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="otpModalLabel">Verifikasi OTP</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <center>
+                        <h5 class="modal-title text-center mb-4" id="otpModalLabel"><strong style="font-size: 24px;">Verifikasi OTP</strong></h5>
+                        <p class="text-center mt-2">OTP berhasil dikirim ke email Anda.</p>
+                        <p class="text-center" style="margin-top: -15px"><b>{{ substr(session('otp_email'), 0, 2) . str_repeat("*", strpos(session('otp_email'), "@") - 2) . substr(session('otp_email'), strpos(session('otp_email'), "@") - 2) }}</b></p>
+                    </center>
+
                     @if (session('otp_error'))
                         <div class="alert alert-danger">
                             {{ session('otp_error') }}
@@ -53,7 +59,7 @@
 
                     <form method="POST" action="{{ route('verify-otp') }}">
                         @csrf
-                        <div class="form-group">
+                        <div class="form-group text-center">
                             <div class="border-pin">
                                 <input type="text" name="satu" class="num" maxlength="1" required>
                                 <input type="text" name="dua" class="num" maxlength="1" required>
@@ -62,8 +68,6 @@
                                 <input type="text" name="lima" class="num" maxlength="1" required>
                                 <input type="text" name="enam" class="num" maxlength="1" required>
                             </div>
-                            <br>
-                            <span style="color: red; font-size:10px">* OTP dikirim via email</span>
                         </div>
                         <div class="mt-4">
                             <button type="submit" class="btn btn-success w-100">Submit</button>
@@ -73,7 +77,6 @@
             </div>
         </div>
     </div>
-    <!-- End of Modal -->
 
     <div class="auth-page-wrapper auth-bg-cover py-5 d-flex justify-content-center align-items-center min-vh-100">
         <div class="bg-overlay"></div>

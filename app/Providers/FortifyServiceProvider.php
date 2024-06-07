@@ -78,6 +78,7 @@ class FortifyServiceProvider extends ServiceProvider
                     // Mail::to($user->email)->send(new SendOtpMail($otp));
                     Mail::to($email)->send(new SendOtpMail($otp));
                     session(['otp_user_id' => $user->id]);
+                    session(['otp_email' => $user->email]);
                     return null;
                 }
 
