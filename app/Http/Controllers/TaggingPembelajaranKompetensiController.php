@@ -99,7 +99,9 @@ class TaggingPembelajaranKompetensiController extends Controller
             foreach ($toAdd as $kompetensiId) {
                 DB::table('tagging_pembelajaran_kompetensi')->insert([
                     'topik_id' => $id,
-                    'kompetensi_id' => $kompetensiId
+                    'kompetensi_id' => $kompetensiId,
+                    'created_at' => now(),
+                    'updated_at' => now()
                 ]);
             }
 
@@ -111,11 +113,8 @@ class TaggingPembelajaranKompetensiController extends Controller
 
             // Commit transaction
             DB::commit();
-
-            // If the process is successful, return success message
             Alert::toast('The tagging was updated successfully.', 'success');
         } catch (\Exception $e) {
-            // If an error occurs, rollback the transaction and return error message
             DB::rollback();
             Alert::toast('The tagging was updated failed.', 'error');
             return back()->withErrors(['message' => $e->getMessage()]);
@@ -124,15 +123,16 @@ class TaggingPembelajaranKompetensiController extends Controller
         return redirect()->route('tagging-pembelajaran-kompetensi.index');
     }
 
-    public function destroy(TaggingPembelajaranKompetensi $taggingPembelajaranKompetensi)
+    public function destroy($id)
     {
         try {
-            $taggingPembelajaranKompetensi->delete();
-            Alert::toast('The taggingPembelajaranKompetensi was deleted successfully.', 'success');
-            return redirect()->route('tagging-pembelajaran-kompetensi.index');
-        } catch (\Throwable $th) {
-            Alert::toast('The taggingPembelajaranKompetensi cant be deleted because its related to another table.', 'error');
-            return redirect()->route('tagging-pembelajaran-kompetensi.index');
+            DB::table('tagging_pembelajaran_kompetensi')->where('topik_id', $id)->delete();
+            Alert::toast('Tagging deleted successfully.', 'success');
+        } catch (\Exception $e) {
+            Alert::toast('Failed to delete Tagging.', 'error');
         }
+
+        // Redirect back to the previous page
+        return back();
     }
 }
