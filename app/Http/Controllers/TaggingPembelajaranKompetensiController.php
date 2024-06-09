@@ -48,11 +48,31 @@ class TaggingPembelajaranKompetensiController extends Controller
         return view('tagging-pembelajaran-kompetensi.index');
     }
 
-    public function settingTagging($topik_id)
+    public function settingTagging($id)
     {
-        return view('tagging-pembelajaran-kompetensi.edit');
-    }
+        $topik = DB::table('topik')->where('id', $id)->first();
+        if (!$topik) {
+            return redirect()->back()->with('error', 'Topik tidak ditemukan.');
+        }
 
+        // Fetch assigned kompetensi_ids
+        $assignedKompetensiIds = DB::table('tagging_pembelajaran_kompetensi')
+            ->where('topik_id', $topik->id)
+            ->pluck('kompetensi_id');
+
+        // Fetch available items from the 'kompetensi' table excluding the assigned ones
+        $availableItems = DB::table('kompetensi')
+            ->whereNotIn('id', $assignedKompetensiIds)
+            ->pluck('nama_kompetensi', 'id');
+
+        // Fetch assigned items from the 'tagging_pembelajaran_kompetensi' table
+        $assignedItems = DB::table('tagging_pembelajaran_kompetensi')
+            ->join('kompetensi', 'tagging_pembelajaran_kompetensi.kompetensi_id', '=', 'kompetensi.id')
+            ->where('tagging_pembelajaran_kompetensi.topik_id', $topik->id)
+            ->pluck('kompetensi.nama_kompetensi', 'kompetensi.id');
+
+        return view('tagging-pembelajaran-kompetensi.edit', compact('topik', 'assignedItems', 'availableItems'));
+    }
     public function destroy(TaggingPembelajaranKompetensi $taggingPembelajaranKompetensi)
     {
         try {
