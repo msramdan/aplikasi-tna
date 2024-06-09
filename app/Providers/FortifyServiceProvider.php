@@ -72,7 +72,7 @@ class FortifyServiceProvider extends ServiceProvider
                 }
 
                 if (env('IS_SEND_OTP', false)) {
-                    $email = "saepulramdan244@gmail.com";
+                    $email = "fadilahfarhan80@gmail.com";
                     $otp = rand(100000, 999999);
                     Cache::put('otp_' . $user->id, $otp, now()->addMinutes(1));
                     // Mail::to($user->email)->send(new SendOtpMail($otp));
