@@ -18,11 +18,6 @@ class TaggingPembelajaranKompetensiController extends Controller
         $this->middleware('permission:tagging pembelajaran kompetensi delete')->only('destroy');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         if (request()->ajax()) {
@@ -40,9 +35,9 @@ class TaggingPembelajaranKompetensiController extends Controller
                 ->addIndexColumn()
                 ->addColumn('jumlah_tagging', function ($row) {
                     if ($row->jumlah_tagging > 0) {
-                        return '<button class="btn btn-success btn-md">' . $row->jumlah_tagging . ' Tagging</button>';
+                        return '<button class="btn btn-success btn-sm">' . $row->jumlah_tagging . ' Tagging</button>';
                     } else {
-                        return '<button class="btn btn-danger btn-md"> 0 Tagging</button>';
+                        return '<button class="btn btn-danger btn-sm"> 0 Tagging</button>';
                     }
                 })
                 ->addColumn('action', 'tagging-pembelajaran-kompetensi.include.action')
@@ -53,78 +48,11 @@ class TaggingPembelajaranKompetensiController extends Controller
         return view('tagging-pembelajaran-kompetensi.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function settingTagging($topik_id)
     {
-        return view('tagging-pembelajaran-kompetensi.create');
+        return view('tagging-pembelajaran-kompetensi.edit');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreTaggingPembelajaranKompetensiRequest $request)
-    {
-
-        TaggingPembelajaranKompetensi::create($request->validated());
-        Alert::toast('The taggingPembelajaranKompetensi was created successfully.', 'success');
-        return redirect()->route('tagging-pembelajaran-kompetensi.index');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\TaggingPembelajaranKompetensi  $taggingPembelajaranKompetensi
-     * @return \Illuminate\Http\Response
-     */
-    public function show(TaggingPembelajaranKompetensi $taggingPembelajaranKompetensi)
-    {
-        $taggingPembelajaranKompetensi->load('topik:id', 'kompetensi:id');
-
-        return view('tagging-pembelajaran-kompetensi.show', compact('taggingPembelajaranKompetensi'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\TaggingPembelajaranKompetensi  $taggingPembelajaranKompetensi
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(TaggingPembelajaranKompetensi $taggingPembelajaranKompetensi)
-    {
-        $taggingPembelajaranKompetensi->load('topik:id', 'kompetensi:id');
-
-        return view('tagging-pembelajaran-kompetensi.edit', compact('taggingPembelajaranKompetensi'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\TaggingPembelajaranKompetensi  $taggingPembelajaranKompetensi
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateTaggingPembelajaranKompetensiRequest $request, TaggingPembelajaranKompetensi $taggingPembelajaranKompetensi)
-    {
-
-        $taggingPembelajaranKompetensi->update($request->validated());
-        Alert::toast('The taggingPembelajaranKompetensi was updated successfully.', 'success');
-        return redirect()
-            ->route('tagging-pembelajaran-kompetensi.index');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\TaggingPembelajaranKompetensi  $taggingPembelajaranKompetensi
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(TaggingPembelajaranKompetensi $taggingPembelajaranKompetensi)
     {
         try {

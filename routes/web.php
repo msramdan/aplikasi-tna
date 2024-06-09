@@ -55,8 +55,14 @@ Route::middleware(['auth', 'web'])->group(function () {
     });
 
     Route::resource('jadwal-kap-tahunan', JadwalKapTahunanController::class);
-    Route::resource('tagging-pembelajaran-kompetensi', TaggingPembelajaranKompetensiController::class);
-
+    Route::controller(TaggingPembelajaranKompetensiController::class)->group(function () {
+        Route::get('/tagging-pembelajaran-kompetensi', 'index')->name('tagging-pembelajaran-kompetensi.index');
+        Route::get('/tagging-pembelajaran-kompetensi/{topik_id}', 'settingTagging')->name('tagging-pembelajaran-kompetensi.setting');
+        Route::delete('/tagging-pembelajaran-kompetensi/{id}', 'destroy')->name('tagging-pembelajaran-kompetensi.destroy');
+    });
+    Route::controller(ActivityLogController::class)->group(function () {
+        Route::get('/activity-log', 'index')->name('activity-log.index');
+    });
     Route::controller(ActivityLogController::class)->group(function () {
         Route::get('/activity-log', 'index')->name('activity-log.index');
     });

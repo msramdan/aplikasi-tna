@@ -1,6 +1,6 @@
 <td>
     @can('tagging pembelajaran kompetensi edit')
-        <a href="{{ route('tagging-pembelajaran-kompetensi.edit', $model->id) }}" class="btn btn-secondary btn-sm">
+        <a href="{{ route('tagging-pembelajaran-kompetensi.setting', $model->id) }}" class="btn btn-secondary btn-sm">
             <i class="fa fa-tag"></i>
         </a>
     @endcan
