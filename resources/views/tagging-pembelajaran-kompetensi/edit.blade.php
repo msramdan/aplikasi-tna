@@ -15,7 +15,8 @@
                                     <a href="/panel">Dashboard</a>
                                 </li>
                                 <li class="breadcrumb-item">
-                                    <a href="{{ route('tagging-pembelajaran-kompetensi.index') }}">{{ __('Tagging Pembelajaran Kompetensi') }}</a>
+                                    <a
+                                        href="{{ route('tagging-pembelajaran-kompetensi.index') }}">{{ __('Tagging Pembelajaran Kompetensi') }}</a>
                                 </li>
                                 <li class="breadcrumb-item active" aria-current="page">
                                     {{ __('Edit') }}
@@ -40,12 +41,15 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            <form method="POST" action="{{ route('tagging-pembelajaran-kompetensi.update', ['id' => $topik->id]) }}" onsubmit="selectAllAssigned()">
+                            <form method="POST"
+                                action="{{ route('tagging-pembelajaran-kompetensi.update', ['id' => $topik->id]) }}"
+                                onsubmit="selectAllAssigned()">
                                 @csrf
                                 @method('POST')
                                 <div class="row">
                                     <div class="col-md-5">
-                                        <input type="text" id="search-available" class="form-control mb-2" placeholder="Search for available">
+                                        <input type="text" id="search-available" class="form-control mb-2"
+                                            placeholder="Search for available">
                                         <select id="available" class="form-control" multiple size="20">
                                             @foreach ($availableItems as $id => $nama_kompetensi)
                                                 <option value="{{ $id }}">{{ $nama_kompetensi }}</option>
@@ -53,20 +57,30 @@
                                         </select>
                                     </div>
                                     <div class="col-md-2 d-flex flex-column justify-content-center align-items-center">
-                                        <button type="button" onclick="moveToAssigned()" class="btn btn-success mb-2">>></button>
-                                        <button type="button" onclick="moveToAvailable()" class="btn btn-danger"><<</button>
+                                        <button type="button" onclick="moveToAssigned()"
+                                            class="btn btn-success mb-2">>></button>
+                                        <button type="button" onclick="moveToAvailable()" class="btn btn-danger">
+                                            << </button>
                                     </div>
                                     <div class="col-md-5">
-                                        <input type="text" id="search-assigned" class="form-control mb-2" placeholder="Search for assigned">
-                                        <select id="assigned" class="form-control" multiple size="20" name="assigned[]">
+                                        <input type="text" id="search-assigned"
+                                            class="form-control mb-2 @error('message') is-invalid @enderror"
+                                            placeholder="Search for assigned">
+                                        <select id="assigned" class="form-control @error('message') is-invalid @enderror"
+                                            multiple size="20" name="assigned[]">
                                             @foreach ($assignedItems as $id => $nama_kompetensi)
                                                 <option value="{{ $id }}">{{ $nama_kompetensi }}</option>
                                             @endforeach
                                         </select>
+                                        @error('message')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+
                                     </div>
                                 </div>
                                 <div class="mt-3">
-                                    <a href="{{ route('tagging-pembelajaran-kompetensi.index') }}" class="btn btn-secondary">
+                                    <a href="{{ route('tagging-pembelajaran-kompetensi.index') }}"
+                                        class="btn btn-secondary">
                                         <i class="mdi mdi-arrow-left-thin"></i> {{ __('Back') }}
                                     </a>
                                     <button type="submit" class="btn btn-primary">
