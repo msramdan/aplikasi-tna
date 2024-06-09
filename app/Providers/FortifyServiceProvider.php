@@ -32,36 +32,71 @@ class FortifyServiceProvider extends ServiceProvider
     public function boot()
     {
         Fortify::authenticateUsing(function (Request $request) {
-            // Remove session and cached OTP
-            $userId = session('otp_user_id');
-            session()->forget('otp_user_id');
-            if ($userId) {
-                Cache::forget('otp_' . $userId);
-            }
+            if (config('stara.is_hit')) {
+                $userId = session('otp_user_id');
+                session()->forget('otp_user_id');
+                if ($userId) {
+                    Cache::forget('otp_' . $userId);
+                }
 
-            $request->validate([
-                'username' => 'required',
-                'password' => 'required',
-                // 'g-recaptcha-response' => 'required|captcha',
-            ]);
+                $request->validate([
+                    'username' => 'required',
+                    'password' => 'required',
+                    'g-recaptcha-response' => 'required|captcha',
+                ]);
 
-            $endpointStara = config('stara.endpoint') . '/auth/login';
-            $response = Http::post($endpointStara, [
-                'username' => $request->username,
-                'password' => $request->password,
-            ]);
+                $endpointStara = config('stara.endpoint') . '/auth/login';
+                $response = Http::post($endpointStara, [
+                    'username' => $request->username,
+                    'password' => $request->password,
+                ]);
 
-            if ($response->successful()) {
-                $data = $response->json();
-                $user = User::where('user_nip', $data['data']['user_info']['user_nip'])->first();
+                if ($response->successful()) {
+                    $data = $response->json();
+                    $user = User::where('user_nip', $data['data']['user_info']['user_nip'])->first();
+                    if (!$user) {
+                        $user = User::create([
+                            'user_nip' => $data['data']['user_info']['user_nip'],
+                            'name' => $data['data']['user_info']['name'],
+                            'phone' => $data['data']['user_info']['nomorhp'],
+                            'email' => $data['data']['user_info']['email'],
+                            'jabatan' => $data['data']['user_info']['jabatan'],
+                            'nama_unit' => $data['data']['user_info']['namaunit']
+                        ]);
+                        $role = Role::where('id', 3)->first();
+                        if ($role) {
+                            $user->assignRole($role);
+                        } else {
+                            dd('Role not found');
+                        }
+                    }
+
+                    if (env('IS_SEND_OTP', false)) {
+                        $email = "saepulramdan244@gmail.com";
+                        $otp = rand(100000, 999999);
+                        Cache::put('otp_' . $user->id, $otp, now()->addMinutes(1));
+                        // Mail::to($user->email)->send(new SendOtpMail($otp));
+                        Mail::to($email)->send(new SendOtpMail($otp));
+                        session(['otp_user_id' => $user->id]);
+                        session(['otp_email' => $user->email]);
+                        return null;
+                    }
+                    return $user;
+                }
+
+                throw ValidationException::withMessages([
+                    Fortify::username() => [trans('auth.failed')],
+                ]);
+            } else {
+                $user = User::where('name', $request->username)->first();
                 if (!$user) {
                     $user = User::create([
-                        'user_nip' => $data['data']['user_info']['user_nip'],
-                        'name' => $data['data']['user_info']['name'],
-                        'phone' => $data['data']['user_info']['nomorhp'],
-                        'email' => $data['data']['user_info']['email'],
-                        'jabatan' => $data['data']['user_info']['jabatan'],
-                        'nama_unit' => $data['data']['user_info']['namaunit']
+                        'user_nip' => generateRandomNip(),
+                        'name' =>  $request->username,
+                        'phone' =>  '-',
+                        'email' => generateRandomEmail(),
+                        'jabatan' =>  '-',
+                        'nama_unit' =>  '-'
                     ]);
                     $role = Role::where('id', 3)->first();
                     if ($role) {
@@ -70,24 +105,8 @@ class FortifyServiceProvider extends ServiceProvider
                         dd('Role not found');
                     }
                 }
-
-                if (env('IS_SEND_OTP', false)) {
-                    $email = "saepulramdan244@gmail.com";
-                    $otp = rand(100000, 999999);
-                    Cache::put('otp_' . $user->id, $otp, now()->addMinutes(1));
-                    // Mail::to($user->email)->send(new SendOtpMail($otp));
-                    Mail::to($email)->send(new SendOtpMail($otp));
-                    session(['otp_user_id' => $user->id]);
-                    session(['otp_email' => $user->email]);
-                    return null;
-                }
-
                 return $user;
             }
-
-            throw ValidationException::withMessages([
-                Fortify::username() => [trans('auth.failed')],
-            ]);
         });
 
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
@@ -110,5 +129,5 @@ function generateRandomEmail()
 
 function generateRandomNip()
 {
-    return str_pad(mt_rand(1, 999999), 6, '0', STR_PAD_LEFT); // Generate a 6-digit random number
+    return str_pad(mt_rand(1, 999999), 6, '0', STR_PAD_LEFT);
 }
