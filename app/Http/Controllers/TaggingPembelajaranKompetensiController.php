@@ -35,7 +35,7 @@ class TaggingPembelajaranKompetensiController extends Controller
                 ->addIndexColumn()
                 ->addColumn('jumlah_tagging', function ($row) {
                     if ($row->jumlah_tagging > 0) {
-                        return '<button class="btn btn-success btn-sm">' . $row->jumlah_tagging . ' Tagging</button>';
+                        return '<button class="btn btn-info btn-sm">' . $row->jumlah_tagging . ' Tagging</button>';
                     } else {
                         return '<button class="btn btn-danger btn-sm"> 0 Tagging</button>';
                     }
