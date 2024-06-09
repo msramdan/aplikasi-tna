@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\TaggingPembelajaranKompetensi;
-use App\Http\Requests\{StoreTaggingPembelajaranKompetensiRequest, UpdateTaggingPembelajaranKompetensiRequest};
 use Yajra\DataTables\Facades\DataTables;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class TaggingPembelajaranKompetensiController extends Controller
 {
@@ -54,25 +54,57 @@ class TaggingPembelajaranKompetensiController extends Controller
         if (!$topik) {
             return redirect()->back()->with('error', 'Topik tidak ditemukan.');
         }
-
-        // Fetch assigned kompetensi_ids
-        $assignedKompetensiIds = DB::table('tagging_pembelajaran_kompetensi')
-            ->where('topik_id', $topik->id)
-            ->pluck('kompetensi_id');
-
-        // Fetch available items from the 'kompetensi' table excluding the assigned ones
-        $availableItems = DB::table('kompetensi')
-            ->whereNotIn('id', $assignedKompetensiIds)
-            ->pluck('nama_kompetensi', 'id');
-
-        // Fetch assigned items from the 'tagging_pembelajaran_kompetensi' table
         $assignedItems = DB::table('tagging_pembelajaran_kompetensi')
             ->join('kompetensi', 'tagging_pembelajaran_kompetensi.kompetensi_id', '=', 'kompetensi.id')
             ->where('tagging_pembelajaran_kompetensi.topik_id', $topik->id)
             ->pluck('kompetensi.nama_kompetensi', 'kompetensi.id');
 
+        $availableItems = DB::table('kompetensi')
+            ->whereNotIn('id', $assignedItems->keys())
+            ->pluck('nama_kompetensi', 'id');
+
         return view('tagging-pembelajaran-kompetensi.edit', compact('topik', 'assignedItems', 'availableItems'));
     }
+    public function updateTagging(Request $request, $id)
+    {
+        // Validate the request
+        $request->validate([
+            'assigned' => 'required|array'
+        ]);
+
+        // Get the assigned kompetensi IDs from the request
+        $newAssignedKompetensiIds = $request->input('assigned');
+
+        // Get current assigned kompetensi IDs from the database
+        $currentAssignedKompetensiIds = DB::table('tagging_pembelajaran_kompetensi')
+            ->where('topik_id', $id)
+            ->pluck('kompetensi_id')
+            ->toArray();
+
+        // Determine which kompetensi IDs to add
+        $toAdd = array_diff($newAssignedKompetensiIds, $currentAssignedKompetensiIds);
+
+        // Determine which kompetensi IDs to remove
+        $toRemove = array_diff($currentAssignedKompetensiIds, $newAssignedKompetensiIds);
+
+        // Add new kompetensi IDs
+        foreach ($toAdd as $kompetensiId) {
+            DB::table('tagging_pembelajaran_kompetensi')->insert([
+                'topik_id' => $id,
+                'kompetensi_id' => $kompetensiId
+            ]);
+        }
+
+        // Remove deselected kompetensi IDs
+        DB::table('tagging_pembelajaran_kompetensi')
+            ->where('topik_id', $id)
+            ->whereIn('kompetensi_id', $toRemove)
+            ->delete();
+
+        return redirect()->route('tagging-pembelajaran-kompetensi.index')->with('success', 'Tagging updated successfully.');
+    }
+
+
     public function destroy(TaggingPembelajaranKompetensi $taggingPembelajaranKompetensi)
     {
         try {

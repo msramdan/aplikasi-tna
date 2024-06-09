@@ -15,8 +15,7 @@
                                     <a href="/panel">Dashboard</a>
                                 </li>
                                 <li class="breadcrumb-item">
-                                    <a
-                                        href="{{ route('tagging-pembelajaran-kompetensi.index') }}">{{ __('Tagging Pembelajaran Kompetensi') }}</a>
+                                    <a href="{{ route('tagging-pembelajaran-kompetensi.index') }}">{{ __('Tagging Pembelajaran Kompetensi') }}</a>
                                 </li>
                                 <li class="breadcrumb-item active" aria-current="page">
                                     {{ __('Edit') }}
@@ -41,43 +40,55 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-5">
-                                    <input type="text" id="search-available" class="form-control mb-2"
-                                        placeholder="Search for available">
-                                    <select id="available" class="form-control" multiple size="20">
-                                        @foreach ($availableItems as $id => $nama_kompetensi)
-                                            <option value="{{ $id }}">{{ $nama_kompetensi }}</option>
-                                        @endforeach
-                                    </select>
+                            <form method="POST" action="{{ route('tagging-pembelajaran-kompetensi.update', ['id' => $topik->id]) }}" onsubmit="selectAllAssigned()">
+                                @csrf
+                                @method('POST')
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <input type="text" id="search-available" class="form-control mb-2" placeholder="Search for available">
+                                        <select id="available" class="form-control" multiple size="20">
+                                            @foreach ($availableItems as $id => $nama_kompetensi)
+                                                <option value="{{ $id }}">{{ $nama_kompetensi }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2 d-flex flex-column justify-content-center align-items-center">
+                                        <button type="button" onclick="moveToAssigned()" class="btn btn-success mb-2">>></button>
+                                        <button type="button" onclick="moveToAvailable()" class="btn btn-danger"><<</button>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <input type="text" id="search-assigned" class="form-control mb-2" placeholder="Search for assigned">
+                                        <select id="assigned" class="form-control" multiple size="20" name="assigned[]">
+                                            @foreach ($assignedItems as $id => $nama_kompetensi)
+                                                <option value="{{ $id }}">{{ $nama_kompetensi }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="col-md-2 d-flex flex-column justify-content-center align-items-center">
-                                    <button onclick="moveToAssigned()" class="btn btn-success mb-2">>></button>
-                                    <button onclick="moveToAvailable()" class="btn btn-danger">
-                                        << </button>
+                                <div class="mt-3">
+                                    <a href="{{ route('tagging-pembelajaran-kompetensi.index') }}" class="btn btn-secondary">
+                                        <i class="mdi mdi-arrow-left-thin"></i> {{ __('Back') }}
+                                    </a>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="mdi mdi-content-save"></i> {{ __('Update') }}
+                                    </button>
                                 </div>
-                                <div class="col-md-5">
-                                    <input type="text" id="search-assigned" class="form-control mb-2"
-                                        placeholder="Search for assigned">
-                                    <select id="assigned" class="form-control" multiple size="20">
-                                        @foreach ($assignedItems as $id => $nama_kompetensi)
-                                            <option value="{{ $id }}">{{ $nama_kompetensi }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
-                    <a href="{{ route('tagging-pembelajaran-kompetensi.index') }}" class="btn btn-secondary"><i
-                            class="mdi mdi-arrow-left-thin"></i> {{ __('Back') }}</a>
-                    <button type="submit" class="btn btn-primary"><i class="mdi mdi-content-save"></i>
-                        {{ __('Update') }}</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
+        function selectAllAssigned() {
+            const assigned = document.getElementById('assigned');
+            for (let i = 0; i < assigned.options.length; i++) {
+                assigned.options[i].selected = true;
+            }
+        }
+
         function moveToAssigned() {
             const available = document.getElementById('available');
             const assigned = document.getElementById('assigned');
