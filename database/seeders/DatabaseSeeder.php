@@ -19,5 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(LokasiSeeder::class);
         $this->call(RuangKelasSeeder::class);
         $this->call(AsramaSeeder::class);
+        $this->call(KompetensiSeeder::class);
+        $this->call(TopikSeeder::class);
     }
 }

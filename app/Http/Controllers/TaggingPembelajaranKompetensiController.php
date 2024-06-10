@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\TaggingPembelajaranKompetensi;
-use App\Http\Requests\{StoreTaggingPembelajaranKompetensiRequest, UpdateTaggingPembelajaranKompetensiRequest};
 use Yajra\DataTables\Facades\DataTables;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class TaggingPembelajaranKompetensiController extends Controller
 {
@@ -18,11 +18,6 @@ class TaggingPembelajaranKompetensiController extends Controller
         $this->middleware('permission:tagging pembelajaran kompetensi delete')->only('destroy');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         if (request()->ajax()) {
@@ -40,9 +35,9 @@ class TaggingPembelajaranKompetensiController extends Controller
                 ->addIndexColumn()
                 ->addColumn('jumlah_tagging', function ($row) {
                     if ($row->jumlah_tagging > 0) {
-                        return '<button class="btn btn-success btn-md">' . $row->jumlah_tagging . ' Tagging</button>';
+                        return '<button class="btn btn-info btn-sm">' . $row->jumlah_tagging . ' Tagging</button>';
                     } else {
-                        return '<button class="btn btn-danger btn-md"> 0 Tagging</button>';
+                        return '<button class="btn btn-danger btn-sm"> 0 Tagging</button>';
                     }
                 })
                 ->addColumn('action', 'tagging-pembelajaran-kompetensi.include.action')
@@ -53,87 +48,91 @@ class TaggingPembelajaranKompetensiController extends Controller
         return view('tagging-pembelajaran-kompetensi.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function settingTagging($id)
     {
-        return view('tagging-pembelajaran-kompetensi.create');
+        $topik = DB::table('topik')->where('id', $id)->first();
+        if (!$topik) {
+            return redirect()->back()->with('error', 'Topik tidak ditemukan.');
+        }
+        $assignedItems = DB::table('tagging_pembelajaran_kompetensi')
+            ->join('kompetensi', 'tagging_pembelajaran_kompetensi.kompetensi_id', '=', 'kompetensi.id')
+            ->where('tagging_pembelajaran_kompetensi.topik_id', $topik->id)
+            ->pluck('kompetensi.nama_kompetensi', 'kompetensi.id');
+
+        $availableItems = DB::table('kompetensi')
+            ->whereNotIn('id', $assignedItems->keys())
+            ->pluck('nama_kompetensi', 'id');
+
+        return view('tagging-pembelajaran-kompetensi.edit', compact('topik', 'assignedItems', 'availableItems'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreTaggingPembelajaranKompetensiRequest $request)
+    public function updateTagging(Request $request, $id)
     {
+        try {
+            // Validate the request
+            $request->validate([
+                'assigned' => 'required|array'
+            ]);
 
-        TaggingPembelajaranKompetensi::create($request->validated());
-        Alert::toast('The taggingPembelajaranKompetensi was created successfully.', 'success');
+            // Get the assigned kompetensi IDs from the request
+            $newAssignedKompetensiIds = $request->input('assigned');
+
+            // Get current assigned kompetensi IDs from the database
+            $currentAssignedKompetensiIds = DB::table('tagging_pembelajaran_kompetensi')
+                ->where('topik_id', $id)
+                ->pluck('kompetensi_id')
+                ->toArray();
+
+            // Make sure $currentAssignedKompetensiIds is an array
+            $currentAssignedKompetensiIds = is_array($currentAssignedKompetensiIds) ? $currentAssignedKompetensiIds : [];
+
+            // Determine which kompetensi IDs to add
+            $toAdd = array_diff($newAssignedKompetensiIds, $currentAssignedKompetensiIds);
+
+            // Determine which kompetensi IDs to remove
+            $toRemove = array_diff($currentAssignedKompetensiIds, $newAssignedKompetensiIds);
+
+            // Start transaction
+            DB::beginTransaction();
+
+            // Add new kompetensi IDs
+            foreach ($toAdd as $kompetensiId) {
+                DB::table('tagging_pembelajaran_kompetensi')->insert([
+                    'topik_id' => $id,
+                    'kompetensi_id' => $kompetensiId,
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]);
+            }
+
+            // Remove deselected kompetensi IDs
+            DB::table('tagging_pembelajaran_kompetensi')
+                ->where('topik_id', $id)
+                ->whereIn('kompetensi_id', $toRemove)
+                ->delete();
+
+            // Commit transaction
+            DB::commit();
+            Alert::toast('The tagging was updated successfully.', 'success');
+        } catch (\Exception $e) {
+            DB::rollback();
+            Alert::toast('The tagging was updated failed.', 'error');
+            return back()->withErrors(['message' => $e->getMessage()]);
+        }
+
         return redirect()->route('tagging-pembelajaran-kompetensi.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\TaggingPembelajaranKompetensi  $taggingPembelajaranKompetensi
-     * @return \Illuminate\Http\Response
-     */
-    public function show(TaggingPembelajaranKompetensi $taggingPembelajaranKompetensi)
-    {
-        $taggingPembelajaranKompetensi->load('topik:id', 'kompetensi:id');
-
-        return view('tagging-pembelajaran-kompetensi.show', compact('taggingPembelajaranKompetensi'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\TaggingPembelajaranKompetensi  $taggingPembelajaranKompetensi
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(TaggingPembelajaranKompetensi $taggingPembelajaranKompetensi)
-    {
-        $taggingPembelajaranKompetensi->load('topik:id', 'kompetensi:id');
-
-        return view('tagging-pembelajaran-kompetensi.edit', compact('taggingPembelajaranKompetensi'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\TaggingPembelajaranKompetensi  $taggingPembelajaranKompetensi
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateTaggingPembelajaranKompetensiRequest $request, TaggingPembelajaranKompetensi $taggingPembelajaranKompetensi)
-    {
-
-        $taggingPembelajaranKompetensi->update($request->validated());
-        Alert::toast('The taggingPembelajaranKompetensi was updated successfully.', 'success');
-        return redirect()
-            ->route('tagging-pembelajaran-kompetensi.index');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\TaggingPembelajaranKompetensi  $taggingPembelajaranKompetensi
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(TaggingPembelajaranKompetensi $taggingPembelajaranKompetensi)
+    public function destroy($id)
     {
         try {
-            $taggingPembelajaranKompetensi->delete();
-            Alert::toast('The taggingPembelajaranKompetensi was deleted successfully.', 'success');
-            return redirect()->route('tagging-pembelajaran-kompetensi.index');
-        } catch (\Throwable $th) {
-            Alert::toast('The taggingPembelajaranKompetensi cant be deleted because its related to another table.', 'error');
-            return redirect()->route('tagging-pembelajaran-kompetensi.index');
+            DB::table('tagging_pembelajaran_kompetensi')->where('topik_id', $id)->delete();
+            Alert::toast('Tagging deleted successfully.', 'success');
+        } catch (\Exception $e) {
+            Alert::toast('Failed to delete Tagging.', 'error');
         }
+
+        // Redirect back to the previous page
+        return back();
     }
 }
