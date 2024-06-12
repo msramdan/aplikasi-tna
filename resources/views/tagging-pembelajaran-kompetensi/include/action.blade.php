@@ -1,6 +1,6 @@
 <td>
-    <button type="button" class="btn btn-info btn-sm btn-detail-kompetensi" data-id="{{ $model->id }}"
-        data-nama_kompetensi="" data-deskripsi_kompetensi=""><i class="mdi mdi-format-list-bulleted"></i></button>
+    <button type="button" class="btn btn-info btn-sm btn-detail-tagging" data-id="{{ $model->id }}"
+        data-pembelajaran="{{ $model->nama_topik }}"><i class="mdi mdi-format-list-bulleted"></i></button>
     @can('tagging pembelajaran kompetensi edit')
         <a href="{{ route('tagging-pembelajaran-kompetensi.setting', $model->id) }}" class="btn btn-success btn-sm">
             <i class="fa fa-tag"></i>

@@ -224,6 +224,17 @@
                             },
                             success: function(response) {
                                 $('#loading-overlay').hide();
+
+                                if (!response.success) {
+                                    Swal.fire({
+                                        icon: 'warning',
+                                        title: 'Alert',
+                                        text: response.message,
+                                    });
+                                    return;
+                                }
+
+
                                 $('#modalDetailKompetensi').modal('show');
                                 $('#modalDetailKompetensiNama').text(
                                     nama_kompetensi);
@@ -261,6 +272,12 @@
                                 $('.modal-body-detail').html(tableHtml);
                             },
                             error: function(error) {
+                                $('#loading-overlay').hide();
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: 'Terjadi kesalahan saat mengambil data.',
+                                });
                                 console.error('Error:', error);
                             },
                         });

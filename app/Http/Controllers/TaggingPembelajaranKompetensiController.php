@@ -135,4 +135,23 @@ class TaggingPembelajaranKompetensiController extends Controller
         // Redirect back to the previous page
         return back();
     }
+
+    public function detailTaggingPembelajaranKompetensi(Request $request)
+    {
+        $id = $request->id;
+        try {
+            $dataTagging = DB::table('tagging_pembelajaran_kompetensi')
+                ->join('kompetensi', 'tagging_pembelajaran_kompetensi.kompetensi_id', '=', 'kompetensi.id')
+                ->where('tagging_pembelajaran_kompetensi.topik_id', $id)
+                ->select('tagging_pembelajaran_kompetensi.*', 'kompetensi.nama_kompetensi')
+                ->get();
+            if ($dataTagging->isNotEmpty()) {
+                return response()->json(['success' => true, 'data' => $dataTagging]);
+            } else {
+                return response()->json(['success' => false, 'message' => 'Tagging pembelajaran - kompetensi tidak ditemukan']);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
 }

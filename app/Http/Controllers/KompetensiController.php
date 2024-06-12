@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kompetensi;
-use App\Http\Requests\{ImportKompetensiRequest,StoreKompetensiRequest, UpdateKompetensiRequest};
+use App\Http\Requests\{ImportKompetensiRequest, StoreKompetensiRequest, UpdateKompetensiRequest};
 use Yajra\DataTables\Facades\DataTables;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\DB;
@@ -183,7 +183,7 @@ class KompetensiController extends Controller
                 return response()->json(['success' => true, 'data' => $kompetensiDetail]);
             } else {
                 // Jika data tidak ditemukan, kembalikan respons dengan pesan kesalahan
-                return response()->json(['success' => false, 'message' => 'Data kompetensi tidak ditemukan'], 404);
+                return response()->json(['success' => false, 'message' => 'Data detail kompetensi tidak ditemukan']);
             }
         } catch (\Exception $e) {
             // Jika terjadi kesalahan, kembalikan respons dengan pesan kesalahan
