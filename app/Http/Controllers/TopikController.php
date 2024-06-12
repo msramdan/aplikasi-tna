@@ -130,14 +130,14 @@ class TopikController extends Controller
     public function exportTopik()
     {
         $date = date('d-m-Y');
-        $nameFile = 'Topik pembelajaran ' . $date;
+        $nameFile = 'Pembelajaran ' . $date;
         return Excel::download(new ExportTopikPembelajaran(), $nameFile . '.xlsx');
     }
 
     public function importTopik(ImportTopikRequest $request)
     {
         Excel::import(new ImportTopik, $request->file('import_topik'));
-        Alert::toast('Topik pembelajaran has been successfully imported.', 'success');
+        Alert::toast('Pembelajaran has been successfully imported.', 'success');
         return back();
     }
 }

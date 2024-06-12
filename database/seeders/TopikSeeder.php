@@ -9,6 +9,6 @@ class TopikSeeder extends Seeder
 {
     public function run()
     {
-        Topik::factory()->count(100)->create();
+        Topik::factory()->count(10)->create();
     }
 }

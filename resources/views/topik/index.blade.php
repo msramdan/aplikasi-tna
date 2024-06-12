@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('Topik pembelajaran'))
+@section('title', __('Pembelajaran'))
 
 @section('content')
     <style>
@@ -51,7 +51,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Import Topik Pembelajaran</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Import Pembelajaran</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form method="POST" action="{{ route('importTopik') }}" enctype="multipart/form-data">
@@ -81,11 +81,11 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">{{ __('Topik pembelajaran') }}</h4>
+                        <h4 class="mb-sm-0">{{ __('Pembelajaran') }}</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
-                                <li class="breadcrumb-item active">{{ __('Topik pembelajaran') }}</li>
+                                <li class="breadcrumb-item active">{{ __('Pembelajaran') }}</li>
                             </ol>
                         </div>
 
@@ -109,7 +109,7 @@
                         <div class="card-header">
                             @can('topik create')
                                 <a href="{{ route('topik.create') }}" class="btn btn-md btn-primary"> <i
-                                        class="mdi mdi-plus"></i> {{ __('Create a new topik') }}</a>
+                                        class="mdi mdi-plus"></i> {{ __('Create a new Pembelajaran') }}</a>
                                 <button type="button" class="btn btn-warning" data-bs-toggle="modal"
                                     data-bs-target="#exampleModal"><i class='fa fa-upload'></i>
                                     {{ __('Import') }}
@@ -127,7 +127,7 @@
                                     <thead class="table-dark">
                                         <tr>
                                             <th>#</th>
-                                            <th>{{ __('Nama Topik') }}</th>
+                                            <th>{{ __('Nama Pembelajaran') }}</th>
                                             <th>{{ __('Action') }}</th>
                                         </tr>
                                     </thead>
@@ -201,7 +201,7 @@
                 success: function(data) {
                     var link = document.createElement('a');
                     link.href = window.URL.createObjectURL(data);
-                    var nameFile = 'Topik pembelajaran.xlsx'
+                    var nameFile = 'Pembelajaran.xlsx'
                     console.log(nameFile)
                     link.download = nameFile;
                     link.click();

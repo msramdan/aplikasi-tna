@@ -2,7 +2,7 @@
     <thead>
         <tr>
             <th style="background-color:#D3D3D3 ">No</th>
-            <th style="background-color:#D3D3D3 ">Topik pembelajaran</th>
+            <th style="background-color:#D3D3D3 ">Pembelajaran</th>
         </tr>
     </thead>
     <tbody>

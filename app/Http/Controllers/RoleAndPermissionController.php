@@ -112,7 +112,7 @@ class RoleAndPermissionController extends Controller
 
         if ($oldPermissions !== $newPermissions) {
             activity()
-                ->useLog('role_log')
+                ->useLog('log_role')
                 ->causedBy(auth()->user())
                 ->performedOn($role)
                 ->withProperties([

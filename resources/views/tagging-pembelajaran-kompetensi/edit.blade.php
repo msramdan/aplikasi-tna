@@ -31,7 +31,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="alert alert-primary" role="alert">
-                                <b>Topik pembelajaran :</b><br>
+                                <b>Pembelajaran :</b><br>
                                 {{ $topik->nama_topik }}
                             </div>
                         </div>

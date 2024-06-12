@@ -33,7 +33,7 @@ class Topik extends Model
         } else {
             $user = "Super Admin";
         }
-        return "Topik pembelajaran " . $this->nama_lokasi . " {$eventName} By "  . $user;
+        return "Pembelajaran " . $this->nama_lokasi . " {$eventName} By "  . $user;
     }
 
     protected $casts = ['nama_topik' => 'string', 'created_at' => 'datetime:d/m/Y H:i', 'updated_at' => 'datetime:d/m/Y H:i'];

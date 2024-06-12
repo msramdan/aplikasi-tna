@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('Detail of Topik pembelajaran'))
+@section('title', __('Detail of Pembelajaran'))
 
 @section('content')
     <div class="page-body">
@@ -8,13 +8,13 @@
             <div class="page-header" style="margin-top: 5px">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h3>{{ __('Topik pembelajaran') }}</h3>
+                        <h3>{{ __('Pembelajaran') }}</h3>
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
                                 <a href="/">Dashboard</a>
                             </li>
                             <li class="breadcrumb-item">
-                                <a href="{{ route('topiks.index') }}">{{ __('Topik pembelajaran') }}</a>
+                                <a href="{{ route('topiks.index') }}">{{ __('Pembelajaran') }}</a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">
                                 {{ __('Detail') }}
