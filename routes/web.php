@@ -18,7 +18,8 @@ use App\Http\Controllers\{
     RuangKelasController,
     SettingAppController,
     TaggingPembelajaranKompetensiController,
-    TopikController
+    TopikController,
+    TaggingKompetensiIkController
 };
 use App\Http\Controllers\Auth\OtpController;
 
@@ -62,6 +63,13 @@ Route::middleware(['auth', 'web'])->group(function () {
         Route::delete('/tagging-pembelajaran-kompetensi/{id}', 'destroy')->name('tagging-pembelajaran-kompetensi.destroy');
         Route::get('/detailTaggingPembelajaranKompetensi', 'detailTaggingPembelajaranKompetensi')->name('detailTaggingPembelajaranKompetensi');
     });
+    Route::controller(TaggingKompetensiIkController::class)->group(function () {
+        Route::get('/tagging-kompetensi-ik', 'index')->name('tagging-kompetensi-ik.index');
+        Route::get('/tagging-kompetensi-ik/{topik_id}', 'settingTagging')->name('tagging-kompetensi-ik.setting');
+        Route::post('/tagging-kompetensi-ik/update/{id}', 'updateTagging')->name('tagging-kompetensi-ik.update');
+        Route::delete('/tagging-kompetensi-ik/{id}', 'destroy')->name('tagging-kompetensi-ik.destroy');
+    });
+
     Route::controller(ActivityLogController::class)->group(function () {
         Route::get('/activity-log', 'index')->name('activity-log.index');
     });

@@ -59,13 +59,13 @@
                 </li>
             @endcanany
 
-            @canany(['tagging pembelajaran kompetensi view'])
+            @canany(['tagging pembelajaran kompetensi view', 'tagging kompetensi ik view'])
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarMultilevel" data-bs-toggle="collapse" role="button"
                         aria-expanded="" aria-controls="sidebarMultilevel">
                         <i class="fa fa-tag"></i> <span data-key="t-multi-level">Setting Tagging</span>
                     </a>
-                    <div class="collapse menu-dropdown {{ set_show(['tagging-pembelajaran-kompetensi*']) }}"
+                    <div class="collapse menu-dropdown {{ set_show(['tagging-pembelajaran-kompetensi*', 'tagging-kompetensi-ik*']) }}"
                         id="sidebarMultilevel">
                         <ul class="nav nav-sm flex-column">
                             @can('tagging pembelajaran kompetensi view')
@@ -76,28 +76,34 @@
                                 </li>
                             @endcan
 
+                            @can('tagging kompetensi ik view')
+                                <li class="nav-item">
+                                    <a href="#taggingKompetensiIk" class="nav-link" data-bs-toggle="collapse" role="button"
+                                        aria-expanded="" aria-controls="taggingKompetensiIk" data-key="t-level-1.2">Tag
+                                        Kompetensi &
+                                        IK</a>
+                                    <div class="collapse menu-dropdown {{ set_show(['tagging-kompetensi-ik*']) }}"
+                                        id="taggingKompetensiIk">
+                                        <ul class="nav nav-sm flex-column">
+                                            <li class="nav-item">
+                                                <a href="{{ route('tagging-kompetensi-ik.index') }}"
+                                                    class="nav-link {{ set_active(['tagging-kompetensi-ik*']) }}"
+                                                    data-key="t-level-2.1">Renstra</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="#" class="nav-link " data-key="t-level-2.1">APP</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="#" class="nav-link " data-key="t-level-2.1">APEP</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="#" class="nav-link " data-key="t-level-2.1">APIP</a>
+                                            </li>
 
-                            <li class="nav-item">
-                                <a href="#sidebarAccount" class="nav-link" data-bs-toggle="collapse" role="button"
-                                    aria-expanded="" aria-controls="sidebarAccount" data-key="t-level-1.2">Tag Kompetensi &
-                                    IK</a>
-                                <div class="collapse menu-dropdown" id="sidebarAccount">
-                                    <ul class="nav nav-sm flex-column">
-                                        <li class="nav-item">
-                                            <a href="#" class="nav-link " data-key="t-level-2.1">Renstra</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="#" class="nav-link " data-key="t-level-2.1">APP</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="#" class="nav-link " data-key="t-level-2.1">APEP</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="#" class="nav-link " data-key="t-level-2.1">APIP</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            @endcan
                         </ul>
                     </div>
                 </li>
