@@ -1,14 +1,12 @@
 <?php
+
 return [
-    'email' => 'E-mail Address',
+    'profile' => 'Profile',
+    'dashboard' => 'Dashboard',
+    'data' => 'Profile Data',
     'name' => 'Name',
-    'phone' => 'Number Phone',
+    'email' => 'Email',
+    'phone' => 'Phone Number',
     'avatar' => 'Avatar',
-    'profile' => 'User Profile',
-    'data' => 'User Data',
-    'change-password' => 'Change Password',
-    'current-password' => 'Current Password',
-    'new-password' => 'New Password',
-    'confirm-password' => 'Confirm Password',
-    'update' => 'Update Data',
+    'update' => 'Update Profile',
 ];

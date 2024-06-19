@@ -1,16 +1,14 @@
 <?php
+
 return [
-    'head' => 'Dashboard',
-    'welcome' => 'Selamat Datang,',
-    'wo_total' => 'Total Perintah Kerja',
-    'euip_total' => 'Total Peralatan',
-    'employee_total' => 'Total Karyawan',
-    'vendor_total' => 'Total Rekanan',
-    'total_status_wo' => 'Total Wo Berdasarkan Status',
-    'total_category_wo' => 'Total Wo Berdasarkan Kategori',
-    'total_type_wo' => 'Total WO Berdasarkan Jenis',
-    'op_sparepat' => 'Rekaman Onderdil',
-    'stock_in_sparepat' => 'Onderdil Masuk',
-    'stock_out_sparepat' => 'Onderdil Keluar',
-    'location_employee_vendor' => 'Lokasi Karyawan & Rekanan',
+    'welcome' => 'Selamat Datang',
+    'total_lokasi' => 'Total Lokasi',
+    'total_ruang_kelas' => 'Total Ruang Kelas',
+    'total_asrama' => 'Total Asrama',
+    'total_user' => 'Total Pengguna',
+    'usulan_pelatihan_sumber_dana' => 'Usulan Pelatihan Berdasarkan Sumber Dana',
+    'usulan_pelatihan_peserta' => 'Usulan Pelatihan Berdasarkan Peserta',
+    'usulan_pelatihan_status' => 'Usulan Pelatihan Berdasarkan Status',
+    'status_ruang_kelas' => 'Status Ruang Kelas Berdasarkan Ketersediaan',
+    'status_asrama' => 'Status Asrama Berdasarkan Ketersediaan',
 ];

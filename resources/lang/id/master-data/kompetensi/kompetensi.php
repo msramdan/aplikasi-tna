@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'kompetensi' => 'Kompetensi',
+    'import_kompetensi' => 'Import Kompetensi',
+    'unduh_format' => 'Unduh Format',
+    'close' => 'Tutup',
+    'submit' => 'Kirim',
+    'detail_kompetensi' => 'Detail Kompetensi',
+    'nama_kompetensi' => 'Nama Kompetensi',
+    'deskripsi_kompetensi' => 'Deskripsi Kompetensi',
+    'dashboard' => 'Dasboard',
+    'failed' => 'Gagal!',
+    'create_new' => 'Buat kompetensi baru',
+    'import' => 'Import',
+    'export' => 'Ekspor',
+    'action' => 'Aksi',
+    'level' => 'Level',
+    'deskripsi_level' => 'Deskripsi Level',
+    'indikator_perilaku' => 'Indikator Perilaku',
+    'error_fetching_data' => 'Terjadi kesalahan saat mengambil data.',
+    'please_wait' => 'Harap Tunggu!',
+    'exporting_data' => 'Sedang melakukan proses ekspor data...',
+    'filename' => 'Kamus_Kompetensi.xlsx',
+    'export_failed' => 'Ekspor data gagal',
+    'check_error' => 'Silakan periksa',
+];
