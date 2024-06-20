@@ -1,7 +1,5 @@
 <?php
 return [
-  'name' => 'Name',
-  'hospital' => 'Hospital',
-  'select_hospital' => 'Select Hospital',
-  'permission' => 'Permissions',
+    'name' => 'Name',
+    'permission' => 'List of permissions',
 ];

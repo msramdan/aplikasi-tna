@@ -40,7 +40,7 @@
                                             <th>{{ trans('utilities/users/index.name') }}</th>
                                             <th>{{ trans('utilities/users/index.role') }}</th>
                                             <th>{{ trans('utilities/users/index.email') }}</th>
-                                            <th>{{ __('Action') }}</th>
+                                            <th>{{ trans('utilities/users/index.action') }}</th>
                                         </tr>
                                     </thead>
                                 </table>

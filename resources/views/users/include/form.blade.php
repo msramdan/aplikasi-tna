@@ -31,10 +31,10 @@
     @isset($user)
         <div class="col-md-12 mb-3">
             <div class="form-group">
-                <label for="role">{{ __('Role') }}</label>
+                <label for="role">{{ trans('utilities/users/form.role') }}</label>
                 <select class="form-select js-example-basic-multiple" name="role" id="role" class="form-control"
                     required>
-                    <option value="" selected disabled>{{ __('-- Select role --') }}</option>
+                    <option value="" selected disabled>{{ trans('utilities/users/form.select_role') }}</option>
                     @foreach ($roles as $role)
                         <option value="{{ $role->id }}"
                             {{ $user->getRoleNames()->toArray() !== [] && $user->getRoleNames()[0] == $role->name ? 'selected' : '-' }}>
@@ -55,10 +55,10 @@
                 @if ($user->avatar == null)
                     <img class="img-thumbnail"
                         src="https://www.gravatar.com/avatar/{{ md5(strtolower(trim($user->email))) }}&s=450"
-                        alt="avatar" >
+                        alt="avatar">
                 @else
                     <img style="70px" class="img-thumbnail" src="{{ asset("uploads/images/avatars/$user->avatar") }}"
-                        alt="avatar" >
+                        alt="avatar">
                 @endif
             </div>
         </div>
@@ -75,7 +75,7 @@
                 @enderror
                 @if ($user->avatar == null)
                     <div id="passwordHelpBlock" class="form-text">
-                        {{ __('Leave the avatar blank if you don`t want to change it.') }}
+                        {{ trans('utilities/users/form.note_avatar') }}
                     </div>
                 @endif
             </div>
