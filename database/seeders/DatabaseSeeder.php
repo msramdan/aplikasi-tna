@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call(KelompokBesarSeeder::class);
         $this->call(NamaAkademiSeeder::class);
         $this->call(KelompokBesarSeeder::class);
+        $this->call(KategoriKompetensiSeeder::class);
         // $this->call(KompetensiSeeder::class);
         // $this->call(TopikSeeder::class);
     }
