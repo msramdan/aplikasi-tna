@@ -9,6 +9,6 @@ return [
     'training_by_funding_source' => 'Proposal Pelatihan Berdasarkan Sumber Dana',
     'training_by_participants' => 'Proposal Pelatihan Berdasarkan Peserta',
     'training_by_status' => 'Proposal Pelatihan Berdasarkan Status',
-    'classroom_status_by_status' => 'Status Ruang Kelas Berdasarkan Status',
-    'dormitory_status_by_status' => 'Status Asrama Berdasarkan Status',
+    'classroom_status_by_status' => 'Ruang Kelas Berdasarkan Status',
+    'dormitory_status_by_status' => 'Asrama Berdasarkan Status',
 ];
