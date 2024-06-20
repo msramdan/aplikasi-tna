@@ -61,12 +61,14 @@
                                 aria-describedby="import_kompetensi" accept=".xlsx" required>
                             <div id="downloadFormat" class="form-text"> <a
                                     href="{{ asset('format_import/format_import_kompetensi.xlsx') }}"><i
-                                        class="fa fa-download" aria-hidden="true"></i> {{ __('master-data.kompetensi.unduh_format') }}</a>
+                                        class="fa fa-download" aria-hidden="true"></i>
+                                    {{ __('master-data.kompetensi.unduh_format') }}</a>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('master-data.kompetensi.close') }}</button>
+                        <button type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">{{ __('master-data.kompetensi.close') }}</button>
                         <button type="submit" class="btn btn-primary">{{ __('master-data.kompetensi.submit') }}</button>
                     </div>
                 </form>
@@ -88,6 +90,21 @@
                     <table class="table" style="text-align: justify">
                         <tbody>
                             <tr>
+                                <th scope="row">Kelompok besar</th>
+                                <td>:</td>
+                                <td><span id="modalDetailKategoriBesar"></span></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Kategori</th>
+                                <td>:</td>
+                                <td><span id="modalDetailKategori"></span></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Nama akademi</th>
+                                <td>:</td>
+                                <td><span id="modalDetailNamaAkademi"></span></td>
+                            </tr>
+                            <tr>
                                 <th scope="row">{{ __('master-data.kompetensi.nama_kompetensi') }}</th>
                                 <td>:</td>
                                 <td><span id="modalDetailKompetensiNama"></span></td>
@@ -104,7 +121,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('master-data.kompetensi.close') }}</button>
+                    <button type="button" class="btn btn-secondary"
+                        data-bs-dismiss="modal">{{ __('master-data.kompetensi.close') }}</button>
                 </div>
             </div>
         </div>
@@ -118,7 +136,8 @@
                         <h4 class="mb-sm-0">{{ __('master-data.kompetensi.kompetensi') }}</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="/">{{ __('master-data.kompetensi.dashboard') }}</a></li>
+                                <li class="breadcrumb-item"><a
+                                        href="/">{{ __('master-data.kompetensi.dashboard') }}</a></li>
                                 <li class="breadcrumb-item active">{{ __('master-data.kompetensi.kompetensi') }}</li>
                             </ol>
                         </div>
@@ -141,7 +160,8 @@
                         <div class="card-header">
                             @can('kompetensi create')
                                 <a href="{{ route('kompetensi.create') }}" class="btn btn-md btn-primary"> <i
-                                        class="mdi mdi-plus"></i> {{ trans('master-data/kompetensi/kompetensi.create_new') }}</a>
+                                        class="mdi mdi-plus"></i>
+                                    {{ trans('master-data/kompetensi/kompetensi.create_new') }}</a>
                                 <button type="button" class="btn btn-warning" data-bs-toggle="modal"
                                     data-bs-target="#exampleModal"><i class='fa fa-upload'></i>
                                     {{ __('master-data.kompetensi.import') }}
@@ -199,7 +219,7 @@
                         data: 'nama_kategori_kompetensi',
                         name: 'nama_kategori_kompetensi',
                     },
-                      {
+                    {
                         data: 'nama_akademi',
                         name: 'nama_akademi',
                     },
@@ -222,6 +242,9 @@
                 drawCallback: function() {
                     $('.btn-detail-kompetensi').click(function() {
                         var id = $(this).data('id');
+                        var nama_kelompok_besar = $(this).data('nama_kelompok_besar');
+                        var nama_kategori_kompetensi = $(this).data('nama_kategori_kompetensi');
+                        var nama_akademi = $(this).data('nama_akademi');
                         var nama_kompetensi = $(this).data('nama_kompetensi');
                         var deskripsi_kompetensi = $(this).data('deskripsi_kompetensi');
                         var csrfToken = $('meta[name="csrf-token"]').attr('content');
@@ -246,27 +269,38 @@
                                 }
 
                                 $('#modalDetailKompetensi').modal('show');
+                                $('#modalDetailKategoriBesar').text(
+                                    nama_kelompok_besar);
+                                $('#modalDetailKategori').text(
+                                    nama_kategori_kompetensi);
+                                $('#modalDetailNamaAkademi').text(
+                                    nama_akademi);
                                 $('#modalDetailKompetensiNama').text(
                                     nama_kompetensi);
                                 $('#modalDetailKompetensiDeskripsi').text(
                                     deskripsi_kompetensi);
-
                                 var tableHtml =
                                     '<div class="table-responsive p-1"><table class="table table-striped">';
                                 tableHtml += '<thead>';
                                 tableHtml += '<tr>';
-                                tableHtml += '<th>{{ __('master-data.kompetensi.level') }}</th>';
-                                tableHtml += '<th>{{ __('master-data.kompetensi.deskripsi_level') }}</th>';
-                                tableHtml += '<th>{{ __('master-data.kompetensi.indikator_perilaku') }}</th>';
+                                tableHtml +=
+                                    '<th>{{ __('master-data.kompetensi.level') }}</th>';
+                                tableHtml +=
+                                    '<th>{{ __('master-data.kompetensi.deskripsi_level') }}</th>';
+                                tableHtml +=
+                                    '<th>{{ __('master-data.kompetensi.indikator_perilaku') }}</th>';
                                 tableHtml += '</tr>';
                                 tableHtml += '</thead>';
                                 tableHtml += '<tbody></div>';
 
                                 $.each(response.data, function(index, item) {
                                     tableHtml += '<tr>';
-                                    tableHtml += '<td>' + item.level + '</td>';
-                                    tableHtml += '<td>' + item.deskripsi_level + '</td>';
-                                    tableHtml += '<td>' + item.indikator_perilaku + '</td>';
+                                    tableHtml += '<td>' + item.level +
+                                        '</td>';
+                                    tableHtml += '<td>' + item
+                                        .deskripsi_level + '</td>';
+                                    tableHtml += '<td>' + item
+                                        .indikator_perilaku + '</td>';
                                     tableHtml += '</tr>';
                                 });
 
