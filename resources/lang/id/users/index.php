@@ -1,9 +1,9 @@
 <?php
 return [
-    'head' => 'Users',
+    'head' => 'Pengguna',
     'avatar' => 'Avatar',
-    'role' => 'Role',
-    'name' => 'Name',
-    'email' => 'Email',
-    'action' => 'Action',
+    'role' => 'Peran',
+    'name' => 'Nama',
+    'email' => 'Surel',
+    'action' => 'Aksi',
 ];

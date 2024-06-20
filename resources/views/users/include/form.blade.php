@@ -1,10 +1,10 @@
 <div class="row">
     <div class="col-md-12 mb-3">
         <div class="form-group">
-            <label for="name">{{ trans('users/') }}</label>
+            <label for="name">{{ trans('users/form.name') }}</label>
             <input readonly type="text" name="name" id="name"
                 class="form-control @error('name') is-invalid @enderror"
-                placeholder="{{ trans('utilities/users/form.name') }}"
+                placeholder="{{ trans('users/form.name') }}"
                 value="{{ isset($user) ? $user->name : old('name') }}" required autofocus>
             @error('name')
                 <span class="text-danger">
@@ -16,10 +16,10 @@
 
     <div class="col-md-12 mb-3">
         <div class="form-group">
-            <label for="email">{{ trans('utilities/users/form.email') }}</label>
+            <label for="email">{{ trans('users/form.email') }}</label>
             <input readonly type="email" name="email" id="email"
                 class="form-control @error('email') is-invalid @enderror"
-                placeholder="{{ trans('utilities/users/form.email') }}"
+                placeholder="{{ trans('users/form.email') }}"
                 value="{{ isset($user) ? $user->email : old('email') }}" required>
             @error('email')
                 <span class="text-danger">
@@ -31,10 +31,10 @@
     @isset($user)
         <div class="col-md-12 mb-3">
             <div class="form-group">
-                <label for="role">{{ trans('utilities/users/form.role') }}</label>
+                <label for="role">{{ trans('users/form.role') }}</label>
                 <select class="form-select js-example-basic-multiple" name="role" id="role" class="form-control"
                     required>
-                    <option value="" selected disabled>{{ trans('utilities/users/form.select_role') }}</option>
+                    <option value="" selected disabled>{{ trans('users/form.select_role') }}</option>
                     @foreach ($roles as $role)
                         <option value="{{ $role->id }}"
                             {{ $user->getRoleNames()->toArray() !== [] && $user->getRoleNames()[0] == $role->name ? 'selected' : '-' }}>
@@ -65,7 +65,7 @@
 
         <div class="col-md-8 mb-3">
             <div class="form-group">
-                <label for="avatar">{{ trans('utilities/users/form.avatar') }}</label>
+                <label for="avatar">{{ trans('users/form.avatar') }}</label>
                 <input type="file" name="avatar" class="form-control @error('avatar') is-invalid @enderror"
                     id="avatar">
                 @error('avatar')
@@ -75,7 +75,7 @@
                 @enderror
                 @if ($user->avatar == null)
                     <div id="passwordHelpBlock" class="form-text">
-                        {{ trans('utilities/users/form.note_avatar') }}
+                        {{ trans('users/form.note_avatar') }}
                     </div>
                 @endif
             </div>

@@ -1,9 +1,9 @@
 <div class="row mb-2">
     <div class="col-md-6">
         <div class="form-group">
-            <label for="name">{{ trans('utilities/rolepermission/form.name') }}</label>
+            <label for="name">{{ trans('roles/form.name') }}</label>
             <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror"
-                placeholder="{{ trans('utilities/rolepermission/form.name') }}"
+                placeholder="{{ trans('roles/form.name') }}"
                 value="{{ isset($role) ? $role->name : old('name') }}" autofocus required>
             @error('name')
                 <span class="text-danger">
@@ -17,7 +17,7 @@
 <div class="row">
     <div class="col-md-12">
 
-        <label class="mb-1">{{ trans('utilities/rolepermission/form.permission') }}</label>
+        <label class="mb-1">{{ trans('roles/form.permission') }}</label>
         @error('permissions')
             <div class="text-danger mb-2 mt-0">{{ $message }}</div>
         @enderror

@@ -10,14 +10,14 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">{{ trans('utilities/setting/setting.head') }}</h4>
+                        <h4 class="mb-sm-0">{{ trans('setting-apps/form.head') }}</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item">
                                     <a href="/">Dashboard</a>
                                 </li>
                                 <li class="breadcrumb-item active">
-                                    <a href="{{ route('setting-apps.index') }}">{{ trans('utilities/setting/setting.head') }}</a>
+                                    <a href="{{ route('setting-apps.index') }}">{{ trans('setting-apps/form.head') }}</a>
                                 </li>
                             </ol>
                         </div>
