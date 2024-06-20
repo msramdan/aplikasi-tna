@@ -30,7 +30,12 @@ class KompetensiController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $kompetensi = Kompetensi::query();
+            $kompetensi = DB::table('kompetensi')
+                ->leftJoin('kelompok_besar', 'kompetensi.kelompok_besar_id', '=', 'kelompok_besar.id')
+                ->leftJoin('nama_akademi', 'kompetensi.nama_akademi_id', '=', 'nama_akademi.id')
+                ->leftJoin('kategori_kompetensi', 'kompetensi.kategori_kompetensi_id', '=', 'kategori_kompetensi.id')
+                ->select('kompetensi.*', 'kelompok_besar.nama_kelompok_besar', 'nama_akademi.nama_akademi', 'kategori_kompetensi.nama_kategori_kompetensi')
+                ->get();
 
             return DataTables::of($kompetensi)
                 ->addIndexColumn()
@@ -51,7 +56,14 @@ class KompetensiController extends Controller
      */
     public function create()
     {
-        return view('kompetensi.create');
+        $kelompokBesar = DB::table('kelompok_besar')->get();
+        $namaAkademi = DB::table('nama_akademi')->get();
+        $kategoriKompetensi = DB::table('kategori_kompetensi')->get();
+        return view('kompetensi.create', [
+            'kelompokBesar' => $kelompokBesar,
+            'namaAkademi' => $namaAkademi,
+            'kategoriKompetensi' => $kategoriKompetensi
+        ]);
     }
 
     /**
@@ -119,7 +131,10 @@ class KompetensiController extends Controller
         $kompetensiDetail = DB::table('kompetensi_detail')
             ->where('kompetensi_id', $kompetensi->id)
             ->get();
-        return view('kompetensi.edit', compact('kompetensi', 'kompetensiDetail'));
+        $kelompokBesar = DB::table('kelompok_besar')->get();
+        $namaAkademi = DB::table('nama_akademi')->get();
+        $kategoriKompetensi = DB::table('kategori_kompetensi')->get();
+        return view('kompetensi.edit', compact('kompetensi', 'kompetensiDetail', 'kelompokBesar', 'namaAkademi', 'kategoriKompetensi'));
     }
 
     /**

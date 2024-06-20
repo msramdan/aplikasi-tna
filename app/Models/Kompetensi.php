@@ -14,7 +14,7 @@ class Kompetensi extends Model
     use LogsActivity;
     protected $table = 'kompetensi';
 
-    protected $fillable = ['nama_kompetensi', 'deskripsi_kompetensi'];
+    protected $fillable = ['nama_kompetensi', 'deskripsi_kompetensi','kelompok_besar_id','kategori_kompetensi_id','nama_akademi_id'];
 
     protected $casts = ['nama_kompetensi' => 'string', 'deskripsi_kompetensi' => 'string', 'created_at' => 'datetime:d/m/Y H:i', 'updated_at' => 'datetime:d/m/Y H:i'];
 

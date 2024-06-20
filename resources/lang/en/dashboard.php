@@ -2,13 +2,13 @@
 
 return [
     'welcome' => 'Welcome',
-    'total_lokasi' => 'Total Locations',
-    'total_ruang_kelas' => 'Total Classrooms',
-    'total_asrama' => 'Total Dormitories',
-    'total_user' => 'Total Users',
-    'usulan_pelatihan_sumber_dana' => 'Training Proposals by Funding Source',
-    'usulan_pelatihan_peserta' => 'Training Proposals by Participants',
-    'usulan_pelatihan_status' => 'Training Proposals by Status',
-    'status_ruang_kelas' => 'Classroom Status by Availability',
-    'status_asrama' => 'Dormitory Status by Availability',
+    'total_location' => 'Total Locations',
+    'total_classrooms' => 'Total Classrooms',
+    'total_dormitories' => 'Total Dormitories',
+    'total_users' => 'Total Users',
+    'training_by_funding_source' => 'Training Proposals by Funding Source',
+    'training_by_participants' => 'Training Proposals by Participants',
+    'training_by_status' => 'Training Proposals by Status',
+    'classroom_status_by_status' => 'Classroom Status by Status',
+    'dormitory_status_by_status' => 'Dormitory Status by Status',
 ];

@@ -2,13 +2,13 @@
 
 return [
     'welcome' => 'Selamat Datang',
-    'total_lokasi' => 'Total Lokasi',
-    'total_ruang_kelas' => 'Total Ruang Kelas',
-    'total_asrama' => 'Total Asrama',
-    'total_user' => 'Total Pengguna',
-    'usulan_pelatihan_sumber_dana' => 'Usulan Pelatihan Berdasarkan Sumber Dana',
-    'usulan_pelatihan_peserta' => 'Usulan Pelatihan Berdasarkan Peserta',
-    'usulan_pelatihan_status' => 'Usulan Pelatihan Berdasarkan Status',
-    'status_ruang_kelas' => 'Status Ruang Kelas Berdasarkan Ketersediaan',
-    'status_asrama' => 'Status Asrama Berdasarkan Ketersediaan',
+    'total_location' => 'Total Lokasi',
+    'total_classrooms' => 'Total Ruang Kelas',
+    'total_dormitories' => 'Total Asrama',
+    'total_users' => 'Total Pengguna',
+    'training_by_funding_source' => 'Proposal Pelatihan Berdasarkan Sumber Dana',
+    'training_by_participants' => 'Proposal Pelatihan Berdasarkan Peserta',
+    'training_by_status' => 'Proposal Pelatihan Berdasarkan Status',
+    'classroom_status_by_status' => 'Status Ruang Kelas Berdasarkan Status',
+    'dormitory_status_by_status' => 'Status Asrama Berdasarkan Status',
 ];
