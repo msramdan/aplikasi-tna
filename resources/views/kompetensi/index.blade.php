@@ -141,7 +141,7 @@
                         <div class="card-header">
                             @can('kompetensi create')
                                 <a href="{{ route('kompetensi.create') }}" class="btn btn-md btn-primary"> <i
-                                        class="mdi mdi-plus"></i> {{ __('master-data.kompetensi.create_new') }}</a>
+                                        class="mdi mdi-plus"></i> {{ trans('master-data/kompetensi/kompetensi.create_new') }}</a>
                                 <button type="button" class="btn btn-warning" data-bs-toggle="modal"
                                     data-bs-target="#exampleModal"><i class='fa fa-upload'></i>
                                     {{ __('master-data.kompetensi.import') }}
