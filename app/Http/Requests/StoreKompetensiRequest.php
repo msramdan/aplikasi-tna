@@ -26,6 +26,9 @@ class StoreKompetensiRequest extends FormRequest
         return [
             'nama_kompetensi' => 'required|string|max:255',
 			'deskripsi_kompetensi' => 'required|string',
+            'kelompok_besar_id' => 'required',
+            'kategori_kompetensi_id' => 'required',
+            'nama_akademi_id' => 'required',
         ];
     }
 }

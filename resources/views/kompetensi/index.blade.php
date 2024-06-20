@@ -162,7 +162,10 @@
                                     <thead class="table-dark">
                                         <tr>
                                             <th>#</th>
-                                            <th>{{ __('Nama Kompetensi') }}</th>
+                                            <th>{{ __('Kategori besar') }}</th>
+                                            <th>{{ __('Kategori') }}</th>
+                                            <th>{{ __('Nama akademi') }}</th>
+                                            <th>{{ __('Nama kompetensi') }}</th>
                                             <th>{{ __('Deskripsi Kompetensi') }}</th>
                                             <th>{{ __('Action') }}</th>
                                         </tr>
@@ -191,6 +194,18 @@
                         name: 'DT_RowIndex',
                         orderable: false,
                         searchable: false
+                    },
+                    {
+                        data: 'nama_kelompok_besar',
+                        name: 'nama_kelompok_besar',
+                    },
+                    {
+                        data: 'nama_kategori_kompetensi',
+                        name: 'nama_kategori_kompetensi',
+                    },
+                      {
+                        data: 'nama_akademi',
+                        name: 'nama_akademi',
                     },
                     {
                         data: 'nama_kompetensi',
