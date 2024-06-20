@@ -28,7 +28,7 @@
     <script src="{{ asset('material/assets/js/plugins.js') }}"></script>
     <script src="{{ asset('material/assets/js/pages/password-addon.init.js') }}"></script>
     <script>
-        function myFunction() {
+        function togglePasswordVisibility() {
             var x = document.getElementById("password");
             if (x.type === "password") {
                 x.type = "text";
