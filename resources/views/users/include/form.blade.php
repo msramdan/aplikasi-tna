@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-md-12 mb-3">
         <div class="form-group">
-            <label for="name">{{ trans('utilities/users/form.name') }}</label>
+            <label for="name">{{ trans('users/') }}</label>
             <input readonly type="text" name="name" id="name"
                 class="form-control @error('name') is-invalid @enderror"
                 placeholder="{{ trans('utilities/users/form.name') }}"
