@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('kompetensi'))
+@section('title', __('master-data.kompetensi.kompetensi'))
 
 @section('content')
     <style>
@@ -45,13 +45,12 @@
         <div class="loading-spinner"></div>
     </div>
 
-
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Import Kompetensi</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('master-data.kompetensi.import_kompetensi') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form method="POST" action="{{ route('importKompetensi') }}" enctype="multipart/form-data">
@@ -62,13 +61,13 @@
                                 aria-describedby="import_kompetensi" accept=".xlsx" required>
                             <div id="downloadFormat" class="form-text"> <a
                                     href="{{ asset('format_import/format_import_kompetensi.xlsx') }}"><i
-                                        class="fa fa-download" aria-hidden="true"></i> Unduh Format</a>
+                                        class="fa fa-download" aria-hidden="true"></i> {{ __('master-data.kompetensi.unduh_format') }}</a>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('master-data.kompetensi.close') }}</button>
+                        <button type="submit" class="btn btn-primary">{{ __('master-data.kompetensi.submit') }}</button>
                     </div>
                 </form>
             </div>
@@ -80,7 +79,7 @@
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Detail Kompetensi</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('master-data.kompetensi.detail_kompetensi') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <hr>
@@ -89,12 +88,12 @@
                     <table class="table" style="text-align: justify">
                         <tbody>
                             <tr>
-                                <th scope="row">Nama Kompetensi</th>
+                                <th scope="row">{{ __('master-data.kompetensi.nama_kompetensi') }}</th>
                                 <td>:</td>
                                 <td><span id="modalDetailKompetensiNama"></span></td>
                             </tr>
                             <tr>
-                                <th scope="row">Deskripsi Kompetensi</th>
+                                <th scope="row">{{ __('master-data.kompetensi.deskripsi_kompetensi') }}</th>
                                 <td>:</td>
                                 <td><span id="modalDetailKompetensiDeskripsi"></span></td>
                             </tr>
@@ -105,7 +104,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('master-data.kompetensi.close') }}</button>
                 </div>
             </div>
         </div>
@@ -116,21 +115,20 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">{{ __('kompetensi') }}</h4>
+                        <h4 class="mb-sm-0">{{ __('master-data.kompetensi.kompetensi') }}</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
-                                <li class="breadcrumb-item active">{{ __('kompetensi') }}</li>
+                                <li class="breadcrumb-item"><a href="/">{{ __('master-data.kompetensi.dashboard') }}</a></li>
+                                <li class="breadcrumb-item active">{{ __('master-data.kompetensi.kompetensi') }}</li>
                             </ol>
                         </div>
-
                     </div>
                 </div>
             </div>
             <div class="row">
                 @if (count($errors) > 0)
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <strong>Failed!</strong>
+                        <strong>{{ __('master-data.kompetensi.failed') }}</strong>
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
                         @endforeach
@@ -138,21 +136,20 @@
                     </div>
                 @endif
 
-
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="card-header">
                             @can('kompetensi create')
                                 <a href="{{ route('kompetensi.create') }}" class="btn btn-md btn-primary"> <i
-                                        class="mdi mdi-plus"></i> {{ __('Create a new kompetensi') }}</a>
+                                        class="mdi mdi-plus"></i> {{ __('master-data.kompetensi.create_new') }}</a>
                                 <button type="button" class="btn btn-warning" data-bs-toggle="modal"
                                     data-bs-target="#exampleModal"><i class='fa fa-upload'></i>
-                                    {{ __('Import') }}
+                                    {{ __('master-data.kompetensi.import') }}
                                 </button>
                             @endcan
                             <button id="btnExport" class="btn btn-success">
                                 <i class='fas fa-file-excel'></i>
-                                {{ __('Export') }}
+                                {{ __('master-data.kompetensi.export') }}
                             </button>
                         </div>
 
@@ -179,7 +176,6 @@
         </div>
     </div>
 @endsection
-
 
 @push('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.all.min.js"></script>
@@ -249,49 +245,42 @@
                                     return;
                                 }
 
-
                                 $('#modalDetailKompetensi').modal('show');
                                 $('#modalDetailKompetensiNama').text(
                                     nama_kompetensi);
                                 $('#modalDetailKompetensiDeskripsi').text(
                                     deskripsi_kompetensi);
 
-                                // Mendefinisikan variabel untuk menyimpan HTML tabel
                                 var tableHtml =
                                     '<div class="table-responsive p-1"><table class="table table-striped">';
                                 tableHtml += '<thead>';
                                 tableHtml += '<tr>';
-                                tableHtml += '<th>Level</th>';
-                                tableHtml += '<th>Deskripsi Level</th>';
-                                tableHtml += '<th>Indikator Perilaku</th>';
+                                tableHtml += '<th>{{ __('master-data.kompetensi.level') }}</th>';
+                                tableHtml += '<th>{{ __('master-data.kompetensi.deskripsi_level') }}</th>';
+                                tableHtml += '<th>{{ __('master-data.kompetensi.indikator_perilaku') }}</th>';
                                 tableHtml += '</tr>';
                                 tableHtml += '</thead>';
                                 tableHtml += '<tbody></div>';
 
-                                // Iterasi melalui data dan membangun baris-baris tabel
                                 $.each(response.data, function(index, item) {
                                     tableHtml += '<tr>';
-                                    tableHtml += '<td>' + item.level +
-                                        '</td>';
-                                    tableHtml += '<td>' + item
-                                        .deskripsi_level + '</td>';
-                                    tableHtml += '<td>' + item
-                                        .indikator_perilaku + '</td>';
+                                    tableHtml += '<td>' + item.level + '</td>';
+                                    tableHtml += '<td>' + item.deskripsi_level + '</td>';
+                                    tableHtml += '<td>' + item.indikator_perilaku + '</td>';
                                     tableHtml += '</tr>';
                                 });
 
                                 tableHtml += '</tbody>';
                                 tableHtml += '</table>';
 
-                                // Menambahkan HTML tabel ke dalam modal body
                                 $('.modal-body-detail').html(tableHtml);
                             },
                             error: function(error) {
                                 $('#loading-overlay').hide();
                                 Swal.fire({
                                     icon: 'error',
-                                    title: 'Error',
-                                    text: 'Terjadi kesalahan saat mengambil data.',
+                                    title: '{{ __('master-data.kompetensi.error_fetching_data') }}',
+                                    text: '{{ __('master-data.kompetensi.check_error') }}',
                                 });
                                 console.error('Error:', error);
                             },
@@ -307,7 +296,6 @@
         $(document).on('click', '#btnExport', function(event) {
             event.preventDefault();
             exportData();
-
         });
 
         var exportData = function() {
@@ -324,8 +312,8 @@
                 },
                 beforeSend: function() {
                     Swal.fire({
-                        title: 'Please Wait !',
-                        html: 'Sedang melakukan proses export data', // add html attribute if you want or remove
+                        title: '{{ __('master-data.kompetensi.please_wait') }}',
+                        html: '{{ __('master-data.kompetensi.exporting_data') }}',
                         allowOutsideClick: false,
                         onBeforeOpen: () => {
                             Swal.showLoading()
@@ -335,7 +323,7 @@
                 success: function(data) {
                     var link = document.createElement('a');
                     link.href = window.URL.createObjectURL(data);
-                    var nameFile = 'Kamus kompetensi.xlsx'
+                    var nameFile = '{{ __('master-data.kompetensi.filename') }}'
                     console.log(nameFile)
                     link.download = nameFile;
                     link.click();
@@ -345,8 +333,8 @@
                     console.log(data)
                     Swal.fire({
                         icon: 'error',
-                        title: "Data export failed",
-                        text: "Please check",
+                        title: '{{ __('master-data.kompetensi.export_failed') }}',
+                        text: '{{ __('master-data.kompetensi.check_error') }}',
                         allowOutsideClick: false,
                     })
                 }

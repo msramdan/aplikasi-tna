@@ -2,10 +2,11 @@
 
 return [
     'profile' => 'Profil',
+    'dashboard' => 'Dasboard',
     'data' => 'Data Profil',
     'name' => 'Nama',
     'email' => 'Email',
-    'phone' => 'No. HP',
+    'phone' => 'Nomor Telepon',
     'avatar' => 'Avatar',
     'update' => 'Perbarui Profil',
 ];

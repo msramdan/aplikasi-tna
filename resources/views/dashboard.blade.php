@@ -167,8 +167,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        {{-- Grafik ruang kelas dan Asrama --}}
                         <div class="row">
                             <div class="col-xl-6 col-md-6">
                                 <div class="card" style="height: 450px">
