@@ -3,7 +3,7 @@
         <tr>
             <th style="background-color:#D3D3D3 ">{{ __('Kelompok besar') }}</th>
             <th style="background-color:#D3D3D3 ">{{ __('kategori') }}</th>
-            <th style="background-color:#D3D3D3 ">{{ __('Nama akademi') }}</th>
+            <th style="background-color:#D3D3D3 ">{{ __('Akademi') }}</th>
             <th style="background-color:#D3D3D3 ">{{ __('Nama kompetensi') }}</th>
             <th style="background-color:#D3D3D3 ">{{ __('Deskripsi kompetensi') }}</th>
             <th style="background-color:#D3D3D3 ">{{ __('Level') }}</th>
