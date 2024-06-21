@@ -17,7 +17,7 @@
         <tr>
             <td>{{ $index + 1 }}</td>
             <td>{{ $row->nama_kelompok_besar }}</td>
-            <td>{{ $row->akademi }}</td>
+            <td>{{ $row->nama_akademi }}</td>
             <td>{{ $row->nama_kategori_kompetensi }}</td>
             <td>{{ $row->nama_kompetensi }}</td>
             <td>{{ $row->deskripsi_kompetensi }}</td>
