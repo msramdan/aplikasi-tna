@@ -6,23 +6,23 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
-class NamaAkademiSeeder extends Seeder
+class AkademiSeeder extends Seeder
 {
     public function run()
     {
         $datas = [
-            'Akademi Akuntansi Forensik dan Investigasi',
-            'Akademi Kompetensi Umum',
-            'Akademi Tata Kelola Korporasi',
-            'Akademi Tata Kelola Pemerintahan Daerah dan Desa',
-            'Akademi Tata Kelola Perekonomian dan Kemaritiman',
-            'Akademi Tata Kelola Polhukam dan PMK',
+            'Akuntansi Forensik dan Investigasi',
+            'Kompetensi Umum',
+            'Tata Kelola Korporasi',
+            'Tata Kelola Pemerintahan Daerah dan Desa',
+            'Tata Kelola Perekonomian dan Kemaritiman',
+            'Tata Kelola Polhukam dan PMK',
             'Cross Kompetensi',
             'Cross Pengawasan',
         ];
 
         foreach ($datas as $nama) {
-            DB::table('nama_akademi')->insert([
+            DB::table('akademi')->insert([
                 'nama_akademi' => $nama,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),

@@ -16,6 +16,9 @@ class ImportKompetensi implements ToCollection, WithHeadingRow, SkipsEmptyRows
     public function collection(Collection $collection)
     {
         Validator::make($collection->toArray(), [
+            '*.kelompok_besar' => 'required',
+            '*.kategori' => 'required',
+            '*.akademi' => 'required',
             '*.nama_kompetensi' => 'required',
             '*.deskripsi_kompetensi' => 'required',
             '*.level' => 'required',

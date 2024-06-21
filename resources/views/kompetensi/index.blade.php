@@ -34,6 +34,7 @@
             0% {
                 transform: rotate(0deg);
             }
+
             100% {
                 transform: rotate(360deg);
             }
@@ -59,7 +60,7 @@
                             <input type="file" class="form-control" id="import_kompetensi" name="import_kompetensi"
                                 aria-describedby="import_kompetensi" accept=".xlsx" required>
                             <div id="downloadFormat" class="form-text">
-                                <a href="{{ asset('format_import/format_import_kompetensi.xlsx') }}">
+                                <a href="#">
                                     <i class="fa fa-download" aria-hidden="true"></i>
                                     {{ trans('kompetensi\index.unduh_format') }}
                                 </a>
@@ -67,7 +68,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ trans('kompetensi\index.close') }}</button>
+                        <button type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">{{ trans('kompetensi\index.close') }}</button>
                         <button type="submit" class="btn btn-primary">{{ trans('kompetensi\index.submit') }}</button>
                     </div>
                 </form>
@@ -75,7 +77,8 @@
         </div>
     </div>
 
-    <div class="modal fade" id="modalDetailKompetensi" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modalDetailKompetensi" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
@@ -97,7 +100,7 @@
                                 <td><span id="modalDetailKategori"></span></td>
                             </tr>
                             <tr>
-                                <th scope="row">{{ trans('kompetensi\index.nama_akademi') }}</th>
+                                <th scope="row">{{ trans('kompetensi\index.akademi') }}</th>
                                 <td>:</td>
                                 <td><span id="modalDetailNamaAkademi"></span></td>
                             </tr>
@@ -117,7 +120,8 @@
                     <div class="modal-body-detail" style="text-align: justify"></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ trans('kompetensi\index.close') }}</button>
+                    <button type="button" class="btn btn-secondary"
+                        data-bs-dismiss="modal">{{ trans('kompetensi\index.close') }}</button>
                 </div>
             </div>
         </div>
@@ -131,7 +135,8 @@
                         <h4 class="mb-sm-0">{{ trans('kompetensi\index.kompetensi') }}</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="/">{{ trans('kompetensi\index.dashboard') }}</a></li>
+                                <li class="breadcrumb-item"><a href="/">{{ trans('kompetensi\index.dashboard') }}</a>
+                                </li>
                                 <li class="breadcrumb-item active">{{ trans('kompetensi\index.kompetensi') }}</li>
                             </ol>
                         </div>
@@ -157,7 +162,8 @@
                                     <i class="mdi mdi-plus"></i>
                                     {{ trans('kompetensi\index.create_new') }}
                                 </a>
-                                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal">
                                     <i class='fa fa-upload'></i>
                                     {{ trans('kompetensi\index.import') }}
                                 </button>
@@ -176,7 +182,7 @@
                                             <th>No</th>
                                             <th>{{ trans('kompetensi\index.kategori_besar') }}</th>
                                             <th>{{ trans('kompetensi\index.kategori') }}</th>
-                                            <th>{{ trans('kompetensi\index.nama_akademi') }}</th>
+                                            <th>{{ trans('kompetensi\index.akademi') }}</th>
                                             <th>{{ trans('kompetensi\index.nama_kompetensi') }}</th>
                                             <th>{{ trans('kompetensi\index.deskripsi_kompetensi') }}</th>
                                             <th>{{ trans('kompetensi\index.action') }}</th>
@@ -200,8 +206,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: "{{ route('kompetensi.index') }}",
-                columns: [
-                    {
+                columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex',
                         orderable: false,
@@ -265,26 +270,37 @@
                                 }
 
                                 $('#modalDetailKompetensi').modal('show');
-                                $('#modalDetailKategoriBesar').text(nama_kelompok_besar);
-                                $('#modalDetailKategori').text(nama_kategori_kompetensi);
+                                $('#modalDetailKategoriBesar').text(
+                                    nama_kelompok_besar);
+                                $('#modalDetailKategori').text(
+                                    nama_kategori_kompetensi);
                                 $('#modalDetailNamaAkademi').text(nama_akademi);
-                                $('#modalDetailKompetensiNama').text(nama_kompetensi);
-                                $('#modalDetailKompetensiDeskripsi').text(deskripsi_kompetensi);
-                                var tableHtml = '<div class="table-responsive p-1"><table class="table table-striped">';
+                                $('#modalDetailKompetensiNama').text(
+                                    nama_kompetensi);
+                                $('#modalDetailKompetensiDeskripsi').text(
+                                    deskripsi_kompetensi);
+                                var tableHtml =
+                                    '<div class="table-responsive p-1"><table class="table table-striped">';
                                 tableHtml += '<thead>';
                                 tableHtml += '<tr>';
-                                tableHtml += '<th>{{ trans('kompetensi\index.level') }}</th>';
-                                tableHtml += '<th>{{ trans('kompetensi\index.deskripsi_level') }}</th>';
-                                tableHtml += '<th>{{ trans('kompetensi\index.indikator_perilaku') }}</th>';
+                                tableHtml +=
+                                    '<th>{{ trans('kompetensi\index.level') }}</th>';
+                                tableHtml +=
+                                    '<th>{{ trans('kompetensi\index.deskripsi_level') }}</th>';
+                                tableHtml +=
+                                    '<th>{{ trans('kompetensi\index.indikator_perilaku') }}</th>';
                                 tableHtml += '</tr>';
                                 tableHtml += '</thead>';
                                 tableHtml += '<tbody></div>';
 
                                 $.each(response.data, function(index, item) {
                                     tableHtml += '<tr>';
-                                    tableHtml += '<td>' + item.level + '</td>';
-                                    tableHtml += '<td>' + item.deskripsi_level + '</td>';
-                                    tableHtml += '<td>' + item.indikator_perilaku + '</td>';
+                                    tableHtml += '<td>' + item.level +
+                                        '</td>';
+                                    tableHtml += '<td>' + item
+                                        .deskripsi_level + '</td>';
+                                    tableHtml += '<td>' + item
+                                        .indikator_perilaku + '</td>';
                                     tableHtml += '</tr>';
                                 });
 
@@ -353,6 +369,56 @@
                         icon: 'error',
                         title: '{{ trans('kompetensi\index.export_failed') }}',
                         text: '{{ trans('kompetensi\index.check_error') }}',
+                        allowOutsideClick: false,
+                    })
+                }
+            });
+        }
+    </script>
+
+    <script>
+        $(document).on('click', '#downloadFormat', function(event) {
+            event.preventDefault();
+            downloadFormat();
+        });
+
+        var downloadFormat = function() {
+            var url = '../download-format-kompetensi';
+            $.ajax({
+                url: url,
+                type: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                },
+                data: {},
+                xhrFields: {
+                    responseType: 'blob'
+                },
+                beforeSend: function() {
+                    Swal.fire({
+                        title: 'Please Wait !',
+                        html: 'Sedang melakukan download format import',
+                        allowOutsideClick: false,
+                        onBeforeOpen: () => {
+                            Swal.showLoading()
+                        },
+                    });
+
+                },
+                success: function(data) {
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(data);
+                    var nameFile = 'format_import_kompetensi.xlsx'
+                    link.download = nameFile;
+                    link.click();
+                    swal.close()
+                },
+                error: function(data) {
+                    console.log(data)
+                    Swal.fire({
+                        icon: 'error',
+                        title: "Download Format Import failed",
+                        text: "Please check",
                         allowOutsideClick: false,
                     })
                 }

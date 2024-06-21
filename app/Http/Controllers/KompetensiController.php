@@ -9,8 +9,10 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Exports\ExportKompetensi;
+use App\FormatImport\GenerateKompetensiFormat;
 use App\Imports\ImportKompetensi;
 use Maatwebsite\Excel\Facades\Excel;
+
 
 class KompetensiController extends Controller
 {
@@ -32,9 +34,9 @@ class KompetensiController extends Controller
         if (request()->ajax()) {
             $kompetensi = DB::table('kompetensi')
                 ->leftJoin('kelompok_besar', 'kompetensi.kelompok_besar_id', '=', 'kelompok_besar.id')
-                ->leftJoin('nama_akademi', 'kompetensi.nama_akademi_id', '=', 'nama_akademi.id')
+                ->leftJoin('akademi', 'kompetensi.akademi_id', '=', 'akademi.id')
                 ->leftJoin('kategori_kompetensi', 'kompetensi.kategori_kompetensi_id', '=', 'kategori_kompetensi.id')
-                ->select('kompetensi.*', 'kelompok_besar.nama_kelompok_besar', 'nama_akademi.nama_akademi', 'kategori_kompetensi.nama_kategori_kompetensi')
+                ->select('kompetensi.*', 'kelompok_besar.nama_kelompok_besar', 'akademi.nama_akademi', 'kategori_kompetensi.nama_kategori_kompetensi')
                 ->get();
 
             return DataTables::of($kompetensi)
@@ -57,7 +59,7 @@ class KompetensiController extends Controller
     public function create()
     {
         $kelompokBesar = DB::table('kelompok_besar')->get();
-        $namaAkademi = DB::table('nama_akademi')->get();
+        $namaAkademi = DB::table('akademi')->get();
         $kategoriKompetensi = DB::table('kategori_kompetensi')->get();
         return view('kompetensi.create', [
             'kelompokBesar' => $kelompokBesar,
@@ -132,7 +134,7 @@ class KompetensiController extends Controller
             ->where('kompetensi_id', $kompetensi->id)
             ->get();
         $kelompokBesar = DB::table('kelompok_besar')->get();
-        $namaAkademi = DB::table('nama_akademi')->get();
+        $namaAkademi = DB::table('akademi')->get();
         $kategoriKompetensi = DB::table('kategori_kompetensi')->get();
         return view('kompetensi.edit', compact('kompetensi', 'kompetensiDetail', 'kelompokBesar', 'namaAkademi', 'kategoriKompetensi'));
     }
@@ -218,5 +220,12 @@ class KompetensiController extends Controller
         Excel::import(new ImportKompetensi, $request->file('import_kompetensi'));
         Alert::toast('Kamus kompetensi has been successfully imported.', 'success');
         return back();
+    }
+
+    public function formatImport()
+    {
+        $date = date('d-m-Y');
+        $nameFile = 'format_import_kompetensi' . $date;
+        return Excel::download(new GenerateKompetensiFormat(), $nameFile . '.xlsx');
     }
 }

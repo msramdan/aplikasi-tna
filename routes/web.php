@@ -40,6 +40,7 @@ Route::middleware(['auth', 'web'])->group(function () {
         Route::get('/detailKompetensi', 'detailKompetensi')->name('detailKompetensi');
         Route::get('/exportKompetensi', 'exportKompetensi')->name('exportKompetensi');
         Route::post('/importKompetensi', 'importKompetensi')->name('importKompetensi');
+        Route::get('/download-format-kompetensi', 'formatImport')->name('download-format-kompetensi');
     });
 
     Route::resource('kalender-pembelajaran', KalenderPembelajaranController::class);
@@ -70,9 +71,6 @@ Route::middleware(['auth', 'web'])->group(function () {
         Route::delete('/tagging-kompetensi-ik/{id}', 'destroy')->name('tagging-kompetensi-ik.destroy');
     });
 
-    Route::controller(ActivityLogController::class)->group(function () {
-        Route::get('/activity-log', 'index')->name('activity-log.index');
-    });
     Route::controller(ActivityLogController::class)->group(function () {
         Route::get('/activity-log', 'index')->name('activity-log.index');
     });
