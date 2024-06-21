@@ -9,7 +9,7 @@ return [
     'detail_kompetensi' => 'Detail Kompetensi',
     'kategori_besar' => 'Kategori Besar',
     'kategori' => 'Kategori',
-    'nama_akademi' => 'Nama Akademi',
+    'akademi' => 'Nama Akademi',
     'nama_kompetensi' => 'Nama Kompetensi',
     'deskripsi_kompetensi' => 'Deskripsi Kompetensi',
     'dashboard' => 'Dasboard',

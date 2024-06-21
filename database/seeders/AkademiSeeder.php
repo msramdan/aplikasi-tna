@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
-class NamaAkademiSeeder extends Seeder
+class AkademiSeeder extends Seeder
 {
     public function run()
     {
@@ -22,7 +22,7 @@ class NamaAkademiSeeder extends Seeder
         ];
 
         foreach ($datas as $nama) {
-            DB::table('nama_akademi')->insert([
+            DB::table('akademi')->insert([
                 'nama_akademi' => $nama,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),

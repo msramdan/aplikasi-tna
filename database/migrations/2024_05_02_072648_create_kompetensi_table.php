@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('kelompok_besar_id')->nullable()->constrained('kelompok_besar')->restrictOnUpdate()->nullOnDelete();
             $table->foreignId('kategori_kompetensi_id')->nullable()->constrained('kategori_kompetensi')->restrictOnUpdate()->nullOnDelete();
-            $table->foreignId('nama_akademi_id')->nullable()->constrained('nama_akademi')->restrictOnUpdate()->nullOnDelete();
+            $table->foreignId('akademi_id')->nullable()->constrained('akademi')->restrictOnUpdate()->nullOnDelete();
             $table->string('nama_kompetensi', 255);
 			$table->text('deskripsi_kompetensi');
             $table->timestamps();

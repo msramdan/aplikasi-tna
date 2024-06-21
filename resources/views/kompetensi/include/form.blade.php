@@ -40,19 +40,19 @@
     </div>
 
     <div class="col-md-6 mb-2">
-        <label for="nama_akademi_id">{{ __('Kategori') }}</label>
-        <select class="form-control js-example-basic-multiple @error('nama_akademi_id') is-invalid @enderror"
-            name="nama_akademi_id" id="nama_akademi_id" required>
+        <label for="akademi_id">{{ __('Kategori') }}</label>
+        <select class="form-control js-example-basic-multiple @error('akademi_id') is-invalid @enderror"
+            name="akademi_id" id="akademi_id" required>
             <option value="" selected disabled>-- {{ __('Select kategori') }} --</option>
 
             @foreach ($namaAkademi as $row)
                 <option value="{{ $row->id }}"
-                    {{ isset($kompetensi) && $kompetensi->nama_akademi_id == $row->id ? 'selected' : (old('nama_akademi_id') == $row->id ? 'selected' : '') }}>
+                    {{ isset($kompetensi) && $kompetensi->akademi_id == $row->id ? 'selected' : (old('akademi_id') == $row->id ? 'selected' : '') }}>
                     {{ $row->nama_akademi }}
                 </option>
             @endforeach
         </select>
-        @error('nama_akademi_id')
+        @error('akademi_id')
             <span class="text-danger">
                 {{ $message }}
             </span>
