@@ -94,7 +94,7 @@ class GenerateKompetensiFormat implements FromView, ShouldAutoSize, WithEvents, 
                 $validationC->setPrompt('Please pick a value from the drop-down list.');
                 $validationC->setFormula1(sprintf('"%s"', implode(',', $dataKolomC)));
 
-                for ($i = 2; $i <= 10; $i++) {
+                for ($i = 2; $i <= 1000; $i++) {
                     $event->sheet->getCell("{$kolom_a}{$i}")->setDataValidation(clone $validationA);
                     $event->sheet->getCell("{$kolom_b}{$i}")->setDataValidation(clone $validationB);
                     $event->sheet->getCell("{$kolom_c}{$i}")->setDataValidation(clone $validationC);

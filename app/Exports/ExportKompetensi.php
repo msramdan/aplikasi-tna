@@ -20,7 +20,7 @@ class ExportKompetensi implements FromView, ShouldAutoSize, WithEvents
         $data = DB::table('kompetensi_detail')
             ->join('kompetensi', 'kompetensi_detail.kompetensi_id', '=', 'kompetensi.id')
             ->leftJoin('kelompok_besar', 'kompetensi.kelompok_besar_id', '=', 'kelompok_besar.id')
-            ->leftJoin('nama_akademi', 'kompetensi.nama_akademi_id', '=', 'nama_akademi.id')
+            ->leftJoin('akademi', 'kompetensi.akademi_id', '=', 'akademi.id')
             ->leftJoin('kategori_kompetensi', 'kompetensi.kategori_kompetensi_id', '=', 'kategori_kompetensi.id')
             ->select(
                 'kompetensi_detail.level',
@@ -29,7 +29,7 @@ class ExportKompetensi implements FromView, ShouldAutoSize, WithEvents
                 'kompetensi.nama_kompetensi',
                 'kompetensi.deskripsi_kompetensi',
                 'kelompok_besar.nama_kelompok_besar',
-                'nama_akademi.nama_akademi',
+                'akademi.nama_akademi',
                 'kategori_kompetensi.nama_kategori_kompetensi'
             )->orderBy('kompetensi.nama_kompetensi', 'ASC')->get();
 
@@ -42,7 +42,7 @@ class ExportKompetensi implements FromView, ShouldAutoSize, WithEvents
     {
         return [
             AfterSheet::class    => function (AfterSheet $event) {
-                $cellRange = 'A1:E1';
+                $cellRange = 'A1:I1';
                 $event->sheet->getStyle($cellRange)->applyFromArray([
                     'borders' => [
                         'allBorders' => [
