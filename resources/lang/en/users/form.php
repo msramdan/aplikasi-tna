@@ -1,9 +1,10 @@
 <?php
+
 return [
-  'avatar' => 'Avatar',
-  'role' => 'Role',
-  'select_role' => 'Select Role',
-  'name' => 'Name',
-  'email' => 'Email',
-  'note_avatar' => 'Leave the avatar blank if you don`t want to change it.',
+    'name' => 'Name',
+    'email' => 'Email',
+    'role' => 'Role',
+    'select_role' => 'Select role',
+    'avatar' => 'Avatar',
+    'note_avatar' => 'Avatar will be taken from Gravatar if not provided',
 ];

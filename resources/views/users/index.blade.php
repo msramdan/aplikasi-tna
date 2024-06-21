@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('Users'))
+@section('title', __('users\index.Users'))
 
 @section('content')
     <div class="page-content">
@@ -8,12 +8,12 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">{{ trans('users/index.head') }}</h4>
+                        <h4 class="mb-sm-0">{{ trans('users\index.head') }}</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                                <li class="breadcrumb-item"><a href="/">{{ __('users\index.Dashboard') }}</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">
-                                    {{ trans('users/index.head') }}</li>
+                                    {{ trans('users\index.head') }}</li>
                             </ol>
                         </div>
 
@@ -27,7 +27,7 @@
                         @can('user create')
                             <div class="card-header">
                                 <a href="{{ route('users.create') }}" class="btn btn-md btn-primary"> <i
-                                        class="mdi mdi-plus"></i> {{ trans('users/index.create') }}</a>
+                                        class="mdi mdi-plus"></i> {{ trans('users\index.create') }}</a>
                             </div>
                         @endcan
                         <div class="card-body">
@@ -35,12 +35,12 @@
                                 <table class="table table-striped" id="data-table" width="100%">
                                     <thead class="table-dark">
                                         <tr>
-                                            <th>#</th>
-                                            <th>{{ trans('users/index.avatar') }}</th>
-                                            <th>{{ trans('users/index.name') }}</th>
-                                            <th>{{ trans('users/index.role') }}</th>
-                                            <th>{{ trans('users/index.email') }}</th>
-                                            <th>{{ trans('users/index.action') }}</th>
+                                            <th>No</th>
+                                            <th>{{ trans('users\index.avatar') }}</th>
+                                            <th>{{ trans('users\index.name') }}</th>
+                                            <th>{{ trans('users\index.role') }}</th>
+                                            <th>{{ trans('users\index.email') }}</th>
+                                            <th>{{ trans('users\index.action') }}</th>
                                         </tr>
                                     </thead>
                                 </table>
