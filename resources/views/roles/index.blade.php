@@ -34,7 +34,7 @@
                                 <table class="table table-striped" id="data-table" width="100%">
                                     <thead class="table-dark">
                                         <tr>
-                                            <th>#</th>
+                                            <th>No</th>
                                             <th>{{ trans('roles/index.name') }}</th>
                                             <th>{{ __('Action') }}</th>
                                         </tr>
