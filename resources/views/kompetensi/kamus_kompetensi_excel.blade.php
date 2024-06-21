@@ -1,12 +1,12 @@
 <table>
     <thead>
         <tr>
-            <th style="background-color:#D3D3D3 ">{{ trans('kamus_kompetensi_excel.no') }}</th>
-            <th style="background-color:#D3D3D3 ">{{ trans('kamus_kompetensi_excel.nama_kompetensi') }}</th>
-            <th style="background-color:#D3D3D3 ">{{ trans('kamus_kompetensi_excel.deskripsi_kompetensi') }}</th>
-            <th style="background-color:#D3D3D3 ">{{ trans('kamus_kompetensi_excel.level') }}</th>
-            <th style="background-color:#D3D3D3 ">{{ trans('kamus_kompetensi_excel.deskripsi_level') }}</th>
-            <th style="background-color:#D3D3D3 ">{{ trans('kamus_kompetensi_excel.indikator_perilaku') }}</th>
+            <th style="background-color:#D3D3D3 ">{{ __('kompetensi\kamus_kompetensi_excel.no') }}</th>
+            <th style="background-color:#D3D3D3 ">{{ __('kompetensi\kamus_kompetensi_excel.nama_kompetensi') }}</th>
+            <th style="background-color:#D3D3D3 ">{{ __('kompetensi\kamus_kompetensi_excel.deskripsi_kompetensi') }}</th>
+            <th style="background-color:#D3D3D3 ">{{ __('kompetensi\kamus_kompetensi_excel.level') }}</th>
+            <th style="background-color:#D3D3D3 ">{{ __('kompetensi\kamus_kompetensi_excel.deskripsi_level') }}</th>
+            <th style="background-color:#D3D3D3 ">{{ __('kompetensi\kamus_kompetensi_excel.indikator_perilaku') }}</th>
         </tr>
     </thead>
     <tbody>
@@ -19,6 +19,6 @@
             <td>{{ $row->deskripsi_level }}</td>
             <td>{{ $row->indikator_perilaku }}</td>
         </tr>
-    @endforeach
+        @endforeach
     </tbody>
 </table>
