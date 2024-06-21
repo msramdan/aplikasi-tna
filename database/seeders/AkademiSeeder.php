@@ -11,12 +11,12 @@ class AkademiSeeder extends Seeder
     public function run()
     {
         $datas = [
-            'Akademi Akuntansi Forensik dan Investigasi',
-            'Akademi Kompetensi Umum',
-            'Akademi Tata Kelola Korporasi',
-            'Akademi Tata Kelola Pemerintahan Daerah dan Desa',
-            'Akademi Tata Kelola Perekonomian dan Kemaritiman',
-            'Akademi Tata Kelola Polhukam dan PMK',
+            'Akuntansi Forensik dan Investigasi',
+            'Kompetensi Umum',
+            'Tata Kelola Korporasi',
+            'Tata Kelola Pemerintahan Daerah dan Desa',
+            'Tata Kelola Perekonomian dan Kemaritiman',
+            'Tata Kelola Polhukam dan PMK',
             'Cross Kompetensi',
             'Cross Pengawasan',
         ];
