@@ -1,7 +1,10 @@
 <?php
+
 return [
-  'head' => 'Peran',
-  'create' => 'Tambah Peran Baru',
-  'name' => 'Nama',
-  'action' => 'Akasi',
+    'Roles' => 'Peran',
+    'Dashboard' => 'Dasboard',
+    'head' => 'Daftar peran',
+    'create' => 'Buat peran baru',
+    'name' => 'Nama',
+    'Action' => 'Aksi',
 ];

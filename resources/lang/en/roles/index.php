@@ -1,7 +1,10 @@
 <?php
+
 return [
-  'head' => 'Role & Permission',
-  'create' => 'Create a New Role',
-  'name' => 'Name',
-  'action' => 'Action',
+    'Roles' => 'Roles',
+    'Dashboard' => 'Dashboard',
+    'head' => 'Role list',
+    'create' => 'Create new role',
+    'name' => 'Name',
+    'Action' => 'Action',
 ];
