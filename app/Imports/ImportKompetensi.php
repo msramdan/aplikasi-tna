@@ -26,7 +26,14 @@ class ImportKompetensi implements ToCollection, WithHeadingRow, SkipsEmptyRows
             '*.indikator_perilaku' => 'required',
         ])->validate();
 
+        $kelompokBesar = DB::table('kelompok_besar')->pluck('id', 'nama_kelompok_besar')->toArray();
+        $akademi = DB::table('akademi')->pluck('id', 'nama_akademi')->toArray();
+        $kategoriKompetensi = DB::table('kategori_kompetensi')->pluck('id', 'nama_kategori_kompetensi')->toArray();
+
         foreach ($collection as $row) {
+            $kelompokBesarId = $kelompokBesar[$row['kelompok_besar']] ?? null;
+            $akademiId = $akademi[$row['akademi']] ?? null;
+            $kategoriKompetensiId = $kategoriKompetensi[$row['kategori']] ?? null;
             // cek ada atw tidak di table kompetensi nama kompetensi
             $cekData = DB::table('kompetensi')
                 ->where('nama_kompetensi', $row['nama_kompetensi'])
@@ -34,6 +41,9 @@ class ImportKompetensi implements ToCollection, WithHeadingRow, SkipsEmptyRows
             // Jika nama kompetensi belum ada, sisipkan data baru
             if (!$cekData) {
                 $kompetensiId = DB::table('kompetensi')->insertGetId([
+                    'kelompok_besar_id' => $kelompokBesarId,
+                    'kategori_kompetensi_id' => $kategoriKompetensiId,
+                    'akademi_id' => $akademiId,
                     'nama_kompetensi' => $row['nama_kompetensi'],
                     'deskripsi_kompetensi' => $row['deskripsi_kompetensi'],
                     'created_at' => now(),

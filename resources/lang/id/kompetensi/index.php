@@ -7,7 +7,7 @@ return [
     'close' => 'Tutup',
     'submit' => 'Kirim',
     'detail_kompetensi' => 'Detail Kompetensi',
-    'kategori_besar' => 'Kategori Besar',
+    'kelompok_besar' => 'Kelompok Besar',
     'kategori' => 'Kategori',
     'akademi' => 'Nama Akademi',
     'nama_kompetensi' => 'Nama Kompetensi',

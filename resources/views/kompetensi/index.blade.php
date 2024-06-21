@@ -180,7 +180,7 @@
                                     <thead class="table-dark">
                                         <tr>
                                             <th>No</th>
-                                            <th>{{ trans('kompetensi\index.kategori_besar') }}</th>
+                                            <th>{{ trans('kompetensi\index.kelompok_besar') }}</th>
                                             <th>{{ trans('kompetensi\index.kategori') }}</th>
                                             <th>{{ trans('kompetensi\index.akademi') }}</th>
                                             <th>{{ trans('kompetensi\index.nama_kompetensi') }}</th>
