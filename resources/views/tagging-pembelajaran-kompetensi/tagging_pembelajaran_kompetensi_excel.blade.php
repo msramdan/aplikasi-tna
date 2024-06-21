@@ -1,9 +1,9 @@
 <table>
     <thead>
         <tr>
-            <th style="background-color:#D3D3D3 ">No</th>
-            <th style="background-color:#D3D3D3 ">Pembelajaran</th>
-            <th style="background-color:#D3D3D3 ">Kompetensi</th>
+            <th style="background-color:#D3D3D3 ">{{ __('tagging-pembelajaran-kompetensi\tagging_pembelajaran_kompetensi_excel.no') }}</th>
+            <th style="background-color:#D3D3D3 ">{{ __('tagging-pembelajaran-kompetensi\tagging_pembelajaran_kompetensi_excel.learning') }}</th>
+            <th style="background-color:#D3D3D3 ">{{ __('tagging-pembelajaran-kompetensi\tagging_pembelajaran_kompetensi_excel.competency') }}</th>
         </tr>
     </thead>
     <tbody>
@@ -13,6 +13,6 @@
             <td>{{ $row->nama_topik }}</td>
             <td>{{ $row->nama_kompetensi }}</td>
         </tr>
-    @endforeach
+        @endforeach
     </tbody>
 </table>
