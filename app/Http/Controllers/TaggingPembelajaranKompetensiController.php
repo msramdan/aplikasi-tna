@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ExportTaggingPembelakaranKompetensi;
 use App\Models\TaggingPembelajaranKompetensi;
 use Yajra\DataTables\Facades\DataTables;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+
 
 class TaggingPembelajaranKompetensiController extends Controller
 {
@@ -153,5 +156,12 @@ class TaggingPembelajaranKompetensiController extends Controller
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
+    }
+
+    public function exportTagPembelajaranKompetensi()
+    {
+        $date = date('d-m-Y');
+        $nameFile = 'tagging_pembelajaran_kompetensi ' . $date;
+        return Excel::download(new ExportTaggingPembelakaranKompetensi(), $nameFile . '.xlsx');
     }
 }

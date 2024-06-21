@@ -63,12 +63,14 @@ Route::middleware(['auth', 'web'])->group(function () {
         Route::post('/tagging-pembelajaran-kompetensi/update/{id}', 'updateTagging')->name('tagging-pembelajaran-kompetensi.update');
         Route::delete('/tagging-pembelajaran-kompetensi/{id}', 'destroy')->name('tagging-pembelajaran-kompetensi.destroy');
         Route::get('/detailTaggingPembelajaranKompetensi', 'detailTaggingPembelajaranKompetensi')->name('detailTaggingPembelajaranKompetensi');
+        Route::get('/exportTagPembelajaranKompetensi', 'exportTagPembelajaranKompetensi')->name('exportTagPembelajaranKompetensi');
     });
     Route::controller(TaggingKompetensiIkController::class)->group(function () {
         Route::get('/tagging-kompetensi-ik', 'index')->name('tagging-kompetensi-ik.index');
         Route::get('/tagging-kompetensi-ik/{topik_id}', 'settingTagging')->name('tagging-kompetensi-ik.setting');
         Route::post('/tagging-kompetensi-ik/update/{id}', 'updateTagging')->name('tagging-kompetensi-ik.update');
         Route::delete('/tagging-kompetensi-ik/{id}', 'destroy')->name('tagging-kompetensi-ik.destroy');
+
     });
 
     Route::controller(ActivityLogController::class)->group(function () {

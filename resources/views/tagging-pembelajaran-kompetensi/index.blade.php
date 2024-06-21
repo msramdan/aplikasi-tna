@@ -129,7 +129,7 @@
 
 
 @push('js')
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.all.min.js"></script>
     <script>
         $('#data-table').DataTable({
             processing: true,
@@ -228,4 +228,55 @@
 
         });
     </script>
+
+<script>
+    $(document).on('click', '#btnExport', function(event) {
+        event.preventDefault();
+        exportData();
+
+    });
+
+    var exportData = function() {
+        var url = '/exportTagPembelajaranKompetensi';
+        $.ajax({
+            url: url,
+            type: 'GET',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            },
+            data: {},
+            xhrFields: {
+                responseType: 'blob'
+            },
+            beforeSend: function() {
+                Swal.fire({
+                    title: 'Please Wait !',
+                    html: 'Sedang melakukan proses export data', // add html attribute if you want or remove
+                    allowOutsideClick: false,
+                    onBeforeOpen: () => {
+                        Swal.showLoading()
+                    },
+                });
+            },
+            success: function(data) {
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(data);
+                var nameFile = 'tagging_pembelajaran_kompetensi.xlsx'
+                console.log(nameFile)
+                link.download = nameFile;
+                link.click();
+                swal.close()
+            },
+            error: function(data) {
+                console.log(data)
+                Swal.fire({
+                    icon: 'error',
+                    title: "Data export failed",
+                    text: "Please check",
+                    allowOutsideClick: false,
+                })
+            }
+        });
+    }
+</script>
 @endpush
