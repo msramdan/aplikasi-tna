@@ -34,7 +34,7 @@
                                 <table class="table table-striped" id="data-table">
                                     <thead class="table-dark">
                                         <tr>
-                                            <th>#</th>
+                                            <th>No</th>
                                             <th>{{ __('Nama Kota') }}</th>
                                             <th>{{ __('Action') }}</th>
                                         </tr>
