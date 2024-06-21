@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('master-data.kompetensi.kompetensi'))
+@section('title', trans('kompetensi\index.kompetensi'))
 
 @section('content')
     <style>
@@ -34,7 +34,6 @@
             0% {
                 transform: rotate(0deg);
             }
-
             100% {
                 transform: rotate(360deg);
             }
@@ -50,7 +49,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('master-data.kompetensi.import_kompetensi') }}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ trans('kompetensi\index.import_kompetensi') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form method="POST" action="{{ route('importKompetensi') }}" enctype="multipart/form-data">
@@ -59,70 +58,66 @@
                         <div class="mb-3">
                             <input type="file" class="form-control" id="import_kompetensi" name="import_kompetensi"
                                 aria-describedby="import_kompetensi" accept=".xlsx" required>
-                            <div id="downloadFormat" class="form-text"> <a
-                                    href="{{ asset('format_import/format_import_kompetensi.xlsx') }}"><i
-                                        class="fa fa-download" aria-hidden="true"></i>
-                                    {{ __('master-data.kompetensi.unduh_format') }}</a>
+                            <div id="downloadFormat" class="form-text">
+                                <a href="{{ asset('format_import/format_import_kompetensi.xlsx') }}">
+                                    <i class="fa fa-download" aria-hidden="true"></i>
+                                    {{ trans('kompetensi\index.unduh_format') }}
+                                </a>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary"
-                            data-bs-dismiss="modal">{{ __('master-data.kompetensi.close') }}</button>
-                        <button type="submit" class="btn btn-primary">{{ __('master-data.kompetensi.submit') }}</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ trans('kompetensi\index.close') }}</button>
+                        <button type="submit" class="btn btn-primary">{{ trans('kompetensi\index.submit') }}</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-    <div class="modal fade" id="modalDetailKompetensi" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="modalDetailKompetensi" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('master-data.kompetensi.detail_kompetensi') }}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ trans('kompetensi\index.detail_kompetensi') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <hr>
-
                 <div class="modal-body">
                     <table class="table" style="text-align: justify">
                         <tbody>
                             <tr>
-                                <th scope="row">Kelompok besar</th>
+                                <th scope="row">{{ trans('kompetensi\index.kategori_besar') }}</th>
                                 <td>:</td>
                                 <td><span id="modalDetailKategoriBesar"></span></td>
                             </tr>
                             <tr>
-                                <th scope="row">Kategori</th>
+                                <th scope="row">{{ trans('kompetensi\index.kategori') }}</th>
                                 <td>:</td>
                                 <td><span id="modalDetailKategori"></span></td>
                             </tr>
                             <tr>
-                                <th scope="row">Nama akademi</th>
+                                <th scope="row">{{ trans('kompetensi\index.nama_akademi') }}</th>
                                 <td>:</td>
                                 <td><span id="modalDetailNamaAkademi"></span></td>
                             </tr>
                             <tr>
-                                <th scope="row">{{ __('master-data.kompetensi.nama_kompetensi') }}</th>
+                                <th scope="row">{{ trans('kompetensi\index.nama_kompetensi') }}</th>
                                 <td>:</td>
                                 <td><span id="modalDetailKompetensiNama"></span></td>
                             </tr>
                             <tr>
-                                <th scope="row">{{ __('master-data.kompetensi.deskripsi_kompetensi') }}</th>
+                                <th scope="row">{{ trans('kompetensi\index.deskripsi_kompetensi') }}</th>
                                 <td>:</td>
                                 <td><span id="modalDetailKompetensiDeskripsi"></span></td>
                             </tr>
                         </tbody>
                     </table>
 
-                    <div class="modal-body-detail" style="text-align: justify">
-                    </div>
+                    <div class="modal-body-detail" style="text-align: justify"></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary"
-                        data-bs-dismiss="modal">{{ __('master-data.kompetensi.close') }}</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ trans('kompetensi\index.close') }}</button>
                 </div>
             </div>
         </div>
@@ -133,12 +128,11 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">{{ __('master-data.kompetensi.kompetensi') }}</h4>
+                        <h4 class="mb-sm-0">{{ trans('kompetensi\index.kompetensi') }}</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a
-                                        href="/">{{ __('master-data.kompetensi.dashboard') }}</a></li>
-                                <li class="breadcrumb-item active">{{ __('master-data.kompetensi.kompetensi') }}</li>
+                                <li class="breadcrumb-item"><a href="/">{{ trans('kompetensi\index.dashboard') }}</a></li>
+                                <li class="breadcrumb-item active">{{ trans('kompetensi\index.kompetensi') }}</li>
                             </ol>
                         </div>
                     </div>
@@ -147,7 +141,7 @@
             <div class="row">
                 @if (count($errors) > 0)
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <strong>{{ __('master-data.kompetensi.failed') }}</strong>
+                        <strong>{{ trans('kompetensi\index.failed') }}</strong>
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
                         @endforeach
@@ -159,17 +153,18 @@
                     <div class="card">
                         <div class="card-header">
                             @can('kompetensi create')
-                                <a href="{{ route('kompetensi.create') }}" class="btn btn-md btn-primary"> <i
-                                        class="mdi mdi-plus"></i>
-                                    {{ trans('master-data/kompetensi/kompetensi.create_new') }}</a>
-                                <button type="button" class="btn btn-warning" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal"><i class='fa fa-upload'></i>
-                                    {{ __('master-data.kompetensi.import') }}
+                                <a href="{{ route('kompetensi.create') }}" class="btn btn-md btn-primary">
+                                    <i class="mdi mdi-plus"></i>
+                                    {{ trans('kompetensi\index.create_new') }}
+                                </a>
+                                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    <i class='fa fa-upload'></i>
+                                    {{ trans('kompetensi\index.import') }}
                                 </button>
                             @endcan
                             <button id="btnExport" class="btn btn-success">
                                 <i class='fas fa-file-excel'></i>
-                                {{ __('master-data.kompetensi.export') }}
+                                {{ trans('kompetensi\index.export') }}
                             </button>
                         </div>
 
@@ -178,13 +173,13 @@
                                 <table class="table table-striped" id="data-table">
                                     <thead class="table-dark">
                                         <tr>
-                                            <th>#</th>
-                                            <th>{{ __('Kategori besar') }}</th>
-                                            <th>{{ __('Kategori') }}</th>
-                                            <th>{{ __('Nama akademi') }}</th>
-                                            <th>{{ __('Nama kompetensi') }}</th>
-                                            <th>{{ __('Deskripsi Kompetensi') }}</th>
-                                            <th>{{ __('Action') }}</th>
+                                            <th>No</th>
+                                            <th>{{ trans('kompetensi\index.kategori_besar') }}</th>
+                                            <th>{{ trans('kompetensi\index.kategori') }}</th>
+                                            <th>{{ trans('kompetensi\index.nama_akademi') }}</th>
+                                            <th>{{ trans('kompetensi\index.nama_kompetensi') }}</th>
+                                            <th>{{ trans('kompetensi\index.deskripsi_kompetensi') }}</th>
+                                            <th>{{ trans('kompetensi\index.action') }}</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -205,7 +200,8 @@
                 processing: true,
                 serverSide: true,
                 ajax: "{{ route('kompetensi.index') }}",
-                columns: [{
+                columns: [
+                    {
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex',
                         orderable: false,
@@ -269,38 +265,26 @@
                                 }
 
                                 $('#modalDetailKompetensi').modal('show');
-                                $('#modalDetailKategoriBesar').text(
-                                    nama_kelompok_besar);
-                                $('#modalDetailKategori').text(
-                                    nama_kategori_kompetensi);
-                                $('#modalDetailNamaAkademi').text(
-                                    nama_akademi);
-                                $('#modalDetailKompetensiNama').text(
-                                    nama_kompetensi);
-                                $('#modalDetailKompetensiDeskripsi').text(
-                                    deskripsi_kompetensi);
-                                var tableHtml =
-                                    '<div class="table-responsive p-1"><table class="table table-striped">';
+                                $('#modalDetailKategoriBesar').text(nama_kelompok_besar);
+                                $('#modalDetailKategori').text(nama_kategori_kompetensi);
+                                $('#modalDetailNamaAkademi').text(nama_akademi);
+                                $('#modalDetailKompetensiNama').text(nama_kompetensi);
+                                $('#modalDetailKompetensiDeskripsi').text(deskripsi_kompetensi);
+                                var tableHtml = '<div class="table-responsive p-1"><table class="table table-striped">';
                                 tableHtml += '<thead>';
                                 tableHtml += '<tr>';
-                                tableHtml +=
-                                    '<th>{{ __('master-data.kompetensi.level') }}</th>';
-                                tableHtml +=
-                                    '<th>{{ __('master-data.kompetensi.deskripsi_level') }}</th>';
-                                tableHtml +=
-                                    '<th>{{ __('master-data.kompetensi.indikator_perilaku') }}</th>';
+                                tableHtml += '<th>{{ trans('kompetensi\index.level') }}</th>';
+                                tableHtml += '<th>{{ trans('kompetensi\index.deskripsi_level') }}</th>';
+                                tableHtml += '<th>{{ trans('kompetensi\index.indikator_perilaku') }}</th>';
                                 tableHtml += '</tr>';
                                 tableHtml += '</thead>';
                                 tableHtml += '<tbody></div>';
 
                                 $.each(response.data, function(index, item) {
                                     tableHtml += '<tr>';
-                                    tableHtml += '<td>' + item.level +
-                                        '</td>';
-                                    tableHtml += '<td>' + item
-                                        .deskripsi_level + '</td>';
-                                    tableHtml += '<td>' + item
-                                        .indikator_perilaku + '</td>';
+                                    tableHtml += '<td>' + item.level + '</td>';
+                                    tableHtml += '<td>' + item.deskripsi_level + '</td>';
+                                    tableHtml += '<td>' + item.indikator_perilaku + '</td>';
                                     tableHtml += '</tr>';
                                 });
 
@@ -313,8 +297,8 @@
                                 $('#loading-overlay').hide();
                                 Swal.fire({
                                     icon: 'error',
-                                    title: '{{ __('master-data.kompetensi.error_fetching_data') }}',
-                                    text: '{{ __('master-data.kompetensi.check_error') }}',
+                                    title: '{{ trans('kompetensi\index.error_fetching_data') }}',
+                                    text: '{{ trans('kompetensi\index.check_error') }}',
                                 });
                                 console.error('Error:', error);
                             },
@@ -346,8 +330,8 @@
                 },
                 beforeSend: function() {
                     Swal.fire({
-                        title: '{{ __('master-data.kompetensi.please_wait') }}',
-                        html: '{{ __('master-data.kompetensi.exporting_data') }}',
+                        title: '{{ trans('kompetensi\index.please_wait') }}',
+                        html: '{{ trans('kompetensi\index.exporting_data') }}',
                         allowOutsideClick: false,
                         onBeforeOpen: () => {
                             Swal.showLoading()
@@ -357,7 +341,7 @@
                 success: function(data) {
                     var link = document.createElement('a');
                     link.href = window.URL.createObjectURL(data);
-                    var nameFile = '{{ __('master-data.kompetensi.filename') }}'
+                    var nameFile = '{{ trans('kompetensi\index.filename') }}'
                     console.log(nameFile)
                     link.download = nameFile;
                     link.click();
@@ -367,8 +351,8 @@
                     console.log(data)
                     Swal.fire({
                         icon: 'error',
-                        title: '{{ __('master-data.kompetensi.export_failed') }}',
-                        text: '{{ __('master-data.kompetensi.check_error') }}',
+                        title: '{{ trans('kompetensi\index.export_failed') }}',
+                        text: '{{ trans('kompetensi\index.check_error') }}',
                         allowOutsideClick: false,
                     })
                 }
