@@ -1,8 +1,8 @@
 <table>
     <thead>
         <tr>
-            <th style="background-color:#D3D3D3 ">No</th>
-            <th style="background-color:#D3D3D3 ">Pembelajaran</th>
+            <th style="background-color:#D3D3D3 ">{{ __('topik\topik_pembelajaran_excel.no') }}</th>
+            <th style="background-color:#D3D3D3 ">{{ __('topik\topik_pembelajaran_excel.pembelajaran') }}</th>
         </tr>
     </thead>
     <tbody>
@@ -11,6 +11,6 @@
             <td>{{ $index + 1 }}</td>
             <td>{{ $row->nama_topik }}</td>
         </tr>
-    @endforeach
+        @endforeach
     </tbody>
 </table>
