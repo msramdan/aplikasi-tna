@@ -8,7 +8,7 @@
             <th style="background-color:#D3D3D3 ">{{ __('Deskripsi kompetensi') }}</th>
             <th style="background-color:#D3D3D3 ">{{ __('Level') }}</th>
             <th style="background-color:#D3D3D3 ">{{ __('Deskripsi level') }}</th>
-            <th style="background-color:#D3D3D3 ">{{ __('Indikator prilaku') }}</th>
+            <th style="background-color:#D3D3D3 ">{{ __('Indikator perilaku') }}</th>
         </tr>
     </thead>
     <tbody>
