@@ -7,7 +7,7 @@
 
     @can('topik delete')
         <form action="{{ route('topik.destroy', $model->id) }}" method="post" class="d-inline"
-            onsubmit="return confirm('Are you sure to delete this record?')">
+            onsubmit="return confirm('{{ __('topik\action.confirm_delete') }}')">
             @csrf
             @method('delete')
 
