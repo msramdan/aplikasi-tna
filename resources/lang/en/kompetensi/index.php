@@ -1,0 +1,30 @@
+<?php
+
+return [
+    'kompetensi' => 'Competency',
+    'import_kompetensi' => 'Import Competency',
+    'unduh_format' => 'Download Format',
+    'close' => 'Close',
+    'submit' => 'Submit',
+    'detail_kompetensi' => 'Competency Details',
+    'kategori_besar' => 'Main Category',
+    'kategori' => 'Category',
+    'nama_akademi' => 'Academy Name',
+    'nama_kompetensi' => 'Competency Name',
+    'deskripsi_kompetensi' => 'Competency Description',
+    'dashboard' => 'Dashboard',
+    'failed' => 'Failed',
+    'create_new' => 'Create New',
+    'import' => 'Import Data',
+    'export' => 'Export Data',
+    'action' => 'Action',
+    'level' => 'Level',
+    'deskripsi_level' => 'Level Description',
+    'indikator_perilaku' => 'Behavioral Indicator',
+    'error_fetching_data' => 'Error fetching data',
+    'check_error' => 'Check the error',
+    'please_wait' => 'Please Wait',
+    'exporting_data' => 'Exporting data',
+    'filename' => 'competency_file.xlsx',
+    'export_failed' => 'Export Failed'
+];
