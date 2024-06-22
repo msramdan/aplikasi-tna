@@ -7,7 +7,7 @@
 
     @can('user delete')
         <form action="{{ route('users.destroy', $model->id) }}" method="post" class="d-inline"
-            onsubmit="return confirm('Are you sure to delete this record?')">
+            onsubmit="return confirm('{{ __('users\action.confirm_delete') }}')">
             @csrf
             @method('delete')
 

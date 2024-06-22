@@ -1,9 +1,13 @@
 <?php
+
 return [
-    'head' => 'Pengguna',
+    'Users' => 'Pengguna',
+    'Dashboard' => 'Dasboard',
+    'head' => 'Daftar pengguna',
+    'create' => 'Buat pengguna',
     'avatar' => 'Avatar',
-    'role' => 'Peran',
     'name' => 'Nama',
-    'email' => 'Surel',
+    'role' => 'Peran',
+    'email' => 'Email',
     'action' => 'Aksi',
 ];

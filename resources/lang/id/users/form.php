@@ -1,9 +1,10 @@
 <?php
+
 return [
-  'avatar' => 'Avatar',
-  'role' => 'Peran',
-  'select_role' => 'Pilih Peran',
-  'name' => 'Nama',
-  'email' => 'Surel',
-  'note_avatar' => 'Biarkan avatar kosong jika Anda tidak ingin mengubahnya.',
+    'name' => 'Nama',
+    'email' => 'Email',
+    'role' => 'Peran',
+    'select_role' => 'Pilih peran',
+    'avatar' => 'Avatar',
+    'note_avatar' => 'Avatar akan diambil dari Gravatar jika tidak ada',
 ];
