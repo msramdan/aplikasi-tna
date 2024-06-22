@@ -7,7 +7,7 @@
 
     @can('role & permission delete')
         <form action="{{ route('roles.destroy', $model->id) }}" method="post" class="d-inline"
-            onsubmit="return confirm('Are you sure to delete this record?')">
+            onsubmit="return confirm('{{ __('roles\action.confirm_delete') }}')">
             @csrf
             @method('delete')
 

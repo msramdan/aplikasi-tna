@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('Asrama'))
+@section('title', __('asrama\index.asrama'))
 
 @section('content')
     <div class="page-content">
@@ -8,11 +8,11 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">{{ __('Asrama') }}</h4>
+                        <h4 class="mb-sm-0">{{ __('asrama\index.asrama') }}</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
-                                <li class="breadcrumb-item active">{{ __('Asrama') }}</li>
+                                <li class="breadcrumb-item active">{{ __('asrama\index.asrama') }}</li>
                             </ol>
                         </div>
 
@@ -25,7 +25,7 @@
                         <div class="card-header">
                             @can('asrama create')
                                 <a href="{{ route('asrama.create') }}" class="btn btn-md btn-primary"> <i
-                                        class="mdi mdi-plus"></i> {{ __('Create a new asrama') }}</a>
+                                        class="mdi mdi-plus"></i> {{ __('asrama\index.create_new_asrama') }}</a>
                             @endcan
                         </div>
 
@@ -34,13 +34,13 @@
                                 <table class="table table-striped" id="data-table">
                                     <thead class="table-dark">
                                         <tr>
-                                            <th>#</th>
-                                            <th>{{ trans('master-data/asrama/index.nama_asrama') }}</th>
-                                            <th>{{ trans('master-data/asrama/index.lokasi') }}</th>
-                                            <th>{{ __('Kuota') }}</th>
-                                            <th>{{ __('Starus Asrama') }}</th>
-                                            <th>{{ __('Keterangan') }}</th>
-                                            <th>{{ __('Action') }}</th>
+                                            <th>No</th>
+                                            <th>{{ __('asrama\index.nama_asrama') }}</th>
+                                            <th>{{ __('asrama\index.lokasi') }}</th>
+                                            <th>{{ __('asrama\index.kuota') }}</th>
+                                            <th>{{ __('asrama\index.status_asrama') }}</th>
+                                            <th>{{ __('asrama\index.keterangan') }}</th>
+                                            <th>{{ __('asrama\index.action') }}</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -79,8 +79,8 @@
                     name: 'kuota',
                 },
                 {
-                    data: 'starus_asrama',
-                    name: 'starus_asrama',
+                    data: 'status_asrama',
+                    name: 'status_asrama',
                 },
                 {
                     data: 'keterangan',

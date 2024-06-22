@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('ruang kelass'))
+@section('title', __('ruang-kelas\index.ruang_kelass'))
 
 @section('content')
     <div class="page-content">
@@ -8,11 +8,11 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">{{ __('ruang kelass') }}</h4>
+                        <h4 class="mb-sm-0">{{ __('ruang-kelas\index.ruang_kelass') }}</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
-                                <li class="breadcrumb-item active">{{ __('ruang kelass') }}</li>
+                                <li class="breadcrumb-item active">{{ __('ruang-kelas\index.ruang_kelass') }}</li>
                             </ol>
                         </div>
 
@@ -25,7 +25,7 @@
                         <div class="card-header">
                             @can('ruang kelas create')
                                 <a href="{{ route('ruang-kelas.create') }}" class="btn btn-md btn-primary"> <i
-                                        class="mdi mdi-plus"></i> {{ __('Create a new ruang kelas') }}</a>
+                                        class="mdi mdi-plus"></i> {{ __('ruang-kelas\index.create_new_ruang_kelas') }}</a>
                             @endcan
                         </div>
                         <div class="card-body">
@@ -33,13 +33,13 @@
                                 <table class="table table-striped" id="data-table">
                                     <thead class="table-dark">
                                         <tr>
-                                            <th>#</th>
-                                            <th>{{ __('Nama Kelas') }}</th>
-                                            <th>{{ __('Lokasi') }}</th>
-                                            <th>{{ __('Kuota') }}</th>
-                                            <th>{{ __('Status') }}</th>
-                                            <th>{{ __('Keterangan') }}</th>
-                                            <th>{{ __('Action') }}</th>
+                                            <th>No</th>
+                                            <th>{{ __('ruang-kelas\index.nama_kelas') }}</th>
+                                            <th>{{ __('ruang-kelas\index.lokasi') }}</th>
+                                            <th>{{ __('ruang-kelas\index.kuota') }}</th>
+                                            <th>{{ __('ruang-kelas\index.status') }}</th>
+                                            <th>{{ __('ruang-kelas\index.keterangan') }}</th>
+                                            <th>{{ __('ruang-kelas\index.action') }}</th>
                                         </tr>
                                     </thead>
                                 </table>

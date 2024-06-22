@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('Edit Tagging Pembelajaran Kompetensi'))
+@section('title', __('tagging-pembelajaran-kompetensi\edit.title'))
 
 @section('content')
     <div class="page-content">
@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">{{ __('Tagging Pembelajaran Kompetensi') }}</h4>
+                        <h4 class="mb-sm-0">{{ __('tagging-pembelajaran-kompetensi\edit.heading') }}</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item">
@@ -16,10 +16,10 @@
                                 </li>
                                 <li class="breadcrumb-item">
                                     <a
-                                        href="{{ route('tagging-pembelajaran-kompetensi.index') }}">{{ __('Tagging Pembelajaran Kompetensi') }}</a>
+                                        href="{{ route('tagging-pembelajaran-kompetensi.index') }}">{{ __('tagging-pembelajaran-kompetensi\edit.heading') }}</a>
                                 </li>
                                 <li class="breadcrumb-item active" aria-current="page">
-                                    {{ __('Edit') }}
+                                    {{ __('tagging-pembelajaran-kompetensi\edit.edit') }}
                                 </li>
                             </ol>
                         </div>
@@ -31,7 +31,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="alert alert-primary" role="alert">
-                                <b>Pembelajaran :</b><br>
+                                <b>{{ __('tagging-pembelajaran-kompetensi\edit.learning') }} :</b><br>
                                 {{ $topik->nama_topik }}
                             </div>
                         </div>
@@ -49,7 +49,7 @@
                                 <div class="row">
                                     <div class="col-md-5">
                                         <input type="text" id="search-available" class="form-control mb-2"
-                                            placeholder="Search for available">
+                                            placeholder="{{ __('tagging-pembelajaran-kompetensi\edit.search_available') }}">
                                         <select id="available" class="form-control" multiple size="20">
                                             @foreach ($availableItems as $id => $nama_kompetensi)
                                                 <option value="{{ $id }}">{{ $nama_kompetensi }}</option>
@@ -65,7 +65,7 @@
                                     <div class="col-md-5">
                                         <input type="text" id="search-assigned"
                                             class="form-control mb-2 @error('message') is-invalid @enderror"
-                                            placeholder="Search for assigned">
+                                            placeholder="{{ __('tagging-pembelajaran-kompetensi\edit.search_assigned') }}">
                                         <select id="assigned" class="form-control @error('message') is-invalid @enderror"
                                             multiple size="20" name="assigned[]">
                                             @foreach ($assignedItems as $id => $nama_kompetensi)
@@ -81,10 +81,10 @@
                                 <div class="mt-3">
                                     <a href="{{ route('tagging-pembelajaran-kompetensi.index') }}"
                                         class="btn btn-secondary">
-                                        <i class="mdi mdi-arrow-left-thin"></i> {{ __('Back') }}
+                                        <i class="mdi mdi-arrow-left-thin"></i> {{ __('tagging-pembelajaran-kompetensi\edit.back') }}
                                     </a>
                                     <button type="submit" class="btn btn-primary">
-                                        <i class="mdi mdi-content-save"></i> {{ __('Update') }}
+                                        <i class="mdi mdi-content-save"></i> {{ __('tagging-pembelajaran-kompetensi\edit.update') }}
                                     </button>
                                 </div>
                             </form>

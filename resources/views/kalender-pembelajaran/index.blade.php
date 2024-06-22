@@ -1,8 +1,6 @@
-<!-- resources/views/calendar.blade.php -->
-
 @extends('layouts.app')
 
-@section('title', __('Kalender Pembelajaran'))
+@section('title', __('kalender-pembelajaran\index.Kalender Pembelajaran'))
 @push('css')
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.css' rel='stylesheet' />
     <style>
@@ -18,11 +16,11 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">{{ __('Kalender Pembelajaran') }}</h4>
+                        <h4 class="mb-sm-0">{{ __('kalender-pembelajaran\index.Kalender Pembelajaran') }}</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
-                                <li class="breadcrumb-item active">{{ __('Kalender Pembelajaran') }}</li>
+                                <li class="breadcrumb-item"><a href="/">{{ __('kalender-pembelajaran\index.Dashboard') }}</a></li>
+                                <li class="breadcrumb-item active">{{ __('kalender-pembelajaran\index.Kalender Pembelajaran') }}</li>
                             </ol>
                         </div>
                     </div>
@@ -52,19 +50,19 @@
                                 <div class="col-md-4">
                                     <div class="input-group mb-4">
                                         <select name="sumber_dana" id="sumber_dana" class="form-control select2-form">
-                                            <option value="">All sumber dana</option>
-                                            <option value="">RM</option>
-                                            <option value="">START</option>
-                                            <option value="">PNBP</option>
+                                            <option value="">{{ __('kalender-pembelajaran\index.All sumber dana') }}</option>
+                                            <option value="">{{ __('kalender-pembelajaran\index.RM') }}</option>
+                                            <option value="">{{ __('kalender-pembelajaran\index.START') }}</option>
+                                            <option value="">{{ __('kalender-pembelajaran\index.PNBP') }}</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="input-group mb-4">
                                         <select name="peserta" id="peserta" class="form-control select2-form">
-                                            <option value="">All peserta</option>
-                                            <option value="">BPKP</option>
-                                            <option value="">APIP</option>
+                                            <option value="">{{ __('kalender-pembelajaran\index.All peserta') }}</option>
+                                            <option value="">{{ __('kalender-pembelajaran\index.BPKP') }}</option>
+                                            <option value="">{{ __('kalender-pembelajaran\index.APIP') }}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -77,7 +75,7 @@
                 <div class="col-sm-6">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Daftar Pembelajaran</h5>
+                            <h5 class="card-title">{{ __('kalender-pembelajaran\index.Daftar Pembelajaran') }}</h5>
                             <ul id="eventList"></ul>
                         </div>
                     </div>
@@ -91,26 +89,26 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="eventModalLabel">Detail pembelajaran</h5>
+                    <h5 class="modal-title" id="eventModalLabel">{{ __('kalender-pembelajaran\index.Detail pembelajaran') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <table class="table">
                         <tbody>
                             <tr>
-                                <th scope="row">Judul</th>
+                                <th scope="row">{{ __('kalender-pembelajaran\index.Judul') }}</th>
                                 <td id="eventTitle"></td>
                             </tr>
                             <tr>
-                                <th scope="row">Tanggal mulai</th>
+                                <th scope="row">{{ __('kalender-pembelajaran\index.Tanggal mulai') }}</th>
                                 <td id="eventDateStart"></td>
                             </tr>
                             <tr>
-                                <th scope="row">Tanggal selesai</th>
+                                <th scope="row">{{ __('kalender-pembelajaran\index.Tanggal selesai') }}</th>
                                 <td id="eventDateEnd"></td>
                             </tr>
                             <tr>
-                                <th scope="row">Deksripsi</th>
+                                <th scope="row">{{ __('kalender-pembelajaran\index.Deksripsi') }}</th>
                                 <td id="eventDescription"></td>
                             </tr>
                         </tbody>
@@ -120,7 +118,6 @@
         </div>
     </div>
 @endsection
-
 
 @push('js')
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.js'></script>
