@@ -7,7 +7,7 @@
 
     @can('kota delete')
         <form action="{{ route('kota.destroy', $model->id) }}" method="post" class="d-inline"
-            onsubmit="return confirm('Are you sure to delete this record?')">
+            onsubmit="return confirm('{{ __('kota\delete.confirm') }}')">
             @csrf
             @method('delete')
 
