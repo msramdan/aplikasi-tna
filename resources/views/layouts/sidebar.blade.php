@@ -124,30 +124,37 @@
                     </div>
                 </li>
             @endcanany
-            <li class="nav-item">
-                <a class="nav-link menu-link {{ request()->routeIs('pengajuan-kap*') ? 'active' : '' }}"
-                    href="#sidebarPengajuanKap" data-bs-toggle="collapse" role="button"
-                    aria-expanded="{{ request()->routeIs('pengajuan-kap*') ? 'true' : 'false' }}"
-                    aria-controls="sidebarPengajuanKap">
-                    <i class="fa fa-pencil" aria-hidden="true"></i>
-                    <span data-key="t-forms">{{ __('sidebar.kap_submission') }}</span>
-                </a>
-                <div class="collapse menu-dropdown {{ request()->routeIs('pengajuan-kap*') ? 'show' : '' }}"
-                    id="sidebarPengajuanKap">
-                    <ul class="nav nav-sm flex-column">
-                        <li class="nav-item">
-                            <a href=""
-                                class="nav-link {{ request()->routeIs('pengajuan-kap/tahunan') ? 'active' : '' }}"
-                                data-key="t-basic-elements">{{ __('sidebar.annual') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href=""
-                                class="nav-link {{ request()->routeIs('pengajuan-kap/insidentil') ? 'active' : '' }}"
-                                data-key="t-basic-elements">{{ __('sidebar.incidental') }}</a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
+
+
+
+            @canany(['pengajuan kap view'])
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ request()->routeIs('pengajuan-kap*') ? 'active' : '' }}"
+                        href="#sidebarPengajuanKap" data-bs-toggle="collapse" role="button"
+                        aria-expanded="{{ request()->routeIs('pengajuan-kap*') ? 'true' : 'false' }}"
+                        aria-controls="sidebarPengajuanKap">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                        <span data-key="t-forms">{{ __('sidebar.kap_submission') }}</span>
+                    </a>
+                    <div class="collapse menu-dropdown {{ request()->routeIs('pengajuan-kap*') ? 'show' : '' }}"
+                        id="sidebarPengajuanKap">
+                        <ul class="nav nav-sm flex-column">
+                            @can('pengajuan kap view')
+                                <li class="nav-item">
+                                    <a href=""
+                                        class="nav-link {{ request()->routeIs('pengajuan-kap/tahunan') ? 'active' : '' }}"
+                                        data-key="t-basic-elements">{{ __('sidebar.annual') }}</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href=""
+                                        class="nav-link {{ request()->routeIs('pengajuan-kap/insidentil') ? 'active' : '' }}"
+                                        data-key="t-basic-elements">{{ __('sidebar.incidental') }}</a>
+                                </li>
+                            @endcan
+                        </ul>
+                    </div>
+                </li>
+            @endcanany
             @can('kalender pembelajaran view')
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ request()->routeIs('kalender-pembelajaran*') ? 'active' : '' }}"

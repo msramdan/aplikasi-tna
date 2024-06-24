@@ -35,10 +35,11 @@ class RoleAndPermissionSeeder extends Seeder
             'name' => 'Admin Unit'
         ]);
         $permissionAdminUnit = [
-            'reporting view',
-            'reporting create',
-            'reporting edit',
-            'reporting delete'
+            'kalender pembelajaran view',
+            'kalender pembelajaran create',
+            'kalender pembelajaran edit',
+            'kalender pembelajaran delete',
+            'pengajuan kap view',
         ];
         foreach ($permissionAdminUnit as $x) {
             $roleAdminUnit->givePermissionTo($x);
@@ -50,9 +51,7 @@ class RoleAndPermissionSeeder extends Seeder
         ]);
         $permissionUser = [
             'kalender pembelajaran view',
-            'kalender pembelajaran create',
-            'kalender pembelajaran edit',
-            'kalender pembelajaran delete'
+            'pengajuan kap view',
         ];
         foreach ($permissionUser as $y) {
             $roleUser->givePermissionTo($y);
