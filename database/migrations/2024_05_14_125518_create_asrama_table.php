@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('nama_asrama', 150);
 			$table->foreignId('lokasi_id')->nullable()->constrained('lokasi')->restrictOnUpdate()->nullOnDelete();
 			$table->integer('kuota');
-			$table->enum('starus_asrama', ['Available', 'Not available']);
+			$table->enum('status_asrama', ['Available', 'Not available']);
 			$table->text('keterangan');
             $table->timestamps();
         });

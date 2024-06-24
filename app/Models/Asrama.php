@@ -16,7 +16,7 @@ class Asrama extends Model
     protected static $logUnguarded = true;
 
 
-    protected $fillable = ['nama_asrama', 'lokasi_id', 'kuota', 'starus_asrama', 'keterangan'];
+    protected $fillable = ['nama_asrama', 'lokasi_id', 'kuota', 'status_asrama', 'keterangan'];
 
     protected $casts = ['nama_asrama' => 'string', 'kuota' => 'integer', 'keterangan' => 'string', 'created_at' => 'datetime:d/m/Y H:i', 'updated_at' => 'datetime:d/m/Y H:i'];
 
@@ -29,7 +29,7 @@ class Asrama extends Model
     {
         return LogOptions::defaults()
             ->useLogName('log_asrama')
-            ->logOnly(['nama_asrama', 'lokasi_id', 'kuota', 'starus_asrama', 'keterangan'])
+            ->logOnly(['nama_asrama', 'lokasi_id', 'kuota', 'status_asrama', 'keterangan'])
             ->logOnlyDirty()
             ->dontSubmitEmptyLogs();
     }

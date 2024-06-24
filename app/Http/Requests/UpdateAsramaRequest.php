@@ -27,7 +27,7 @@ class UpdateAsramaRequest extends FormRequest
             'nama_asrama' => 'required|string|max:150',
 			'lokasi_id' => 'required|exists:App\Models\Lokasi,id',
 			'kuota' => 'required|numeric',
-			'starus_asrama' => 'required|in:Available,Not available',
+			'status_asrama' => 'required|in:Available,Not available',
 			'keterangan' => 'required|string',
         ];
     }
