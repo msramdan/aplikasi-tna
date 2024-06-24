@@ -7,7 +7,7 @@
 
     @can('asrama delete')
         <form action="{{ route('asrama.destroy', $model->id) }}" method="post" class="d-inline"
-            onsubmit="return confirm('{{ __('asrama\action.confirm_delete') }}')">
+            onsubmit="return confirm('{{ __('asrama/action.confirm_delete') }}')">
             @csrf
             @method('delete')
 
