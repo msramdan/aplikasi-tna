@@ -158,12 +158,14 @@ class TaggingKompetensiIkController extends Controller
         }
         $type = request()->query('type', '');
         if ($type === 'renstra') {
-            $endpoint = config('custom.stara_endpoint') . '/simaren/indikator-kinerja/es2';
+            $endpoint = config('stara.endpoint') . '/simaren/indikator-kinerja/es2';
         } else {
             dd('API blm ready');
         }
 
-        $response = Http::withToken($token)->get($endpoint);
+        $response = Http::withToken($token)->get($endpoint, [
+            'tahun' => $tahun
+        ]);
         $availableItems = [];
 
         if ($response->successful()) {
