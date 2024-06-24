@@ -160,7 +160,7 @@
                                                 <div class="mb-2">
                                                     <label class="form-label" style="margin-bottom: 4px"
                                                         for="password">Password</label>
-                                                    <input type="password" value="GIACorpu@1326"
+                                                    <input type="password" value=""
                                                         class="form-control @error('password') is-invalid @enderror"
                                                         placeholder="Enter password" id="password" name="password">
                                                     @error('password')
