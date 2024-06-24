@@ -70,7 +70,7 @@ class FortifyServiceProvider extends ServiceProvider
                             dd('Role not found');
                         }
                     }
-
+                    session(['api_token' => $data['data']['token']]);
                     if (env('IS_SEND_OTP', false)) {
                         // $email = "saepulramdan244@gmail.com";
                         $otp = rand(100000, 999999);

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('Tagging Pembelajaran Kompetensi'))
+@section('title', __('Tagging Kompetensi - IK APEP'))
 
 @push('css')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
@@ -52,7 +52,7 @@
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">TAGGING PEMBELAJARAN KOMPETENSI</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Tagging Kompetensi - IK APEP</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <hr>
@@ -81,11 +81,11 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">{{ __('Tagging Pembelajaran Kompetensi') }}</h4>
+                        <h4 class="mb-sm-0">{{ __('Tagging Kompetensi - IK APEP') }}</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="/panel">Dashboard</a></li>
-                                <li class="breadcrumb-item active">{{ __('Tagging Pembelajaran Kompetensi') }}</li>
+                                <li class="breadcrumb-item active">{{ __('Tagging Kompetensi - IK APEP') }}</li>
                             </ol>
                         </div>
 
@@ -96,10 +96,7 @@
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="card-header">
-                            <button type="button" class="btn btn-warning" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal"><i class='fa fa-upload'></i>
-                                {{ __('Import') }}
-                            </button>
+
                             <button id="btnExport" class="btn btn-success">
                                 <i class='fas fa-file-excel'></i>
                                 {{ __('Export') }}
@@ -112,8 +109,8 @@
                                     <thead class="table-dark">
                                         <tr>
                                             <th>#</th>
-                                            <th>{{ __('Pembelajaran') }}</th>
-                                            <th>{{ __('Tagging Kompetensi') }}</th>
+                                            <th>{{ __('Kompetensi') }}</th>
+                                            <th>{{ __('Tagging IK APEP') }}</th>
                                             <th>{{ __('Action') }}</th>
                                         </tr>
                                     </thead>
@@ -134,7 +131,7 @@
         $('#data-table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('tagging-pembelajaran-kompetensi.index') }}",
+            ajax: "{{ route('tagging-kompetensi-ik.apep') }}",
             columns: [{
                     data: 'DT_RowIndex',
                     name: 'DT_RowIndex',
@@ -142,8 +139,8 @@
                     searchable: false
                 },
                 {
-                    data: 'nama_topik',
-                    name: 'nama_topik'
+                    data: 'nama_kompetensi',
+                    name: 'nama_kompetensi'
                 },
                 {
                     data: 'jumlah_tagging',
@@ -157,74 +154,74 @@
                 }
             ],
 
-            drawCallback: function() {
-                $('.btn-detail-tagging').click(function() {
-                    var id = $(this).data('id');
-                    var pembelajaran = $(this).data('pembelajaran');
-                    var csrfToken = $('meta[name="csrf-token"]').attr('content');
-                    $('#loading-overlay').show();
-                    $.ajax({
-                        type: "GET",
-                        url: '{{ route('detailTaggingPembelajaranKompetensi') }}',
-                        data: {
-                            id: id,
-                            _token: csrfToken
-                        },
-                        success: function(response) {
-                            $('#loading-overlay').hide();
+            // drawCallback: function() {
+            //     $('.btn-detail-tagging').click(function() {
+            //         var id = $(this).data('id');
+            //         var pembelajaran = $(this).data('pembelajaran');
+            //         var csrfToken = $('meta[name="csrf-token"]').attr('content');
+            //         $('#loading-overlay').show();
+            //         $.ajax({
+            //             type: "GET",
+            //             url: '{{ route('detailTaggingPembelajaranKompetensi') }}',
+            //             data: {
+            //                 id: id,
+            //                 _token: csrfToken
+            //             },
+            //             success: function(response) {
+            //                 $('#loading-overlay').hide();
 
-                            // Cek apakah response success bernilai false
-                            if (!response.success) {
-                                Swal.fire({
-                                    icon: 'warning',
-                                    title: 'Alert',
-                                    text: response.message,
-                                });
-                                return;
-                            }
+            //                 // Cek apakah response success bernilai false
+            //                 if (!response.success) {
+            //                     Swal.fire({
+            //                         icon: 'warning',
+            //                         title: 'Alert',
+            //                         text: response.message,
+            //                     });
+            //                     return;
+            //                 }
 
-                            $('#modalDetailTagging').modal('show');
-                            $('#modalPembelajaran').text(pembelajaran);
+            //                 $('#modalDetailTagging').modal('show');
+            //                 $('#modalPembelajaran').text(pembelajaran);
 
-                            // Mendefinisikan variabel untuk menyimpan HTML tabel
-                            var tableHtml =
-                                '<div class="table-responsive p-1"><table class="table table-striped">';
-                            tableHtml += '<thead>';
-                            tableHtml += '<tr>';
-                            tableHtml += '<th>No</th>'; // Kolom untuk nomor urut
-                            tableHtml += '<th>Kompetensi</th>';
-                            tableHtml += '</tr>';
-                            tableHtml += '</thead>';
-                            tableHtml += '<tbody></div>';
+            //                 // Mendefinisikan variabel untuk menyimpan HTML tabel
+            //                 var tableHtml =
+            //                     '<div class="table-responsive p-1"><table class="table table-striped">';
+            //                 tableHtml += '<thead>';
+            //                 tableHtml += '<tr>';
+            //                 tableHtml += '<th>No</th>'; // Kolom untuk nomor urut
+            //                 tableHtml += '<th>Kompetensi</th>';
+            //                 tableHtml += '</tr>';
+            //                 tableHtml += '</thead>';
+            //                 tableHtml += '<tbody></div>';
 
-                            // Iterasi melalui data dan membangun baris-baris tabel
-                            $.each(response.data, function(index, item) {
-                                tableHtml += '<tr>';
-                                tableHtml += '<td>' + (index + 1) +
-                                    '</td>'; // Menampilkan nomor urut
-                                tableHtml += '<td>' + item.nama_kompetensi +
-                                    '</td>';
-                                tableHtml += '</tr>';
-                            });
+            //                 // Iterasi melalui data dan membangun baris-baris tabel
+            //                 $.each(response.data, function(index, item) {
+            //                     tableHtml += '<tr>';
+            //                     tableHtml += '<td>' + (index + 1) +
+            //                         '</td>'; // Menampilkan nomor urut
+            //                     tableHtml += '<td>' + item.nama_kompetensi +
+            //                         '</td>';
+            //                     tableHtml += '</tr>';
+            //                 });
 
-                            tableHtml += '</tbody>';
-                            tableHtml += '</table>';
+            //                 tableHtml += '</tbody>';
+            //                 tableHtml += '</table>';
 
-                            // Menambahkan HTML tabel ke dalam modal body
-                            $('.modal-body-detail').html(tableHtml);
-                        },
-                        error: function(error) {
-                            $('#loading-overlay').hide();
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Error',
-                                text: 'Terjadi kesalahan saat mengambil data.',
-                            });
-                            console.error('Error:', error);
-                        },
-                    });
-                });
-            }
+            //                 // Menambahkan HTML tabel ke dalam modal body
+            //                 $('.modal-body-detail').html(tableHtml);
+            //             },
+            //             error: function(error) {
+            //                 $('#loading-overlay').hide();
+            //                 Swal.fire({
+            //                     icon: 'error',
+            //                     title: 'Error',
+            //                     text: 'Terjadi kesalahan saat mengambil data.',
+            //                 });
+            //                 console.error('Error:', error);
+            //             },
+            //         });
+            //     });
+            // }
 
         });
     </script>

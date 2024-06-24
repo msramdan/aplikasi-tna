@@ -15,7 +15,12 @@ return new class extends Migration
     {
         Schema::create('tagging_kompetensi_ik', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->foreignId('kompetensi_id')->constrained('kompetensi')->restrictOnUpdate()->cascadeOnDelete();
+            $table->text('indikator_kinerja');
+            $table->text('sasaran_kegiatan')->nullable();
+            $table->string('unit_kerja')->nullable();
+            $table->enum('status_ruang_kelas', ['Renstra', 'APP', 'APEP', 'APIP']);
+            $table->string('tahun', 10);
             $table->timestamps();
         });
     }

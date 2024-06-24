@@ -31,8 +31,8 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="alert alert-primary" role="alert">
-                                <b>Pembelajaran :</b><br>
-                                {{ $topik->nama_topik }}
+                                <b>Kompetensi :</b><br>
+                                {{ $kompetensi->nama_kompetensi }}
                             </div>
                         </div>
                     </div>
@@ -42,7 +42,7 @@
                     <div class="card">
                         <div class="card-body">
                             <form method="POST"
-                                action="{{ route('tagging-pembelajaran-kompetensi.update', ['id' => $topik->id]) }}"
+                                action="{{ route('tagging-pembelajaran-kompetensi.update', ['id' => $kompetensi->id]) }}"
                                 onsubmit="selectAllAssigned()">
                                 @csrf
                                 @method('POST')
@@ -51,8 +51,9 @@
                                         <input type="text" id="search-available" class="form-control mb-2"
                                             placeholder="Search for available">
                                         <select id="available" class="form-control" multiple size="20">
-                                            @foreach ($availableItems as $id => $nama_kompetensi)
-                                                <option value="{{ $id }}">{{ $nama_kompetensi }}</option>
+                                            @foreach ($availableItems as $item)
+                                                <option value="{{ $item['indikator_kinerja'] }}">
+                                                    {{ $item['indikator_kinerja'] }}</option>
                                             @endforeach
                                         </select>
                                     </div>
