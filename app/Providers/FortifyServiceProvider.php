@@ -72,11 +72,10 @@ class FortifyServiceProvider extends ServiceProvider
                     }
                     session(['api_token' => $data['data']['token']]);
                     if (env('IS_SEND_OTP', false)) {
-                        // $email = "saepulramdan244@gmail.com";
                         $otp = rand(100000, 999999);
-                        Cache::put('otp_' . $user->id, $otp, now()->addMinutes(1));
+                        $otpExpiration = env('EXPIRED_OTP', 3);
+                        Cache::put('otp_' . $user->id, $otp, now()->addMinutes($otpExpiration));
                         Mail::to($user->email)->send(new SendOtpMail($otp));
-                        // Mail::to($email)->send(new SendOtpMail($otp));
                         session(['otp_user_id' => $user->id]);
                         session(['otp_email' => $user->email]);
                         return null;
