@@ -18,8 +18,9 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('email')->unique();
             $table->string('jabatan')->nullable();
-            $table->string('nama_unit')->nullable();
             $table->string('avatar')->nullable();
+            $table->string('kode_unit')->nullable();
+            $table->string('nama_unit')->nullable();
             $table->timestamps();
         });
     }

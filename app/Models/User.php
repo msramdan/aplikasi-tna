@@ -27,6 +27,7 @@ class User extends Authenticatable
         'email',
         'jabatan',
         'nama_unit',
+        'kode_unit',
         'avatar'
     ];
 

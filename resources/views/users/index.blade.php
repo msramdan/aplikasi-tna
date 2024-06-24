@@ -40,6 +40,8 @@
                                             <th>{{ trans('users/index.name') }}</th>
                                             <th>{{ trans('users/index.role') }}</th>
                                             <th>{{ trans('users/index.email') }}</th>
+                                            <th>Kode unit</th>
+                                            <th>Unit kerja</th>
                                             <th>{{ trans('users/index.action') }}</th>
                                         </tr>
                                     </thead>
@@ -84,6 +86,14 @@
             {
                 data: 'email',
                 name: 'email'
+            },
+            {
+                data: 'kode_unit',
+                name: 'kode_unit'
+            },
+            {
+                data: 'nama_unit',
+                name: 'nama_unit'
             },
             {
                 data: 'action',
