@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('topik\index.pembelajaran'))
+@section('title', __('topik/index.pembelajaran'))
 
 @section('content')
     <style>
@@ -50,7 +50,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('topik\index.import_pembelajaran') }}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('topik/index.import_pembelajaran') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form method="POST" action="{{ route('importTopik') }}" enctype="multipart/form-data">
@@ -61,14 +61,14 @@
                                 aria-describedby="import_topik" accept=".xlsx" required>
                             <div id="downloadFormat" class="form-text">
                                 <a href="{{ asset('format_import/format_import_topik_pembelajaran.xlsx') }}">
-                                    <i class="fa fa-download" aria-hidden="true"></i> {{ __('topik\index.unduh_format') }}
+                                    <i class="fa fa-download" aria-hidden="true"></i> {{ __('topik/index.unduh_format') }}
                                 </a>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('topik\index.close') }}</button>
-                        <button type="submit" class="btn btn-primary">{{ __('topik\index.submit') }}</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('topik/index.close') }}</button>
+                        <button type="submit" class="btn btn-primary">{{ __('topik/index.submit') }}</button>
                     </div>
                 </form>
             </div>
@@ -80,11 +80,11 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">{{ __('topik\index.pembelajaran') }}</h4>
+                        <h4 class="mb-sm-0">{{ __('topik/index.pembelajaran') }}</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
-                                <li class="breadcrumb-item active">{{ __('topik\index.pembelajaran') }}</li>
+                                <li class="breadcrumb-item active">{{ __('topik/index.pembelajaran') }}</li>
                             </ol>
                         </div>
                     </div>
@@ -93,7 +93,7 @@
             <div class="row">
                 @if (count($errors) > 0)
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <strong>{{ __('topik\index.failed') }}</strong>
+                        <strong>{{ __('topik/index.failed') }}</strong>
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
                         @endforeach
@@ -106,15 +106,15 @@
                         <div class="card-header">
                             @can('topik create')
                                 <a href="{{ route('topik.create') }}" class="btn btn-md btn-primary">
-                                    <i class="mdi mdi-plus"></i> {{ __('topik\index.create_new') }}
+                                    <i class="mdi mdi-plus"></i> {{ __('topik/index.create_new') }}
                                 </a>
                                 <button type="button" class="btn btn-warning" data-bs-toggle="modal"
                                     data-bs-target="#exampleModal">
-                                    <i class='fa fa-upload'></i> {{ __('topik\index.import') }}
+                                    <i class='fa fa-upload'></i> {{ __('topik/index.import') }}
                                 </button>
                             @endcan
                             <button id="btnExport" class="btn btn-success">
-                                <i class='fas fa-file-excel'></i> {{ __('topik\index.export') }}
+                                <i class='fas fa-file-excel'></i> {{ __('topik/index.export') }}
                             </button>
                         </div>
 
@@ -124,8 +124,8 @@
                                     <thead class="table-dark">
                                         <tr>
                                             <th>No</th>
-                                            <th>{{ __('topik\index.nama_pembelajaran') }}</th>
-                                            <th>{{ __('topik\index.action') }}</th>
+                                            <th>{{ __('topik/index.nama_pembelajaran') }}</th>
+                                            <th>{{ __('topik/index.action') }}</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -185,8 +185,8 @@
                 },
                 beforeSend: function() {
                     Swal.fire({
-                        title: '{{ __('topik\index.please_wait') }}',
-                        html: '{{ __('topik\index.exporting_data') }}', // add html attribute if you want or remove
+                        title: '{{ __('topik/index.please_wait') }}',
+                        html: '{{ __('topik/index.exporting_data') }}', // add html attribute if you want or remove
                         allowOutsideClick: false,
                         onBeforeOpen: () => {
                             Swal.showLoading()
@@ -206,8 +206,8 @@
                     console.log(data);
                     Swal.fire({
                         icon: 'error',
-                        title: "{{ __('topik\index.export_failed') }}",
-                        text: "{{ __('topik\index.check_data') }}",
+                        title: "{{ __('topik/index.export_failed') }}",
+                        text: "{{ __('topik/index.check_data') }}",
                         allowOutsideClick: false,
                     });
                 }

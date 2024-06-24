@@ -1,8 +1,8 @@
 <table>
     <thead>
         <tr>
-            <th style="background-color:#D3D3D3 ">{{ __('topik\topik_pembelajaran_excel.no') }}</th>
-            <th style="background-color:#D3D3D3 ">{{ __('topik\topik_pembelajaran_excel.pembelajaran') }}</th>
+            <th style="background-color:#D3D3D3 ">{{ __('topik/topik_pembelajaran_excel.no') }}</th>
+            <th style="background-color:#D3D3D3 ">{{ __('topik/topik_pembelajaran_excel.pembelajaran') }}</th>
         </tr>
     </thead>
     <tbody>

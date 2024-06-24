@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('lokasi\index.lokasi'))
+@section('title', __('lokasi/index.lokasi'))
 
 @section('content')
     <div class="page-content">
@@ -8,11 +8,11 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">{{ __('lokasi\index.lokasi') }}</h4>
+                        <h4 class="mb-sm-0">{{ __('lokasi/index.lokasi') }}</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
-                                <li class="breadcrumb-item active">{{ __('lokasi\index.lokasi') }}</li>
+                                <li class="breadcrumb-item active">{{ __('lokasi/index.lokasi') }}</li>
                             </ol>
                         </div>
                     </div>
@@ -24,7 +24,7 @@
                         <div class="card-header">
                             @can('lokasi create')
                                 <a href="{{ route('lokasi.create') }}" class="btn btn-md btn-primary"> <i
-                                        class="mdi mdi-plus"></i> {{ __('lokasi\index.create_new_lokasi') }}</a>
+                                        class="mdi mdi-plus"></i> {{ __('lokasi/index.create_new_lokasi') }}</a>
                             @endcan
                         </div>
 
@@ -34,10 +34,10 @@
                                     <thead class="table-dark">
                                         <tr>
                                             <th>#</th>
-                                            <th>{{ __('lokasi\index.kota') }}</th>
-                                            <th>{{ __('lokasi\index.type') }}</th>
-                                            <th>{{ __('lokasi\index.nama_lokasi') }}</th>
-                                            <th>{{ __('lokasi\index.action') }}</th>
+                                            <th>{{ __('lokasi/index.kota') }}</th>
+                                            <th>{{ __('lokasi/index.type') }}</th>
+                                            <th>{{ __('lokasi/index.nama_lokasi') }}</th>
+                                            <th>{{ __('lokasi/index.action') }}</th>
                                         </tr>
                                     </thead>
                                 </table>

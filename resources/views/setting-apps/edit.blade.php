@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('setting-apps\edit.title'))
+@section('title', __('setting-apps/edit.title'))
 
 @section('content')
     <div class="page-content">
@@ -8,14 +8,14 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">{{ trans('setting-apps\edit.head') }}</h4>
+                        <h4 class="mb-sm-0">{{ trans('setting-apps/edit.head') }}</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item">
-                                    <a href="/">{{ __('setting-apps\edit.dashboard') }}</a>
+                                    <a href="/">{{ __('setting-apps/edit.dashboard') }}</a>
                                 </li>
                                 <li class="breadcrumb-item active">
-                                    <a href="{{ route('setting-apps.index') }}">{{ trans('setting-apps\edit.head') }}</a>
+                                    <a href="{{ route('setting-apps.index') }}">{{ trans('setting-apps/edit.head') }}</a>
                                 </li>
                             </ol>
                         </div>
@@ -32,7 +32,7 @@
 
                                 @include('setting-apps.include.form')
                                 <button type="submit" class="btn btn-primary"><i class="mdi mdi-content-save"></i>
-                                    {{ __('setting-apps\edit.update') }}</button>
+                                    {{ __('setting-apps/edit.update') }}</button>
                             </form>
                         </div>
                     </div>

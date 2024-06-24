@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('roles\index.Roles'))
+@section('title', __('roles/index.Roles'))
 
 @section('content')
     <div class="page-content">
@@ -8,12 +8,12 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">{{ trans('roles\index.head') }}</h4>
+                        <h4 class="mb-sm-0">{{ trans('roles/index.head') }}</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="/">{{ __('roles\index.Dashboard') }}</a></li>
+                                <li class="breadcrumb-item"><a href="/">{{ __('roles/index.Dashboard') }}</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">
-                                    {{ trans('roles\index.head') }}</li>
+                                    {{ trans('roles/index.head') }}</li>
                             </ol>
                         </div>
 
@@ -26,7 +26,7 @@
                         @can('role & permission create')
                             <div class="card-header">
                                 <a href="{{ route('roles.create') }}" class="btn btn-md btn-primary"> <i
-                                        class="mdi mdi-plus"></i> {{ trans('roles\index.create') }}</a>
+                                        class="mdi mdi-plus"></i> {{ trans('roles/index.create') }}</a>
                             </div>
                         @endcan
                         <div class="card-body">
@@ -35,8 +35,8 @@
                                     <thead class="table-dark">
                                         <tr>
                                             <th>#</th>
-                                            <th>{{ trans('roles\index.name') }}</th>
-                                            <th>{{ __('roles\index.Action') }}</th>
+                                            <th>{{ trans('roles/index.name') }}</th>
+                                            <th>{{ __('roles/index.Action') }}</th>
                                         </tr>
                                     </thead>
                                 </table>

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('roles\edit.Edit Role'))
+@section('title', __('roles/edit.Edit Role'))
 
 @section('content')
 
@@ -9,17 +9,17 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">{{ trans('roles\index.head') }}</h4>
+                        <h4 class="mb-sm-0">{{ trans('roles/index.head') }}</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item">
-                                    <a href="/">{{ __('roles\edit.Dashboard') }}</a>
+                                    <a href="/">{{ __('roles/edit.Dashboard') }}</a>
                                 </li>
                                 <li class="breadcrumb-item">
-                                    <a href="{{ route('roles.index') }}">{{ trans('roles\index.head') }}</a>
+                                    <a href="{{ route('roles.index') }}">{{ trans('roles/index.head') }}</a>
                                 </li>
                                 <li class="breadcrumb-item active" aria-current="page">
-                                    {{ __('roles\edit.Edit') }}
+                                    {{ __('roles/edit.Edit') }}
                                 </li>
                             </ol>
                         </div>
@@ -41,10 +41,10 @@
                                 @include('roles.include.form')
 
                                 <a href="{{ url()->previous() }}" class="btn btn-secondary"><i
-                                        class="mdi mdi-arrow-left-thin"></i> {{ __('roles\edit.Back') }}</a>
+                                        class="mdi mdi-arrow-left-thin"></i> {{ __('roles/edit.Back') }}</a>
 
                                 <button type="submit" class="btn btn-primary"><i class="mdi mdi-content-save"></i>
-                                    {{ __('roles\edit.Update') }}</button>
+                                    {{ __('roles/edit.Update') }}</button>
                             </form>
                         </div>
                     </div>

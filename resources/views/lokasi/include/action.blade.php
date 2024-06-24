@@ -7,7 +7,7 @@
 
     @can('lokasi delete')
         <form action="{{ route('lokasi.destroy', $model->id) }}" method="post" class="d-inline"
-            onsubmit="return confirm('{{ __('lokasi\action.confirm_delete') }}')">
+            onsubmit="return confirm('{{ __('lokasi/action.confirm_delete') }}')">
             @csrf
             @method('delete')
 

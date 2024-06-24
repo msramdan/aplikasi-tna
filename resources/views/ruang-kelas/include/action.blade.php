@@ -7,7 +7,7 @@
 
     @can('ruang kelas delete')
         <form action="{{ route('ruang-kelas.destroy', $model->id) }}" method="post" class="d-inline"
-            onsubmit="return confirm('{{ __('ruang-kelas\action.confirm_delete') }}')">
+            onsubmit="return confirm('{{ __('ruang-kelas/action.confirm_delete') }}')">
             @csrf
             @method('delete')
 

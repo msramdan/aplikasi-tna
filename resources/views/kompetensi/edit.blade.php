@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('kompetensi\edit.edit_kompetensi'))
+@section('title', __('kompetensi/edit.edit_kompetensi'))
 
 @section('content')
     <div class="page-content">
@@ -8,17 +8,17 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">{{ __('kompetensi\edit.kompetensi') }}</h4>
+                        <h4 class="mb-sm-0">{{ __('kompetensi/edit.kompetensi') }}</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item">
                                     <a href="/">Dashboard</a>
                                 </li>
                                 <li class="breadcrumb-item">
-                                    <a href="{{ route('kompetensi.index') }}">{{ __('kompetensi\edit.kompetensi') }}</a>
+                                    <a href="{{ route('kompetensi.index') }}">{{ __('kompetensi/edit.kompetensi') }}</a>
                                 </li>
                                 <li class="breadcrumb-item active" aria-current="page">
-                                    {{ __('kompetensi\edit.edit') }}
+                                    {{ __('kompetensi/edit.edit') }}
                                 </li>
                             </ol>
                         </div>
@@ -42,9 +42,9 @@
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <th style="width: 10px">{{ __('kompetensi\edit.level') }}</th>
-                                            <th>{{ __('kompetensi\edit.deskripsi_level') }}</th>
-                                            <th>{{ __('kompetensi\edit.indikator_perilaku') }}</th>
+                                            <th style="width: 10px">{{ __('kompetensi/edit.level') }}</th>
+                                            <th>{{ __('kompetensi/edit.deskripsi_level') }}</th>
+                                            <th>{{ __('kompetensi/edit.indikator_perilaku') }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -69,9 +69,9 @@
                     </div>
                 </div>
                 <a href="{{ url()->previous() }}" class="btn btn-secondary"><i class="mdi mdi-arrow-left-thin"></i>
-                    {{ __('kompetensi\edit.back') }}</a>
+                    {{ __('kompetensi/edit.back') }}</a>
                 <button type="submit" class="btn btn-primary"><i class="mdi mdi-content-save"></i>
-                    {{ __('kompetensi\edit.update') }}</button>
+                    {{ __('kompetensi/edit.update') }}</button>
             </form>
         </div>
     </div>

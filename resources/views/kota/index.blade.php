@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('kota\index.title'))
+@section('title', __('kota/index.title'))
 
 @section('content')
     <div class="page-content">
@@ -8,11 +8,11 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">{{ __('kota\index.title') }}</h4>
+                        <h4 class="mb-sm-0">{{ __('kota/index.title') }}</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="/">{{ __('kota\index.dashboard') }}</a></li>
-                                <li class="breadcrumb-item active">{{ __('kota\index.title') }}</li>
+                                <li class="breadcrumb-item"><a href="/">{{ __('kota/index.dashboard') }}</a></li>
+                                <li class="breadcrumb-item active">{{ __('kota/index.title') }}</li>
                             </ol>
                         </div>
                     </div>
@@ -24,7 +24,7 @@
                         <div class="card-header">
                             @can('kota create')
                                 <a href="{{ route('kota.create') }}" class="btn btn-md btn-primary"> <i
-                                        class="mdi mdi-plus"></i> {{ __('kota\index.create_new') }}</a>
+                                        class="mdi mdi-plus"></i> {{ __('kota/index.create_new') }}</a>
                             @endcan
                         </div>
 
@@ -34,8 +34,8 @@
                                     <thead class="table-dark">
                                         <tr>
                                             <th>No</th>
-                                            <th>{{ __('kota\index.nama_kota') }}</th>
-                                            <th>{{ __('kota\index.action') }}</th>
+                                            <th>{{ __('kota/index.nama_kota') }}</th>
+                                            <th>{{ __('kota/index.action') }}</th>
                                         </tr>
                                     </thead>
                                 </table>

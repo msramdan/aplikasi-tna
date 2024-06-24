@@ -1,9 +1,9 @@
 <table>
     <thead>
         <tr>
-            <th style="background-color:#D3D3D3 ">{{ __('tagging-pembelajaran-kompetensi\tagging_pembelajaran_kompetensi_excel.no') }}</th>
-            <th style="background-color:#D3D3D3 ">{{ __('tagging-pembelajaran-kompetensi\tagging_pembelajaran_kompetensi_excel.learning') }}</th>
-            <th style="background-color:#D3D3D3 ">{{ __('tagging-pembelajaran-kompetensi\tagging_pembelajaran_kompetensi_excel.competency') }}</th>
+            <th style="background-color:#D3D3D3 ">{{ __('tagging-pembelajaran-kompetensi/tagging_pembelajaran_kompetensi_excel.no') }}</th>
+            <th style="background-color:#D3D3D3 ">{{ __('tagging-pembelajaran-kompetensi/tagging_pembelajaran_kompetensi_excel.learning') }}</th>
+            <th style="background-color:#D3D3D3 ">{{ __('tagging-pembelajaran-kompetensi/tagging_pembelajaran_kompetensi_excel.competency') }}</th>
         </tr>
     </thead>
     <tbody>

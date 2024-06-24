@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('jadwal-kap-tahunan\index.Jadwal Kap Tahunan'))
+@section('title', __('jadwal-kap-tahunan/index.Jadwal Kap Tahunan'))
 
 @section('content')
     <div class="page-content">
@@ -8,11 +8,11 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">{{ __('jadwal-kap-tahunan\index.Jadwal Kap Tahunan') }}</h4>
+                        <h4 class="mb-sm-0">{{ __('jadwal-kap-tahunan/index.Jadwal Kap Tahunan') }}</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="/">{{ __('jadwal-kap-tahunan\index.Dashboard') }}</a></li>
-                                <li class="breadcrumb-item active">{{ __('jadwal-kap-tahunan\index.Jadwal Kap Tahunan') }}</li>
+                                <li class="breadcrumb-item"><a href="/">{{ __('jadwal-kap-tahunan/index.Dashboard') }}</a></li>
+                                <li class="breadcrumb-item active">{{ __('jadwal-kap-tahunan/index.Jadwal Kap Tahunan') }}</li>
                             </ol>
                         </div>
 
@@ -25,7 +25,7 @@
                         <div class="card-header">
                             @can('jadwal kap tahunan create')
                                 <a href="{{ route('jadwal-kap-tahunan.create') }}" class="btn btn-md btn-primary"> <i
-                                        class="mdi mdi-plus"></i> {{ __('jadwal-kap-tahunan\index.Create a new jadwal kap tahunan') }}</a>
+                                        class="mdi mdi-plus"></i> {{ __('jadwal-kap-tahunan/index.Create a new jadwal kap tahunan') }}</a>
                             @endcan
                         </div>
 
@@ -35,10 +35,10 @@
                                     <thead class="table-dark">
                                         <tr>
                                             <th>No</th>
-                                            <th>{{ __('jadwal-kap-tahunan\index.Tahun') }}</th>
-                                            <th>{{ __('jadwal-kap-tahunan\index.Tanggal Mulai') }}</th>
-                                            <th>{{ __('jadwal-kap-tahunan\index.Tanggal Selesai') }}</th>
-                                            <th>{{ __('jadwal-kap-tahunan\index.Action') }}</th>
+                                            <th>{{ __('jadwal-kap-tahunan/index.Tahun') }}</th>
+                                            <th>{{ __('jadwal-kap-tahunan/index.Tanggal Mulai') }}</th>
+                                            <th>{{ __('jadwal-kap-tahunan/index.Tanggal Selesai') }}</th>
+                                            <th>{{ __('jadwal-kap-tahunan/index.Action') }}</th>
                                         </tr>
                                     </thead>
                                 </table>
