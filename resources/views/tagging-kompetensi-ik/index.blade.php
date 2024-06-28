@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('Tagging Kompetensi - IK APIP'))
+@section('title', __('Tagging Kompetensi - IK Renstra'))
 
 @push('css')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
@@ -52,7 +52,7 @@
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tagging Kompetensi - IK APIP</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Tagging Kompetensi - IK Renstra</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <hr>
@@ -81,11 +81,11 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">{{ __('Tagging Kompetensi - IK APIP') }}</h4>
+                        <h4 class="mb-sm-0">{{ __('Tagging Kompetensi - IK Renstra') }}</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="/panel">Dashboard</a></li>
-                                <li class="breadcrumb-item active">{{ __('Tagging Kompetensi - IK APIP') }}</li>
+                                <li class="breadcrumb-item active">{{ __('Tagging Kompetensi - IK Renstra') }}</li>
                             </ol>
                         </div>
 
@@ -96,9 +96,11 @@
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="card-header">
-                            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
                                 <i class='fa fa-upload'></i> Import
                             </button>
+
                             <button id="btnExport" class="btn btn-success">
                                 <i class='fas fa-file-excel'></i>
                                 {{ __('Export') }}
@@ -112,7 +114,7 @@
                                         <tr>
                                             <th>#</th>
                                             <th>{{ __('Kompetensi') }}</th>
-                                            <th>{{ __('Tagging IK APIP') }}</th>
+                                            <th>{{ __('Tagging IK Renstra') }}</th>
                                             <th>{{ __('Action') }}</th>
                                         </tr>
                                     </thead>
@@ -130,10 +132,16 @@
 @push('js')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
+        $(document).ready(function() {
+            $('.select2-form').select2();
+        });
+    </script>
+    <script>
+        var type = window.location.pathname.split('/')[2];
         $('#data-table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('tagging-kompetensi-ik.apip') }}",
+            ajax: "{{ route('tagging-kompetensi-ik', ['type' => ':type']) }}".replace(':type', type),
             columns: [{
                     data: 'DT_RowIndex',
                     name: 'DT_RowIndex',
@@ -156,74 +164,77 @@
                 }
             ],
 
-            // drawCallback: function() {
-            //     $('.btn-detail-tagging').click(function() {
-            //         var id = $(this).data('id');
-            //         var pembelajaran = $(this).data('pembelajaran');
-            //         var csrfToken = $('meta[name="csrf-token"]').attr('content');
-            //         $('#loading-overlay').show();
-            //         $.ajax({
-            //             type: "GET",
-            //             url: '{{ route('detailTaggingPembelajaranKompetensi') }}',
-            //             data: {
-            //                 id: id,
-            //                 _token: csrfToken
-            //             },
-            //             success: function(response) {
-            //                 $('#loading-overlay').hide();
+            drawCallback: function() {
+                $('.btn-detail-tagging').click(function() {
+                    var id = $(this).data('id');
+                    var nama_kompetensi = $(this).data('nama_kompetensi');
+                    var type = $(this).data('type');
 
-            //                 // Cek apakah response success bernilai false
-            //                 if (!response.success) {
-            //                     Swal.fire({
-            //                         icon: 'warning',
-            //                         title: 'Alert',
-            //                         text: response.message,
-            //                     });
-            //                     return;
-            //                 }
+                    var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                    $('#loading-overlay').show();
+                    $.ajax({
+                        type: "GET",
+                        url: '{{ route('detailTaggingKompetensiIk') }}',
+                        data: {
+                            id: id,
+                            type: type,
+                            _token: csrfToken
+                        },
+                        success: function(response) {
+                            $('#loading-overlay').hide();
 
-            //                 $('#modalDetailTagging').modal('show');
-            //                 $('#modalPembelajaran').text(pembelajaran);
+                            // Cek apakah response success bernilai false
+                            if (!response.success) {
+                                Swal.fire({
+                                    icon: 'warning',
+                                    title: 'Alert',
+                                    text: response.message,
+                                });
+                                return;
+                            }
 
-            //                 // Mendefinisikan variabel untuk menyimpan HTML tabel
-            //                 var tableHtml =
-            //                     '<div class="table-responsive p-1"><table class="table table-striped">';
-            //                 tableHtml += '<thead>';
-            //                 tableHtml += '<tr>';
-            //                 tableHtml += '<th>No</th>'; // Kolom untuk nomor urut
-            //                 tableHtml += '<th>Kompetensi</th>';
-            //                 tableHtml += '</tr>';
-            //                 tableHtml += '</thead>';
-            //                 tableHtml += '<tbody></div>';
+                            $('#modalDetailTagging').modal('show');
+                            $('#modalPembelajaran').text(pembelajaran);
 
-            //                 // Iterasi melalui data dan membangun baris-baris tabel
-            //                 $.each(response.data, function(index, item) {
-            //                     tableHtml += '<tr>';
-            //                     tableHtml += '<td>' + (index + 1) +
-            //                         '</td>'; // Menampilkan nomor urut
-            //                     tableHtml += '<td>' + item.nama_kompetensi +
-            //                         '</td>';
-            //                     tableHtml += '</tr>';
-            //                 });
+                            // Mendefinisikan variabel untuk menyimpan HTML tabel
+                            var tableHtml =
+                                '<div class="table-responsive p-1"><table class="table table-striped">';
+                            tableHtml += '<thead>';
+                            tableHtml += '<tr>';
+                            tableHtml += '<th>No</th>'; // Kolom untuk nomor urut
+                            tableHtml += '<th>Indikator kinerja</th>';
+                            tableHtml += '</tr>';
+                            tableHtml += '</thead>';
+                            tableHtml += '<tbody></div>';
 
-            //                 tableHtml += '</tbody>';
-            //                 tableHtml += '</table>';
+                            // Iterasi melalui data dan membangun baris-baris tabel
+                            $.each(response.data, function(index, item) {
+                                tableHtml += '<tr>';
+                                tableHtml += '<td>' + (index + 1) +
+                                    '</td>'; // Menampilkan nomor urut
+                                tableHtml += '<td>' + item.indikator_kinerja +
+                                    '</td>';
+                                tableHtml += '</tr>';
+                            });
 
-            //                 // Menambahkan HTML tabel ke dalam modal body
-            //                 $('.modal-body-detail').html(tableHtml);
-            //             },
-            //             error: function(error) {
-            //                 $('#loading-overlay').hide();
-            //                 Swal.fire({
-            //                     icon: 'error',
-            //                     title: 'Error',
-            //                     text: 'Terjadi kesalahan saat mengambil data.',
-            //                 });
-            //                 console.error('Error:', error);
-            //             },
-            //         });
-            //     });
-            // }
+                            tableHtml += '</tbody>';
+                            tableHtml += '</table>';
+
+                            // Menambahkan HTML tabel ke dalam modal body
+                            $('.modal-body-detail').html(tableHtml);
+                        },
+                        error: function(error) {
+                            $('#loading-overlay').hide();
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: 'Terjadi kesalahan saat mengambil data.',
+                            });
+                            console.error('Error:', error);
+                        },
+                    });
+                });
+            }
 
         });
     </script>

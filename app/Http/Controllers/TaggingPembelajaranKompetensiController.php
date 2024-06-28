@@ -128,16 +128,18 @@ class TaggingPembelajaranKompetensiController extends Controller
 
     public function destroy($id)
     {
-        try {
-            DB::table('tagging_pembelajaran_kompetensi')->where('topik_id', $id)->delete();
-            Alert::toast('Tagging deleted successfully.', 'success');
-        } catch (\Exception $e) {
-            Alert::toast('Failed to delete Tagging.', 'error');
+        $cek = DB::table('tagging_pembelajaran_kompetensi')
+            ->where('topik_id', $id)
+            ->first();
+        if (!$cek) {
+            Alert::toast('Record not found.', 'error');
+            return back();
         }
-
-        // Redirect back to the previous page
+        DB::table('tagging_pembelajaran_kompetensi')->where('topik_id', $id)->delete();
+        Alert::toast('Tagging deleted successfully.', 'success');
         return back();
     }
+
 
     public function detailTaggingPembelajaranKompetensi(Request $request)
     {

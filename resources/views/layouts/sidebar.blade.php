@@ -97,23 +97,23 @@
                                         id="taggingKompetensiIk">
                                         <ul class="nav nav-sm flex-column">
                                             <li class="nav-item">
-                                                <a href="{{ route('tagging-kompetensi-ik.renstra') }}"
-                                                    class="nav-link {{ request()->routeIs('tagging-kompetensi-ik.renstra') ? 'active' : '' }}"
+                                                <a href="{{ route('tagging-kompetensi-ik', ['type' => 'renstra']) }}"
+                                                    class="nav-link {{ request()->routeIs('tagging-kompetensi-ik') ? 'active' : '' }}"
                                                     data-key="t-level-2.1">{{ __('sidebar.renstra') }}</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a href="{{ route('tagging-kompetensi-ik.app') }}"
-                                                    class="nav-link {{ request()->routeIs('tagging-kompetensi-ik.app') ? 'active' : '' }}"
+                                                <a href="{{ route('tagging-kompetensi-ik', ['type' => 'app']) }}"
+                                                    class="nav-link {{ request()->routeIs('tagging-kompetensi-ik') ? 'active' : '' }}"
                                                     data-key="t-level-2.1">{{ __('sidebar.app') }}</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a href="{{ route('tagging-kompetensi-ik.apep') }}"
-                                                    class="nav-link {{ request()->routeIs('tagging-kompetensi-ik.apep') ? 'active' : '' }}"
+                                                <a href="{{ route('tagging-kompetensi-ik', ['type' => 'apep']) }}"
+                                                    class="nav-link {{ request()->routeIs('tagging-kompetensi-ik') ? 'active' : '' }}"
                                                     data-key="t-level-2.1">{{ __('sidebar.apep') }}</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a href="{{ route('tagging-kompetensi-ik.apip') }}"
-                                                    class="nav-link {{ request()->routeIs('tagging-kompetensi-ik.apip') ? 'active' : '' }}"
+                                                <a href="{{ route('tagging-kompetensi-ik', ['type' => 'apip']) }}"
+                                                    class="nav-link {{ request()->routeIs('tagging-kompetensi-ik') ? 'active' : '' }}"
                                                     data-key="t-level-2.1">{{ __('sidebar.apip') }}</a>
                                             </li>
                                         </ul>
