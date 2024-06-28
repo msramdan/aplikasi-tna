@@ -36,6 +36,7 @@
             0% {
                 transform: rotate(0deg);
             }
+
             100% {
                 transform: rotate(360deg);
             }
@@ -46,11 +47,45 @@
         <div class="loading-spinner"></div>
     </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Import tagging pembelajaran - kompetensi</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form method="POST" action="{{ route('importKompetensi') }}" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        @csrf
+                        <div class="mb-3">
+                            <input type="file" class="form-control" id="import_kompetensi" name="import_kompetensi"
+                                aria-describedby="import_kompetensi" accept=".xlsx" required>
+                            <div id="downloadFormat" class="form-text">
+                                <a href="#">
+                                    <i class="fa fa-download" aria-hidden="true"></i>
+                                    Unduh format
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">{{ trans('kompetensi/index.close') }}</button>
+                        <button type="submit" class="btn btn-primary">{{ trans('kompetensi/index.submit') }}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
     <div class="modal fade" id="modalDetailTagging" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('tagging-pembelajaran-kompetensi/index.modal_title') }}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        {{ __('tagging-pembelajaran-kompetensi/index.modal_title') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <hr>
@@ -68,7 +103,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('tagging-pembelajaran-kompetensi/index.close') }}</button>
+                    <button type="button" class="btn btn-secondary"
+                        data-bs-dismiss="modal">{{ __('tagging-pembelajaran-kompetensi/index.close') }}</button>
                 </div>
             </div>
         </div>
@@ -82,8 +118,10 @@
                         <h4 class="mb-sm-0">{{ __('tagging-pembelajaran-kompetensi/index.page_title') }}</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="/panel">{{ __('tagging-pembelajaran-kompetensi/index.dashboard') }}</a></li>
-                                <li class="breadcrumb-item active">{{ __('tagging-pembelajaran-kompetensi/index.page_title') }}</li>
+                                <li class="breadcrumb-item"><a
+                                        href="/panel">{{ __('tagging-pembelajaran-kompetensi/index.dashboard') }}</a></li>
+                                <li class="breadcrumb-item active">
+                                    {{ __('tagging-pembelajaran-kompetensi/index.page_title') }}</li>
                             </ol>
                         </div>
                     </div>
@@ -93,7 +131,8 @@
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="card-header">
-                            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
                                 <i class='fa fa-upload'></i> {{ __('tagging-pembelajaran-kompetensi/index.import') }}
                             </button>
                             <button id="btnExport" class="btn btn-success">
@@ -129,11 +168,26 @@
             processing: true,
             serverSide: true,
             ajax: "{{ route('tagging-pembelajaran-kompetensi.index') }}",
-            columns: [
-                { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
-                { data: 'nama_topik', name: 'nama_topik' },
-                { data: 'jumlah_tagging', name: 'jumlah_tagging' },
-                { data: 'action', name: 'action', orderable: false, searchable: false }
+            columns: [{
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex',
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: 'nama_topik',
+                    name: 'nama_topik'
+                },
+                {
+                    data: 'jumlah_tagging',
+                    name: 'jumlah_tagging'
+                },
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
+                    searchable: false
+                }
             ],
             drawCallback: function() {
                 $('.btn-detail-tagging').click(function() {
@@ -144,7 +198,10 @@
                     $.ajax({
                         type: "GET",
                         url: '{{ route('detailTaggingPembelajaranKompetensi') }}',
-                        data: { id: id, _token: csrfToken },
+                        data: {
+                            id: id,
+                            _token: csrfToken
+                        },
                         success: function(response) {
                             $('#loading-overlay').hide();
 
@@ -160,11 +217,13 @@
                             $('#modalDetailTagging').modal('show');
                             $('#modalPembelajaran').text(pembelajaran);
 
-                            var tableHtml = '<div class="table-responsive p-1"><table class="table table-striped">';
+                            var tableHtml =
+                                '<div class="table-responsive p-1"><table class="table table-striped">';
                             tableHtml += '<thead>';
                             tableHtml += '<tr>';
                             tableHtml += '<th>No</th>';
-                            tableHtml += '<th>{{ __('tagging-pembelajaran-kompetensi/index.competency') }}</th>';
+                            tableHtml +=
+                                '<th>{{ __('tagging-pembelajaran-kompetensi/index.competency') }}</th>';
                             tableHtml += '</tr>';
                             tableHtml += '</thead>';
                             tableHtml += '<tbody></div>';
@@ -172,7 +231,8 @@
                             $.each(response.data, function(index, item) {
                                 tableHtml += '<tr>';
                                 tableHtml += '<td>' + (index + 1) + '</td>';
-                                tableHtml += '<td>' + item.nama_kompetensi + '</td>';
+                                tableHtml += '<td>' + item.nama_kompetensi +
+                                '</td>';
                                 tableHtml += '</tr>';
                             });
 
@@ -207,15 +267,21 @@
             $.ajax({
                 url: url,
                 type: 'GET',
-                headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
                 data: {},
-                xhrFields: { responseType: 'blob' },
+                xhrFields: {
+                    responseType: 'blob'
+                },
                 beforeSend: function() {
                     Swal.fire({
                         title: '{{ __('tagging-pembelajaran-kompetensi/index.please_wait') }}',
                         html: '{{ __('tagging-pembelajaran-kompetensi/index.exporting') }}',
                         allowOutsideClick: false,
-                        onBeforeOpen: () => { Swal.showLoading() },
+                        onBeforeOpen: () => {
+                            Swal.showLoading()
+                        },
                     });
                 },
                 success: function(data) {
@@ -233,6 +299,56 @@
                         text: '{{ __('tagging-pembelajaran-kompetensi/index.export_failed_message') }}',
                         allowOutsideClick: false,
                     });
+                }
+            });
+        }
+    </script>
+
+    <script>
+        $(document).on('click', '#downloadFormat', function(event) {
+            event.preventDefault();
+            downloadFormat();
+        });
+
+        var downloadFormat = function() {
+            var url = '../download-format-tagging-pembelejaran-kompotensi';
+            $.ajax({
+                url: url,
+                type: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                },
+                data: {},
+                xhrFields: {
+                    responseType: 'blob'
+                },
+                beforeSend: function() {
+                    Swal.fire({
+                        title: 'Please Wait !',
+                        html: 'Sedang melakukan download format import',
+                        allowOutsideClick: false,
+                        onBeforeOpen: () => {
+                            Swal.showLoading()
+                        },
+                    });
+
+                },
+                success: function(data) {
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(data);
+                    var nameFile = 'format_import_tagging_pembelajaran_kompetensi.xlsx'
+                    link.download = nameFile;
+                    link.click();
+                    swal.close()
+                },
+                error: function(data) {
+                    console.log(data)
+                    Swal.fire({
+                        icon: 'error',
+                        title: "Download Format Import failed",
+                        text: "Please check",
+                        allowOutsideClick: false,
+                    })
                 }
             });
         }
