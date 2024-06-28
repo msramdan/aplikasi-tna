@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ExportTaggingPembelakaranKompetensi;
 use App\FormatImport\GenerateTaggingPembelajaranKompetensi;
+use App\Http\Requests\ImportTaggingPembelajaranKompetensiRequest;
+use App\Imports\ImportTaggingPembelajaranKompetensi;
 use Yajra\DataTables\Facades\DataTables;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\DB;
@@ -172,5 +174,12 @@ class TaggingPembelajaranKompetensiController extends Controller
         $date = date('d-m-Y');
         $nameFile = 'format_import_tagging_pembelajaran_kompetensi' . $date;
         return Excel::download(new GenerateTaggingPembelajaranKompetensi(), $nameFile . '.xlsx');
+    }
+
+    public function importTaggingPembelajaranKompetensi(ImportTaggingPembelajaranKompetensiRequest $request)
+    {
+        Excel::import(new ImportTaggingPembelajaranKompetensi, $request->file('import_tagging_pembelajaran_kompetensi'));
+        Alert::toast('Tagging pembelajaran - kompetensi has been successfully imported.', 'success');
+        return back();
     }
 }

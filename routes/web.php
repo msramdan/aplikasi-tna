@@ -65,6 +65,7 @@ Route::middleware(['auth', 'web'])->group(function () {
         Route::get('/detailTaggingPembelajaranKompetensi', 'detailTaggingPembelajaranKompetensi')->name('detailTaggingPembelajaranKompetensi');
         Route::get('/exportTagPembelajaranKompetensi', 'exportTagPembelajaranKompetensi')->name('exportTagPembelajaranKompetensi');
         Route::get('/download-format-tagging-pembelejaran-kompotensi', 'formatImport')->name('download-format-tagging-pembelejaran-kompotensi');
+        Route::post('/importTaggingPembelajaranKompetensi', 'importTaggingPembelajaranKompetensi')->name('importTaggingPembelajaranKompetensi');
     });
     Route::controller(TaggingKompetensiIkController::class)->group(function () {
         Route::get('/tagging-kompetensi-ik/{type}', 'index')->name('tagging-kompetensi-ik');

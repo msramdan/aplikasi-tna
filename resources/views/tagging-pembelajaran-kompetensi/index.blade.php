@@ -55,12 +55,12 @@
                     <h5 class="modal-title" id="exampleModalLabel">Import tagging pembelajaran - kompetensi</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form method="POST" action="{{ route('importKompetensi') }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('importTaggingPembelajaranKompetensi') }}" enctype="multipart/form-data">
                     <div class="modal-body">
                         @csrf
                         <div class="mb-3">
-                            <input type="file" class="form-control" id="import_kompetensi" name="import_kompetensi"
-                                aria-describedby="import_kompetensi" accept=".xlsx" required>
+                            <input type="file" class="form-control" id="import_tagging_pembelajaran_kompetensi" name="import_tagging_pembelajaran_kompetensi"
+                                aria-describedby="import_tagging_pembelajaran_kompetensi" accept=".xlsx" required>
                             <div id="downloadFormat" class="form-text">
                                 <a href="#">
                                     <i class="fa fa-download" aria-hidden="true"></i>
