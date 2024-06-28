@@ -55,11 +55,13 @@
                     <h5 class="modal-title" id="exampleModalLabel">Import tagging pembelajaran - kompetensi</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form method="POST" action="{{ route('importTaggingPembelajaranKompetensi') }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('importTaggingPembelajaranKompetensi') }}"
+                    enctype="multipart/form-data">
                     <div class="modal-body">
                         @csrf
                         <div class="mb-3">
-                            <input type="file" class="form-control" id="import_tagging_pembelajaran_kompetensi" name="import_tagging_pembelajaran_kompetensi"
+                            <input type="file" class="form-control" id="import_tagging_pembelajaran_kompetensi"
+                                name="import_tagging_pembelajaran_kompetensi"
                                 aria-describedby="import_tagging_pembelajaran_kompetensi" accept=".xlsx" required>
                             <div id="downloadFormat" class="form-text">
                                 <a href="#">
@@ -113,6 +115,15 @@
     <div class="page-content">
         <div class="container-fluid">
             <div class="row">
+                @if (count($errors) > 0)
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>{{ __('topik/index.failed') }}</strong>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                         <h4 class="mb-sm-0">{{ __('tagging-pembelajaran-kompetensi/index.page_title') }}</h4>
@@ -232,7 +243,7 @@
                                 tableHtml += '<tr>';
                                 tableHtml += '<td>' + (index + 1) + '</td>';
                                 tableHtml += '<td>' + item.nama_kompetensi +
-                                '</td>';
+                                    '</td>';
                                 tableHtml += '</tr>';
                             });
 

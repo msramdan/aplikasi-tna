@@ -3,7 +3,7 @@
 namespace App\FormatImport;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
-class GenerateTaggingPembelajaranKompetensi implements WithMultipleSheets
+class GenerateTaggingPembelajaranKompetensiMultiSheet implements WithMultipleSheets
 {
     public function sheets(): array
     {

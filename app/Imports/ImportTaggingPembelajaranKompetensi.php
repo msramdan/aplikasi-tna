@@ -2,6 +2,8 @@
 
 namespace App\Imports;
 
+use App\Models\Kompetensi;
+use App\Models\Topik;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Concerns\Importable;
@@ -15,13 +17,16 @@ class ImportTaggingPembelajaranKompetensi implements ToCollection, WithHeadingRo
     use Importable;
     public function collection(Collection $collection)
     {
-        dd('here');
         Validator::make($collection->toArray(), [
-            '*.nama_topik' => 'required',
+            '*.nama_pembelajaran' => 'required',
+            '*.nama_kompetensi' => 'required',
         ])->validate();
+
+
         foreach ($collection as $row) {
-            DB::table('topik')->insert([
-                'nama_topik' => $row['nama_topik'],
+            $insert = DB::table('tagging_pembelajaran_kompetensi')->insert([
+                'topik_id' => Topik::where('nama_topik', $row['nama_pembelajaran'])->first()->id,
+                'kompetensi_id' => Kompetensi::where('nama_kompetensi', $row['nama_kompetensi'])->first()->id,
                 'created_at' => now(),
                 'updated_at' => now()
             ]);
