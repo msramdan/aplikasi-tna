@@ -2,6 +2,6 @@
 
 return [
     'no' => 'No',
-    'learning' => 'Pembelajaran',
-    'competency' => 'Kompetensi'
+    'learning' => 'Nama pembelajaran',
+    'competency' => 'Nama kompetensi'
 ];

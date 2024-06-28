@@ -7,7 +7,7 @@ use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
-use App\Models\Topik;
+use App\Models\Kompetensi;
 use Maatwebsite\Excel\Concerns\WithTitle;
 
 class ReferencesKompetensi implements FromView, ShouldAutoSize, WithEvents, WithTitle
@@ -19,7 +19,7 @@ class ReferencesKompetensi implements FromView, ShouldAutoSize, WithEvents, With
 
     public function view(): View
     {
-        $data = Topik::orderBy('id', 'desc')->get();
+        $data = Kompetensi::orderBy('id', 'desc')->get();
         return view('tagging-pembelajaran-kompetensi.references_kompetensi', [
             'data' => $data
         ]);

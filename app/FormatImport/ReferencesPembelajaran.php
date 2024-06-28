@@ -2,7 +2,7 @@
 
 namespace App\FormatImport;
 
-use App\Models\Kompetensi;
+use App\Models\Topik;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
@@ -19,7 +19,7 @@ class ReferencesPembelajaran implements FromView, ShouldAutoSize, WithEvents, Wi
 
     public function view(): View
     {
-        $data = Kompetensi::orderBy('id', 'desc')->get();
+        $data = Topik::orderBy('id', 'desc')->get();
         return view('tagging-pembelajaran-kompetensi.references_pembelajaran', [
             'data' => $data
         ]);
