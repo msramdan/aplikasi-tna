@@ -96,7 +96,9 @@
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="card-header">
-
+                            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                <i class='fa fa-upload'></i> Import
+                            </button>
                             <button id="btnExport" class="btn btn-success">
                                 <i class='fas fa-file-excel'></i>
                                 {{ __('Export') }}

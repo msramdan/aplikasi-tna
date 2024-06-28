@@ -95,32 +95,18 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <div class="input-group mb-4">
-                                        <select name="tahun" id="tahun" class="form-control select2-form">
-                                            @php
-                                                $startYear = 2024;
-                                                $currentYear = date('Y');
-                                                $endYear = $currentYear + 1;
-                                            @endphp
-                                            @foreach (range($startYear, $endYear) as $year)
-                                                <option value="{{ $year }}">
-                                                    {{ $year }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <button id="btnExport" class="btn btn-success">
-                                        <i class='fas fa-file-excel'></i>
-                                        {{ __('Export') }}
-                                    </button>
-                                </div>
-                            </div>
+                        <div class="card-header">
+                            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                <i class='fa fa-upload'></i> Import
+                            </button>
 
+                            <button id="btnExport" class="btn btn-success">
+                                <i class='fas fa-file-excel'></i>
+                                {{ __('Export') }}
+                            </button>
+                        </div>
+
+                        <div class="card-body">
                             <div class="table-responsive p-1">
                                 <table class="table table-striped" id="data-table">
                                     <thead class="table-dark">

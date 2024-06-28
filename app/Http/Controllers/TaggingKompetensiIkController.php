@@ -139,41 +139,60 @@ class TaggingKompetensiIkController extends Controller
         return view('tagging-kompetensi-ik.index_apip');
     }
 
-    public function settingTagging($id)
-    {
-        $tahun = '2024';
-        $kompetensi = DB::table('kompetensi')->where('id', $id)->first();
-        if (!$kompetensi) {
-            return redirect()->back()->with('error', 'Kompetensi tidak ditemukan.');
-        }
-        $assignedItems = DB::table('tagging_kompetensi_ik')
-            ->join('kompetensi', 'tagging_kompetensi_ik.kompetensi_id', '=', 'kompetensi.id')
-            ->where('tagging_kompetensi_ik.kompetensi_id', $kompetensi->id)
-            ->where('tagging_kompetensi_ik.tahun',  $tahun)
-            ->pluck('tagging_kompetensi_ik.indikator_kinerja', 'kompetensi.id');
-
-        $token = session('api_token');
-        if (!$token) {
-            return redirect()->back()->with('error', 'User is not authenticated.');
-        }
-        $type = request()->query('type', '');
-        if ($type === 'renstra') {
-            $endpoint = config('stara.endpoint') . '/simaren/indikator-kinerja/es2';
-        } else {
-            dd('API blm ready');
-        }
-
-        $response = Http::withToken($token)->get($endpoint, [
-            'tahun' => $tahun
-        ]);
-        $availableItems = [];
-
-        if ($response->successful()) {
-            $apiData = $response->json();
-            $availableItems = $apiData['data'] ?? [];
-        } else {
-            return redirect()->back()->with('error', 'Failed to retrieve data from the API.');
-        }
-        return view('tagging-kompetensi-ik.edit', compact('kompetensi', 'assignedItems', 'availableItems'));
+    public function settingTagging(Request $request, $id)
+{
+    $type = $request->query('type');
+    $kompetensi = DB::table('kompetensi')->where('id', $id)->first();
+    if (!$kompetensi) {
+        return redirect()->back()->with('error', 'Kompetensi tidak ditemukan.');
     }
+
+    $assignedItems = DB::table('tagging_kompetensi_ik')
+        ->join('kompetensi', 'tagging_kompetensi_ik.kompetensi_id', '=', 'kompetensi.id')
+        ->where('tagging_kompetensi_ik.kompetensi_id', $kompetensi->id)
+        ->where('tagging_kompetensi_ik.type', $type)
+        ->pluck('tagging_kompetensi_ik.indikator_kinerja')
+        ->toArray();
+
+    $token = session('api_token');
+    if (!$token) {
+        return redirect()->back()->with('error', 'User is not authenticated.');
+    }
+
+    $type = request()->query('type', '');
+    if ($type === 'renstra') {
+        $endpoint = config('stara.endpoint') . '/simaren/indikator-kinerja/es2';
+    } else {
+        dd('API blm ready');
+    }
+
+    $response = Http::withToken($token)->get($endpoint);
+    $availableItems = [];
+
+    if ($response->successful()) {
+        $apiData = $response->json();
+        $apiItems = $apiData['data'] ?? [];
+
+        // Filter availableItems to exclude those containing assignedItems
+        $availableItems = array_filter($apiItems, function ($item) use ($assignedItems) {
+            foreach ($assignedItems as $assignedItem) {
+                if (strpos($item['indikator_kinerja'], $assignedItem) !== false) {
+                    return false;
+                }
+            }
+            return true;
+        });
+    } else {
+        return redirect()->back()->with('error', 'Failed to retrieve data from the API.');
+    }
+
+    // echo "<pre>";
+    // var_dump(count($apiData['data']));
+    // var_dump(count($availableItems));
+    // die();
+
+    return view('tagging-kompetensi-ik.edit', compact('kompetensi', 'assignedItems', 'availableItems'));
+}
+
+
 }

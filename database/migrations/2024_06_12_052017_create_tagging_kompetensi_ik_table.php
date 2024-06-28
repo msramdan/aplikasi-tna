@@ -18,9 +18,7 @@ return new class extends Migration
             $table->foreignId('kompetensi_id')->constrained('kompetensi')->restrictOnUpdate()->cascadeOnDelete();
             $table->text('indikator_kinerja');
             $table->text('sasaran_kegiatan')->nullable();
-            $table->string('unit_kerja')->nullable();
-            $table->enum('status_ruang_kelas', ['Renstra', 'APP', 'APEP', 'APIP']);
-            $table->string('tahun', 10);
+            $table->enum('type', ['Renstra', 'APP', 'APEP', 'APIP']);
             $table->timestamps();
         });
     }
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tagging_kompetensi_iks');
+        Schema::dropIfExists('tagging_kompetensi_ik');
     }
 };
