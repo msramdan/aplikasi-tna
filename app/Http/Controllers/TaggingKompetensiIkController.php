@@ -155,8 +155,7 @@ class TaggingKompetensiIkController extends Controller
             Alert::toast('The tagging was updated failed.', 'error');
             return back()->withErrors(['message' => $e->getMessage()]);
         }
-
-        return redirect()->route('tagging-kompetensi-ik.index', ['type' => $type]);
+        return redirect('tagging-kompetensi-ik/' . $type);
     }
 
     public function destroy($id, $type)
