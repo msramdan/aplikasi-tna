@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('Tagging Kompetensi - IK Renstra'))
+@section('title', __('Tagging Kompetensi - ') . strtoupper(Request::segment(2)))
 
 @push('css')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
@@ -52,7 +52,8 @@
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tagging Kompetensi - IK Renstra</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Tagging Kompetensi - {{ strtoupper(Request::segment(2)) }}</h5>
+
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <hr>
@@ -81,11 +82,12 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">{{ __('Tagging Kompetensi - IK Renstra') }}</h4>
+                        <h4 class="mb-sm-0">{{ __('Tagging Kompetensi - ') }}{{ strtoupper(Request::segment(2)) }}</h4>
+
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="/panel">Dashboard</a></li>
-                                <li class="breadcrumb-item active">{{ __('Tagging Kompetensi - IK Renstra') }}</li>
+                                <li class="breadcrumb-item active">{{ __('Tagging Kompetensi - ') }}{{ strtoupper(Request::segment(2)) }}</li>
                             </ol>
                         </div>
 
@@ -114,7 +116,7 @@
                                         <tr>
                                             <th>#</th>
                                             <th>{{ __('Kompetensi') }}</th>
-                                            <th>{{ __('Tagging IK Renstra') }}</th>
+                                            <th>{{ __('Tagging IK') }} {{ strtoupper(Request::segment(2)) }}</th>
                                             <th>{{ __('Action') }}</th>
                                         </tr>
                                     </thead>
