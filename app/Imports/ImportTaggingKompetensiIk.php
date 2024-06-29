@@ -12,20 +12,20 @@ use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Illuminate\Support\Facades\DB;
 
-class ImportTaggingPembelajaranKompetensi implements ToCollection, WithHeadingRow, SkipsEmptyRows
+class ImportTaggingKompetensiIk implements ToCollection, WithHeadingRow, SkipsEmptyRows
 {
     use Importable;
     public function collection(Collection $collection)
     {
         Validator::make($collection->toArray(), [
-            '*.nama_pembelajaran' => 'required',
             '*.nama_kompetensi' => 'required',
+            '*.indikator_kinerja' => 'required',
         ])->validate();
 
         foreach ($collection as $row) {
-            DB::table('tagging_pembelajaran_kompetensi')->insert([
-                'topik_id' => Topik::where('nama_topik', $row['nama_pembelajaran'])->first()->id,
-                'kompetensi_id' => Kompetensi::where('nama_kompetensi', $row['nama_kompetensi'])->first()->id,
+            DB::table('tagging_kompetensi_ik')->insert([
+                'topik_id' => Kompetensi::where('nama_kompetensi', $row['nama_kompetensi'])->first()->id,
+                'indikator_kinerja' => $row['indikator_kinerja'],
                 'created_at' => now(),
                 'updated_at' => now()
             ]);

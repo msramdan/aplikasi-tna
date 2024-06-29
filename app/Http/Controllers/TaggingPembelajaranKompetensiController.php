@@ -182,4 +182,5 @@ class TaggingPembelajaranKompetensiController extends Controller
         Alert::toast('Tagging pembelajaran - kompetensi has been successfully imported.', 'success');
         return back();
     }
+
 }

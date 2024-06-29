@@ -34,7 +34,6 @@ Route::middleware(['auth', 'web'])->group(function () {
     Route::resource('users', UserController::class);
     Route::resource('roles', RoleAndPermissionController::class);
     Route::resource('setting-apps', SettingAppController::class);
-
     Route::resource('kompetensi', KompetensiController::class);
     Route::controller(KompetensiController::class)->group(function () {
         Route::get('/detailKompetensi', 'detailKompetensi')->name('detailKompetensi');
@@ -42,20 +41,17 @@ Route::middleware(['auth', 'web'])->group(function () {
         Route::post('/importKompetensi', 'importKompetensi')->name('importKompetensi');
         Route::get('/download-format-kompetensi', 'formatImport')->name('download-format-kompetensi');
     });
-
     Route::resource('kalender-pembelajaran', KalenderPembelajaranController::class);
     Route::resource('reporting', ReportingController::class);
     Route::resource('kota', KotaController::class);
     Route::resource('lokasi', LokasiController::class);
     Route::resource('ruang-kelas', RuangKelasController::class);
     Route::resource('asrama', AsramaController::class);
-
     Route::resource('topik', TopikController::class);
     Route::controller(TopikController::class)->group(function () {
         Route::get('/exportTopik', 'exportTopik')->name('exportTopik');
         Route::post('/importTopik', 'importTopik')->name('importTopik');
     });
-
     Route::resource('jadwal-kap-tahunan', JadwalKapTahunanController::class);
     Route::controller(TaggingPembelajaranKompetensiController::class)->group(function () {
         Route::get('/tagging-pembelajaran-kompetensi', 'index')->name('tagging-pembelajaran-kompetensi.index');
@@ -75,11 +71,8 @@ Route::middleware(['auth', 'web'])->group(function () {
         Route::get('/detailTaggingKompetensiIk', 'detailTaggingKompetensiIk')->name('detailTaggingKompetensiIk');
         Route::get('/export-tagging-kompetensi-ik/{type}', 'exportTagKompetensiIk')->name('export-tagging-kompetensi-ik');
         Route::get('/download-format-tagging-kompetensi-ik/{type}', 'formatImport')->name('download-format-tagging-kompetensi-ik');
-
-
-        Route::get('/exportTagKompetensiIk', 'exportTagTagKompetensiIk')->name('exportTagTagKompetensiIk');
+        Route::post('/importTaggingKompetensiIk/{type}', 'importTaggingKompetensiIk')->name('importTaggingKompetensiIk');
     });
-
     Route::controller(ActivityLogController::class)->group(function () {
         Route::get('/activity-log', 'index')->name('activity-log.index');
     });

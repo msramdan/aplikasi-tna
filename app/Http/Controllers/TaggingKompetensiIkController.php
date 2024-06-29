@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Exports\ExportTaggingKompetensiIk;
 use App\FormatImport\GenerateTaggingKompetensiIkMultiSheet;
+use App\Http\Requests\ImportTaggingKompetensiIkRequest;
+use App\Imports\ImportTaggingIkMultiSheet;
 use Yajra\DataTables\Facades\DataTables;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\DB;
@@ -213,5 +215,13 @@ class TaggingKompetensiIkController extends Controller
         $date = date('d-m-Y');
         $nameFile = 'format_import_tagging_kompetensi_ik_' . $type . '' . $date;
         return Excel::download(new GenerateTaggingKompetensiIkMultiSheet($type), $nameFile . '.xlsx');
+    }
+
+    public function importTaggingKompetensiIk(ImportTaggingKompetensiIkRequest $request, $type)
+    {
+        dd($type);
+        Excel::import(new ImportTaggingIkMultiSheet, $request->file('import_tagging_kompetensi_ik'));
+        Alert::toast('Tagging kompetensi - IK has been successfully imported.', 'success');
+        return back();
     }
 }

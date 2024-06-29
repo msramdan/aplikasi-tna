@@ -56,14 +56,14 @@
                     <h5 class="modal-title" id="exampleModalLabel">Import tagging pembelajaran - kompetensi</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form method="POST" action="{{ route('importTaggingPembelajaranKompetensi') }}"
+                <form method="POST" action="{{ route('importTaggingKompetensiIk', ['type' => request()->segment(2)]) }}"
                     enctype="multipart/form-data">
                     <div class="modal-body">
                         @csrf
                         <div class="mb-3">
-                            <input type="file" class="form-control" id="import_tagging_pembelajaran_kompetensi"
-                                name="import_tagging_pembelajaran_kompetensi"
-                                aria-describedby="import_tagging_pembelajaran_kompetensi" accept=".xlsx" required>
+                            <input type="file" class="form-control" id="import_tagging_kompetensi_ik"
+                                name="import_tagging_kompetensi_ik"
+                                aria-describedby="import_tagging_kompetensi_ik" accept=".xlsx" required>
                             <div id="downloadFormat" class="form-text">
                                 <a href="#">
                                     <i class="fa fa-download" aria-hidden="true"></i>
@@ -166,7 +166,6 @@
         </div>
     </div>
 @endsection
-
 
 @push('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.all.min.js"></script>
@@ -278,7 +277,7 @@
         });
     </script>
 
-    {{-- Export data--}}
+    {{-- Export data --}}
     <script>
         $(document).on('click', '#btnExport', function(event) {
             event.preventDefault();
@@ -339,7 +338,8 @@
         var downloadFormat = function() {
             var type = window.location.pathname.split('/')[2];
             $.ajax({
-                url: "{{ route('download-format-tagging-kompetensi-ik', ['type' => ':type']) }}".replace(':type', type),
+                url: "{{ route('download-format-tagging-kompetensi-ik', ['type' => ':type']) }}".replace(
+                    ':type', type),
                 type: 'GET',
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',
