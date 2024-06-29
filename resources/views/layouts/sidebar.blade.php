@@ -98,22 +98,22 @@
                                         <ul class="nav nav-sm flex-column">
                                             <li class="nav-item">
                                                 <a href="{{ route('tagging-kompetensi-ik', ['type' => 'renstra']) }}"
-                                                   class="nav-link {{ request()->segment(1) === 'tagging-kompetensi-ik' && request()->segment(2) === 'renstra' ? 'active' : '' }}"
+                                                    class="nav-link {{ (request()->segment(1) === 'tagging-kompetensi-ik' && request()->segment(2) === 'renstra') || (request()->segment(1) === 'tagging-kompetensi-ik' && request()->segment(3) === 'renstra') ? 'active' : '' }}"
                                                     data-key="t-level-2.1">{{ __('sidebar.renstra') }}</a>
                                             </li>
                                             <li class="nav-item">
                                                 <a href="{{ route('tagging-kompetensi-ik', ['type' => 'app']) }}"
-                                                    class="nav-link {{ request()->segment(1) === 'tagging-kompetensi-ik' && request()->segment(2) === 'app' ? 'active' : '' }}"
+                                                    class="nav-link {{ (request()->segment(1) === 'tagging-kompetensi-ik' && request()->segment(2) === 'app') || (request()->segment(1) === 'tagging-kompetensi-ik' && request()->segment(3) === 'app') ? 'active' : '' }}"
                                                     data-key="t-level-2.1">{{ __('sidebar.app') }}</a>
                                             </li>
                                             <li class="nav-item">
                                                 <a href="{{ route('tagging-kompetensi-ik', ['type' => 'apep']) }}"
-                                                    class="nav-link {{ request()->segment(1) === 'tagging-kompetensi-ik' && request()->segment(2) === 'apep' ? 'active' : '' }}"
+                                                    class="nav-link {{ (request()->segment(1) === 'tagging-kompetensi-ik' && request()->segment(2) === 'apep') || (request()->segment(1) === 'tagging-kompetensi-ik' && request()->segment(3) === 'apep') ? 'active' : '' }}"
                                                     data-key="t-level-2.1">{{ __('sidebar.apep') }}</a>
                                             </li>
                                             <li class="nav-item">
                                                 <a href="{{ route('tagging-kompetensi-ik', ['type' => 'apip']) }}"
-                                                    class="nav-link {{ request()->segment(1) === 'tagging-kompetensi-ik' && request()->segment(2) === 'apip' ? 'active' : '' }}"
+                                                    class="nav-link {{ (request()->segment(1) === 'tagging-kompetensi-ik' && request()->segment(2) === 'apip') || (request()->segment(1) === 'tagging-kompetensi-ik' && request()->segment(3) === 'apip') ? 'active' : '' }}"
                                                     data-key="t-level-2.1">{{ __('sidebar.apip') }}</a>
                                             </li>
                                         </ul>

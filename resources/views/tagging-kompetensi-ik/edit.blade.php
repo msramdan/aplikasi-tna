@@ -1,6 +1,5 @@
 @extends('layouts.app')
-
-@section('title', __('Edit Tagging Pembelajaran Kompetensi'))
+@section('title', __('Edit Kompetensi - IK ') . $type)
 
 @section('content')
     <div class="page-content">
@@ -8,7 +7,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">{{ __('Tagging Pembelajaran Kompetensi') }}</h4>
+                        <h4 class="mb-sm-0">{{ __('Tagging Kompetensi - IK ') }}{{ $type }}</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item">
@@ -16,7 +15,7 @@
                                 </li>
                                 <li class="breadcrumb-item">
                                     <a
-                                        href="{{ route('tagging-pembelajaran-kompetensi.index') }}">{{ __('Tagging Pembelajaran Kompetensi') }}</a>
+                                        href="{{ route('tagging-pembelajaran-kompetensi.index') }}">{{ __('Tagging Kompetensi - IK ') }}{{ $type }}</a>
                                 </li>
                                 <li class="breadcrumb-item active" aria-current="page">
                                     {{ __('Edit') }}
@@ -42,7 +41,7 @@
                     <div class="card">
                         <div class="card-body">
                             <form method="POST"
-                                action="{{ route('tagging-pembelajaran-kompetensi.update', ['id' => $kompetensi->id]) }}"
+                                action="{{ route('tagging-kompetensi-ik.update', ['id' => $kompetensi->id, 'type' => $type]) }}"
                                 onsubmit="selectAllAssigned()">
                                 @csrf
                                 @method('POST')
@@ -69,8 +68,8 @@
                                             placeholder="Search for assigned">
                                         <select id="assigned" class="form-control @error('message') is-invalid @enderror"
                                             multiple size="20" name="assigned[]">
-                                            @foreach ($assignedItems as $id => $nama_kompetensi)
-                                                <option value="{{ $id }}">{{ $nama_kompetensi }}</option>
+                                            @foreach ($assignedItems as $id => $indikator_kinerja)
+                                                <option value="{{ $indikator_kinerja }}">{{ $indikator_kinerja }}</option>
                                             @endforeach
                                         </select>
                                         @error('message')
@@ -80,7 +79,7 @@
                                     </div>
                                 </div>
                                 <div class="mt-3">
-                                    <a href="{{ route('tagging-pembelajaran-kompetensi.index') }}"
+                                    <a href="{{ route('tagging-kompetensi-ik', ['type' => $type]) }}"
                                         class="btn btn-secondary">
                                         <i class="mdi mdi-arrow-left-thin"></i> {{ __('Back') }}
                                     </a>

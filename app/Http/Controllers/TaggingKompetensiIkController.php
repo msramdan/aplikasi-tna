@@ -23,18 +23,18 @@ class TaggingKompetensiIkController extends Controller
     {
         if (request()->ajax()) {
             $taggingKompetensiIk = DB::table('kompetensi')
-            ->leftJoin('tagging_kompetensi_ik', function ($join) use ($type) {
-                $join->on('kompetensi.id', '=', 'tagging_kompetensi_ik.kompetensi_id')
-                    ->where('tagging_kompetensi_ik.type', '=', $type);
-            })
-            ->select(
-                'kompetensi.id as id',
-                'kompetensi.nama_kompetensi as nama_kompetensi',
-                DB::raw('COUNT(tagging_kompetensi_ik.id) as jumlah_tagging'),
-                DB::raw('MIN(tagging_kompetensi_ik.id) as tagging_kompetensi_ik_id')
-            )
-            ->groupBy('kompetensi.id')
-            ->get();
+                ->leftJoin('tagging_kompetensi_ik', function ($join) use ($type) {
+                    $join->on('kompetensi.id', '=', 'tagging_kompetensi_ik.kompetensi_id')
+                        ->where('tagging_kompetensi_ik.type', '=', $type);
+                })
+                ->select(
+                    'kompetensi.id as id',
+                    'kompetensi.nama_kompetensi as nama_kompetensi',
+                    DB::raw('COUNT(tagging_kompetensi_ik.id) as jumlah_tagging'),
+                    DB::raw('MIN(tagging_kompetensi_ik.id) as tagging_kompetensi_ik_id')
+                )
+                ->groupBy('kompetensi.id')
+                ->get();
 
             return DataTables::of($taggingKompetensiIk)
                 ->addIndexColumn()
@@ -53,9 +53,8 @@ class TaggingKompetensiIkController extends Controller
         return view('tagging-kompetensi-ik.index');
     }
 
-    public function settingTagging(Request $request, $id)
+    public function settingTagging($id, $type)
     {
-        $type = $request->query('type');
         $kompetensi = DB::table('kompetensi')->where('id', $id)->first();
         if (!$kompetensi) {
             return redirect()->back()->with('error', 'Kompetensi tidak ditemukan.');
@@ -72,12 +71,10 @@ class TaggingKompetensiIkController extends Controller
         if (!$token) {
             return redirect()->back()->with('error', 'User is not authenticated.');
         }
-
-        $type = request()->query('type', '');
         if ($type === 'renstra') {
             $endpoint = config('stara.endpoint') . '/simaren/indikator-kinerja/es2';
         } else {
-            dd('API blm ready');
+            $endpoint = config('stara.endpoint') . '/simaren/indikator-kinerja/es2';
         }
 
         $response = Http::withToken($token)->get($endpoint);
@@ -100,7 +97,66 @@ class TaggingKompetensiIkController extends Controller
             return redirect()->back()->with('error', 'Failed to retrieve data from the API.');
         }
 
-        return view('tagging-kompetensi-ik.edit', compact('kompetensi', 'assignedItems', 'availableItems'));
+        return view('tagging-kompetensi-ik.edit', compact('kompetensi', 'assignedItems', 'availableItems', 'type'));
+    }
+
+    public function updateTagging(Request $request, $id, $type)
+    {
+        try {
+            // Validate the request
+            $request->validate([
+                'assigned' => 'required|array'
+            ]);
+
+            // Get the assigned kompetensi IDs from the request
+            $newAssignedKompetensiIds = $request->input('assigned');
+
+            // Get current assigned kompetensi IDs from the database
+            $currentAssignedKompetensiIds = DB::table('tagging_kompetensi_ik')
+                ->where('kompetensi_id', $id)
+                ->where('type', $type)
+                ->pluck('indikator_kinerja')
+                ->toArray();
+
+            // Make sure $currentAssignedKompetensiIds is an array
+            $currentAssignedKompetensiIds = is_array($currentAssignedKompetensiIds) ? $currentAssignedKompetensiIds : [];
+
+            // Determine which kompetensi IDs to add
+            $toAdd = array_diff($newAssignedKompetensiIds, $currentAssignedKompetensiIds);
+            // Determine which kompetensi IDs to remove
+            $toRemove = array_diff($currentAssignedKompetensiIds, $newAssignedKompetensiIds);
+
+            // Start transaction
+            DB::beginTransaction();
+
+            // Add new kompetensi IDs
+            foreach ($toAdd as $kompetensiId) {
+                DB::table('tagging_kompetensi_ik')->insert([
+                    'kompetensi_id' => $id,
+                    'type' => $type,
+                    'indikator_kinerja' => $kompetensiId,
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]);
+            }
+
+            // Remove deselected kompetensi IDs
+            DB::table('tagging_kompetensi_ik')
+                ->where('kompetensi_id', $id)
+                ->where('type', $type)
+                ->whereIn('indikator_kinerja', $toRemove)
+                ->delete();
+
+            // Commit transaction
+            DB::commit();
+            Alert::toast('The tagging was updated successfully.', 'success');
+        } catch (\Exception $e) {
+            DB::rollback();
+            Alert::toast('The tagging was updated failed.', 'error');
+            return back()->withErrors(['message' => $e->getMessage()]);
+        }
+
+        return redirect()->route('tagging-kompetensi-ik.index', ['type' => $type]);
     }
 
     public function destroy($id, $type)
