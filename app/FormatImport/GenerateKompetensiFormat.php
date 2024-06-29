@@ -10,10 +10,17 @@ use Maatwebsite\Excel\Events\AfterSheet;
 use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
 use PhpOffice\PhpSpreadsheet\Cell\DataValidation;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Concerns\WithTitle;
 
 
-class GenerateKompetensiFormat implements FromView, ShouldAutoSize, WithEvents, WithStrictNullComparison
+class GenerateKompetensiFormat implements FromView, ShouldAutoSize, WithEvents, WithStrictNullComparison,WithTitle
 {
+    public function title(): string
+    {
+        return 'Format import';
+    }
+
+
     public function view(): View
     {
         return view('kompetensi.format_import');

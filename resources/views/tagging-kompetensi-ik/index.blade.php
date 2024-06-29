@@ -52,7 +52,8 @@
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tagging Kompetensi - IK {{ strtoupper(Request::segment(2)) }}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Tagging Kompetensi - IK
+                        {{ strtoupper(Request::segment(2)) }}</h5>
 
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -62,8 +63,8 @@
                     <table class="table" style="text-align: justify">
                         <tbody>
                             <tr>
-                                <th scope="row"><b>Pembelajaran</b></th>
-                                <td><span id="modalPembelajaran"></span></td>
+                                <th scope="row"><b>Kompetensi</b></th>
+                                <td><span id="modalKompetensi"></span></td>
                             </tr>
                         </tbody>
                     </table>
@@ -87,7 +88,8 @@
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="/panel">Dashboard</a></li>
-                                <li class="breadcrumb-item active">{{ __('Tagging Kompetensi - IK ') }}{{ strtoupper(Request::segment(2)) }}</li>
+                                <li class="breadcrumb-item active">
+                                    {{ __('Tagging Kompetensi - IK ') }}{{ strtoupper(Request::segment(2)) }}</li>
                             </ol>
                         </div>
 
@@ -132,7 +134,7 @@
 
 
 @push('js')
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.all.min.js"></script>
     <script>
         $(document).ready(function() {
             $('.select2-form').select2();
@@ -196,7 +198,7 @@
                             }
 
                             $('#modalDetailTagging').modal('show');
-                            $('#modalPembelajaran').text(pembelajaran);
+                            $('#modalKompetensi').text(nama_kompetensi);
 
                             // Mendefinisikan variabel untuk menyimpan HTML tabel
                             var tableHtml =
@@ -239,5 +241,56 @@
             }
 
         });
+    </script>
+
+    {{-- Export --}}
+    <script>
+        $(document).on('click', '#btnExport', function(event) {
+            event.preventDefault();
+            exportData();
+        });
+
+        var exportData = function() {
+            var type = window.location.pathname.split('/')[2];
+            $.ajax({
+                url: "{{ route('export-tagging-kompetensi-ik', ['type' => ':type']) }}".replace(':type', type),
+                type: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                },
+                data: {},
+                xhrFields: {
+                    responseType: 'blob'
+                },
+                beforeSend: function() {
+                    Swal.fire({
+                        title: '{{ __('topik/index.please_wait') }}',
+                        html: '{{ __('topik/index.exporting_data') }}',
+                        allowOutsideClick: false,
+                        onBeforeOpen: () => {
+                            Swal.showLoading()
+                        },
+                    });
+                },
+                success: function(data) {
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(data);
+                    var nameFile = 'tagging_kompetensi_indikator_kerja_' + type + '.xlsx';
+                    console.log(nameFile);
+                    link.download = nameFile;
+                    link.click();
+                    swal.close();
+                },
+                error: function(data) {
+                    console.log(data);
+                    Swal.fire({
+                        icon: 'error',
+                        title: "{{ __('topik/index.export_failed') }}",
+                        text: "{{ __('topik/index.check_data') }}",
+                        allowOutsideClick: false,
+                    });
+                }
+            });
+        }
     </script>
 @endpush

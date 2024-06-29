@@ -7,7 +7,6 @@ use App\Exports\ExportTaggingPembelakaranKompetensi;
 use App\FormatImport\GenerateTaggingPembelajaranKompetensiMultiSheet;
 use App\Imports\ImportTaggingMultiSheet;
 use App\Http\Requests\ImportTaggingPembelajaranKompetensiRequest;
-use App\Imports\ImportTaggingPembelajaranKompetensi;
 use Yajra\DataTables\Facades\DataTables;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\DB;

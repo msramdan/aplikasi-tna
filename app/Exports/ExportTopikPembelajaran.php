@@ -8,12 +8,16 @@ use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
-use Auth;
+use Maatwebsite\Excel\Concerns\WithTitle;
 
-
-class ExportTopikPembelajaran implements FromView, ShouldAutoSize, WithEvents
+class ExportTopikPembelajaran implements FromView, ShouldAutoSize, WithEvents,WithTitle
 {
+    public function title(): string
+    {
+        return 'Data pembelajaran';
+    }
+
+
     public function view(): View
     {
 

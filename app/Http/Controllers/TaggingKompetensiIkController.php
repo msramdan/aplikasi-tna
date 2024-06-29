@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TaggingPembelajaranKompetensi;
+use App\Exports\ExportTaggingKompetensiIk;
 use Yajra\DataTables\Facades\DataTables;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TaggingKompetensiIkController extends Controller
 {
@@ -196,5 +197,12 @@ class TaggingKompetensiIkController extends Controller
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
+    }
+
+    public function exportTagKompetensiIk($type)
+    {
+        $date = date('d-m-Y');
+        $nameFile = 'tagging_kompetensi_indikator_kerja_' . $type . '_' . $date;
+        return Excel::download(new ExportTaggingKompetensiIk($type), $nameFile . '.xlsx');
     }
 }

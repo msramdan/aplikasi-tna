@@ -11,27 +11,33 @@ use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\WithTitle;
 
 
-class ExportTaggingPembelakaranKompetensi implements FromView, ShouldAutoSize, WithEvents, WithTitle
+class ExportTaggingKompetensiIk implements FromView, ShouldAutoSize, WithEvents, WithTitle
 {
+    public $type;
+
+    public function __construct($type)
+    {
+        $this->type = $type;
+    }
+
+
     public function title(): string
     {
-        return 'Tag pembelajaran - kompetensi';
+        return 'Tag kompetensi - IK ' . $this->type;
     }
 
     public function view(): View
     {
-
-        $data = DB::table('tagging_pembelajaran_kompetensi')
-            ->join('topik', 'tagging_pembelajaran_kompetensi.topik_id', '=', 'topik.id')
-            ->join('kompetensi', 'tagging_pembelajaran_kompetensi.kompetensi_id', '=', 'kompetensi.id')
+        $type = $this->type;
+        $data = DB::table('tagging_kompetensi_ik')
+            ->join('kompetensi', 'tagging_kompetensi_ik.kompetensi_id', '=', 'kompetensi.id')
+            ->where('tagging_kompetensi_ik.type', '=', $type)
             ->select(
-                'tagging_pembelajaran_kompetensi.id',
-                'topik.nama_topik',
+                'tagging_kompetensi_ik.indikator_kinerja',
                 'kompetensi.nama_kompetensi'
             )
             ->get();
-
-        return view('tagging-pembelajaran-kompetensi.tagging_pembelajaran_kompetensi_excel', [
+        return view('tagging-kompetensi-ik.tagging_kompetensi_ik_excel', [
             'data' => $data
         ]);
     }

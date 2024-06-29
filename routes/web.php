@@ -71,10 +71,11 @@ Route::middleware(['auth', 'web'])->group(function () {
         Route::get('/tagging-kompetensi-ik/{type}', 'index')->name('tagging-kompetensi-ik');
         Route::get('/tagging-kompetensi-ik/{id}/{type}', 'settingTagging')->name('tagging-kompetensi-ik.setting');
         Route::delete('/tagging-kompetensi-ik/{id}/{type}','destroy')->name('tagging-kompetensi-ik.destroy');
-
-
         Route::post('/tagging-kompetensi-ik/update/{id}/{type}', 'updateTagging')->name('tagging-kompetensi-ik.update');
         Route::get('/detailTaggingKompetensiIk', 'detailTaggingKompetensiIk')->name('detailTaggingKompetensiIk');
+        Route::get('/export-tagging-kompetensi-ik/{type}', 'exportTagKompetensiIk')->name('export-tagging-kompetensi-ik');
+
+
         Route::get('/exportTagKompetensiIk', 'exportTagTagKompetensiIk')->name('exportTagTagKompetensiIk');
 
     });
