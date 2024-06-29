@@ -17,7 +17,7 @@ class GenerateKompetensiFormat implements FromView, ShouldAutoSize, WithEvents, 
 {
     public function title(): string
     {
-        return 'Format import';
+        return 'Format import kompetensi';
     }
 
 

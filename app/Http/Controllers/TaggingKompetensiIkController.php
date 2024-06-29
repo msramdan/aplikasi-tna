@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Exports\ExportTaggingKompetensiIk;
+use App\FormatImport\GenerateTaggingKompetensiIkMultiSheet;
 use Yajra\DataTables\Facades\DataTables;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Maatwebsite\Excel\Facades\Excel;
+
 
 class TaggingKompetensiIkController extends Controller
 {
@@ -204,5 +206,12 @@ class TaggingKompetensiIkController extends Controller
         $date = date('d-m-Y');
         $nameFile = 'tagging_kompetensi_indikator_kerja_' . $type . '_' . $date;
         return Excel::download(new ExportTaggingKompetensiIk($type), $nameFile . '.xlsx');
+    }
+
+    public function formatImport($type)
+    {
+        $date = date('d-m-Y');
+        $nameFile = 'format_import_tagging_kompetensi_ik_' . $type . '' . $date;
+        return Excel::download(new GenerateTaggingKompetensiIkMultiSheet($type), $nameFile . '.xlsx');
     }
 }

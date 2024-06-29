@@ -47,7 +47,7 @@
         <div class="loading-spinner"></div>
     </div>
 
-    <!-- Modal -->
+    <!-- Modal import-->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -81,7 +81,7 @@
         </div>
     </div>
 
-
+    {{-- modal detail --}}
     <div class="modal fade" id="modalDetailTagging" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
@@ -266,7 +266,7 @@
             }
         });
     </script>
-
+    {{-- export data --}}
     <script>
         $(document).on('click', '#btnExport', function(event) {
             event.preventDefault();
@@ -315,6 +315,7 @@
         }
     </script>
 
+    {{-- download format import --}}
     <script>
         $(document).on('click', '#downloadFormat', function(event) {
             event.preventDefault();

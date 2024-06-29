@@ -2,33 +2,41 @@
 
 namespace App\FormatImport;
 
+use App\Models\Topik;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
-use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
 use Maatwebsite\Excel\Concerns\WithTitle;
 
-
-
-class GenerateTaggingFormat implements FromView, ShouldAutoSize, WithEvents, WithStrictNullComparison, WithTitle
+class ReferencesIK implements FromView, ShouldAutoSize, WithEvents, WithTitle
 {
+    public $type;
+
+    public function __construct($type)
+    {
+        $this->type = $type;
+    }
+
     public function title(): string
     {
-        return 'Format import pembelajaran kompetensi';
+        return 'References IK ' . $this->type;
     }
 
     public function view(): View
     {
-        return view('tagging-pembelajaran-kompetensi.format_import');
+        $data = Topik::orderBy('id', 'desc')->get();
+        return view('tagging-kompetensi-ik.references_ik', [
+            'data' => $data
+        ]);
     }
 
     public function registerEvents(): array
     {
         return [
             AfterSheet::class    => function (AfterSheet $event) {
-                $cellRange = 'A1:B1'; // All headers
+                $cellRange = 'A1:A1'; // All headers
                 $event->sheet->getStyle($cellRange)->applyFromArray([
                     'borders' => [
                         'allBorders' => [

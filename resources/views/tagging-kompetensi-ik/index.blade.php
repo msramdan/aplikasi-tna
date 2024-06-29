@@ -48,6 +48,41 @@
         <div class="loading-spinner"></div>
     </div>
 
+    <!-- Modal import-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Import tagging pembelajaran - kompetensi</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form method="POST" action="{{ route('importTaggingPembelajaranKompetensi') }}"
+                    enctype="multipart/form-data">
+                    <div class="modal-body">
+                        @csrf
+                        <div class="mb-3">
+                            <input type="file" class="form-control" id="import_tagging_pembelajaran_kompetensi"
+                                name="import_tagging_pembelajaran_kompetensi"
+                                aria-describedby="import_tagging_pembelajaran_kompetensi" accept=".xlsx" required>
+                            <div id="downloadFormat" class="form-text">
+                                <a href="#">
+                                    <i class="fa fa-download" aria-hidden="true"></i>
+                                    Unduh format
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">{{ trans('kompetensi/index.close') }}</button>
+                        <button type="submit" class="btn btn-primary">{{ trans('kompetensi/index.submit') }}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {{-- modal detail --}}
     <div class="modal fade" id="modalDetailTagging" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
@@ -243,7 +278,7 @@
         });
     </script>
 
-    {{-- Export --}}
+    {{-- Export data--}}
     <script>
         $(document).on('click', '#btnExport', function(event) {
             event.preventDefault();
@@ -289,6 +324,57 @@
                         text: "{{ __('topik/index.check_data') }}",
                         allowOutsideClick: false,
                     });
+                }
+            });
+        }
+    </script>
+
+    {{-- download format import --}}
+    <script>
+        $(document).on('click', '#downloadFormat', function(event) {
+            event.preventDefault();
+            downloadFormat();
+        });
+
+        var downloadFormat = function() {
+            var type = window.location.pathname.split('/')[2];
+            $.ajax({
+                url: "{{ route('download-format-tagging-kompetensi-ik', ['type' => ':type']) }}".replace(':type', type),
+                type: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                },
+                data: {},
+                xhrFields: {
+                    responseType: 'blob'
+                },
+                beforeSend: function() {
+                    Swal.fire({
+                        title: 'Please Wait !',
+                        html: 'Sedang melakukan download format import',
+                        allowOutsideClick: false,
+                        onBeforeOpen: () => {
+                            Swal.showLoading()
+                        },
+                    });
+
+                },
+                success: function(data) {
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(data);
+                    var nameFile = 'format_import_tagging_kompetensi_indikator_kerja_' + type + '.xlsx';
+                    link.download = nameFile;
+                    link.click();
+                    swal.close()
+                },
+                error: function(data) {
+                    console.log(data)
+                    Swal.fire({
+                        icon: 'error',
+                        title: "Download Format Import failed",
+                        text: "Please check",
+                        allowOutsideClick: false,
+                    })
                 }
             });
         }

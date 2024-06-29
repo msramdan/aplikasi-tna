@@ -12,16 +12,24 @@ use Maatwebsite\Excel\Concerns\WithTitle;
 
 
 
-class GenerateTaggingFormat implements FromView, ShouldAutoSize, WithEvents, WithStrictNullComparison, WithTitle
+class GenerateTaggingIkFormat implements FromView, ShouldAutoSize, WithEvents, WithStrictNullComparison, WithTitle
 {
+    public $type;
+
+    public function __construct($type)
+    {
+        $this->type = $type;
+    }
+
+
     public function title(): string
     {
-        return 'Format import pembelajaran kompetensi';
+        return 'Tag kompetensi IK ' . $this->type;
     }
 
     public function view(): View
     {
-        return view('tagging-pembelajaran-kompetensi.format_import');
+        return view('tagging-kompetensi-ik.format_import');
     }
 
     public function registerEvents(): array
