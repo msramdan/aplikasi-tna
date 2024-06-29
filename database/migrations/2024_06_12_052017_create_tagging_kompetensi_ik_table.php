@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('kompetensi_id')->constrained('kompetensi')->restrictOnUpdate()->cascadeOnDelete();
             $table->text('indikator_kinerja');
-            $table->enum('type', ['Renstra', 'APP', 'APEP', 'APIP']);
+            $table->enum('type', ['renstra', 'app', 'apep', 'apip']);
             $table->timestamps();
         });
     }
