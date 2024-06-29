@@ -219,8 +219,7 @@ class TaggingKompetensiIkController extends Controller
 
     public function importTaggingKompetensiIk(ImportTaggingKompetensiIkRequest $request, $type)
     {
-        dd($type);
-        Excel::import(new ImportTaggingIkMultiSheet, $request->file('import_tagging_kompetensi_ik'));
+        Excel::import(new ImportTaggingIkMultiSheet($type), $request->file('import_tagging_kompetensi_ik'));
         Alert::toast('Tagging kompetensi - IK has been successfully imported.', 'success');
         return back();
     }

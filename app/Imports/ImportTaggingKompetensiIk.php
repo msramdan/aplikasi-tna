@@ -15,17 +15,24 @@ use Illuminate\Support\Facades\DB;
 class ImportTaggingKompetensiIk implements ToCollection, WithHeadingRow, SkipsEmptyRows
 {
     use Importable;
+    public $type;
+
+    public function __construct($type)
+    {
+        $this->type = $type;
+    }
+
     public function collection(Collection $collection)
     {
         Validator::make($collection->toArray(), [
             '*.nama_kompetensi' => 'required',
             '*.indikator_kinerja' => 'required',
         ])->validate();
-
         foreach ($collection as $row) {
             DB::table('tagging_kompetensi_ik')->insert([
-                'topik_id' => Kompetensi::where('nama_kompetensi', $row['nama_kompetensi'])->first()->id,
+                'kompetensi_id' => Kompetensi::where('nama_kompetensi', $row['nama_kompetensi'])->first()->id,
                 'indikator_kinerja' => $row['indikator_kinerja'],
+                'type' => $this->type,
                 'created_at' => now(),
                 'updated_at' => now()
             ]);
