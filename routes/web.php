@@ -14,6 +14,7 @@ use App\Http\Controllers\{
     KotaController,
     LocalizationController,
     LokasiController,
+    PengajuanKapController,
     ReportingController,
     RuangKelasController,
     SettingAppController,
@@ -76,8 +77,10 @@ Route::middleware(['auth', 'web'])->group(function () {
     Route::controller(ActivityLogController::class)->group(function () {
         Route::get('/activity-log', 'index')->name('activity-log.index');
     });
+    Route::controller(PengajuanKapController::class)->group(function () {
+        Route::get('/pengajuan-kap/{is_bpkp}/{frekuensi}', 'index')->name('pengajuan-kap.index');
+    });
+
 });
 
 Route::post('/verify-otp', [OtpController::class, 'verifyOtp'])->name('verify-otp');
-
-Route::resource('pengajuan-kap', App\Http\Controllers\PengajuanKapController::class)->middleware('auth');

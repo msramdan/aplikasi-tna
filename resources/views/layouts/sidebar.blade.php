@@ -125,36 +125,81 @@
                 </li>
             @endcanany
 
-
-
             @canany(['pengajuan kap view'])
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ request()->routeIs('pengajuan-kap*') ? 'active' : '' }}"
-                        href="#sidebarPengajuanKap" data-bs-toggle="collapse" role="button"
+                        href="#pengajuanKap" data-bs-toggle="collapse" role="button"
                         aria-expanded="{{ request()->routeIs('pengajuan-kap*') ? 'true' : 'false' }}"
-                        aria-controls="sidebarPengajuanKap">
-                        <i class="fa fa-pencil" aria-hidden="true"></i>
-                        <span data-key="t-forms">{{ __('sidebar.kap_submission') }}</span>
+                        aria-controls="pengajuanKap">
+                        <i class="fa fa-pencil"></i> <span data-key="t-multi-level">Pengajuan KAP</span>
                     </a>
                     <div class="collapse menu-dropdown {{ request()->routeIs('pengajuan-kap*') ? 'show' : '' }}"
-                        id="sidebarPengajuanKap">
+                        id="pengajuanKap">
                         <ul class="nav nav-sm flex-column">
                             @can('pengajuan kap view')
                                 <li class="nav-item">
-                                    <a href="{{route('pengajuan-kap.index')}}"
-                                        class="nav-link {{ request()->routeIs('pengajuan-kap/tahunan') ? 'active' : '' }}"
-                                        data-key="t-basic-elements">{{ __('sidebar.annual') }}</a>
+                                    <a href="#bpkp"
+                                        class="nav-link {{ request()->segment(1) === 'pengajuan-kap' && request()->segment(2) === 'BPKP' ? 'active' : '' }}"
+                                        data-bs-toggle="collapse" role="button"
+                                        aria-expanded="{{ request()->segment(1) === 'pengajuan-kap' && request()->segment(2) === 'BPKP' ? 'true' : 'false' }}"
+                                        aria-controls="bpkp" data-key="t-level-1.2">BPKP</a>
+                                    <div class="collapse menu-dropdown {{ request()->segment(1) === 'pengajuan-kap' && request()->segment(2) === 'BPKP' ? 'show' : '' }}"
+                                        id="bpkp">
+                                        <ul class="nav nav-sm flex-column">
+                                            <li class="nav-item">
+                                                <a href="{{ route('pengajuan-kap.index', [
+                                                    'is_bpkp' => 'BPKP',
+                                                    'frekuensi' => 'Tahunan',
+                                                ]) }}"
+                                                    class="nav-link {{ request()->segment(1) === 'pengajuan-kap' && request()->segment(2) === 'BPKP' && request()->segment(3) === 'Tahunan' ? 'active' : '' }}"
+                                                    data-key="t-level-2.1">Tahunan</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="{{ route('pengajuan-kap.index', [
+                                                    'is_bpkp' => 'BPKP',
+                                                    'frekuensi' => 'Insidentil',
+                                                ]) }}"
+                                                    class="nav-link {{ request()->segment(1) === 'pengajuan-kap' && request()->segment(2) === 'BPKP' && request()->segment(3) === 'Insidentil' ? 'active' : '' }}"
+                                                    data-key="t-level-2.1">Insidentil</a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </li>
                                 <li class="nav-item">
-                                    <a href=""
-                                        class="nav-link {{ request()->routeIs('pengajuan-kap/insidentil') ? 'active' : '' }}"
-                                        data-key="t-basic-elements">{{ __('sidebar.incidental') }}</a>
+                                    <a href="#nonBpkp"
+                                        class="nav-link {{ request()->segment(1) === 'pengajuan-kap' && request()->segment(2) === 'Non BPKP' ? 'active' : '' }}"
+                                        data-bs-toggle="collapse" role="button"
+                                        aria-expanded="{{ request()->segment(1) === 'pengajuan-kap' && request()->segment(2) === 'Non BPKP' ? 'true' : 'false' }}"
+                                        aria-controls="nonBpkp" data-key="t-level-1.2">Non BPKP</a>
+
+                                    <div class="collapse menu-dropdown {{ request()->segment(1) === 'pengajuan-kap' && request()->segment(2) === 'Non BPKP' ? 'show' : '' }}"
+                                        id="nonBpkp">
+                                        <ul class="nav nav-sm flex-column">
+                                            <li class="nav-item">
+                                                <a href="{{ route('pengajuan-kap.index', [
+                                                    'is_bpkp' => 'Non BPKP',
+                                                    'frekuensi' => 'Tahunan',
+                                                ]) }}"
+                                                    class="nav-link {{ request()->segment(1) === 'pengajuan-kap' && request()->segment(2) === 'Non BPKP' && request()->segment(3) === 'Tahunan' ? 'active' : '' }}"
+                                                    data-key="t-level-2.1">Tahunan</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="{{ route('pengajuan-kap.index', [
+                                                    'is_bpkp' => 'Non BPKP',
+                                                    'frekuensi' => 'Insidentil',
+                                                ]) }}"
+                                                    class="nav-link {{ request()->segment(1) === 'pengajuan-kap' && request()->segment(2) === 'Non BPKP' && request()->segment(3) === 'Insidentil' ? 'active' : '' }}"
+                                                    data-key="t-level-2.1">Insidentil</a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </li>
                             @endcan
                         </ul>
                     </div>
                 </li>
             @endcanany
+
             @can('kalender pembelajaran view')
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ request()->routeIs('kalender-pembelajaran*') ? 'active' : '' }}"

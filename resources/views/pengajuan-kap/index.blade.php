@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('Pengajuan Kaps'))
+@section('title', __('Pengajuan Kap ') . strtoupper(Request::segment(2)) . ' - ' . strtoupper(Request::segment(3)))
 
 @section('content')
     <style>
@@ -49,19 +49,118 @@
 
     {{-- modal detail --}}
     <div class="modal fade" id="modalDetailKompetensi" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ trans('kompetensi/index.detail_kompetensi') }}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Detail pengajuan KAP</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <hr>
                 <div class="modal-body">
                     <table class="table" style="text-align: justify">
                         <tbody>
+                            <tr>
+                                <th scope="row">Kode pembelajaran</th>
+                                <td>:</td>
+                                <td><span id="modal-kode-pembelajaran"></span></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Type pembelajaran</th>
+                                <td>:</td>
+                                <td><span id="modal-kode-pembelajaran"></span></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Indikator kinerja</th>
+                                <td>:</td>
+                                <td><span id="modal-kode-pembelajaran"></span></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Kompetensi</th>
+                                <td>:</td>
+                                <td><span id="modal-kode-pembelajaran"></span></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Topik</th>
+                                <td>:</td>
+                                <td><span id="modal-kode-pembelajaran"></span></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Concern Program Pembelajaran</th>
+                                <td>:</td>
+                                <td><span id="modal-kode-pembelajaran"></span></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Alokasi Waktu</th>
+                                <td>:</td>
+                                <td><span id="modal-kode-pembelajaran"></span></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Indikator Dampak Terhadap Kinerja Organisasi</th>
+                                <td>:</td>
+                                <td><span id="modal-kode-pembelajaran"></span></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Penugasan Yang Terkait Dengan Pembelajaran</th>
+                                <td>:</td>
+                                <td><span id="modal-kode-pembelajaran"></span></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Skill Group Owner</th>
+                                <td>:</td>
+                                <td><span id="modal-kode-pembelajaran"></span></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Jalur Pembelajaran</th>
+                                <td>:</td>
+                                <td><span id="modal-kode-pembelajaran"></span></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Model Pembelajaran</th>
+                                <td>:</td>
+                                <td><span id="modal-kode-pembelajaran"></span></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Jenis Pembelajaran</th>
+                                <td>:</td>
+                                <td><span id="modal-kode-pembelajaran"></span></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Metode Pembelajaran</th>
+                                <td>:</td>
+                                <td><span id="modal-kode-pembelajaran"></span></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Sasaran Peserta</th>
+                                <td>:</td>
+                                <td><span id="modal-kode-pembelajaran"></span></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Kriteria Peserta</th>
+                                <td>:</td>
+                                <td><span id="modal-kode-pembelajaran"></span></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Aktivitas Prapembelajaran</th>
+                                <td>:</td>
+                                <td><span id="modal-kode-pembelajaran"></span></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Penyelenggara Pembelajaran</th>
+                                <td>:</td>
+                                <td><span id="modal-kode-pembelajaran"></span></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Fasilitator Pembelajaran</th>
+                                <td>:</td>
+                                <td><span id="modal-kode-pembelajaran"></span></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Sertifikat</th>
+                                <td>:</td>
+                                <td><span id="modal-kode-pembelajaran"></span></td>
+                            </tr>
                         </tbody>
                     </table>
-
                     <div class="modal-body-detail" style="text-align: justify"></div>
                 </div>
                 <div class="modal-footer">
@@ -77,11 +176,15 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">{{ __('Pengajuan Kaps') }}</h4>
+                        <h4 class="mb-sm-0">
+                            {{ __('Pengajuan Kap ') . strtoupper(Request::segment(2) . ' - ' . strtoupper(Request::segment(3))) }}
+                        </h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
-                                <li class="breadcrumb-item active">{{ __('Pengajuan Kaps') }}</li>
+                                <li class="breadcrumb-item active">
+                                    {{ __('Pengajuan Kap ') . strtoupper(Request::segment(2) . ' - ' . strtoupper(Request::segment(3))) }}
+                                </li>
                             </ol>
                         </div>
 
@@ -92,14 +195,14 @@
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="card-header">
-                            @can('pengajuan kap create')
+                            {{-- @can('pengajuan kap create')
                                 <a href="{{ route('pengajuan-kap.create') }}" class="btn btn-md btn-primary"> <i
                                         class="mdi mdi-plus"></i> {{ __('Create a new pengajuan kap') }}</a>
-                            @endcan
+                            @endcan --}}
                         </div>
 
                         <div class="card-body">
-                            <div class="table-responsive">
+                            <div class="table-responsive p-1">
                                 <table class="table table-bordered table-sm" id="data-table">
                                     <thead>
                                         <tr>
@@ -109,21 +212,6 @@
                                             <th>{{ __('Indikator Kinerja') }}</th>
                                             <th>{{ __('Kompetensi') }}</th>
                                             <th>{{ __('Topik') }}</th>
-                                            <th>{{ __('Concern Program Pembelajaran') }}</th>
-                                            {{-- <th>{{ __('Alokasi Waktu') }}</th>
-											<th>{{ __('Indikator Dampak Terhadap Kinerja Organisasi') }}</th>
-											<th>{{ __('Penugasan Yang Terkait Dengan Pembelajaran') }}</th>
-											<th>{{ __('Skill Group Owner') }}</th>
-											<th>{{ __('Jalur Pembelajaran') }}</th>
-											<th>{{ __('Model Pembelajaran') }}</th>
-											<th>{{ __('Jenis Pembelajaran') }}</th>
-											<th>{{ __('Metode Pembelajaran') }}</th>
-											<th>{{ __('Sasaran Peserta') }}</th>
-											<th>{{ __('Kriteria Peserta') }}</th>
-											<th>{{ __('Aktivitas Prapembelajaran') }}</th>
-											<th>{{ __('Penyelenggara Pembelajaran') }}</th>
-											<th>{{ __('Fasilitator Pembelajaran') }}</th>
-											<th>{{ __('Sertifikat') }}</th> --}}
                                             <th>{{ __('Action') }}</th>
                                         </tr>
                                     </thead>
@@ -140,10 +228,14 @@
 
 @push('js')
     <script>
+        var is_bpkp = window.location.pathname.split('/')[2];
+        var frekuensi = window.location.pathname.split('/')[3];
         $('#data-table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('pengajuan-kap.index') }}",
+            ajax: "{{ route('pengajuan-kap.index', ['is_bpkp' => ':is_bpkp', 'frekuensi' => ':frekuensi']) }}"
+                .replace(':is_bpkp', is_bpkp)
+                .replace(':frekuensi', frekuensi),
             columns: [{
                     data: 'DT_RowIndex',
                     name: 'DT_RowIndex',
@@ -170,66 +262,6 @@
                     data: 'topik',
                     name: 'topik.id'
                 },
-                {
-                    data: 'concern_program_pembelajaran',
-                    name: 'concern_program_pembelajaran',
-                },
-                // {
-                //     data: 'alokasi_waktu',
-                //     name: 'alokasi_waktu',
-                // },
-                // {
-                //     data: 'indikator_dampak_terhadap_kinerja_organisasi',
-                //     name: 'indikator_dampak_terhadap_kinerja_organisasi',
-                // },
-                // {
-                //     data: 'penugasan_yang_terkait_dengan_pembelajaran',
-                //     name: 'penugasan_yang_terkait_dengan_pembelajaran',
-                // },
-                // {
-                //     data: 'skill_group_owner',
-                //     name: 'skill_group_owner',
-                // },
-                // {
-                //     data: 'jalur_pembelajaran',
-                //     name: 'jalur_pembelajaran',
-                // },
-                // {
-                //     data: 'model_pembelajaran',
-                //     name: 'model_pembelajaran',
-                // },
-                // {
-                //     data: 'jenis_pembelajaran',
-                //     name: 'jenis_pembelajaran',
-                // },
-                // {
-                //     data: 'metode_pembelajaran',
-                //     name: 'metode_pembelajaran',
-                // },
-                // {
-                //     data: 'sasaran_peserta',
-                //     name: 'sasaran_peserta',
-                // },
-                // {
-                //     data: 'kriteria_peserta',
-                //     name: 'kriteria_peserta',
-                // },
-                // {
-                //     data: 'aktivitas_prapembelajaran',
-                //     name: 'aktivitas_prapembelajaran',
-                // },
-                // {
-                //     data: 'penyelenggara_pembelajaran',
-                //     name: 'penyelenggara_pembelajaran',
-                // },
-                // {
-                //     data: 'fasilitator_pembelajaran',
-                //     name: 'fasilitator_pembelajaran',
-                // },
-                // {
-                //     data: 'sertifikat',
-                //     name: 'sertifikat',
-                // },
                 {
                     data: 'action',
                     name: 'action',

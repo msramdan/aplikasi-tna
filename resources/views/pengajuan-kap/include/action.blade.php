@@ -1,4 +1,8 @@
 <td>
+    <a href="#" class="btn btn-light btn-sm" >
+        <i class="fa fa-print"></i>
+    </a>
+
     <button type="button" class="btn btn-info btn-sm btn-detail-kompetensi"
     data-id="{{ $model->id }}"
     ><i class="mdi mdi-eye"></i></button>
