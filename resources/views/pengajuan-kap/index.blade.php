@@ -212,7 +212,7 @@
                                         <tr>
                                             <th>#</th>
                                             <th>{{ __('Kode Pembelajaran') }}</th>
-                                            <th>{{ __('Type Pembelajaran') }}</th>
+                                            <th>{{ __('Institusi sumber') }}</th>
                                             <th>{{ __('Indikator Kinerja') }}</th>
                                             <th>{{ __('Kompetensi') }}</th>
                                             <th>{{ __('Topik') }}</th>
@@ -251,20 +251,20 @@
                     name: 'kode_pembelajaran',
                 },
                 {
-                    data: 'type_pembelajaran',
-                    name: 'type_pembelajaran',
+                    data: 'institusi_sumber',
+                    name: 'institusi_sumber',
                 },
                 {
                     data: 'indikator_kinerja',
                     name: 'indikator_kinerja',
                 },
                 {
-                    data: 'kompetensi',
-                    name: 'kompetensi.id'
+                    data: 'nama_kompetensi',
+                    name: 'nama_kompetensi'
                 },
                 {
-                    data: 'topik',
-                    name: 'topik.id'
+                    data: 'nama_topik',
+                    name: 'nama_topik'
                 },
                 {
                     data: 'action',

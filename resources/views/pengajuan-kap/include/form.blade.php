@@ -212,7 +212,7 @@
 
     <div class="col-md-6 mb-2">
         <label for="jalur-pembelajaran">{{ __('Jalur Pembelajaran') }}</label>
-        <select class="form-control @error('jalur_pembelajaran') is-invalid @enderror" name="jalur_pembelajaran[]"
+        <select class="form-control @error('jalur_pembelajaran') is-invalid @enderror" name="jalur_pembelajaran"
             id="jalur-pembelajaran" multiple required>
             <option value="" disabled>-- {{ __('Select jalur pembelajaran') }} --</option>
             @foreach (['Pelatihan', 'Seminar/konferensi/sarasehan', 'Kursus', 'Lokakarya (workshop)', 'Belajar mandiri', 'Coaching', 'Mentoring', 'Bimbingan teknis', 'Sosialisasi', 'Detasering (secondment)', 'Job shadowing', 'Outbond', 'Benchmarking', 'Pertukaran PNS', 'Community of practices', 'Pelatihan di kantor sendiri', 'Library café', 'Magang/praktik kerja'] as $jalur)

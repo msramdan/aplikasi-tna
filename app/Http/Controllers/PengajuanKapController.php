@@ -8,6 +8,7 @@ use Yajra\DataTables\Facades\DataTables;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PengajuanKapController extends Controller
 {
@@ -27,23 +28,49 @@ class PengajuanKapController extends Controller
     public function index($is_bpkp, $frekuensi)
     {
         if (request()->ajax()) {
-            $pengajuanKaps = PengajuanKap::with('kompetensi:id', 'topik:id',);
+            $pengajuanKaps = DB::table('pengajuan_kap')
+                ->select(
+                    'pengajuan_kap.id',
+                    'pengajuan_kap.kode_pembelajaran',
+                    'pengajuan_kap.institusi_sumber',
+                    'pengajuan_kap.jenis_program',
+                    'pengajuan_kap.frekuensi_pelaksanaan',
+                    'pengajuan_kap.indikator_kinerja',
+                    'pengajuan_kap.concern_program_pembelajaran',
+                    'pengajuan_kap.alokasi_waktu',
+                    'pengajuan_kap.indikator_dampak_terhadap_kinerja_organisasi',
+                    'pengajuan_kap.penugasan_yang_terkait_dengan_pembelajaran',
+                    'pengajuan_kap.skill_group_owner',
+                    'pengajuan_kap.bentuk_pembelajaran',
+                    'pengajuan_kap.jalur_pembelajaran',
+                    'pengajuan_kap.model_pembelajaran',
+                    'pengajuan_kap.jenis_pembelajaran',
+                    'pengajuan_kap.metode_pembelajaran',
+                    'pengajuan_kap.sasaran_peserta',
+                    'pengajuan_kap.kriteria_peserta',
+                    'pengajuan_kap.aktivitas_prapembelajaran',
+                    'pengajuan_kap.penyelenggara_pembelajaran',
+                    'pengajuan_kap.fasilitator_pembelajaran',
+                    'pengajuan_kap.sertifikat',
+                    'pengajuan_kap.tanggal_created',
+                    'pengajuan_kap.status_pengajuan',
+                    'pengajuan_kap.user_created',
+                    'pengajuan_kap.created_at',
+                    'pengajuan_kap.updated_at',
+                    'users.name as user_name', // Nama pengguna dari tabel users
+                    'kompetensi.nama_kompetensi', // Nama kompetensi dari tabel kompetensi
+                    'topik.nama_topik' // Nama topik dari tabel topik
+                )
+                ->leftJoin('users', 'pengajuan_kap.user_created', '=', 'users.id') // Left join dengan tabel users
+                ->leftJoin('kompetensi', 'pengajuan_kap.kompetensi_id', '=', 'kompetensi.id') // Left join dengan tabel kompetensi
+                ->leftJoin('topik', 'pengajuan_kap.topik_id', '=', 'topik.id') // Left join dengan tabel topik
+                ->get();
 
             return DataTables::of($pengajuanKaps)
                 ->addIndexColumn()
-                ->addColumn('created_at', function ($row) {
-                    return $row->created_at->format('d M Y H:i:s');
-                })->addColumn('updated_at', function ($row) {
-                    return $row->updated_at->format('d M Y H:i:s');
-                })
-                ->addColumn('kompetensi', function ($row) {
-                    return $row->kompetensi ? $row->kompetensi->id : '';
-                })->addColumn('topik', function ($row) {
-                    return $row->topik ? $row->topik->id : '';
-                })->addColumn('action', 'pengajuan-kap.include.action')
+                ->addColumn('action', 'pengajuan-kap.include.action')
                 ->toJson();
         }
-
         return view('pengajuan-kap.index', [
             'is_bpkp' => $is_bpkp,
             'frekuensi' => $frekuensi,
@@ -91,7 +118,6 @@ class PengajuanKapController extends Controller
             'sertifikat' => 'required|string|max:255',
             'tanggal_created' => 'required|date',
             'status_pengajuan' => 'required|in:Pending,Approved,Rejected',
-            'user_created' => 'nullable|exists:users,id',
         ]);
 
         DB::table('pengajuan_kap')->insert([
@@ -120,7 +146,7 @@ class PengajuanKapController extends Controller
             'sertifikat' => $validatedData['sertifikat'],
             'tanggal_created' => $validatedData['tanggal_created'],
             'status_pengajuan' => $validatedData['status_pengajuan'],
-            'user_created' => $validatedData['user_created'],
+            'user_created' => Auth::id(),
             'created_at' => now(),
             'updated_at' => now(),
         ]);
