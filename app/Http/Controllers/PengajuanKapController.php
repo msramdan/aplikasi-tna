@@ -20,11 +20,6 @@ class PengajuanKapController extends Controller
         $this->middleware('permission:pengajuan kap delete')->only('destroy');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index($is_bpkp, $frekuensi)
     {
         if (request()->ajax()) {
@@ -61,16 +56,29 @@ class PengajuanKapController extends Controller
                     'kompetensi.nama_kompetensi',
                     'topik.nama_topik'
                 )
-                ->leftJoin('users', 'pengajuan_kap.user_created', '=', 'users.id') // Left join dengan tabel users
-                ->leftJoin('kompetensi', 'pengajuan_kap.kompetensi_id', '=', 'kompetensi.id') // Left join dengan tabel kompetensi
-                ->leftJoin('topik', 'pengajuan_kap.topik_id', '=', 'topik.id') // Left join dengan tabel topik
+                ->leftJoin('users', 'pengajuan_kap.user_created', '=', 'users.id')
+                ->leftJoin('kompetensi', 'pengajuan_kap.kompetensi_id', '=', 'kompetensi.id')
+                ->leftJoin('topik', 'pengajuan_kap.topik_id', '=', 'topik.id')
+                ->where('pengajuan_kap.institusi_sumber', '=', $is_bpkp)
+                ->where('pengajuan_kap.frekuensi_pelaksanaan', '=', $frekuensi)
                 ->get();
 
             return DataTables::of($pengajuanKaps)
                 ->addIndexColumn()
+                ->addColumn('status_pengajuan', function ($row) {
+                    if ($row->status_pengajuan == 'Pending') {
+                        return '<button style="width:100%" class="btn btn-gray btn-sm btn-block">Pending</button>';
+                    } else if ($row->status_pengajuan == 'Approved') {
+                        return '<button style="width:100%" class="btn btn-success btn-sm btn-block">Approved</button>';
+                    } else if ($row->status_pengajuan == 'Rejected') {
+                        return '<button style="width:100%" class="btn btn-danger btn-sm btn-block">Rejected</button>';
+                    }
+                })
                 ->addColumn('action', 'pengajuan-kap.include.action')
+                ->rawColumns(['status_pengajuan', 'action'])
                 ->toJson();
         }
+
         return view('pengajuan-kap.index', [
             'is_bpkp' => $is_bpkp,
             'frekuensi' => $frekuensi,
@@ -87,19 +95,38 @@ class PengajuanKapController extends Controller
             $jenis_program = [];
         }
 
+        $jalur_pembelajaran = [
+            'Pelatihan',
+            'Seminar/konferensi/sarasehan',
+            'Kursus', 'Lokakarya (workshop)',
+            'Belajar mandiri', 'Coaching',
+            'Mentoring',
+            'Bimbingan teknis',
+            'Sosialisasi',
+            'Detasering (secondment)',
+            'Job shadowing',
+            'Outbond',
+            'Benchmarking',
+            'Pertukaran PNS',
+            'Community of practices',
+            'Pelatihan di kantor sendiri',
+            'Library cafe',
+            'Magang/praktik kerja'
+        ];
+
+
         return view('pengajuan-kap.create', [
             'is_bpkp' => $is_bpkp,
             'frekuensi' => $frekuensi,
             'jenis_program' => $jenis_program,
+            'jalur_pembelajaran' => $jalur_pembelajaran,
         ]);
     }
 
     public function store(Request $request, $is_bpkp, $frekuensi)
     {
         $validatedData = $request->validate([
-            'institusi_sumber' => 'required|in:BPKP,Non BPKP',
             'jenis_program' => 'required|in:Renstra,APP,APEP,APIP',
-            'frekuensi_pelaksanaan' => 'required|in:Tahunan,Insidentil',
             'indikator_kinerja' => 'required|string|max:255',
             'kompetensi_id' => 'nullable|exists:kompetensi,id',
             'topik_id' => 'nullable|exists:topik,id',
@@ -109,7 +136,7 @@ class PengajuanKapController extends Controller
             'penugasan_yang_terkait_dengan_pembelajaran' => 'required|string|max:255',
             'skill_group_owner' => 'required|string|max:255',
             'bentuk_pembelajaran' => 'required|in:Klasikal,Nonklasikal',
-            'jalur_pembelajaran' => 'required|in:Pelatihan,Seminar/konferensi/sarasehan,Kursus,Lokakarya (workshop),Belajar mandiri,Coaching,Mentoring,Bimbingan teknis,Sosialisasi,Detasering (secondment),Job shadowing,Outbond,Benchmarking,Pertukaran PNS,Community of practices,Pelatihan di kantor sendiri,Library café,Magang/praktik kerja',
+            'jalur_pembelajaran' => 'required|in:Pelatihan,Seminar/konferensi/sarasehan,Kursus,Lokakarya (workshop),Belajar mandiri,Coaching,Mentoring,Bimbingan teknis,Sosialisasi,Detasering (secondment),Job shadowing,Outbond,Benchmarking,Pertukaran PNS,Community of practices,Pelatihan di kantor sendiri,Library cafe,Magang/praktik kerja',
             'model_pembelajaran' => 'required|in:Pembelajaran terstruktur,Pembelajaran kolaboratif,Pembelajaran di tempat kerja,Pembelajaran terintegrasi',
             'jenis_pembelajaran' => 'required|in:Kedinasan,Fungsional auditor,Teknis substansi,Sertifikasi non JFA',
             'metode_pembelajaran' => 'required|in:Synchronous learning,Asynchronous learning,Blended learning',
@@ -120,12 +147,11 @@ class PengajuanKapController extends Controller
             'fasilitator_pembelajaran' => 'required|in:Widyaiswara,Instruktur,Praktisi,Pakar,Tutor,Coach,Mentor,Narasumber lainnya',
             'sertifikat' => 'required|string|max:255',
         ]);
-
         DB::table('pengajuan_kap')->insert([
-            'kode_pembelajaran' => $validatedData['kode_pembelajaran'],
-            'institusi_sumber' => $validatedData['institusi_sumber'],
+            'kode_pembelajaran' => 'Test',
+            'institusi_sumber' => $is_bpkp,
             'jenis_program' => $validatedData['jenis_program'],
-            'frekuensi_pelaksanaan' => $validatedData['frekuensi_pelaksanaan'],
+            'frekuensi_pelaksanaan' => $frekuensi,
             'indikator_kinerja' => $validatedData['indikator_kinerja'],
             'kompetensi_id' => $validatedData['kompetensi_id'],
             'topik_id' => $validatedData['topik_id'],

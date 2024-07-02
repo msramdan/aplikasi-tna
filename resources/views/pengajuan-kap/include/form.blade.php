@@ -211,10 +211,10 @@
         <select class="form-control js-example-basic-multiple @error('jalur_pembelajaran') is-invalid @enderror"
             name="jalur_pembelajaran" id="jalur-pembelajaran" required>
             <option value="" selected disabled>-- {{ __('Select jalur pembelajaran') }} --</option>
-            @foreach (['Pelatihan', 'Seminar/konferensi/sarasehan', 'Kursus', 'Lokakarya (workshop)', 'Belajar mandiri', 'Coaching', 'Mentoring', 'Bimbingan teknis', 'Sosialisasi', 'Detasering (secondment)', 'Job shadowing', 'Outbond', 'Benchmarking', 'Pertukaran PNS', 'Community of practices', 'Pelatihan di kantor sendiri', 'Library café', 'Magang/praktik kerja'] as $jalur)
-                <option value="{{ $jalur }}"
-                    {{ isset($pengajuanKap) && in_array($jalur, explode(',', $pengajuanKap->jalur_pembelajaran)) ? 'selected' : (in_array($jalur, old('jalur_pembelajaran', [])) ? 'selected' : '') }}>
-                    {{ $jalur }}
+            @foreach ($jalur_pembelajaran as $row)
+                <option value="{{ $row }}"
+                    {{ isset($pengajuanKap) && $pengajuanKap->jalur_pembelajaran == $row ? 'selected' : (old('jalur_pembelajaran') == $row ? 'selected' : '') }}>
+                    {{ $row }}
                 </option>
             @endforeach
         </select>

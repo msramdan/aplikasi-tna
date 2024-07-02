@@ -4,6 +4,12 @@
 
 @section('content')
     <style>
+        .btn-gray {
+            background-color: gray;
+            color: white;
+            border-color: gray;
+        }
+
         #loading-overlay {
             display: none;
             position: fixed;
@@ -212,10 +218,11 @@
                                         <tr>
                                             <th>#</th>
                                             <th>{{ __('Kode Pembelajaran') }}</th>
-                                            <th>{{ __('Institusi sumber') }}</th>
                                             <th>{{ __('Indikator Kinerja') }}</th>
                                             <th>{{ __('Kompetensi') }}</th>
                                             <th>{{ __('Topik') }}</th>
+                                            <th>{{ __('User created') }}</th>
+                                            <th>{{ __('Status') }}</th>
                                             <th>{{ __('Action') }}</th>
                                         </tr>
                                     </thead>
@@ -251,10 +258,6 @@
                     name: 'kode_pembelajaran',
                 },
                 {
-                    data: 'institusi_sumber',
-                    name: 'institusi_sumber',
-                },
-                {
                     data: 'indikator_kinerja',
                     name: 'indikator_kinerja',
                 },
@@ -267,53 +270,20 @@
                     name: 'nama_topik'
                 },
                 {
+                    data: 'user_name',
+                    name: 'user_name'
+                },
+                {
+                    data: 'status_pengajuan',
+                    name: 'status_pengajuan'
+                },
+                {
                     data: 'action',
                     name: 'action',
                     orderable: false,
                     searchable: false
                 }
             ],
-
-            drawCallback: function() {
-                $('.btn-detail-kompetensi').click(function() {
-                    var id = $(this).data('id');
-                    var csrfToken = $('meta[name="csrf-token"]').attr('content');
-                    $('#loading-overlay').show();
-                    $.ajax({
-                        type: "GET",
-                        url: '{{ route('detailKompetensi') }}',
-                        data: {
-                            id: id,
-                            _token: csrfToken
-                        },
-                        success: function(response) {
-                            $('#loading-overlay').hide();
-
-                            if (!response.success) {
-                                Swal.fire({
-                                    icon: 'warning',
-                                    title: 'Alert',
-                                    text: response.message,
-                                });
-                                return;
-                            }
-
-                            $('#modalDetailKompetensi').modal('show');
-                        },
-                        error: function(error) {
-                            $('#loading-overlay').hide();
-                            Swal.fire({
-                                icon: 'error',
-                                title: '{{ trans('kompetensi/index.error_fetching_data') }}',
-                                text: '{{ trans('kompetensi/index.check_error') }}',
-                            });
-                            console.error('Error:', error);
-                        },
-                    });
-
-                });
-            }
-
         });
     </script>
 @endpush
