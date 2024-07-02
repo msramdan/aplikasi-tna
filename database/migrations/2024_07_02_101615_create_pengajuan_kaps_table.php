@@ -6,11 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+
     public function up()
     {
         Schema::create('pengajuan_kap', function (Blueprint $table) {
@@ -19,6 +15,7 @@ return new class extends Migration
             $table->enum('institusi_sumber', ['BPKP', 'Non BPKP']);
             $table->enum('jenis_program', ['Renstra', 'APP', 'APEP', 'APIP']);
             $table->enum('frekuensi_pelaksanaan', ['Tahunan', 'Insidentil']);
+
             $table->string('indikator_kinerja', 255);
             $table->foreignId('kompetensi_id')->nullable()->constrained('kompetensi')->cascadeOnUpdate()->nullOnDelete();
             $table->foreignId('topik_id')->nullable()->constrained('topik')->cascadeOnUpdate()->nullOnDelete();
@@ -45,7 +42,7 @@ return new class extends Migration
                 'Pertukaran PNS',
                 'Community of practices',
                 'Pelatihan di kantor sendiri',
-                'Library café',
+                'Library cafe',
                 'Magang/praktik kerja'
             ]);
             $table->enum('model_pembelajaran', ['Pembelajaran terstruktur', 'Pembelajaran kolaboratif', 'Pembelajaran di tempat kerja','Pembelajaran terintegrasi']);

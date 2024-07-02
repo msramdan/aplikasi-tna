@@ -11,19 +11,64 @@
             </span>
         @enderror
     </div>
+
     <div class="col-md-6 mb-2">
-        <label for="type-pembelajaran">{{ __('Type Pembelajaran') }}</label>
-        <select class="form-control @error('type_pembelajaran') is-invalid @enderror" name="type_pembelajaran"
-            id="type-pembelajaran" required>
-            <option value="" selected disabled>-- {{ __('Select type pembelajaran') }} --</option>
+        <label for="institusi-sumber">{{ __('Institusi Sumber') }}</label>
+        <select class="form-control @error('institusi_sumber') is-invalid @enderror" name="institusi_sumber"
+            id="institusi-sumber" required>
+            <option value="" selected disabled>-- {{ __('Select institusi sumber') }} --</option>
+            <option value="BPKP"
+                {{ isset($pengajuanKap) && $pengajuanKap->institusi_sumber == 'BPKP' ? 'selected' : (old('institusi_sumber') == 'BPKP' ? 'selected' : '') }}>
+                BPKP</option>
+            <option value="Non BPKP"
+                {{ isset($pengajuanKap) && $pengajuanKap->institusi_sumber == 'Non BPKP' ? 'selected' : (old('institusi_sumber') == 'Non BPKP' ? 'selected' : '') }}>
+                Non BPKP</option>
+        </select>
+        @error('institusi_sumber')
+            <span class="text-danger">
+                {{ $message }}
+            </span>
+        @enderror
+    </div>
+
+    <div class="col-md-6 mb-2">
+        <label for="jenis-program">{{ __('Jenis Program') }}</label>
+        <select class="form-control @error('jenis_program') is-invalid @enderror" name="jenis_program"
+            id="jenis-program" required>
+            <option value="" selected disabled>-- {{ __('Select jenis program') }} --</option>
+            <option value="Renstra"
+                {{ isset($pengajuanKap) && $pengajuanKap->jenis_program == 'Renstra' ? 'selected' : (old('jenis_program') == 'Renstra' ? 'selected' : '') }}>
+                Renstra</option>
+            <option value="APP"
+                {{ isset($pengajuanKap) && $pengajuanKap->jenis_program == 'APP' ? 'selected' : (old('jenis_program') == 'APP' ? 'selected' : '') }}>
+                APP</option>
+            <option value="APEP"
+                {{ isset($pengajuanKap) && $pengajuanKap->jenis_program == 'APEP' ? 'selected' : (old('jenis_program') == 'APEP' ? 'selected' : '') }}>
+                APEP</option>
+            <option value="APIP"
+                {{ isset($pengajuanKap) && $pengajuanKap->jenis_program == 'APIP' ? 'selected' : (old('jenis_program') == 'APIP' ? 'selected' : '') }}>
+                APIP</option>
+        </select>
+        @error('jenis_program')
+            <span class="text-danger">
+                {{ $message }}
+            </span>
+        @enderror
+    </div>
+
+    <div class="col-md-6 mb-2">
+        <label for="frekuensi-pelaksanaan">{{ __('Frekuensi Pelaksanaan') }}</label>
+        <select class="form-control @error('frekuensi_pelaksanaan') is-invalid @enderror" name="frekuensi_pelaksanaan"
+            id="frekuensi-pelaksanaan" required>
+            <option value="" selected disabled>-- {{ __('Select frekuensi pelaksanaan') }} --</option>
             <option value="Tahunan"
-                {{ isset($pengajuanKap) && $pengajuanKap->type_pembelajaran == 'Tahunan' ? 'selected' : (old('type_pembelajaran') == 'Tahunan' ? 'selected' : '') }}>
+                {{ isset($pengajuanKap) && $pengajuanKap->frekuensi_pelaksanaan == 'Tahunan' ? 'selected' : (old('frekuensi_pelaksanaan') == 'Tahunan' ? 'selected' : '') }}>
                 Tahunan</option>
             <option value="Insidentil"
-                {{ isset($pengajuanKap) && $pengajuanKap->type_pembelajaran == 'Insidentil' ? 'selected' : (old('type_pembelajaran') == 'Insidentil' ? 'selected' : '') }}>
+                {{ isset($pengajuanKap) && $pengajuanKap->frekuensi_pelaksanaan == 'Insidentil' ? 'selected' : (old('frekuensi_pelaksanaan') == 'Insidentil' ? 'selected' : '') }}>
                 Insidentil</option>
         </select>
-        @error('type_pembelajaran')
+        @error('frekuensi_pelaksanaan')
             <span class="text-danger">
                 {{ $message }}
             </span>
@@ -145,23 +190,37 @@
             </span>
         @enderror
     </div>
+
+    <div class="col-md-6 mb-2">
+        <label for="bentuk-pembelajaran">{{ __('Bentuk Pembelajaran') }}</label>
+        <select class="form-control @error('bentuk_pembelajaran') is-invalid @enderror" name="bentuk_pembelajaran"
+            id="bentuk-pembelajaran" required>
+            <option value="" selected disabled>-- {{ __('Select bentuk pembelajaran') }} --</option>
+            <option value="Klasikal"
+                {{ isset($pengajuanKap) && $pengajuanKap->bentuk_pembelajaran == 'Klasikal' ? 'selected' : (old('bentuk_pembelajaran') == 'Klasikal' ? 'selected' : '') }}>
+                Klasikal</option>
+            <option value="Nonklasikal"
+                {{ isset($pengajuanKap) && $pengajuanKap->bentuk_pembelajaran == 'Nonklasikal' ? 'selected' : (old('bentuk_pembelajaran') == 'Nonklasikal' ? 'selected' : '') }}>
+                Nonklasikal</option>
+        </select>
+        @error('bentuk_pembelajaran')
+            <span class="text-danger">
+                {{ $message }}
+            </span>
+        @enderror
+    </div>
+
     <div class="col-md-6 mb-2">
         <label for="jalur-pembelajaran">{{ __('Jalur Pembelajaran') }}</label>
-        <select class="form-control @error('jalur_pembelajaran') is-invalid @enderror" name="jalur_pembelajaran"
-            id="jalur-pembelajaran" required>
-            <option value="" selected disabled>-- {{ __('Select jalur pembelajaran') }} --</option>
-            <option value="Pelatihan"
-                {{ isset($pengajuanKap) && $pengajuanKap->jalur_pembelajaran == 'Pelatihan' ? 'selected' : (old('jalur_pembelajaran') == 'Pelatihan' ? 'selected' : '') }}>
-                Pelatihan</option>
-            <option value="Sertifikasi"
-                {{ isset($pengajuanKap) && $pengajuanKap->jalur_pembelajaran == 'Sertifikasi' ? 'selected' : (old('jalur_pembelajaran') == 'Sertifikasi' ? 'selected' : '') }}>
-                Sertifikasi</option>
-            <option value="Pelatihan di kantor sendiri"
-                {{ isset($pengajuanKap) && $pengajuanKap->jalur_pembelajaran == 'Pelatihan di kantor sendiri' ? 'selected' : (old('jalur_pembelajaran') == 'Pelatihan di kantor sendiri' ? 'selected' : '') }}>
-                Pelatihan di kantor sendiri</option>
-            <option value="Belajar mandiri"
-                {{ isset($pengajuanKap) && $pengajuanKap->jalur_pembelajaran == 'Belajar mandiri' ? 'selected' : (old('jalur_pembelajaran') == 'Belajar mandiri' ? 'selected' : '') }}>
-                Belajar mandiri</option>
+        <select class="form-control @error('jalur_pembelajaran') is-invalid @enderror" name="jalur_pembelajaran[]"
+            id="jalur-pembelajaran" multiple required>
+            <option value="" disabled>-- {{ __('Select jalur pembelajaran') }} --</option>
+            @foreach (['Pelatihan', 'Seminar/konferensi/sarasehan', 'Kursus', 'Lokakarya (workshop)', 'Belajar mandiri', 'Coaching', 'Mentoring', 'Bimbingan teknis', 'Sosialisasi', 'Detasering (secondment)', 'Job shadowing', 'Outbond', 'Benchmarking', 'Pertukaran PNS', 'Community of practices', 'Pelatihan di kantor sendiri', 'Library café', 'Magang/praktik kerja'] as $jalur)
+                <option value="{{ $jalur }}"
+                    {{ isset($pengajuanKap) && in_array($jalur, explode(',', $pengajuanKap->jalur_pembelajaran)) ? 'selected' : (in_array($jalur, old('jalur_pembelajaran', [])) ? 'selected' : '') }}>
+                    {{ $jalur }}
+                </option>
+            @endforeach
         </select>
         @error('jalur_pembelajaran')
             <span class="text-danger">
@@ -175,15 +234,18 @@
         <select class="form-control @error('model_pembelajaran') is-invalid @enderror" name="model_pembelajaran"
             id="model-pembelajaran" required>
             <option value="" selected disabled>-- {{ __('Select model pembelajaran') }} --</option>
-            <option value="Terstruktur"
-                {{ isset($pengajuanKap) && $pengajuanKap->model_pembelajaran == 'Terstruktur' ? 'selected' : (old('model_pembelajaran') == 'Terstruktur' ? 'selected' : '') }}>
-                Terstruktur</option>
-            <option value="Social learning"
-                {{ isset($pengajuanKap) && $pengajuanKap->model_pembelajaran == 'Social learning' ? 'selected' : (old('model_pembelajaran') == 'Social learning' ? 'selected' : '') }}>
-                Social learning</option>
-            <option value="Experiential learning"
-                {{ isset($pengajuanKap) && $pengajuanKap->model_pembelajaran == 'Experiential learning' ? 'selected' : (old('model_pembelajaran') == 'Experiential learning' ? 'selected' : '') }}>
-                Experiential learning</option>
+            <option value="Pembelajaran terstruktur"
+                {{ isset($pengajuanKap) && $pengajuanKap->model_pembelajaran == 'Pembelajaran terstruktur' ? 'selected' : (old('model_pembelajaran') == 'Pembelajaran terstruktur' ? 'selected' : '') }}>
+                Pembelajaran terstruktur</option>
+            <option value="Pembelajaran kolaboratif"
+                {{ isset($pengajuanKap) && $pengajuanKap->model_pembelajaran == 'Pembelajaran kolaboratif' ? 'selected' : (old('model_pembelajaran') == 'Pembelajaran kolaboratif' ? 'selected' : '') }}>
+                Pembelajaran kolaboratif</option>
+            <option value="Pembelajaran di tempat kerja"
+                {{ isset($pengajuanKap) && $pengajuanKap->model_pembelajaran == 'Pembelajaran di tempat kerja' ? 'selected' : (old('model_pembelajaran') == 'Pembelajaran di tempat kerja' ? 'selected' : '') }}>
+                Pembelajaran di tempat kerja</option>
+            <option value="Pembelajaran terintegrasi"
+                {{ isset($pengajuanKap) && $pengajuanKap->model_pembelajaran == 'Pembelajaran terintegrasi' ? 'selected' : (old('model_pembelajaran') == 'Pembelajaran terintegrasi' ? 'selected' : '') }}>
+                Pembelajaran terintegrasi</option>
         </select>
         @error('model_pembelajaran')
             <span class="text-danger">
@@ -197,15 +259,15 @@
         <select class="form-control @error('jenis_pembelajaran') is-invalid @enderror" name="jenis_pembelajaran"
             id="jenis-pembelajaran" required>
             <option value="" selected disabled>-- {{ __('Select jenis pembelajaran') }} --</option>
-            <option value="Fungsional"
-                {{ isset($pengajuanKap) && $pengajuanKap->jenis_pembelajaran == 'Fungsional' ? 'selected' : (old('jenis_pembelajaran') == 'Fungsional' ? 'selected' : '') }}>
-                Fungsional</option>
-            <option value="Teknis substansi"
-                {{ isset($pengajuanKap) && $pengajuanKap->jenis_pembelajaran == 'Teknis substansi' ? 'selected' : (old('jenis_pembelajaran') == 'Teknis substansi' ? 'selected' : '') }}>
-                Teknis substansi</option>
             <option value="Kedinasan"
                 {{ isset($pengajuanKap) && $pengajuanKap->jenis_pembelajaran == 'Kedinasan' ? 'selected' : (old('jenis_pembelajaran') == 'Kedinasan' ? 'selected' : '') }}>
                 Kedinasan</option>
+            <option value="Fungsional auditor"
+                {{ isset($pengajuanKap) && $pengajuanKap->jenis_pembelajaran == 'Fungsional auditor' ? 'selected' : (old('jenis_pembelajaran') == 'Fungsional auditor' ? 'selected' : '') }}>
+                Fungsional auditor</option>
+            <option value="Teknis substansi"
+                {{ isset($pengajuanKap) && $pengajuanKap->jenis_pembelajaran == 'Teknis substansi' ? 'selected' : (old('jenis_pembelajaran') == 'Teknis substansi' ? 'selected' : '') }}>
+                Teknis substansi</option>
             <option value="Sertifikasi non JFA"
                 {{ isset($pengajuanKap) && $pengajuanKap->jenis_pembelajaran == 'Sertifikasi non JFA' ? 'selected' : (old('jenis_pembelajaran') == 'Sertifikasi non JFA' ? 'selected' : '') }}>
                 Sertifikasi non JFA</option>
@@ -222,18 +284,15 @@
         <select class="form-control @error('metode_pembelajaran') is-invalid @enderror" name="metode_pembelajaran"
             id="metode-pembelajaran" required>
             <option value="" selected disabled>-- {{ __('Select metode pembelajaran') }} --</option>
-            <option value="Tatap muka"
-                {{ isset($pengajuanKap) && $pengajuanKap->metode_pembelajaran == 'Tatap muka' ? 'selected' : (old('metode_pembelajaran') == 'Tatap muka' ? 'selected' : '') }}>
-                Tatap muka</option>
-            <option value="PJJ"
-                {{ isset($pengajuanKap) && $pengajuanKap->metode_pembelajaran == 'PJJ' ? 'selected' : (old('metode_pembelajaran') == 'PJJ' ? 'selected' : '') }}>
-                PJJ</option>
-            <option value="E-learning"
-                {{ isset($pengajuanKap) && $pengajuanKap->metode_pembelajaran == 'E-learning' ? 'selected' : (old('metode_pembelajaran') == 'E-learning' ? 'selected' : '') }}>
-                E-learning</option>
-            <option value="Blended"
-                {{ isset($pengajuanKap) && $pengajuanKap->metode_pembelajaran == 'Blended' ? 'selected' : (old('metode_pembelajaran') == 'Blended' ? 'selected' : '') }}>
-                Blended</option>
+            <option value="Synchronous learning"
+                {{ isset($pengajuanKap) && $pengajuanKap->metode_pembelajaran == 'Synchronous learning' ? 'selected' : (old('metode_pembelajaran') == 'Synchronous learning' ? 'selected' : '') }}>
+                Synchronous learning</option>
+            <option value="Asynchronous learning"
+                {{ isset($pengajuanKap) && $pengajuanKap->metode_pembelajaran == 'Asynchronous learning' ? 'selected' : (old('metode_pembelajaran') == 'Asynchronous learning' ? 'selected' : '') }}>
+                Asynchronous learning</option>
+            <option value="Blended learning"
+                {{ isset($pengajuanKap) && $pengajuanKap->metode_pembelajaran == 'Blended learning' ? 'selected' : (old('metode_pembelajaran') == 'Blended learning' ? 'selected' : '') }}>
+                Blended learning</option>
         </select>
         @error('metode_pembelajaran')
             <span class="text-danger">
@@ -278,6 +337,7 @@
             </span>
         @enderror
     </div>
+
     <div class="col-md-6 mb-2">
         <label for="penyelenggara-pembelajaran">{{ __('Penyelenggara Pembelajaran') }}</label>
         <select class="form-control @error('penyelenggara_pembelajaran') is-invalid @enderror"
@@ -349,4 +409,60 @@
             </span>
         @enderror
     </div>
+
+    <!-- Tanggal Created -->
+    <div class="col-md-6 mb-2">
+        <label for="tanggal-created">{{ __('Tanggal Created') }}</label>
+        <input type="datetime-local" id="tanggal-created" name="tanggal_created"
+            class="form-control @error('tanggal_created') is-invalid @enderror"
+            value="{{ isset($pengajuanKap) ? \Carbon\Carbon::parse($pengajuanKap->tanggal_created)->format('Y-m-d\TH:i') : old('tanggal_created') }}"
+            required>
+        @error('tanggal_created')
+            <span class="text-danger">
+                {{ $message }}
+            </span>
+        @enderror
+    </div>
+
+    <!-- Status Pengajuan -->
+    <div class="col-md-6 mb-2">
+        <label for="status-pengajuan">{{ __('Status Pengajuan') }}</label>
+        <select class="form-control @error('status_pengajuan') is-invalid @enderror" name="status_pengajuan"
+            id="status-pengajuan" required>
+            <option value="" selected disabled>-- {{ __('Select status pengajuan') }} --</option>
+            <option value="Pending"
+                {{ isset($pengajuanKap) && $pengajuanKap->status_pengajuan == 'Pending' ? 'selected' : (old('status_pengajuan') == 'Pending' ? 'selected' : '') }}>
+                Pending</option>
+            <option value="Approved"
+                {{ isset($pengajuanKap) && $pengajuanKap->status_pengajuan == 'Approved' ? 'selected' : (old('status_pengajuan') == 'Approved' ? 'selected' : '') }}>
+                Approved</option>
+            <option value="Rejected"
+                {{ isset($pengajuanKap) && $pengajuanKap->status_pengajuan == 'Rejected' ? 'selected' : (old('status_pengajuan') == 'Rejected' ? 'selected' : '') }}>
+                Rejected</option>
+        </select>
+        @error('status_pengajuan')
+            <span class="text-danger">
+                {{ $message }}
+            </span>
+        @enderror
+    </div>
+
+    <!-- User Created (Foreign Key) -->
+    {{-- <div class="col-md-6 mb-2">
+        <label for="user-created">{{ __('User Created') }}</label>
+        <select class="form-control @error('user_created') is-invalid @enderror" name="user_created"
+            id="user-created" required>
+            <option value="" selected disabled>-- {{ __('Select user created') }} --</option>
+            @foreach ($users as $user)
+                <option value="{{ $user->id }}"
+                    {{ isset($pengajuanKap) && $pengajuanKap->user_created == $user->id ? 'selected' : (old('user_created') == $user->id ? 'selected' : '') }}>
+                    {{ $user->name }}</option>
+            @endforeach
+        </select>
+        @error('user_created')
+            <span class="text-danger">
+                {{ $message }}
+            </span>
+        @enderror
+    </div> --}}
 </div>
