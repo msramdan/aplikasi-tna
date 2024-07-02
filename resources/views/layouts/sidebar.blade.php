@@ -1,4 +1,3 @@
----sidebar.blade.php---
 <div id="scrollbar">
     <div class="container-fluid">
         <div id="two-column-menu"></div>
