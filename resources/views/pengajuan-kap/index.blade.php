@@ -195,10 +195,14 @@
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="card-header">
-                            {{-- @can('pengajuan kap create')
-                                <a href="{{ route('pengajuan-kap.create') }}" class="btn btn-md btn-primary"> <i
-                                        class="mdi mdi-plus"></i> {{ __('Create a new pengajuan kap') }}</a>
-                            @endcan --}}
+                            @can('pengajuan kap create')
+                                <a href="{{ route('pengajuan-kap.create', [
+                                    'is_bpkp' => $is_bpkp,
+                                    'frekuensi' => $frekuensi,
+                                ]) }}"
+                                    class="btn btn-md btn-primary"> <i class="mdi mdi-plus"></i>
+                                    {{ __('Create a new pengajuan kap') }}</a>
+                            @endcan
                         </div>
 
                         <div class="card-body">

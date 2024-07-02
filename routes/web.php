@@ -79,8 +79,15 @@ Route::middleware(['auth', 'web'])->group(function () {
     });
     Route::controller(PengajuanKapController::class)->group(function () {
         Route::get('/pengajuan-kap/{is_bpkp}/{frekuensi}', 'index')->name('pengajuan-kap.index');
+        Route::get('/pengajuan-kap/create/{is_bpkp}/{frekuensi}', 'create')->name('pengajuan-kap.create');
+        Route::get('/pengajuan-kap/create/{id}/{is_bpkp}/{frekuensi}/edit', 'edit')->name('pengajuan-kap.edit');
+        // Route untuk submit create
+        Route::post('/pengajuan-kap/{is_bpkp}/{frekuensi}', 'store')->name('pengajuan-kap.store');
+        // Route untuk submit edit
+        Route::put('/pengajuan-kap/{id}/{is_bpkp}/{frekuensi}', 'update')->name('pengajuan-kap.update');
+        // Route untuk delete
+        Route::delete('/pengajuan-kap/{id}/{is_bpkp}/{frekuensi}', 'destroy')->name('pengajuan-kap.destroy');
     });
-
 });
 
 Route::post('/verify-otp', [OtpController::class, 'verifyOtp'])->name('verify-otp');
