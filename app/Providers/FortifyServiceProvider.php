@@ -85,6 +85,7 @@ class FortifyServiceProvider extends ServiceProvider
                     }
                 }
                 session(['api_token' => $data['data']['token']]);
+                session()->flash('login_success', true);
                 if (env('IS_SEND_OTP', false)) {
                     $otp = rand(100000, 999999);
                     $otpExpiration = env('EXPIRED_OTP', 3);
