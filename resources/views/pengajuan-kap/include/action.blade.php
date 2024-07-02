@@ -1,4 +1,8 @@
 <td>
+    <button type="button" class="btn btn-info btn-sm btn-detail-kompetensi"
+    data-id="{{ $model->id }}"
+    ><i class="mdi mdi-eye"></i></button>
+
     @can('pengajuan kap edit')
         <a href="{{ route('pengajuan-kap.edit', $model->id) }}" class="btn btn-success btn-sm">
             <i class="mdi mdi-pencil"></i>

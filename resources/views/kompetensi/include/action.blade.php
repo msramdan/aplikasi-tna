@@ -6,7 +6,8 @@
     data-nama_akademi="{{ $model->nama_akademi }}"
     data-nama_kompetensi="{{ $model->nama_kompetensi }}"
     data-deskripsi_kompetensi="{{ $model->deskripsi_kompetensi }}"
-    ><i class="mdi mdi-format-list-bulleted"></i></button>
+    ><i class="mdi mdi-eye"></i></button>
+
     @can('kompetensi edit')
         <a href="{{ route('kompetensi.edit', $model->id) }}" class="btn btn-success btn-sm">
             <i class="mdi mdi-pencil"></i>

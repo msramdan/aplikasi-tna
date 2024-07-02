@@ -25,7 +25,7 @@ class PengajuanKapController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $pengajuanKaps = PengajuanKap::with('kompetensi:id', 'topik:id', );
+            $pengajuanKaps = PengajuanKap::with('kompetensi:id', 'topik:id',);
 
             return DataTables::of($pengajuanKaps)
                 ->addIndexColumn()
@@ -53,6 +53,7 @@ class PengajuanKapController extends Controller
      */
     public function create()
     {
+
         return view('pengajuan-kap.create');
     }
 
@@ -68,7 +69,6 @@ class PengajuanKapController extends Controller
         PengajuanKap::create($request->validated());
         Alert::toast('The pengajuanKap was created successfully.', 'success');
         return redirect()->route('pengajuan-kap.index');
-
     }
 
     /**
@@ -79,9 +79,9 @@ class PengajuanKapController extends Controller
      */
     public function show(PengajuanKap $pengajuanKap)
     {
-        $pengajuanKap->load('kompetensi:id', 'topik:id', );
+        $pengajuanKap->load('kompetensi:id', 'topik:id',);
 
-		return view('pengajuan-kap.show', compact('pengajuanKap'));
+        return view('pengajuan-kap.show', compact('pengajuanKap'));
     }
 
     /**
@@ -92,9 +92,9 @@ class PengajuanKapController extends Controller
      */
     public function edit(PengajuanKap $pengajuanKap)
     {
-        $pengajuanKap->load('kompetensi:id', 'topik:id', );
+        $pengajuanKap->load('kompetensi:id', 'topik:id',);
 
-		return view('pengajuan-kap.edit', compact('pengajuanKap'));
+        return view('pengajuan-kap.edit', compact('pengajuanKap'));
     }
 
     /**

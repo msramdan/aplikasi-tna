@@ -45,7 +45,7 @@
         <div class="loading-spinner"></div>
     </div>
 
-    <!-- Modal -->
+    <!-- Modal import-->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -76,7 +76,7 @@
             </div>
         </div>
     </div>
-
+    {{-- modal detail --}}
     <div class="modal fade" id="modalDetailKompetensi" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-xl">

@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Kompetensi;
 use App\Models\Kota;
 use App\Models\Lokasi;
+use App\Models\Topik;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Permission\Models\Role;
@@ -48,6 +50,22 @@ class ViewServiceProvider extends ServiceProvider
             $data = Lokasi::select('id', 'nama_lokasi')->get();
             return $view->with(
                 'lokasis',
+                $data
+            );
+        });
+
+        View::composer(['pengajuan-kap.create', 'pengajuan-kap.edit'], function ($view) {
+            $data = Kompetensi::select('id', 'nama_kompetensi')->get();
+            return $view->with(
+                'kompetensis',
+                $data
+            );
+        });
+
+        View::composer(['pengajuan-kap.create', 'pengajuan-kap.edit'], function ($view) {
+            $data = Topik::select('id', 'nama_topik')->get();
+            return $view->with(
+                'topiks',
                 $data
             );
         });
