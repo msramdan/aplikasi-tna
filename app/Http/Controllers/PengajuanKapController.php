@@ -57,9 +57,9 @@ class PengajuanKapController extends Controller
                     'pengajuan_kap.user_created',
                     'pengajuan_kap.created_at',
                     'pengajuan_kap.updated_at',
-                    'users.name as user_name', // Nama pengguna dari tabel users
-                    'kompetensi.nama_kompetensi', // Nama kompetensi dari tabel kompetensi
-                    'topik.nama_topik' // Nama topik dari tabel topik
+                    'users.name as user_name',
+                    'kompetensi.nama_kompetensi',
+                    'topik.nama_topik'
                 )
                 ->leftJoin('users', 'pengajuan_kap.user_created', '=', 'users.id') // Left join dengan tabel users
                 ->leftJoin('kompetensi', 'pengajuan_kap.kompetensi_id', '=', 'kompetensi.id') // Left join dengan tabel kompetensi
@@ -77,23 +77,26 @@ class PengajuanKapController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create($is_bpkp, $frekuensi)
     {
+        if ($is_bpkp === 'BPKP') {
+            $jenis_program = ['Renstra', 'APP', 'APEP'];
+        } elseif ($is_bpkp === 'Non BPKP') {
+            $jenis_program = ['APIP'];
+        } else {
+            $jenis_program = [];
+        }
+
         return view('pengajuan-kap.create', [
             'is_bpkp' => $is_bpkp,
             'frekuensi' => $frekuensi,
+            'jenis_program' => $jenis_program,
         ]);
     }
 
     public function store(Request $request, $is_bpkp, $frekuensi)
     {
         $validatedData = $request->validate([
-            'kode_pembelajaran' => 'required|string|max:50',
             'institusi_sumber' => 'required|in:BPKP,Non BPKP',
             'jenis_program' => 'required|in:Renstra,APP,APEP,APIP',
             'frekuensi_pelaksanaan' => 'required|in:Tahunan,Insidentil',
@@ -116,8 +119,6 @@ class PengajuanKapController extends Controller
             'penyelenggara_pembelajaran' => 'required|in:Pusdiklatwas BPKP,Unit kerja,Lainnya',
             'fasilitator_pembelajaran' => 'required|in:Widyaiswara,Instruktur,Praktisi,Pakar,Tutor,Coach,Mentor,Narasumber lainnya',
             'sertifikat' => 'required|string|max:255',
-            'tanggal_created' => 'required|date',
-            'status_pengajuan' => 'required|in:Pending,Approved,Rejected',
         ]);
 
         DB::table('pengajuan_kap')->insert([
@@ -144,8 +145,8 @@ class PengajuanKapController extends Controller
             'penyelenggara_pembelajaran' => $validatedData['penyelenggara_pembelajaran'],
             'fasilitator_pembelajaran' => $validatedData['fasilitator_pembelajaran'],
             'sertifikat' => $validatedData['sertifikat'],
-            'tanggal_created' => $validatedData['tanggal_created'],
-            'status_pengajuan' => $validatedData['status_pengajuan'],
+            'tanggal_created' => date('Y-m-d H:i:s'),
+            'status_pengajuan' => 'Pending',
             'user_created' => Auth::id(),
             'created_at' => now(),
             'updated_at' => now(),
