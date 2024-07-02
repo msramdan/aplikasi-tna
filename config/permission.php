@@ -194,6 +194,6 @@ return [
         ['group' => 'tagging pembelajaran kompetensi', 'access' => ['tagging pembelajaran kompetensi view', 'tagging pembelajaran kompetensi edit', 'tagging pembelajaran kompetensi delete']],
         ['group' => 'activity log', 'access' => ['activity log view']],
         ['group' => 'tagging kompetensi ik', 'access' => ['tagging kompetensi ik view', 'tagging kompetensi ik create', 'tagging kompetensi ik edit', 'tagging kompetensi ik delete']],
-        ['group' => 'pengajuan kap', 'access' => ['pengajuan kap view']],
+        ['group' => 'pengajuan kap', 'access' => ['pengajuan kap view', 'pengajuan kap create', 'pengajuan kap edit', 'pengajuan kap delete']],
     ],
 ];

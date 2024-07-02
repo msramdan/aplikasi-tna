@@ -118,7 +118,8 @@ return [
             'ruang kelas view',
             'asrama view',
             'topik view',
-            'tagging pembelajaran kompetensi view'
+            'tagging pembelajaran kompetensi view',
+            'pengajuan kap view'
         ],
         'menus' => [
             [
@@ -140,7 +141,8 @@ return [
                     'ruang kelas view',
                     'asrama view',
                     'topik view',
-                    'tagging pembelajaran kompetensi view'
+                    'tagging pembelajaran kompetensi view',
+                    'pengajuan kap view'
                 ],
                 'submenus' => [
                     [
@@ -177,6 +179,11 @@ return [
                         'title' => 'Tagging Pembelajaran Kompetensis',
                         'route' => '/tagging-pembelajaran-kompetensis',
                         'permission' => 'tagging pembelajaran kompetensi view'
+                    ],
+                    [
+                        'title' => 'Pengajuan Kaps',
+                        'route' => '/pengajuan-kap',
+                        'permission' => 'pengajuan kap view'
                     ]
                 ]
             ]

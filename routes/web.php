@@ -79,3 +79,5 @@ Route::middleware(['auth', 'web'])->group(function () {
 });
 
 Route::post('/verify-otp', [OtpController::class, 'verifyOtp'])->name('verify-otp');
+
+Route::resource('pengajuan-kap', App\Http\Controllers\PengajuanKapController::class)->middleware('auth');

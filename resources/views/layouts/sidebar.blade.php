@@ -141,7 +141,7 @@
                         <ul class="nav nav-sm flex-column">
                             @can('pengajuan kap view')
                                 <li class="nav-item">
-                                    <a href=""
+                                    <a href="{{route('pengajuan-kap.index')}}"
                                         class="nav-link {{ request()->routeIs('pengajuan-kap/tahunan') ? 'active' : '' }}"
                                         data-key="t-basic-elements">{{ __('sidebar.annual') }}</a>
                                 </li>
