@@ -302,4 +302,30 @@ class PengajuanKapController extends Controller
             'frekuensi' => $frekuensi,
         ]);
     }
+
+    public function approve(Request $request, $id)
+    {
+        $pengajuanKap = PengajuanKap::findOrFail($id);
+        $pengajuanKap->status_pengajuan = 'Approved';
+        $pengajuanKap->approve_notes = $request->approveNotes;
+        $pengajuanKap->save();
+
+        return redirect()->route('pengajuan-kap.index', [
+            'is_bpkp' => $pengajuanKap->institusi_sumber,
+            'frekuensi' => $pengajuanKap->frekuensi_pelaksanaan,
+        ])->with('success', 'Pengajuan Kap approved successfully.');
+    }
+
+    public function reject(Request $request, $id)
+    {
+        $pengajuanKap = PengajuanKap::findOrFail($id);
+        $pengajuanKap->status_pengajuan = 'Rejected';
+        $pengajuanKap->reject_notes = $request->rejectNotes;
+        $pengajuanKap->save();
+
+        return redirect()->route('pengajuan-kap.index', [
+            'is_bpkp' => $pengajuanKap->institusi_sumber,
+            'frekuensi' => $pengajuanKap->frekuensi_pelaksanaan,
+        ])->with('success', 'Pengajuan Kap rejected successfully.');
+    }
 }
