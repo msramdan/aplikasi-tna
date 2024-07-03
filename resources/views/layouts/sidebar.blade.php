@@ -141,7 +141,7 @@
                                         class="nav-link {{ request()->segment(1) === 'pengajuan-kap' && request()->segment(2) === 'BPKP' ? 'active' : '' }}"
                                         data-bs-toggle="collapse" role="button"
                                         aria-expanded="{{ request()->segment(1) === 'pengajuan-kap' && request()->segment(2) === 'BPKP' ? 'true' : 'false' }}"
-                                        aria-controls="bpkp" data-key="t-level-1.2">BPKP</a>
+                                        aria-controls="bpkp" data-key="t-level-1.2">Tahunan</a>
                                     <div class="collapse menu-dropdown {{ request()->segment(1) === 'pengajuan-kap' && request()->segment(2) === 'BPKP' ? 'show' : '' }}"
                                         id="bpkp">
                                         <ul class="nav nav-sm flex-column">
@@ -151,16 +151,18 @@
                                                     'frekuensi' => 'Tahunan',
                                                 ]) }}"
                                                     class="nav-link {{ request()->segment(1) === 'pengajuan-kap' && request()->segment(2) === 'BPKP' && request()->segment(3) === 'Tahunan' ? 'active' : '' }}"
-                                                    data-key="t-level-2.1">Tahunan</a>
+                                                    data-key="t-level-2.1">BPKP</a>
                                             </li>
+
                                             <li class="nav-item">
                                                 <a href="{{ route('pengajuan-kap.index', [
-                                                    'is_bpkp' => 'BPKP',
-                                                    'frekuensi' => 'Insidentil',
+                                                    'is_bpkp' => 'Non BPKP',
+                                                    'frekuensi' => 'Tahunan',
                                                 ]) }}"
-                                                    class="nav-link {{ request()->segment(1) === 'pengajuan-kap' && request()->segment(2) === 'BPKP' && request()->segment(3) === 'Insidentil' ? 'active' : '' }}"
-                                                    data-key="t-level-2.1">Insidentil</a>
+                                                    class="nav-link {{ request()->segment(1) === 'pengajuan-kap' && request()->segment(2) === 'Non BPKP' && request()->segment(3) === 'Tahunan' ? 'active' : '' }}"
+                                                    data-key="t-level-2.1">Non BPKP</a>
                                             </li>
+
                                         </ul>
                                     </div>
                                 </li>
@@ -169,18 +171,19 @@
                                         class="nav-link {{ request()->segment(1) === 'pengajuan-kap' && request()->segment(2) === 'Non BPKP' ? 'active' : '' }}"
                                         data-bs-toggle="collapse" role="button"
                                         aria-expanded="{{ request()->segment(1) === 'pengajuan-kap' && request()->segment(2) === 'Non BPKP' ? 'true' : 'false' }}"
-                                        aria-controls="nonBpkp" data-key="t-level-1.2">Non BPKP</a>
+                                        aria-controls="nonBpkp" data-key="t-level-1.2">Insidentil</a>
 
                                     <div class="collapse menu-dropdown {{ request()->segment(1) === 'pengajuan-kap' && request()->segment(2) === 'Non BPKP' ? 'show' : '' }}"
                                         id="nonBpkp">
                                         <ul class="nav nav-sm flex-column">
+
                                             <li class="nav-item">
                                                 <a href="{{ route('pengajuan-kap.index', [
-                                                    'is_bpkp' => 'Non BPKP',
-                                                    'frekuensi' => 'Tahunan',
+                                                    'is_bpkp' => 'BPKP',
+                                                    'frekuensi' => 'Insidentil',
                                                 ]) }}"
-                                                    class="nav-link {{ request()->segment(1) === 'pengajuan-kap' && request()->segment(2) === 'Non BPKP' && request()->segment(3) === 'Tahunan' ? 'active' : '' }}"
-                                                    data-key="t-level-2.1">Tahunan</a>
+                                                    class="nav-link {{ request()->segment(1) === 'pengajuan-kap' && request()->segment(2) === 'BPKP' && request()->segment(3) === 'Insidentil' ? 'active' : '' }}"
+                                                    data-key="t-level-2.1">BPKP</a>
                                             </li>
                                             <li class="nav-item">
                                                 <a href="{{ route('pengajuan-kap.index', [
@@ -188,7 +191,7 @@
                                                     'frekuensi' => 'Insidentil',
                                                 ]) }}"
                                                     class="nav-link {{ request()->segment(1) === 'pengajuan-kap' && request()->segment(2) === 'Non BPKP' && request()->segment(3) === 'Insidentil' ? 'active' : '' }}"
-                                                    data-key="t-level-2.1">Insidentil</a>
+                                                    data-key="t-level-2.1">Non BPKP</a>
                                             </li>
                                         </ul>
                                     </div>

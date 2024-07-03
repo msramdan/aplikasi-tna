@@ -87,6 +87,8 @@ Route::middleware(['auth', 'web'])->group(function () {
         Route::put('/pengajuan-kap/{id}/{is_bpkp}/{frekuensi}', 'update')->name('pengajuan-kap.update');
         // Route untuk delete
         Route::delete('/pengajuan-kap/{id}/{is_bpkp}/{frekuensi}', 'destroy')->name('pengajuan-kap.destroy');
+        // Route untuk show
+        Route::get('/pengajuan-kap/{id}/{is_bpkp}/{frekuensi}', 'show')->name('pengajuan-kap.show');
     });
 });
 

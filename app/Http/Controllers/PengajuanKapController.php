@@ -253,4 +253,51 @@ class PengajuanKapController extends Controller
 
         return redirect()->route('pengajuan-kap.index', ['is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi])->with('success', 'Pengajuan KAP berhasil dihapus.');
     }
+
+    public function show($id, $is_bpkp, $frekuensi)
+    {
+        $pengajuanKap = DB::table('pengajuan_kap')
+            ->select(
+                'pengajuan_kap.id',
+                'pengajuan_kap.kode_pembelajaran',
+                'pengajuan_kap.institusi_sumber',
+                'pengajuan_kap.jenis_program',
+                'pengajuan_kap.frekuensi_pelaksanaan',
+                'pengajuan_kap.indikator_kinerja',
+                'pengajuan_kap.concern_program_pembelajaran',
+                'pengajuan_kap.alokasi_waktu',
+                'pengajuan_kap.indikator_dampak_terhadap_kinerja_organisasi',
+                'pengajuan_kap.penugasan_yang_terkait_dengan_pembelajaran',
+                'pengajuan_kap.skill_group_owner',
+                'pengajuan_kap.bentuk_pembelajaran',
+                'pengajuan_kap.jalur_pembelajaran',
+                'pengajuan_kap.model_pembelajaran',
+                'pengajuan_kap.jenis_pembelajaran',
+                'pengajuan_kap.metode_pembelajaran',
+                'pengajuan_kap.sasaran_peserta',
+                'pengajuan_kap.kriteria_peserta',
+                'pengajuan_kap.aktivitas_prapembelajaran',
+                'pengajuan_kap.penyelenggara_pembelajaran',
+                'pengajuan_kap.fasilitator_pembelajaran',
+                'pengajuan_kap.sertifikat',
+                'pengajuan_kap.tanggal_created',
+                'pengajuan_kap.status_pengajuan',
+                'pengajuan_kap.user_created',
+                'users.name as user_name',
+                'kompetensi.nama_kompetensi',
+                'topik.nama_topik'
+            )
+            ->leftJoin('users', 'pengajuan_kap.user_created', '=', 'users.id')
+            ->leftJoin('kompetensi', 'pengajuan_kap.kompetensi_id', '=', 'kompetensi.id')
+            ->leftJoin('topik', 'pengajuan_kap.topik_id', '=', 'topik.id')
+            ->where('pengajuan_kap.id', '=', $id)
+            ->where('pengajuan_kap.institusi_sumber', '=', $is_bpkp)
+            ->where('pengajuan_kap.frekuensi_pelaksanaan', '=', $frekuensi)
+            ->first();
+        return view('pengajuan-kap.show', [
+            'pengajuanKap' => $pengajuanKap,
+            'is_bpkp' => $is_bpkp,
+            'frekuensi' => $frekuensi,
+        ]);
+    }
 }

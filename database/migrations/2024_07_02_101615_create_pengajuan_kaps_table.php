@@ -45,7 +45,7 @@ return new class extends Migration
                 'Library cafe',
                 'Magang/praktik kerja'
             ]);
-            $table->enum('model_pembelajaran', ['Pembelajaran terstruktur', 'Pembelajaran kolaboratif', 'Pembelajaran di tempat kerja','Pembelajaran terintegrasi']);
+            $table->enum('model_pembelajaran', ['Pembelajaran terstruktur', 'Pembelajaran kolaboratif', 'Pembelajaran di tempat kerja', 'Pembelajaran terintegrasi']);
             $table->enum('jenis_pembelajaran', ['Kedinasan', 'Fungsional auditor', 'Teknis substansi', 'Sertifikasi non JFA']);
             $table->enum('metode_pembelajaran', ['Synchronous learning', 'Asynchronous learning', 'Blended learning']);
             $table->string('sasaran_peserta', 255);
@@ -55,7 +55,7 @@ return new class extends Migration
             $table->enum('fasilitator_pembelajaran', ['Widyaiswara', 'Instruktur', 'Praktisi', 'Pakar', 'Tutor', 'Coach', 'Mentor', 'Narasumber lainnya']);
             $table->string('sertifikat', 255);
             $table->datetime('tanggal_created');
-            $table->enum('status_pengajuan', ['Pending', 'Approved', 'Rejected']);
+            $table->enum('status_pengajuan', ['Pending', 'Process', 'Approved', 'Rejected']);
             $table->foreignId('user_created')->nullable()->constrained('users')->cascadeOnUpdate()->nullOnDelete();
             $table->timestamps();
         });
