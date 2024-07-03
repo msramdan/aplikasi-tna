@@ -42,3 +42,36 @@ if (!function_exists('setting_web')) {
         return $setting;
     }
 }
+
+
+function formatTanggalIndonesia($tanggal)
+{
+    // Ubah format ke dalam format tanggal PHP
+    $tanggalPHP = date_create($tanggal);
+
+    // Array nama bulan dalam bahasa Indonesia
+    $namaBulan = [
+        1 => 'Januari',
+        2 => 'Februari',
+        3 => 'Maret',
+        4 => 'April',
+        5 => 'Mei',
+        6 => 'Juni',
+        7 => 'Juli',
+        8 => 'Agustus',
+        9 => 'September',
+        10 => 'Oktober',
+        11 => 'November',
+        12 => 'Desember'
+    ];
+
+    // Ambil tanggal, bulan, dan tahun
+    $tanggal = date_format($tanggalPHP, 'd');
+    $bulan = $namaBulan[date_format($tanggalPHP, 'n')];
+    $tahun = date_format($tanggalPHP, 'Y');
+
+    // Format hasilnya
+    $tanggalIndonesia = $tanggal . ' ' . $bulan . ' ' . $tahun;
+
+    return $tanggalIndonesia;
+}

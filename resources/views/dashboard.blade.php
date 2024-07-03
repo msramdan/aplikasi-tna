@@ -16,13 +16,28 @@
                         </div>
                         <div class="modal-body">
                             <p style="text-align: justify">
-                                Yuk, segera ajukan KAP untuk tahun 2025! Isi formulirnya sekarang agar bisa direview dan
-                                masuk ke dalam kalender pembelajaran. Dengan begitu, kita bisa merencanakan pembelajaran
-                                yang efektif dan terstruktur untuk tahun depan!
+                                Yuk, segera ajukan KAP untuk tahun
+
+                                @if (session('jadwal_kap_tahunan'))
+                                    {{ session('jadwal_kap_tahunan')->tahun }}
+                                @endif
+                                ! Isi formulirnya sekarang agar bisa direview dan masuk ke dalam kalender pembelajaran.
+                                Dengan begitu, kita bisa merencanakan pembelajaran yang efektif dan terstruktur untuk tahun
+                                depan!
                             </p>
+                            @if (session('jadwal_kap_tahunan'))
+                                <div class="text-center">
+                                    <h5>
+                                        Periode Pengisian: <br>
+                                        {{ formatTanggalIndonesia(session('jadwal_kap_tahunan')->tanggal_mulai) }} -
+                                        {{ formatTanggalIndonesia(session('jadwal_kap_tahunan')->tanggal_selesai) }}
+                                    </h5>
+                                </div>
+                            @endif
+                            <br>
                             <div class="text-center">
                                 <p>
-                                    Klik link di bawah ini untuk pengajuan KAP
+                                    <u><b>Klik link di bawah ini untuk pengajuan KAP</b> </u>
                                 </p>
                                 <div class="row">
                                     <div class="col">
@@ -39,7 +54,6 @@
                     </div>
                 </div>
             </div>
-
 
 
             <div class="row">

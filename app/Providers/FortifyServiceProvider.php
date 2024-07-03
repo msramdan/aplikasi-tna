@@ -15,6 +15,8 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Cache;
 use App\Mail\SendOtpMail;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 
 class FortifyServiceProvider extends ServiceProvider
@@ -85,7 +87,18 @@ class FortifyServiceProvider extends ServiceProvider
                     }
                 }
                 session(['api_token' => $data['data']['token']]);
-                session()->flash('login_success', true);
+                $now = Carbon::now();
+                $now = Carbon::now();
+                $jadwalData = DB::table('jadwal_kap_tahunan')
+                    ->where('tanggal_mulai', '<=', $now)
+                    ->where('tanggal_selesai', '>=', $now)
+                    ->first();
+
+                if ($jadwalData) {
+                    session()->flash('login_success', true);
+                    session(['jadwal_kap_tahunan' => $jadwalData]);
+                }
+
                 if (env('IS_SEND_OTP', false)) {
                     $otp = rand(100000, 999999);
                     $otpExpiration = env('EXPIRED_OTP', 3);
