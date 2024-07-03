@@ -146,17 +146,25 @@
                                         <td class="fw-bold">{{ __('Status pengajuan') }}</td>
                                         <td>
                                             @if ($pengajuanKap->status_pengajuan == 'Pending')
-                                                <button style="width:150px"
-                                                    class="btn btn-gray btn-sm btn-block">Pending</button>
+                                                <button style="width:150px" class="btn btn-gray btn-sm btn-block">
+                                                    <i class="fa fa-clock" aria-hidden="true"></i> Pending
+                                                </button>
                                             @elseif ($pengajuanKap->status_pengajuan == 'Approved')
-                                                <button style="width:150px"
-                                                    class="btn btn-success btn-sm btn-block">Approved</button>
+                                                <button style="width:150px" class="btn btn-success btn-sm btn-block">
+                                                    <i class="fa fa-check" aria-hidden="true"></i> Approved
+                                                </button>
                                             @elseif ($pengajuanKap->status_pengajuan == 'Rejected')
-                                                <button style="width:150px"
-                                                    class="btn btn-danger btn-sm btn-block">Rejected</button>
+                                                <button style="width:150px" class="btn btn-danger btn-sm btn-block">
+                                                    <i class="fa fa-times" aria-hidden="true"></i> Rejected
+                                                </button>
+                                            @elseif ($pengajuanKap->status_pengajuan == 'Process')
+                                                <button style="width:150px" class="btn btn-primary btn-sm btn-block">
+                                                    <i class="fa fa-spinner" aria-hidden="true"></i> Process
+                                                </button>
                                             @endif
                                         </td>
                                     </tr>
+
                                     <tr>
                                         <td class="fw-bold">{{ __('User created') }}</td>
                                         <td>{{ $pengajuanKap->user_name }}</td>

@@ -67,11 +67,13 @@ class PengajuanKapController extends Controller
                 ->addIndexColumn()
                 ->addColumn('status_pengajuan', function ($row) {
                     if ($row->status_pengajuan == 'Pending') {
-                        return '<button style="width:100%" class="btn btn-gray btn-sm btn-block">Pending</button>';
+                        return '<button style="width:90px" class="btn btn-gray btn-sm btn-block"><i class="fa fa-clock" aria-hidden="true"></i> Pending</button>';
                     } else if ($row->status_pengajuan == 'Approved') {
-                        return '<button style="width:100%" class="btn btn-success btn-sm btn-block">Approved</button>';
+                        return '<button style="width:90px" class="btn btn-success btn-sm btn-block"><i class="fa fa-check" aria-hidden="true"></i> Approved</button>';
                     } else if ($row->status_pengajuan == 'Rejected') {
-                        return '<button style="width:100%" class="btn btn-danger btn-sm btn-block">Rejected</button>';
+                        return '<button style="width:90px" class="btn btn-danger btn-sm btn-block"><i class="fa fa-times" aria-hidden="true"></i> Rejected</button>';
+                    } else if ($row->status_pengajuan == 'Process') {
+                        return '<button style="width:90px" class="btn btn-primary btn-sm btn-block"><i class="fa fa-spinner" aria-hidden="true"></i> Process</button>';
                     }
                 })
                 ->addColumn('action', 'pengajuan-kap.include.action')

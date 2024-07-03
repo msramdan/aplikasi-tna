@@ -217,7 +217,7 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>{{ __('Kode Pembelajaran') }}</th>
+                                            <th>{{ __('Kode') }}</th>
                                             <th>{{ __('Indikator Kinerja') }}</th>
                                             <th>{{ __('Kompetensi') }}</th>
                                             <th>{{ __('Topik') }}</th>
