@@ -59,6 +59,7 @@
             font-size: 14px;
             color: #666;
             text-align: center;
+            z-index: 1;
         }
 
         .step.active .step-icon {
@@ -93,6 +94,12 @@
             width: 4px;
             background-color: #ddd;
             z-index: -1;
+            /* Z-index diperkecil untuk memastikan garis berada di belakang konten */
+        }
+
+        .step {
+            position: relative;
+            /* Pastikan step memiliki posisi relatif untuk referensi elemen ::after */
         }
 
         .step:not(:last-child)::after {
@@ -105,11 +112,12 @@
             width: 4px;
             background-color: #ddd;
             z-index: 0;
+            /* Z-index diperkecil untuk memastikan garis berada di belakang konten */
         }
 
         .step.active:not(:last-child)::after {
             background-color: green;
-            opacity: 0.5;
+            opacity: 0.2;
         }
 
 
