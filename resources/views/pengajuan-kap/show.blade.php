@@ -92,7 +92,7 @@
             height: 100%;
             width: 4px;
             background-color: #ddd;
-            z-index: 0;
+            z-index: -1;
         }
 
         .step:not(:last-child)::after {
@@ -109,6 +109,7 @@
 
         .step.active:not(:last-child)::after {
             background-color: green;
+            opacity: 0.5;
         }
 
 
@@ -344,27 +345,27 @@
                             <div class="wizard-steps">
                                 <div class="step active">
                                     <div class="step-icon">1</div>
-                                    <div class="step-label">Team pusdiklat</div>
+                                    <div class="step-label"><b>Team pusdiklat</b> </div>
                                 </div>
                                 <div class="step active">
                                     <div class="step-icon">2</div>
-                                    <div class="step-label">Biro keuangan</div>
+                                    <div class="step-label"><b>Biro keuangan</b></div>
                                 </div>
                                 <div class="step rejected">
                                     <div class="step-icon">3</div>
-                                    <div class="step-label">Inspektorat</div>
+                                    <div class="step-label"><b>Inspektorat</b></div>
                                 </div>
                                 <div class="step ">
                                     <div class="step-icon">4</div>
-                                    <div class="step-label">Subkor</div>
+                                    <div class="step-label"><b>Subkor</b></div>
                                 </div>
                                 <div class="step">
                                     <div class="step-icon">5</div>
-                                    <div class="step-label">Koordinator</div>
+                                    <div class="step-label"><b>Koordinator</b></div>
                                 </div>
                                 <div class="step">
                                     <div class="step-icon">6</div>
-                                    <div class="step-label">Kepala pusat</div>
+                                    <div class="step-label"><b>Kepala pusat</b></div>
                                 </div>
                             </div>
                             <div class="wizard-content">
