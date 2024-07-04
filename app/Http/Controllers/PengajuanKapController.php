@@ -25,33 +25,7 @@ class PengajuanKapController extends Controller
         if (request()->ajax()) {
             $pengajuanKaps = DB::table('pengajuan_kap')
                 ->select(
-                    'pengajuan_kap.id',
-                    'pengajuan_kap.kode_pembelajaran',
-                    'pengajuan_kap.institusi_sumber',
-                    'pengajuan_kap.jenis_program',
-                    'pengajuan_kap.frekuensi_pelaksanaan',
-                    'pengajuan_kap.indikator_kinerja',
-                    'pengajuan_kap.concern_program_pembelajaran',
-                    'pengajuan_kap.alokasi_waktu',
-                    'pengajuan_kap.indikator_dampak_terhadap_kinerja_organisasi',
-                    'pengajuan_kap.penugasan_yang_terkait_dengan_pembelajaran',
-                    'pengajuan_kap.skill_group_owner',
-                    'pengajuan_kap.bentuk_pembelajaran',
-                    'pengajuan_kap.jalur_pembelajaran',
-                    'pengajuan_kap.model_pembelajaran',
-                    'pengajuan_kap.jenis_pembelajaran',
-                    'pengajuan_kap.metode_pembelajaran',
-                    'pengajuan_kap.sasaran_peserta',
-                    'pengajuan_kap.kriteria_peserta',
-                    'pengajuan_kap.aktivitas_prapembelajaran',
-                    'pengajuan_kap.penyelenggara_pembelajaran',
-                    'pengajuan_kap.fasilitator_pembelajaran',
-                    'pengajuan_kap.sertifikat',
-                    'pengajuan_kap.tanggal_created',
-                    'pengajuan_kap.status_pengajuan',
-                    'pengajuan_kap.user_created',
-                    'pengajuan_kap.created_at',
-                    'pengajuan_kap.updated_at',
+                    'pengajuan_kap.*',
                     'users.name as user_name',
                     'kompetensi.nama_kompetensi',
                     'topik.nama_topik'
@@ -118,6 +92,59 @@ class PengajuanKapController extends Controller
 
 
         return view('pengajuan-kap.create', [
+            'is_bpkp' => $is_bpkp,
+            'frekuensi' => $frekuensi,
+            'jenis_program' => $jenis_program,
+            'jalur_pembelajaran' => $jalur_pembelajaran,
+        ]);
+    }
+
+    public function edit($id, $is_bpkp, $frekuensi)
+    {
+        if ($is_bpkp === 'BPKP') {
+            $jenis_program = ['Renstra', 'APP', 'APEP'];
+        } elseif ($is_bpkp === 'Non BPKP') {
+            $jenis_program = ['APIP'];
+        } else {
+            $jenis_program = [];
+        }
+
+        $jalur_pembelajaran = [
+            'Pelatihan',
+            'Seminar/konferensi/sarasehan',
+            'Kursus', 'Lokakarya (workshop)',
+            'Belajar mandiri', 'Coaching',
+            'Mentoring',
+            'Bimbingan teknis',
+            'Sosialisasi',
+            'Detasering (secondment)',
+            'Job shadowing',
+            'Outbond',
+            'Benchmarking',
+            'Pertukaran PNS',
+            'Community of practices',
+            'Pelatihan di kantor sendiri',
+            'Library cafe',
+            'Magang/praktik kerja'
+        ];
+
+        $pengajuanKap = DB::table('pengajuan_kap')
+            ->select(
+                'pengajuan_kap.*',
+                'users.name as user_name',
+                'kompetensi.nama_kompetensi',
+                'topik.nama_topik'
+            )
+            ->leftJoin('users', 'pengajuan_kap.user_created', '=', 'users.id')
+            ->leftJoin('kompetensi', 'pengajuan_kap.kompetensi_id', '=', 'kompetensi.id')
+            ->leftJoin('topik', 'pengajuan_kap.topik_id', '=', 'topik.id')
+            ->where('pengajuan_kap.id', '=', $id)
+            ->where('pengajuan_kap.institusi_sumber', '=', $is_bpkp)
+            ->where('pengajuan_kap.frekuensi_pelaksanaan', '=', $frekuensi)
+            ->first();
+
+        return view('pengajuan-kap.edit', [
+            'pengajuanKap' => $pengajuanKap,
             'is_bpkp' => $is_bpkp,
             'frekuensi' => $frekuensi,
             'jenis_program' => $jenis_program,
@@ -251,40 +278,26 @@ class PengajuanKapController extends Controller
 
     public function destroy($id, $is_bpkp, $frekuensi)
     {
-        DB::table('pengajuan_kap')->where('id', $id)->delete();
-
-        return redirect()->route('pengajuan-kap.index', ['is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi])->with('success', 'Pengajuan KAP berhasil dihapus.');
+        try {
+            $pengajuanKap = DB::table('pengajuan_kap')->find($id);
+            if (!$pengajuanKap) {
+                Alert::toast('Pengajuan KAP tidak ditemukan.', 'error');
+                return redirect()->route('pengajuan-kap.index', ['is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi]);
+            }
+            DB::table('pengajuan_kap')->where('id', $id)->delete();
+            Alert::toast('Pengajuan KAP berhasil dihapus.', 'success');
+        } catch (\Exception $e) {
+            Alert::toast('Terjadi kesalahan saat menghapus Pengajuan KAP', 'error');
+            return redirect()->route('pengajuan-kap.index', ['is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi]);
+        }
+        return redirect()->route('pengajuan-kap.index', ['is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi]);
     }
 
     public function show($id, $is_bpkp, $frekuensi)
     {
         $pengajuanKap = DB::table('pengajuan_kap')
             ->select(
-                'pengajuan_kap.id',
-                'pengajuan_kap.kode_pembelajaran',
-                'pengajuan_kap.institusi_sumber',
-                'pengajuan_kap.jenis_program',
-                'pengajuan_kap.frekuensi_pelaksanaan',
-                'pengajuan_kap.indikator_kinerja',
-                'pengajuan_kap.concern_program_pembelajaran',
-                'pengajuan_kap.alokasi_waktu',
-                'pengajuan_kap.indikator_dampak_terhadap_kinerja_organisasi',
-                'pengajuan_kap.penugasan_yang_terkait_dengan_pembelajaran',
-                'pengajuan_kap.skill_group_owner',
-                'pengajuan_kap.bentuk_pembelajaran',
-                'pengajuan_kap.jalur_pembelajaran',
-                'pengajuan_kap.model_pembelajaran',
-                'pengajuan_kap.jenis_pembelajaran',
-                'pengajuan_kap.metode_pembelajaran',
-                'pengajuan_kap.sasaran_peserta',
-                'pengajuan_kap.kriteria_peserta',
-                'pengajuan_kap.aktivitas_prapembelajaran',
-                'pengajuan_kap.penyelenggara_pembelajaran',
-                'pengajuan_kap.fasilitator_pembelajaran',
-                'pengajuan_kap.sertifikat',
-                'pengajuan_kap.tanggal_created',
-                'pengajuan_kap.status_pengajuan',
-                'pengajuan_kap.user_created',
+                'pengajuan_kap.*',
                 'users.name as user_name',
                 'kompetensi.nama_kompetensi',
                 'topik.nama_topik'
