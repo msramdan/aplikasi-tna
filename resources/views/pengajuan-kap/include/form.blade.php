@@ -83,18 +83,6 @@
         @enderror
     </div>
     <div class="col-md-6 mb-2">
-        <label for="alokasi-waktu">{{ __('Alokasi Waktu') }}</label>
-        <input type="number" name="alokasi_waktu" id="alokasi-waktu"
-            class="form-control @error('alokasi_waktu') is-invalid @enderror"
-            value="{{ isset($pengajuanKap) ? $pengajuanKap->alokasi_waktu : old('alokasi_waktu') }}"
-            placeholder="{{ __('Alokasi Waktu') }}" required />
-        @error('alokasi_waktu')
-            <span class="text-danger">
-                {{ $message }}
-            </span>
-        @enderror
-    </div>
-    <div class="col-md-6 mb-2">
         <label
             for="indikator-dampak-terhadap-kinerja-organisasi">{{ __('Indikator Dampak Terhadap Kinerja Organisasi') }}</label>
         <input type="text" name="indikator_dampak_terhadap_kinerja_organisasi"
