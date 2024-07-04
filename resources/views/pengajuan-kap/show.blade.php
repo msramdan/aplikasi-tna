@@ -126,6 +126,7 @@
             background-color: red;
             animation: pulse-red 1s infinite alternate;
         }
+
         .step.rejected .step-label {
             color: red;
         }
@@ -503,22 +504,13 @@
     @endsection
 
     @push('js')
-        {{-- <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const steps = document.querySelectorAll('.step');
-                const contents = document.querySelectorAll('.content');
-
-                steps.forEach((step, index) => {
-                    step.addEventListener('click', () => {
-                        steps.forEach((step, i) => {
-                            step.classList.remove('active');
-                            contents[i].classList.remove('active');
-                        });
-
-                        step.classList.add('active');
-                        contents[index].classList.add('active');
-                    });
+        <script>
+            $(document).ready(function() {
+                $('.wizard-steps .step').click(function() {
+                    var index = $(this).index();
+                    $('.wizard-content .content').removeClass('active');
+                    $('.wizard-content .content').eq(index).addClass('active');
                 });
             });
-        </script> --}}
+        </script>
     @endpush
