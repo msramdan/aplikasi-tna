@@ -330,19 +330,7 @@
                                 </table>
                             </div>
 
-                            <a href="{{ route('pengajuan-kap.index', [
-                                'is_bpkp' => $is_bpkp,
-                                'frekuensi' => $frekuensi,
-                            ]) }}"
-                                class="btn btn-secondary">{{ __('Back') }}</a>
-                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                data-bs-target="#approveModal">
-                                Approved
-                            </button>
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                data-bs-target="#rejectModal">
-                                Rejected
-                            </button>
+
                         </div>
                     </div>
                 </div>
@@ -461,6 +449,25 @@
                 </div>
 
             </div>
+            <div class="col-md-12">
+                <a href="{{ route('pengajuan-kap.index', [
+                    'is_bpkp' => $is_bpkp,
+                    'frekuensi' => $frekuensi,
+                ]) }}"
+                    class="btn btn-secondary">{{ __('Back') }}</a>
+                <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                    data-bs-target="#approveModal">
+                    Approved
+                </button>
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                    data-bs-target="#rejectModal">
+                    Rejected
+                </button>
+            </div>
+            <br>
+            <br>
+            <br>
+            <br>
         </div>
 
         <!-- Approve Modal -->
