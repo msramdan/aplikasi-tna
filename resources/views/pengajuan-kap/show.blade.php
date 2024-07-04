@@ -114,16 +114,21 @@
 
         /* Add animation for current step */
         .step.process .step-icon {
+            background-color: gray;
             animation: pulse 1s infinite alternate;
         }
 
-        .rejected .step-icon {
-            background-color: red;
-            /* Warna latar belakang merah */
-            animation: pulse-red 1s infinite alternate;
-            /* Animasi berkedip */
+        .step.process .step-label {
+            color: gray;
         }
 
+        .step.rejected .step-icon {
+            background-color: red;
+            animation: pulse-red 1s infinite alternate;
+        }
+        .step.rejected .step-label {
+            color: red;
+        }
 
         @keyframes pulse {
             0% {
