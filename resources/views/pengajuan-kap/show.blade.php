@@ -11,6 +11,7 @@
             border-color: gray;
         }
     </style>
+
     <style>
         .wizard-container {
             display: flex;
@@ -109,7 +110,46 @@
         .step.active:not(:last-child)::after {
             background-color: green;
         }
+
+
+        /* Add animation for current step */
+        .step.process .step-icon {
+            animation: pulse 1s infinite alternate;
+        }
+
+        .rejected .step-icon {
+            background-color: red;
+            /* Warna latar belakang merah */
+            animation: pulse-red 1s infinite alternate;
+            /* Animasi berkedip */
+        }
+
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(128, 128, 128, 0.7);
+                /* Warna abu-abu dengan opacity 0.7 */
+            }
+
+            100% {
+                box-shadow: 0 0 0 10px rgba(128, 128, 128, 0);
+                /* Transparansi penuh untuk fade out */
+            }
+        }
+
+        @keyframes pulse-red {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7);
+                /* Warna merah dengan opacity 0.7 */
+            }
+
+            100% {
+                box-shadow: 0 0 0 10px rgba(255, 0, 0, 0);
+                /* Transparansi penuh untuk fade out */
+            }
+        }
     </style>
+
 
 
 
@@ -304,11 +344,11 @@
                                     <div class="step-icon">2</div>
                                     <div class="step-label">Biro keuangan</div>
                                 </div>
-                                <div class="step">
+                                <div class="step rejected">
                                     <div class="step-icon">3</div>
                                     <div class="step-label">Inspektorat</div>
                                 </div>
-                                <div class="step">
+                                <div class="step ">
                                     <div class="step-icon">4</div>
                                     <div class="step-label">Subkor</div>
                                 </div>
@@ -404,6 +444,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
 
