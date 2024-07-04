@@ -94,27 +94,23 @@
             z-index: 0;
         }
 
-        .step::before {
+        .step:not(:last-child)::after {
             content: '';
             position: absolute;
-            top: 50%;
+            top: 100%;
             left: 50%;
-            transform: translate(-50%, -50%);
-            height: calc(100% - 40px);
+            transform: translateY(-50%);
+            height: calc(100% + 20px);
             width: 4px;
             background-color: #ddd;
             z-index: 0;
         }
 
-        .step.active::before {
+        .step.active:not(:last-child)::after {
             background-color: green;
         }
-
-        .step:first-child::before {
-            top: 50%;
-            height: calc(100% - 20px);
-        }
     </style>
+
 
 
     <div class="page-body">
