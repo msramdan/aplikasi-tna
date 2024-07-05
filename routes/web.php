@@ -8,6 +8,7 @@ use App\Http\Controllers\{
     RoleAndPermissionController,
     ActivityLogController,
     AsramaController,
+    BackupController,
     JadwalKapTahunanController,
     KalenderPembelajaranController,
     KompetensiController,
@@ -92,6 +93,8 @@ Route::middleware(['auth', 'web'])->group(function () {
         Route::put('/pengajuan-kap/{id}/approve', 'approve')->name('pengajuan-kap.approve');
         Route::put('/pengajuan-kap/{id}/reject', 'reject')->name('pengajuan-kap.reject');
     });
+    Route::get('/backup', [BackupController::class, 'index'])->name('backup.index');
+    Route::get('/backup/download', [BackupController::class, 'downloadBackup'])->name('backup.download');
 });
 
 Route::post('/verify-otp', [OtpController::class, 'verifyOtp'])->name('verify-otp');
