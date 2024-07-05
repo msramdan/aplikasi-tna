@@ -10,6 +10,11 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 class BackupController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('permission:backup database view')->only('index', 'downloadBackup');
+    }
+
     public function index()
     {
         return view('backup-database.index');

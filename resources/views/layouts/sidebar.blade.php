@@ -235,16 +235,18 @@
                                         data-key="t-basic-elements">{{ __('sidebar.annual_kap_schedule') }}</a>
                                 </li>
                             @endcan
-                            <li class="nav-item">
-                                <a href="{{ route('activity-log.index') }}"
-                                    class="nav-link {{ request()->routeIs('activity-log*') ? 'active' : '' }}"
-                                    data-key="t-basic-elements">{{ __('sidebar.activity_log') }}</a>
-                            </li>
                             @can('setting app view')
                                 <li class="nav-item">
                                     <a href="{{ route('setting-apps.index') }}"
                                         class="nav-link {{ request()->routeIs('setting-apps*') ? 'active' : '' }}"
                                         data-key="t-basic-elements">{{ __('sidebar.setting_app') }}</a>
+                                </li>
+                            @endcan
+                            @can('activity log view')
+                                <li class="nav-item">
+                                    <a href="{{ route('activity-log.index') }}"
+                                        class="nav-link {{ request()->routeIs('activity-log*') ? 'active' : '' }}"
+                                        data-key="t-basic-elements">{{ __('sidebar.activity_log') }}</a>
                                 </li>
                             @endcan
                             @can('backup database view')
