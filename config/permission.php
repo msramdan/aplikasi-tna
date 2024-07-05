@@ -192,8 +192,9 @@ return [
         ['group' => 'topik', 'access' => ['topik view', 'topik create', 'topik edit', 'topik delete']],
         ['group' => 'jadwal kap tahunan', 'access' => ['jadwal kap tahunan view', 'jadwal kap tahunan create', 'jadwal kap tahunan edit', 'jadwal kap tahunan delete']],
         ['group' => 'tagging pembelajaran kompetensi', 'access' => ['tagging pembelajaran kompetensi view', 'tagging pembelajaran kompetensi edit', 'tagging pembelajaran kompetensi delete']],
-        ['group' => 'activity log', 'access' => ['activity log view']],
         ['group' => 'tagging kompetensi ik', 'access' => ['tagging kompetensi ik view', 'tagging kompetensi ik create', 'tagging kompetensi ik edit', 'tagging kompetensi ik delete']],
         ['group' => 'pengajuan kap', 'access' => ['pengajuan kap view', 'pengajuan kap create', 'pengajuan kap edit', 'pengajuan kap delete']],
+        ['group' => 'activity log', 'access' => ['activity log view']],
+        ['group' => 'backup database', 'access' => ['backup database view']],
     ],
 ];

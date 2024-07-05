@@ -207,11 +207,11 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link collapsed {{ request()->routeIs('users*', 'roles*', 'jadwal-kap-tahunan*', 'activity-log*', 'setting-apps*') ? 'active' : '' }}"
                         href="#sidebarUtilities" data-bs-toggle="collapse" role="button"
-                        aria-expanded="{{ request()->routeIs('users*', 'roles*', 'jadwal-kap-tahunan*', 'activity-log*', 'setting-apps*','backup*') ? 'true' : 'false' }}"
+                        aria-expanded="{{ request()->routeIs('users*', 'roles*', 'jadwal-kap-tahunan*', 'activity-log*', 'setting-apps*', 'backup*') ? 'true' : 'false' }}"
                         aria-controls="sidebarUtilities">
                         <i class="fa fa-cogs"></i> <span data-key="t-forms">{{ __('sidebar.utilities') }}</span>
                     </a>
-                    <div class="collapse menu-dropdown {{ request()->routeIs('users*', 'roles*', 'jadwal-kap-tahunan*', 'activity-log*', 'setting-apps*','backup*') ? 'show' : '' }}"
+                    <div class="collapse menu-dropdown {{ request()->routeIs('users*', 'roles*', 'jadwal-kap-tahunan*', 'activity-log*', 'setting-apps*', 'backup*') ? 'show' : '' }}"
                         id="sidebarUtilities">
                         <ul class="nav nav-sm flex-column">
                             @can('user view')
@@ -247,13 +247,13 @@
                                         data-key="t-basic-elements">{{ __('sidebar.setting_app') }}</a>
                                 </li>
                             @endcan
-                            {{-- @can('backup database view') --}}
-                            <li class="nav-item">
-                                <a href="{{ route('backup.index') }}"
-                                    class="nav-link {{ request()->routeIs('backup*') ? 'active' : '' }}"
-                                    data-key="t-basic-elements">Backup Database</a>
-                            </li>
-                            {{-- @endcan --}}
+                            @can('backup database view')
+                                <li class="nav-item">
+                                    <a href="{{ route('backup.index') }}"
+                                        class="nav-link {{ request()->routeIs('backup*') ? 'active' : '' }}"
+                                        data-key="t-basic-elements">Backup Database</a>
+                                </li>
+                            @endcan
                         </ul>
                     </div>
                 </li>
