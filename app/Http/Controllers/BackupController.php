@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Illuminate\Support\Facades\Log;
+use Spatie\Activitylog\Models\Activity;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class BackupController extends Controller
 {
@@ -29,25 +32,41 @@ class BackupController extends Controller
         $filename = Carbon::now()->format('Y-m-d_H-i-s') . '.sql';
         $filePath = storage_path('app/backups/' . $filename);
 
-        // Pastikan direktori backup ada
+        // Ensure the backup directory exists
         if (!file_exists(storage_path('app/backups'))) {
             mkdir(storage_path('app/backups'), 0777, true);
         }
 
-        // Perintah untuk melakukan backup database
+        // Command to backup the database
         $command = "mysqldump --user={$username} --password={$password} --host={$host} {$database} > {$filePath}";
 
         $returnVar = null;
         $output = null;
 
-        // Jalankan perintah
+        // Execute the command
         exec($command, $output, $returnVar);
 
         if ($returnVar !== 0) {
             return response()->json(['error' => 'Failed to backup the database.'], 500);
         }
 
-        // Mengirim file sebagai response download
+        // Get the authenticated user
+        $user = auth()->user();
+
+        $attributes = [
+            'file_name' => $filename,
+            'tanggal' => date('Y-m-d H:i:s'),
+        ];
+
+        // Log activity
+        activity('log_backup_database')
+            ->performedOn($user) // Assuming you want to associate the activity with the user model
+            ->causedBy($user)
+            ->event('Backup database')
+            ->withProperties(['attributes' => $attributes])
+            ->log("User {$user->name} melakukan backup database");
+
+        // Send the file as a download response
         return response()->download($filePath)->deleteFileAfterSend(true);
     }
 }
