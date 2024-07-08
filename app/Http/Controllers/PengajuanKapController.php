@@ -37,6 +37,7 @@ class PengajuanKapController extends Controller
                 ->leftJoin('topik', 'pengajuan_kap.topik_id', '=', 'topik.id')
                 ->where('pengajuan_kap.institusi_sumber', '=', $is_bpkp)
                 ->where('pengajuan_kap.frekuensi_pelaksanaan', '=', $frekuensi)
+                ->orderBy('pengajuan_kap.id', 'desc')
                 ->get();
 
             return DataTables::of($pengajuanKaps)
@@ -243,7 +244,6 @@ class PengajuanKapController extends Controller
         }
     }
 
-
     public function update(Request $request, $id, $is_bpkp, $frekuensi)
     {
         $validatedData = $request->validate([
@@ -362,7 +362,6 @@ class PengajuanKapController extends Controller
         ]);
     }
 
-
     public function approve(Request $request, $id)
     {
         DB::beginTransaction();
@@ -434,7 +433,6 @@ class PengajuanKapController extends Controller
             return redirect()->back();
         }
     }
-
 
     public function reject(Request $request, $id)
     {
