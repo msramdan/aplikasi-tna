@@ -15,7 +15,6 @@ return new class extends Migration
             $table->enum('institusi_sumber', ['BPKP', 'Non BPKP']);
             $table->enum('jenis_program', ['Renstra', 'APP', 'APEP', 'APIP']);
             $table->enum('frekuensi_pelaksanaan', ['Tahunan', 'Insidentil']);
-
             $table->string('indikator_kinerja', 255);
             $table->foreignId('kompetensi_id')->nullable()->constrained('kompetensi')->cascadeOnUpdate()->nullOnDelete();
             $table->foreignId('topik_id')->nullable()->constrained('topik')->cascadeOnUpdate()->nullOnDelete();
@@ -57,6 +56,7 @@ return new class extends Migration
             $table->datetime('tanggal_created');
             $table->enum('status_pengajuan', ['Pending', 'Process', 'Approved', 'Rejected']);
             $table->foreignId('user_created')->nullable()->constrained('users')->cascadeOnUpdate()->nullOnDelete();
+            $table->tinyInteger('current_step');
             $table->timestamps();
         });
     }
