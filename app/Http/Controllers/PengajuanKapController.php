@@ -413,6 +413,7 @@ class PengajuanKapController extends Controller
                         ->where('id', $id)
                         ->update([
                             'current_step' => $currentStep + 1,
+                            'status_pengajuan' => 'Process',
                             'updated_at' => Carbon::now(),
                         ]);
                 }

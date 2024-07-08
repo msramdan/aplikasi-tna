@@ -380,12 +380,21 @@
                     'frekuensi' => $frekuensi,
                 ]) }}"
                     class="btn btn-secondary">{{ __('Back') }}</a>
-                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#approveModal">
+                @if ($pengajuanKap->status_pengajuan == 'Rejected' || $pengajuanKap->status_pengajuan == 'Approved')
+                <button type="button" disabled class="btn btn-success" >
                     Approved
                 </button>
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#rejectModal">
+                <button type="button" disabled class="btn btn-danger" >
                     Rejected
                 </button>
+                @else
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#approveModal">
+                        Approved
+                    </button>
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#rejectModal">
+                        Rejected
+                    </button>
+                @endif
             </div>
             <br>
             <br>
