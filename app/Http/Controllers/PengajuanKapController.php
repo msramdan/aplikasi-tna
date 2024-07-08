@@ -9,6 +9,8 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+
 
 class PengajuanKapController extends Controller
 {
@@ -363,27 +365,129 @@ class PengajuanKapController extends Controller
 
     public function approve(Request $request, $id)
     {
-        $pengajuanKap = PengajuanKap::findOrFail($id);
-        $pengajuanKap->status_pengajuan = 'Approved';
-        $pengajuanKap->approve_notes = $request->approveNotes;
-        $pengajuanKap->save();
+        DB::beginTransaction();
 
-        return redirect()->route('pengajuan-kap.index', [
-            'is_bpkp' => $pengajuanKap->institusi_sumber,
-            'frekuensi' => $pengajuanKap->frekuensi_pelaksanaan,
-        ])->with('success', 'Pengajuan Kap approved successfully.');
+        try {
+            // Retrieve the PengajuanKap record by its ID
+            $pengajuanKap = DB::table('pengajuan_kap')->find($id);
+
+            // Check for the current_step in PengajuanKap
+            $currentStep = $pengajuanKap->current_step;
+
+            // Query the log_review_pengajuan_kap table for the first matching record
+            $logReview = DB::table('log_review_pengajuan_kap')
+                ->where('pengajuan_kap_id', $id)
+                ->where('step', $currentStep)
+                ->first();
+
+            // If a matching log review is found, update its fields
+            if ($logReview) {
+                DB::table('log_review_pengajuan_kap')
+                    ->where('id', $logReview->id)
+                    ->update([
+                        'status' => 'Approved',
+                        'tanggal_review' => Carbon::now(),
+                        'catatan' => $request->approveNotes,
+                        'user_review_id' => Auth::id(),
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ]);
+
+                // After updating log review, get the maximum step from log_review_pengajuan_kap
+                $maxStep = DB::table('log_review_pengajuan_kap')
+                    ->where('pengajuan_kap_id', $id)
+                    ->max('step');
+
+                // Update logic based on the maximum step found
+                if ($maxStep === $currentStep) {
+                    // If the current step matches the max step, update pengajuan_kap status
+                    DB::table('pengajuan_kap')
+                        ->where('id', $id)
+                        ->update([
+                            'status_pengajuan' => 'Approved',
+                            'updated_at' => Carbon::now(),
+                        ]);
+                } else {
+                    // Otherwise, increment the current step in the pengajuan_kap table
+                    DB::table('pengajuan_kap')
+                        ->where('id', $id)
+                        ->update([
+                            'current_step' => $currentStep + 1,
+                            'updated_at' => Carbon::now(),
+                        ]);
+                }
+            }
+
+            DB::commit();
+            Alert::toast('Pengajuan Kap approved successfully.', 'success');
+            // Redirect with success message
+            return redirect()->route('pengajuan-kap.index', [
+                'is_bpkp' => $pengajuanKap->institusi_sumber,
+                'frekuensi' => $pengajuanKap->frekuensi_pelaksanaan,
+            ]);
+        } catch (\Exception $e) {
+            DB::rollback();
+            Alert::toast('Failed to approve Pengajuan Kap. Please try again', 'error');
+
+            // Handle the exception, optionally log it or notify the user
+            return redirect()->back();
+        }
     }
+
 
     public function reject(Request $request, $id)
     {
-        $pengajuanKap = PengajuanKap::findOrFail($id);
-        $pengajuanKap->status_pengajuan = 'Rejected';
-        $pengajuanKap->reject_notes = $request->rejectNotes;
-        $pengajuanKap->save();
+        DB::beginTransaction();
 
-        return redirect()->route('pengajuan-kap.index', [
-            'is_bpkp' => $pengajuanKap->institusi_sumber,
-            'frekuensi' => $pengajuanKap->frekuensi_pelaksanaan,
-        ])->with('success', 'Pengajuan Kap rejected successfully.');
+        try {
+            // Retrieve the PengajuanKap record by its ID
+            $pengajuanKap = DB::table('pengajuan_kap')->find($id);
+
+            // Check for the current_step in PengajuanKap
+            $currentStep = $pengajuanKap->current_step;
+
+            // Query the log_review_pengajuan_kap table for the first matching record
+            $logReview = DB::table('log_review_pengajuan_kap')
+                ->where('pengajuan_kap_id', $id)
+                ->where('step', $currentStep)
+                ->first();
+
+            // If a matching log review is found, update its fields
+            if ($logReview) {
+                DB::table('log_review_pengajuan_kap')
+                    ->where('id', $logReview->id)
+                    ->update([
+                        'status' => 'Rejected',
+                        'tanggal_review' => Carbon::now(),
+                        'catatan' => $request->rejectNotes,
+                        'user_review_id' => Auth::id(),
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ]);
+
+                // Update pengajuan_kap status to 'Rejected'
+                DB::table('pengajuan_kap')
+                    ->where('id', $id)
+                    ->update([
+                        'status_pengajuan' => 'Rejected',
+                        'updated_at' => Carbon::now(),
+                    ]);
+            }
+
+            DB::commit();
+            Alert::toast('Pengajuan Kap rejected successfully.', 'success');
+
+            // Redirect with success message
+            return redirect()->route('pengajuan-kap.index', [
+                'is_bpkp' => $pengajuanKap->institusi_sumber,
+                'frekuensi' => $pengajuanKap->frekuensi_pelaksanaan,
+            ]);
+        } catch (\Exception $e) {
+            DB::rollback();
+            Alert::toast('Failed to reject Pengajuan Kap. Please try again', 'error');
+
+            // Handle the exception, optionally log it or notify the user
+            return redirect()->back();;
+        }
     }
 }

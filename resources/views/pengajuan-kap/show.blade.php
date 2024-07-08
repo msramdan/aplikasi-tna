@@ -346,7 +346,7 @@
 
                                 @foreach ($logReviews as $index => $log)
                                     <div
-                                        class="step {{ $pengajuanKap->current_step == $index + 1 ? 'process' : '' }} {{ $log->status == 'Approved' ? 'active' : ($log->status == 'Rejected' ? 'rejected' : '') }}">
+                                        class="step {{ $pengajuanKap->current_step == $index + 1 && $log->status == 'Pending' ? 'process' : '' }} {{ $log->status == 'Approved' ? 'active' : ($log->status == 'Rejected' ? 'rejected' : '') }}">
                                         <div class="step-icon">{{ $index + 1 }}</div>
                                         <div class="step-label"><b>{{ $log->remark }}</b></div>
                                     </div>
@@ -407,7 +407,7 @@
                             @method('PUT')
                             <div class="mb-3">
                                 <label for="approveNotes" class="form-label">{{ __('Notes') }}</label>
-                                <textarea class="form-control" id="approveNotes" name="approveNotes" rows="3"></textarea>
+                                <textarea required class="form-control" id="approveNotes" name="approveNotes" rows="3"></textarea>
                             </div>
                             <button type="submit" class="btn btn-success">{{ __('Submit') }}</button>
                         </form>
@@ -430,7 +430,7 @@
                             @method('PUT')
                             <div class="mb-3">
                                 <label for="rejectNotes" class="form-label">{{ __('Notes') }}</label>
-                                <textarea class="form-control" id="rejectNotes" name="rejectNotes" rows="3"></textarea>
+                                <textarea required class="form-control" id="rejectNotes" name="rejectNotes" rows="3"></textarea>
                             </div>
                             <button type="submit" class="btn btn-danger">{{ __('Submit') }}</button>
                         </form>
