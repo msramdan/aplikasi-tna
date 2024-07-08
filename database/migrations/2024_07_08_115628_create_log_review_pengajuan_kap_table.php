@@ -15,8 +15,8 @@ return new class extends Migration
             $table->string('remark');
             $table->unsignedBigInteger('user_review_id')->nullable();
             $table->enum('status', ['Pending', 'Approved', 'Rejected', '']);
-            $table->date('tanggal_review');
-            $table->text('catatan');
+            $table->datetime('tanggal_review')->nullable();
+            $table->text('catatan')->nullable();
             $table->timestamps();
             $table->foreign('pengajuan_kap_id')->references('id')->on('pengajuan_kap')->onDelete('cascade');
             $table->foreign('user_review_id')->references('id')->on('users')->onDelete('set null');

@@ -151,7 +151,6 @@ class PengajuanKapController extends Controller
             'jalur_pembelajaran' => $jalur_pembelajaran,
         ]);
     }
-
     public function store(Request $request, $is_bpkp, $frekuensi)
     {
         $validatedData = $request->validate([
@@ -176,39 +175,72 @@ class PengajuanKapController extends Controller
             'fasilitator_pembelajaran' => 'required|in:Widyaiswara,Instruktur,Praktisi,Pakar,Tutor,Coach,Mentor,Narasumber lainnya',
             'sertifikat' => 'required|string|max:255',
         ]);
-        DB::table('pengajuan_kap')->insert([
-            'kode_pembelajaran' => 'Test',
-            'institusi_sumber' => $is_bpkp,
-            'jenis_program' => $validatedData['jenis_program'],
-            'frekuensi_pelaksanaan' => $frekuensi,
-            'indikator_kinerja' => $validatedData['indikator_kinerja'],
-            'kompetensi_id' => $validatedData['kompetensi_id'],
-            'topik_id' => $validatedData['topik_id'],
-            'concern_program_pembelajaran' => $validatedData['concern_program_pembelajaran'],
-            'alokasi_waktu' => $validatedData['alokasi_waktu'],
-            'indikator_dampak_terhadap_kinerja_organisasi' => $validatedData['indikator_dampak_terhadap_kinerja_organisasi'],
-            'penugasan_yang_terkait_dengan_pembelajaran' => $validatedData['penugasan_yang_terkait_dengan_pembelajaran'],
-            'skill_group_owner' => $validatedData['skill_group_owner'],
-            'bentuk_pembelajaran' => $validatedData['bentuk_pembelajaran'],
-            'jalur_pembelajaran' => $validatedData['jalur_pembelajaran'],
-            'model_pembelajaran' => $validatedData['model_pembelajaran'],
-            'jenis_pembelajaran' => $validatedData['jenis_pembelajaran'],
-            'metode_pembelajaran' => $validatedData['metode_pembelajaran'],
-            'sasaran_peserta' => $validatedData['sasaran_peserta'],
-            'kriteria_peserta' => $validatedData['kriteria_peserta'],
-            'aktivitas_prapembelajaran' => $validatedData['aktivitas_prapembelajaran'],
-            'penyelenggara_pembelajaran' => $validatedData['penyelenggara_pembelajaran'],
-            'fasilitator_pembelajaran' => $validatedData['fasilitator_pembelajaran'],
-            'sertifikat' => $validatedData['sertifikat'],
-            'tanggal_created' => date('Y-m-d H:i:s'),
-            'status_pengajuan' => 'Pending',
-            'user_created' => Auth::id(),
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
 
-        return redirect()->route('pengajuan-kap.index', ['is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi])->with('success', 'Pengajuan KAP berhasil disimpan.');
+        DB::beginTransaction();
+        try {
+            $pengajuanKapId = DB::table('pengajuan_kap')->insertGetId([
+                'kode_pembelajaran' => 'Test',
+                'institusi_sumber' => $is_bpkp,
+                'jenis_program' => $validatedData['jenis_program'],
+                'frekuensi_pelaksanaan' => $frekuensi,
+                'indikator_kinerja' => $validatedData['indikator_kinerja'],
+                'kompetensi_id' => $validatedData['kompetensi_id'],
+                'topik_id' => $validatedData['topik_id'],
+                'concern_program_pembelajaran' => $validatedData['concern_program_pembelajaran'],
+                'alokasi_waktu' => $validatedData['alokasi_waktu'],
+                'indikator_dampak_terhadap_kinerja_organisasi' => $validatedData['indikator_dampak_terhadap_kinerja_organisasi'],
+                'penugasan_yang_terkait_dengan_pembelajaran' => $validatedData['penugasan_yang_terkait_dengan_pembelajaran'],
+                'skill_group_owner' => $validatedData['skill_group_owner'],
+                'bentuk_pembelajaran' => $validatedData['bentuk_pembelajaran'],
+                'jalur_pembelajaran' => $validatedData['jalur_pembelajaran'],
+                'model_pembelajaran' => $validatedData['model_pembelajaran'],
+                'jenis_pembelajaran' => $validatedData['jenis_pembelajaran'],
+                'metode_pembelajaran' => $validatedData['metode_pembelajaran'],
+                'sasaran_peserta' => $validatedData['sasaran_peserta'],
+                'kriteria_peserta' => $validatedData['kriteria_peserta'],
+                'aktivitas_prapembelajaran' => $validatedData['aktivitas_prapembelajaran'],
+                'penyelenggara_pembelajaran' => $validatedData['penyelenggara_pembelajaran'],
+                'fasilitator_pembelajaran' => $validatedData['fasilitator_pembelajaran'],
+                'sertifikat' => $validatedData['sertifikat'],
+                'tanggal_created' => date('Y-m-d H:i:s'),
+                'status_pengajuan' => 'Pending',
+                'user_created' => Auth::id(),
+                'current_step' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+            $remarks = [
+                'Team pusdiklat',
+                'Biro keuangan',
+                'Inspektorat',
+                'Subkor',
+                'Koordinator',
+                'Kepala pusat'
+            ];
+
+            foreach ($remarks as $index => $remark) {
+                DB::table('log_review_pengajuan_kap')->insert([
+                    'pengajuan_kap_id' => $pengajuanKapId,
+                    'step' => $index + 1,
+                    'remark' => $remark,
+                    'user_review_id' => null,
+                    'status' => 'Pending',
+                    'tanggal_review' => null,
+                    'catatan' => '',
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
+
+            DB::commit();
+            return redirect()->route('pengajuan-kap.index', ['is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi])->with('success', 'Pengajuan KAP berhasil disimpan.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('pengajuan-kap.index', ['is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi])->with('error', 'Pengajuan KAP gagal disimpan.');
+        }
     }
+
 
     public function update(Request $request, $id, $is_bpkp, $frekuensi)
     {
@@ -309,12 +341,25 @@ class PengajuanKapController extends Controller
             ->where('pengajuan_kap.institusi_sumber', '=', $is_bpkp)
             ->where('pengajuan_kap.frekuensi_pelaksanaan', '=', $frekuensi)
             ->first();
+
+        $logReviews = DB::table('log_review_pengajuan_kap')
+            ->select(
+                'log_review_pengajuan_kap.*',
+                'users.name as user_name'
+            )
+            ->leftJoin('users', 'log_review_pengajuan_kap.user_review_id', '=', 'users.id')
+            ->where('log_review_pengajuan_kap.pengajuan_kap_id', '=', $id)
+            ->orderBy('log_review_pengajuan_kap.step')
+            ->get();
+
         return view('pengajuan-kap.show', [
             'pengajuanKap' => $pengajuanKap,
+            'logReviews' => $logReviews,
             'is_bpkp' => $is_bpkp,
             'frekuensi' => $frekuensi,
         ]);
     }
+
 
     public function approve(Request $request, $id)
     {

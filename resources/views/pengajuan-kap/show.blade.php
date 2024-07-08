@@ -300,6 +300,10 @@
                                         <td>{{ $pengajuanKap->tanggal_created }}</td>
                                     </tr>
                                     <tr>
+                                        <td class="fw-bold">{{ __('Current step') }}</td>
+                                        <td>Step {{ $pengajuanKap->current_step }}</td>
+                                    </tr>
+                                    <tr>
                                         <td class="fw-bold">{{ __('Status pengajuan') }}</td>
                                         <td>
                                             @if ($pengajuanKap->status_pengajuan == 'Pending')
@@ -339,110 +343,31 @@
                     <div class="card">
                         <div class="wizard-container">
                             <div class="wizard-steps">
-                                <div class="step active">
-                                    <div class="step-icon">1</div>
-                                    <div class="step-label"><b>Team pusdiklat</b> </div>
-                                </div>
-                                <div class="step active">
-                                    <div class="step-icon">2</div>
-                                    <div class="step-label"><b>Biro keuangan</b></div>
-                                </div>
-                                <div class="step rejected">
-                                    <div class="step-icon">3</div>
-                                    <div class="step-label"><b>Inspektorat</b></div>
-                                </div>
-                                <div class="step ">
-                                    <div class="step-icon">4</div>
-                                    <div class="step-label"><b>Subkor</b></div>
-                                </div>
-                                <div class="step">
-                                    <div class="step-icon">5</div>
-                                    <div class="step-label"><b>Koordinator</b></div>
-                                </div>
-                                <div class="step">
-                                    <div class="step-icon">6</div>
-                                    <div class="step-label"><b>Kepala pusat</b></div>
-                                </div>
+
+                                @foreach ($logReviews as $index => $log)
+                                    <div
+                                        class="step {{ $pengajuanKap->current_step == $index + 1 ? 'process' : '' }} {{ $log->status == 'Approved' ? 'active' : ($log->status == 'Rejected' ? 'rejected' : '') }}">
+                                        <div class="step-icon">{{ $index + 1 }}</div>
+                                        <div class="step-label"><b>{{ $log->remark }}</b></div>
+                                    </div>
+                                @endforeach
                             </div>
                             <div class="wizard-content">
-                                <div class="content active">
-                                    <br>
-                                    <h2>Team pusdiklat</h2>
-                                    <div class="form-group">
-                                        <label for="notes-team-pusdiklat">Catatan:</label>
-                                        <textarea id="notes-team-pusdiklat" class="form-control" rows="4" readonly></textarea>
+                                @foreach ($logReviews as $index => $log)
+                                    <div class="content {{ $index == 0 ? 'active' : '' }}">
+                                        <br>
+                                        <h2>{{ $log->remark }}</h2>
+                                        <div class="form-group">
+                                            <label for="notes-{{ $log->step }}">Catatan:</label>
+                                            <textarea id="notes-{{ $log->step }}" class="form-control" rows="4" readonly>{{ $log->catatan }}</textarea>
+                                        </div>
+                                        <div class="notes" style="margin-top: 10px">
+                                            <p><strong>User:</strong> {{ $log->user_name ?? '-' }}</p>
+                                            <p><strong>Status:</strong> {{ $log->status }}</p>
+                                            <p><strong>Tanggal:</strong> {{ $log->tanggal_review ?? '-' }}</p>
+                                        </div>
                                     </div>
-                                    <div class="notes" style="margin-top: 10px">
-                                        <p><strong>User:</strong> Muhammad Saeful Ramdan</p>
-                                        <p><strong>Status:</strong> Approved</p>
-                                        <p><strong>Tanggal:</strong> July 4, 2024</p>
-                                    </div>
-                                </div>
-                                <div class="content">
-                                    <br>
-                                    <h2>Biro keuangan</h2>
-                                    <div class="form-group">
-                                        <label for="notes-biro-keuangan">Catatan:</label>
-                                        <textarea id="notes-biro-keuangan" class="form-control" rows="4" readonly></textarea>
-                                    </div>
-                                    <div class="notes" style="margin-top: 10px">
-                                        <p><strong>User:</strong> -</p>
-                                        <p><strong>Status:</strong> Pending</p>
-                                        <p><strong>Tanggal:</strong> -</p>
-                                    </div>
-                                </div>
-                                <div class="content">
-                                    <br>
-                                    <h2>Inspektorat</h2>
-                                    <div class="form-group">
-                                        <label for="notes-inspektorat">Catatan:</label>
-                                        <textarea id="notes-inspektorat" class="form-control" rows="4" readonly></textarea>
-                                    </div>
-                                    <div class="notes" style="margin-top: 10px">
-                                        <p><strong>User:</strong> -</p>
-                                        <p><strong>Status:</strong> Pending</p>
-                                        <p><strong>Tanggal:</strong> -</p>
-                                    </div>
-                                </div>
-                                <div class="content">
-                                    <br>
-                                    <h2>Subkor</h2>
-                                    <div class="form-group">
-                                        <label for="notes-subkor">Catatan:</label>
-                                        <textarea id="notes-subkor" class="form-control" rows="4" readonly></textarea>
-                                    </div>
-                                    <div class="notes" style="margin-top: 10px">
-                                        <p><strong>User:</strong> -</p>
-                                        <p><strong>Status:</strong> -</p>
-                                        <p><strong>Tanggal:</strong> -</p>
-                                    </div>
-                                </div>
-                                <div class="content">
-                                    <br>
-                                    <h2>Koordinator</h2>
-                                    <div class="form-group">
-                                        <label for="notes-koordinator">Catatan:</label>
-                                        <textarea id="notes-koordinator" class="form-control" rows="4" readonly></textarea>
-                                    </div>
-                                    <div class="notes" style="margin-top: 10px">
-                                        <p><strong>User:</strong> -</p>
-                                        <p><strong>Status:</strong> -</p>
-                                        <p><strong>Tanggal:</strong> -</p>
-                                    </div>
-                                </div>
-                                <div class="content">
-                                    <br>
-                                    <h2>Kepala pusat</h2>
-                                    <div class="form-group">
-                                        <label for="notes-kepala-pusat">Catatan:</label>
-                                        <textarea id="notes-kepala-pusat" class="form-control" rows="4" readonly></textarea>
-                                    </div>
-                                    <div class="notes" style="margin-top: 10px">
-                                        <p><strong>User:</strong> -</p>
-                                        <p><strong>Status:</strong> -</p>
-                                        <p><strong>Tanggal:</strong> -</p>
-                                    </div>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -455,12 +380,10 @@
                     'frekuensi' => $frekuensi,
                 ]) }}"
                     class="btn btn-secondary">{{ __('Back') }}</a>
-                <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                    data-bs-target="#approveModal">
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#approveModal">
                     Approved
                 </button>
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                    data-bs-target="#rejectModal">
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#rejectModal">
                     Rejected
                 </button>
             </div>
@@ -471,8 +394,7 @@
         </div>
 
         <!-- Approve Modal -->
-        <div class="modal fade" id="approveModal" tabindex="-1" aria-labelledby="approveModalLabel"
-            aria-hidden="true">
+        <div class="modal fade" id="approveModal" tabindex="-1" aria-labelledby="approveModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
