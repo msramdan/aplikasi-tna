@@ -1,3 +1,15 @@
+
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+
 <div class="row mb-2">
     <div class="col-md-3 mb-2">
         <label for="jenis-program">{{ __('Jenis Program') }}</label>
@@ -309,41 +321,23 @@
     </div>
 
     <div class="col-md-3 mb-2">
-        <label for="fasilitator-pembelajaran">{{ __('Fasilitator Pembelajaran') }}</label>
-        <select class="form-control js-example-basic-multiple @error('fasilitator_pembelajaran') is-invalid @enderror"
-            name="fasilitator_pembelajaran" id="fasilitator-pembelajaran" required>
-            <option value="" selected disabled>-- {{ __('Select fasilitator pembelajaran') }} --</option>
-            <option value="Widyaiswara"
-                {{ isset($pengajuanKap) && $pengajuanKap->fasilitator_pembelajaran == 'Widyaiswara' ? 'selected' : (old('fasilitator_pembelajaran') == 'Widyaiswara' ? 'selected' : '') }}>
-                Widyaiswara</option>
-            <option value="Instruktur"
-                {{ isset($pengajuanKap) && $pengajuanKap->fasilitator_pembelajaran == 'Instruktur' ? 'selected' : (old('fasilitator_pembelajaran') == 'Instruktur' ? 'selected' : '') }}>
-                Instruktur</option>
-            <option value="Praktisi"
-                {{ isset($pengajuanKap) && $pengajuanKap->fasilitator_pembelajaran == 'Praktisi' ? 'selected' : (old('fasilitator_pembelajaran') == 'Praktisi' ? 'selected' : '') }}>
-                Praktisi</option>
-            <option value="Pakar"
-                {{ isset($pengajuanKap) && $pengajuanKap->fasilitator_pembelajaran == 'Pakar' ? 'selected' : (old('fasilitator_pembelajaran') == 'Pakar' ? 'selected' : '') }}>
-                Pakar</option>
-            <option value="Tutor"
-                {{ isset($pengajuanKap) && $pengajuanKap->fasilitator_pembelajaran == 'Tutor' ? 'selected' : (old('fasilitator_pembelajaran') == 'Tutor' ? 'selected' : '') }}>
-                Tutor</option>
-            <option value="Coach"
-                {{ isset($pengajuanKap) && $pengajuanKap->fasilitator_pembelajaran == 'Coach' ? 'selected' : (old('fasilitator_pembelajaran') == 'Coach' ? 'selected' : '') }}>
-                Coach</option>
-            <option value="Mentor"
-                {{ isset($pengajuanKap) && $pengajuanKap->fasilitator_pembelajaran == 'Mentor' ? 'selected' : (old('fasilitator_pembelajaran') == 'Mentor' ? 'selected' : '') }}>
-                Mentor</option>
-            <option value="Narasumber lainnya"
-                {{ isset($pengajuanKap) && $pengajuanKap->fasilitator_pembelajaran == 'Narasumber lainnya' ? 'selected' : (old('fasilitator_pembelajaran') == 'Narasumber lainnya' ? 'selected' : '') }}>
-                Narasumber lainnya</option>
-        </select>
+        <label>{{ __('Fasilitator Pembelajaran') }}</label>
+        <div>
+            @foreach(['Widyaiswara', 'Instruktur', 'Praktisi', 'Pakar', 'Tutor', 'Coach', 'Mentor', 'Narasumber lainnya'] as $fasilitator)
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="fasilitator_pembelajaran[]" id="fasilitator_{{ $fasilitator }}"
+                           value="{{ $fasilitator }}"
+                           {{ isset($pengajuanKap) ? (in_array($fasilitator, json_decode($pengajuanKap->fasilitator_pembelajaran)) ? 'checked' : '') : (in_array($fasilitator, old('fasilitator_pembelajaran', [])) ? 'checked' : '') }}>
+                    <label class="form-check-label" for="fasilitator_{{ $fasilitator }}">
+                        {{ $fasilitator }}
+                    </label>
+                </div>
+            @endforeach
+        </div>
         @error('fasilitator_pembelajaran')
             <span class="text-danger">
                 {{ $message }}
             </span>
         @enderror
     </div>
-
-
 </div>

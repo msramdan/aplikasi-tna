@@ -154,6 +154,7 @@ class PengajuanKapController extends Controller
             'jalur_pembelajaran' => $jalur_pembelajaran,
         ]);
     }
+
     public function store(Request $request, $is_bpkp, $frekuensi)
     {
         $validatedData = $request->validate([
@@ -175,12 +176,16 @@ class PengajuanKapController extends Controller
             'kriteria_peserta' => 'required|string|max:255',
             'aktivitas_prapembelajaran' => 'required|string|max:255',
             'penyelenggara_pembelajaran' => 'required|in:Pusdiklatwas BPKP,Unit kerja,Lainnya',
-            'fasilitator_pembelajaran' => 'required|in:Widyaiswara,Instruktur,Praktisi,Pakar,Tutor,Coach,Mentor,Narasumber lainnya',
+            'fasilitator_pembelajaran' => 'required|array',
+            'fasilitator_pembelajaran.*' => 'required|string|in:Widyaiswara,Instruktur,Praktisi,Pakar,Tutor,Coach,Mentor,Narasumber lainnya',
             'sertifikat' => 'required|string|max:255',
         ]);
 
+
         DB::beginTransaction();
         try {
+            $fasilitator_pembelajaran = $request->input('fasilitator_pembelajaran');
+            $fasilitator_pembelajaran_json = json_encode($fasilitator_pembelajaran);
             $pengajuanKapId = DB::table('pengajuan_kap')->insertGetId([
                 'kode_pembelajaran' => 'Test',
                 'institusi_sumber' => $is_bpkp,
@@ -203,7 +208,7 @@ class PengajuanKapController extends Controller
                 'kriteria_peserta' => $validatedData['kriteria_peserta'],
                 'aktivitas_prapembelajaran' => $validatedData['aktivitas_prapembelajaran'],
                 'penyelenggara_pembelajaran' => $validatedData['penyelenggara_pembelajaran'],
-                'fasilitator_pembelajaran' => $validatedData['fasilitator_pembelajaran'],
+                'fasilitator_pembelajaran' => $fasilitator_pembelajaran_json,
                 'sertifikat' => $validatedData['sertifikat'],
                 'tanggal_created' => date('Y-m-d H:i:s'),
                 'status_pengajuan' => 'Pending',
@@ -237,20 +242,20 @@ class PengajuanKapController extends Controller
             }
 
             DB::commit();
-            return redirect()->route('pengajuan-kap.index', ['is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi])->with('success', 'Pengajuan KAP berhasil disimpan.');
+            Alert::toast('Pengajuan KAP berhasil disimpan.', 'success');
+
+            return redirect()->route('pengajuan-kap.index', ['is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi]);
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->route('pengajuan-kap.index', ['is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi])->with('error', 'Pengajuan KAP gagal disimpan.');
+            Alert::toast('Pengajuan KAP gagal disimpan.', 'error');
+            return redirect()->route('pengajuan-kap.index', ['is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi]);
         }
     }
 
     public function update(Request $request, $id, $is_bpkp, $frekuensi)
     {
         $validatedData = $request->validate([
-            'kode_pembelajaran' => 'required|string|max:50',
-            'institusi_sumber' => 'required|in:BPKP,Non BPKP',
             'jenis_program' => 'required|in:Renstra,APP,APEP,APIP',
-            'frekuensi_pelaksanaan' => 'required|in:Tahunan,Insidentil',
             'indikator_kinerja' => 'required|string|max:255',
             'kompetensi_id' => 'nullable|exists:kompetensi,id',
             'topik_id' => 'nullable|exists:topik,id',
@@ -260,7 +265,7 @@ class PengajuanKapController extends Controller
             'penugasan_yang_terkait_dengan_pembelajaran' => 'required|string|max:255',
             'skill_group_owner' => 'required|string|max:255',
             'bentuk_pembelajaran' => 'required|in:Klasikal,Nonklasikal',
-            'jalur_pembelajaran' => 'required|in:Pelatihan,Seminar/konferensi/sarasehan,Kursus,Lokakarya (workshop),Belajar mandiri,Coaching,Mentoring,Bimbingan teknis,Sosialisasi,Detasering (secondment),Job shadowing,Outbond,Benchmarking,Pertukaran PNS,Community of practices,Pelatihan di kantor sendiri,Library café,Magang/praktik kerja',
+            'jalur_pembelajaran' => 'required|in:Pelatihan,Seminar/konferensi/sarasehan,Kursus,Lokakarya (workshop),Belajar mandiri,Coaching,Mentoring,Bimbingan teknis,Sosialisasi,Detasering (secondment),Job shadowing,Outbond,Benchmarking,Pertukaran PNS,Community of practices,Pelatihan di kantor sendiri,Library cafe,Magang/praktik kerja',
             'model_pembelajaran' => 'required|in:Pembelajaran terstruktur,Pembelajaran kolaboratif,Pembelajaran di tempat kerja,Pembelajaran terintegrasi',
             'jenis_pembelajaran' => 'required|in:Kedinasan,Fungsional auditor,Teknis substansi,Sertifikasi non JFA',
             'metode_pembelajaran' => 'required|in:Synchronous learning,Asynchronous learning,Blended learning',
@@ -268,20 +273,17 @@ class PengajuanKapController extends Controller
             'kriteria_peserta' => 'required|string|max:255',
             'aktivitas_prapembelajaran' => 'required|string|max:255',
             'penyelenggara_pembelajaran' => 'required|in:Pusdiklatwas BPKP,Unit kerja,Lainnya',
-            'fasilitator_pembelajaran' => 'required|in:Widyaiswara,Instruktur,Praktisi,Pakar,Tutor,Coach,Mentor,Narasumber lainnya',
+            'fasilitator_pembelajaran' => 'required|array',
+            'fasilitator_pembelajaran.*' => 'required|string|in:Widyaiswara,Instruktur,Praktisi,Pakar,Tutor,Coach,Mentor,Narasumber lainnya',
             'sertifikat' => 'required|string|max:255',
-            'tanggal_created' => 'required|date',
-            'status_pengajuan' => 'required|in:Pending,Approved,Rejected',
             'user_created' => 'nullable|exists:users,id',
         ]);
+        $fasilitator_pembelajaran = json_encode($validatedData['fasilitator_pembelajaran']);
 
         DB::table('pengajuan_kap')
             ->where('id', $id)
             ->update([
-                'kode_pembelajaran' => $validatedData['kode_pembelajaran'],
-                'institusi_sumber' => $validatedData['institusi_sumber'],
                 'jenis_program' => $validatedData['jenis_program'],
-                'frekuensi_pelaksanaan' => $validatedData['frekuensi_pelaksanaan'],
                 'indikator_kinerja' => $validatedData['indikator_kinerja'],
                 'kompetensi_id' => $validatedData['kompetensi_id'],
                 'topik_id' => $validatedData['topik_id'],
@@ -299,15 +301,12 @@ class PengajuanKapController extends Controller
                 'kriteria_peserta' => $validatedData['kriteria_peserta'],
                 'aktivitas_prapembelajaran' => $validatedData['aktivitas_prapembelajaran'],
                 'penyelenggara_pembelajaran' => $validatedData['penyelenggara_pembelajaran'],
-                'fasilitator_pembelajaran' => $validatedData['fasilitator_pembelajaran'],
+                'fasilitator_pembelajaran' => $fasilitator_pembelajaran,
                 'sertifikat' => $validatedData['sertifikat'],
-                'tanggal_created' => $validatedData['tanggal_created'],
-                'status_pengajuan' => $validatedData['status_pengajuan'],
-                'user_created' => $validatedData['user_created'],
                 'updated_at' => now(),
             ]);
-
-        return redirect()->route('pengajuan-kap.index', ['is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi])->with('success', 'Pengajuan KAP berhasil diperbarui.');
+        Alert::toast('Pengajuan KAP berhasil diperbarui.', 'success');
+        return redirect()->route('pengajuan-kap.index', ['is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi]);
     }
 
     public function destroy($id, $is_bpkp, $frekuensi)

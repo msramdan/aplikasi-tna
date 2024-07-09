@@ -51,7 +51,7 @@ return new class extends Migration
             $table->string('kriteria_peserta', 255);
             $table->string('aktivitas_prapembelajaran', 255);
             $table->enum('penyelenggara_pembelajaran', ['Pusdiklatwas BPKP', 'Unit kerja', 'Lainnya']);
-            $table->enum('fasilitator_pembelajaran', ['Widyaiswara', 'Instruktur', 'Praktisi', 'Pakar', 'Tutor', 'Coach', 'Mentor', 'Narasumber lainnya']);
+            $table->json('fasilitator_pembelajaran')->nullable();
             $table->string('sertifikat', 255);
             $table->datetime('tanggal_created');
             $table->enum('status_pengajuan', ['Pending', 'Process', 'Approved', 'Rejected']);
