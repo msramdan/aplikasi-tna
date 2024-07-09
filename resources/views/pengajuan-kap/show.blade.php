@@ -197,7 +197,7 @@
         </div>
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-7">
+                <div class="col-md-8">
                     <div class="card">
                         <div class="card-body">
 
@@ -243,6 +243,14 @@
                                         <td>{{ $pengajuanKap->alokasi_waktu }} Hari</td>
                                     </tr>
                                     <tr>
+                                        <td class="fw-bold">{{ __('Bentuk Pembelajaran') }}</td>
+                                        <td>{{ $pengajuanKap->bentuk_pembelajaran }} Hari</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold">{{ __('Jalur Pembelajaran') }}</td>
+                                        <td>{{ $pengajuanKap->jalur_pembelajaran }} Hari</td>
+                                    </tr>
+                                    <tr>
                                         <td class="fw-bold">{{ __('Indikator Dampak Terhadap Kinerja Organisasi') }}</td>
                                         <td>{{ $pengajuanKap->indikator_dampak_terhadap_kinerja_organisasi }}</td>
                                     </tr>
@@ -286,9 +294,17 @@
                                         <td class="fw-bold">{{ __('Penyelenggara Pembelajaran') }}</td>
                                         <td>{{ $pengajuanKap->penyelenggara_pembelajaran }}</td>
                                     </tr>
+                                    @php
+                                        $fasilitators = json_decode($pengajuanKap->fasilitator_pembelajaran);
+                                    @endphp
+
                                     <tr>
                                         <td class="fw-bold">{{ __('Fasilitator Pembelajaran') }}</td>
-                                        <td>{{ $pengajuanKap->fasilitator_pembelajaran }}</td>
+                                        <td>
+                                            @foreach ($fasilitators as $item)
+                                                <span class="badge bg-primary">{{ $item }}</span>
+                                            @endforeach
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="fw-bold">{{ __('Sertifikat') }}</td>
@@ -339,7 +355,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-5">
+                <div class="col-md-4">
                     <div class="card">
                         <div class="wizard-container">
                             <div class="wizard-steps">
@@ -381,12 +397,12 @@
                 ]) }}"
                     class="btn btn-secondary">{{ __('Back') }}</a>
                 @if ($pengajuanKap->status_pengajuan == 'Rejected' || $pengajuanKap->status_pengajuan == 'Approved')
-                <button type="button" disabled class="btn btn-success" >
-                    Approved
-                </button>
-                <button type="button" disabled class="btn btn-danger" >
-                    Rejected
-                </button>
+                    <button type="button" disabled class="btn btn-success">
+                        Approved
+                    </button>
+                    <button type="button" disabled class="btn btn-danger">
+                        Rejected
+                    </button>
                 @else
                     <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#approveModal">
                         Approved

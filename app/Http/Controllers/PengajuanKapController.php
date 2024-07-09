@@ -157,8 +157,6 @@ class PengajuanKapController extends Controller
 
     public function store(Request $request, $is_bpkp, $frekuensi)
     {
-        dd($request);
-
         $validatedData = $request->validate([
             'jenis_program' => 'required|in:Renstra,APP,APEP,APIP',
             'indikator_kinerja' => 'required|string|max:255',
@@ -203,6 +201,7 @@ class PengajuanKapController extends Controller
                 'penugasan_yang_terkait_dengan_pembelajaran' => $validatedData['penugasan_yang_terkait_dengan_pembelajaran'],
                 'skill_group_owner' => $validatedData['skill_group_owner'],
                 'bentuk_pembelajaran' => $validatedData['bentuk_pembelajaran'],
+                'tujuan_program_pembelajaran' => $validatedData['tujuan_program_pembelajaran'],
                 'jalur_pembelajaran' => $validatedData['jalur_pembelajaran'],
                 'model_pembelajaran' => $validatedData['model_pembelajaran'],
                 'jenis_pembelajaran' => $validatedData['jenis_pembelajaran'],
@@ -249,6 +248,7 @@ class PengajuanKapController extends Controller
             return redirect()->route('pengajuan-kap.index', ['is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi]);
         } catch (\Exception $e) {
             DB::rollBack();
+            // \Log::error('Error: ' . $e->getMessage());
             Alert::toast('Pengajuan KAP gagal disimpan.', 'error');
             return redirect()->route('pengajuan-kap.index', ['is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi]);
         }
@@ -296,6 +296,7 @@ class PengajuanKapController extends Controller
                 'penugasan_yang_terkait_dengan_pembelajaran' => $validatedData['penugasan_yang_terkait_dengan_pembelajaran'],
                 'skill_group_owner' => $validatedData['skill_group_owner'],
                 'bentuk_pembelajaran' => $validatedData['bentuk_pembelajaran'],
+                'tujuan_program_pembelajaran' => $validatedData['tujuan_program_pembelajaran'],
                 'jalur_pembelajaran' => $validatedData['jalur_pembelajaran'],
                 'model_pembelajaran' => $validatedData['model_pembelajaran'],
                 'jenis_pembelajaran' => $validatedData['jenis_pembelajaran'],
@@ -307,6 +308,7 @@ class PengajuanKapController extends Controller
                 'fasilitator_pembelajaran' => $fasilitator_pembelajaran,
                 'sertifikat' => $validatedData['sertifikat'],
                 'updated_at' => now(),
+
             ]);
         Alert::toast('Pengajuan KAP berhasil diperbarui.', 'success');
         return redirect()->route('pengajuan-kap.index', ['is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi]);
