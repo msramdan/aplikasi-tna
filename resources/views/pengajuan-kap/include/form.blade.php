@@ -25,8 +25,8 @@
             <form id="form-1" style="margin-top: 20px">
                 <div class="row" style="padding: 20px">
                     <div class="form-group row mb-3">
-                        <label for="jenis_program" class="col-sm-4 col-form-label">{{ __('Jenis Program') }}</label>
-                        <div class="col-sm-8">
+                        <label for="jenis_program" class="col-sm-3 col-form-label">{{ __('Jenis Program') }}</label>
+                        <div class="col-sm-6">
                             <select
                                 class="form-control js-example-basic-multiple @error('jenis_program') is-invalid @enderror"
                                 name="jenis_program" id="jenis_program" required>
@@ -46,9 +46,9 @@
 
                     <div class="form-group row mb-3">
                         <label for="indikator-kinerja"
-                            class="col-sm-4 col-form-label">{{ __('Indikator Kinerja') }}</label>
+                            class="col-sm-3 col-form-label">{{ __('Indikator Kinerja') }}</label>
 
-                        <div class="col-sm-8">
+                        <div class="col-sm-6">
                             <input type="text" name="indikator_kinerja" id="indikator-kinerja"
                                 class="form-control @error('indikator_kinerja') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->indikator_kinerja : old('indikator_kinerja') }}"
@@ -60,8 +60,8 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label for="kompetensi_id" class="col-sm-4 col-form-label">{{ __('Kompetensi') }}</label>
-                        <div class="col-sm-8">
+                        <label for="kompetensi_id" class="col-sm-3 col-form-label">{{ __('Kompetensi') }}</label>
+                        <div class="col-sm-6">
                             <select
                                 class="form-control js-example-basic-multiple @error('kompetensi_id') is-invalid @enderror"
                                 name="kompetensi_id" id="kompetensi_id" required>
@@ -80,8 +80,8 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label for="topik_id" class="col-sm-4 col-form-label">{{ __('Topik Pembelajaran') }}</label>
-                        <div class="col-sm-8">
+                        <label for="topik_id" class="col-sm-3 col-form-label">{{ __('Topik Pembelajaran') }}</label>
+                        <div class="col-sm-6">
                             <select
                                 class="form-control js-example-basic-multiple @error('topik_id') is-invalid @enderror"
                                 name="topik_id" id="topik_id" required>
@@ -100,24 +100,45 @@
                         </div>
                     </div>
 
-                    <div class="form-group row mb-3">
-                        <label for="concern-program-pembelajaran"
-                            class="col-sm-4 col-form-label">{{ __('Concern Program Pembelajaran') }}</label>
-                        <div class="col-sm-8">
-                            <input type="text" name="concern_program_pembelajaran" id="concern-program-pembelajaran"
-                                class="form-control @error('concern_program_pembelajaran') is-invalid @enderror"
-                                value="{{ isset($pengajuanKap) ? $pengajuanKap->concern_program_pembelajaran : old('concern_program_pembelajaran') }}"
-                                placeholder="{{ __('Concern Program Pembelajaran') }}" required />
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">{{ __('Concern Program Pembelajaran') }}</label>
+                        <div class="col-sm-6"></div>
+                    </div>
+
+                    <div class="form-group row mb-1">
+                        <label for="arahan_pimpinan" style="padding-left: 40px"
+                            class="col-sm-3 col-form-label">{{ __('A. Arahan pimpinan/isu terkini/dll') }}</label>
+                        <div class="col-sm-6">
+                            <input type="text" name="arahan_pimpinan"
+                                id="arahan_pimpinan"
+                                class="form-control @error('arahan_pimpinan') is-invalid @enderror"
+                                value="{{ isset($pengajuanKap) ? $pengajuanKap->arahan_pimpinan : old('arahan_pimpinan') }}"
+                                placeholder="{{ __('Arahan pimpinan/isu terkini/dll') }}" required />
                             <div class="invalid-feedback">
-                                Mohon untuk diisi Concern Program Pembelajaran
+                                Mohon untuk diisi Arahan pimpinan/isu terkini/dll
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label class="col-sm-4 col-form-label"
+                        <label for="prioritis_pembelajaran" style="padding-left: 40px"
+                            class="col-sm-3 col-form-label">{{ __('B. Prioritis Pembelajaran') }}</label>
+                        <div class="col-sm-6">
+                            <input type="text" name="prioritis_pembelajaran"
+                                id="prioritis_pembelajaran"
+                                class="form-control @error('prioritis_pembelajaran') is-invalid @enderror"
+                                value="{{ isset($pengajuanKap) ? $pengajuanKap->prioritis_pembelajaran : old('prioritis_pembelajaran') }}"
+                                placeholder="{{ __('Prioritis Pembelajaran') }}" required />
+                            <div class="invalid-feedback">
+                                Mohon untuk diisi Prioritis Pembelajaran
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-3">
+                        <label class="col-sm-3 col-form-label"
                             for="tujuan_program_pembelajaran">{{ __('Tujuan Program Pembelajaran') }}</label>
-                        <div class="col-sm-8">
+                        <div class="col-sm-6">
                             <input type="text" name="tujuan_program_pembelajaran" id="tujuan_program_pembelajaran"
                                 class="form-control @error('tujuan_program_pembelajaran') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->tujuan_program_pembelajaran : old('tujuan_program_pembelajaran') }}"
@@ -129,9 +150,9 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label class="col-sm-4 col-form-label"
+                        <label class="col-sm-3 col-form-label"
                             for="indikator-dampak-terhadap-kinerja-organisasi">{{ __('Indikator Dampak Terhadap Kinerja Organisasi') }}</label>
-                        <div class="col-sm-8">
+                        <div class="col-sm-6">
                             <input type="text" name="indikator_dampak_terhadap_kinerja_organisasi"
                                 id="indikator-dampak-terhadap-kinerja-organisasi"
                                 class="form-control @error('indikator_dampak_terhadap_kinerja_organisasi') is-invalid @enderror"
@@ -144,9 +165,9 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label class="col-sm-4 col-form-label"
+                        <label class="col-sm-3 col-form-label"
                             for="penugasan-yang-terkait-dengan-pembelajaran">{{ __('Penugasan Yang Terkait Dengan Pembelajaran') }}</label>
-                        <div class="col-sm-8">
+                        <div class="col-sm-6">
                             <input type="text" name="penugasan_yang_terkait_dengan_pembelajaran"
                                 id="penugasan-yang-terkait-dengan-pembelajaran"
                                 class="form-control @error('penugasan_yang_terkait_dengan_pembelajaran') is-invalid @enderror"
@@ -160,9 +181,9 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label class="col-sm-4 col-form-label"
+                        <label class="col-sm-3 col-form-label"
                             for="skill-group-owner">{{ __('Skill Group Owner') }}</label>
-                        <div class="col-sm-8">
+                        <div class="col-sm-6">
                             <input type="text" name="skill_group_owner" id="skill-group-owner"
                                 class="form-control @error('skill_group_owner') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->skill_group_owner : old('skill_group_owner') }}"
@@ -181,23 +202,26 @@
             <form id="form-2" style="margin-top: 20px">
                 <div class="row" style="padding: 20px">
                     <div class="form-group row mb-3">
-                        <label for="alokasi-waktu" class="col-sm-4 col-form-label">{{ __('Alokasi Waktu') }}</label>
-
-                        <div class="col-sm-8">
-                            <input type="number" name="alokasi_waktu" id="skill-group-owner"
-                                class="form-control @error('alokasi_waktu') is-invalid @enderror"
-                                value="{{ isset($pengajuanKap) ? $pengajuanKap->alokasi_waktu : old('alokasi_waktu') }}"
-                                placeholder="{{ __('Alokasi Waktu') }}" required />
-                            <div class="invalid-feedback">
-                                Mohon untuk diisi Alokasi Waktu
+                        <label for="alokasi-waktu" class="col-sm-3 col-form-label">{{ __('Alokasi Waktu') }}</label>
+                        <div class="col-sm-6">
+                            <div class="input-group">
+                                <input type="number" name="alokasi_waktu" id="alokasi-waktu"
+                                    class="form-control @error('alokasi_waktu') is-invalid @enderror"
+                                    value="{{ isset($pengajuanKap) ? $pengajuanKap->alokasi_waktu : old('alokasi_waktu') }}"
+                                    placeholder="{{ __('Alokasi Waktu') }}" required />
+                                <span class="input-group-text">Hari</span>
+                                <div class="invalid-feedback">
+                                    Mohon untuk diisi Alokasi Waktu
+                                </div>
                             </div>
                         </div>
                     </div>
 
+
                     <div class="form-group row mb-3">
                         <label for="bentuk_pembelajaran"
-                            class="col-sm-4 col-form-label">{{ __('Bentuk Pembelajaran') }}</label>
-                        <div class="col-sm-8">
+                            class="col-sm-3 col-form-label">{{ __('Bentuk Pembelajaran') }}</label>
+                        <div class="col-sm-6">
                             <select
                                 class="form-control js-example-basic-multiple @error('bentuk_pembelajaran') is-invalid @enderror"
                                 name="bentuk_pembelajaran" id="bentuk_pembelajaran" required>
@@ -219,8 +243,8 @@
 
                     <div class="form-group row mb-3">
                         <label for="jalur_pembelajaran"
-                            class="col-sm-4 col-form-label">{{ __('Jalur Pembelajaran') }}</label>
-                        <div class="col-sm-8">
+                            class="col-sm-3 col-form-label">{{ __('Jalur Pembelajaran') }}</label>
+                        <div class="col-sm-6">
                             <select
                                 class="form-control js-example-basic-multiple @error('jalur_pembelajaran') is-invalid @enderror"
                                 name="jalur_pembelajaran" id="jalur_pembelajaran" required>
@@ -242,8 +266,8 @@
 
                     <div class="form-group row mb-3">
                         <label for="model_pembelajaran"
-                            class="col-sm-4 col-form-label">{{ __('Model Pembelajaran') }}</label>
-                        <div class="col-sm-8">
+                            class="col-sm-3 col-form-label">{{ __('Model Pembelajaran') }}</label>
+                        <div class="col-sm-6">
                             <select
                                 class="form-control js-example-basic-multiple @error('model_pembelajaran') is-invalid @enderror"
                                 name="model_pembelajaran" id="model_pembelajaran" required>
@@ -271,8 +295,8 @@
 
                     <div class="form-group row mb-3">
                         <label for="jenis_pembelajaran"
-                            class="col-sm-4 col-form-label">{{ __('Jenis Pembelajaran') }}</label>
-                        <div class="col-sm-8">
+                            class="col-sm-3 col-form-label">{{ __('Jenis Pembelajaran') }}</label>
+                        <div class="col-sm-6">
                             <select
                                 class="form-control js-example-basic-multiple @error('jenis_pembelajaran') is-invalid @enderror"
                                 name="jenis_pembelajaran" id="jenis_pembelajaran" required>
@@ -300,8 +324,8 @@
 
                     <div class="form-group row mb-3">
                         <label for="metode_pembelajaran"
-                            class="col-sm-4 col-form-label">{{ __('Metode Pembelajaran') }}</label>
-                        <div class="col-sm-8">
+                            class="col-sm-3 col-form-label">{{ __('Metode Pembelajaran') }}</label>
+                        <div class="col-sm-6">
                             <select
                                 class="form-control js-example-basic-multiple @error('metode_pembelajaran') is-invalid @enderror"
                                 name="metode_pembelajaran" id="metode_pembelajaran" required>
@@ -333,8 +357,8 @@
                 <div class="row" style="padding: 20px">
                     <div class="form-group row mb-3">
                         <label for="sasaran_peserta"
-                            class="col-sm-4 col-form-label">{{ __('Sasaran Peserta') }}</label>
-                        <div class="col-sm-8">
+                            class="col-sm-3 col-form-label">{{ __('Sasaran Peserta') }}</label>
+                        <div class="col-sm-6">
                             <input type="text" name="sasaran_peserta" id="sasaran_peserta"
                                 class="form-control @error('sasaran_peserta') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->sasaran_peserta : old('sasaran_peserta') }}"
@@ -347,8 +371,8 @@
 
                     <div class="form-group row mb-3">
                         <label for="kriteria_peserta"
-                            class="col-sm-4 col-form-label">{{ __('Kriteria Peserta') }}</label>
-                        <div class="col-sm-8">
+                            class="col-sm-3 col-form-label">{{ __('Kriteria Peserta') }}</label>
+                        <div class="col-sm-6">
                             <input type="text" name="kriteria_peserta" id="kriteria_peserta"
                                 class="form-control @error('kriteria_peserta') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->kriteria_peserta : old('kriteria_peserta') }}"
@@ -361,8 +385,8 @@
 
                     <div class="form-group row mb-3">
                         <label for="aktivitas_prapembelajaran"
-                            class="col-sm-4 col-form-label">{{ __('Aktivitas Prapembelajaran') }}</label>
-                        <div class="col-sm-8">
+                            class="col-sm-3 col-form-label">{{ __('Aktivitas Prapembelajaran') }}</label>
+                        <div class="col-sm-6">
                             <input type="text" name="aktivitas_prapembelajaran" id="aktivitas_prapembelajaran"
                                 class="form-control @error('aktivitas_prapembelajaran') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->aktivitas_prapembelajaran : old('aktivitas_prapembelajaran') }}"
@@ -375,8 +399,8 @@
 
                     <div class="form-group row mb-3">
                         <label for="penyelenggara_pembelajaran"
-                            class="col-sm-4 col-form-label">{{ __('Penyelenggara Pembelajaran') }}</label>
-                        <div class="col-sm-8">
+                            class="col-sm-3 col-form-label">{{ __('Penyelenggara Pembelajaran') }}</label>
+                        <div class="col-sm-6">
                             <select
                                 class="form-control js-example-basic-multiple @error('penyelenggara_pembelajaran') is-invalid @enderror"
                                 name="penyelenggara_pembelajaran" id="penyelenggara_pembelajaran" required>
@@ -399,8 +423,8 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label class="col-sm-4 col-form-label">{{ __('Fasilitator Pembelajaran') }}</label>
-                        <div class="col-sm-8">
+                        <label class="col-sm-3 col-form-label">{{ __('Fasilitator Pembelajaran') }}</label>
+                        <div class="col-sm-6">
                             @foreach (['Widyaiswara', 'Instruktur', 'Praktisi', 'Pakar', 'Tutor', 'Coach', 'Mentor', 'Narasumber lainnya'] as $fasilitator)
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="fasilitator_pembelajaran[]"
@@ -418,8 +442,8 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label for="sertifikat" class="col-sm-4 col-form-label">{{ __('Sertifikat') }}</label>
-                        <div class="col-sm-8">
+                        <label for="sertifikat" class="col-sm-3 col-form-label">{{ __('Sertifikat') }}</label>
+                        <div class="col-sm-6">
                             <input type="text" name="sertifikat" id="sertifikat"
                                 class="form-control @error('sertifikat') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->sertifikat : old('sertifikat') }}"

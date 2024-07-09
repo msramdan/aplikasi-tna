@@ -35,7 +35,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
                             <a href="{{ route('pengajuan-kap.index', [
