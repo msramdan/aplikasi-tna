@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('indikator_kinerja', 255);
             $table->foreignId('kompetensi_id')->nullable()->constrained('kompetensi')->cascadeOnUpdate()->nullOnDelete();
             $table->foreignId('topik_id')->nullable()->constrained('topik')->cascadeOnUpdate()->nullOnDelete();
-            $table->string('concern_program_pembelajaran', 255);
+            $table->text('concern_program_pembelajaran');
+            $table->text('tujuan_program_pembelajaran');
             $table->string('alokasi_waktu', 10);
             $table->string('indikator_dampak_terhadap_kinerja_organisasi', 255);
             $table->string('penugasan_yang_terkait_dengan_pembelajaran', 255);

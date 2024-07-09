@@ -30,55 +30,32 @@
                     </div>
                 </div>
             </div>
-            <form action="{{ route('pengajuan-kap.store', ['is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi]) }}"
-                method="POST">
-                @csrf
-                @method('POST')
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="card">
-                            <div class="card-body">
-                                @include('pengajuan-kap.include.form')
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="alert alert-info" role="alert">
-                                    Waktu pelaksanaan
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        {{-- <div class="card-header">
+                            <a href="{{ route('pengajuan-kap.index', [
+                                'is_bpkp' => $is_bpkp,
+                                'frekuensi' => $frekuensi,
+                            ]) }}"
+                                class="btn btn-secondary"><i class="mdi mdi-arrow-left-thin"></i>
+                                {{ __('Back') }}</a>
+                        </div> --}}
+                        <div class="card-body">
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
                                 </div>
-                                <div class="row mb-2">
-                                    <div class="col-md-12 mb-2">
-                                        <label for="alokasi-waktu">{{ __('Alokasi Waktu') }}</label>
-
-                                        <div class="input-group">
-                                            <input type="number" name="alokasi_waktu" id="alokasi-waktu"
-                                                class="form-control @error('alokasi_waktu') is-invalid @enderror"
-                                                value="{{ isset($pengajuanKap) ? $pengajuanKap->alokasi_waktu : old('alokasi_waktu') }}"
-                                                placeholder="{{ __('Alokasi Waktu') }}" required />
-                                            <span class="input-group-text" id="basic-addon2">Hari</span>
-                                        </div>
-                                        @error('alokasi_waktu')
-                                            <span class="text-danger">
-                                                {{ $message }}
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
+                            @endif
+                            @include('pengajuan-kap.include.form')
                         </div>
                     </div>
                 </div>
-                <a href="{{ route('pengajuan-kap.index', [
-                    'is_bpkp' => $is_bpkp,
-                    'frekuensi' => $frekuensi,
-                ]) }}"
-                    class="btn btn-secondary"><i class="mdi mdi-arrow-left-thin"></i>
-                    {{ __('Back') }}</a>
-
-                <button type="submit" class="btn btn-primary"><i class="mdi mdi-content-save"></i>
-                    {{ __('Save') }}</button>
+            </div>
             </form>
         </div>
     </div>
