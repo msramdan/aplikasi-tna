@@ -121,16 +121,16 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label for="prioritis_pembelajaran" style="padding-left: 40px"
-                            class="col-sm-3 col-form-label">{{ __('B. Prioritis Pembelajaran') }}</label>
+                        <label for="prioritas_pembelajaran" style="padding-left: 40px"
+                            class="col-sm-3 col-form-label">{{ __('B. Prioritas Pembelajaran') }}</label>
                         <div class="col-sm-6">
-                            <input type="text" name="prioritis_pembelajaran"
-                                id="prioritis_pembelajaran"
-                                class="form-control @error('prioritis_pembelajaran') is-invalid @enderror"
-                                value="{{ isset($pengajuanKap) ? $pengajuanKap->prioritis_pembelajaran : old('prioritis_pembelajaran') }}"
-                                placeholder="{{ __('Prioritis Pembelajaran') }}" required />
+                            <input type="text" name="prioritas_pembelajaran"
+                                id="prioritas_pembelajaran"
+                                class="form-control @error('prioritas_pembelajaran') is-invalid @enderror"
+                                value="{{ isset($pengajuanKap) ? $pengajuanKap->prioritas_pembelajaran : old('prioritas_pembelajaran') }}"
+                                placeholder="{{ __('Prioritas Pembelajaran') }}" required />
                             <div class="invalid-feedback">
-                                Mohon untuk diisi Prioritis Pembelajaran
+                                Mohon untuk diisi Prioritas Pembelajaran
                             </div>
                         </div>
                     </div>
@@ -453,6 +453,22 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="form-group row mb-3">
+                        <label for="level_evaluasi_instrumen"
+                            class="col-sm-3 col-form-label">{{ __('Level Evaluasi dan Instrumennya') }}</label>
+                        <div class="col-sm-6">
+                            <input type="text" name="level_evaluasi_instrumen"
+                                id="level_evaluasi_instrumen"
+                                class="form-control @error('level_evaluasi_instrumen') is-invalid @enderror"
+                                value="{{ isset($pengajuanKap) ? $pengajuanKap->level_evaluasi_instrumen : old('level_evaluasi_instrumen') }}"
+                                placeholder="{{ __('Level Evaluasi dan Instrumennya') }}" required />
+                            <div class="invalid-feedback">
+                                Mohon untuk diisi Prioritas Pembelajaran
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </form>
         </div>
