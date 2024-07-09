@@ -83,56 +83,30 @@
                     $("#smartwizard").smartWizard('fixHeight');
                     return false;
                 }
-                console.log('sub');
-                $('#form-laporan').html('');
+                $('#form-laporan').html(''); // Pastikan form-laporan kosong sebelum menambahkan elemen baru
+
                 var csrf = "{{ csrf_token() }}";
-                $('#form-laporan').append(`
-                <input type="hidden" name="_token" value="${csrf}"/>
-            `);
+                $('#form-laporan').append(`<input type="hidden" name="_token" value="${csrf}"/>`);
+                $('#form-laporan').append('@method('POST')'); // Spoofing metode PUT
 
-                var form1 = document.getElementById('form-1').elements;
-                [...form1].forEach((item) => {
-                    $('#form-laporan').append(item.cloneNode(true));
-                });
-                var form2 = document.getElementById('form-2').elements;
-                [...form2].forEach((item) => {
-                    $('#form-laporan').append(item.cloneNode(true));
-                });
-                var form3 = document.getElementById('form-3').elements;
-                [...form3].forEach((item) => {
-                    $('#form-laporan').append(item.cloneNode(true));
+                var forms = ['form-1', 'form-2', 'form-3'];
+                forms.forEach(formId => {
+                    var formElements = document.getElementById(formId).elements;
+                    [...formElements].forEach(item => {
+                        $('#form-laporan').append(item.cloneNode(true));
+                    });
                 });
 
+                var inputFields = [
+                    'jenis_program', 'kompetensi_id', 'topik_id', 'bentuk_pembelajaran',
+                    'jalur_pembelajaran', 'model_pembelajaran', 'jenis_pembelajaran',
+                    'metode_pembelajaran', 'penyelenggara_pembelajaran'
+                ];
 
-                var jenis_program_value = $('#jenis_program').val();
-                $('#form-laporan').append(`<input type="hidden" name="jenis_program" value="${jenis_program_value}"/>`);
-
-                var kompetensi_id = $('#kompetensi_id').val();
-                $('#form-laporan').append(`<input type="hidden" name="kompetensi_id" value="${kompetensi_id}"/>`);
-
-                var topik_id = $('#topik_id').val();
-                $('#form-laporan').append(`<input type="hidden" name="topik_id" value="${topik_id}"/>`);
-
-                var bentuk_pembelajaran = $('#bentuk_pembelajaran').val();
-                $('#form-laporan').append(
-                    `<input type="hidden" name="bentuk_pembelajaran" value="${bentuk_pembelajaran}"/>`);
-
-                var jalur_pembelajaran = $('#jalur_pembelajaran').val();
-                $('#form-laporan').append(`<input type="hidden" name="jalur_pembelajaran" value="${jalur_pembelajaran}"/>`);
-
-                var model_pembelajaran = $('#model_pembelajaran').val();
-                $('#form-laporan').append(`<input type="hidden" name="model_pembelajaran" value="${model_pembelajaran}"/>`);
-
-                var jenis_pembelajaran = $('#jenis_pembelajaran').val();
-                $('#form-laporan').append(`<input type="hidden" name="jenis_pembelajaran" value="${jenis_pembelajaran}"/>`);
-
-                var metode_pembelajaran = $('#metode_pembelajaran').val();
-                $('#form-laporan').append(
-                    `<input type="hidden" name="metode_pembelajaran" value="${metode_pembelajaran}"/>`);
-
-                var penyelenggara_pembelajaran = $('#penyelenggara_pembelajaran').val();
-                $('#form-laporan').append(
-                    `<input type="hidden" name="penyelenggara_pembelajaran" value="${penyelenggara_pembelajaran}"/>`);
+                inputFields.forEach(field => {
+                    var fieldValue = $(`#${field}`).val();
+                    $('#form-laporan').append(`<input type="hidden" name="${field}" value="${fieldValue}"/>`);
+                });
 
                 $('#form-laporan').submit();
             }
