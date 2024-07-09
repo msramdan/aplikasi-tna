@@ -47,10 +47,13 @@
                 <div class="modal-body">
 
                     <center>
-                        <h5 class="modal-title text-center mb-4" id="otpModalLabel"><strong style="font-size: 24px;">Verifikasi OTP</strong></h5>
+                        <h5 class="modal-title text-center mb-4" id="otpModalLabel"><strong
+                                style="font-size: 24px;">Verifikasi OTP</strong></h5>
                         <p class="text-center mt-2">OTP berhasil dikirim ke email Anda.</p>
                         @if (null !== session('otp_email'))
-                            <p class="text-center" style="margin-top: -15px"><b>{{ substr(session('otp_email'), 0, 2) . str_repeat("*", strpos(session('otp_email'), "@") - 2) . substr(session('otp_email'), strpos(session('otp_email'), "@") - 2) }}</b></p>
+                            <p class="text-center" style="margin-top: -15px">
+                                <b>{{ substr(session('otp_email'), 0, 2) . str_repeat('*', strpos(session('otp_email'), '@') - 2) . substr(session('otp_email'), strpos(session('otp_email'), '@') - 2) }}</b>
+                            </p>
                         @else
                             <p class="text-center" style="margin-top: -15px"><b>Email tidak tersedia.</b></p>
                         @endif
@@ -160,15 +163,21 @@
                                                 <div class="mb-2">
                                                     <label class="form-label" style="margin-bottom: 4px"
                                                         for="password">Password</label>
-                                                    <input type="password" value=""
-                                                        class="form-control @error('password') is-invalid @enderror"
-                                                        placeholder="Enter password" id="password" name="password">
-                                                    @error('password')
-                                                        <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
+                                                    <div class="input-group">
+                                                        <input type="password" value=""
+                                                            class="form-control @error('password') is-invalid @enderror"
+                                                            placeholder="Enter password" id="password" name="password">
+                                                        <button class="input-group-text" style="width: 50px"
+                                                            type="button" id="togglePassword">
+                                                            <i class="fas fa-eye-slash"></i>
+                                                        </button>
+                                                        @error('password')
+                                                            <div class="invalid-feedback">{{ $message }}</div>
+                                                        @enderror
+                                                    </div>
                                                 </div>
 
-                                                <div class="mb-2">
+                                                <div class="mb-2 mt-2">
                                                     {!! NoCaptcha::display() !!}
                                                     {!! NoCaptcha::renderJs() !!}
                                                     @error('g-recaptcha-response')
@@ -176,10 +185,9 @@
                                                     @enderror
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="auth-remember-check" onclick="togglePasswordVisibility()">
-                                                    <label class="form-check-label" for="auth-remember-check">Show
-                                                        Password</label>
+                                                    <input class="form-check-input" type="checkbox" value="">
+                                                    <label class="form-check-label" for="auth-remember-check">Remember
+                                                        me</label>
                                                 </div>
                                                 <div class="mt-4">
                                                     <button class="btn btn-success w-100" type="submit">Sign In</button>
@@ -227,6 +235,23 @@
                     $this.prev('.num').focus();
                 }
             });
+        });
+    </script>
+
+    <script>
+        document.getElementById('togglePassword').addEventListener('click', function(e) {
+            const passwordInput = document.getElementById('password');
+            const passwordIcon = e.currentTarget.querySelector('i');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                passwordIcon.classList.remove('fa-eye-slash');
+                passwordIcon.classList.add('fa-eye');
+            } else {
+                passwordInput.type = 'password';
+                passwordIcon.classList.remove('fa-eye');
+                passwordIcon.classList.add('fa-eye-slash');
+            }
         });
     </script>
 @endpush

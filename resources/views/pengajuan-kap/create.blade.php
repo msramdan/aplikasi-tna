@@ -59,9 +59,6 @@
                                                 placeholder="{{ __('Alokasi Waktu') }}" required />
                                             <span class="input-group-text" id="basic-addon2">Hari</span>
                                         </div>
-
-
-
                                         @error('alokasi_waktu')
                                             <span class="text-danger">
                                                 {{ $message }}

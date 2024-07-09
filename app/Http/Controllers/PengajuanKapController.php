@@ -486,7 +486,7 @@ class PengajuanKapController extends Controller
             Alert::toast('Failed to reject Pengajuan Kap. Please try again', 'error');
 
             // Handle the exception, optionally log it or notify the user
-            return redirect()->back();;
+            return redirect()->back();
         }
     }
 }
