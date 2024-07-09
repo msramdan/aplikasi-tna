@@ -22,7 +22,7 @@
 
     <div class="tab-content">
         <div id="step-1" class="tab-pane" role="tabpanel" aria-labelledby="step-1" style="display: none;">
-            <form id="form-1" style="margin-top: 40px">
+            <form id="form-1" style="margin-top: 20px">
                 <div class="row" style="padding: 20px">
                     <div class="form-group row mb-3">
                         <label for="jenis_program" class="col-sm-4 col-form-label">{{ __('Jenis Program') }}</label>
@@ -178,7 +178,7 @@
         </div>
 
         <div id="step-2" class="tab-pane" role="tabpanel" aria-labelledby="step-2" style="display: none;">
-            <form id="form-2" class="row row-cols-1 ms-5 me-5 needs-validation" novalidate="">
+            <form id="form-2" style="margin-top: 20px">
                 <div class="row" style="padding: 20px">
                     <div class="form-group row mb-3">
                         <label for="alokasi-waktu" class="col-sm-4 col-form-label">{{ __('Alokasi Waktu') }}</label>
@@ -329,7 +329,7 @@
 
 
         <div id="step-3" class="tab-pane" role="tabpanel" aria-labelledby="step-3">
-            <form id="form-3" class="row row-cols-1 ms-5 me-5 needs-validation" novalidate="">
+            <form id="form-3" style="margin-top: 20px">
                 <div class="row" style="padding: 20px">
                     <div class="form-group row mb-3">
                         <label for="sasaran_peserta"
