@@ -397,7 +397,7 @@
                                     </label>
                                 </div>
                             @endforeach
-                            <div class="invalid-feedback">
+                            <div class="invalid-feedback" id="invalid-fasilitator" style="display: none;">
                                 Mohon untuk pilih Fasilitator Pembelajaran
                             </div>
                         </div>
