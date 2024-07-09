@@ -157,6 +157,9 @@ class PengajuanKapController extends Controller
 
     public function store(Request $request, $is_bpkp, $frekuensi)
     {
+
+        // dd($request);
+
         $validatedData = $request->validate([
             'jenis_program' => 'required|in:Renstra,APP,APEP,APIP',
             'indikator_kinerja' => 'required|string|max:255',

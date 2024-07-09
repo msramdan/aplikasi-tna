@@ -74,7 +74,6 @@
                     </div>
                 </div>
 
-
                 <button type="submit" class="btn btn-primary"><i class="mdi mdi-content-save"></i>
                     {{ __('Update') }}</button>
             </form>

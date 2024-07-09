@@ -1,9 +1,3 @@
-@push('css')
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/smartwizard@6/dist/css/smart_wizard_all.min.css" rel="stylesheet"
-        type="text/css" />
-@endpush
-
 <div id="smartwizard" dir="" class="sw sw-theme-arrows sw-justified">
     <ul class="nav nav-progress">
         <li class="nav-item">
@@ -47,11 +41,6 @@
                             <div class="invalid-feedback">
                                 Mohon untuk pilih Jenis Program
                             </div>
-                            @error('jenis_program')
-                                <span class="text-danger">
-                                    {{ $message }}
-                                </span>
-                            @enderror
                         </div>
                     </div>
 
@@ -67,11 +56,6 @@
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Indikator Kinerja
                             </div>
-                            @error('indikator_kinerja')
-                                <span class="text-danger">
-                                    {{ $message }}
-                                </span>
-                            @enderror
                         </div>
                     </div>
 
@@ -92,11 +76,6 @@
                             <div class="invalid-feedback">
                                 Mohon untuk pilih Kompetensi
                             </div>
-                            @error('kompetensi_id')
-                                <span class="text-danger">
-                                    {{ $message }}
-                                </span>
-                            @enderror
                         </div>
                     </div>
 
@@ -118,11 +97,6 @@
                             <div class="invalid-feedback">
                                 Mohon untuk pilih Topik Pembelajaran
                             </div>
-                            @error('topik_id')
-                                <span class="text-danger">
-                                    {{ $message }}
-                                </span>
-                            @enderror
                         </div>
                     </div>
 
@@ -137,12 +111,6 @@
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Concern Program Pembelajaran
                             </div>
-
-                            @error('concern_program_pembelajaran')
-                                <span class="text-danger">
-                                    {{ $message }}
-                                </span>
-                            @enderror
                         </div>
                     </div>
 
@@ -157,12 +125,6 @@
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Tujuan Program Pembelajaran
                             </div>
-
-                            @error('tujuan_program_pembelajaran')
-                                <span class="text-danger">
-                                    {{ $message }}
-                                </span>
-                            @enderror
                         </div>
                     </div>
 
@@ -178,12 +140,6 @@
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Indikator Dampak Terhadap Kinerja Organisasi
                             </div>
-
-                            @error('indikator_dampak_terhadap_kinerja_organisasi')
-                                <span class="text-danger">
-                                    {{ $message }}
-                                </span>
-                            @enderror
                         </div>
                     </div>
 
@@ -200,12 +156,6 @@
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Penugasan Yang Terkait Dengan Pembelajaran
                             </div>
-
-                            @error('penugasan_yang_terkait_dengan_pembelajaran')
-                                <span class="text-danger">
-                                    {{ $message }}
-                                </span>
-                            @enderror
                         </div>
                     </div>
 
@@ -220,11 +170,6 @@
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Skill Group Owner
                             </div>
-                            @error('skill_group_owner')
-                                <span class="text-danger">
-                                    {{ $message }}
-                                </span>
-                            @enderror
                         </div>
                     </div>
 
@@ -239,18 +184,13 @@
                         <label for="alokasi-waktu" class="col-sm-4 col-form-label">{{ __('Alokasi Waktu') }}</label>
 
                         <div class="col-sm-8">
-                            <input type="text" name="alokasi_waktu" id="skill-group-owner"
+                            <input type="number" name="alokasi_waktu" id="skill-group-owner"
                                 class="form-control @error('alokasi_waktu') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->alokasi_waktu : old('alokasi_waktu') }}"
                                 placeholder="{{ __('Alokasi Waktu') }}" required />
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Alokasi Waktu
                             </div>
-                            @error('alokasi_waktu')
-                                <span class="text-danger">
-                                    {{ $message }}
-                                </span>
-                            @enderror
                         </div>
                     </div>
 
@@ -274,12 +214,6 @@
                             <div class="invalid-feedback">
                                 Mohon untuk pilih Bentuk Pembelajaran
                             </div>
-                            @error('bentuk_pembelajaran')
-                                <span class="text-danger">
-                                    {{ $message }}
-                                </span>
-                            @enderror
-
                         </div>
                     </div>
 
@@ -303,11 +237,6 @@
                             <div class="invalid-feedback">
                                 Mohon untuk pilih Jalur Pembelajaran
                             </div>
-                            @error('jalur_pembelajaran')
-                                <span class="text-danger">
-                                    {{ $message }}
-                                </span>
-                            @enderror
                         </div>
                     </div>
 
@@ -337,11 +266,6 @@
                             <div class="invalid-feedback">
                                 Mohon untuk pilih Model Pembelajaran
                             </div>
-                            @error('model_pembelajaran')
-                                <span class="text-danger">
-                                    {{ $message }}
-                                </span>
-                            @enderror
                         </div>
                     </div>
 
@@ -371,11 +295,6 @@
                             <div class="invalid-feedback">
                                 Mohon untuk pilih Jenis Pembelajaran
                             </div>
-                            @error('jenis_pembelajaran')
-                                <span class="text-danger">
-                                    {{ $message }}
-                                </span>
-                            @enderror
                         </div>
                     </div>
 
@@ -402,11 +321,6 @@
                             <div class="invalid-feedback">
                                 Mohon untuk pilih Metode Pembelajaran
                             </div>
-                            @error('metode_pembelajaran')
-                                <span class="text-danger">
-                                    {{ $message }}
-                                </span>
-                            @enderror
                         </div>
                     </div>
                 </div>
@@ -428,12 +342,6 @@
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Sasaran Peserta
                             </div>
-
-                            @error('sasaran_peserta')
-                                <span class="text-danger">
-                                    {{ $message }}
-                                </span>
-                            @enderror
                         </div>
                     </div>
 
@@ -448,11 +356,6 @@
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Aktivitas Prapembelajaran
                             </div>
-                            @error('kriteria_peserta')
-                                <span class="text-danger">
-                                    {{ $message }}
-                                </span>
-                            @enderror
                         </div>
                     </div>
 
@@ -478,11 +381,6 @@
                             <div class="invalid-feedback">
                                 Mohon untuk pilih Penyelenggara Pembelajaran
                             </div>
-                            @error('penyelenggara_pembelajaran')
-                                <span class="text-danger">
-                                    {{ $message }}
-                                </span>
-                            @enderror
                         </div>
                     </div>
 
@@ -502,11 +400,6 @@
                             <div class="invalid-feedback">
                                 Mohon untuk pilih Fasilitator Pembelajaran
                             </div>
-                            @error('fasilitator_pembelajaran')
-                                <span class="text-danger">
-                                    {{ $message }}
-                                </span>
-                            @enderror
                         </div>
                     </div>
 
@@ -520,11 +413,6 @@
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Sertifikat
                             </div>
-                            @error('sertifikat')
-                                <span class="text-danger">
-                                    {{ $message }}
-                                </span>
-                            @enderror
                         </div>
                     </div>
                 </div>
@@ -538,144 +426,3 @@
             onclick="onConfirm()">Submit</button>
     </div>
 </div>
-
-<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmModalLabel">Order Placed</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Congratulations! Your order is placed.
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" onclick="closeModal()">Ok, close and reset</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-@push('js')
-    <script src="https://techlaboratory.net/projects/demo/jquery-smart-wizard/v6/js/demo.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/smartwizard@6/dist/js/jquery.smartWizard.min.js" type="text/javascript">
-    </script>
-    <script type="text/javascript">
-        const myModal = new bootstrap.Modal(document.getElementById('confirmModal'));
-
-        function onConfirm() {
-            let form = document.getElementById('form-3');
-            if (form) {
-                if (!form.checkValidity()) {
-                    form.classList.add('was-validated');
-                    $('#smartwizard').smartWizard("setState", [3], 'error');
-                    $("#smartwizard").smartWizard('fixHeight');
-                    return false;
-                }
-
-                myModal.show();
-            }
-        }
-
-        function closeModal() {
-            // Reset wizard
-            $('#smartwizard').smartWizard("reset");
-
-            // Reset form
-            document.getElementById("form-1").reset();
-            document.getElementById("form-2").reset();
-            document.getElementById("form-3").reset();
-            myModal.hide();
-        }
-
-        $(function() {
-            // Leave step event is used for validating the forms
-            $("#smartwizard").on("leaveStep", function(e, anchorObject, currentStepIdx, nextStepIdx,
-                stepDirection) {
-                // Validate only on forward movement
-                if (stepDirection == 'forward') {
-                    let form = document.getElementById('form-' + (currentStepIdx + 1));
-                    if (form) {
-                        if (!form.checkValidity()) {
-                            form.classList.add('was-validated');
-                            $('#smartwizard').smartWizard("setState", [currentStepIdx], 'error');
-                            $("#smartwizard").smartWizard('fixHeight');
-                            return false;
-                        }
-                        $('#smartwizard').smartWizard("unsetState", [currentStepIdx], 'error');
-                    }
-                }
-            });
-
-            // Step show event
-            $("#smartwizard").on("showStep", function(e, anchorObject, stepIndex, stepDirection, stepPosition) {
-                $("#prev-btn").removeClass('disabled').prop('disabled', false);
-                $("#next-btn").removeClass('disabled').prop('disabled', false);
-                if (stepPosition === 'first') {
-                    $("#prev-btn").addClass('disabled').prop('disabled', true);
-                } else if (stepPosition === 'last') {
-                    $("#next-btn").addClass('disabled').prop('disabled', true);
-                } else {
-                    $("#prev-btn").removeClass('disabled').prop('disabled', false);
-                    $("#next-btn").removeClass('disabled').prop('disabled', false);
-                }
-
-                // Get step info from Smart Wizard
-                let stepInfo = $('#smartwizard').smartWizard("getStepInfo");
-                $("#sw-current-step").text(stepInfo.currentStep + 1);
-                $("#sw-total-step").text(stepInfo.totalSteps);
-
-                if (stepPosition == 'last') {
-                    $("#btnFinish").prop('disabled', false);
-                } else {
-                    $("#btnFinish").prop('disabled', true);
-                }
-
-                // Focus first name
-                if (stepIndex == 1) {
-                    setTimeout(() => {
-                        $('#first-name').focus();
-                    }, 0);
-                }
-            });
-
-            // Smart Wizard
-            $('#smartwizard').smartWizard({
-                selected: 0,
-                // autoAdjustHeight: false,
-                theme: 'arrows', // basic, arrows, square, round, dots
-                transition: {
-                    animation: 'none'
-                },
-                toolbar: {
-                    showNextButton: true, // show/hide a Next button
-                    showPreviousButton: true, // show/hide a Previous button
-                    position: 'bottom', // none/ top/ both bottom
-                    extraHtml: `<button class="btn btn-success" id="btnFinish" disabled onclick="onConfirm()">Submit</button>`
-                },
-                anchor: {
-                    enableNavigation: true, // Enable/Disable anchor navigation
-                    enableNavigationAlways: false, // Activates all anchors clickable always
-                    enableDoneState: true, // Add done state on visited steps
-                    markPreviousStepsAsDone: true, // When a step selected by url hash, all previous steps are marked done
-                    unDoneOnBackNavigation: true, // While navigate back, done state will be cleared
-                    enableDoneStateNavigation: true // Enable/Disable the done state navigation
-                },
-            });
-
-            $("#state_selector").on("change", function() {
-                $('#smartwizard').smartWizard("setState", [$('#step_to_style').val()], $(this).val(), !$(
-                    '#is_reset').prop("checked"));
-                return true;
-            });
-
-            $("#style_selector").on("change", function() {
-                $('#smartwizard').smartWizard("setStyle", [$('#step_to_style').val()], $(this).val(), !$(
-                    '#is_reset').prop("checked"));
-                return true;
-            });
-
-        });
-    </script>
-@endpush
