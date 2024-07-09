@@ -1,3 +1,28 @@
+<div class="modal fade" id="indikatorModal" tabindex="-1" aria-labelledby="indikatorModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="indikatorModalLabel">Pilih Indikator Kinerja</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Modal body content goes here -->
+                <!-- Example: List of indicators -->
+                <ul>
+                    <li>Indikator 1</li>
+                    <li>Indikator 2</li>
+                    <li>Indikator 3</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <div id="smartwizard" dir="" class="sw sw-theme-arrows sw-justified">
     <ul class="nav nav-progress">
         <li class="nav-item">
@@ -45,16 +70,19 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label for="indikator-kinerja"
-                            class="col-sm-3 col-form-label">{{ __('Indikator Kinerja') }}</label>
-
+                        <label for="indikator_kinerja" class="col-sm-3 col-form-label">{{ __('Indikator Kinerja') }}</label>
                         <div class="col-sm-6">
-                            <input type="text" name="indikator_kinerja" id="indikator-kinerja"
-                                class="form-control @error('indikator_kinerja') is-invalid @enderror"
-                                value="{{ isset($pengajuanKap) ? $pengajuanKap->indikator_kinerja : old('indikator_kinerja') }}"
-                                placeholder="{{ __('Indikator Kinerja') }}" required />
-                            <div class="invalid-feedback">
-                                Mohon untuk diisi Indikator Kinerja
+                            <div class="input-group">
+                                <input type="text" name="indikator_kinerja" id="indikator_kinerja" readonly
+                                    class="form-control @error('indikator_kinerja') is-invalid @enderror"
+                                    value="{{ isset($pengajuanKap) ? $pengajuanKap->indikator_kinerja : old('indikator_kinerja') }}"
+                                    placeholder="" required />
+                                    <span class="input-group-text btn btn-success" data-bs-toggle="modal" data-bs-target="#indikatorModal" style="cursor: pointer;">
+                                        <i class="fa fa-eye" aria-hidden="true"></i> Pilih
+                                    </span>
+                                <div class="invalid-feedback">
+                                    Mohon untuk diisi Indikator Kinerja
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -390,7 +418,7 @@
                             <input type="text" name="aktivitas_prapembelajaran" id="aktivitas_prapembelajaran"
                                 class="form-control @error('aktivitas_prapembelajaran') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->aktivitas_prapembelajaran : old('aktivitas_prapembelajaran') }}"
-                                placeholder="{{ __('Kriteria Peserta') }}" required />
+                                placeholder="{{ __('Aktivitas Prapembelajaran') }}" required />
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Aktivitas Prapembelajaran
                             </div>
