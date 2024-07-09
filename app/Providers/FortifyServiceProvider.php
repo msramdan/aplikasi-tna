@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Cache;
 use App\Mail\SendOtpMail;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 
 class FortifyServiceProvider extends ServiceProvider
@@ -108,6 +109,13 @@ class FortifyServiceProvider extends ServiceProvider
                     session(['otp_email' => $user->email]);
                     return null;
                 }
+
+                if ($request->filled('remember')) {
+                    Auth::login($user, true);
+                } else {
+                    Auth::login($user);
+                }
+
                 return $user;
             }
 

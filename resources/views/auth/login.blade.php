@@ -185,9 +185,8 @@
                                                     @enderror
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="">
-                                                    <label class="form-check-label" for="auth-remember-check">Remember
-                                                        me</label>
+                                                    <input class="form-check-input" type="checkbox" id="auth-remember-check" name="remember">
+                                                    <label class="form-check-label" for="auth-remember-check">Remember me</label>
                                                 </div>
                                                 <div class="mt-4">
                                                     <button class="btn btn-success w-100" type="submit">Sign In</button>
