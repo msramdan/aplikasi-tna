@@ -60,7 +60,6 @@
                     </div>
                 </div>
             </div>
-            </form>
         </div>
     </div>
     <form action="{{ route('pengajuan-kap.store', ['is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi]) }}" id="form-laporan"
@@ -75,8 +74,6 @@
     <script src="https://cdn.jsdelivr.net/npm/smartwizard@6/dist/js/jquery.smartWizard.min.js" type="text/javascript">
     </script>
     <script type="text/javascript">
-        // const myModal = new bootstrap.Modal(document.getElementById('confirmModal'));
-
         function onConfirm() {
             let form = document.getElementById('form-3');
             if (form) {
@@ -107,7 +104,7 @@
                 });
 
 
-                var jenis_program_value = $('#jenis-program').val();
+                var jenis_program_value = $('#jenis_program').val();
                 $('#form-laporan').append(`<input type="hidden" name="jenis_program" value="${jenis_program_value}"/>`);
 
                 var kompetensi_id = $('#kompetensi_id').val();

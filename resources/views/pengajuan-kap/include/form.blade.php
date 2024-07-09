@@ -25,11 +25,11 @@
             <form id="form-1" style="margin-top: 40px">
                 <div class="row" style="padding: 20px">
                     <div class="form-group row mb-3">
-                        <label for="jenis-program" class="col-sm-4 col-form-label">{{ __('Jenis Program') }}</label>
+                        <label for="jenis_program" class="col-sm-4 col-form-label">{{ __('Jenis Program') }}</label>
                         <div class="col-sm-8">
                             <select
                                 class="form-control js-example-basic-multiple @error('jenis_program') is-invalid @enderror"
-                                name="jenis_program" id="jenis-program" required>
+                                name="jenis_program" id="jenis_program" required>
                                 <option value="" selected disabled>-- {{ __('Select jenis program') }} --</option>
                                 @foreach ($jenis_program as $program)
                                     <option value="{{ $program }}"
