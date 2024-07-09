@@ -153,7 +153,7 @@
                                                         class="form-label">Username</label>
                                                     <input type="text"
                                                         class="form-control @error('username') is-invalid @enderror"
-                                                        id="username" value="Adi Lesmana" name="username"
+                                                        id="username" value="" name="username"
                                                         placeholder="Enter your username">
                                                     @error('username')
                                                         <div class="invalid-feedback">{{ $message }}</div>
