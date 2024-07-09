@@ -157,8 +157,7 @@ class PengajuanKapController extends Controller
 
     public function store(Request $request, $is_bpkp, $frekuensi)
     {
-
-        // dd($request);
+        dd($request);
 
         $validatedData = $request->validate([
             'jenis_program' => 'required|in:Renstra,APP,APEP,APIP',
@@ -247,7 +246,6 @@ class PengajuanKapController extends Controller
 
             DB::commit();
             Alert::toast('Pengajuan KAP berhasil disimpan.', 'success');
-
             return redirect()->route('pengajuan-kap.index', ['is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi]);
         } catch (\Exception $e) {
             DB::rollBack();

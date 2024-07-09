@@ -60,11 +60,11 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label for="kompetensi-id" class="col-sm-4 col-form-label">{{ __('Kompetensi') }}</label>
+                        <label for="kompetensi_id" class="col-sm-4 col-form-label">{{ __('Kompetensi') }}</label>
                         <div class="col-sm-8">
                             <select
                                 class="form-control js-example-basic-multiple @error('kompetensi_id') is-invalid @enderror"
-                                name="kompetensi_id" id="kompetensi-id" required>
+                                name="kompetensi_id" id="kompetensi_id" required>
                                 <option value="" selected disabled>-- {{ __('Select kompetensi') }} --</option>
                                 @foreach ($kompetensis as $kompetensi)
                                     <option value="{{ $kompetensi->id }}"
@@ -80,11 +80,11 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label for="topik-id" class="col-sm-4 col-form-label">{{ __('Topik Pembelajaran') }}</label>
+                        <label for="topik_id" class="col-sm-4 col-form-label">{{ __('Topik Pembelajaran') }}</label>
                         <div class="col-sm-8">
                             <select
                                 class="form-control js-example-basic-multiple @error('topik_id') is-invalid @enderror"
-                                name="topik_id" id="topik-id" required>
+                                name="topik_id" id="topik_id" required>
                                 <option value="" selected disabled>-- {{ __('Select topik pembelajaran') }} --
                                 </option>
                                 @foreach ($topiks as $topik)
@@ -195,12 +195,12 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label for="bentuk-pembelajaran"
+                        <label for="bentuk_pembelajaran"
                             class="col-sm-4 col-form-label">{{ __('Bentuk Pembelajaran') }}</label>
                         <div class="col-sm-8">
                             <select
                                 class="form-control js-example-basic-multiple @error('bentuk_pembelajaran') is-invalid @enderror"
-                                name="bentuk_pembelajaran" id="bentuk-pembelajaran" required>
+                                name="bentuk_pembelajaran" id="bentuk_pembelajaran" required>
                                 <option value="" selected disabled>-- {{ __('Select bentuk pembelajaran') }}
                                     --
                                 </option>
@@ -218,12 +218,12 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label for="jalur-pembelajaran"
+                        <label for="jalur_pembelajaran"
                             class="col-sm-4 col-form-label">{{ __('Jalur Pembelajaran') }}</label>
                         <div class="col-sm-8">
                             <select
                                 class="form-control js-example-basic-multiple @error('jalur_pembelajaran') is-invalid @enderror"
-                                name="jalur_pembelajaran" id="jalur-pembelajaran" required>
+                                name="jalur_pembelajaran" id="jalur_pembelajaran" required>
                                 <option value="" selected disabled>-- {{ __('Select jalur pembelajaran') }}
                                     --
                                 </option>
@@ -241,12 +241,12 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label for="model-pembelajaran"
+                        <label for="model_pembelajaran"
                             class="col-sm-4 col-form-label">{{ __('Model Pembelajaran') }}</label>
                         <div class="col-sm-8">
                             <select
                                 class="form-control js-example-basic-multiple @error('model_pembelajaran') is-invalid @enderror"
-                                name="model_pembelajaran" id="model-pembelajaran" required>
+                                name="model_pembelajaran" id="model_pembelajaran" required>
                                 <option value="" selected disabled>-- {{ __('Select model pembelajaran') }}
                                     --
                                 </option>
@@ -270,12 +270,12 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label for="jenis-pembelajaran"
+                        <label for="jenis_pembelajaran"
                             class="col-sm-4 col-form-label">{{ __('Jenis Pembelajaran') }}</label>
                         <div class="col-sm-8">
                             <select
                                 class="form-control js-example-basic-multiple @error('jenis_pembelajaran') is-invalid @enderror"
-                                name="jenis_pembelajaran" id="jenis-pembelajaran" required>
+                                name="jenis_pembelajaran" id="jenis_pembelajaran" required>
                                 <option value="" selected disabled>-- {{ __('Select jenis pembelajaran') }}
                                     --
                                 </option>
@@ -299,12 +299,12 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label for="metode-pembelajaran"
+                        <label for="metode_pembelajaran"
                             class="col-sm-4 col-form-label">{{ __('Metode Pembelajaran') }}</label>
                         <div class="col-sm-8">
                             <select
                                 class="form-control js-example-basic-multiple @error('metode_pembelajaran') is-invalid @enderror"
-                                name="metode_pembelajaran" id="metode-pembelajaran" required>
+                                name="metode_pembelajaran" id="metode_pembelajaran" required>
                                 <option value="" selected disabled>-- {{ __('Select metode pembelajaran') }}
                                     --
                                 </option>
@@ -332,10 +332,10 @@
             <form id="form-3" class="row row-cols-1 ms-5 me-5 needs-validation" novalidate="">
                 <div class="row" style="padding: 20px">
                     <div class="form-group row mb-3">
-                        <label for="sasaran-pesertum"
+                        <label for="sasaran_peserta"
                             class="col-sm-4 col-form-label">{{ __('Sasaran Peserta') }}</label>
                         <div class="col-sm-8">
-                            <input type="text" name="sasaran_peserta" id="sasaran-pesertum"
+                            <input type="text" name="sasaran_peserta" id="sasaran_peserta"
                                 class="form-control @error('sasaran_peserta') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->sasaran_peserta : old('sasaran_peserta') }}"
                                 placeholder="{{ __('Sasaran Peserta') }}" required />
@@ -346,12 +346,26 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label for="aktivitas-prapembelajaran"
-                            class="col-sm-4 col-form-label">{{ __('Aktivitas Prapembelajaran') }}</label>
+                        <label for="kriteria_peserta"
+                            class="col-sm-4 col-form-label">{{ __('Kriteria Peserta') }}</label>
                         <div class="col-sm-8">
-                            <input type="text" name="kriteria_peserta" id="kriteria-pesertum"
+                            <input type="text" name="kriteria_peserta" id="kriteria_peserta"
                                 class="form-control @error('kriteria_peserta') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->kriteria_peserta : old('kriteria_peserta') }}"
+                                placeholder="{{ __('Sasaran Peserta') }}" required />
+                            <div class="invalid-feedback">
+                                Mohon untuk diisi Sasaran Peserta
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-3">
+                        <label for="aktivitas_prapembelajaran"
+                            class="col-sm-4 col-form-label">{{ __('Aktivitas Prapembelajaran') }}</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="aktivitas_prapembelajaran" id="aktivitas_prapembelajaran"
+                                class="form-control @error('aktivitas_prapembelajaran') is-invalid @enderror"
+                                value="{{ isset($pengajuanKap) ? $pengajuanKap->aktivitas_prapembelajaran : old('aktivitas_prapembelajaran') }}"
                                 placeholder="{{ __('Kriteria Peserta') }}" required />
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Aktivitas Prapembelajaran
@@ -360,12 +374,12 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label for="penyelenggara-pembelajaran"
+                        <label for="penyelenggara_pembelajaran"
                             class="col-sm-4 col-form-label">{{ __('Penyelenggara Pembelajaran') }}</label>
                         <div class="col-sm-8">
                             <select
                                 class="form-control js-example-basic-multiple @error('penyelenggara_pembelajaran') is-invalid @enderror"
-                                name="penyelenggara_pembelajaran" id="penyelenggara-pembelajaran" required>
+                                name="penyelenggara_pembelajaran" id="penyelenggara_pembelajaran" required>
                                 <option value="" selected disabled>--
                                     {{ __('Select penyelenggara pembelajaran') }} --</option>
                                 <option value="Pusdiklatwas BPKP"
