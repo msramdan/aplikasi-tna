@@ -20,9 +20,11 @@ use App\Http\Controllers\{
     SettingAppController,
     TaggingPembelajaranKompetensiController,
     TopikController,
-    TaggingKompetensiIkController
+    TaggingKompetensiIkController,
+    QRCodeController,
 };
 use App\Http\Controllers\Auth\OtpController;
+use PharIo\Manifest\Url;
 
 Route::get('/localization/{language}', [LocalizationController::class, 'switch'])->name('localization.switch');
 Route::get('/dashboard', function () {
@@ -86,6 +88,7 @@ Route::middleware(['auth', 'web'])->group(function () {
         // Route untuk submit edit
         Route::put('/pengajuan-kap/{id}/{is_bpkp}/{frekuensi}', 'update')->name('pengajuan-kap.update');
         // Route untuk delete
+
         Route::delete('/pengajuan-kap/{id}/{is_bpkp}/{frekuensi}', 'destroy')->name('pengajuan-kap.destroy');
         // Route untuk show
         Route::get('/pengajuan-kap/{id}/{is_bpkp}/{frekuensi}', 'show')->name('pengajuan-kap.show');
@@ -94,4 +97,5 @@ Route::middleware(['auth', 'web'])->group(function () {
     });
 });
 
+Route::get('/generate-qrcode', [QRCodeController::class, 'generateQRCode'])->name('generateQRCode');
 Route::post('/verify-otp', [OtpController::class, 'verifyOtp'])->name('verify-otp');

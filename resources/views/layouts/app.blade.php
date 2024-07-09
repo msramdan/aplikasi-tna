@@ -102,10 +102,38 @@
 
                         <div class="ms-1 header-item d-sm-flex">
                             <button type="button"
-                                class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle shadow-none">
+                                class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle shadow-none"
+                                data-bs-toggle="modal" data-bs-target="#qrModal">
                                 <i class='bx bx-qr fs-22'></i>
                             </button>
                         </div>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="qrModal" tabindex="-1" aria-labelledby="qrModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-primary">
+                                        <h5 class="modal-title text-white" id="qrModalLabel">QR Code</h5>
+                                        <button type="button" class="btn-close bg-danger" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body text-center bg-light bg-gradient">
+                                        <div id="qrcode">
+                                            <div class="visible-print text-center">
+                                                <!-- Bagian ini akan diisi dengan QR code -->
+                                                @isset($qrCode)
+                                                    {!! $qrCode !!}
+                                                    <h3 class="text-secondary mt-3">Scan Me</h3>
+                                                @endisset
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
 
                         <div class="ms-1 header-item  d-sm-flex">
                             <button type="button"
@@ -153,9 +181,11 @@
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     <i class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i>
-                                    <span class="align-middle" data-key="t-logout">{{ trans('navbar.logout') }}</span>
+                                    <span class="align-middle"
+                                        data-key="t-logout">{{ trans('navbar.logout') }}</span>
                                 </a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                    class="d-none">
                                     @csrf
                                 </form>
 
@@ -235,6 +265,9 @@
             }
         })
     </script> --}}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>

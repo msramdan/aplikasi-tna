@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "808fe5afe11071afaab5d2a530ff427c",
+    "content-hash": "986e1a58d515d0f7b11935b0a2602ef8",
     "packages": [
         {
             "name": "anhskohbo/no-captcha",
@@ -126,27 +126,27 @@
         },
         {
             "name": "barryvdh/laravel-dompdf",
-            "version": "v2.0.1",
+            "version": "v2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/barryvdh/laravel-dompdf.git",
-                "reference": "9843d2be423670fb434f4c978b3c0f4dd92c87a6"
+                "reference": "c96f90c97666cebec154ca1ffb67afed372114d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-dompdf/zipball/9843d2be423670fb434f4c978b3c0f4dd92c87a6",
-                "reference": "9843d2be423670fb434f4c978b3c0f4dd92c87a6",
+                "url": "https://api.github.com/repos/barryvdh/laravel-dompdf/zipball/c96f90c97666cebec154ca1ffb67afed372114d8",
+                "reference": "c96f90c97666cebec154ca1ffb67afed372114d8",
                 "shasum": ""
             },
             "require": {
-                "dompdf/dompdf": "^2.0.1",
-                "illuminate/support": "^6|^7|^8|^9|^10",
+                "dompdf/dompdf": "^2.0.7",
+                "illuminate/support": "^6|^7|^8|^9|^10|^11",
                 "php": "^7.2 || ^8.0"
             },
             "require-dev": {
-                "nunomaduro/larastan": "^1|^2",
-                "orchestra/testbench": "^4|^5|^6|^7|^8",
-                "phpro/grumphp": "^1",
+                "larastan/larastan": "^1.0|^2.7.0",
+                "orchestra/testbench": "^4|^5|^6|^7|^8|^9",
+                "phpro/grumphp": "^1 || ^2.5",
                 "squizlabs/php_codesniffer": "^3.5"
             },
             "type": "library",
@@ -187,7 +187,7 @@
             ],
             "support": {
                 "issues": "https://github.com/barryvdh/laravel-dompdf/issues",
-                "source": "https://github.com/barryvdh/laravel-dompdf/tree/v2.0.1"
+                "source": "https://github.com/barryvdh/laravel-dompdf/tree/v2.2.0"
             },
             "funding": [
                 {
@@ -199,7 +199,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-01-12T15:12:49+00:00"
+            "time": "2024-04-25T13:16:04+00:00"
         },
         {
             "name": "brick/math",
@@ -632,16 +632,16 @@
         },
         {
             "name": "dompdf/dompdf",
-            "version": "v2.0.3",
+            "version": "v2.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dompdf/dompdf.git",
-                "reference": "e8d2d5e37e8b0b30f0732a011295ab80680d7e85"
+                "reference": "c20247574601700e1f7c8dab39310fca1964dc52"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dompdf/dompdf/zipball/e8d2d5e37e8b0b30f0732a011295ab80680d7e85",
-                "reference": "e8d2d5e37e8b0b30f0732a011295ab80680d7e85",
+                "url": "https://api.github.com/repos/dompdf/dompdf/zipball/c20247574601700e1f7c8dab39310fca1964dc52",
+                "reference": "c20247574601700e1f7c8dab39310fca1964dc52",
                 "shasum": ""
             },
             "require": {
@@ -649,7 +649,7 @@
                 "ext-mbstring": "*",
                 "masterminds/html5": "^2.0",
                 "phenx/php-font-lib": ">=0.5.4 <1.0.0",
-                "phenx/php-svg-lib": ">=0.3.3 <1.0.0",
+                "phenx/php-svg-lib": ">=0.5.2 <1.0.0",
                 "php": "^7.1 || ^8.0"
             },
             "require-dev": {
@@ -688,9 +688,9 @@
             "homepage": "https://github.com/dompdf/dompdf",
             "support": {
                 "issues": "https://github.com/dompdf/dompdf/issues",
-                "source": "https://github.com/dompdf/dompdf/tree/v2.0.3"
+                "source": "https://github.com/dompdf/dompdf/tree/v2.0.8"
             },
-            "time": "2023-02-07T12:51:48+00:00"
+            "time": "2024-04-29T13:06:17+00:00"
         },
         {
             "name": "dragonmantank/cron-expression",
@@ -3634,16 +3634,16 @@
         },
         {
             "name": "phenx/php-svg-lib",
-            "version": "0.5.0",
+            "version": "0.5.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dompdf/php-svg-lib.git",
-                "reference": "76876c6cf3080bcb6f249d7d59705108166a6685"
+                "reference": "46b25da81613a9cf43c83b2a8c2c1bdab27df691"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dompdf/php-svg-lib/zipball/76876c6cf3080bcb6f249d7d59705108166a6685",
-                "reference": "76876c6cf3080bcb6f249d7d59705108166a6685",
+                "url": "https://api.github.com/repos/dompdf/php-svg-lib/zipball/46b25da81613a9cf43c83b2a8c2c1bdab27df691",
+                "reference": "46b25da81613a9cf43c83b2a8c2c1bdab27df691",
                 "shasum": ""
             },
             "require": {
@@ -3662,7 +3662,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "LGPL-3.0"
+                "LGPL-3.0-or-later"
             ],
             "authors": [
                 {
@@ -3674,9 +3674,9 @@
             "homepage": "https://github.com/PhenX/php-svg-lib",
             "support": {
                 "issues": "https://github.com/dompdf/php-svg-lib/issues",
-                "source": "https://github.com/dompdf/php-svg-lib/tree/0.5.0"
+                "source": "https://github.com/dompdf/php-svg-lib/tree/0.5.4"
             },
-            "time": "2022-09-06T12:16:56+00:00"
+            "time": "2024-04-08T12:52:34+00:00"
         },
         {
             "name": "phpoffice/phpspreadsheet",
@@ -10455,5 +10455,5 @@
         "php": "^8.1"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }
