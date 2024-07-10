@@ -201,156 +201,191 @@
                     <div class="card">
                         <div class="card-body">
 
-                            <div class="table-responsive">
-                                <table class="table table-hover table-striped table-sm">
-                                    <tr>
-                                        <td class="fw-bold">{{ __('Kode Pembelajaran') }}</td>
-                                        <td>{{ $pengajuanKap->kode_pembelajaran }}</td>
-                                    </tr>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link active" id="icon-tab-0" data-bs-toggle="tab" href="#icon-tabpanel-0"
+                                        role="tab" aria-controls="icon-tabpanel-0" aria-selected="true"><i
+                                            class="fa-solid fa-1 fa-fw"></i> Konteks Pembelajaran</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="icon-tab-1" data-bs-toggle="tab" href="#icon-tabpanel-1"
+                                        role="tab" aria-controls="icon-tabpanel-1" aria-selected="false"><i
+                                            class="fa-solid fa-2 fa-fw"></i> Detil Pembelajaran</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="icon-tab-2" data-bs-toggle="tab" href="#icon-tabpanel-2"
+                                        role="tab" aria-controls="icon-tabpanel-2" aria-selected="false"><i
+                                            class="fa-solid fa-3 fa-fw"></i> Penyelenggaraan Pembelajaran</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content pt-5" id="tab-content">
+                                <div class="tab-pane active" id="icon-tabpanel-0" role="tabpanel"
+                                    aria-labelledby="icon-tab-0">
+                                    <table class="table table-hover table-striped table-sm">
+                                        <tr>
+                                            <td class="fw-bold">{{ __('Kode Pembelajaran') }}</td>
+                                            <td>{{ $pengajuanKap->kode_pembelajaran }}</td>
+                                        </tr>
 
-                                    <tr>
-                                        <td class="fw-bold">{{ __('Institusi Sumber') }}</td>
-                                        <td>{{ $pengajuanKap->institusi_sumber }}</td>
-                                    </tr>
+                                        <tr>
+                                            <td class="fw-bold">{{ __('Institusi Sumber') }}</td>
+                                            <td>{{ $pengajuanKap->institusi_sumber }}</td>
+                                        </tr>
 
-                                    <tr>
-                                        <td class="fw-bold">{{ __('Jenis Progran') }}</td>
-                                        <td>{{ $pengajuanKap->jenis_program }}</td>
-                                    </tr>
+                                        <tr>
+                                            <td class="fw-bold">{{ __('Jenis Progran') }}</td>
+                                            <td>{{ $pengajuanKap->jenis_program }}</td>
+                                        </tr>
 
-                                    <tr>
-                                        <td class="fw-bold">{{ __('Frekuensi pelaksanaan') }}</td>
-                                        <td>{{ $pengajuanKap->frekuensi_pelaksanaan }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="fw-bold">{{ __('Indikator Kinerja') }}</td>
-                                        <td>{{ $pengajuanKap->indikator_kinerja }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="fw-bold">{{ __('Kompetensi') }}</td>
-                                        <td>{{ $pengajuanKap->nama_kompetensi }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="fw-bold">{{ __('Topik') }}</td>
-                                        <td>{{ $pengajuanKap->nama_topik }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="fw-bold">{{ __('Alokasi Waktu') }}</td>
-                                        <td>{{ $pengajuanKap->alokasi_waktu }} Hari</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="fw-bold">{{ __('Bentuk Pembelajaran') }}</td>
-                                        <td>{{ $pengajuanKap->bentuk_pembelajaran }} Hari</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="fw-bold">{{ __('Jalur Pembelajaran') }}</td>
-                                        <td>{{ $pengajuanKap->jalur_pembelajaran }} Hari</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="fw-bold">{{ __('Indikator Dampak Terhadap Kinerja Organisasi') }}</td>
-                                        <td>{{ $pengajuanKap->indikator_dampak_terhadap_kinerja_organisasi }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="fw-bold">{{ __('Penugasan Yang Terkait Dengan Pembelajaran') }}</td>
-                                        <td>{{ $pengajuanKap->penugasan_yang_terkait_dengan_pembelajaran }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="fw-bold">{{ __('Skill Group Owner') }}</td>
-                                        <td>{{ $pengajuanKap->skill_group_owner }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="fw-bold">{{ __('Jalur Pembelajaran') }}</td>
-                                        <td>{{ $pengajuanKap->jalur_pembelajaran }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="fw-bold">{{ __('Model Pembelajaran') }}</td>
-                                        <td>{{ $pengajuanKap->model_pembelajaran }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="fw-bold">{{ __('Jenis Pembelajaran') }}</td>
-                                        <td>{{ $pengajuanKap->jenis_pembelajaran }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="fw-bold">{{ __('Metode Pembelajaran') }}</td>
-                                        <td>{{ $pengajuanKap->metode_pembelajaran }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="fw-bold">{{ __('Sasaran Peserta') }}</td>
-                                        <td>{{ $pengajuanKap->sasaran_peserta }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="fw-bold">{{ __('Kriteria Peserta') }}</td>
-                                        <td>{{ $pengajuanKap->kriteria_peserta }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="fw-bold">{{ __('Aktivitas Prapembelajaran') }}</td>
-                                        <td>{{ $pengajuanKap->aktivitas_prapembelajaran }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="fw-bold">{{ __('Penyelenggara Pembelajaran') }}</td>
-                                        <td>{{ $pengajuanKap->penyelenggara_pembelajaran }}</td>
-                                    </tr>
-                                    @php
-                                        $fasilitators = json_decode($pengajuanKap->fasilitator_pembelajaran);
-                                    @endphp
+                                        <tr>
+                                            <td class="fw-bold">{{ __('Frekuensi pelaksanaan') }}</td>
+                                            <td>{{ $pengajuanKap->frekuensi_pelaksanaan }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">{{ __('Indikator Kinerja') }}</td>
+                                            <td>{{ $pengajuanKap->indikator_kinerja }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">{{ __('Kompetensi') }}</td>
+                                            <td>{{ $pengajuanKap->nama_kompetensi }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">{{ __('Topik') }}</td>
+                                            <td>{{ $pengajuanKap->nama_topik }}</td>
+                                        </tr>
 
-                                    <tr>
-                                        <td class="fw-bold">{{ __('Fasilitator Pembelajaran') }}</td>
-                                        <td>
-                                            @foreach ($fasilitators as $item)
-                                                <span class="badge bg-primary">{{ $item }}</span>
-                                            @endforeach
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="fw-bold">{{ __('Sertifikat') }}</td>
-                                        <td>{{ $pengajuanKap->sertifikat }}</td>
-                                    </tr>
+                                        <tr>
+                                            <td class="fw-bold">{{ __('Tujuan Program Pembelajaran') }}</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">{{ __(' Indikator Keberhasilan') }}</td>
+                                            <td></td>
+                                        </tr>
 
-                                    <tr>
-                                        <td class="fw-bold">{{ __('Tanggal dibuat') }}</td>
-                                        <td>{{ $pengajuanKap->tanggal_created }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="fw-bold">{{ __('Current step') }}</td>
-                                        <td>Step {{ $pengajuanKap->current_step }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="fw-bold">{{ __('Status pengajuan') }}</td>
-                                        <td>
-                                            @if ($pengajuanKap->status_pengajuan == 'Pending')
-                                                <button style="width:150px" class="btn btn-gray btn-sm btn-block">
-                                                    <i class="fa fa-clock" aria-hidden="true"></i> Pending
-                                                </button>
-                                            @elseif ($pengajuanKap->status_pengajuan == 'Approved')
-                                                <button style="width:150px" class="btn btn-success btn-sm btn-block">
-                                                    <i class="fa fa-check" aria-hidden="true"></i> Approved
-                                                </button>
-                                            @elseif ($pengajuanKap->status_pengajuan == 'Rejected')
-                                                <button style="width:150px" class="btn btn-danger btn-sm btn-block">
-                                                    <i class="fa fa-times" aria-hidden="true"></i> Rejected
-                                                </button>
-                                            @elseif ($pengajuanKap->status_pengajuan == 'Process')
-                                                <button style="width:150px" class="btn btn-primary btn-sm btn-block">
-                                                    <i class="fa fa-spinner" aria-hidden="true"></i> Process
-                                                </button>
-                                            @endif
-                                        </td>
-                                    </tr>
+                                        <tr>
+                                            <td class="fw-bold">{{ __('Indikator Dampak Terhadap Kinerja Organisasi') }}
+                                            </td>
+                                            <td>{{ $pengajuanKap->indikator_dampak_terhadap_kinerja_organisasi }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">{{ __('Penugasan Yang Terkait Dengan Pembelajaran') }}</td>
+                                            <td>{{ $pengajuanKap->penugasan_yang_terkait_dengan_pembelajaran }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">{{ __('Skill Group Owner') }}</td>
+                                            <td>{{ $pengajuanKap->skill_group_owner }}</td>
+                                        </tr>
 
-                                    <tr>
-                                        <td class="fw-bold">{{ __('User created') }}</td>
-                                        <td>{{ $pengajuanKap->user_name }}</td>
-                                    </tr>
+                                        <tr>
+                                            <td class="fw-bold">{{ __('Tanggal dibuat') }}</td>
+                                            <td>{{ $pengajuanKap->tanggal_created }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">{{ __('Current step') }}</td>
+                                            <td>Step {{ $pengajuanKap->current_step }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">{{ __('Status pengajuan') }}</td>
+                                            <td>
+                                                @if ($pengajuanKap->status_pengajuan == 'Pending')
+                                                    <button style="width:150px" class="btn btn-gray btn-sm btn-block">
+                                                        <i class="fa fa-clock" aria-hidden="true"></i> Pending
+                                                    </button>
+                                                @elseif ($pengajuanKap->status_pengajuan == 'Approved')
+                                                    <button style="width:150px" class="btn btn-success btn-sm btn-block">
+                                                        <i class="fa fa-check" aria-hidden="true"></i> Approved
+                                                    </button>
+                                                @elseif ($pengajuanKap->status_pengajuan == 'Rejected')
+                                                    <button style="width:150px" class="btn btn-danger btn-sm btn-block">
+                                                        <i class="fa fa-times" aria-hidden="true"></i> Rejected
+                                                    </button>
+                                                @elseif ($pengajuanKap->status_pengajuan == 'Process')
+                                                    <button style="width:150px" class="btn btn-primary btn-sm btn-block">
+                                                        <i class="fa fa-spinner" aria-hidden="true"></i> Process
+                                                    </button>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">{{ __('User created') }}</td>
+                                            <td>{{ $pengajuanKap->user_name }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="tab-pane" id="icon-tabpanel-1" role="tabpanel" aria-labelledby="icon-tab-1">
+                                    <table class="table table-hover table-striped table-sm">
+                                        <tr>
+                                            <td class="fw-bold">{{ __('Alokasi Waktu') }}</td>
+                                            <td>{{ $pengajuanKap->alokasi_waktu }} Hari</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">{{ __('Bentuk Pembelajaran') }}</td>
+                                            <td>{{ $pengajuanKap->bentuk_pembelajaran }} Hari</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">{{ __('Jalur Pembelajaran') }}</td>
+                                            <td>{{ $pengajuanKap->jalur_pembelajaran }} Hari</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">{{ __('Model Pembelajaran') }}</td>
+                                            <td>{{ $pengajuanKap->model_pembelajaran }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">{{ __('Jenis Pembelajaran') }}</td>
+                                            <td>{{ $pengajuanKap->jenis_pembelajaran }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">{{ __('Metode Pembelajaran') }}</td>
+                                            <td>{{ $pengajuanKap->metode_pembelajaran }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="tab-pane" id="icon-tabpanel-2" role="tabpanel" aria-labelledby="icon-tab-2">
+                                    <table class="table table-hover table-striped table-sm">
+                                        <tr>
+                                            <td class="fw-bold">{{ __('Sasaran Peserta') }}</td>
+                                            <td>{{ $pengajuanKap->sasaran_peserta }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">{{ __('Kriteria Peserta') }}</td>
+                                            <td>{{ $pengajuanKap->kriteria_peserta }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">{{ __('Aktivitas Prapembelajaran') }}</td>
+                                            <td>{{ $pengajuanKap->aktivitas_prapembelajaran }}</td>
+                                        </tr>
 
-                                </table>
+                                        <tr>
+                                            <td class="fw-bold">{{ __('Penyelenggara Pembelajaran') }}</td>
+                                            <td>{{ $pengajuanKap->penyelenggara_pembelajaran }}</td>
+                                        </tr>
+                                        @php
+                                            $fasilitators = json_decode($pengajuanKap->fasilitator_pembelajaran);
+                                        @endphp
+
+                                        <tr>
+                                            <td class="fw-bold">{{ __('Fasilitator Pembelajaran') }}</td>
+                                            <td>
+                                                @foreach ($fasilitators as $item)
+                                                    <span class="badge bg-primary">{{ $item }}</span>
+                                                @endforeach
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">{{ __('Sertifikat') }}</td>
+                                            <td>{{ $pengajuanKap->sertifikat }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">{{ __(' Level Evaluasi dan Instrumennya') }}</td>
+                                            <td></td>
+                                        </tr>
+                                    </table>
+                                </div>
                             </div>
-
-
                         </div>
                     </div>
                 </div>
-
                 <div class="col-md-4">
                     <div class="card">
                         <div class="wizard-container">
@@ -384,7 +419,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
             <div class="col-md-12">
                 <a href="{{ route('pengajuan-kap.index', [
@@ -400,7 +434,8 @@
                         Rejected
                     </button>
                 @else
-                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#approveModal">
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                        data-bs-target="#approveModal">
                         Approved
                     </button>
                     <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#rejectModal">
@@ -415,7 +450,8 @@
         </div>
 
         <!-- Approve Modal -->
-        <div class="modal fade" id="approveModal" tabindex="-1" aria-labelledby="approveModalLabel" aria-hidden="true">
+        <div class="modal fade" id="approveModal" tabindex="-1" aria-labelledby="approveModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
