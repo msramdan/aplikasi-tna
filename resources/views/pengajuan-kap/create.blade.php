@@ -218,7 +218,7 @@
             function checkInputs() {
                 let allEmpty = true;
 
-                $('input[name="keterangan[]"]').each(function() {
+                $('input[name="indikator_keberhasilan[]"]').each(function() {
                     if ($(this).val() !== '') {
                         allEmpty = false;
                         return false; // Break out of the loop
@@ -226,13 +226,13 @@
                 });
 
                 if (allEmpty) {
-                    $('input[name="keterangan[]"]').attr('required', 'required');
+                    $('input[name="indikator_keberhasilan[]"]').attr('required', 'required');
                 } else {
-                    $('input[name="keterangan[]"]').removeAttr('required');
+                    $('input[name="indikator_keberhasilan[]"]').removeAttr('required');
                 }
             }
 
-            $('input[name="keterangan[]"]').on('input', function() {
+            $('input[name="indikator_keberhasilan[]"]').on('input', function() {
                 checkInputs();
             });
 
