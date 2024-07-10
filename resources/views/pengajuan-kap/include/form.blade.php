@@ -45,7 +45,7 @@
         </li>
     </ul>
 
-    <div class="tab-content">
+    <div class="tab-content" style="overflow: auto">
         <div id="step-1" class="tab-pane" role="tabpanel" aria-labelledby="step-1" style="display: none;">
             <form id="form-1" style="margin-top: 20px">
                 <div class="row" style="padding: 20px">
@@ -202,52 +202,62 @@
                                     <tr>
                                         <td>1</td>
                                         <td><input type="text" name="indikator_keberhasilan[]"
-                                                class="form-control @error('indikator_keberhasilan') is-invalid @enderror" /></td>
+                                                class="form-control @error('indikator_keberhasilan') is-invalid @enderror" />
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>2</td>
                                         <td><input type="text" name="indikator_keberhasilan[]"
-                                                class="form-control @error('indikator_keberhasilan') is-invalid @enderror" /></td>
+                                                class="form-control @error('indikator_keberhasilan') is-invalid @enderror" />
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>3</td>
                                         <td><input type="text" name="indikator_keberhasilan[]"
-                                                class="form-control @error('indikator_keberhasilan') is-invalid @enderror" /></td>
+                                                class="form-control @error('indikator_keberhasilan') is-invalid @enderror" />
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>4</td>
                                         <td><input type="text" name="indikator_keberhasilan[]"
-                                                class="form-control @error('indikator_keberhasilan') is-invalid @enderror" /></td>
+                                                class="form-control @error('indikator_keberhasilan') is-invalid @enderror" />
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>5</td>
                                         <td><input type="text" name="indikator_keberhasilan[]"
-                                                class="form-control @error('indikator_keberhasilan') is-invalid @enderror" /></td>
+                                                class="form-control @error('indikator_keberhasilan') is-invalid @enderror" />
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>6</td>
                                         <td><input type="text" name="indikator_keberhasilan[]"
-                                                class="form-control @error('indikator_keberhasilan') is-invalid @enderror" /></td>
+                                                class="form-control @error('indikator_keberhasilan') is-invalid @enderror" />
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>7</td>
                                         <td><input type="text" name="indikator_keberhasilan[]"
-                                                class="form-control @error('indikator_keberhasilan') is-invalid @enderror" /></td>
+                                                class="form-control @error('indikator_keberhasilan') is-invalid @enderror" />
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>8</td>
                                         <td><input type="text" name="indikator_keberhasilan[]"
-                                                class="form-control @error('indikator_keberhasilan') is-invalid @enderror" /></td>
+                                                class="form-control @error('indikator_keberhasilan') is-invalid @enderror" />
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>9</td>
                                         <td><input type="text" name="indikator_keberhasilan[]"
-                                                class="form-control @error('indikator_keberhasilan') is-invalid @enderror" /></td>
+                                                class="form-control @error('indikator_keberhasilan') is-invalid @enderror" />
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>10</td>
                                         <td><input type="text" name="indikator_keberhasilan[]"
-                                                class="form-control @error('indikator_keberhasilan') is-invalid @enderror" /></td>
+                                                class="form-control @error('indikator_keberhasilan') is-invalid @enderror" />
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -322,6 +332,46 @@
                         </div>
                     </div>
 
+                    <div class="form-group row mb-1">
+                        <label class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-6">
+                            <div class="table-responsive">
+
+                                <table class="table table-bordered table-sm" id="dynamic_field">
+                                    <thead>
+                                        <tr>
+                                            <th>Lokasi</th>
+                                            <th>Tgl Mulai</th>
+                                            <th>Tgl Selesai</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tr>
+                                        <td>
+                                            <select name="lokasi[]"
+                                                class="form-control @error('lokasi') is-invalid @enderror" required>
+                                                <option value="" selected disabled>-- Pilih --</option>
+                                                @foreach ($lokasiData as $lokasi)
+                                                    <option value="{{ $lokasi->id }}">{{ $lokasi->nama_lokasi }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </td>
+                                        <td><input type="date" name="tanggal_mulai[]"
+                                                class="form-control @error('tanggal_mulai') is-invalid @enderror"
+                                                required /></td>
+                                        <td><input type="date" name="tanggal_selesai[]"
+                                                class="form-control @error('tanggal_selesai') is-invalid @enderror"
+                                                required /></td>
+                                        <td><button type="button" name="add_photo" id="add_photo"
+                                                class="btn btn-success"><i class="fa fa-plus"
+                                                    aria-hidden="true"></i></button></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="form-group row mb-3">
                         <label for="bentuk_pembelajaran"
@@ -452,10 +502,11 @@
                             </div>
                         </div>
                     </div>
+
+
                 </div>
             </form>
         </div>
-
 
         <div id="step-3" class="tab-pane" role="tabpanel" aria-labelledby="step-3">
             <form id="form-3" style="margin-top: 20px">
@@ -573,31 +624,43 @@
                                 <tbody>
                                     <tr>
                                         <td>1</td>
-                                        <td><input type="text" name="level_evaluasi_instrumen[]"
+                                        <td>
+                                            <input type="hidden" name="no_level[]" value="1"
+                                                class="form-control @error('no_level') is-invalid @enderror" />
+
+                                            <input type="text" name="level_evaluasi_instrumen[]"
                                                 class="form-control @error('level_evaluasi_instrumen') is-invalid @enderror" />
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>2</td>
-                                        <td><input type="text" name="level_evaluasi_instrumen[]"
+                                        <td><input type="hidden" name="no_level[]" value="2"
+                                                class="form-control @error('no_level') is-invalid @enderror" /><input
+                                                type="text" name="level_evaluasi_instrumen[]"
                                                 class="form-control @error('level_evaluasi_instrumen') is-invalid @enderror" />
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>3</td>
-                                        <td><input type="text" name="level_evaluasi_instrumen[]"
+                                        <td><input type="hidden" name="no_level[]" value="3"
+                                                class="form-control @error('no_level') is-invalid @enderror" /><input
+                                                type="text" name="level_evaluasi_instrumen[]"
                                                 class="form-control @error('level_evaluasi_instrumen') is-invalid @enderror" />
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>4</td>
-                                        <td><input type="text" name="level_evaluasi_instrumen[]"
+                                        <td><input type="hidden" name="no_level[]" value="4"
+                                                class="form-control @error('no_level') is-invalid @enderror" /><input
+                                                type="text" name="level_evaluasi_instrumen[]"
                                                 class="form-control @error('level_evaluasi_instrumen') is-invalid @enderror" />
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>5</td>
-                                        <td><input type="text" name="level_evaluasi_instrumen[]"
+                                        <td><input type="hidden" name="no_level[]" value="5"
+                                                class="form-control @error('no_level') is-invalid @enderror" /><input
+                                                type="text" name="level_evaluasi_instrumen[]"
                                                 class="form-control @error('level_evaluasi_instrumen') is-invalid @enderror" />
                                         </td>
                                     </tr>
@@ -610,8 +673,7 @@
             </form>
         </div>
     </div>
-
-    <div class="sw-toolbar-elm toolbar toolbar-bottom" role="toolbar"><button class="btn sw-btn-prev sw-btn disabled"
+    <div class="sw-toolbar-elm toolbar toolbar-bottom"><button class="btn sw-btn-prev sw-btn disabled"
             type="button">Previous</button><button class="btn sw-btn-next sw-btn"
             type="button">Next</button><button class="btn btn-success" id="btnFinish" disabled=""
             onclick="onConfirm()">Submit</button>

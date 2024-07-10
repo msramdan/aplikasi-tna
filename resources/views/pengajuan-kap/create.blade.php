@@ -6,6 +6,8 @@
     <link href="https://cdn.jsdelivr.net/npm/smartwizard@6/dist/css/smart_wizard_all.min.css" rel="stylesheet"
         type="text/css" />
 @endpush
+
+
 @section('content')
     <div class="page-content">
         <div class="container-fluid">
@@ -100,7 +102,7 @@
                 var inputFields = [
                     'jenis_program', 'kompetensi_id', 'topik_id', 'bentuk_pembelajaran',
                     'jalur_pembelajaran', 'model_pembelajaran', 'jenis_pembelajaran',
-                    'metode_pembelajaran', 'penyelenggara_pembelajaran','prioritas_pembelajaran'
+                    'metode_pembelajaran', 'penyelenggara_pembelajaran', 'prioritas_pembelajaran'
                 ];
 
                 inputFields.forEach(field => {
@@ -292,6 +294,35 @@
             });
 
             checkInputInstrumen();
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            var i = 1;
+            $('#add_photo').click(function() {
+                i++;
+                var newRow = '<tr id="row' + i + '">' +
+                    '<td>' +
+                    '<select name="lokasi[]" class="form-control" required>' +
+                    '<option value="" selected disabled>-- Pilih --</option>' +
+                    '@foreach ($lokasiData as $lokasi)' +
+                    '<option value="{{ $lokasi->id }}">{{ $lokasi->nama_lokasi }}</option>' +
+                    '@endforeach' +
+                    '</select>' +
+                    '</td>' +
+                    '<td><input type="date" name="tanggal_mulai[]" class="form-control" required /></td>' +
+                    '<td><input type="date" name="tanggal_selesai[]" class="form-control" required /></td>' +
+                    '<td><button type="button" name="remove" id="' + i +
+                    '" class="btn btn-danger btn_remove">X</button></td>' +
+                    '</tr>';
+                $('#dynamic_field').append(newRow);
+            });
+
+            $(document).on('click', '.btn_remove', function() {
+                var button_id = $(this).attr("id");
+                $('#row' + button_id + '').remove();
+            });
         });
     </script>
 @endpush

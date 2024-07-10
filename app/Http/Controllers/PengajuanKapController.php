@@ -92,13 +92,13 @@ class PengajuanKapController extends Controller
             'Library cafe',
             'Magang/praktik kerja'
         ];
-
-
+        $lokasiData = DB::table('lokasi')->get();
         return view('pengajuan-kap.create', [
             'is_bpkp' => $is_bpkp,
             'frekuensi' => $frekuensi,
             'jenis_program' => $jenis_program,
             'jalur_pembelajaran' => $jalur_pembelajaran,
+            'lokasiData' => $lokasiData,
         ]);
     }
 
@@ -157,6 +157,7 @@ class PengajuanKapController extends Controller
 
     public function store(Request $request, $is_bpkp, $frekuensi)
     {
+
         $validatedData = $request->validate([
             'jenis_program' => 'required|in:Renstra,APP,APEP,APIP',
             'indikator_kinerja' => 'required|string',
@@ -183,8 +184,8 @@ class PengajuanKapController extends Controller
             'fasilitator_pembelajaran.*' => 'required|string|in:Widyaiswara,Instruktur,Praktisi,Pakar,Tutor,Coach,Mentor,Narasumber lainnya',
             'sertifikat' => 'required|string',
             'level_evaluasi_instrumen' => 'required|array',
+            'no_level' => 'required|array',
         ]);
-
 
         DB::beginTransaction();
         try {
@@ -222,9 +223,26 @@ class PengajuanKapController extends Controller
                 'current_step' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
-                // 'level_evaluasi_instrumen' => $level_evaluasi_instrumen_json,
-                // 'indikator_keberhasilan' => 'required|array',
             ]);
+
+            foreach ($validatedData['indikator_keberhasilan'] as $index => $row) {
+                DB::table('indikator_keberhasilan_kap')->insert([
+                    'pengajuan_kap_id' => $pengajuanKapId,
+                    'indikator_keberhasilan' => $row,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
+
+            foreach ($validatedData['level_evaluasi_instrumen'] as $index => $x) {
+                DB::table('level_evaluasi_instrumen_kap')->insert([
+                    'pengajuan_kap_id' => $pengajuanKapId,
+                    'level' => $validatedData['no_level'][$index],
+                    'keterangan' => $x,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
 
             $remarks = [
                 'Team pusdiklat',
