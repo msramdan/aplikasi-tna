@@ -161,9 +161,9 @@
                                 <option value="" disabled selected>
                                     {{ __('-- Select Prioritas Pembelajaran --') }}</option>
                                 @for ($i = 1; $i <= 20; $i++)
-                                    <option value="Level {{ $i }}"
+                                    <option value="Prioritas {{ $i }}"
                                         {{ (isset($pengajuanKap) && $pengajuanKap->prioritas_pembelajaran == $i) || old('prioritas_pembelajaran') == $i ? 'selected' : '' }}>
-                                        Level {{ $i }}
+                                        Prioritas {{ $i }}
                                     </option>
                                 @endfor
                             </select>
