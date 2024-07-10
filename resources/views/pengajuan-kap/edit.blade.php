@@ -98,10 +98,19 @@
                     });
                 });
 
+                $('select[name^="tempat_acara"]').each(function(index, element) {
+                    var selectedValue = $(element).val();
+                    if (selectedValue !== null && selectedValue !== '') {
+                        $('#form-laporan').append(
+                            `<input type="hidden" name="${$(element).attr('name')}" value="${selectedValue}"/>`
+                        );
+                    }
+                });
+
                 var inputFields = [
                     'jenis_program', 'kompetensi_id', 'topik_id', 'bentuk_pembelajaran',
                     'jalur_pembelajaran', 'model_pembelajaran', 'jenis_pembelajaran',
-                    'metode_pembelajaran', 'penyelenggara_pembelajaran','prioritas_pembelajaran'
+                    'metode_pembelajaran', 'penyelenggara_pembelajaran', 'prioritas_pembelajaran'
                 ];
 
                 inputFields.forEach(field => {
@@ -211,6 +220,160 @@
                 return true;
             });
 
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            function checkInputs() {
+                let allEmpty = true;
+
+                $('input[name="indikator_keberhasilan[]"]').each(function() {
+                    if ($(this).val() !== '') {
+                        allEmpty = false;
+                        return false; // Break out of the loop
+                    }
+                });
+
+                if (allEmpty) {
+                    $('input[name="indikator_keberhasilan[]"]').attr('required', 'required');
+                } else {
+                    $('input[name="indikator_keberhasilan[]"]').removeAttr('required');
+                }
+            }
+
+            $('input[name="indikator_keberhasilan[]"]').on('input', function() {
+                checkInputs();
+            });
+
+            checkInputs(); // Initial check on page load
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            function checkCheckboxes() {
+                let anyChecked = $('input[name="fasilitator_pembelajaran[]"]:checked').length > 0;
+
+                if (anyChecked) {
+                    $('input[name="fasilitator_pembelajaran[]"]').removeAttr('required');
+                    $('#invalid-fasilitator').hide();
+                } else {
+                    $('input[name="fasilitator_pembelajaran[]"]').attr('required', 'required');
+                    if ($('input[name="fasilitator_pembelajaran[]"]').is(':focus')) {
+                        $('#invalid-fasilitator').show();
+                    }
+                }
+            }
+
+            $('input[name="fasilitator_pembelajaran[]"]').on('change', function() {
+                checkCheckboxes();
+            });
+
+            // Remove required attribute on load to ensure the message is not displayed initially
+            $('input[name="fasilitator_pembelajaran[]"]').removeAttr('required');
+
+            // Initial check to handle pre-checked checkboxes
+            checkCheckboxes();
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            function checkInputInstrumen() {
+                let allEmptyInstrumen = true;
+
+                $('input[name="level_evaluasi_instrumen[]"]').each(function() {
+                    if ($(this).val() !== '') {
+                        allEmptyInstrumen = false;
+                        return false; // Break out of the loop
+                    }
+                });
+
+                if (allEmptyInstrumen) {
+                    $('input[name="level_evaluasi_instrumen[]"]').attr('required', 'required');
+                } else {
+                    $('input[name="level_evaluasi_instrumen[]"]').removeAttr('required');
+                }
+            }
+
+            $('input[name="level_evaluasi_instrumen[]"]').on('input', function() {
+                checkInputInstrumen();
+            });
+
+            checkInputInstrumen();
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            var i = 1;
+            $('#add_photo').click(function() {
+                i++;
+                var newRow = '<tr id="row' + i + '">' +
+                    '<td>' +
+                    '<select name="tempat_acara[]" class="form-control" required>' +
+                    '<option value="" selected disabled>-- Pilih --</option>' +
+                    '@foreach ($lokasiData as $lokasi)' +
+                    '<option value="{{ $lokasi->id }}">{{ $lokasi->nama_lokasi }}</option>' +
+                    '@endforeach' +
+                    '</select>' +
+                    '</td>' +
+                    '<td><input type="date" name="tanggal_mulai[]" class="form-control" required /></td>' +
+                    '<td><input type="date" name="tanggal_selesai[]" class="form-control" required /></td>' +
+                    '<td><button type="button" name="remove" id="' + i +
+                    '" class="btn btn-danger btn_remove">X</button></td>' +
+                    '</tr>';
+                $('#dynamic_field').append(newRow);
+            });
+
+            $(document).on('click', '.btn_remove', function() {
+                var button_id = $(this).attr("id");
+                $('#row' + button_id + '').remove();
+            });
+        });
+    </script>
+    {{-- get deskripsi kompetensi --}}
+    <script>
+        $(document).ready(function() {
+            $('#kompetensi_id').on('change', function() {
+                var kompetensiId = $(this).val();
+                if (kompetensiId) {
+                    // Show spinner
+                    $('#kompetensi-description').html(
+                        '<div class="spinner-border text-primary" role="status">' +
+                        '<span class="visually-hidden">Loading...</span>' +
+                        '</div>'
+                    );
+
+                    $.ajax({
+                        url: '/getKompetensiById/' + kompetensiId,
+                        type: 'GET',
+                        success: function(data) {
+                            if (data.error) {
+                                $('#kompetensi-description').html(
+                                    '<div class="alert alert-danger mt-2" role="alert">' +
+                                    data.error + '</div>');
+                            } else {
+                                $('#kompetensi-description').html(
+                                    '<div class="alert alert-primary mt-2" role="alert">' +
+                                    '<strong>Deskripsi Kompetensi:</strong><br>' +
+                                    '<div style="text-align: justify">' + data
+                                    .deskripsi_kompetensi + '</div>' +
+                                    '</div>'
+                                );
+                            }
+                        },
+                        error: function() {
+                            $('#kompetensi-description').html(
+                                '<div class="alert alert-danger mt-2" role="alert">Error fetching data.</div>'
+                            );
+                        }
+                    });
+                } else {
+                    $('#kompetensi-description').empty();
+                }
+            });
         });
     </script>
 @endpush

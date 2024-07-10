@@ -145,13 +145,14 @@ class PengajuanKapController extends Controller
             ->where('pengajuan_kap.institusi_sumber', '=', $is_bpkp)
             ->where('pengajuan_kap.frekuensi_pelaksanaan', '=', $frekuensi)
             ->first();
-
+        $lokasiData = DB::table('lokasi')->get();
         return view('pengajuan-kap.edit', [
             'pengajuanKap' => $pengajuanKap,
             'is_bpkp' => $is_bpkp,
             'frekuensi' => $frekuensi,
             'jenis_program' => $jenis_program,
             'jalur_pembelajaran' => $jalur_pembelajaran,
+            'lokasiData' => $lokasiData,
         ]);
     }
 

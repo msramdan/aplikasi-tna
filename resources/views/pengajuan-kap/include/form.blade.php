@@ -163,12 +163,13 @@
                                 required>
                                 <option value="" disabled selected>
                                     {{ __('-- Select Prioritas Pembelajaran --') }}</option>
-                                @for ($i = 1; $i <= 20; $i++)
+                                    @for ($i = 1; $i <= 20; $i++)
                                     <option value="Prioritas {{ $i }}"
-                                        {{ (isset($pengajuanKap) && $pengajuanKap->prioritas_pembelajaran == $i) || old('prioritas_pembelajaran') == $i ? 'selected' : '' }}>
+                                        {{ (isset($pengajuanKap) && $pengajuanKap->prioritas_pembelajaran == "Prioritas $i") || old('prioritas_pembelajaran') == "Prioritas $i" ? 'selected' : '' }}>
                                         Prioritas {{ $i }}
                                     </option>
                                 @endfor
+
                             </select>
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Prioritas Pembelajaran
