@@ -98,6 +98,14 @@
                         $('#form-laporan').append(item.cloneNode(true));
                     });
                 });
+                $('select[name^="lokasi"]').each(function(index, element) {
+                    var selectedValue = $(element).val();
+                    if (selectedValue === null || selectedValue === '') {
+                        selectedValue = '';
+                    }
+                    $('#form-laporan').append(
+                        `<input type="hidden" name="${$(element).attr('name')}" value="${selectedValue}"/>`);
+                });
 
                 var inputFields = [
                     'jenis_program', 'kompetensi_id', 'topik_id', 'bentuk_pembelajaran',
@@ -109,7 +117,6 @@
                     var fieldValue = $(`#${field}`).val();
                     $('#form-laporan').append(`<input type="hidden" name="${field}" value="${fieldValue}"/>`);
                 });
-
                 $('#form-laporan').submit();
             }
         }

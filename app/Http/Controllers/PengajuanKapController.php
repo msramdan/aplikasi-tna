@@ -157,7 +157,7 @@ class PengajuanKapController extends Controller
 
     public function store(Request $request, $is_bpkp, $frekuensi)
     {
-
+        dd($request);
         $validatedData = $request->validate([
             'jenis_program' => 'required|in:Renstra,APP,APEP,APIP',
             'indikator_kinerja' => 'required|string',
@@ -185,6 +185,9 @@ class PengajuanKapController extends Controller
             'sertifikat' => 'required|string',
             'level_evaluasi_instrumen' => 'required|array',
             'no_level' => 'required|array',
+            'lokasi' => 'required|array',
+            'tanggal_mulai' => 'required|array',
+            'tanggal_selesai' => 'required|array',
         ]);
 
         DB::beginTransaction();
@@ -307,6 +310,10 @@ class PengajuanKapController extends Controller
             'sertifikat' => 'required|string',
             'user_created' => 'nullable|exists:users,id',
             'level_evaluasi_instrumen' => 'required|array',
+            'no_level' => 'required|array',
+            'lokasi' => 'required|array',
+            'tanggal_mulai' => 'required|array',
+            'tanggal_selesai' => 'required|array',
         ]);
         $fasilitator_pembelajaran = json_encode($validatedData['fasilitator_pembelajaran']);
 
