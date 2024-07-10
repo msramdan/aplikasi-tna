@@ -98,13 +98,13 @@
                         $('#form-laporan').append(item.cloneNode(true));
                     });
                 });
-                $('select[name^="lokasi"]').each(function(index, element) {
+                $('select[name^="tempat_acara"]').each(function(index, element) {
                     var selectedValue = $(element).val();
-                    if (selectedValue === null || selectedValue === '') {
-                        selectedValue = '';
+                    if (selectedValue !== null && selectedValue !== '') {
+                        $('#form-laporan').append(
+                            `<input type="hidden" name="${$(element).attr('name')}" value="${selectedValue}"/>`
+                        );
                     }
-                    $('#form-laporan').append(
-                        `<input type="hidden" name="${$(element).attr('name')}" value="${selectedValue}"/>`);
                 });
 
                 var inputFields = [
@@ -311,7 +311,7 @@
                 i++;
                 var newRow = '<tr id="row' + i + '">' +
                     '<td>' +
-                    '<select name="lokasi[]" class="form-control" required>' +
+                    '<select name="tempat_acara[]" class="form-control" required>' +
                     '<option value="" selected disabled>-- Pilih --</option>' +
                     '@foreach ($lokasiData as $lokasi)' +
                     '<option value="{{ $lokasi->id }}">{{ $lokasi->nama_lokasi }}</option>' +

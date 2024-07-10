@@ -157,7 +157,7 @@ class PengajuanKapController extends Controller
 
     public function store(Request $request, $is_bpkp, $frekuensi)
     {
-        dd($request);
+
         $validatedData = $request->validate([
             'jenis_program' => 'required|in:Renstra,APP,APEP,APIP',
             'indikator_kinerja' => 'required|string',
@@ -185,7 +185,7 @@ class PengajuanKapController extends Controller
             'sertifikat' => 'required|string',
             'level_evaluasi_instrumen' => 'required|array',
             'no_level' => 'required|array',
-            'lokasi' => 'required|array',
+            'tempat_acara' => 'required|array',
             'tanggal_mulai' => 'required|array',
             'tanggal_selesai' => 'required|array',
         ]);
@@ -227,6 +227,18 @@ class PengajuanKapController extends Controller
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
+
+            foreach ($validatedData['tanggal_mulai'] as $index => $row) {
+                DB::table('waktu_tempat')->insert([
+                    'pengajuan_kap_id' => $pengajuanKapId,
+                    'batch' => $index + 1,
+                    'lokasi_id' => $validatedData['tempat_acara'][$index],
+                    'tanggal_mulai' => $validatedData['tanggal_mulai'][$index],
+                    'tanggal_selesai' => $validatedData['tanggal_selesai'][$index],
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
 
             foreach ($validatedData['indikator_keberhasilan'] as $index => $row) {
                 DB::table('indikator_keberhasilan_kap')->insert([

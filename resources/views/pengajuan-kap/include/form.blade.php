@@ -349,7 +349,7 @@
 
                                     <tr>
                                         <td>
-                                            <select name="lokasi[]"
+                                            <select name="tempat_acara[]"
                                                 class="form-control @error('lokasi') is-invalid @enderror" required>
                                                 <option value="" selected disabled>-- Pilih --</option>
                                                 @foreach ($lokasiData as $lokasi)
