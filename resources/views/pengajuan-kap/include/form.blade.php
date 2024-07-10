@@ -74,7 +74,7 @@
                             class="col-sm-3 col-form-label">{{ __('Indikator Kinerja') }}</label>
                         <div class="col-sm-6">
                             <div class="input-group">
-                                <input type="text" name="indikator_kinerja" id="indikator_kinerja" readonly
+                                <input type="text" name="indikator_kinerja" id="indikator_kinerja"
                                     class="form-control @error('indikator_kinerja') is-invalid @enderror"
                                     value="{{ isset($pengajuanKap) ? $pengajuanKap->indikator_kinerja : old('indikator_kinerja') }}"
                                     placeholder="" required />
@@ -201,53 +201,53 @@
                                 <tbody>
                                     <tr>
                                         <td>1</td>
-                                        <td><input type="text" name="keterangan[]"
-                                                class="form-control @error('keterangan') is-invalid @enderror" /></td>
+                                        <td><input type="text" name="indikator_keberhasilan[]"
+                                                class="form-control @error('indikator_keberhasilan') is-invalid @enderror" /></td>
                                     </tr>
                                     <tr>
                                         <td>2</td>
-                                        <td><input type="text" name="keterangan[]"
-                                                class="form-control @error('keterangan') is-invalid @enderror" /></td>
+                                        <td><input type="text" name="indikator_keberhasilan[]"
+                                                class="form-control @error('indikator_keberhasilan') is-invalid @enderror" /></td>
                                     </tr>
                                     <tr>
                                         <td>3</td>
-                                        <td><input type="text" name="keterangan[]"
-                                                class="form-control @error('keterangan') is-invalid @enderror" /></td>
+                                        <td><input type="text" name="indikator_keberhasilan[]"
+                                                class="form-control @error('indikator_keberhasilan') is-invalid @enderror" /></td>
                                     </tr>
                                     <tr>
                                         <td>4</td>
-                                        <td><input type="text" name="keterangan[]"
-                                                class="form-control @error('keterangan') is-invalid @enderror" /></td>
+                                        <td><input type="text" name="indikator_keberhasilan[]"
+                                                class="form-control @error('indikator_keberhasilan') is-invalid @enderror" /></td>
                                     </tr>
                                     <tr>
                                         <td>5</td>
-                                        <td><input type="text" name="keterangan[]"
-                                                class="form-control @error('keterangan') is-invalid @enderror" /></td>
+                                        <td><input type="text" name="indikator_keberhasilan[]"
+                                                class="form-control @error('indikator_keberhasilan') is-invalid @enderror" /></td>
                                     </tr>
                                     <tr>
                                         <td>6</td>
-                                        <td><input type="text" name="keterangan[]"
-                                                class="form-control @error('keterangan') is-invalid @enderror" /></td>
+                                        <td><input type="text" name="indikator_keberhasilan[]"
+                                                class="form-control @error('indikator_keberhasilan') is-invalid @enderror" /></td>
                                     </tr>
                                     <tr>
                                         <td>7</td>
-                                        <td><input type="text" name="keterangan[]"
-                                                class="form-control @error('keterangan') is-invalid @enderror" /></td>
+                                        <td><input type="text" name="indikator_keberhasilan[]"
+                                                class="form-control @error('indikator_keberhasilan') is-invalid @enderror" /></td>
                                     </tr>
                                     <tr>
                                         <td>8</td>
-                                        <td><input type="text" name="keterangan[]"
-                                                class="form-control @error('keterangan') is-invalid @enderror" /></td>
+                                        <td><input type="text" name="indikator_keberhasilan[]"
+                                                class="form-control @error('indikator_keberhasilan') is-invalid @enderror" /></td>
                                     </tr>
                                     <tr>
                                         <td>9</td>
-                                        <td><input type="text" name="keterangan[]"
-                                                class="form-control @error('keterangan') is-invalid @enderror" /></td>
+                                        <td><input type="text" name="indikator_keberhasilan[]"
+                                                class="form-control @error('indikator_keberhasilan') is-invalid @enderror" /></td>
                                     </tr>
                                     <tr>
                                         <td>10</td>
-                                        <td><input type="text" name="keterangan[]"
-                                                class="form-control @error('keterangan') is-invalid @enderror" /></td>
+                                        <td><input type="text" name="indikator_keberhasilan[]"
+                                                class="form-control @error('indikator_keberhasilan') is-invalid @enderror" /></td>
                                     </tr>
                                 </tbody>
                             </table>

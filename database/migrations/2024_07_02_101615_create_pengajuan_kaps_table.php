@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('kompetensi_id')->nullable()->constrained('kompetensi')->cascadeOnUpdate()->nullOnDelete();
             $table->foreignId('topik_id')->nullable()->constrained('topik')->cascadeOnUpdate()->nullOnDelete();
             $table->text('arahan_pimpinan');
-            $table->string('prioritas_pembelajaran', 5);
+            $table->string('prioritas_pembelajaran', 10);
             $table->text('tujuan_program_pembelajaran');
             $table->string('alokasi_waktu', 10);
             $table->text('indikator_dampak_terhadap_kinerja_organisasi');
@@ -55,12 +55,13 @@ return new class extends Migration
             $table->enum('penyelenggara_pembelajaran', ['Pusdiklatwas BPKP', 'Unit kerja', 'Lainnya']);
             $table->json('fasilitator_pembelajaran')->nullable();
             $table->text('sertifikat');
-            $table->string('level_evaluasi_instrumen', 5);
             $table->datetime('tanggal_created');
             $table->enum('status_pengajuan', ['Pending', 'Process', 'Approved', 'Rejected']);
             $table->foreignId('user_created')->nullable()->constrained('users')->cascadeOnUpdate()->nullOnDelete();
             $table->tinyInteger('current_step');
             $table->timestamps();
+            // $table->json('indikator_keberhasilan')->nullable();
+            // $table->json('level_evaluasi_instrumen')->nullable();
         });
     }
 

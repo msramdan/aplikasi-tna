@@ -162,6 +162,7 @@ class PengajuanKapController extends Controller
             'indikator_kinerja' => 'required|string',
             'kompetensi_id' => 'nullable|exists:kompetensi,id',
             'topik_id' => 'nullable|exists:topik,id',
+            'indikator_keberhasilan' => 'required|array',
             'arahan_pimpinan' => 'required|string',
             'prioritas_pembelajaran' => 'required|string',
             'tujuan_program_pembelajaran' => 'required|string',
@@ -181,7 +182,7 @@ class PengajuanKapController extends Controller
             'fasilitator_pembelajaran' => 'required|array',
             'fasilitator_pembelajaran.*' => 'required|string|in:Widyaiswara,Instruktur,Praktisi,Pakar,Tutor,Coach,Mentor,Narasumber lainnya',
             'sertifikat' => 'required|string',
-            'level_evaluasi_instrumen' => 'required',
+            'level_evaluasi_instrumen' => 'required|array',
         ]);
 
 
@@ -215,13 +216,14 @@ class PengajuanKapController extends Controller
                 'penyelenggara_pembelajaran' => $validatedData['penyelenggara_pembelajaran'],
                 'fasilitator_pembelajaran' => $fasilitator_pembelajaran_json,
                 'sertifikat' => $validatedData['sertifikat'],
-                'sertifikat' => $validatedData['level_evaluasi_instrumen'],
                 'tanggal_created' => date('Y-m-d H:i:s'),
                 'status_pengajuan' => 'Pending',
                 'user_created' => Auth::id(),
                 'current_step' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
+                // 'level_evaluasi_instrumen' => $level_evaluasi_instrumen_json,
+                // 'indikator_keberhasilan' => 'required|array',
             ]);
 
             $remarks = [
@@ -252,7 +254,7 @@ class PengajuanKapController extends Controller
             return redirect()->route('pengajuan-kap.index', ['is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi]);
         } catch (\Exception $e) {
             DB::rollBack();
-            // \Log::error('Error: ' . $e->getMessage());
+            \Log::error('Error: ' . $e->getMessage());
             Alert::toast('Pengajuan KAP gagal disimpan.', 'error');
             return redirect()->route('pengajuan-kap.index', ['is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi]);
         }
@@ -265,6 +267,7 @@ class PengajuanKapController extends Controller
             'indikator_kinerja' => 'required|string',
             'kompetensi_id' => 'nullable|exists:kompetensi,id',
             'topik_id' => 'nullable|exists:topik,id',
+            'indikator_keberhasilan' => 'required|array',
             'arahan_pimpinan' => 'required|string',
             'prioritas_pembelajaran' => 'required|string',
             'tujuan_program_pembelajaran' => 'required|string',
@@ -285,7 +288,7 @@ class PengajuanKapController extends Controller
             'fasilitator_pembelajaran.*' => 'required|string|in:Widyaiswara,Instruktur,Praktisi,Pakar,Tutor,Coach,Mentor,Narasumber lainnya',
             'sertifikat' => 'required|string',
             'user_created' => 'nullable|exists:users,id',
-            'level_evaluasi_instrumen' => 'required',
+            'level_evaluasi_instrumen' => 'required|array',
         ]);
         $fasilitator_pembelajaran = json_encode($validatedData['fasilitator_pembelajaran']);
 
