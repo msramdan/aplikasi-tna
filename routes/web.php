@@ -42,6 +42,7 @@ Route::middleware(['auth', 'web'])->group(function () {
         Route::get('/exportKompetensi', 'exportKompetensi')->name('exportKompetensi');
         Route::post('/importKompetensi', 'importKompetensi')->name('importKompetensi');
         Route::get('/download-format-kompetensi', 'formatImport')->name('download-format-kompetensi');
+        Route::get('/getKompetensiById/{id}', 'getKompetensiById')->name('getKompetensiById');
     });
     Route::resource('kalender-pembelajaran', KalenderPembelajaranController::class);
     Route::resource('reporting', ReportingController::class);

@@ -228,4 +228,14 @@ class KompetensiController extends Controller
         $nameFile = 'format_import_kompetensi' . $date;
         return Excel::download(new GenerateKompetensiFormat(), $nameFile . '.xlsx');
     }
+
+    public function getKompetensiById($id)
+    {
+        $kompetensi = Kompetensi::find($id);
+        if ($kompetensi) {
+            return response()->json($kompetensi);
+        } else {
+            return response()->json(['error' => 'Kompetensi not found'], 404);
+        }
+    }
 }

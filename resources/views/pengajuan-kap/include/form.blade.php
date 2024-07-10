@@ -106,6 +106,9 @@
                             <div class="invalid-feedback">
                                 Mohon untuk pilih Kompetensi
                             </div>
+                            <div id="kompetensi-description" class="mt-2">
+                                {{-- Munculkan deskripsi kompetensi di sini --}}
+                            </div>
                         </div>
                     </div>
 
@@ -502,8 +505,6 @@
                             </div>
                         </div>
                     </div>
-
-
                 </div>
             </form>
         </div>
