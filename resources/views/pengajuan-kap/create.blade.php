@@ -240,31 +240,58 @@
         });
     </script>
 
-<script>
-    $(document).ready(function() {
-        function checkCheckboxes() {
-            let anyChecked = $('input[name="fasilitator_pembelajaran[]"]:checked').length > 0;
+    <script>
+        $(document).ready(function() {
+            function checkCheckboxes() {
+                let anyChecked = $('input[name="fasilitator_pembelajaran[]"]:checked').length > 0;
 
-            if (anyChecked) {
-                $('input[name="fasilitator_pembelajaran[]"]').removeAttr('required');
-                $('#invalid-fasilitator').hide();
-            } else {
-                $('input[name="fasilitator_pembelajaran[]"]').attr('required', 'required');
-                if ($('input[name="fasilitator_pembelajaran[]"]').is(':focus')) {
-                    $('#invalid-fasilitator').show();
+                if (anyChecked) {
+                    $('input[name="fasilitator_pembelajaran[]"]').removeAttr('required');
+                    $('#invalid-fasilitator').hide();
+                } else {
+                    $('input[name="fasilitator_pembelajaran[]"]').attr('required', 'required');
+                    if ($('input[name="fasilitator_pembelajaran[]"]').is(':focus')) {
+                        $('#invalid-fasilitator').show();
+                    }
                 }
             }
-        }
 
-        $('input[name="fasilitator_pembelajaran[]"]').on('change', function() {
+            $('input[name="fasilitator_pembelajaran[]"]').on('change', function() {
+                checkCheckboxes();
+            });
+
+            // Remove required attribute on load to ensure the message is not displayed initially
+            $('input[name="fasilitator_pembelajaran[]"]').removeAttr('required');
+
+            // Initial check to handle pre-checked checkboxes
             checkCheckboxes();
         });
+    </script>
 
-        // Remove required attribute on load to ensure the message is not displayed initially
-        $('input[name="fasilitator_pembelajaran[]"]').removeAttr('required');
+    <script>
+        $(document).ready(function() {
+            function checkInputInstrumen() {
+                let allEmptyInstrumen = true;
 
-        // Initial check to handle pre-checked checkboxes
-        checkCheckboxes();
-    });
-</script>
+                $('input[name="level_evaluasi_instrumen[]"]').each(function() {
+                    if ($(this).val() !== '') {
+                        allEmptyInstrumen = false;
+                        return false; // Break out of the loop
+                    }
+                });
+
+                if (allEmptyInstrumen) {
+                    $('input[name="level_evaluasi_instrumen[]"]').attr('required', 'required');
+                } else {
+                    $('input[name="level_evaluasi_instrumen[]"]').removeAttr('required');
+                }
+            }
+
+            $('input[name="level_evaluasi_instrumen[]"]').on('input', function() {
+                checkInputInstrumen();
+            });
+
+            checkInputInstrumen();
+        });
+    </script>
 @endpush

@@ -201,43 +201,53 @@
                                 <tbody>
                                     <tr>
                                         <td>1</td>
-                                        <td><input type="text" name="keterangan[]" class="form-control @error('keterangan') is-invalid @enderror" /></td>
+                                        <td><input type="text" name="keterangan[]"
+                                                class="form-control @error('keterangan') is-invalid @enderror" /></td>
                                     </tr>
                                     <tr>
                                         <td>2</td>
-                                        <td><input type="text" name="keterangan[]" class="form-control @error('keterangan') is-invalid @enderror" /></td>
+                                        <td><input type="text" name="keterangan[]"
+                                                class="form-control @error('keterangan') is-invalid @enderror" /></td>
                                     </tr>
                                     <tr>
                                         <td>3</td>
-                                        <td><input type="text" name="keterangan[]" class="form-control @error('keterangan') is-invalid @enderror" /></td>
+                                        <td><input type="text" name="keterangan[]"
+                                                class="form-control @error('keterangan') is-invalid @enderror" /></td>
                                     </tr>
                                     <tr>
                                         <td>4</td>
-                                        <td><input type="text" name="keterangan[]" class="form-control @error('keterangan') is-invalid @enderror" /></td>
+                                        <td><input type="text" name="keterangan[]"
+                                                class="form-control @error('keterangan') is-invalid @enderror" /></td>
                                     </tr>
                                     <tr>
                                         <td>5</td>
-                                        <td><input type="text" name="keterangan[]" class="form-control @error('keterangan') is-invalid @enderror" /></td>
+                                        <td><input type="text" name="keterangan[]"
+                                                class="form-control @error('keterangan') is-invalid @enderror" /></td>
                                     </tr>
                                     <tr>
                                         <td>6</td>
-                                        <td><input type="text" name="keterangan[]" class="form-control @error('keterangan') is-invalid @enderror" /></td>
+                                        <td><input type="text" name="keterangan[]"
+                                                class="form-control @error('keterangan') is-invalid @enderror" /></td>
                                     </tr>
                                     <tr>
                                         <td>7</td>
-                                        <td><input type="text" name="keterangan[]" class="form-control @error('keterangan') is-invalid @enderror" /></td>
+                                        <td><input type="text" name="keterangan[]"
+                                                class="form-control @error('keterangan') is-invalid @enderror" /></td>
                                     </tr>
                                     <tr>
                                         <td>8</td>
-                                        <td><input type="text" name="keterangan[]" class="form-control @error('keterangan') is-invalid @enderror" /></td>
+                                        <td><input type="text" name="keterangan[]"
+                                                class="form-control @error('keterangan') is-invalid @enderror" /></td>
                                     </tr>
                                     <tr>
                                         <td>9</td>
-                                        <td><input type="text" name="keterangan[]" class="form-control @error('keterangan') is-invalid @enderror" /></td>
+                                        <td><input type="text" name="keterangan[]"
+                                                class="form-control @error('keterangan') is-invalid @enderror" /></td>
                                     </tr>
                                     <tr>
                                         <td>10</td>
-                                        <td><input type="text" name="keterangan[]" class="form-control @error('keterangan') is-invalid @enderror" /></td>
+                                        <td><input type="text" name="keterangan[]"
+                                                class="form-control @error('keterangan') is-invalid @enderror" /></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -553,13 +563,46 @@
                         <label for="level_evaluasi_instrumen"
                             class="col-sm-3 col-form-label">{{ __('Level Evaluasi dan Instrumennya') }}</label>
                         <div class="col-sm-6">
-                            <input type="text" name="level_evaluasi_instrumen" id="level_evaluasi_instrumen"
-                                class="form-control @error('level_evaluasi_instrumen') is-invalid @enderror"
-                                value="{{ isset($pengajuanKap) ? $pengajuanKap->level_evaluasi_instrumen : old('level_evaluasi_instrumen') }}"
-                                placeholder="{{ __('Level Evaluasi dan Instrumennya') }}" required />
-                            <div class="invalid-feedback">
-                                Mohon untuk diisi Prioritas Pembelajaran
-                            </div>
+                            <table class="table table-bordered table-sm text-center">
+                                <thead style="background-color: #cbccce">
+                                    <tr>
+                                        <th>Level</th>
+                                        <th>Instrumen</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td><input type="text" name="level_evaluasi_instrumen[]"
+                                                class="form-control @error('level_evaluasi_instrumen') is-invalid @enderror" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td><input type="text" name="level_evaluasi_instrumen[]"
+                                                class="form-control @error('level_evaluasi_instrumen') is-invalid @enderror" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td><input type="text" name="level_evaluasi_instrumen[]"
+                                                class="form-control @error('level_evaluasi_instrumen') is-invalid @enderror" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td><input type="text" name="level_evaluasi_instrumen[]"
+                                                class="form-control @error('level_evaluasi_instrumen') is-invalid @enderror" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td><input type="text" name="level_evaluasi_instrumen[]"
+                                                class="form-control @error('level_evaluasi_instrumen') is-invalid @enderror" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
 
