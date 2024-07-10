@@ -70,16 +70,18 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label for="indikator_kinerja" class="col-sm-3 col-form-label">{{ __('Indikator Kinerja') }}</label>
+                        <label for="indikator_kinerja"
+                            class="col-sm-3 col-form-label">{{ __('Indikator Kinerja') }}</label>
                         <div class="col-sm-6">
                             <div class="input-group">
                                 <input type="text" name="indikator_kinerja" id="indikator_kinerja" readonly
                                     class="form-control @error('indikator_kinerja') is-invalid @enderror"
                                     value="{{ isset($pengajuanKap) ? $pengajuanKap->indikator_kinerja : old('indikator_kinerja') }}"
                                     placeholder="" required />
-                                    <span class="input-group-text btn btn-success" data-bs-toggle="modal" data-bs-target="#indikatorModal" style="cursor: pointer;">
-                                        <i class="fa fa-eye" aria-hidden="true"></i> Pilih
-                                    </span>
+                                <span class="input-group-text btn btn-success" data-bs-toggle="modal"
+                                    data-bs-target="#indikatorModal" style="cursor: pointer;">
+                                    <i class="fa fa-eye" aria-hidden="true"></i> Pilih
+                                </span>
                                 <div class="invalid-feedback">
                                     Mohon untuk diisi Indikator Kinerja
                                 </div>
@@ -137,8 +139,7 @@
                         <label for="arahan_pimpinan" style="padding-left: 40px"
                             class="col-sm-3 col-form-label">{{ __('A. Arahan pimpinan/isu terkini/dll') }}</label>
                         <div class="col-sm-6">
-                            <input type="text" name="arahan_pimpinan"
-                                id="arahan_pimpinan"
+                            <input type="text" name="arahan_pimpinan" id="arahan_pimpinan"
                                 class="form-control @error('arahan_pimpinan') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->arahan_pimpinan : old('arahan_pimpinan') }}"
                                 placeholder="{{ __('Arahan pimpinan/isu terkini/dll') }}" required />
@@ -150,13 +151,22 @@
 
                     <div class="form-group row mb-3">
                         <label for="prioritas_pembelajaran" style="padding-left: 40px"
-                            class="col-sm-3 col-form-label">{{ __('B. Prioritas Pembelajaran') }}</label>
+                            class="col-sm-3 col-form-label">
+                            {{ __('B. Prioritas Pembelajaran') }}
+                        </label>
                         <div class="col-sm-6">
-                            <input type="text" name="prioritas_pembelajaran"
-                                id="prioritas_pembelajaran"
-                                class="form-control @error('prioritas_pembelajaran') is-invalid @enderror"
-                                value="{{ isset($pengajuanKap) ? $pengajuanKap->prioritas_pembelajaran : old('prioritas_pembelajaran') }}"
-                                placeholder="{{ __('Prioritas Pembelajaran') }}" required />
+                            <select name="prioritas_pembelajaran" id="prioritas_pembelajaran"
+                                class="form-control js-example-basic-multiple @error('prioritas_pembelajaran') is-invalid @enderror"
+                                required>
+                                <option value="" disabled selected>
+                                    {{ __('-- Select Prioritas Pembelajaran --') }}</option>
+                                @for ($i = 1; $i <= 20; $i++)
+                                    <option value="Level {{ $i }}"
+                                        {{ (isset($pengajuanKap) && $pengajuanKap->prioritas_pembelajaran == $i) || old('prioritas_pembelajaran') == $i ? 'selected' : '' }}>
+                                        Level {{ $i }}
+                                    </option>
+                                @endfor
+                            </select>
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Prioritas Pembelajaran
                             </div>
@@ -174,6 +184,63 @@
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Tujuan Program Pembelajaran
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-3">
+                        <label class="col-sm-3 col-form-label"
+                            for="tujuan_program_pembelajaran">{{ __('Indikator Keberhasilan') }}</label>
+                        <div class="col-sm-6">
+                            <table class="table table-bordered table-sm text-center">
+                                <thead style="background-color: #cbccce">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Peserta Mampu</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td><input type="text" name="keterangan[]" class="form-control @error('keterangan') is-invalid @enderror" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td><input type="text" name="keterangan[]" class="form-control @error('keterangan') is-invalid @enderror" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td><input type="text" name="keterangan[]" class="form-control @error('keterangan') is-invalid @enderror" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td><input type="text" name="keterangan[]" class="form-control @error('keterangan') is-invalid @enderror" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td><input type="text" name="keterangan[]" class="form-control @error('keterangan') is-invalid @enderror" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td>6</td>
+                                        <td><input type="text" name="keterangan[]" class="form-control @error('keterangan') is-invalid @enderror" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td>7</td>
+                                        <td><input type="text" name="keterangan[]" class="form-control @error('keterangan') is-invalid @enderror" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td>8</td>
+                                        <td><input type="text" name="keterangan[]" class="form-control @error('keterangan') is-invalid @enderror" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td>9</td>
+                                        <td><input type="text" name="keterangan[]" class="form-control @error('keterangan') is-invalid @enderror" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td>10</td>
+                                        <td><input type="text" name="keterangan[]" class="form-control @error('keterangan') is-invalid @enderror" /></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
 
@@ -486,8 +553,7 @@
                         <label for="level_evaluasi_instrumen"
                             class="col-sm-3 col-form-label">{{ __('Level Evaluasi dan Instrumennya') }}</label>
                         <div class="col-sm-6">
-                            <input type="text" name="level_evaluasi_instrumen"
-                                id="level_evaluasi_instrumen"
+                            <input type="text" name="level_evaluasi_instrumen" id="level_evaluasi_instrumen"
                                 class="form-control @error('level_evaluasi_instrumen') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->level_evaluasi_instrumen : old('level_evaluasi_instrumen') }}"
                                 placeholder="{{ __('Level Evaluasi dan Instrumennya') }}" required />

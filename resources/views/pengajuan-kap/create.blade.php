@@ -212,4 +212,31 @@
 
         });
     </script>
+
+    <script>
+        $(document).ready(function() {
+            function checkInputs() {
+                let allEmpty = true;
+
+                $('input[name="keterangan[]"]').each(function() {
+                    if ($(this).val() !== '') {
+                        allEmpty = false;
+                        return false; // Break out of the loop
+                    }
+                });
+
+                if (allEmpty) {
+                    $('input[name="keterangan[]"]').attr('required', 'required');
+                } else {
+                    $('input[name="keterangan[]"]').removeAttr('required');
+                }
+            }
+
+            $('input[name="keterangan[]"]').on('input', function() {
+                checkInputs();
+            });
+
+            checkInputs(); // Initial check on page load
+        });
+    </script>
 @endpush
