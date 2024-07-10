@@ -197,10 +197,34 @@
         </div>
         <div class="container-fluid">
             <div class="row">
+
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-body">
-
+                            <div class="col-md-12">
+                                <a href="{{ route('pengajuan-kap.index', [
+                                    'is_bpkp' => $is_bpkp,
+                                    'frekuensi' => $frekuensi,
+                                ]) }}"
+                                    class="btn btn-secondary">{{ __('Back') }}</a>
+                                @if ($pengajuanKap->status_pengajuan == 'Rejected' || $pengajuanKap->status_pengajuan == 'Approved')
+                                    <button type="button" disabled class="btn btn-success">
+                                        Approved
+                                    </button>
+                                    <button type="button" disabled class="btn btn-danger">
+                                        Rejected
+                                    </button>
+                                @else
+                                    <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                        data-bs-target="#approveModal">
+                                        Approved
+                                    </button>
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#rejectModal">
+                                        Rejected
+                                    </button>
+                                @endif
+                            </div>
+                            <br>
                             <ul class="nav nav-tabs" role="tablist">
                                 <li class="nav-item" role="presentation">
                                     <a class="nav-link active" id="icon-tab-0" data-bs-toggle="tab" href="#icon-tabpanel-0"
@@ -256,11 +280,26 @@
 
                                         <tr>
                                             <td class="fw-bold">{{ __('Tujuan Program Pembelajaran') }}</td>
-                                            <td></td>
+                                            <td>{{ $pengajuanKap->tujuan_program_pembelajaran }}</td>
                                         </tr>
                                         <tr>
                                             <td class="fw-bold">{{ __(' Indikator Keberhasilan') }}</td>
-                                            <td></td>
+                                            <td>
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">#</th>
+                                                            <th scope="col">Peserta Mampu</th>
+                                                        </tr>
+                                                    </thead>
+                                                    @foreach ($indikator_keberhasilan_kap as $item)
+                                                        <tr>
+                                                            <td>{{ $loop->index + 1 }}</td>
+                                                            <td>{{ $item->indikator_keberhasilan }}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                </table>
+                                            </td>
                                         </tr>
 
                                         <tr>
@@ -320,6 +359,28 @@
                                             <td>{{ $pengajuanKap->alokasi_waktu }} Hari</td>
                                         </tr>
                                         <tr>
+                                            <td class="fw-bold"></td>
+                                            <td>
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Lokasi</th>
+                                                            <th scope="col">Tgl Mulai</th>
+                                                            <th scope="col">Tgl Selesai</th>
+                                                        </tr>
+                                                    </thead>
+                                                    @foreach ($waktu_tempat as $row)
+                                                        <tr>
+                                                            <td>{{ $row->nama_lokasi }}</td>
+                                                            <td>{{ $row->tanggal_mulai }}</td>
+                                                            <td>{{ $row->tanggal_selesai }}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                </table>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
                                             <td class="fw-bold">{{ __('Bentuk Pembelajaran') }}</td>
                                             <td>{{ $pengajuanKap->bentuk_pembelajaran }} Hari</td>
                                         </tr>
@@ -378,7 +439,22 @@
                                         </tr>
                                         <tr>
                                             <td class="fw-bold">{{ __(' Level Evaluasi dan Instrumennya') }}</td>
-                                            <td></td>
+                                            <td>
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Level</th>
+                                                            <th scope="col">Instrumen</th>
+                                                        </tr>
+                                                    </thead>
+                                                    @foreach ($level_evaluasi_instrumen_kap as $item)
+                                                        <tr>
+                                                            <td>{{ $item->level }}</td>
+                                                            <td>{{ $item->keterangan }}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                </table>
+                                            </td>
                                         </tr>
                                     </table>
                                 </div>
@@ -420,33 +496,6 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-12">
-                <a href="{{ route('pengajuan-kap.index', [
-                    'is_bpkp' => $is_bpkp,
-                    'frekuensi' => $frekuensi,
-                ]) }}"
-                    class="btn btn-secondary">{{ __('Back') }}</a>
-                @if ($pengajuanKap->status_pengajuan == 'Rejected' || $pengajuanKap->status_pengajuan == 'Approved')
-                    <button type="button" disabled class="btn btn-success">
-                        Approved
-                    </button>
-                    <button type="button" disabled class="btn btn-danger">
-                        Rejected
-                    </button>
-                @else
-                    <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                        data-bs-target="#approveModal">
-                        Approved
-                    </button>
-                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#rejectModal">
-                        Rejected
-                    </button>
-                @endif
-            </div>
-            <br>
-            <br>
-            <br>
-            <br>
         </div>
 
         <!-- Approve Modal -->

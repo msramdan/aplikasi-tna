@@ -406,9 +406,24 @@ class PengajuanKapController extends Controller
             ->orderBy('log_review_pengajuan_kap.step')
             ->get();
 
+        $level_evaluasi_instrumen_kap = DB::table('level_evaluasi_instrumen_kap')
+            ->where('pengajuan_kap_id', $id)
+            ->get();
+        $indikator_keberhasilan_kap = DB::table('indikator_keberhasilan_kap')
+            ->where('pengajuan_kap_id', $id)
+            ->get();
+        $waktu_tempat = DB::table('waktu_tempat')
+            ->join('lokasi', 'waktu_tempat.lokasi_id', '=', 'lokasi.id')
+            ->where('waktu_tempat.pengajuan_kap_id', $id)
+            ->select('waktu_tempat.*', 'lokasi.nama_lokasi')
+            ->get();
+
         return view('pengajuan-kap.show', [
             'pengajuanKap' => $pengajuanKap,
             'logReviews' => $logReviews,
+            'level_evaluasi_instrumen_kap' => $level_evaluasi_instrumen_kap,
+            'indikator_keberhasilan_kap' => $indikator_keberhasilan_kap,
+            'waktu_tempat' => $waktu_tempat,
             'is_bpkp' => $is_bpkp,
             'frekuensi' => $frekuensi,
         ]);
