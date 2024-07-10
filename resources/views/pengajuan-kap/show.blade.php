@@ -235,10 +235,6 @@
                                         <td>{{ $pengajuanKap->nama_topik }}</td>
                                     </tr>
                                     <tr>
-                                        <td class="fw-bold">{{ __('Concern Program Pembelajaran') }}</td>
-                                        <td>{{ $pengajuanKap->concern_program_pembelajaran }}</td>
-                                    </tr>
-                                    <tr>
                                         <td class="fw-bold">{{ __('Alokasi Waktu') }}</td>
                                         <td>{{ $pengajuanKap->alokasi_waktu }} Hari</td>
                                     </tr>
