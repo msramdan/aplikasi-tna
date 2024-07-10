@@ -239,4 +239,32 @@
             checkInputs(); // Initial check on page load
         });
     </script>
+
+<script>
+    $(document).ready(function() {
+        function checkCheckboxes() {
+            let anyChecked = $('input[name="fasilitator_pembelajaran[]"]:checked').length > 0;
+
+            if (anyChecked) {
+                $('input[name="fasilitator_pembelajaran[]"]').removeAttr('required');
+                $('#invalid-fasilitator').hide();
+            } else {
+                $('input[name="fasilitator_pembelajaran[]"]').attr('required', 'required');
+                if ($('input[name="fasilitator_pembelajaran[]"]').is(':focus')) {
+                    $('#invalid-fasilitator').show();
+                }
+            }
+        }
+
+        $('input[name="fasilitator_pembelajaran[]"]').on('change', function() {
+            checkCheckboxes();
+        });
+
+        // Remove required attribute on load to ensure the message is not displayed initially
+        $('input[name="fasilitator_pembelajaran[]"]').removeAttr('required');
+
+        // Initial check to handle pre-checked checkboxes
+        checkCheckboxes();
+    });
+</script>
 @endpush
