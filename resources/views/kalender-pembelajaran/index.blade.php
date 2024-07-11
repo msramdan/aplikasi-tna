@@ -2,6 +2,7 @@
 
 @section('title', __('kalender-pembelajaran/index.Kalender Pembelajaran'))
 @push('css')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.css' rel='stylesheet' />
     <style>
         #calendar {
@@ -19,8 +20,10 @@
                         <h4 class="mb-sm-0">{{ __('kalender-pembelajaran/index.Kalender Pembelajaran') }}</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="/">{{ __('kalender-pembelajaran/index.Dashboard') }}</a></li>
-                                <li class="breadcrumb-item active">{{ __('kalender-pembelajaran/index.Kalender Pembelajaran') }}</li>
+                                <li class="breadcrumb-item"><a
+                                        href="/">{{ __('kalender-pembelajaran/index.Dashboard') }}</a></li>
+                                <li class="breadcrumb-item active">
+                                    {{ __('kalender-pembelajaran/index.Kalender Pembelajaran') }}</li>
                             </ol>
                         </div>
                     </div>
@@ -39,30 +42,11 @@
                                                 $currentYear = date('Y');
                                                 $endYear = $currentYear + 1;
                                             @endphp
-                                            @foreach (range($startYear, $endYear) as $year)
-                                                <option value="{{ $year }}">
-                                                    {{ $year }}
+                                            @foreach (range($startYear, $endYear) as $yearOption)
+                                                <option value="{{ $yearOption }}" {{ $yearOption == $year ? 'selected' : '' }}>
+                                                    {{ $yearOption }}
                                                 </option>
                                             @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="input-group mb-4">
-                                        <select name="sumber_dana" id="sumber_dana" class="form-control select2-form">
-                                            <option value="">{{ __('kalender-pembelajaran/index.All sumber dana') }}</option>
-                                            <option value="">{{ __('kalender-pembelajaran/index.RM') }}</option>
-                                            <option value="">{{ __('kalender-pembelajaran/index.START') }}</option>
-                                            <option value="">{{ __('kalender-pembelajaran/index.PNBP') }}</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="input-group mb-4">
-                                        <select name="peserta" id="peserta" class="form-control select2-form">
-                                            <option value="">{{ __('kalender-pembelajaran/index.All peserta') }}</option>
-                                            <option value="">{{ __('kalender-pembelajaran/index.BPKP') }}</option>
-                                            <option value="">{{ __('kalender-pembelajaran/index.APIP') }}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -89,7 +73,8 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="eventModalLabel">{{ __('kalender-pembelajaran/index.Detail pembelajaran') }}</h5>
+                    <h5 class="modal-title" id="eventModalLabel">{{ __('kalender-pembelajaran/index.Detail pembelajaran') }}
+                    </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -132,62 +117,69 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                events: [{
-                        title: 'Pelatihan akuntansi 1',
-                        start: '2024-05-06T00:00:00',
-                        end: '2024-05-06T23:59:59',
-                        description: 'Deskripsi Event 1'
-                    },
-                    {
-                        title: 'Pelatihan akuntansi 2',
-                        start: '2024-05-06T00:00:00',
-                        end: '2024-05-06T23:59:59',
-                        description: 'Deskripsi Event 1'
-                    },
-                    {
-                        title: 'Pelatihan akuntansi 3',
-                        start: '2024-05-06T00:00:00',
-                        end: '2024-05-06T23:59:59',
-                        description: 'Deskripsi Event 1'
-                    },
-                    {
-                        title: 'Pelatihan IT',
-                        start: '2024-05-10T00:00:00',
-                        end: '2024-05-11T23:59:59',
-                        description: 'Deskripsi Event 1'
-                    }
-                ],
-                editable: true,
-                eventClick: function(info) {
-                    // Set nilai modal sesuai dengan acara yang diklik
-                    document.getElementById('eventTitle').innerText = info.event.title;
-                    document.getElementById('eventDateStart').innerText = moment(info.event.start)
-                        .format("YYYY-MM-DD");
-                    document.getElementById('eventDateEnd').innerText = moment(info.event.end)
-                        .format("YYYY-MM-DD");
-                    document.getElementById('eventDescription').innerText = info.event.extendedProps
-                        .description;
+            var calendar;
 
-                    // Tampilkan modal
-                    var modal = new bootstrap.Modal(document.getElementById('eventModal'));
-                    modal.show();
-                },
-                dayMaxEventRows: true, // Membuat tombol "more"
-                dateClick: function(info) {
-                    var clickedDate = info.date;
-                    var eventsOnDate = calendar.getEvents().filter(function(event) {
-                        return moment(clickedDate).isBetween(event.start, event.end, null,
-                            '[]');
-                    });
-                    var eventList = eventsOnDate.map(function(event) {
-                        return "<li>" + event.title + "</li>";
-                    });
-                    document.getElementById('eventList').innerHTML = eventList.join("");
-                }
+            function fetchEvents(year) {
+                $.ajax({
+                    url: '{{ route('getEvents') }}',
+                    type: 'PUT',
+                    data: {
+                        year: year,
+                        _token: $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(data) {
+                        calendar.removeAllEvents();
+                        calendar.addEventSource(data);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Failed to fetch events:', error);
+                    }
+                });
+            }
+
+            function initializeCalendar() {
+                calendar = new FullCalendar.Calendar(calendarEl, {
+                    initialView: 'dayGridMonth',
+                    editable: true,
+                    eventClick: function(info) {
+                        // Set nilai modal sesuai dengan acara yang diklik
+                        document.getElementById('eventTitle').innerText = info.event.title;
+                        document.getElementById('eventDateStart').innerText = moment(info.event.start)
+                            .format("YYYY-MM-DD");
+                        document.getElementById('eventDateEnd').innerText = moment(info.event.end)
+                            .format("YYYY-MM-DD");
+                        document.getElementById('eventDescription').innerText = info.event.extendedProps
+                            .description;
+
+                        // Tampilkan modal
+                        var modal = new bootstrap.Modal(document.getElementById('eventModal'));
+                        modal.show();
+                    },
+                    dayMaxEventRows: true,
+                    dateClick: function(info) {
+                        var clickedDate = info.date;
+                        var eventsOnDate = calendar.getEvents().filter(function(event) {
+                            return moment(clickedDate).isBetween(event.start, event.end, null,
+                                '[]');
+                        });
+                        var eventList = eventsOnDate.map(function(event) {
+                            return "<li>" + event.title + "</li>";
+                        });
+                        document.getElementById('eventList').innerHTML = eventList.join("");
+                    }
+                });
+
+                var selectedYear = document.getElementById('tahun').value;
+                fetchEvents(selectedYear);
+                calendar.render();
+            }
+
+            document.getElementById('tahun').addEventListener('change', function() {
+                var selectedYear = this.value;
+                fetchEvents(selectedYear);
             });
-            calendar.render();
+
+            initializeCalendar();
         });
     </script>
 @endpush

@@ -321,15 +321,15 @@
                 i++;
                 var newRow = '<tr id="row' + i + '">' +
                     '<td>' +
-                    '<select name="tempat_acara[]" class="form-control" required>' +
+                    '<select name="tempat_acara[]" class="form-control">' +
                     '<option value="" selected disabled>-- Pilih --</option>' +
                     '@foreach ($lokasiData as $lokasi)' +
                     '<option value="{{ $lokasi->id }}">{{ $lokasi->nama_lokasi }}</option>' +
                     '@endforeach' +
                     '</select>' +
                     '</td>' +
-                    '<td><input type="date" name="tanggal_mulai[]" class="form-control" required /></td>' +
-                    '<td><input type="date" name="tanggal_selesai[]" class="form-control" required /></td>' +
+                    '<td><input type="date" name="tanggal_mulai[]" class="form-control" /></td>' +
+                    '<td><input type="date" name="tanggal_selesai[]" class="form-control" /></td>' +
                     '<td><button type="button" name="remove" id="' + i +
                     '" class="btn btn-danger btn_remove">X</button></td>' +
                     '</tr>';
@@ -381,20 +381,6 @@
                     });
                 } else {
                     $('#kompetensi-description').empty();
-                }
-            });
-        });
-    </script>
-
-    <script>
-        $(document).ready(function() {
-            // Function to handle row removal
-            $(document).on('click', '.btn_remove_data', function() {
-                var rowId = $(this).attr('id');
-                $('#detail_file' + rowId).remove(); // Remove the row
-                // Check if all rows are removed
-                if ($('#waktu_tempat_table tr[id^="detail_file"]').length === 0) {
-                    $('#placeholder_row select, #placeholder_row input').prop('required', true);
                 }
             });
         });

@@ -44,7 +44,10 @@ Route::middleware(['auth', 'web'])->group(function () {
         Route::get('/download-format-kompetensi', 'formatImport')->name('download-format-kompetensi');
         Route::get('/getKompetensiById/{id}', 'getKompetensiById')->name('getKompetensiById');
     });
-    Route::resource('kalender-pembelajaran', KalenderPembelajaranController::class);
+    Route::controller(KalenderPembelajaranController::class)->group(function () {
+        Route::get('/kalender-pembelajaran/{tahun}', 'index')->name('kalender-pembelajaran.index');
+        Route::put('/events', 'getEvents')->name('getEvents');
+    });
     Route::resource('reporting', ReportingController::class);
     Route::resource('kota', KotaController::class);
     Route::resource('lokasi', LokasiController::class);

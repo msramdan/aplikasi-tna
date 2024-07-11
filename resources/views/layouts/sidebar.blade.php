@@ -177,12 +177,13 @@
                     </div>
                 </li>
             @endcanany
-
-
+            @php
+                $currentYear = date('Y');
+            @endphp
             @can('kalender pembelajaran view')
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ request()->routeIs('kalender-pembelajaran*') ? 'active' : '' }}"
-                        href="{{ route('kalender-pembelajaran.index') }}">
+                        href="{{ route('kalender-pembelajaran.index', ['tahun' => $currentYear]) }}">
                         <i class="fa fa-calendar"></i> <span
                             data-key="t-widgets">{{ __('sidebar.learning_calendar') }}</span>
                     </a>

@@ -219,6 +219,7 @@ class PengajuanKapController extends Controller
                 'indikator_kinerja' => $validatedData['indikator_kinerja'],
                 'kompetensi_id' => $validatedData['kompetensi_id'],
                 'topik_id' => $validatedData['topik_id'],
+                'tahun' => '2024',
                 'arahan_pimpinan' => $validatedData['arahan_pimpinan'],
                 'prioritas_pembelajaran' => $validatedData['prioritas_pembelajaran'],
                 'alokasi_waktu' => $validatedData['alokasi_waktu'],

@@ -3,9 +3,6 @@
     data-sidebar-image="none">
 {{-- head --}}
 @include('layouts.header')
-@stack('css-libs')
-@stack('css-styles')
-
 <body>
     <div id="layout-wrapper">
         <header id="page-topbar">
@@ -100,12 +97,12 @@
                             </div>
                         </div>
 
-                        <div class="ms-1 header-item d-sm-flex">
+                        {{-- <div class="ms-1 header-item d-sm-flex">
                             <button type="button"
                                 class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle shadow-none">
                                 <i class='bx bx-qr fs-22'></i>
                             </button>
-                        </div>
+                        </div> --}}
 
                         <div class="ms-1 header-item  d-sm-flex">
                             <button type="button"

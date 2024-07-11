@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('kompetensi_id')->nullable()->constrained('kompetensi')->cascadeOnUpdate()->nullOnDelete();
             $table->foreignId('topik_id')->nullable()->constrained('topik')->cascadeOnUpdate()->nullOnDelete();
             $table->text('arahan_pimpinan');
+            $table->string('tahun', 10);
             $table->string('prioritas_pembelajaran', 50);
             $table->text('tujuan_program_pembelajaran');
             $table->string('alokasi_waktu', 50);
