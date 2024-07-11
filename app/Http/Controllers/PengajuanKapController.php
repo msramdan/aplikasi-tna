@@ -146,6 +146,19 @@ class PengajuanKapController extends Controller
             ->where('pengajuan_kap.frekuensi_pelaksanaan', '=', $frekuensi)
             ->first();
         $lokasiData = DB::table('lokasi')->get();
+
+        $level_evaluasi_instrumen_kap = DB::table('level_evaluasi_instrumen_kap')
+            ->where('pengajuan_kap_id', $id)
+            ->get();
+        $indikator_keberhasilan_kap = DB::table('indikator_keberhasilan_kap')
+            ->where('pengajuan_kap_id', $id)
+            ->get();
+        $waktu_tempat = DB::table('waktu_tempat')
+            ->join('lokasi', 'waktu_tempat.lokasi_id', '=', 'lokasi.id')
+            ->where('waktu_tempat.pengajuan_kap_id', $id)
+            ->select('waktu_tempat.*', 'lokasi.nama_lokasi')
+            ->get();
+
         return view('pengajuan-kap.edit', [
             'pengajuanKap' => $pengajuanKap,
             'is_bpkp' => $is_bpkp,
@@ -153,6 +166,9 @@ class PengajuanKapController extends Controller
             'jenis_program' => $jenis_program,
             'jalur_pembelajaran' => $jalur_pembelajaran,
             'lokasiData' => $lokasiData,
+            'level_evaluasi_instrumen_kap' => $level_evaluasi_instrumen_kap,
+            'indikator_keberhasilan_kap' => $indikator_keberhasilan_kap,
+            'waktu_tempat' => $waktu_tempat,
         ]);
     }
 

@@ -163,7 +163,7 @@
                                 required>
                                 <option value="" disabled selected>
                                     {{ __('-- Select Prioritas Pembelajaran --') }}</option>
-                                    @for ($i = 1; $i <= 20; $i++)
+                                @for ($i = 1; $i <= 20; $i++)
                                     <option value="Prioritas {{ $i }}"
                                         {{ (isset($pengajuanKap) && $pengajuanKap->prioritas_pembelajaran == "Prioritas $i") || old('prioritas_pembelajaran') == "Prioritas $i" ? 'selected' : '' }}>
                                         Prioritas {{ $i }}
@@ -202,67 +202,30 @@
                                         <th>Peserta Mampu</th>
                                     </tr>
                                 </thead>
+
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td><input type="text" name="indikator_keberhasilan[]"
-                                                class="form-control @error('indikator_keberhasilan') is-invalid @enderror" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td><input type="text" name="indikator_keberhasilan[]"
-                                                class="form-control @error('indikator_keberhasilan') is-invalid @enderror" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td><input type="text" name="indikator_keberhasilan[]"
-                                                class="form-control @error('indikator_keberhasilan') is-invalid @enderror" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td><input type="text" name="indikator_keberhasilan[]"
-                                                class="form-control @error('indikator_keberhasilan') is-invalid @enderror" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>5</td>
-                                        <td><input type="text" name="indikator_keberhasilan[]"
-                                                class="form-control @error('indikator_keberhasilan') is-invalid @enderror" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>6</td>
-                                        <td><input type="text" name="indikator_keberhasilan[]"
-                                                class="form-control @error('indikator_keberhasilan') is-invalid @enderror" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>7</td>
-                                        <td><input type="text" name="indikator_keberhasilan[]"
-                                                class="form-control @error('indikator_keberhasilan') is-invalid @enderror" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>8</td>
-                                        <td><input type="text" name="indikator_keberhasilan[]"
-                                                class="form-control @error('indikator_keberhasilan') is-invalid @enderror" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>9</td>
-                                        <td><input type="text" name="indikator_keberhasilan[]"
-                                                class="form-control @error('indikator_keberhasilan') is-invalid @enderror" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>10</td>
-                                        <td><input type="text" name="indikator_keberhasilan[]"
-                                                class="form-control @error('indikator_keberhasilan') is-invalid @enderror" />
-                                        </td>
-                                    </tr>
+                                    @if (isset($pengajuanKap))
+                                        @foreach ($indikator_keberhasilan_kap as $row)
+                                            <tr>
+                                                <td>{{ $loop->index + 1 }}</td>
+                                                <td>
+                                                    <input type="text" name="indikator_keberhasilan[]"
+                                                        value="{{ $row->indikator_keberhasilan }}"
+                                                        class="form-control @error('indikator_keberhasilan') is-invalid @enderror" />
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        @for ($i = 1; $i <= 10; $i++)
+                                            <tr>
+                                                <td>{{ $i }}</td>
+                                                <td>
+                                                    <input type="text" name="indikator_keberhasilan[]"
+                                                        class="form-control @error('indikator_keberhasilan') is-invalid @enderror" />
+                                                </td>
+                                            </tr>
+                                        @endfor
+                                    @endif
                                 </tbody>
                             </table>
                         </div>
@@ -624,48 +587,34 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>
-                                            <input type="hidden" name="no_level[]" value="1"
-                                                class="form-control @error('no_level') is-invalid @enderror" />
-
-                                            <input type="text" name="level_evaluasi_instrumen[]"
-                                                class="form-control @error('level_evaluasi_instrumen') is-invalid @enderror" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td><input type="hidden" name="no_level[]" value="2"
-                                                class="form-control @error('no_level') is-invalid @enderror" /><input
-                                                type="text" name="level_evaluasi_instrumen[]"
-                                                class="form-control @error('level_evaluasi_instrumen') is-invalid @enderror" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td><input type="hidden" name="no_level[]" value="3"
-                                                class="form-control @error('no_level') is-invalid @enderror" /><input
-                                                type="text" name="level_evaluasi_instrumen[]"
-                                                class="form-control @error('level_evaluasi_instrumen') is-invalid @enderror" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td><input type="hidden" name="no_level[]" value="4"
-                                                class="form-control @error('no_level') is-invalid @enderror" /><input
-                                                type="text" name="level_evaluasi_instrumen[]"
-                                                class="form-control @error('level_evaluasi_instrumen') is-invalid @enderror" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>5</td>
-                                        <td><input type="hidden" name="no_level[]" value="5"
-                                                class="form-control @error('no_level') is-invalid @enderror" /><input
-                                                type="text" name="level_evaluasi_instrumen[]"
-                                                class="form-control @error('level_evaluasi_instrumen') is-invalid @enderror" />
-                                        </td>
-                                    </tr>
+                                    @if (isset($pengajuanKap))
+                                        @foreach ($level_evaluasi_instrumen_kap as $level)
+                                            <tr>
+                                                <td>{{ $level->level }}</td>
+                                                <td>
+                                                    <input type="hidden" name="no_level[]"
+                                                        value="{{ $level->level }}"
+                                                        class="form-control @error('no_level') is-invalid @enderror" />
+                                                    <input type="text" name="level_evaluasi_instrumen[]"
+                                                        value="{{ $level->keterangan }}"
+                                                        class="form-control @error('level_evaluasi_instrumen') is-invalid @enderror" />
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            <tr>
+                                                <td>{{ $i }}</td>
+                                                <td>
+                                                    <input type="hidden" name="no_level[]"
+                                                        value="{{ $i }}"
+                                                        class="form-control @error('no_level') is-invalid @enderror" />
+                                                    <input type="text" name="level_evaluasi_instrumen[]"
+                                                        class="form-control @error('level_evaluasi_instrumen') is-invalid @enderror" />
+                                                </td>
+                                            </tr>
+                                        @endfor
+                                    @endif
                                 </tbody>
                             </table>
                         </div>
