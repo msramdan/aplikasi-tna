@@ -317,7 +317,7 @@
     <script>
         $(document).ready(function() {
             var i = 1;
-            $('#add_photo').click(function() {
+            $('#add_waktu_tempat').click(function() {
                 i++;
                 var newRow = '<tr id="row' + i + '">' +
                     '<td>' +
@@ -381,6 +381,20 @@
                     });
                 } else {
                     $('#kompetensi-description').empty();
+                }
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            // Function to handle row removal
+            $(document).on('click', '.btn_remove_data', function() {
+                var rowId = $(this).attr('id');
+                $('#detail_file' + rowId).remove(); // Remove the row
+                // Check if all rows are removed
+                if ($('#waktu_tempat_table tr[id^="detail_file"]').length === 0) {
+                    $('#placeholder_row select, #placeholder_row input').prop('required', true);
                 }
             });
         });

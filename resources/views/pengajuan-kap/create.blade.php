@@ -307,7 +307,7 @@
     <script>
         $(document).ready(function() {
             var i = 1;
-            $('#add_photo').click(function() {
+            $('#add_waktu_tempat').click(function() {
                 i++;
                 var newRow = '<tr id="row' + i + '">' +
                     '<td>' +
