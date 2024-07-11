@@ -314,13 +314,45 @@
                                         </tr>
                                     </thead>
 
+                                    @if (isset($pengajuanKap))
+                                        @foreach ($waktu_tempat as $row)
+                                            <tr id="detail_file{{ $row->id }}">
+                                                <td>
+                                                    <select name="tempat_acara[]"
+                                                        class="form-control @error('lokasi') is-invalid @enderror"
+                                                        required>
+                                                        <option value="" selected disabled>-- Pilih --</option>
+                                                        @foreach ($lokasiData as $lokasi)
+                                                            <option value="{{ $lokasi->id }}"
+                                                                {{ $lokasi->id == $row->lokasi_id ? 'selected' : '' }}>
+                                                                {{ $lokasi->nama_lokasi }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                <td><input type="date" name="tanggal_mulai[]"
+                                                        value="{{ $row->tanggal_mulai }}"
+                                                        class="form-control @error('tanggal_mulai') is-invalid @enderror"
+                                                        required /></td>
+                                                <td><input type="date" name="tanggal_selesai[]"
+                                                        value="{{ $row->tanggal_selesai }}"
+                                                        class="form-control @error('tanggal_selesai') is-invalid @enderror"
+                                                        required /></td>
+                                                <td>
+                                                    <button type="button" id="{{ $row->id }}"
+                                                        class="btn btn-danger btn_remove_data">X</button>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @endif
                                     <tr>
                                         <td>
                                             <select name="tempat_acara[]"
                                                 class="form-control @error('lokasi') is-invalid @enderror" required>
                                                 <option value="" selected disabled>-- Pilih --</option>
                                                 @foreach ($lokasiData as $lokasi)
-                                                    <option value="{{ $lokasi->id }}">{{ $lokasi->nama_lokasi }}
+                                                    <option value="{{ $lokasi->id }}">
+                                                        {{ $lokasi->nama_lokasi }}
                                                     </option>
                                                 @endforeach
                                             </select>

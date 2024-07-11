@@ -306,6 +306,15 @@
     </script>
 
     <script>
+        $(document).on('click', '.btn_remove_data', function() {
+            var bid = this.id;
+            console.log(bid)
+            var trid = $(this).closest('tr').attr('id');
+            $('#' + trid + '').remove();
+        });
+    </script>
+
+    <script>
         $(document).ready(function() {
             var i = 1;
             $('#add_photo').click(function() {
