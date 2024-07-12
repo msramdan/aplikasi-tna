@@ -115,73 +115,79 @@
             $('.select2-form').select2();
         });
     </script>
+<script>
+    $(document).ready(function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar;
 
-    <script>
-        $(document).ready(function() {
-            var calendarEl = document.getElementById('calendar');
-            var calendar;
+        function fetchEvents(year) {
+            $.ajax({
+                url: '{{ route('getEvents') }}',
+                type: 'GET',
+                data: {
+                    year: year,
+                    _token: $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(data) {
+                    calendar.removeAllEvents();
+                    calendar.addEventSource(data);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Failed to fetch events:', error);
+                }
+            });
+        }
 
-            function fetchEvents(year) {
-                $.ajax({
-                    url: '{{ route('getEvents') }}',
-                    type: 'GET',
-                    data: {
-                        year: year,
-                        _token: $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function(data) {
-                        calendar.removeAllEvents();
-                        calendar.addEventSource(data);
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Failed to fetch events:', error);
-                    }
-                });
-            }
+        function initializeCalendar(year) {
+            var startOfYear = moment(year + '-01-01').format('YYYY-MM-DD');
+            var endOfYear = moment(year + '-12-31').format('YYYY-MM-DD');
 
-            function initializeCalendar() {
-                calendar = new FullCalendar.Calendar(calendarEl, {
-                    initialView: 'dayGridMonth',
-                    editable: true,
-                    eventClick: function(info) {
-                        // Set nilai modal sesuai dengan acara yang diklik
-                        $('#eventTitle').text(info.event.title);
-                        $('#eventDateStart').text(moment(info.event.start).format("YYYY-MM-DD"));
-                        $('#eventDateEnd').text(moment(info.event.end).format("YYYY-MM-DD"));
-                        $('#eventDescription').text(info.event.extendedProps.description);
+            calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                editable: true,
+                validRange: {
+                    start: startOfYear,
+                    end: endOfYear
+                },
+                eventClick: function(info) {
+                    // Set nilai modal sesuai dengan acara yang diklik
+                    $('#eventTitle').text(info.event.title);
+                    $('#eventDateStart').text(moment(info.event.start).format("YYYY-MM-DD"));
+                    $('#eventDateEnd').text(moment(info.event.end).format("YYYY-MM-DD"));
+                    $('#eventDescription').text(info.event.extendedProps.description);
 
-                        // Tampilkan modal
-                        var modal = new bootstrap.Modal(document.getElementById('eventModal'));
-                        modal.show();
-                    },
-                    dayMaxEventRows: true,
-                    dateClick: function(info) {
-                        var clickedDate = info.date;
-                        var eventsOnDate = calendar.getEvents().filter(function(event) {
-                            return moment(clickedDate).isBetween(event.start, event.end, null,
-                                '[]');
-                        });
-                        var eventList = eventsOnDate.map(function(event) {
-                            return "<li>" + event.title + "</li>";
-                        });
-                        $('#eventList').html(eventList.join(""));
-                    }
-                });
-
-                var selectedYear = $('#tahun').val();
-                console.log(selectedYear);
-                fetchEvents(selectedYear);
-                calendar.render();
-            }
-
-            $('#tahun').on('change', function() {
-                var selectedYear = $(this).val();
-                var url = '{{ route('kalender-pembelajaran.index', ':year') }}';
-                url = url.replace(':year', selectedYear);
-                window.location.href = url;
+                    // Tampilkan modal
+                    var modal = new bootstrap.Modal(document.getElementById('eventModal'));
+                    modal.show();
+                },
+                dayMaxEventRows: true,
+                dateClick: function(info) {
+                    var clickedDate = info.date;
+                    var eventsOnDate = calendar.getEvents().filter(function(event) {
+                        return moment(clickedDate).isBetween(event.start, event.end, null, '[]');
+                    });
+                    var eventList = eventsOnDate.map(function(event) {
+                        return "<li>" + event.title + "</li>";
+                    });
+                    $('#eventList').html(eventList.join(""));
+                }
             });
 
-            initializeCalendar();
+            fetchEvents(year);
+            calendar.render();
+        }
+
+        $('#tahun').on('change', function() {
+            var selectedYear = $(this).val();
+            var url = '{{ route('kalender-pembelajaran.index', ':year') }}';
+            url = url.replace(':year', selectedYear);
+            window.location.href = url;
         });
-    </script>
+
+        // Initialize the calendar with the current year or the selected year from the controller
+        var initialYear = $('#tahun').val();
+        initializeCalendar(initialYear);
+    });
+</script>
+
 @endpush
