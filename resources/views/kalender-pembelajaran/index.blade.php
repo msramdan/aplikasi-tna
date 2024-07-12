@@ -43,7 +43,8 @@
                                                 $endYear = $currentYear + 1;
                                             @endphp
                                             @foreach (range($startYear, $endYear) as $yearOption)
-                                                <option value="{{ $yearOption }}" {{ $yearOption == $year ? 'selected' : '' }}>
+                                                <option value="{{ $yearOption }}"
+                                                    {{ $yearOption == $year ? 'selected' : '' }}>
                                                     {{ $yearOption }}
                                                 </option>
                                             @endforeach
@@ -114,8 +115,9 @@
             $('.select2-form').select2();
         });
     </script>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        $(document).ready(function() {
             var calendarEl = document.getElementById('calendar');
             var calendar;
 
@@ -143,13 +145,10 @@
                     editable: true,
                     eventClick: function(info) {
                         // Set nilai modal sesuai dengan acara yang diklik
-                        document.getElementById('eventTitle').innerText = info.event.title;
-                        document.getElementById('eventDateStart').innerText = moment(info.event.start)
-                            .format("YYYY-MM-DD");
-                        document.getElementById('eventDateEnd').innerText = moment(info.event.end)
-                            .format("YYYY-MM-DD");
-                        document.getElementById('eventDescription').innerText = info.event.extendedProps
-                            .description;
+                        $('#eventTitle').text(info.event.title);
+                        $('#eventDateStart').text(moment(info.event.start).format("YYYY-MM-DD"));
+                        $('#eventDateEnd').text(moment(info.event.end).format("YYYY-MM-DD"));
+                        $('#eventDescription').text(info.event.extendedProps.description);
 
                         // Tampilkan modal
                         var modal = new bootstrap.Modal(document.getElementById('eventModal'));
@@ -165,18 +164,21 @@
                         var eventList = eventsOnDate.map(function(event) {
                             return "<li>" + event.title + "</li>";
                         });
-                        document.getElementById('eventList').innerHTML = eventList.join("");
+                        $('#eventList').html(eventList.join(""));
                     }
                 });
 
-                var selectedYear = document.getElementById('tahun').value;
+                var selectedYear = $('#tahun').val();
+                console.log(selectedYear);
                 fetchEvents(selectedYear);
                 calendar.render();
             }
 
-            document.getElementById('tahun').addEventListener('change', function() {
-                var selectedYear = this.value;
-                fetchEvents(selectedYear);
+            $('#tahun').on('change', function() {
+                var selectedYear = $(this).val();
+                var url = '{{ route('kalender-pembelajaran.index', ':year') }}';
+                url = url.replace(':year', selectedYear);
+                window.location.href = url;
             });
 
             initializeCalendar();

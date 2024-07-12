@@ -24,7 +24,7 @@ class KalenderPembelajaranController extends Controller
 
     public function getEvents(Request $request)
     {
-        $year = '2024';
+        $year =  $request->input('year');
         $events = DB::table('waktu_tempat')
             ->join('pengajuan_kap', 'waktu_tempat.pengajuan_kap_id', '=', 'pengajuan_kap.id')
             ->join('lokasi', 'waktu_tempat.lokasi_id', '=', 'lokasi.id')
