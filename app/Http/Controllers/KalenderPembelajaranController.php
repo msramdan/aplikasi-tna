@@ -55,6 +55,7 @@ class KalenderPembelajaranController extends Controller
                 'start' => \Carbon\Carbon::parse($event->start)->format('Y-m-d\TH:i:s'),
                 'end' => \Carbon\Carbon::parse($event->end)->format('Y-m-d\TH:i:s'),
                 'description' => $event->tujuan_program_pembelajaran,
+                'allDay' => true,
             ];
         });
 
