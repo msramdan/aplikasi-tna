@@ -124,7 +124,7 @@
             function fetchEvents(year) {
                 $.ajax({
                     url: '{{ route('getEvents') }}',
-                    type: 'PUT',
+                    type: 'GET',
                     data: {
                         year: year,
                         _token: $('meta[name="csrf-token"]').attr('content')
