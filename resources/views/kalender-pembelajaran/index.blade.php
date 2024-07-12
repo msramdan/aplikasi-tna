@@ -82,7 +82,24 @@
                     <table class="table">
                         <tbody>
                             <tr>
-                                <th scope="row">{{ __('kalender-pembelajaran/index.Judul') }}</th>
+                                <th scope="row">Kode Pembelajaran</th>
+                                <td id="eventKode"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Institusi Sumber</th>
+                                <td id="eventSumber"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Jenis Progran</th>
+                                <td id="eventJenis"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Frekuensi pelaksanaan</th>
+                                <td id="eventFrekuensi"></td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">Topik pembelajaran</th>
                                 <td id="eventTitle"></td>
                             </tr>
                             <tr>
@@ -155,13 +172,15 @@
                         right: 'dayGridMonth,timeGridWeek,timeGridDay'
                     },
                     eventClick: function(info) {
-                        // Set nilai modal sesuai dengan acara yang diklik
+                        console.log(info.event);
+                        $('#eventKode').text(info.event.extendedProps.kode_pembelajaran);
+                        $('#eventSumber').text(info.event.extendedProps.institusi_sumber);
+                        $('#eventJenis').text(info.event.extendedProps.jenis_program);
+                        $('#eventFrekuensi').text(info.event.extendedProps.frekuensi_pelaksanaan);
                         $('#eventTitle').text(info.event.title);
                         $('#eventDateStart').text(moment(info.event.start).format("YYYY-MM-DD"));
                         $('#eventDateEnd').text(moment(info.event.end).format("YYYY-MM-DD"));
                         $('#eventDescription').text(info.event.extendedProps.description);
-
-                        // Tampilkan modal
                         var modal = new bootstrap.Modal(document.getElementById('eventModal'));
                         modal.show();
                     },
