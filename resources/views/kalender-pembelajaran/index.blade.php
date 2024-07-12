@@ -186,14 +186,16 @@
                     },
                     dayMaxEventRows: true,
                     dateClick: function(info) {
-                        var clickedDate = info.date;
+                        var clickedDate = info.dateStr;
                         var eventsOnDate = calendar.getEvents().filter(function(event) {
-                            return moment(clickedDate).isBetween(event.start, event.end, null,
-                                '[]');
+                            return event.startStr === clickedDate || event.endStr ===
+                                clickedDate || (event.startStr < clickedDate && event.endStr >
+                                    clickedDate);
                         });
                         var eventList = eventsOnDate.map(function(event) {
                             return "<li>" + event.title + "</li>";
                         });
+                        console.log(eventList);
                         $('#eventList').html(eventList.join(""));
                     }
                 });
