@@ -81,151 +81,243 @@
     <!-- Points Section -->
     <div class="points">
         <strong>I. Konteks Pembelajaran</strong>
-        <table class="table" style=" font-size:13px; padding:15px">
+        <table style="font-size:13px; padding:15px;line-height:16px">
             <tr>
-                <td style="width: 200px">{{ __('Kode Pembelajaran') }}</td>
-                <td>:</td>
-                <td>{{ $pengajuanKap->kode_pembelajaran }}</td>
+                <td style="width: 200px; vertical-align: top;">{{ __('Kode Pembelajaran') }}</td>
+                <td style="vertical-align: top;">:</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->kode_pembelajaran }}</td>
             </tr>
 
             <tr>
-                <td>{{ __('Institusi Sumber') }}</td>
-                <td>:</td>
-                <td>{{ $pengajuanKap->institusi_sumber }}</td>
+                <td style="vertical-align: top;">{{ __('Institusi Sumber') }}</td>
+                <td style="vertical-align: top;">:</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->institusi_sumber }}</td>
             </tr>
 
             <tr>
-                <td>{{ __('Jenis Progran') }}</td>
-                <td>:</td>
-                <td>{{ $pengajuanKap->jenis_program }}</td>
+                <td style="vertical-align: top;">{{ __('Jenis Program') }}</td>
+                <td style="vertical-align: top;">:</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->jenis_program }}</td>
             </tr>
 
             <tr>
-                <td>{{ __('Frekuensi pelaksanaan') }}</td>
-                <td>:</td>
-                <td>{{ $pengajuanKap->frekuensi_pelaksanaan }}</td>
+                <td style="vertical-align: top;">{{ __('Frekuensi pelaksanaan') }}</td>
+                <td style="vertical-align: top;">:</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->frekuensi_pelaksanaan }}</td>
             </tr>
             <tr>
-                <td>{{ __('Indikator Kinerja') }}</td>
-                <td>:</td>
-                <td>{{ $pengajuanKap->indikator_kinerja }}</td>
+                <td style="vertical-align: top;">{{ __('Indikator Kinerja') }}</td>
+                <td style="vertical-align: top;">:</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->indikator_kinerja }}</td>
             </tr>
             <tr>
-                <td>{{ __('Kompetensi') }}</td>
-                <td>:</td>
-                <td>{{ $pengajuanKap->nama_kompetensi }}</td>
+                <td style="vertical-align: top;">{{ __('Kompetensi') }}</td>
+                <td style="vertical-align: top;">:</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->nama_kompetensi }}</td>
             </tr>
             <tr>
-                <td>{{ __('Topik') }}</td>
-                <td>:</td>
-                <td>{{ $pengajuanKap->nama_topik }}</td>
+                <td style="vertical-align: top;">{{ __('Topik') }}</td>
+                <td style="vertical-align: top;">:</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->nama_topik }}</td>
             </tr>
 
             <tr>
-                <td>{{ __('Tujuan Program Pembelajaran') }}</td>
-                <td>:</td>
-                <td>{{ $pengajuanKap->tujuan_program_pembelajaran }}</td>
+                <td style="vertical-align: top;">{{ __('Tujuan Program Pembelajaran') }}</td>
+                <td style="vertical-align: top;">:</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->tujuan_program_pembelajaran }}</td>
             </tr>
+
             <tr>
-                <td>{{ __('Indikator Dampak Terhadap Kinerja Organisasi') }}
+                <td style="vertical-align: top;">{{ __('Indikator Keberhasilan') }}</td>
+                <td style="vertical-align: top;">:</td>
+                <td>
+                    <table style="width: 450px; border-collapse: collapse;">
+                        <thead>
+                            <tr>
+                                <th style="background-color: #27146D; color: white; padding: 2px;text-align: left;">
+                                    #</th>
+                                <th style="background-color: #27146D; color: white; padding: 2px;text-align: left;">
+                                    Peserta Mampu</th>
+                            </tr>
+                        </thead>
+                        @foreach ($indikator_keberhasilan_kap as $item)
+                            <tr>
+                                <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: justify">
+                                    {{ $loop->index + 1 }}</td>
+                                <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: justify">
+                                    {{ $item->indikator_keberhasilan }}</td>
+                            </tr>
+                        @endforeach
+                    </table>
                 </td>
-                <td>:</td>
-                <td>{{ $pengajuanKap->indikator_dampak_terhadap_kinerja_organisasi }}</td>
+            </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td style="vertical-align: top;">{{ __('Indikator Dampak Terhadap Kinerja Organisasi') }}</td>
+                <td style="vertical-align: top;">:</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->indikator_dampak_terhadap_kinerja_organisasi }}</td>
             </tr>
             <tr>
-                <td>{{ __('Penugasan Yang Terkait Dengan Pembelajaran') }}</td>
-                <td>:</td>
-                <td style="text-align: justify">{{ $pengajuanKap->penugasan_yang_terkait_dengan_pembelajaran }}</td>
+                <td style="vertical-align: top;">{{ __('Penugasan Yang Terkait Dengan Pembelajaran') }}</td>
+                <td style="vertical-align: top;">:</td>
+                <td style="text-align: justify; vertical-align: top;">
+                    {{ $pengajuanKap->penugasan_yang_terkait_dengan_pembelajaran }}</td>
             </tr>
             <tr>
-                <td>{{ __('Skill Group Owner') }}</td>
-                <td>:</td>
-                <td style="text-align: justify">{{ $pengajuanKap->skill_group_owner }}</td>
+                <td style="vertical-align: top;">{{ __('Skill Group Owner') }}</td>
+                <td style="vertical-align: top;">:</td>
+                <td style="text-align: justify; vertical-align: top;">{{ $pengajuanKap->skill_group_owner }}</td>
             </tr>
 
             <tr>
-                <td>{{ __('Tanggal dibuat') }}</td>
-                <td>:</td>
-                <td>{{ $pengajuanKap->tanggal_created }}</td>
+                <td style="vertical-align: top;">{{ __('Tanggal dibuat') }}</td>
+                <td style="vertical-align: top;">:</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->tanggal_created }}</td>
             </tr>
         </table>
 
         <br>
         <strong>II. Detail Pembelajaran</strong>
-        <table class="table" style=" font-size:13px; padding:15px">
+        <table style="font-size:13px; padding:15px;line-height:16px">
             <tr>
-                <td style="width: 200px">{{ __('Alokasi Waktu') }}</td>
-                <td>:</td>
-                <td>{{ $pengajuanKap->alokasi_waktu }} Hari</td>
+                <td style="width: 200px; vertical-align: top;">{{ __('Alokasi Waktu') }}</td>
+                <td style="vertical-align: top;">:</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->alokasi_waktu }} Hari</td>
             </tr>
             <tr>
-                <td>{{ __('Bentuk Pembelajaran') }}</td>
-                <td>:</td>
-                <td>{{ $pengajuanKap->bentuk_pembelajaran }} Hari</td>
+                <td></td>
+                <td></td>
+                <td>
+                    <table style="width: 450px; border-collapse: collapse;">
+                        <thead>
+                            <tr>
+                                <th style="background-color: #27146D; color: white; padding: 2px;text-align: left;">
+                                    Lokasi</th>
+                                <th style="background-color: #27146D; color: white; padding: 2px;text-align: left;">
+                                    Tanggal Mulai</th>
+                                <th style="background-color: #27146D; color: white; padding: 2px;text-align: left;">
+                                    Tanggal Selesai</th>
+                            </tr>
+                        </thead>
+                        @foreach ($waktu_tempat as $row)
+                            <tr>
+                                <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: justify">
+                                    {{ $row->nama_lokasi }}</td>
+                                <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: justify">
+                                    {{ $row->tanggal_mulai }}</td>
+                                <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: justify">
+                                    {{ $row->tanggal_selesai }}</td>
+                            </tr>
+                        @endforeach
+                    </table>
+                </td>
             </tr>
             <tr>
-                <td>{{ __('Jalur Pembelajaran') }}</td>
-                <td>:</td>
-                <td>{{ $pengajuanKap->jalur_pembelajaran }} Hari</td>
+                <td style="vertical-align: top;">{{ __('Bentuk Pembelajaran') }}</td>
+                <td style="vertical-align: top;">:</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->bentuk_pembelajaran }}</td>
             </tr>
             <tr>
-                <td>{{ __('Model Pembelajaran') }}</td>
-                <td>:</td>
-                <td>{{ $pengajuanKap->model_pembelajaran }}</td>
+                <td style="vertical-align: top;">{{ __('Jalur Pembelajaran') }}</td>
+                <td style="vertical-align: top;">:</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->jalur_pembelajaran }}</td>
             </tr>
             <tr>
-                <td>{{ __('Jenis Pembelajaran') }}</td>
-                <td>:</td>
-                <td>{{ $pengajuanKap->jenis_pembelajaran }}</td>
+                <td style="vertical-align: top;">{{ __('Model Pembelajaran') }}</td>
+                <td style="vertical-align: top;">:</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->model_pembelajaran }}</td>
             </tr>
             <tr>
-                <td>{{ __('Metode Pembelajaran') }}</td>
-                <td>:</td>
-                <td>{{ $pengajuanKap->metode_pembelajaran }}</td>
+                <td style="vertical-align: top;">{{ __('Jenis Pembelajaran') }}</td>
+                <td style="vertical-align: top;">:</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->jenis_pembelajaran }}</td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top;">{{ __('Metode Pembelajaran') }}</td>
+                <td style="vertical-align: top;">:</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->metode_pembelajaran }}</td>
             </tr>
         </table>
 
         <br>
         <strong>III. Penyelenggaraan Pembelajaran</strong>
-        <table class="table" style=" font-size:13px; padding:15px">
+        <table style="font-size:13px; padding:15px;line-height:16px">
             <tr>
-                <td style="width: 200px">{{ __('Sasaran Peserta') }}</td>
-                <td>:</td>
-                <td>{{ $pengajuanKap->sasaran_peserta }}</td>
+                <td style="width: 200px; vertical-align: top;">{{ __('Sasaran Peserta') }}</td>
+                <td style="vertical-align: top;">:</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->sasaran_peserta }}</td>
             </tr>
             <tr>
-                <td>{{ __('Kriteria Peserta') }}</td>
-                <td>:</td>
-                <td>{{ $pengajuanKap->kriteria_peserta }}</td>
+                <td style="vertical-align: top;">{{ __('Kriteria Peserta') }}</td>
+                <td style="vertical-align: top;">:</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->kriteria_peserta }}</td>
             </tr>
             <tr>
-                <td>{{ __('Aktivitas Prapembelajaran') }}</td>
-                <td>:</td>
-                <td>{{ $pengajuanKap->aktivitas_prapembelajaran }}</td>
+                <td style="vertical-align: top;">{{ __('Aktivitas Prapembelajaran') }}</td>
+                <td style="vertical-align: top;">:</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->aktivitas_prapembelajaran }}</td>
             </tr>
 
             <tr>
-                <td>{{ __('Penyelenggara Pembelajaran') }}</td>
-                <td>:</td>
-                <td>{{ $pengajuanKap->penyelenggara_pembelajaran }}</td>
+                <td style="vertical-align: top;">{{ __('Penyelenggara Pembelajaran') }}</td>
+                <td style="vertical-align: top;">:</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->penyelenggara_pembelajaran }}</td>
             </tr>
             @php
                 $fasilitators = json_decode($pengajuanKap->fasilitator_pembelajaran);
             @endphp
 
             <tr>
-                <td>{{ __('Fasilitator Pembelajaran') }}</td>
-                <td>:</td>
-                <td>
+                <td style="vertical-align: top;">{{ __('Fasilitator Pembelajaran') }}</td>
+                <td style="vertical-align: top;">:</td>
+                <td style="vertical-align: top;">
                     @foreach ($fasilitators as $item)
-                        <span class="badge bg-primary">{{ $item }}</span>
+                        <span class="badge bg-primary" style="vertical-align: top;">{{ $item }}</span>
                     @endforeach
                 </td>
             </tr>
             <tr>
-                <td>{{ __('Sertifikat') }}</td>
-                <td>:</td>
-                <td>{{ $pengajuanKap->sertifikat }}</td>
+                <td style="vertical-align: top;">{{ __('Sertifikat') }}</td>
+                <td style="vertical-align: top;">:</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->sertifikat }}</td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top;">{{ __(' Level Evaluasi dan Instrumennya') }}</td>
+                <td style="vertical-align: top;">:</td>
+                <td>
+                    <table style="width: 450px; border-collapse: collapse;">
+                        <thead>
+                            <tr>
+                                <th style="background-color: #27146D; color: white; padding: 2px;text-align: left;">
+                                    Level</th>
+                                <th style="background-color: #27146D; color: white; padding: 2px;text-align: left;">
+                                    Instrumen</th>
+                            </tr>
+                        </thead>
+                        @foreach ($level_evaluasi_instrumen_kap as $item)
+                            <tr>
+                                <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: justify">
+                                    {{ $item->level }}</td>
+                                <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: justify">
+                                    {{ $item->keterangan }}</td>
+                            </tr>
+                        @endforeach
+                    </table>
+                </td>
             </tr>
         </table>
     </div>
