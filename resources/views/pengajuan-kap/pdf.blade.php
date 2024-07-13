@@ -81,7 +81,7 @@
     <!-- Points Section -->
     <div class="points">
         <strong>I. Konteks Pembelajaran</strong>
-        <table style="font-size:13px; padding:15px;line-height:16px">
+        <table style="font-size:12px; padding:15px;line-height:17px">
             <tr>
                 <td style="width: 200px; vertical-align: top;">{{ __('Kode Pembelajaran') }}</td>
                 <td style="vertical-align: top;">:</td>
@@ -134,9 +134,9 @@
                     <table style="width: 450px; border-collapse: collapse;">
                         <thead>
                             <tr>
-                                <th style="background-color: #27146D; color: white; padding: 2px;text-align: left;">
+                                <th style="background-color: #f2f2f2; ; padding: 2px;text-align: left;">
                                     #</th>
-                                <th style="background-color: #27146D; color: white; padding: 2px;text-align: left;">
+                                <th style="background-color: #f2f2f2; ; padding: 2px;text-align: left;">
                                     Peserta Mampu</th>
                             </tr>
                         </thead>
@@ -151,21 +151,6 @@
                     </table>
                 </td>
             </tr>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             <tr>
                 <td style="vertical-align: top;">{{ __('Indikator Dampak Terhadap Kinerja Organisasi') }}</td>
                 <td style="vertical-align: top;">:</td>
@@ -192,7 +177,7 @@
 
         <br>
         <strong>II. Detail Pembelajaran</strong>
-        <table style="font-size:13px; padding:15px;line-height:16px">
+        <table style="font-size:12px; padding:15px;line-height:17px">
             <tr>
                 <td style="width: 200px; vertical-align: top;">{{ __('Alokasi Waktu') }}</td>
                 <td style="vertical-align: top;">:</td>
@@ -205,11 +190,11 @@
                     <table style="width: 450px; border-collapse: collapse;">
                         <thead>
                             <tr>
-                                <th style="background-color: #27146D; color: white; padding: 2px;text-align: left;">
+                                <th style="background-color: #f2f2f2; ; padding: 2px;text-align: left;">
                                     Lokasi</th>
-                                <th style="background-color: #27146D; color: white; padding: 2px;text-align: left;">
+                                <th style="background-color: #f2f2f2; ; padding: 2px;text-align: left;">
                                     Tanggal Mulai</th>
-                                <th style="background-color: #27146D; color: white; padding: 2px;text-align: left;">
+                                <th style="background-color: #f2f2f2; ; padding: 2px;text-align: left;">
                                     Tanggal Selesai</th>
                             </tr>
                         </thead>
@@ -255,7 +240,7 @@
 
         <br>
         <strong>III. Penyelenggaraan Pembelajaran</strong>
-        <table style="font-size:13px; padding:15px;line-height:16px">
+        <table style="font-size:12px; padding:15px;line-height:17px">
             <tr>
                 <td style="width: 200px; vertical-align: top;">{{ __('Sasaran Peserta') }}</td>
                 <td style="vertical-align: top;">:</td>
@@ -302,9 +287,9 @@
                     <table style="width: 450px; border-collapse: collapse;">
                         <thead>
                             <tr>
-                                <th style="background-color: #27146D; color: white; padding: 2px;text-align: left;">
+                                <th style="background-color: #f2f2f2; ; padding: 2px;text-align: left;">
                                     Level</th>
-                                <th style="background-color: #27146D; color: white; padding: 2px;text-align: left;">
+                                <th style="background-color: #f2f2f2; ; padding: 2px;text-align: left;">
                                     Instrumen</th>
                             </tr>
                         </thead>
@@ -319,6 +304,47 @@
                     </table>
                 </td>
             </tr>
+        </table>
+
+        <br>
+        <strong>IV. History Review</strong>
+        <table style="font-size:12px; padding:15px;line-height:17px; width:100%;border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th style="background-color: #f2f2f2;width:15%;text-align:center">Remark</th>
+                    <th style="background-color: #f2f2f2;width:45%;text-align:center">Catatan</th>
+                    <th style="background-color: #f2f2f2;width:20%;text-align:center">User</th>
+                    <th style="background-color: #f2f2f2;width:10%;text-align:center">Status</th>
+                    <th style="background-color: #f2f2f2;width:10%;text-align:center">Tgl Review</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($logReviews as $log)
+                    <tr>
+                        <td style=" border-bottom: 1px solid #ddd;text-align:center">
+                            {{ $log->remark }}
+                        </td>
+                        <td style=" border-bottom: 1px solid #ddd;text-align:center">
+                            <textarea rows="8" readonly>{{ $log->catatan }}</textarea>
+                        </td>
+                        <td style=" border-bottom: 1px solid #ddd;text-align:center">{{ $log->user_name ?? '-' }}</td>
+                        <td style=" border-bottom: 1px solid #ddd;text-align:center">{{ $log->status }}</td>
+                        <td style=" border-bottom: 1px solid #ddd;text-align:center">{{ $log->tanggal_review ?? '-' }}
+                        </td>
+                    </tr>
+                @endforeach
+                <tr>
+                    <td colspan="2" style="border: 1px solid #ddd; text-align: center;">
+                        Hasil cetak Kerangka Acuan Pembelajaran ini dibuat secara otomatis oleh sistem. Untuk detail
+                        Kerangka Acuan Pembelajaran, silakan pindai kode QR.
+                    </td>
+                    <td colspan="3" style="border: 1px solid #ddd; text-align: center;">
+                        <img loading="lazy"
+                            src="https://quickchart.io/qr?text=Here's my text">
+                    </td>
+                </tr>
+
+            </tbody>
         </table>
     </div>
 </body>
