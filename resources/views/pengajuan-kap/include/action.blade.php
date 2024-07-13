@@ -1,6 +1,11 @@
 <td>
     <div>
-        <a href="#" class="btn btn-gray btn-sm">
+        <a href="{{ route('pengajuan-kap.pdf', [
+            'id' => $model->id,
+            'is_bpkp' => $model->institusi_sumber,
+            'frekuensi' => $model->frekuensi_pelaksanaan,
+        ]) }}"
+            class="btn btn-gray btn-sm">
             <i class="fa fa-print"></i>
         </a>
 

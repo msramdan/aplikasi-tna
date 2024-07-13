@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use PDF;
 
 
 class PengajuanKapController extends Controller
@@ -573,5 +574,56 @@ class PengajuanKapController extends Controller
             // Handle the exception, optionally log it or notify the user
             return redirect()->back();
         }
+    }
+
+    public function cetak_pdf($id, $is_bpkp, $frekuensi)
+    {
+        $pengajuanKap = DB::table('pengajuan_kap')
+            ->select(
+                'pengajuan_kap.*',
+                'users.name as user_name',
+                'kompetensi.nama_kompetensi',
+                'topik.nama_topik'
+            )
+            ->leftJoin('users', 'pengajuan_kap.user_created', '=', 'users.id')
+            ->leftJoin('kompetensi', 'pengajuan_kap.kompetensi_id', '=', 'kompetensi.id')
+            ->leftJoin('topik', 'pengajuan_kap.topik_id', '=', 'topik.id')
+            ->where('pengajuan_kap.id', '=', $id)
+            ->where('pengajuan_kap.institusi_sumber', '=', $is_bpkp)
+            ->where('pengajuan_kap.frekuensi_pelaksanaan', '=', $frekuensi)
+            ->first();
+
+        $logReviews = DB::table('log_review_pengajuan_kap')
+            ->select(
+                'log_review_pengajuan_kap.*',
+                'users.name as user_name'
+            )
+            ->leftJoin('users', 'log_review_pengajuan_kap.user_review_id', '=', 'users.id')
+            ->where('log_review_pengajuan_kap.pengajuan_kap_id', '=', $id)
+            ->orderBy('log_review_pengajuan_kap.step')
+            ->get();
+
+        $level_evaluasi_instrumen_kap = DB::table('level_evaluasi_instrumen_kap')
+            ->where('pengajuan_kap_id', $id)
+            ->get();
+        $indikator_keberhasilan_kap = DB::table('indikator_keberhasilan_kap')
+            ->where('pengajuan_kap_id', $id)
+            ->get();
+        $waktu_tempat = DB::table('waktu_tempat')
+            ->join('lokasi', 'waktu_tempat.lokasi_id', '=', 'lokasi.id')
+            ->where('waktu_tempat.pengajuan_kap_id', $id)
+            ->select('waktu_tempat.*', 'lokasi.nama_lokasi')
+            ->get();
+
+        $pdf = PDF::loadview('pengajuan-kap.pdf', [
+            'pengajuanKap' => $pengajuanKap,
+            'logReviews' => $logReviews,
+            'level_evaluasi_instrumen_kap' => $level_evaluasi_instrumen_kap,
+            'indikator_keberhasilan_kap' => $indikator_keberhasilan_kap,
+            'waktu_tempat' => $waktu_tempat,
+            'is_bpkp' => $is_bpkp,
+            'frekuensi' => $frekuensi,
+        ]);
+        return $pdf->stream('pengajuan-kap.pdf');
     }
 }
