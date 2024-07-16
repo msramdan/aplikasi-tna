@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('Pengusulan Pembelajaran ') . strtoupper(Request::segment(2)) . ' - ' .
-    strtoupper(Request::segment(3)))
+@section('title', __('Pengusulan Pembelajaran ') . strtoupper(Request::segment(2)) . ' - ' . strtoupper(Request::segment(3)))
 
 @section('content')
     <style>
@@ -19,7 +18,6 @@
             width: 100%;
             height: 100%;
             background: rgba(255, 255, 255, 0.8);
-            /* Transparan white background */
             z-index: 1000;
             text-align: center;
         }
@@ -58,17 +56,16 @@
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                         <h4 class="mb-sm-0">
-                            {{ __('Pengusulan Pembelajaran ') . strtoupper(Request::segment(2) . ' - ' . strtoupper(Request::segment(3))) }}
+                            {{ __('Pengusulan Pembelajaran ') . strtoupper(Request::segment(2)) . ' - ' . strtoupper(Request::segment(3)) }}
                         </h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
                                 <li class="breadcrumb-item active">
-                                    {{ __('Pengusulan Pembelajaran ') . strtoupper(Request::segment(2) . ' - ' . strtoupper(Request::segment(3))) }}
+                                    {{ __('Pengusulan Pembelajaran ') . strtoupper(Request::segment(2)) . ' - ' . strtoupper(Request::segment(3)) }}
                                 </li>
                             </ol>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -77,12 +74,10 @@
                     <div class="card">
                         <div class="card-header">
                             @can('pengajuan kap create')
-                                <a href="{{ route('pengajuan-kap.create', [
-                                    'is_bpkp' => $is_bpkp,
-                                    'frekuensi' => $frekuensi,
-                                ]) }}"
-                                    class="btn btn-md btn-primary"> <i class="mdi mdi-plus"></i>
-                                    {{ __('Create a new Pengusulan Pembelajaran') }}</a>
+                                <a href="{{ route('pengajuan-kap.create', ['is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi]) }}"
+                                    class="btn btn-md btn-primary">
+                                    <i class="mdi mdi-plus"></i> {{ __('Create a new Pengusulan Pembelajaran') }}
+                                </a>
                             @endcan
                             <button id="approve-selected" class="btn btn-md btn-success" disabled>
                                 {{ __('Approve Selected') }}
@@ -181,17 +176,15 @@
                         d.checkboxAll = $('#select-all').prop('checked') ? 1 : 0;
                     }
                 },
-                columns: [{
+                columns: [
+                    {
                         orderable: false,
                         searchable: false,
                         render: function(data, type, full, meta) {
-                            if (full.status_kap === 'Approved' || full.status_kap ===
-                                'Rejected') {
-                                return '<input type="checkbox" class="select-item" value="' + full
-                                    .id + '" disabled>';
+                            if (full.status_kap === 'Approved' || full.status_kap === 'Rejected') {
+                                return '<input type="checkbox" class="select-item" value="' + full.id + '" disabled>';
                             } else {
-                                return '<input type="checkbox" class="select-item" value="' + full
-                                    .id + '">';
+                                return '<input type="checkbox" class="select-item" value="' + full.id + '">';
                             }
                         }
                     },
@@ -279,6 +272,8 @@
                         success: function(response) {
                             alert(response.message);
                             $('#approveModal').modal('hide'); // Close modal
+                            $('#approvalNote').val(''); // Clear note
+                            $('#select-all').prop('checked', false).trigger('change'); // Uncheck all
                             table.ajax.reload();
                         },
                         error: function(xhr) {
@@ -309,6 +304,8 @@
                         success: function(response) {
                             alert(response.message);
                             $('#rejectModal').modal('hide'); // Close modal
+                            $('#rejectionNote').val(''); // Clear note
+                            $('#select-all').prop('checked', false).trigger('change'); // Uncheck all
                             table.ajax.reload();
                         },
                         error: function(xhr) {
