@@ -8,5 +8,5 @@ return [
     'nama_akademi' => 'Nama Akademi',
     'select_nama_akademi' => 'Pilih Nama Akademi',
     'nama_kompetensi' => 'Nama Kompetensi',
-    'deskripsi_kompetensi' => 'Deskripsi Kompetensi',
+    'deskripsi_kompetensi' => 'Kompetensi Dasari',
 ];

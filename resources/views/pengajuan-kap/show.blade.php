@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('Detail of Pengajuan Kap'))
+@section('title', __('Detail of Pengusulan Pembelajaran'))
 
 @section('content')
 
@@ -173,7 +173,7 @@
             <div class="page-header" style="margin-top: 5px">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h3>{{ __('Pengajuan Kap') }}</h3>
+                        <h3>{{ __('Pengusulan Pembelajaran') }}</h3>
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
                                 <a href="/">Dashboard</a>
@@ -183,7 +183,7 @@
                                     href="{{ route('pengajuan-kap.index', [
                                         'is_bpkp' => $is_bpkp,
                                         'frekuensi' => $frekuensi,
-                                    ]) }}">{{ __('Pengajuan Kap') }}</a>
+                                    ]) }}">{{ __('Pengusulan Pembelajaran') }}</a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">
                                 {{ __('Detail') }}
@@ -504,7 +504,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="approveModalLabel">{{ __('Approve Pengajuan Kap') }}</h5>
+                        <h5 class="modal-title" id="approveModalLabel">{{ __('Approve Pengusulan Pembelajaran') }}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -527,7 +527,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="rejectModalLabel">{{ __('Reject Pengajuan Kap') }}</h5>
+                        <h5 class="modal-title" id="rejectModalLabel">{{ __('Reject Pengusulan Pembelajaran') }}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">

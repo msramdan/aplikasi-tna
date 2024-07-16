@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('Pengajuan Kap ') . strtoupper(Request::segment(2)) . ' - ' . strtoupper(Request::segment(3)))
+@section('title', __('Pengusulan Pembelajaran ') . strtoupper(Request::segment(2)) . ' - ' . strtoupper(Request::segment(3)))
 
 @section('content')
     <style>
@@ -57,13 +57,13 @@
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                         <h4 class="mb-sm-0">
-                            {{ __('Pengajuan Kap ') . strtoupper(Request::segment(2) . ' - ' . strtoupper(Request::segment(3))) }}
+                            {{ __('Pengusulan Pembelajaran ') . strtoupper(Request::segment(2) . ' - ' . strtoupper(Request::segment(3))) }}
                         </h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
                                 <li class="breadcrumb-item active">
-                                    {{ __('Pengajuan Kap ') . strtoupper(Request::segment(2) . ' - ' . strtoupper(Request::segment(3))) }}
+                                    {{ __('Pengusulan Pembelajaran ') . strtoupper(Request::segment(2) . ' - ' . strtoupper(Request::segment(3))) }}
                                 </li>
                             </ol>
                         </div>
@@ -81,7 +81,7 @@
                                     'frekuensi' => $frekuensi,
                                 ]) }}"
                                     class="btn btn-md btn-primary"> <i class="mdi mdi-plus"></i>
-                                    {{ __('Create a new pengajuan kap') }}</a>
+                                    {{ __('Create a new Pengusulan Pembelajaran') }}</a>
                             @endcan
                         </div>
 

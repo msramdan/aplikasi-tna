@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('Edit Pengajuan Kap'))
+@section('title', __('Edit Pengusulan Pembelajaran'))
 @push('css')
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/smartwizard@6/dist/css/smart_wizard_all.min.css" rel="stylesheet"
@@ -12,7 +12,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">{{ __('Pengajuan Kap') }}</h4>
+                        <h4 class="mb-sm-0">{{ __('Pengusulan Pembelajaran') }}</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item">
@@ -23,7 +23,7 @@
                                         href="{{ route('pengajuan-kap.index', [
                                             'is_bpkp' => $is_bpkp,
                                             'frekuensi' => $frekuensi,
-                                        ]) }}">{{ __('Pengajuan Kap') }}</a>
+                                        ]) }}">{{ __('Pengusulan Pembelajaran') }}</a>
                                 </li>
                                 <li class="breadcrumb-item active" aria-current="page">
                                     {{ __('Edit') }}
@@ -342,7 +342,7 @@
             });
         });
     </script>
-    {{-- get deskripsi kompetensi --}}
+    {{-- get Kompetensi Dasari --}}
     <script>
         $(document).ready(function() {
             $('#kompetensi_id').on('change', function() {
@@ -366,7 +366,7 @@
                             } else {
                                 $('#kompetensi-description').html(
                                     '<div class="alert alert-primary mt-2" role="alert">' +
-                                    '<strong>Deskripsi Kompetensi:</strong><br>' +
+                                    '<strong>Kompetensi Dasari:</strong><br>' +
                                     '<div style="text-align: justify">' + data
                                     .deskripsi_kompetensi + '</div>' +
                                     '</div>'

@@ -130,7 +130,7 @@
                         href="#pengajuanKap" data-bs-toggle="collapse" role="button"
                         aria-expanded="{{ request()->routeIs('pengajuan-kap*') ? 'true' : 'false' }}"
                         aria-controls="pengajuanKap">
-                        <i class="fa fa-pencil"></i> <span data-key="t-multi-level">Pengajuan KAP</span>
+                        <i class="fa fa-pencil"></i> <span data-key="t-multi-level">Pengusulan Pembelajaran</span>
                     </a>
                     <div class="collapse menu-dropdown {{ request()->routeIs('pengajuan-kap*') ? 'show' : '' }}"
                         id="pengajuanKap">

@@ -107,7 +107,7 @@
                                 Mohon untuk pilih Kompetensi
                             </div>
                             <div id="kompetensi-description" class="mt-2">
-                                {{-- Munculkan deskripsi kompetensi di sini --}}
+                                {{-- Munculkan Kompetensi Dasari di sini --}}
                             </div>
                         </div>
                     </div>
