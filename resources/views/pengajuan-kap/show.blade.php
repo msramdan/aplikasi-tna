@@ -239,7 +239,7 @@
                                 <li class="nav-item" role="presentation">
                                     <a class="nav-link" id="icon-tab-2" data-bs-toggle="tab" href="#icon-tabpanel-2"
                                         role="tab" aria-controls="icon-tabpanel-2" aria-selected="false"><i
-                                            class="fa-solid fa-3 fa-fw"></i> Penyelenggaraan Pembelajaran</a>
+                                            class="fa-solid fa-3 fa-fw"></i> Peserta dan Fasilitator</a>
                                 </li>
                             </ul>
                             <div class="tab-content pt-5" id="tab-content">

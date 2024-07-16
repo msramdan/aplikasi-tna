@@ -40,7 +40,7 @@
         <li class="nav-item">
             <a class="nav-link default" href="#step-3">
                 <span class="num">3</span>
-                Penyelenggaraan Pembelajaran
+                Peserta dan Fasilitator
             </a>
         </li>
     </ul>
@@ -283,24 +283,9 @@
         <div id="step-2" class="tab-pane" role="tabpanel" aria-labelledby="step-2" style="display: none;">
             <form id="form-2" style="margin-top: 20px">
                 <div class="row" style="padding: 20px">
-                    <div class="form-group row mb-3">
-                        <label for="alokasi-waktu" class="col-sm-3 col-form-label">{{ __('Alokasi Waktu') }}</label>
-                        <div class="col-sm-6">
-                            <div class="input-group">
-                                <input type="number" name="alokasi_waktu" id="alokasi-waktu"
-                                    class="form-control @error('alokasi_waktu') is-invalid @enderror"
-                                    value="{{ isset($pengajuanKap) ? $pengajuanKap->alokasi_waktu : old('alokasi_waktu') }}"
-                                    placeholder="{{ __('Alokasi Waktu') }}" required />
-                                <span class="input-group-text">Hari</span>
-                                <div class="invalid-feedback">
-                                    Mohon untuk diisi Alokasi Waktu
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="form-group row mb-1">
-                        <label class="col-sm-3 col-form-label"></label>
+
+                        <label for="alokasi-waktu" class="col-sm-3 col-form-label">{{ __('Alokasi Waktu') }}</label>
                         <div class="col-sm-6">
                             <div class="table-responsive">
 
@@ -385,12 +370,30 @@
                     </div>
 
                     <div class="form-group row mb-3">
+                        <label class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-6">
+                            <div class="input-group">
+                                <input type="number" name="alokasi_waktu" id="alokasi-waktu"
+                                    class="form-control @error('alokasi_waktu') is-invalid @enderror"
+                                    value="{{ isset($pengajuanKap) ? $pengajuanKap->alokasi_waktu : old('alokasi_waktu') }}"
+                                    placeholder="{{ __('Alokasi Waktu') }}" required readonly />
+                                <span class="input-group-text">Hari</span>
+                                <div class="invalid-feedback">
+                                    Mohon untuk diisi Alokasi Waktu
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group row mb-3">
                         <label for="bentuk_pembelajaran"
                             class="col-sm-3 col-form-label">{{ __('Bentuk Pembelajaran') }}</label>
                         <div class="col-sm-6">
                             <select
                                 class="form-control js-example-basic-multiple @error('bentuk_pembelajaran') is-invalid @enderror"
-                                name="bentuk_pembelajaran" id="bentuk_pembelajaran" required>
+                                name="bentuk_pembelajaran" id="bentuk_pembelajaran">
                                 <option value="" selected disabled>-- {{ __('Select bentuk pembelajaran') }}
                                     --
                                 </option>
@@ -413,7 +416,7 @@
                         <div class="col-sm-6">
                             <select
                                 class="form-control js-example-basic-multiple @error('jalur_pembelajaran') is-invalid @enderror"
-                                name="jalur_pembelajaran" id="jalur_pembelajaran" required>
+                                name="jalur_pembelajaran" id="jalur_pembelajaran">
                                 <option value="" selected disabled>-- {{ __('Select jalur pembelajaran') }}
                                     --
                                 </option>
@@ -436,7 +439,7 @@
                         <div class="col-sm-6">
                             <select
                                 class="form-control js-example-basic-multiple @error('model_pembelajaran') is-invalid @enderror"
-                                name="model_pembelajaran" id="model_pembelajaran" required>
+                                name="model_pembelajaran" id="model_pembelajaran">
                                 <option value="" selected disabled>-- {{ __('Select model pembelajaran') }}
                                     --
                                 </option>
@@ -465,7 +468,7 @@
                         <div class="col-sm-6">
                             <select
                                 class="form-control js-example-basic-multiple @error('jenis_pembelajaran') is-invalid @enderror"
-                                name="jenis_pembelajaran" id="jenis_pembelajaran" required>
+                                name="jenis_pembelajaran" id="jenis_pembelajaran">
                                 <option value="" selected disabled>-- {{ __('Select jenis pembelajaran') }}
                                     --
                                 </option>
@@ -494,7 +497,7 @@
                         <div class="col-sm-6">
                             <select
                                 class="form-control js-example-basic-multiple @error('metode_pembelajaran') is-invalid @enderror"
-                                name="metode_pembelajaran" id="metode_pembelajaran" required>
+                                name="metode_pembelajaran" id="metode_pembelajaran">
                                 <option value="" selected disabled>-- {{ __('Select metode pembelajaran') }}
                                     --
                                 </option>
@@ -527,7 +530,7 @@
                             <input type="text" name="sasaran_peserta" id="sasaran_peserta"
                                 class="form-control @error('sasaran_peserta') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->sasaran_peserta : old('sasaran_peserta') }}"
-                                placeholder="{{ __('Sasaran Peserta') }}" required />
+                                placeholder="{{ __('Sasaran Peserta') }}"  />
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Sasaran Peserta
                             </div>
@@ -541,7 +544,7 @@
                             <input type="text" name="kriteria_peserta" id="kriteria_peserta"
                                 class="form-control @error('kriteria_peserta') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->kriteria_peserta : old('kriteria_peserta') }}"
-                                placeholder="{{ __('Sasaran Peserta') }}" required />
+                                placeholder="{{ __('Sasaran Peserta') }}"  />
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Sasaran Peserta
                             </div>
@@ -555,7 +558,7 @@
                             <input type="text" name="aktivitas_prapembelajaran" id="aktivitas_prapembelajaran"
                                 class="form-control @error('aktivitas_prapembelajaran') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->aktivitas_prapembelajaran : old('aktivitas_prapembelajaran') }}"
-                                placeholder="{{ __('Aktivitas Prapembelajaran') }}" required />
+                                placeholder="{{ __('Aktivitas Prapembelajaran') }}"  />
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Aktivitas Prapembelajaran
                             </div>
@@ -568,7 +571,7 @@
                         <div class="col-sm-6">
                             <select
                                 class="form-control js-example-basic-multiple @error('penyelenggara_pembelajaran') is-invalid @enderror"
-                                name="penyelenggara_pembelajaran" id="penyelenggara_pembelajaran" required>
+                                name="penyelenggara_pembelajaran" id="penyelenggara_pembelajaran" >
                                 <option value="" selected disabled>--
                                     {{ __('Select penyelenggara pembelajaran') }} --</option>
                                 <option value="Pusdiklatwas BPKP"
@@ -612,7 +615,7 @@
                             <input type="text" name="sertifikat" id="sertifikat"
                                 class="form-control @error('sertifikat') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->sertifikat : old('sertifikat') }}"
-                                placeholder="{{ __('Sertifikat') }}" required />
+                                placeholder="{{ __('Sertifikat') }}"  />
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Sertifikat
                             </div>

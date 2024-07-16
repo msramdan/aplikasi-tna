@@ -97,6 +97,9 @@ Route::middleware(['auth', 'web'])->group(function () {
         Route::get('/pengajuan-kap-pdf/{id}/{is_bpkp}/{frekuensi}', 'cetak_pdf')->name('pengajuan-kap.pdf');
         Route::put('/pengajuan-kap/{id}/approve', 'approve')->name('pengajuan-kap.approve');
         Route::put('/pengajuan-kap/{id}/reject', 'reject')->name('pengajuan-kap.reject');
+        // for selected
+        Route::post('/approve', 'approveSelected')->name('pengajuan-kap-selected.approve');
+        Route::post('/reject', 'rejectSelected')->name('pengajuan-kap-selected.reject');
     });
     Route::get('/backup', [BackupController::class, 'index'])->name('backup.index');
     Route::get('/backup/download', [BackupController::class, 'downloadBackup'])->name('backup.download');

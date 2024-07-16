@@ -239,7 +239,7 @@
         </table>
 
         <br>
-        <strong>III. Penyelenggaraan Pembelajaran</strong>
+        <strong>III. Peserta dan Fasilitator</strong>
         <table style="font-size:12px; padding:15px;line-height:17px">
             <tr>
                 <td style="width: 200px; vertical-align: top;">{{ __('Sasaran Peserta') }}</td>

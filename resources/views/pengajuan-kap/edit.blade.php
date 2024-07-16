@@ -250,7 +250,7 @@
         });
     </script>
 
-    <script>
+    {{-- <script>
         $(document).ready(function() {
             function checkCheckboxes() {
                 let anyChecked = $('input[name="fasilitator_pembelajaran[]"]:checked').length > 0;
@@ -303,7 +303,7 @@
 
             checkInputInstrumen();
         });
-    </script>
+    </script> --}}
 
     <script>
         $(document).on('click', '.btn_remove_data', function() {

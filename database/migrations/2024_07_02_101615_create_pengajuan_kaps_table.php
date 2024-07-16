@@ -26,7 +26,7 @@ return new class extends Migration
             $table->text('indikator_dampak_terhadap_kinerja_organisasi');
             $table->text('penugasan_yang_terkait_dengan_pembelajaran');
             $table->text('skill_group_owner');
-            $table->enum('bentuk_pembelajaran', ['Klasikal', 'Nonklasikal']);
+            $table->enum('bentuk_pembelajaran', ['Klasikal', 'Nonklasikal'])->nullable();
             $table->enum('jalur_pembelajaran', [
                 'Pelatihan',
                 'Seminar/konferensi/sarasehan',
@@ -46,23 +46,21 @@ return new class extends Migration
                 'Pelatihan di kantor sendiri',
                 'Library cafe',
                 'Magang/praktik kerja'
-            ]);
-            $table->enum('model_pembelajaran', ['Pembelajaran terstruktur', 'Pembelajaran kolaboratif', 'Pembelajaran di tempat kerja', 'Pembelajaran terintegrasi']);
-            $table->enum('jenis_pembelajaran', ['Kedinasan', 'Fungsional auditor', 'Teknis substansi', 'Sertifikasi non JFA']);
-            $table->enum('metode_pembelajaran', ['Synchronous learning', 'Asynchronous learning', 'Blended learning']);
-            $table->text('sasaran_peserta');
-            $table->text('kriteria_peserta');
-            $table->text('aktivitas_prapembelajaran');
-            $table->enum('penyelenggara_pembelajaran', ['Pusdiklatwas BPKP', 'Unit kerja', 'Lainnya']);
+            ])->nullable();
+            $table->enum('model_pembelajaran', ['Pembelajaran terstruktur', 'Pembelajaran kolaboratif', 'Pembelajaran di tempat kerja', 'Pembelajaran terintegrasi'])->nullable();
+            $table->enum('jenis_pembelajaran', ['Kedinasan', 'Fungsional auditor', 'Teknis substansi', 'Sertifikasi non JFA'])->nullable();
+            $table->enum('metode_pembelajaran', ['Synchronous learning', 'Asynchronous learning', 'Blended learning'])->nullable();
+            $table->text('sasaran_peserta')->nullable();
+            $table->text('kriteria_peserta')->nullable();
+            $table->text('aktivitas_prapembelajaran')->nullable();
+            $table->enum('penyelenggara_pembelajaran', ['Pusdiklatwas BPKP', 'Unit kerja', 'Lainnya'])->nullable();
             $table->json('fasilitator_pembelajaran')->nullable();
-            $table->text('sertifikat');
+            $table->text('sertifikat')->nullable();
             $table->datetime('tanggal_created');
             $table->enum('status_pengajuan', ['Pending', 'Process', 'Approved', 'Rejected']);
             $table->foreignId('user_created')->nullable()->constrained('users')->cascadeOnUpdate()->nullOnDelete();
             $table->tinyInteger('current_step');
             $table->timestamps();
-            // $table->json('indikator_keberhasilan')->nullable();
-            // $table->json('level_evaluasi_instrumen')->nullable();
         });
     }
 
