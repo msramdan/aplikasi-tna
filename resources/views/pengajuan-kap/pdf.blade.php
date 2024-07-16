@@ -214,53 +214,53 @@
             <tr>
                 <td style="vertical-align: top;">{{ __('Bentuk Pembelajaran') }}</td>
                 <td style="vertical-align: top;">:</td>
-                <td style="vertical-align: top;">{{ $pengajuanKap->bentuk_pembelajaran }}</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->bentuk_pembelajaran ?: '-' }}</td>
             </tr>
             <tr>
                 <td style="vertical-align: top;">{{ __('Jalur Pembelajaran') }}</td>
                 <td style="vertical-align: top;">:</td>
-                <td style="vertical-align: top;">{{ $pengajuanKap->jalur_pembelajaran }}</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->jalur_pembelajaran ?: '-' }}</td>
             </tr>
             <tr>
                 <td style="vertical-align: top;">{{ __('Model Pembelajaran') }}</td>
                 <td style="vertical-align: top;">:</td>
-                <td style="vertical-align: top;">{{ $pengajuanKap->model_pembelajaran }}</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->model_pembelajaran ?: '-' }}</td>
             </tr>
             <tr>
                 <td style="vertical-align: top;">{{ __('Jenis Pembelajaran') }}</td>
                 <td style="vertical-align: top;">:</td>
-                <td style="vertical-align: top;">{{ $pengajuanKap->jenis_pembelajaran }}</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->jenis_pembelajaran ?: '-' }}</td>
             </tr>
             <tr>
                 <td style="vertical-align: top;">{{ __('Metode Pembelajaran') }}</td>
                 <td style="vertical-align: top;">:</td>
-                <td style="vertical-align: top;">{{ $pengajuanKap->metode_pembelajaran }}</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->metode_pembelajaran ?: '-' }}</td>
             </tr>
         </table>
 
         <br>
-        <strong>III. Peserta dan Fasilitator</strong>
+        <strong>III. Penyelenggaraan Pembelajaran</strong>
         <table style="font-size:12px; padding:15px;line-height:17px">
             <tr>
                 <td style="width: 200px; vertical-align: top;">{{ __('Sasaran Peserta') }}</td>
                 <td style="vertical-align: top;">:</td>
-                <td style="vertical-align: top;">{{ $pengajuanKap->sasaran_peserta }}</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->sasaran_peserta ?: '-' }}</td>
             </tr>
             <tr>
                 <td style="vertical-align: top;">{{ __('Kriteria Peserta') }}</td>
                 <td style="vertical-align: top;">:</td>
-                <td style="vertical-align: top;">{{ $pengajuanKap->kriteria_peserta }}</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->kriteria_peserta ?: '-' }}</td>
             </tr>
             <tr>
                 <td style="vertical-align: top;">{{ __('Aktivitas Prapembelajaran') }}</td>
                 <td style="vertical-align: top;">:</td>
-                <td style="vertical-align: top;">{{ $pengajuanKap->aktivitas_prapembelajaran }}</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->aktivitas_prapembelajaran ?: '-' }}</td>
             </tr>
 
             <tr>
                 <td style="vertical-align: top;">{{ __('Penyelenggara Pembelajaran') }}</td>
                 <td style="vertical-align: top;">:</td>
-                <td style="vertical-align: top;">{{ $pengajuanKap->penyelenggara_pembelajaran }}</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->penyelenggara_pembelajaran ?: '-' }}</td>
             </tr>
             @php
                 $fasilitators = json_decode($pengajuanKap->fasilitator_pembelajaran);
@@ -270,15 +270,20 @@
                 <td style="vertical-align: top;">{{ __('Fasilitator Pembelajaran') }}</td>
                 <td style="vertical-align: top;">:</td>
                 <td style="vertical-align: top;">
-                    @foreach ($fasilitators as $item)
-                        <span class="badge bg-primary" style="vertical-align: top;">{{ $item }}</span>
-                    @endforeach
+                    @if ($fasilitators !== null && !empty($fasilitators))
+                        @foreach ($fasilitators as $item)
+                            <span class="badge bg-primary" style="vertical-align: top;">{{ $item }}</span>
+                        @endforeach
+                    @else
+                        <span class="text-muted">-</span>
+                    @endif
+
                 </td>
             </tr>
             <tr>
                 <td style="vertical-align: top;">{{ __('Sertifikat') }}</td>
                 <td style="vertical-align: top;">:</td>
-                <td style="vertical-align: top;">{{ $pengajuanKap->sertifikat }}</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->sertifikat ?: '-' }}</td>
             </tr>
             <tr>
                 <td style="vertical-align: top;">{{ __(' Level Evaluasi dan Instrumennya') }}</td>
@@ -296,9 +301,9 @@
                         @foreach ($level_evaluasi_instrumen_kap as $item)
                             <tr>
                                 <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: justify">
-                                    {{ $item->level }}</td>
+                                    {{ $item->level ?: '-' }}</td>
                                 <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: justify">
-                                    {{ $item->keterangan }}</td>
+                                    {{ $item->keterangan ?: '-' }}</td>
                             </tr>
                         @endforeach
                     </table>
@@ -339,8 +344,7 @@
                         Kerangka Acuan Pembelajaran, silakan pindai kode QR.
                     </td>
                     <td colspan="3" style="border: 1px solid #ddd; text-align: center;">
-                        <img loading="lazy"
-                            src="https://quickchart.io/qr?text=Here's my text">
+                        <img loading="lazy" src="https://quickchart.io/qr?text=Here's my text">
                     </td>
                 </tr>
 
