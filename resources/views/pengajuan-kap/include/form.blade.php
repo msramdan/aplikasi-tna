@@ -284,11 +284,9 @@
             <form id="form-2" style="margin-top: 20px">
                 <div class="row" style="padding: 20px">
                     <div class="form-group row mb-1">
-
                         <label for="alokasi-waktu" class="col-sm-3 col-form-label">{{ __('Alokasi Waktu') }}</label>
                         <div class="col-sm-6">
                             <div class="table-responsive">
-
                                 <table class="table table-bordered table-sm" id="dynamic_field">
                                     <thead>
                                         <tr>
@@ -303,64 +301,44 @@
                                             @foreach ($waktu_tempat as $row)
                                                 <tr id="detail_file{{ $row->id }}">
                                                     <td>
-                                                        <select name="tempat_acara[]"
-                                                            class="form-control @error('lokasi') is-invalid @enderror"
-                                                            required>
-                                                            <option value="" selected disabled>-- Pilih --
-                                                            </option>
+                                                        <select name="tempat_acara[]" class="form-control @error('lokasi') is-invalid @enderror" required>
+                                                            <option value="" selected disabled>-- Pilih --</option>
                                                             @foreach ($lokasiData as $lokasi)
-                                                                <option value="{{ $lokasi->id }}"
-                                                                    {{ $lokasi->id == $row->lokasi_id ? 'selected' : '' }}>
+                                                                <option value="{{ $lokasi->id }}" {{ $lokasi->id == $row->lokasi_id ? 'selected' : '' }}>
                                                                     {{ $lokasi->nama_lokasi }}
                                                                 </option>
                                                             @endforeach
                                                         </select>
                                                     </td>
                                                     <td>
-                                                        <input type="date" name="tanggal_mulai[]"
-                                                            value="{{ $row->tanggal_mulai }}"
-                                                            class="form-control @error('tanggal_mulai') is-invalid @enderror"
-                                                            required />
+                                                        <input type="date" name="tanggal_mulai[]" value="{{ $row->tanggal_mulai }}" class="form-control @error('tanggal_mulai') is-invalid @enderror tanggal_mulai" required />
                                                     </td>
                                                     <td>
-                                                        <input type="date" name="tanggal_selesai[]"
-                                                            value="{{ $row->tanggal_selesai }}"
-                                                            class="form-control @error('tanggal_selesai') is-invalid @enderror"
-                                                            required />
+                                                        <input type="date" name="tanggal_selesai[]" value="{{ $row->tanggal_selesai }}" class="form-control @error('tanggal_selesai') is-invalid @enderror tanggal_selesai" required />
                                                     </td>
                                                     <td>
-                                                        <button type="button" id="{{ $row->id }}"
-                                                            class="btn btn-danger btn_remove_data">X</button>
+                                                        <button type="button" id="{{ $row->id }}" class="btn btn-danger btn_remove_data">X</button>
                                                     </td>
                                                 </tr>
                                             @endforeach
                                         @endif
                                         <tr id="placeholder_row">
                                             <td>
-                                                <select name="tempat_acara[]" class="form-control @error('lokasi') is-invalid @enderror"
-                                                @if(!isset($pengajuanKap)) required @endif>
+                                                <select name="tempat_acara[]" class="form-control @error('lokasi') is-invalid @enderror" @if(!isset($pengajuanKap)) required @endif>
                                                     <option value="" selected disabled>-- Pilih --</option>
                                                     @foreach ($lokasiData as $lokasi)
-                                                        <option value="{{ $lokasi->id }}">
-                                                            {{ $lokasi->nama_lokasi }}
-                                                        </option>
+                                                        <option value="{{ $lokasi->id }}">{{ $lokasi->nama_lokasi }}</option>
                                                     @endforeach
                                                 </select>
                                             </td>
                                             <td>
-                                                <input type="date" name="tanggal_mulai[]"
-                                                    class="form-control @error('tanggal_mulai') is-invalid @enderror"
-                                                    @if (!isset($pengajuanKap)) required @endif />
+                                                <input type="date" name="tanggal_mulai[]" class="form-control @error('tanggal_mulai') is-invalid @enderror tanggal_mulai" @if (!isset($pengajuanKap)) required @endif />
                                             </td>
                                             <td>
-                                                <input type="date" name="tanggal_selesai[]"
-                                                    class="form-control @error('tanggal_selesai') is-invalid @enderror"
-                                                    @if (!isset($pengajuanKap)) required @endif />
+                                                <input type="date" name="tanggal_selesai[]" class="form-control @error('tanggal_selesai') is-invalid @enderror tanggal_selesai" @if (!isset($pengajuanKap)) required @endif />
                                             </td>
                                             <td>
-                                                <button type="button" name="add_waktu_tempat" id="add_waktu_tempat"
-                                                    class="btn btn-success"><i class="fa fa-plus"
-                                                        aria-hidden="true"></i></button>
+                                                <button type="button" name="add_waktu_tempat" id="add_waktu_tempat" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i></button>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -373,10 +351,8 @@
                         <label class="col-sm-3 col-form-label"></label>
                         <div class="col-sm-6">
                             <div class="input-group">
-                                <input type="number" name="alokasi_waktu" id="alokasi-waktu"
-                                    class="form-control @error('alokasi_waktu') is-invalid @enderror"
-                                    value="{{ isset($pengajuanKap) ? $pengajuanKap->alokasi_waktu : old('alokasi_waktu') }}"
-                                    placeholder="{{ __('Alokasi Waktu') }}" required />
+                                <input type="number" name="alokasi_waktu" id="alokasi-waktu" class="form-control @error('alokasi_waktu') is-invalid @enderror"
+                                       value="{{ isset($pengajuanKap) ? $pengajuanKap->alokasi_waktu : old('alokasi_waktu') }}" placeholder="{{ __('Alokasi Waktu') }}" required />
                                 <span class="input-group-text">Hari</span>
                                 <div class="invalid-feedback">
                                     Mohon untuk diisi Alokasi Waktu
@@ -384,6 +360,11 @@
                             </div>
                         </div>
                     </div>
+
+
+
+
+
 
 
 

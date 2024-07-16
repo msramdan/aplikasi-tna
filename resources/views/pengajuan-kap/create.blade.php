@@ -304,34 +304,6 @@
         });
     </script> --}}
 
-    <script>
-        $(document).ready(function() {
-            var i = 1;
-            $('#add_waktu_tempat').click(function() {
-                i++;
-                var newRow = '<tr id="row' + i + '">' +
-                    '<td>' +
-                    '<select name="tempat_acara[]" class="form-control" required>' +
-                    '<option value="" selected disabled>-- Pilih --</option>' +
-                    '@foreach ($lokasiData as $lokasi)' +
-                    '<option value="{{ $lokasi->id }}">{{ $lokasi->nama_lokasi }}</option>' +
-                    '@endforeach' +
-                    '</select>' +
-                    '</td>' +
-                    '<td><input type="date" name="tanggal_mulai[]" class="form-control" required /></td>' +
-                    '<td><input type="date" name="tanggal_selesai[]" class="form-control" required /></td>' +
-                    '<td><button type="button" name="remove" id="' + i +
-                    '" class="btn btn-danger btn_remove">X</button></td>' +
-                    '</tr>';
-                $('#dynamic_field').append(newRow);
-            });
-
-            $(document).on('click', '.btn_remove', function() {
-                var button_id = $(this).attr("id");
-                $('#row' + button_id + '').remove();
-            });
-        });
-    </script>
 
     {{-- get Kompetensi Dasari --}}
     <script>
@@ -376,4 +348,65 @@
             });
         });
     </script>
+
+<script>
+    $(document).ready(function() {
+        var i = 1;
+
+        // Function to calculate the total allocated time in days
+        function calculateAlokasiWaktu() {
+            var totalDays = 0;
+
+            $('#waktu_tempat_table tr').each(function() {
+                var tanggalMulai = $(this).find('input[name="tanggal_mulai[]"]').val();
+                var tanggalSelesai = $(this).find('input[name="tanggal_selesai[]"]').val();
+
+                if (tanggalMulai && tanggalSelesai) {
+                    var startDate = new Date(tanggalMulai);
+                    var endDate = new Date(tanggalSelesai);
+
+                    if (endDate > startDate) {
+                        var timeDiff = endDate.getTime() - startDate.getTime();
+                        var daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+                        totalDays += daysDiff;
+                    } else {
+                        alert('Tanggal Selesai harus lebih dari Tanggal Mulai');
+                        $(this).find('input[name="tanggal_selesai[]"]').val('');
+                    }
+                }
+            });
+
+            $('#alokasi-waktu').val(totalDays);
+        }
+
+        // Event listener for dynamically added tanggal_mulai and tanggal_selesai inputs
+        $(document).on('change', 'input[name="tanggal_mulai[]"], input[name="tanggal_selesai[]"]', function() {
+            calculateAlokasiWaktu();
+        });
+
+        $('#add_waktu_tempat').click(function() {
+            i++;
+            var newRow = '<tr id="row' + i + '">' +
+                '<td>' +
+                '<select name="tempat_acara[]" class="form-control" required>' +
+                '<option value="" selected disabled>-- Pilih --</option>' +
+                '@foreach ($lokasiData as $lokasi)' +
+                '<option value="{{ $lokasi->id }}">{{ $lokasi->nama_lokasi }}</option>' +
+                '@endforeach' +
+                '</select>' +
+                '</td>' +
+                '<td><input type="date" name="tanggal_mulai[]" class="form-control tanggal_mulai" required /></td>' +
+                '<td><input type="date" name="tanggal_selesai[]" class="form-control tanggal_selesai" required /></td>' +
+                '<td><button type="button" name="remove" id="' + i + '" class="btn btn-danger btn_remove">X</button></td>' +
+                '</tr>';
+            $('#dynamic_field').append(newRow);
+        });
+
+        $(document).on('click', '.btn_remove', function() {
+            var button_id = $(this).attr("id");
+            $('#row' + button_id + '').remove();
+            calculateAlokasiWaktu();  // Recalculate after removing a row
+        });
+    });
+</script>
 @endpush
