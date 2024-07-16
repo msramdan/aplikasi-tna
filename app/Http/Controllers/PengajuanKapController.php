@@ -280,8 +280,8 @@ class PengajuanKapController extends Controller
 
             $remarks = [
                 'Team pusdiklat',
-                'Biro keuangan',
-                'Inspektorat',
+                'Keuangan',
+                'Penjamin Mutu',
                 'Subkor',
                 'Koordinator',
                 'Kepala pusat'
