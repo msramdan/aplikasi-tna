@@ -248,82 +248,93 @@
                                     <table class="table table-hover table-striped table-sm">
                                         <tr>
                                             <td class="fw-bold">{{ __('Kode Pembelajaran') }}</td>
-                                            <td>{{ $pengajuanKap->kode_pembelajaran }}</td>
+                                            <td>{{ $pengajuanKap->kode_pembelajaran ?: '-' }}</td>
                                         </tr>
 
                                         <tr>
                                             <td class="fw-bold">{{ __('Institusi Sumber') }}</td>
-                                            <td>{{ $pengajuanKap->institusi_sumber }}</td>
+                                            <td>{{ $pengajuanKap->institusi_sumber ?: '-' }}</td>
                                         </tr>
 
                                         <tr>
-                                            <td class="fw-bold">{{ __('Jenis Progran') }}</td>
-                                            <td>{{ $pengajuanKap->jenis_program }}</td>
+                                            <td class="fw-bold">{{ __('Jenis Program') }}</td>
+                                            <td>{{ $pengajuanKap->jenis_program ?: '-' }}</td>
                                         </tr>
 
                                         <tr>
                                             <td class="fw-bold">{{ __('Frekuensi pelaksanaan') }}</td>
-                                            <td>{{ $pengajuanKap->frekuensi_pelaksanaan }}</td>
+                                            <td>{{ $pengajuanKap->frekuensi_pelaksanaan ?: '-' }}</td>
                                         </tr>
+
                                         <tr>
                                             <td class="fw-bold">{{ __('Indikator Kinerja') }}</td>
-                                            <td>{{ $pengajuanKap->indikator_kinerja }}</td>
+                                            <td>{{ $pengajuanKap->indikator_kinerja ?: '-' }}</td>
                                         </tr>
+
                                         <tr>
                                             <td class="fw-bold">{{ __('Kompetensi') }}</td>
-                                            <td>{{ $pengajuanKap->nama_kompetensi }}</td>
+                                            <td>{{ $pengajuanKap->nama_kompetensi ?: '-' }}</td>
                                         </tr>
+
                                         <tr>
                                             <td class="fw-bold">{{ __('Topik') }}</td>
-                                            <td>{{ $pengajuanKap->nama_topik }}</td>
+                                            <td>{{ $pengajuanKap->nama_topik ?: '-' }}</td>
                                         </tr>
 
                                         <tr>
                                             <td class="fw-bold">{{ __('Tujuan Program Pembelajaran') }}</td>
-                                            <td>{{ $pengajuanKap->tujuan_program_pembelajaran }}</td>
+                                            <td>{{ $pengajuanKap->tujuan_program_pembelajaran ?: '-' }}</td>
                                         </tr>
+
                                         <tr>
-                                            <td class="fw-bold">{{ __(' Indikator Keberhasilan') }}</td>
+                                            <td class="fw-bold">{{ __('Indikator Keberhasilan') }}</td>
                                             <td>
-                                                <table class="table table-striped table-sm">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">#</th>
-                                                            <th scope="col">Peserta Mampu</th>
-                                                        </tr>
-                                                    </thead>
-                                                    @foreach ($indikator_keberhasilan_kap as $item)
-                                                        <tr>
-                                                            <td>{{ $loop->index + 1 }}</td>
-                                                            <td>{{ $item->indikator_keberhasilan }}</td>
-                                                        </tr>
-                                                    @endforeach
-                                                </table>
+                                                @if (!$indikator_keberhasilan_kap->isEmpty())
+                                                    <table class="table table-striped table-sm">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">#</th>
+                                                                <th scope="col">Peserta Mampu</th>
+                                                            </tr>
+                                                        </thead>
+                                                        @foreach ($indikator_keberhasilan_kap as $item)
+                                                            <tr>
+                                                                <td>{{ $loop->index + 1 }}</td>
+                                                                <td>{{ $item->indikator_keberhasilan ?: '-' }}</td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </table>
+                                                @else
+                                                    <span class="text-muted">-</span>
+                                                @endif
                                             </td>
                                         </tr>
 
                                         <tr>
-                                            <td class="fw-bold">{{ __('Indikator Dampak Terhadap Kinerja Organisasi') }}
-                                            </td>
-                                            <td>{{ $pengajuanKap->indikator_dampak_terhadap_kinerja_organisasi }}</td>
+                                            <td class="fw-bold">{{ __('Indikator Dampak Terhadap Kinerja Organisasi') }}</td>
+                                            <td>{{ $pengajuanKap->indikator_dampak_terhadap_kinerja_organisasi ?: '-' }}</td>
                                         </tr>
+
                                         <tr>
                                             <td class="fw-bold">{{ __('Penugasan Yang Terkait Dengan Pembelajaran') }}</td>
-                                            <td>{{ $pengajuanKap->penugasan_yang_terkait_dengan_pembelajaran }}</td>
+                                            <td>{{ $pengajuanKap->penugasan_yang_terkait_dengan_pembelajaran ?: '-' }}</td>
                                         </tr>
+
                                         <tr>
                                             <td class="fw-bold">{{ __('Skill Group Owner') }}</td>
-                                            <td>{{ $pengajuanKap->skill_group_owner }}</td>
+                                            <td>{{ $pengajuanKap->skill_group_owner ?: '-' }}</td>
                                         </tr>
 
                                         <tr>
                                             <td class="fw-bold">{{ __('Tanggal dibuat') }}</td>
-                                            <td>{{ $pengajuanKap->tanggal_created }}</td>
+                                            <td>{{ $pengajuanKap->tanggal_created ?: '-' }}</td>
                                         </tr>
+
                                         <tr>
                                             <td class="fw-bold">{{ __('Current step') }}</td>
-                                            <td>Step {{ $pengajuanKap->current_step }}</td>
+                                            <td>Step {{ $pengajuanKap->current_step ?: '-' }}</td>
                                         </tr>
+
                                         <tr>
                                             <td class="fw-bold">{{ __('Status pengajuan') }}</td>
                                             <td>
@@ -343,120 +354,138 @@
                                                     <button style="width:150px" class="btn btn-primary btn-sm btn-block">
                                                         <i class="fa fa-spinner" aria-hidden="true"></i> Process
                                                     </button>
+                                                @else
+                                                    -
                                                 @endif
                                             </td>
                                         </tr>
+
                                         <tr>
                                             <td class="fw-bold">{{ __('User created') }}</td>
-                                            <td>{{ $pengajuanKap->user_name }}</td>
+                                            <td>{{ $pengajuanKap->user_name ?: '-' }}</td>
                                         </tr>
                                     </table>
+
                                 </div>
                                 <div class="tab-pane" id="icon-tabpanel-1" role="tabpanel" aria-labelledby="icon-tab-1">
                                     <table class="table table-hover table-striped table-sm">
                                         <tr>
                                             <td class="fw-bold">{{ __('Alokasi Waktu') }}</td>
-                                            <td>{{ $pengajuanKap->alokasi_waktu }} Hari</td>
+                                            <td>{{ $pengajuanKap->alokasi_waktu ?: '-' }} Hari</td>
                                         </tr>
                                         <tr>
                                             <td class="fw-bold"></td>
                                             <td>
-                                                <table class="table table-striped table-sm">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">Lokasi</th>
-                                                            <th scope="col">Tgl Mulai</th>
-                                                            <th scope="col">Tgl Selesai</th>
-                                                        </tr>
-                                                    </thead>
-                                                    @foreach ($waktu_tempat as $row)
-                                                        <tr>
-                                                            <td>{{ $row->nama_lokasi }}</td>
-                                                            <td>{{ $row->tanggal_mulai }}</td>
-                                                            <td>{{ $row->tanggal_selesai }}</td>
-                                                        </tr>
-                                                    @endforeach
-                                                </table>
+                                                @if ($waktu_tempat->isEmpty())
+                                                    <span class="text-muted">-</span>
+                                                @else
+                                                    <table class="table table-striped table-sm">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Lokasi</th>
+                                                                <th scope="col">Tgl Mulai</th>
+                                                                <th scope="col">Tgl Selesai</th>
+                                                            </tr>
+                                                        </thead>
+                                                        @foreach ($waktu_tempat as $row)
+                                                            <tr>
+                                                                <td>{{ $row->nama_lokasi ?: '-' }}</td>
+                                                                <td>{{ $row->tanggal_mulai ?: '-' }}</td>
+                                                                <td>{{ $row->tanggal_selesai ?: '-' }}</td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </table>
+                                                @endif
                                             </td>
                                         </tr>
 
                                         <tr>
                                             <td class="fw-bold">{{ __('Bentuk Pembelajaran') }}</td>
-                                            <td>{{ $pengajuanKap->bentuk_pembelajaran }} Hari</td>
+                                            <td>{{ $pengajuanKap->bentuk_pembelajaran ?: '-' }}</td>
                                         </tr>
                                         <tr>
                                             <td class="fw-bold">{{ __('Jalur Pembelajaran') }}</td>
-                                            <td>{{ $pengajuanKap->jalur_pembelajaran }} Hari</td>
+                                            <td>{{ $pengajuanKap->jalur_pembelajaran ?: '-' }}</td>
                                         </tr>
                                         <tr>
                                             <td class="fw-bold">{{ __('Model Pembelajaran') }}</td>
-                                            <td>{{ $pengajuanKap->model_pembelajaran }}</td>
+                                            <td>{{ $pengajuanKap->model_pembelajaran ?: '-' }}</td>
                                         </tr>
                                         <tr>
                                             <td class="fw-bold">{{ __('Jenis Pembelajaran') }}</td>
-                                            <td>{{ $pengajuanKap->jenis_pembelajaran }}</td>
+                                            <td>{{ $pengajuanKap->jenis_pembelajaran ?: '-' }}</td>
                                         </tr>
                                         <tr>
                                             <td class="fw-bold">{{ __('Metode Pembelajaran') }}</td>
-                                            <td>{{ $pengajuanKap->metode_pembelajaran }}</td>
+                                            <td>{{ $pengajuanKap->metode_pembelajaran ?: '-' }}</td>
                                         </tr>
                                     </table>
+
                                 </div>
                                 <div class="tab-pane" id="icon-tabpanel-2" role="tabpanel" aria-labelledby="icon-tab-2">
                                     <table class="table table-hover table-striped table-sm">
                                         <tr>
                                             <td class="fw-bold">{{ __('Sasaran Peserta') }}</td>
-                                            <td>{{ $pengajuanKap->sasaran_peserta }}</td>
+                                            <td>{{ $pengajuanKap->sasaran_peserta ?: '-' }}</td>
                                         </tr>
                                         <tr>
                                             <td class="fw-bold">{{ __('Kriteria Peserta') }}</td>
-                                            <td>{{ $pengajuanKap->kriteria_peserta }}</td>
+                                            <td>{{ $pengajuanKap->kriteria_peserta ?: '-' }}</td>
                                         </tr>
                                         <tr>
                                             <td class="fw-bold">{{ __('Aktivitas Prapembelajaran') }}</td>
-                                            <td>{{ $pengajuanKap->aktivitas_prapembelajaran }}</td>
+                                            <td>{{ $pengajuanKap->aktivitas_prapembelajaran ?: '-' }}</td>
                                         </tr>
 
                                         <tr>
                                             <td class="fw-bold">{{ __('Penyelenggara Pembelajaran') }}</td>
-                                            <td>{{ $pengajuanKap->penyelenggara_pembelajaran }}</td>
+                                            <td>{{ $pengajuanKap->penyelenggara_pembelajaran ?: '-' }}</td>
                                         </tr>
+
                                         @php
                                             $fasilitators = json_decode($pengajuanKap->fasilitator_pembelajaran);
                                         @endphp
-
                                         <tr>
                                             <td class="fw-bold">{{ __('Fasilitator Pembelajaran') }}</td>
                                             <td>
-                                                @foreach ($fasilitators as $item)
-                                                    <span class="badge bg-primary">{{ $item }}</span>
-                                                @endforeach
+                                                @if ($fasilitators !== null && !empty($fasilitators))
+                                                    @foreach ($fasilitators as $item)
+                                                        <span class="badge bg-primary">{{ $item }}</span>
+                                                    @endforeach
+                                                @else
+                                                    <span class="text-muted">-</span>
+                                                @endif
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="fw-bold">{{ __('Sertifikat') }}</td>
-                                            <td>{{ $pengajuanKap->sertifikat }}</td>
+                                            <td>{{ $pengajuanKap->sertifikat ?: '-' }}</td>
                                         </tr>
                                         <tr>
-                                            <td class="fw-bold">{{ __(' Level Evaluasi dan Instrumennya') }}</td>
+                                            <td class="fw-bold">{{ __('Level Evaluasi dan Instrumen') }}</td>
                                             <td>
-                                                <table class="table table-striped table-sm">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">Level</th>
-                                                            <th scope="col">Instrumen</th>
-                                                        </tr>
-                                                    </thead>
-                                                    @foreach ($level_evaluasi_instrumen_kap as $item)
-                                                        <tr>
-                                                            <td>{{ $item->level }}</td>
-                                                            <td>{{ $item->keterangan }}</td>
-                                                        </tr>
-                                                    @endforeach
-                                                </table>
+                                                @if (!$level_evaluasi_instrumen_kap->isEmpty())
+                                                    <table class="table table-striped table-sm">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Level</th>
+                                                                <th scope="col">Instrumen</th>
+                                                            </tr>
+                                                        </thead>
+                                                        @foreach ($level_evaluasi_instrumen_kap as $item)
+                                                            <tr>
+                                                                <td>{{ $item->level ?: '-' }}</td>
+                                                                <td>{{ $item->keterangan ?: '-' }}</td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </table>
+                                                @else
+                                                    <span class="text-muted">-</span>
+                                                @endif
                                             </td>
                                         </tr>
                                     </table>
+
                                 </div>
                             </div>
                         </div>
