@@ -376,7 +376,7 @@
                                 <input type="number" name="alokasi_waktu" id="alokasi-waktu"
                                     class="form-control @error('alokasi_waktu') is-invalid @enderror"
                                     value="{{ isset($pengajuanKap) ? $pengajuanKap->alokasi_waktu : old('alokasi_waktu') }}"
-                                    placeholder="{{ __('Alokasi Waktu') }}" required readonly />
+                                    placeholder="{{ __('Alokasi Waktu') }}" required />
                                 <span class="input-group-text">Hari</span>
                                 <div class="invalid-feedback">
                                     Mohon untuk diisi Alokasi Waktu

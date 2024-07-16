@@ -202,7 +202,7 @@ class PengajuanKapController extends Controller
             'aktivitas_prapembelajaran' => 'nullable|string',
             'penyelenggara_pembelajaran' => 'nullable',
             'fasilitator_pembelajaran' => 'nullable|array',
-            'fasilitator_pembelajaran.*' => 'nullable|string|in:Widyaiswara,Instruktur,Praktisi,Pakar,Tutor,Coach,Mentor,Narasumber lainnya',
+            'fasilitator_pembelajaran.*' => 'nullable|string',
             'sertifikat' => 'nullable|string',
             'level_evaluasi_instrumen' => 'nullable|array',
             'no_level' => 'nullable|array',
@@ -215,6 +215,14 @@ class PengajuanKapController extends Controller
         // try {
         $fasilitator_pembelajaran = $request->input('fasilitator_pembelajaran');
         $fasilitator_pembelajaran_json = json_encode($fasilitator_pembelajaran);
+
+        $bentuk_pembelajaran = $validatedData['bentuk_pembelajaran'] ?? null;
+        $jalur_pembelajaran = $validatedData['jalur_pembelajaran'] ?? null;
+        $model_pembelajaran = $validatedData['model_pembelajaran'] ?? null;
+        $jenis_pembelajaran = $validatedData['jenis_pembelajaran'] ?? null;
+        $metode_pembelajaran = $validatedData['metode_pembelajaran'] ?? null;
+        $penyelenggara_pembelajaran = $validatedData['penyelenggara_pembelajaran'] ?? null;
+
         $pengajuanKapId = DB::table('pengajuan_kap')->insertGetId([
             'kode_pembelajaran' => 'Test',
             'institusi_sumber' => $is_bpkp,
@@ -230,16 +238,16 @@ class PengajuanKapController extends Controller
             'indikator_dampak_terhadap_kinerja_organisasi' => $validatedData['indikator_dampak_terhadap_kinerja_organisasi'],
             'penugasan_yang_terkait_dengan_pembelajaran' => $validatedData['penugasan_yang_terkait_dengan_pembelajaran'],
             'skill_group_owner' => $validatedData['skill_group_owner'],
-            'bentuk_pembelajaran' => $validatedData['bentuk_pembelajaran'],
+            'bentuk_pembelajaran' => $bentuk_pembelajaran,
             'tujuan_program_pembelajaran' => $validatedData['tujuan_program_pembelajaran'],
-            'jalur_pembelajaran' => $validatedData['jalur_pembelajaran'],
-            'model_pembelajaran' => $validatedData['model_pembelajaran'],
-            'jenis_pembelajaran' => $validatedData['jenis_pembelajaran'],
-            'metode_pembelajaran' => $validatedData['metode_pembelajaran'],
+            'jalur_pembelajaran' => $jalur_pembelajaran,
+            'model_pembelajaran' => $model_pembelajaran,
+            'jenis_pembelajaran' => $jenis_pembelajaran,
+            'metode_pembelajaran' => $metode_pembelajaran,
             'sasaran_peserta' => $validatedData['sasaran_peserta'],
             'kriteria_peserta' => $validatedData['kriteria_peserta'],
             'aktivitas_prapembelajaran' => $validatedData['aktivitas_prapembelajaran'],
-            'penyelenggara_pembelajaran' => $validatedData['penyelenggara_pembelajaran'],
+            'penyelenggara_pembelajaran' => $penyelenggara_pembelajaran,
             'fasilitator_pembelajaran' => $fasilitator_pembelajaran_json,
             'sertifikat' => $validatedData['sertifikat'],
             'tanggal_created' => date('Y-m-d H:i:s'),
