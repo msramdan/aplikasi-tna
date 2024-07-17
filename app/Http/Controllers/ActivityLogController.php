@@ -17,11 +17,37 @@ class ActivityLogController extends Controller
     }
 
 
-    public function index()
+    public function index(Request $request)
     {
         if (request()->ajax()) {
-            $query = ActivityLog::with('user')->orderBy('id', 'DESC')->get();
-            return DataTables::of($query)
+            $activityLog = ActivityLog::with('user');
+            $start_date = intval($request->query('start_date'));
+            $end_date = intval($request->query('end_date'));
+            $log_name = $request->query('log_name');
+
+            if (isset($start_date) && !empty($start_date)) {
+                $from = date("Y-m-d H:i:s", substr($request->query('start_date'), 0, 10));
+                $activityLog = $activityLog->where('created_at', '>=', $from);
+            } else {
+                $from = date('Y-m-d') . " 00:00:00";
+                $activityLog = $activityLog->where('created_at', '>=', $from);
+            }
+            if (isset($end_date) && !empty($end_date)) {
+                $to = date("Y-m-d H:i:s", substr($request->query('end_date'), 0, 10));
+                $activityLog = $activityLog->where('created_at', '<=', $to);
+            } else {
+                $to = date('Y-m-d') . " 23:59:59";
+                $activityLog = $activityLog->where('created_at', '<=', $to);
+            }
+
+            if (isset($log_name) && !empty($log_name)) {
+                if ($log_name != 'All') {
+                    $activityLog = $activityLog->where('log_name', $log_name);
+                }
+            }
+
+            $activityLog = $activityLog->orderBy('activity_log.id', 'DESC');
+            return DataTables::of($activityLog)
                 ->addIndexColumn()
                 ->addColumn('causer', function ($row) {
                     if ($row->user) {
@@ -29,7 +55,6 @@ class ActivityLogController extends Controller
                     } else {
                         return '-';
                     }
-
                 })
                 ->addColumn('new_value', function ($row) {
                     $array =  json_decode($row->properties);
@@ -63,10 +88,35 @@ class ActivityLogController extends Controller
                 ->addColumn('time', function ($row) {
                     return Carbon::parse($row->created_at)->diffForHumans();
                 })
-                // ->rawColumns([ 'old_value'])
                 ->make(true);
-            // ->toJson();
         }
-        return view('activity_log.index');
+
+        $from = date('Y-m-d') . " 00:00:00";
+        $to = date('Y-m-d') . " 23:59:59";
+        $microFrom = strtotime($from) * 1000;
+        $microTo = strtotime($to) * 1000;
+        $start_date = $request->query('start_date') !== null ? intval($request->query('start_date')) : $microFrom;
+        $end_date = $request->query('end_date') !== null ? intval($request->query('end_date')) : $microTo;
+        $log_name = $request->query('log_name') ?? null;
+
+        $arrLog = [
+            'log_auth',
+            'log_asrama',
+            'log_jadwal_kap_tahunan',
+            'log_kompetensi',
+            'log_kota',
+            'log_lokasi',
+            'log_ruang_kelas',
+            'log_setting_app',
+            'log_topik_pembelajaran',
+            'log_users',
+        ];
+
+        return view('activity_log.index', [
+            'microFrom' => $start_date,
+            'microTo' => $end_date,
+            'arrLog' => $arrLog,
+            'log_name' => $log_name,
+        ]);
     }
 }
