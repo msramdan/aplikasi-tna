@@ -91,13 +91,20 @@ class ActivityLogController extends Controller
                 ->make(true);
         }
 
-        $from = date('Y-m-d') . " 00:00:00";
-        $to = date('Y-m-d') . " 23:59:59";
-        $microFrom = strtotime($from) * 1000;
-        $microTo = strtotime($to) * 1000;
+        $currentDate = date('Y-m-d');
+
+        // Get the first and last date of the current month
+        $firstDayOfMonth = date('Y-m-01', strtotime($currentDate));
+        $lastDayOfMonth = date('Y-m-t', strtotime($currentDate));
+
+        // Convert these dates to timestamps in milliseconds
+        $microFrom = strtotime($firstDayOfMonth . " 00:00:00") * 1000;
+        $microTo = strtotime($lastDayOfMonth . " 23:59:59") * 1000;
+
+        // Get the start and end dates from the request or use the defaults
         $start_date = $request->query('start_date') !== null ? intval($request->query('start_date')) : $microFrom;
         $end_date = $request->query('end_date') !== null ? intval($request->query('end_date')) : $microTo;
-        $log_name = $request->query('log_name') ?? null;
+        $log_name = $request->query('log_name') ?? 'All';
 
         $arrLog = [
             'log_auth',
