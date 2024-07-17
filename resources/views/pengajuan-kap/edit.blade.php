@@ -366,7 +366,7 @@
                             } else {
                                 $('#kompetensi-description').html(
                                     '<div class="alert alert-primary mt-2" role="alert">' +
-                                    '<strong>Kompetensi Dasari:</strong><br>' +
+                                    '<strong>Kompetensi Dasar:</strong><br>' +
                                     '<div style="text-align: justify">' + data
                                     .deskripsi_kompetensi + '</div>' +
                                     '</div>'
