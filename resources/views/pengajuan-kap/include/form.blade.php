@@ -68,8 +68,7 @@
                             <div class="input-group">
                                 <input type="text" name="indikator_kinerja" id="indikator_kinerja"
                                     class="form-control" placeholder="" required readonly />
-                                <button type="button" id="pilihButton" class="input-group-text btn btn-success"
-                                    data-bs-toggle="modal" data-bs-target="#indikatorModal">
+                                <button type="button" id="pilihButton" class="input-group-text btn btn-success">
                                     <i class="fa fa-eye" aria-hidden="true"></i> Pilih
                                 </button>
                                 <div class="invalid-feedback">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\DB;
 
 class ApiController extends Controller
 {
@@ -49,6 +50,43 @@ class ApiController extends Controller
             }
         } catch (\Exception $e) {
             // Handle any exceptions
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
+    }
+
+    public function getKompetensiSupportIK(Request $request)
+    {
+        try {
+            $indikator = $request->input('indikator');
+            $data = DB::table('tagging_kompetensi_ik')
+                ->join('kompetensi', 'tagging_kompetensi_ik.kompetensi_id', '=', 'kompetensi.id')
+                ->where('tagging_kompetensi_ik.indikator_kinerja', $indikator)
+                ->select('kompetensi.id as kompetensi_id', 'kompetensi.nama_kompetensi')
+                ->get();
+
+            return response()->json(['data' => $data]);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
+    }
+
+    public function getTopikSupportKompetensi(Request $request)
+    {
+        $kompetensiId = $request->input('kompetensi_id');
+
+        if (!$kompetensiId) {
+            return response()->json(['message' => 'Parameter kompetensi_id tidak valid'], 400);
+        }
+
+        try {
+            $data = DB::table('tagging_pembelajaran_kompetensi')
+                ->join('topik', 'tagging_pembelajaran_kompetensi.topik_id', '=', 'topik.id')
+                ->where('tagging_pembelajaran_kompetensi.kompetensi_id', $kompetensiId)
+                ->select('topik.id as topik_id', 'topik.nama_topik')
+                ->get();
+
+            return response()->json(['data' => $data]);
+        } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 500);
         }
     }

@@ -106,6 +106,8 @@ Route::middleware(['auth', 'web'])->group(function () {
     Route::get('/backup', [BackupController::class, 'index'])->name('backup.index');
     Route::get('/backup/download', [BackupController::class, 'downloadBackup'])->name('backup.download');
     Route::get('/get-indikator/{jenisProgram}', [ApiController::class, 'getIndikator'])->name('getIndikator');
+    Route::get('/get-kompetensi-support-ik', [ApiController::class, 'getKompetensiSupportIK'])->name('getKompetensiSupportIK');
+    Route::get('/get-topik-support-kompetensi', [ApiController::class, 'getTopikSupportKompetensi'])->name('getTopikSupportKompetensi');
 });
 
 Route::post('/verify-otp', [OtpController::class, 'verifyOtp'])->name('verify-otp');

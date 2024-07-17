@@ -9,6 +9,48 @@
 
 
 @section('content')
+    <style>
+        #loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            /* Transparan white background */
+            z-index: 1000;
+            text-align: center;
+        }
+
+        .loading-spinner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+
+    <div id="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
+
     <div class="page-content">
         <div class="container-fluid">
             <div class="row">
@@ -430,13 +472,36 @@
             });
         });
     </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <script>
         $(document).ready(function() {
             $('#pilihButton').prop('disabled', true);
 
             $('#jenis_program').change(function() {
                 var selectedValue = $(this).val();
-
                 if (selectedValue !== '') {
                     $('#pilihButton').prop('disabled', false);
                 } else {
@@ -446,7 +511,7 @@
 
             $('#pilihButton').click(function() {
                 var jenisProgram = $('#jenis_program').val();
-
+                $('#loading-overlay').show();
                 $.ajax({
                     url: '{{ route('getIndikator', ['jenisProgram' => ':jenisProgram']) }}'
                         .replace(':jenisProgram', jenisProgram),
@@ -454,10 +519,8 @@
                     success: function(response) {
                         var modalBody = $('#indikatorModal .modal-body');
                         modalBody.empty();
-
                         var table =
                             '<table class="table"><thead><tr><th>Indikator</th><th>Satuan Target</th><th>Target</th><th>Realisasi TW1</th><th>Realisasi TW2</th><th>Realisasi TW3</th><th>Realisasi TW4</th><th>Persen Realisasi</th><th>Aksi</th></tr></thead><tbody>';
-
                         $.each(response.data, function(key, value) {
                             table += '<tr>';
                             table += '<td>' + value.indikator_kinerja + '</td>';
@@ -473,23 +536,81 @@
                                 value.indikator_kinerja + '">Pilih</button></td>';
                             table += '</tr>';
                         });
-
                         table += '</tbody></table>';
                         modalBody.append(table);
 
                         $('#indikatorModal').modal('show');
+                        $('#loading-overlay').hide();
                     },
                     error: function() {
+                        $('#loading-overlay').hide();
                         alert('Terjadi kesalahan saat memuat data.');
                     }
                 });
             });
 
+            const options_temp = '<option value="" selected disabled>-- Select --</option>';
             $(document).on('click', '.pilihIndikator', function() {
+                $('#kompetensi_id').html(options_temp);
                 var indikator = $(this).data('indikator');
                 $('#indikator_kinerja').val(indikator);
                 $('#indikatorModal').modal('hide');
+                getDataKompetensiSupportIK(indikator);
             });
+
+            function getDataKompetensiSupportIK(indikator) {
+                $.ajax({
+                    url: '{{ route('getKompetensiSupportIK') }}', // Ganti dengan nama route yang sesuai di Laravel
+                    type: 'GET',
+                    data: {
+                        indikator: indikator
+                    },
+                    beforeSend: function() {
+                        $('#kompetensi_id').prop('disabled', true);
+                    },
+                    success: function(res) {
+                        $('#kompetensi-description').empty();
+                        const options = res.data.map(value => {
+                            return `<option value="${value.kompetensi_id}">${value.nama_kompetensi}</option>`;
+                        });
+                        $('#kompetensi_id').html(options_temp + options.join(''));
+                        $('#kompetensi_id').prop('disabled', false);
+                    },
+                    error: function() {
+                        alert('Terjadi kesalahan saat memuat data kompetensi.');
+                    }
+                });
+            }
+
+            $('#kompetensi_id').change(function() {
+                $('#topik_id').html(options_temp);
+                if ($(this).val() != "") {
+                    getDataTopikSupportKompetensi($(this).val());
+                }
+            })
+
+            function getDataTopikSupportKompetensi(kompetensi_id) {
+                $.ajax({
+                    url: '{{ route('getTopikSupportKompetensi') }}',
+                    type: 'GET',
+                    data: {
+                        kompetensi_id: kompetensi_id
+                    },
+                    beforeSend: function() {
+                        $('#topik_id').prop('disabled', true);
+                    },
+                    success: function(res) {
+                        const options = res.data.map(value => {
+                            return `<option value="${value.topik_id}">${value.nama_topik}</option>`;
+                        });
+                        $('#topik_id').html(options_temp + options);
+                        $('#topik_id').prop('disabled', false);
+                    },
+                    error: function() {
+                        alert('Terjadi kesalahan saat memuat data topik.');
+                    }
+                });
+            }
         });
     </script>
 @endpush
