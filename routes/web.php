@@ -7,6 +7,7 @@ use App\Http\Controllers\{
     ProfileController,
     RoleAndPermissionController,
     ActivityLogController,
+    ApiController,
     AsramaController,
     BackupController,
     JadwalKapTahunanController,
@@ -24,6 +25,7 @@ use App\Http\Controllers\{
     TaggingKompetensiIkController
 };
 use App\Http\Controllers\Auth\OtpController;
+
 
 Route::get('/localization/{language}', [LocalizationController::class, 'switch'])->name('localization.switch');
 Route::get('/dashboard', function () {
@@ -103,6 +105,7 @@ Route::middleware(['auth', 'web'])->group(function () {
     });
     Route::get('/backup', [BackupController::class, 'index'])->name('backup.index');
     Route::get('/backup/download', [BackupController::class, 'downloadBackup'])->name('backup.download');
+    Route::get('/get-indikator/{jenisProgram}', [ApiController::class, 'getIndikator'])->name('getIndikator');
 });
 
 Route::post('/verify-otp', [OtpController::class, 'verifyOtp'])->name('verify-otp');

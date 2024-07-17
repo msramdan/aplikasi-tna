@@ -19,7 +19,7 @@
         </a>
 
         @if ($model->status_pengajuan == 'Pending')
-            @can('pengajuan kap edit')
+            {{-- @can('pengajuan kap edit')
                 <a href="{{ route('pengajuan-kap.edit', [
                     'id' => $model->id,
                     'is_bpkp' => $model->institusi_sumber,
@@ -28,7 +28,7 @@
                     class="btn btn-success btn-sm">
                     <i class="mdi mdi-pencil"></i>
                 </a>
-            @endcan
+            @endcan --}}
 
             @can('pengajuan kap delete')
                 <form
@@ -47,11 +47,11 @@
                 </form>
             @endcan
         @else
-            @can('pengajuan kap edit')
+            {{-- @can('pengajuan kap edit')
                 <button disabled class="btn btn-success btn-sm">
                     <i class="mdi mdi-pencil"></i>
                 </button>
-            @endcan
+            @endcan --}}
             @can('pengajuan kap delete')
                 <button disabled class="btn btn-danger btn-sm">
                     <i class="mdi mdi-trash-can-outline"></i>

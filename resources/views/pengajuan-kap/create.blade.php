@@ -426,8 +426,71 @@
             $(document).on('click', '.btn_remove', function() {
                 var button_id = $(this).attr("id");
                 $('#row' + button_id + '').remove();
-                calculateAlokasiWaktu(); // Recalculate after removing a row
+                calculateAlokasiWaktu();
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#pilihButton').prop('disabled', true);
+
+            $('#jenis_program').change(function() {
+                var selectedValue = $(this).val();
+
+                if (selectedValue !== '') {
+                    $('#pilihButton').prop('disabled', false);
+                } else {
+                    $('#pilihButton').prop('disabled', true);
+                }
+            });
+
+            $('#pilihButton').click(function() {
+                var jenisProgram = $('#jenis_program').val();
+
+                $.ajax({
+                    url: '{{ route('getIndikator', ['jenisProgram' => ':jenisProgram']) }}'
+                        .replace(':jenisProgram', jenisProgram),
+                    type: 'GET',
+                    success: function(response) {
+                        var modalBody = $('#indikatorModal .modal-body');
+                        modalBody.empty();
+
+                        var table =
+                            '<table class="table"><thead><tr><th>Indikator</th><th>Satuan Target</th><th>Target</th><th>Realisasi TW1</th><th>Realisasi TW2</th><th>Realisasi TW3</th><th>Realisasi TW4</th><th>Persen Realisasi</th><th>Aksi</th></tr></thead><tbody>';
+
+                        $.each(response.data, function(key, value) {
+                            table += '<tr>';
+                            table += '<td>' + value.indikator_kinerja + '</td>';
+                            table += '<td>' + value.satuan_target + '</td>';
+                            table += '<td>' + value.target + '</td>';
+                            table += '<td>' + value.realisasi_tw1 + '</td>';
+                            table += '<td>' + value.realisasi_tw2 + '</td>';
+                            table += '<td>' + value.realisasi_tw3 + '</td>';
+                            table += '<td>' + value.realisasi_tw4 + '</td>';
+                            table += '<td>' + value.persen_realisasi + '</td>';
+                            table +=
+                                '<td><button type="button" class="btn btn-primary pilihIndikator" data-indikator="' +
+                                value.indikator_kinerja + '">Pilih</button></td>';
+                            table += '</tr>';
+                        });
+
+                        table += '</tbody></table>';
+                        modalBody.append(table);
+
+                        $('#indikatorModal').modal('show');
+                    },
+                    error: function() {
+                        alert('Terjadi kesalahan saat memuat data.');
+                    }
+                });
+            });
+
+            $(document).on('click', '.pilihIndikator', function() {
+                var indikator = $(this).data('indikator');
+                $('#indikator_kinerja').val(indikator);
+                $('#indikatorModal').modal('hide');
             });
         });
     </script>
 @endpush
+1

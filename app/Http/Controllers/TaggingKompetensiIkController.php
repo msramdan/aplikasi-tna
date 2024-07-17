@@ -74,12 +74,17 @@ class TaggingKompetensiIkController extends Controller
 
         $token = session('api_token');
         if (!$token) {
+            dd('User is not authenticated.');
             return redirect()->back()->with('error', 'User is not authenticated.');
         }
         if ($type === 'renstra') {
-            $endpoint = config('stara.endpoint') . '/simaren/indikator-kinerja/es2';
+            $endpoint = config('stara.endpoint') . '/simaren/ref-indikator-kinerja-es2';
+        } elseif ($type === 'app') {
+            $endpoint = config('stara.endpoint') . '/simaren/ref-topik-app';
+        } elseif ($type === 'apep') {
+            $endpoint = config('stara.endpoint') . '/simaren/ref-topik-apep';
         } else {
-            $endpoint = config('stara.endpoint') . '/simaren/indikator-kinerja/es2';
+            dd('Coming soon');
         }
 
         $response = Http::withToken($token)->get($endpoint);
