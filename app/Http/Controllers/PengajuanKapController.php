@@ -305,12 +305,12 @@ class PengajuanKapController extends Controller
             }
 
             $remarks = [
-                'Team pusdiklat',
+                'Tim Unit Pengelola Pembelajaran',
                 'Keuangan',
-                'Penjamin Mutu',
-                'Subkor',
+                'Penjaminan Mutu',
+                'Subkoordinator',
                 'Koordinator',
-                'Kepala pusat'
+                'Kepala Unit Pengelola Pembelajaran'
             ];
 
             foreach ($remarks as $index => $remark) {
