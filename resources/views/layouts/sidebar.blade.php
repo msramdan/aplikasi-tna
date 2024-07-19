@@ -206,13 +206,13 @@
                 log',
                 ])
                 <li class="nav-item">
-                    <a class="nav-link menu-link collapsed {{ request()->routeIs('users*', 'roles*', 'jadwal-kap-tahunan*', 'activity-log*', 'setting-apps*') ? 'active' : '' }}"
+                    <a class="nav-link menu-link collapsed {{ request()->routeIs('users*', 'roles*', 'jadwal-kap-tahunan*', 'config-step-review*', 'activity-log*', 'setting-apps*') ? 'active' : '' }}"
                         href="#sidebarUtilities" data-bs-toggle="collapse" role="button"
-                        aria-expanded="{{ request()->routeIs('users*', 'roles*', 'jadwal-kap-tahunan*', 'activity-log*', 'setting-apps*', 'backup*') ? 'true' : 'false' }}"
+                        aria-expanded="{{ request()->routeIs('users*', 'roles*', 'jadwal-kap-tahunan*', 'config-step-review*', 'activity-log*', 'setting-apps*', 'backup*') ? 'true' : 'false' }}"
                         aria-controls="sidebarUtilities">
                         <i class="fa fa-cogs"></i> <span data-key="t-forms">{{ __('sidebar.utilities') }}</span>
                     </a>
-                    <div class="collapse menu-dropdown {{ request()->routeIs('users*', 'roles*', 'jadwal-kap-tahunan*', 'activity-log*', 'setting-apps*', 'backup*') ? 'show' : '' }}"
+                    <div class="collapse menu-dropdown {{ request()->routeIs('users*', 'roles*', 'jadwal-kap-tahunan*', 'config-step-review*', 'activity-log*', 'setting-apps*', 'backup*') ? 'show' : '' }}"
                         id="sidebarUtilities">
                         <ul class="nav nav-sm flex-column">
                             @can('user view')
@@ -236,6 +236,11 @@
                                         data-key="t-basic-elements">{{ __('sidebar.annual_kap_schedule') }}</a>
                                 </li>
                             @endcan
+                            <li class="nav-item">
+                                <a href="{{ route('config-step-review.index') }}"
+                                    class="nav-link {{ request()->routeIs('config-step-review*') ? 'active' : '' }}"
+                                    data-key="t-basic-elements">Config Step Review</a>
+                            </li>
                             @can('setting app view')
                                 <li class="nav-item">
                                     <a href="{{ route('setting-apps.index') }}"

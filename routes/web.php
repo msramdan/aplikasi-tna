@@ -20,6 +20,7 @@ use App\Http\Controllers\{
     ReportingController,
     RuangKelasController,
     SettingAppController,
+    ConfigStepReview,
     TaggingPembelajaranKompetensiController,
     TopikController,
     TaggingKompetensiIkController
@@ -38,6 +39,7 @@ Route::middleware(['auth', 'web'])->group(function () {
     Route::resource('users', UserController::class);
     Route::resource('roles', RoleAndPermissionController::class);
     Route::resource('setting-apps', SettingAppController::class);
+    Route::resource('config-step-review', ConfigStepReview::class);
     Route::resource('kompetensi', KompetensiController::class);
     Route::controller(KompetensiController::class)->group(function () {
         Route::get('/detailKompetensi', 'detailKompetensi')->name('detailKompetensi');
