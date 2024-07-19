@@ -419,6 +419,10 @@
                                             <td class="fw-bold">{{ __('Metode Pembelajaran') }}</td>
                                             <td>{{ $pengajuanKap->metode_pembelajaran ?: '-' }}</td>
                                         </tr>
+                                        <tr>
+                                            <td class="fw-bold">{{ __('Sumber dana') }}</td>
+                                            <td>{{ $pengajuanKap->sumber_dana ?: '-' }}</td>
+                                        </tr>
                                     </table>
 
                                 </div>
