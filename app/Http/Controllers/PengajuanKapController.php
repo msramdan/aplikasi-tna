@@ -23,9 +23,11 @@ class PengajuanKapController extends Controller
         $this->middleware('permission:pengajuan kap delete')->only('destroy');
     }
 
-    public function index($is_bpkp, $frekuensi)
+    public function index(Request $request, $is_bpkp, $frekuensi)
     {
         if (request()->ajax()) {
+            $tahun = $request->query('tahun');
+            $current_step = intval($request->query('step'));
             $pengajuanKaps = DB::table('pengajuan_kap')
                 ->select(
                     'pengajuan_kap.*',
@@ -37,14 +39,27 @@ class PengajuanKapController extends Controller
                 ->leftJoin('kompetensi', 'pengajuan_kap.kompetensi_id', '=', 'kompetensi.id')
                 ->leftJoin('topik', 'pengajuan_kap.topik_id', '=', 'topik.id')
                 ->where('pengajuan_kap.institusi_sumber', '=', $is_bpkp)
-                ->where('pengajuan_kap.frekuensi_pelaksanaan', '=', $frekuensi)
-                ->orderBy('pengajuan_kap.id', 'desc')
-                ->get();
+                ->where('pengajuan_kap.frekuensi_pelaksanaan', '=', $frekuensi);
 
+            if (isset($tahun) && !empty($tahun)) {
+                if ($tahun != 'All') {
+                    $pengajuanKaps = $pengajuanKaps->where('tahun', $tahun);
+                }
+            }
+
+            if (isset($current_step) && !empty($current_step)) {
+                if ($current_step != 'All') {
+                    $pengajuanKaps = $pengajuanKaps->where('current_step', $current_step);
+                }
+            }
+            $pengajuanKaps = $pengajuanKaps->orderBy('pengajuan_kap.id', 'DESC');
             return DataTables::of($pengajuanKaps)
                 ->addIndexColumn()
                 ->addColumn('status_kap', function ($row) {
                     return $row->status_pengajuan;
+                })
+                ->addColumn('current_step', function ($row) {
+                    return 'Step ' . $row->current_step;
                 })
                 ->addColumn('status_pengajuan', function ($row) {
                     if ($row->status_pengajuan == 'Pending') {
@@ -61,8 +76,9 @@ class PengajuanKapController extends Controller
                 ->rawColumns(['status_pengajuan', 'action'])
                 ->toJson();
         }
-
+        $tahun = '2024';
         return view('pengajuan-kap.index', [
+            'year' => $tahun,
             'is_bpkp' => $is_bpkp,
             'frekuensi' => $frekuensi,
         ]);

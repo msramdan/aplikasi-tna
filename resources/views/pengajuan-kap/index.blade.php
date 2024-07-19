@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
-@section('title', __('Pengusulan Pembelajaran ') . strtoupper(Request::segment(2)) . ' - ' . strtoupper(Request::segment(3)))
+@section('title', __('Pengusulan Pembelajaran ') . strtoupper(Request::segment(2)) . ' - ' .
+    strtoupper(Request::segment(3)))
 
 @section('content')
     <style>
@@ -79,15 +80,60 @@
                                     <i class="mdi mdi-plus"></i> {{ __('Create a new Pengusulan Pembelajaran') }}
                                 </a>
                             @endcan
-                            <button id="approve-selected" class="btn btn-md btn-success" disabled>
-                                {{ __('Approve Selected') }}
-                            </button>
-                            <button id="reject-selected" class="btn btn-md btn-danger" disabled>
-                                {{ __('Reject Selected') }}
-                            </button>
                         </div>
 
                         <div class="card-body">
+
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="input-group mb-2">
+                                        <select name="tahun" id="tahun"
+                                            class="form-control js-example-basic-multiple">
+                                            @php
+                                                $startYear = 2023;
+                                                $currentYear = date('Y');
+                                                $endYear = $currentYear + 1;
+                                            @endphp
+                                            @foreach (range($startYear, $endYear) as $yearOption)
+                                                <option value="{{ $yearOption }}"
+                                                    {{ $yearOption == $year ? 'selected' : '' }}>
+                                                    {{ $yearOption }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="input-group mb-2">
+                                        <select name="step" id="step"
+                                            class="form-control js-example-basic-multiple">
+                                            <option value="All">-- All Step --</option>
+                                            <option value="1">Step 1</option>
+                                            <option value="2">Step 2</option>
+                                            <option value="3">Step 3</option>
+                                            <option value="4">Step 4</option>
+                                            <option value="5">Step 5</option>
+                                            <option value="6">Step 6</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group mb-2">
+                                        <button id="approve-selected" class="btn btn-md btn-success" disabled>
+                                            {{ __('Approved') }}
+                                        </button>
+                                        &nbsp;
+                                        <button id="reject-selected" class="btn btn-md btn-danger" disabled>
+                                            {{ __('Rejected') }}
+                                        </button>
+                                        &nbsp;
+                                        <button id="reject-selected" class="btn btn-md btn-warning" disabled>
+                                            {{ __('Skiped Review') }}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
                             <div class="table-responsive p-1">
                                 <table class="table table-striped" id="data-table">
                                     <thead class="table-dark">
@@ -99,6 +145,7 @@
                                             <th>{{ __('Kompetensi') }}</th>
                                             <th>{{ __('Topik') }}</th>
                                             <th>{{ __('User created') }}</th>
+                                            <th>{{ __('Current Step') }}</th>
                                             <th>{{ __('Status') }}</th>
                                             <th>{{ __('Action') }}</th>
                                         </tr>
@@ -161,6 +208,61 @@
 
 @push('js')
     <script>
+        let columns = [{
+                orderable: false,
+                searchable: false,
+                render: function(data, type, full, meta) {
+                    if (full.status_kap === 'Approved' || full.status_kap === 'Rejected') {
+                        return '<input type="checkbox" class="select-item" value="' + full
+                            .id + '" disabled>';
+                    } else {
+                        return '<input type="checkbox" class="select-item" value="' + full
+                            .id + '">';
+                    }
+                }
+            },
+            {
+                data: 'DT_RowIndex',
+                name: 'DT_RowIndex',
+                orderable: false,
+                searchable: false,
+            },
+            {
+                data: 'kode_pembelajaran',
+                name: 'kode_pembelajaran'
+            },
+            {
+                data: 'indikator_kinerja',
+                name: 'indikator_kinerja'
+            },
+            {
+                data: 'nama_kompetensi',
+                name: 'nama_kompetensi'
+            },
+            {
+                data: 'nama_topik',
+                name: 'nama_topik'
+            },
+            {
+                data: 'user_name',
+                name: 'user_name'
+            },
+            {
+                data: 'current_step',
+                name: 'current_step'
+            },
+            {
+                data: 'status_pengajuan',
+                name: 'status_pengajuan'
+            },
+            {
+                data: 'action',
+                name: 'action',
+                orderable: false,
+                searchable: false
+            }
+        ];
+
         $(document).ready(function() {
             var is_bpkp = window.location.pathname.split('/')[2];
             var frekuensi = window.location.pathname.split('/')[3];
@@ -174,58 +276,38 @@
                         .replace(':frekuensi', frekuensi),
                     data: function(d) {
                         d.checkboxAll = $('#select-all').prop('checked') ? 1 : 0;
+                        d.tahun = $('select[name=tahun] option').filter(':selected').val()
+                        d.step = $('select[name=step] option').filter(':selected').val()
                     }
                 },
-                columns: [
-                    {
-                        orderable: false,
-                        searchable: false,
-                        render: function(data, type, full, meta) {
-                            if (full.status_kap === 'Approved' || full.status_kap === 'Rejected') {
-                                return '<input type="checkbox" class="select-item" value="' + full.id + '" disabled>';
-                            } else {
-                                return '<input type="checkbox" class="select-item" value="' + full.id + '">';
-                            }
-                        }
-                    },
-                    {
-                        data: 'DT_RowIndex',
-                        name: 'DT_RowIndex',
-                        orderable: false,
-                        searchable: false,
-                    },
-                    {
-                        data: 'kode_pembelajaran',
-                        name: 'kode_pembelajaran'
-                    },
-                    {
-                        data: 'indikator_kinerja',
-                        name: 'indikator_kinerja'
-                    },
-                    {
-                        data: 'nama_kompetensi',
-                        name: 'nama_kompetensi'
-                    },
-                    {
-                        data: 'nama_topik',
-                        name: 'nama_topik'
-                    },
-                    {
-                        data: 'user_name',
-                        name: 'user_name'
-                    },
-                    {
-                        data: 'status_pengajuan',
-                        name: 'status_pengajuan'
-                    },
-                    {
-                        data: 'action',
-                        name: 'action',
-                        orderable: false,
-                        searchable: false
-                    }
-                ],
+                columns: columns,
+                order: [
+                    [1, 'asc']
+                ]
             });
+
+            function replaceURLParams() {
+                var params = new URLSearchParams();
+                var tahunSelected = $('select[name=tahun]').val();
+                var currentStep = $('select[name=step]').val();
+                if (tahunSelected) params.set('tahun', tahunSelected);
+                if (currentStep) params.set('step', currentStep);
+                var newURL =
+                    "{{ route('pengajuan-kap.index', ['is_bpkp' => ':is_bpkp', 'frekuensi' => ':frekuensi']) }}"
+                    .replace(':is_bpkp', is_bpkp)
+                    .replace(':frekuensi', frekuensi) + '?' + params.toString();
+                history.replaceState(null, null, newURL);
+            }
+
+            $('#tahun').change(function() {
+                table.draw();
+                replaceURLParams()
+            })
+
+            $('#step').change(function() {
+                table.draw();
+                replaceURLParams()
+            })
 
             // Handle select all checkbox
             $('#select-all').on('change', function() {
@@ -273,7 +355,8 @@
                             alert(response.message);
                             $('#approveModal').modal('hide'); // Close modal
                             $('#approvalNote').val(''); // Clear note
-                            $('#select-all').prop('checked', false).trigger('change'); // Uncheck all
+                            $('#select-all').prop('checked', false).trigger(
+                                'change'); // Uncheck all
                             table.ajax.reload();
                         },
                         error: function(xhr) {
@@ -305,7 +388,8 @@
                             alert(response.message);
                             $('#rejectModal').modal('hide'); // Close modal
                             $('#rejectionNote').val(''); // Clear note
-                            $('#select-all').prop('checked', false).trigger('change'); // Uncheck all
+                            $('#select-all').prop('checked', false).trigger(
+                                'change'); // Uncheck all
                             table.ajax.reload();
                         },
                         error: function(xhr) {
