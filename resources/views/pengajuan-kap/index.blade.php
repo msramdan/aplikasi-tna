@@ -127,7 +127,7 @@
                                             {{ __('Rejected') }}
                                         </button>
                                         &nbsp;
-                                        <button id="reject-selected" class="btn btn-md btn-warning" disabled>
+                                        <button id="skiped-selected" class="btn btn-md btn-warning" disabled>
                                             {{ __('Skiped Review') }}
                                         </button>
                                     </div>
@@ -193,13 +193,36 @@
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="rejectionNote" class="form-label">Catatan</label>
-                        <textarea class="form-control" id="rejectionNote" rows="3" required></textarea>
+                        <label for="skipedNote" class="form-label">Catatan</label>
+                        <textarea class="form-control" id="skipedNote" rows="3" required></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     <button type="button" class="btn btn-danger" id="btn-confirm-reject">Reject</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Skiped -->
+    <div class="modal fade" id="skipedModal" tabindex="-1" role="dialog" aria-labelledby="skipedModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="skipedModalLabel">Skiped Review</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="skipedNote" class="form-label">Catatan</label>
+                        <textarea class="form-control" id="skipedNote" rows="3" required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-warning" id="btn-confirm-skiped">Skiped</button>
                 </div>
             </div>
         </div>
@@ -322,7 +345,8 @@
             // Handle individual checkboxes
             $('#data-table tbody').on('change', '.select-item', function() {
                 var selectedCount = $('.select-item:checked').length;
-                $('#approve-selected, #reject-selected').prop('disabled', selectedCount === 0);
+                $('#approve-selected, #reject-selected, #skiped-selected').prop('disabled',
+                    selectedCount === 0);
             });
 
             // Handle approve button click
@@ -333,6 +357,11 @@
             // Handle reject button click
             $('#reject-selected').on('click', function() {
                 $('#rejectModal').modal('show');
+            });
+
+            // Handle skiped button click
+            $('#skiped-selected').on('click', function() {
+                $('#skipedModal').modal('show');
             });
 
             // Handle approve confirm
@@ -373,21 +402,54 @@
                 var selectedIds = $('.select-item:checked').map(function() {
                     return $(this).val();
                 }).get();
-                var rejectionNote = $('#rejectionNote').val().trim();
+                var skipedNote = $('#skipedNote').val().trim();
 
-                if (selectedIds.length > 0 && rejectionNote !== '') {
+                if (selectedIds.length > 0 && skipedNote !== '') {
                     $.ajax({
                         url: "{{ route('pengajuan-kap-selected.reject') }}",
                         type: 'POST',
                         data: {
                             ids: selectedIds,
-                            note: rejectionNote,
+                            note: skipedNote,
                             _token: '{{ csrf_token() }}'
                         },
                         success: function(response) {
                             alert(response.message);
                             $('#rejectModal').modal('hide'); // Close modal
-                            $('#rejectionNote').val(''); // Clear note
+                            $('#skipedNote').val(''); // Clear note
+                            $('#select-all').prop('checked', false).trigger(
+                                'change'); // Uncheck all
+                            table.ajax.reload();
+                        },
+                        error: function(xhr) {
+                            alert('Something went wrong.');
+                        }
+                    });
+                } else {
+                    alert('Catatan rejected perlu diisi');
+                }
+            });
+
+            // Handle skiped confirm
+            $('#btn-confirm-skiped').on('click', function() {
+                var selectedIds = $('.select-item:checked').map(function() {
+                    return $(this).val();
+                }).get();
+                var skipedNote = $('#skipedNote').val().trim();
+
+                if (selectedIds.length > 0 && skipedNote !== '') {
+                    $.ajax({
+                        url: "{{ route('pengajuan-kap-selected.reject') }}",
+                        type: 'POST',
+                        data: {
+                            ids: selectedIds,
+                            note: skipedNote,
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function(response) {
+                            alert(response.message);
+                            $('#rejectModal').modal('hide'); // Close modal
+                            $('#skipedNote').val(''); // Clear note
                             $('#select-all').prop('checked', false).trigger(
                                 'change'); // Uncheck all
                             table.ajax.reload();
