@@ -29,17 +29,22 @@ class PengajuanKapController extends Controller
             $tahun = $request->query('tahun');
             $current_step = intval($request->query('step'));
             $pengajuanKaps = DB::table('pengajuan_kap')
-                ->select(
-                    'pengajuan_kap.*',
-                    'users.name as user_name',
-                    'kompetensi.nama_kompetensi',
-                    'topik.nama_topik'
-                )
-                ->leftJoin('users', 'pengajuan_kap.user_created', '=', 'users.id')
-                ->leftJoin('kompetensi', 'pengajuan_kap.kompetensi_id', '=', 'kompetensi.id')
-                ->leftJoin('topik', 'pengajuan_kap.topik_id', '=', 'topik.id')
-                ->where('pengajuan_kap.institusi_sumber', '=', $is_bpkp)
-                ->where('pengajuan_kap.frekuensi_pelaksanaan', '=', $frekuensi);
+            ->select(
+                'pengajuan_kap.*',
+                'users.name as user_name',
+                'kompetensi.nama_kompetensi',
+                'topik.nama_topik',
+                'log_review_pengajuan_kap.remark'
+            )
+            ->leftJoin('users', 'pengajuan_kap.user_created', '=', 'users.id')
+            ->leftJoin('kompetensi', 'pengajuan_kap.kompetensi_id', '=', 'kompetensi.id')
+            ->leftJoin('topik', 'pengajuan_kap.topik_id', '=', 'topik.id')
+            ->join('log_review_pengajuan_kap', function ($join) {
+                $join->on('pengajuan_kap.id', '=', 'log_review_pengajuan_kap.pengajuan_kap_id')
+                     ->whereColumn('log_review_pengajuan_kap.step', 'pengajuan_kap.current_step');
+            })
+            ->where('pengajuan_kap.institusi_sumber', '=', $is_bpkp)
+            ->where('pengajuan_kap.frekuensi_pelaksanaan', '=', $frekuensi);
 
             if (isset($tahun) && !empty($tahun)) {
                 if ($tahun != 'All') {
@@ -58,8 +63,8 @@ class PengajuanKapController extends Controller
                 ->addColumn('status_kap', function ($row) {
                     return $row->status_pengajuan;
                 })
-                ->addColumn('current_step', function ($row) {
-                    return 'Step ' . $row->current_step;
+                ->addColumn('remark', function ($row) {
+                    return $row->remark;
                 })
                 ->addColumn('status_pengajuan', function ($row) {
                     if ($row->status_pengajuan == 'Pending') {
@@ -355,9 +360,6 @@ class PengajuanKapController extends Controller
             return redirect()->route('pengajuan-kap.index', ['is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi]);
         }
     }
-
-
-
 
     public function update(Request $request, $id, $is_bpkp, $frekuensi)
     {

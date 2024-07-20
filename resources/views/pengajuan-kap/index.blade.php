@@ -103,17 +103,17 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <div class="input-group mb-2">
                                         <select name="step" id="step"
                                             class="form-control js-example-basic-multiple">
                                             <option value="All">-- All Step --</option>
-                                            <option value="1">Step 1</option>
-                                            <option value="2">Step 2</option>
-                                            <option value="3">Step 3</option>
-                                            <option value="4">Step 4</option>
-                                            <option value="5">Step 5</option>
-                                            <option value="6">Step 6</option>
+                                            <option value="1">Tim Unit Pengelola Pembelajaran</option>
+                                            <option value="2">Keuangan</option>
+                                            <option value="3">Penjaminan Mutu</option>
+                                            <option value="4">Subkoordinator</option>
+                                            <option value="5">Koordinator</option>
+                                            <option value="6">Kepala Unit Pengelola Pembelajaran</option>
                                         </select>
                                     </div>
                                 </div>
@@ -144,7 +144,7 @@
                                             <th>{{ __('Indikator Kinerja') }}</th>
                                             <th>{{ __('Kompetensi') }}</th>
                                             <th>{{ __('Topik') }}</th>
-                                            <th>{{ __('User created') }}</th>
+                                            <th>{{ __('User') }}</th>
                                             <th>{{ __('Current Step') }}</th>
                                             <th>{{ __('Status') }}</th>
                                             <th>{{ __('Action') }}</th>
@@ -271,8 +271,8 @@
                 name: 'user_name'
             },
             {
-                data: 'current_step',
-                name: 'current_step'
+                data: 'remark',
+                name: 'remark'
             },
             {
                 data: 'status_pengajuan',
