@@ -92,7 +92,7 @@
                                             @php
                                                 $startYear = 2023;
                                                 $currentYear = date('Y');
-                                                $endYear = $currentYear + 1;
+                                                $endYear = $currentYear + 2;
                                             @endphp
                                             @foreach (range($startYear, $endYear) as $yearOption)
                                                 <option value="{{ $yearOption }}"

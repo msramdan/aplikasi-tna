@@ -6,6 +6,9 @@ use App\Models\JadwalKapTahunan;
 use App\Http\Requests\{StoreJadwalKapTahunanRequest, UpdateJadwalKapTahunanRequest};
 use Yajra\DataTables\Facades\DataTables;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+
 
 class JadwalKapTahunanController extends Controller
 {
@@ -60,11 +63,9 @@ class JadwalKapTahunanController extends Controller
      */
     public function store(StoreJadwalKapTahunanRequest $request)
     {
-
         JadwalKapTahunan::create($request->validated());
-        Alert::toast('The jadwalKapTahunan was created successfully.', 'success');
+        Alert::toast('The jadwal kap tahunan was created successfully.', 'success');
         return redirect()->route('jadwal-kap-tahunan.index');
-
     }
 
     /**
@@ -96,13 +97,22 @@ class JadwalKapTahunanController extends Controller
      * @param  \App\Models\JadwalKapTahunan  $jadwalKapTahunan
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateJadwalKapTahunanRequest $request, JadwalKapTahunan $jadwalKapTahunan)
-    {
 
-        $jadwalKapTahunan->update($request->validated());
-        Alert::toast('The jadwalKapTahunan was updated successfully.', 'success');
-        return redirect()
-            ->route('jadwal-kap-tahunan.index');
+    public function update(Request $request, JadwalKapTahunan $jadwalKapTahunan)
+    {
+        $request->validate([
+            'tahun' => [
+                'required',
+                'numeric',
+                Rule::unique('jadwal_kap_tahunan')->ignore($jadwalKapTahunan->id),
+            ],
+            'tanggal_mulai' => 'required|date',
+            'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
+        ]);
+
+        $jadwalKapTahunan->update($request->all());
+        Alert::toast('The jadwal kap tahunan was updated successfully.', 'success');
+        return redirect()->route('jadwal-kap-tahunan.index');
     }
 
     /**
@@ -115,10 +125,10 @@ class JadwalKapTahunanController extends Controller
     {
         try {
             $jadwalKapTahunan->delete();
-            Alert::toast('The jadwalKapTahunan was deleted successfully.', 'success');
+            Alert::toast('The jadwal kap tahunan was deleted successfully.', 'success');
             return redirect()->route('jadwal-kap-tahunan.index');
         } catch (\Throwable $th) {
-            Alert::toast('The jadwalKapTahunan cant be deleted because its related to another table.', 'error');
+            Alert::toast('The jadwal kap tahunan cant be deleted because its related to another table.', 'error');
             return redirect()->route('jadwal-kap-tahunan.index');
         }
     }

@@ -86,6 +86,24 @@ class PengajuanKapController extends Controller
 
     public function create($is_bpkp, $frekuensi)
     {
+        if ($frekuensi === 'Tahunan') {
+            // Ambil tanggal hari ini
+            $today = now()->toDateString();
+
+            // Ambil jadwal KAP tahunan yang aktif
+            $jadwalKapTahunan = DB::table('jadwal_kap_tahunan')
+                ->whereDate('tanggal_mulai', '<=', $today)
+                ->whereDate('tanggal_selesai', '>=', $today)
+                ->orderBy('id', 'desc')
+                ->first();
+
+            // Jika jadwal KAP tahunan tidak ditemukan
+            if (!$jadwalKapTahunan) {
+                Alert::info('Informasi', 'Jadwal pengajuan KAP tahunan telah berakhir / belum dibuka oleh admin.');
+                return redirect()->back();
+            }
+        }
+
         if ($is_bpkp === 'BPKP') {
             $jenis_program = ['Renstra', 'APP', 'APEP'];
         } elseif ($is_bpkp === 'Non BPKP') {

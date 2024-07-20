@@ -23,8 +23,9 @@ class UpdateJadwalKapTahunanRequest extends FormRequest
      */
     public function rules()
     {
+        $id = $this->route('jadwal_kap_tahunan');
         return [
-            'tahun' => 'required|numeric',
+            'tahun' => 'required|numeric|unique:jadwal_kap_tahunan,tahun,' . $id . ',id',
 			'tanggal_mulai' => 'required|date',
 			'tanggal_selesai' => 'required|date',
         ];

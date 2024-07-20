@@ -24,9 +24,9 @@ class StoreJadwalKapTahunanRequest extends FormRequest
     public function rules()
     {
         return [
-            'tahun' => 'required|numeric',
-			'tanggal_mulai' => 'required|date',
-			'tanggal_selesai' => 'required|date',
+            'tahun' => 'required|numeric|unique:jadwal_kap_tahunan,tahun',
+            'tanggal_mulai' => 'required|date',
+            'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
         ];
     }
 }
