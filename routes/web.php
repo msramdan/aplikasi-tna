@@ -49,7 +49,7 @@ Route::middleware(['auth', 'web'])->group(function () {
         Route::get('/getKompetensiById/{id}', 'getKompetensiById')->name('getKompetensiById');
     });
     Route::controller(KalenderPembelajaranController::class)->group(function () {
-        Route::get('/kalender-pembelajaran/{tahun}', 'index')->name('kalender-pembelajaran.index');
+        Route::get('/kalender-pembelajaran/{tahun}/{topik}', 'index')->name('kalender-pembelajaran.index')->where('topik', '.*');
         Route::get('/events', 'getEvents')->name('getEvents');
     });
     Route::resource('reporting', ReportingController::class);

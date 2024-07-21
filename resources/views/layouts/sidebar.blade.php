@@ -179,24 +179,17 @@
             @endcanany
             @php
                 $currentYear = date('Y');
+                $defaultTopik = 'All';
             @endphp
             @can('kalender pembelajaran view')
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ request()->routeIs('kalender-pembelajaran*') ? 'active' : '' }}"
-                        href="{{ route('kalender-pembelajaran.index', ['tahun' => $currentYear]) }}">
+                        href="{{ route('kalender-pembelajaran.index', ['tahun' => $currentYear, 'topik' => $defaultTopik]) }}">
                         <i class="fa fa-calendar"></i> <span
                             data-key="t-widgets">{{ __('sidebar.learning_calendar') }}</span>
                     </a>
                 </li>
             @endcan
-            {{-- @can('reporting view')
-                <li class="nav-item">
-                    <a class="nav-link menu-link {{ request()->routeIs('reporting*') ? 'active' : '' }}"
-                        href="{{ route('reporting.index') }}">
-                        <i class="fa fa-book"></i> <span data-key="t-widgets">{{ __('sidebar.reporting') }}</span>
-                    </a>
-                </li>
-            @endcan --}}
             @canany([
                 'user view',
                 'role & permission view',

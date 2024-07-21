@@ -54,9 +54,15 @@
 
                                 <div class="col-md-4">
                                     <div class="input-group mb-2">
-                                        <select name="tahun" id="tahun"
+                                        <select name="topik" id="topik"
                                             class="form-control js-example-basic-multiple">
                                             <option value="All">-- All topik --</option>
+                                            @foreach ($topiks as $topik)
+                                                <option value="{{ $topik->id }}"
+                                                    {{ $selectedTopik == $topik->id ? 'selected' : '' }}>
+                                                    {{ $topik->nama_topik }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -67,7 +73,6 @@
                                 <div class="col-sm-6">
                                     <div id='calendar'></div>
                                 </div>
-
                                 <div class="col-sm-6">
                                     <table class="table table-striped" id="data-table">
                                         <thead class="table-dark">
@@ -77,6 +82,9 @@
                                                 <th>{{ __('Topik') }}</th>
                                             </tr>
                                         </thead>
+                                        <tbody>
+                                            <!-- Data will be dynamically added here -->
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -149,24 +157,30 @@
     <script>
         $(document).ready(function() {
             $('.select2-form').select2();
-        });
-    </script>
-    <script>
-        $(document).ready(function() {
+
             var calendarEl = document.getElementById('calendar');
             var calendar;
 
-            function fetchEvents(year) {
+            function fetchEvents(year, topik) {
                 $.ajax({
                     url: '{{ route('getEvents') }}',
                     type: 'GET',
                     data: {
                         year: year,
+                        topik: topik,
                         _token: $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function(data) {
                         calendar.removeAllEvents();
                         calendar.addEventSource(data);
+
+                        var tableBody = $('#data-table tbody');
+                        tableBody.empty();
+                        $.each(data, function(index, event) {
+                            tableBody.append('<tr><td>' + (index + 1) + '</td><td>' + event
+                                .start.split('T')[0] + ' - ' + event.end.split('T')[0] +
+                                '</td><td>' + event.title + '</td></tr>');
+                        });
                     },
                     error: function(xhr, status, error) {
                         console.error('Failed to fetch events:', error);
@@ -174,7 +188,7 @@
                 });
             }
 
-            function initializeCalendar(year) {
+            function initializeCalendar(year, topik) {
                 var startOfYear = moment(year + '-01-01').format('YYYY-MM-DD');
                 var endOfYear = moment(year + '-12-31').format('YYYY-MM-DD');
 
@@ -191,7 +205,6 @@
                         right: 'dayGridMonth,timeGridWeek,timeGridDay'
                     },
                     eventClick: function(info) {
-                        console.log(info.event);
                         $('#eventKode').text(info.event.extendedProps.kode_pembelajaran);
                         $('#eventSumber').text(info.event.extendedProps.institusi_sumber);
                         $('#eventJenis').text(info.event.extendedProps.jenis_program);
@@ -206,20 +219,28 @@
                     dayMaxEventRows: true,
                 });
 
-                fetchEvents(year);
+                fetchEvents(year, topik);
                 calendar.render();
             }
 
-            $('#tahun').on('change', function() {
-                var selectedYear = $(this).val();
-                var url = '{{ route('kalender-pembelajaran.index', ':year') }}';
-                url = url.replace(':year', selectedYear);
-                window.location.href = url;
+            function updateURL(year, topik) {
+                var newUrl = '{{ url('/kalender-pembelajaran') }}/' + year + '/' + topik;
+                window.history.replaceState({
+                    path: newUrl
+                }, '', newUrl);
+            }
+
+            $('#tahun, #topik').on('change', function() {
+                var selectedYear = $('#tahun').val();
+                var selectedTopik = $('#topik').val();
+                fetchEvents(selectedYear, selectedTopik);
+                updateURL(selectedYear, selectedTopik);
             });
 
-            // Initialize the calendar with the current year or the selected year from the controller
+            // Initialize the calendar with the current year and topic or the selected year and topic from the controller
             var initialYear = $('#tahun').val();
-            initializeCalendar(initialYear);
+            var initialTopik = $('#topik').val();
+            initializeCalendar(initialYear, initialTopik);
         });
     </script>
 @endpush
