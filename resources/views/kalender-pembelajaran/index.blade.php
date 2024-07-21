@@ -9,9 +9,28 @@
             width: 100%;
             margin: 0 auto;
         }
+
+        #loading-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
     </style>
 @endpush
 @section('content')
+    <div id="loading-indicator" style="display:none;">
+        <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
     <div class="page-content">
         <div class="container-fluid">
             <div class="row">
@@ -154,6 +173,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
         integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <script>
         $(document).ready(function() {
             $('.select2-form').select2();
@@ -161,7 +181,16 @@
             var calendarEl = document.getElementById('calendar');
             var calendar;
 
+            function showLoading() {
+                $('#loading-indicator').show();
+            }
+
+            function hideLoading() {
+                $('#loading-indicator').hide();
+            }
+
             function fetchEvents(year, topik) {
+                showLoading();
                 $.ajax({
                     url: '{{ route('getEvents') }}',
                     type: 'GET',
@@ -181,9 +210,11 @@
                                 .start.split('T')[0] + ' - ' + event.end.split('T')[0] +
                                 '</td><td>' + event.title + '</td></tr>');
                         });
+                        hideLoading();
                     },
                     error: function(xhr, status, error) {
                         console.error('Failed to fetch events:', error);
+                        hideLoading();
                     }
                 });
             }
