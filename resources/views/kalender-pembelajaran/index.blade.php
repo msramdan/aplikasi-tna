@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-12">
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
@@ -51,17 +51,35 @@
                                         </select>
                                     </div>
                                 </div>
+
+                                <div class="col-md-4">
+                                    <div class="input-group mb-2">
+                                        <select name="tahun" id="tahun"
+                                            class="form-control js-example-basic-multiple">
+                                            <option value="All">-- All topik --</option>
+                                        </select>
+                                    </div>
+                                </div>
+
                             </div>
                             <hr>
-                            <div id='calendar'></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ __('kalender-pembelajaran/index.Daftar Pembelajaran') }}</h5>
-                            <ul id="eventList"></ul>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div id='calendar'></div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <table class="table table-striped" id="data-table">
+                                        <thead class="table-dark">
+                                            <tr>
+                                                <th>#</th>
+                                                <th>{{ __('Tanggal') }}</th>
+                                                <th>{{ __('Topik') }}</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -74,7 +92,8 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="eventModalLabel">{{ __('kalender-pembelajaran/index.Detail pembelajaran') }}
+                    <h5 class="modal-title" id="eventModalLabel">
+                        {{ __('kalender-pembelajaran/index.Detail pembelajaran') }}
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -185,19 +204,6 @@
                         modal.show();
                     },
                     dayMaxEventRows: true,
-                    dateClick: function(info) {
-                        var clickedDate = info.dateStr;
-                        var eventsOnDate = calendar.getEvents().filter(function(event) {
-                            return event.startStr === clickedDate || event.endStr ===
-                                clickedDate || (event.startStr < clickedDate && event.endStr >
-                                    clickedDate);
-                        });
-                        var eventList = eventsOnDate.map(function(event) {
-                            return "<li>" + event.title + "</li>";
-                        });
-                        console.log(eventList);
-                        $('#eventList').html(eventList.join(""));
-                    }
                 });
 
                 fetchEvents(year);
