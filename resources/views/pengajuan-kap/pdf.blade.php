@@ -122,6 +122,12 @@
             </tr>
 
             <tr>
+                <td style="vertical-align: top;">{{ __('Judul Program pembelajaran') }}</td>
+                <td style="vertical-align: top;">:</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->judul }}</td>
+            </tr>
+
+            <tr>
                 <td style="vertical-align: top;">{{ __('Tujuan Program Pembelajaran') }}</td>
                 <td style="vertical-align: top;">:</td>
                 <td style="vertical-align: top;">{{ $pengajuanKap->tujuan_program_pembelajaran }}</td>

@@ -109,6 +109,20 @@
                         </div>
                     </div>
 
+                    <div class="form-group row mb-3">
+                        <label class="col-sm-3 col-form-label"
+                            for="judul">{{ __('Judul Program Pembelajaran') }}</label>
+                        <div class="col-sm-6">
+                            <input type="text" name="judul" id="judul"
+                                class="form-control @error('judul') is-invalid @enderror"
+                                value="{{ isset($pengajuanKap) ? $pengajuanKap->judul : old('judul') }}"
+                                placeholder="{{ __('Judul Program Pembelajaran') }}" required />
+                            <div class="invalid-feedback">
+                                Mohon untuk diisi Judul Program Pembelajaran
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label">{{ __('Concern Program Pembelajaran') }}</label>
                         <div class="col-sm-6"></div>

@@ -282,6 +282,11 @@
                                         </tr>
 
                                         <tr>
+                                            <td class="fw-bold">{{ __('Judul Program pembelajaran') }}</td>
+                                            <td>{{ $pengajuanKap->judul ?: '-' }}</td>
+                                        </tr>
+
+                                        <tr>
                                             <td class="fw-bold">{{ __('Tujuan Program Pembelajaran') }}</td>
                                             <td>{{ $pengajuanKap->tujuan_program_pembelajaran ?: '-' }}</td>
                                         </tr>
