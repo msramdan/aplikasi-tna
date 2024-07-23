@@ -29,22 +29,22 @@ class PengajuanKapController extends Controller
             $tahun = $request->query('tahun');
             $current_step = intval($request->query('step'));
             $pengajuanKaps = DB::table('pengajuan_kap')
-            ->select(
-                'pengajuan_kap.*',
-                'users.name as user_name',
-                'kompetensi.nama_kompetensi',
-                'topik.nama_topik',
-                'log_review_pengajuan_kap.remark'
-            )
-            ->leftJoin('users', 'pengajuan_kap.user_created', '=', 'users.id')
-            ->leftJoin('kompetensi', 'pengajuan_kap.kompetensi_id', '=', 'kompetensi.id')
-            ->leftJoin('topik', 'pengajuan_kap.topik_id', '=', 'topik.id')
-            ->join('log_review_pengajuan_kap', function ($join) {
-                $join->on('pengajuan_kap.id', '=', 'log_review_pengajuan_kap.pengajuan_kap_id')
-                     ->whereColumn('log_review_pengajuan_kap.step', 'pengajuan_kap.current_step');
-            })
-            ->where('pengajuan_kap.institusi_sumber', '=', $is_bpkp)
-            ->where('pengajuan_kap.frekuensi_pelaksanaan', '=', $frekuensi);
+                ->select(
+                    'pengajuan_kap.*',
+                    'users.name as user_name',
+                    'kompetensi.nama_kompetensi',
+                    'topik.nama_topik',
+                    'log_review_pengajuan_kap.remark'
+                )
+                ->leftJoin('users', 'pengajuan_kap.user_created', '=', 'users.id')
+                ->leftJoin('kompetensi', 'pengajuan_kap.kompetensi_id', '=', 'kompetensi.id')
+                ->leftJoin('topik', 'pengajuan_kap.topik_id', '=', 'topik.id')
+                ->join('log_review_pengajuan_kap', function ($join) {
+                    $join->on('pengajuan_kap.id', '=', 'log_review_pengajuan_kap.pengajuan_kap_id')
+                        ->whereColumn('log_review_pengajuan_kap.step', 'pengajuan_kap.current_step');
+                })
+                ->where('pengajuan_kap.institusi_sumber', '=', $is_bpkp)
+                ->where('pengajuan_kap.frekuensi_pelaksanaan', '=', $frekuensi);
 
             if (isset($tahun) && !empty($tahun)) {
                 if ($tahun != 'All') {
@@ -249,6 +249,21 @@ class PengajuanKapController extends Controller
             'tanggal_selesai' => 'required|array',
         ]);
 
+        $year = date('y');
+        $topikId = sprintf('%03d', $validatedData['topik_id']);
+        $lastPengajuan = DB::table('pengajuan_kap')
+            ->where('tahun', date('Y'))
+            ->orderBy('kode_pembelajaran', 'desc')
+            ->first();
+        if ($lastPengajuan) {
+            $lastKodePembelajaran = substr($lastPengajuan->kode_pembelajaran, -3);
+            $newNoUrut = sprintf('%03d', (int)$lastKodePembelajaran + 1);
+        } else {
+            $newNoUrut = '001';
+        }
+
+        $kodePembelajaran = $year . $topikId . $newNoUrut;
+
         DB::beginTransaction();
         try {
             $fasilitator_pembelajaran = $request->input('fasilitator_pembelajaran');
@@ -261,7 +276,7 @@ class PengajuanKapController extends Controller
             $sumber_dana = ($is_bpkp == 'BPKP') ? 'RM' : 'PNBP';
 
             $pengajuanKapId = DB::table('pengajuan_kap')->insertGetId([
-                'kode_pembelajaran' => 'Test',
+                'kode_pembelajaran' => $kodePembelajaran,
                 'institusi_sumber' => $is_bpkp,
                 'jenis_program' => $validatedData['jenis_program'],
                 'frekuensi_pelaksanaan' => $frekuensi,

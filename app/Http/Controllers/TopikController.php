@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Topik;
-use App\Http\Requests\{StoreTopikRequest, UpdateTopikRequest,ImportTopikRequest};
+use App\Http\Requests\{StoreTopikRequest, UpdateTopikRequest, ImportTopikRequest};
 use Yajra\DataTables\Facades\DataTables;
 use RealRashid\SweetAlert\Facades\Alert;
 use Maatwebsite\Excel\Facades\Excel;
@@ -30,15 +30,11 @@ class TopikController extends Controller
     {
         if (request()->ajax()) {
             $topik = Topik::query();
-
             return DataTables::of($topik)
                 ->addIndexColumn()
-                ->addColumn('created_at', function ($row) {
-                    return $row->created_at->format('d M Y H:i:s');
-                })->addColumn('updated_at', function ($row) {
-                    return $row->updated_at->format('d M Y H:i:s');
+                ->addColumn('id', function ($row) {
+                    return sprintf('%03d', $row->id);
                 })
-
                 ->addColumn('action', 'topik.include.action')
                 ->toJson();
         }
@@ -68,7 +64,6 @@ class TopikController extends Controller
         Topik::create($request->validated());
         Alert::toast('The topik was created successfully.', 'success');
         return redirect()->route('topik.index');
-
     }
 
     /**

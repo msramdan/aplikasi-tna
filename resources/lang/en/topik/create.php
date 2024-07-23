@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'create_topik' => 'Create topic',
-    'pembelajaran' => 'Learning',
+    'create_topik' => 'Create learning program',
+    'pembelajaran' => 'Learning program',
     'create' => 'Create',
     'back' => 'Back',
     'save' => 'Save',

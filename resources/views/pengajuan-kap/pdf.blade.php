@@ -116,7 +116,7 @@
                 <td style="vertical-align: top;">{{ $pengajuanKap->nama_kompetensi }}</td>
             </tr>
             <tr>
-                <td style="vertical-align: top;">{{ __('Topik') }}</td>
+                <td style="vertical-align: top;">{{ __('Program pembelajaran') }}</td>
                 <td style="vertical-align: top;">:</td>
                 <td style="vertical-align: top;">{{ $pengajuanKap->nama_topik }}</td>
             </tr>

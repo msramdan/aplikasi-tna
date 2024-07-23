@@ -95,16 +95,16 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label for="topik_id" class="col-sm-3 col-form-label">{{ __('Topik Pembelajaran') }}</label>
+                        <label for="topik_id" class="col-sm-3 col-form-label">{{ __('Program pembelajaran') }}</label>
                         <div class="col-sm-6">
                             <select
                                 class="form-control js-example-basic-multiple @error('topik_id') is-invalid @enderror"
                                 name="topik_id" id="topik_id" required>
-                                <option value="" selected disabled>-- {{ __('Select topik pembelajaran') }} --
+                                <option value="" selected disabled>-- {{ __('Select program pembelajaran') }} --
                                 </option>
                             </select>
                             <div class="invalid-feedback">
-                                Mohon untuk pilih Topik Pembelajaran
+                                Mohon untuk pilih program pembelajaran
                             </div>
                         </div>
                     </div>

@@ -5,7 +5,7 @@ return [
 
     'master_data' => 'Data Utama',
     'kompetensi_dictionary' => 'Kamus Kompetensi',
-    'learning' => 'Pembelajaran',
+    'learning' => 'Program Pembelajaran',
     'city_list' => 'Daftar Kota',
     'location' => 'Lokasi',
     'classroom' => 'Ruang Kelas',

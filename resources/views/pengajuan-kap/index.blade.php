@@ -143,7 +143,7 @@
                                             <th>{{ __('Kode') }}</th>
                                             <th>{{ __('Indikator Kinerja') }}</th>
                                             <th>{{ __('Kompetensi') }}</th>
-                                            <th>{{ __('Topik') }}</th>
+                                            <th>{{ __('Program pembelajaran') }}</th>
                                             <th>{{ __('User') }}</th>
                                             <th>{{ __('Current Step') }}</th>
                                             <th>{{ __('Status') }}</th>

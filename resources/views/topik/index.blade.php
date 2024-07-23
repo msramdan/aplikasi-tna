@@ -123,7 +123,7 @@
                                 <table class="table table-striped" id="data-table">
                                     <thead class="table-dark">
                                         <tr>
-                                            <th>No</th>
+                                            <th>ID</th>
                                             <th>{{ __('topik/index.nama_pembelajaran') }}</th>
                                             <th>{{ __('topik/index.action') }}</th>
                                         </tr>
@@ -145,11 +145,10 @@
             processing: true,
             serverSide: true,
             ajax: "{{ route('topik.index') }}",
-            columns: [{
-                    data: 'DT_RowIndex',
-                    name: 'DT_RowIndex',
-                    orderable: false,
-                    searchable: false
+            columns: [
+                {
+                    data: 'id',
+                    name: 'id',
                 },
                 {
                     data: 'nama_topik',

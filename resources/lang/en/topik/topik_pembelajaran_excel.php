@@ -2,5 +2,5 @@
 
 return [
     'no' => 'No',
-    'pembelajaran' => 'Learning',
+    'pembelajaran' => 'Learning program',
 ];

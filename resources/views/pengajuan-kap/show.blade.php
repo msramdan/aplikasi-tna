@@ -277,7 +277,7 @@
                                         </tr>
 
                                         <tr>
-                                            <td class="fw-bold">{{ __('Topik') }}</td>
+                                            <td class="fw-bold">{{ __('Program pembelajaran') }}</td>
                                             <td>{{ $pengajuanKap->nama_topik ?: '-' }}</td>
                                         </tr>
 
