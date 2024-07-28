@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SettingApp;
 use App\Models\User;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 
 class ConfigStepReview extends Controller
@@ -19,8 +18,70 @@ class ConfigStepReview extends Controller
 
     public function index()
     {
-        $settingApp = SettingApp::findOrFail(1)->first();
-        $users = User::orderBy('name', 'ASC')->get();
-        return view('config-step-review.edit', compact('settingApp', 'users'));
+        $users = DB::table('users')->get();
+        $configSteps = DB::table('config_step_review')->get();
+        $steps = [
+            'Tim Unit Pengelola Pembelajaran',
+            'Keuangan',
+            'Penjaminan Mutu',
+            'Subkoordinator',
+            'Koordinator',
+            'Kepala Unit Pengelola Pembelajaran'
+        ];
+
+        // Create a mapping of steps to their assigned users
+        $stepReviewers = [];
+        foreach ($configSteps as $configStep) {
+            $stepReviewers[$configStep->remark][] = $configStep->user_review_id;
+        }
+
+        return view('config-step-review.edit', compact('users', 'steps', 'stepReviewers'));
+    }
+
+    public function submitForm(Request $request)
+    {
+        $steps = [
+            'Tim Unit Pengelola Pembelajaran',
+            'Keuangan',
+            'Penjaminan Mutu',
+            'Subkoordinator',
+            'Koordinator',
+            'Kepala Unit Pengelola Pembelajaran'
+        ];
+
+        foreach ($steps as $index => $remark) {
+            $reviewerKey = "reviewer_" . ($index + 1);
+            $newUserIds = $request->input($reviewerKey, []);
+
+            // Get existing user IDs for this remark
+            $existingUserIds = DB::table('config_step_review')
+                                ->where('remark', $remark)
+                                ->pluck('user_review_id')
+                                ->toArray();
+
+            // Determine which user IDs to add
+            $userIdsToAdd = array_diff($newUserIds, $existingUserIds);
+
+            // Determine which user IDs to remove
+            $userIdsToRemove = array_diff($existingUserIds, $newUserIds);
+
+            // Insert new user IDs
+            foreach ($userIdsToAdd as $userId) {
+                DB::table('config_step_review')->insert([
+                    'remark' => $remark,
+                    'user_review_id' => $userId,
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]);
+            }
+
+            // Remove user IDs that are no longer selected
+            DB::table('config_step_review')
+                ->where('remark', $remark)
+                ->whereIn('user_review_id', $userIdsToRemove)
+                ->delete();
+        }
+
+        return redirect()->back()->with('success', 'Reviewers assigned successfully.');
     }
 }

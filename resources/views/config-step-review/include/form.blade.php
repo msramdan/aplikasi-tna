@@ -37,129 +37,29 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-
-                <td>
-                    <center>
-                        <div class="placeholder-img">1</div>
-                    </center>
-                </td>
-                <td>
-                    <center>
-                        Tim Unit Pengelola Pembelajaran
-                    </center>
-                </td>
-                <td>
-                    <select class="form-control js-example-basic-multiple" name="reviewer_1[]" multiple="multiple">
-                        <option value="1">User 1</option>
-                        <option value="2">User 2</option>
-                        <option value="3">User 3</option>
-                        <option value="4">User 4</option>
-                        <option value="5">User 5</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <center>
-                        <div class="placeholder-img">2</div>
-                    </center>
-                </td>
-                <td>
-                    <center>
-                        Keuangan
-                    </center>
-                </td>
-                <td>
-                    <select class="form-control js-example-basic-multiple" name="reviewer_2[]" multiple="multiple">
-                        <option value="1">User 1</option>
-                        <option value="2">User 2</option>
-                        <option value="3">User 3</option>
-                        <option value="4">User 4</option>
-                        <option value="5">User 5</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <center>
-                        <div class="placeholder-img">3</div>
-                    </center>
-                </td>
-                <td>
-                    <center>
-                        Penjaminan Mutu
-                    </center>
-                </td>
-                <td>
-                    <select class="form-control js-example-basic-multiple" name="reviewer_3[]" multiple="multiple">
-                        <option value="1">User 1</option>
-                        <option value="2">User 2</option>
-                        <option value="3">User 3</option>
-                        <option value="4">User 4</option>
-                        <option value="5">User 5</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <center>
-                        <div class="placeholder-img">4</div>
-                    </center>
-                </td>
-                <td>
-                    <center>
-                        Subkoordinator
-                    </center>
-                </td>
-                <td>
-                    <select class="form-control js-example-basic-multiple" name="reviewer_4[]" multiple="multiple">
-                        <option value="1">User 1</option>
-                        <option value="2">User 2</option>
-                        <option value="3">User 3</option>
-                        <option value="4">User 4</option>
-                        <option value="5">User 5</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <center>
-                        <div class="placeholder-img">5</div>
-                    </center>
-                </td>
-                <td>
-                    <center>Koordinator</center>
-                </td>
-                <td>
-                    <select class="form-control js-example-basic-multiple" name="reviewer_5[]" multiple="multiple">
-                        <option value="1">User 1</option>
-                        <option value="2">User 2</option>
-                        <option value="3">User 3</option>
-                        <option value="4">User 4</option>
-                        <option value="5">User 5</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <center>
-                        <div class="placeholder-img">6</div>
-                    </center>
-                </td>
-                <td>
-                    <center>Kepala Unit Pengelola Pembelajaran</center>
-                </td>
-                <td>
-                    <select class="form-control js-example-basic-multiple" name="reviewer_6[]" multiple="multiple">
-                        <option value="1">User 1</option>
-                        <option value="2">User 2</option>
-                        <option value="3">User 3</option>
-                        <option value="4">User 4</option>
-                        <option value="5">User 5</option>
-                    </select>
-                </td>
-            </tr>
+            @foreach($steps as $index => $remark)
+                <tr>
+                    <td>
+                        <center>
+                            <div class="placeholder-img">{{ $index + 1 }}</div>
+                        </center>
+                    </td>
+                    <td>
+                        <center>{{ $remark }}</center>
+                    </td>
+                    <td>
+                        <select class="form-control js-example-basic-multiple" name="reviewer_{{ $index + 1 }}[]" multiple="multiple">
+                            @foreach($users as $user)
+                                <option value="{{ $user->id }}"
+                                    @if(isset($stepReviewers[$remark]) && in_array($user->id, $stepReviewers[$remark]))
+                                        selected
+                                    @endif
+                                >{{ $user->name }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                </tr>
+            @endforeach
         </tbody>
     </table>
 </div>
