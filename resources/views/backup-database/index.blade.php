@@ -23,7 +23,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-12">
                     <div class="card">
                         <div class="col-md-12" style="padding:20px;">
                             <div class="panel box-v3">

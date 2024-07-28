@@ -504,6 +504,22 @@ class PengajuanKapController extends Controller
             ->where('waktu_tempat.pengajuan_kap_id', $id)
             ->select('waktu_tempat.*', 'lokasi.nama_lokasi')
             ->get();
+        $steps = [
+            'Tim Unit Pengelola Pembelajaran',
+            'Keuangan',
+            'Penjaminan Mutu',
+            'Subkoordinator',
+            'Koordinator',
+            'Kepala Unit Pengelola Pembelajaran'
+        ];
+
+        $currentStepRemark = isset($pengajuanKap->current_step) && $pengajuanKap->current_step > 0 && $pengajuanKap->current_step <= count($steps)
+            ? $steps[$pengajuanKap->current_step - 1]
+            : '-';
+        $userHasAccess = DB::table('config_step_review')
+            ->where('remark', $currentStepRemark)
+            ->where('user_review_id', Auth::id())
+            ->exists();
 
         return view('pengajuan-kap.show', [
             'pengajuanKap' => $pengajuanKap,
@@ -513,6 +529,8 @@ class PengajuanKapController extends Controller
             'waktu_tempat' => $waktu_tempat,
             'is_bpkp' => $is_bpkp,
             'frekuensi' => $frekuensi,
+            'currentStepRemark' => $currentStepRemark,
+            'userHasAccess' => $userHasAccess
         ]);
     }
 

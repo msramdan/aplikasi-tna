@@ -206,21 +206,22 @@
                                     'is_bpkp' => $is_bpkp,
                                     'frekuensi' => $frekuensi,
                                 ]) }}"
-                                    class="btn btn-secondary">{{ __('Back') }}</a>
+                                   class="btn btn-secondary"><i class="fa fa-arrow-left" aria-hidden="true"></i> {{ __('Back') }}</a>
                                 @if ($pengajuanKap->status_pengajuan == 'Rejected' || $pengajuanKap->status_pengajuan == 'Approved')
                                     <button type="button" disabled class="btn btn-success">
-                                        Approved
+                                        <i class="fa fa-check" aria-hidden="true"></i> Approved
                                     </button>
                                     <button type="button" disabled class="btn btn-danger">
-                                        Rejected
+                                        <i class="fa fa-times" aria-hidden="true"></i> Rejected
                                     </button>
                                 @else
                                     <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                        data-bs-target="#approveModal">
-                                        Approved
+                                        data-bs-target="#approveModal" {{ $userHasAccess ? '' : 'disabled' }}>
+                                        <i class="fa fa-check" aria-hidden="true"></i> Approved
                                     </button>
-                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#rejectModal">
-                                        Rejected
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                        data-bs-target="#rejectModal" {{ $userHasAccess ? '' : 'disabled' }}>
+                                        <i class="fa fa-times" aria-hidden="true"></i> Rejected
                                     </button>
                                 @endif
                             </div>
@@ -337,7 +338,7 @@
 
                                         <tr>
                                             <td class="fw-bold">{{ __('Current step') }}</td>
-                                            <td>Step {{ $pengajuanKap->current_step ?: '-' }}</td>
+                                            <td>Step {{ $pengajuanKap->current_step ?: '-' }} - {{ $currentStepRemark }}</td>
                                         </tr>
 
                                         <tr>
