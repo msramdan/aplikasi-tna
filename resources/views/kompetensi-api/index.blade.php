@@ -90,7 +90,7 @@
                     <table class="table" style="text-align: justify">
                         <tbody>
                             <tr>
-                                <th scope="row">{{ trans('kompetensi/index.kategori_besar') }}</th>
+                                <th scope="row">{{ trans('kompetensi/index.kelompok_besar') }}</th>
                                 <td>:</td>
                                 <td><span id="modalDetailKategoriBesar"></span></td>
                             </tr>
