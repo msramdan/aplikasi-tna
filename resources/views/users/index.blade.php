@@ -41,6 +41,7 @@
                                             <th>{{ trans('users/index.role') }}</th>
                                             <th>{{ trans('users/index.email') }}</th>
                                             <th>Kode unit</th>
+                                            <th>Key sort unit</th>
                                             <th>Unit kerja</th>
                                             <th>{{ trans('users/index.action') }}</th>
                                         </tr>
@@ -90,6 +91,10 @@
             {
                 data: 'kode_unit',
                 name: 'kode_unit'
+            },
+            {
+                data: 'key_sort_unit',
+                name: 'key_sort_unit'
             },
             {
                 data: 'nama_unit',
