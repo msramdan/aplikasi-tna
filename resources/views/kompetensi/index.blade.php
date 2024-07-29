@@ -158,10 +158,6 @@
                     <div class="card">
                         <div class="card-header">
                             @can('kompetensi create')
-                                <a href="{{ route('kompetensi.create') }}" class="btn btn-md btn-primary">
-                                    <i class="mdi mdi-plus"></i>
-                                    {{ trans('kompetensi/index.create_new') }}
-                                </a>
                                 <button type="button" class="btn btn-warning" data-bs-toggle="modal"
                                     data-bs-target="#exampleModal">
                                     <i class='fa fa-upload'></i>
@@ -179,7 +175,7 @@
                                 <table class="table table-striped" id="data-table">
                                     <thead class="table-dark">
                                         <tr>
-                                            <th>No</th>
+                                            <th>ID</th>
                                             <th>{{ trans('kompetensi/index.kelompok_besar') }}</th>
                                             <th>{{ trans('kompetensi/index.kategori') }}</th>
                                             <th>{{ trans('kompetensi/index.akademi') }}</th>
@@ -207,10 +203,8 @@
                 serverSide: true,
                 ajax: "{{ route('kompetensi.index') }}",
                 columns: [{
-                        data: 'DT_RowIndex',
-                        name: 'DT_RowIndex',
-                        orderable: false,
-                        searchable: false
+                        data: 'id',
+                        name: 'id',
                     },
                     {
                         data: 'nama_kelompok_besar',
@@ -249,76 +243,86 @@
                         var nama_kompetensi = $(this).data('nama_kompetensi');
                         var deskripsi_kompetensi = $(this).data('deskripsi_kompetensi');
                         var csrfToken = $('meta[name="csrf-token"]').attr('content');
-                        $('#loading-overlay').show();
-                        $.ajax({
-                            type: "GET",
-                            url: '{{ route('detailKompetensi') }}',
-                            data: {
-                                id: id,
-                                _token: csrfToken
-                            },
-                            success: function(response) {
-                                $('#loading-overlay').hide();
+                        $('#modalDetailKompetensi').modal('show');
+                        $('#modalDetailKategoriBesar').text(
+                            nama_kelompok_besar);
+                        $('#modalDetailKategori').text(
+                            nama_kategori_kompetensi);
+                        $('#modalDetailNamaAkademi').text(nama_akademi);
+                        $('#modalDetailKompetensiNama').text(
+                            nama_kompetensi);
+                        $('#modalDetailKompetensiDeskripsi').text(
+                            deskripsi_kompetensi);
+                        // $('#loading-overlay').show();
+                        // $.ajax({
+                        //     type: "GET",
+                        //     url: '{{ route('detailKompetensi') }}',
+                        //     data: {
+                        //         id: id,
+                        //         _token: csrfToken
+                        //     },
+                        //     success: function(response) {
+                        //         $('#loading-overlay').hide();
 
-                                if (!response.success) {
-                                    Swal.fire({
-                                        icon: 'warning',
-                                        title: 'Alert',
-                                        text: response.message,
-                                    });
-                                    return;
-                                }
+                        //         if (!response.success) {
+                        //             Swal.fire({
+                        //                 icon: 'warning',
+                        //                 title: 'Alert',
+                        //                 text: response.message,
+                        //             });
+                        //             return;
+                        //         }
 
-                                $('#modalDetailKompetensi').modal('show');
-                                $('#modalDetailKategoriBesar').text(
-                                    nama_kelompok_besar);
-                                $('#modalDetailKategori').text(
-                                    nama_kategori_kompetensi);
-                                $('#modalDetailNamaAkademi').text(nama_akademi);
-                                $('#modalDetailKompetensiNama').text(
-                                    nama_kompetensi);
-                                $('#modalDetailKompetensiDeskripsi').text(
-                                    deskripsi_kompetensi);
-                                var tableHtml =
-                                    '<div class="table-responsive p-1"><table class="table table-striped">';
-                                tableHtml += '<thead>';
-                                tableHtml += '<tr>';
-                                tableHtml +=
-                                    '<th>{{ trans('kompetensi/index.level') }}</th>';
-                                tableHtml +=
-                                    '<th>{{ trans('kompetensi/index.deskripsi_level') }}</th>';
-                                tableHtml +=
-                                    '<th>{{ trans('kompetensi/index.indikator_perilaku') }}</th>';
-                                tableHtml += '</tr>';
-                                tableHtml += '</thead>';
-                                tableHtml += '<tbody></div>';
+                        //         $('#modalDetailKompetensi').modal('show');
+                        //         $('#modalDetailKategoriBesar').text(
+                        //             nama_kelompok_besar);
+                        //         $('#modalDetailKategori').text(
+                        //             nama_kategori_kompetensi);
+                        //         $('#modalDetailNamaAkademi').text(nama_akademi);
+                        //         $('#modalDetailKompetensiNama').text(
+                        //             nama_kompetensi);
+                        //         $('#modalDetailKompetensiDeskripsi').text(
+                        //             deskripsi_kompetensi);
+                        //         var tableHtml =
+                        //             '<div class="table-responsive p-1"><table class="table table-striped">';
+                        //         tableHtml += '<thead>';
+                        //         tableHtml += '<tr>';
+                        //         tableHtml +=
+                        //             '<th>{{ trans('kompetensi/index.level') }}</th>';
+                        //         tableHtml +=
+                        //             '<th>{{ trans('kompetensi/index.deskripsi_level') }}</th>';
+                        //         tableHtml +=
+                        //             '<th>{{ trans('kompetensi/index.indikator_perilaku') }}</th>';
+                        //         tableHtml += '</tr>';
+                        //         tableHtml += '</thead>';
+                        //         tableHtml += '<tbody></div>';
 
-                                $.each(response.data, function(index, item) {
-                                    tableHtml += '<tr>';
-                                    tableHtml += '<td>' + item.level +
-                                        '</td>';
-                                    tableHtml += '<td>' + item
-                                        .deskripsi_level + '</td>';
-                                    tableHtml += '<td>' + item
-                                        .indikator_perilaku + '</td>';
-                                    tableHtml += '</tr>';
-                                });
+                        //         $.each(response.data, function(index, item) {
+                        //             tableHtml += '<tr>';
+                        //             tableHtml += '<td>' + item.level +
+                        //                 '</td>';
+                        //             tableHtml += '<td>' + item
+                        //                 .deskripsi_level + '</td>';
+                        //             tableHtml += '<td>' + item
+                        //                 .indikator_perilaku + '</td>';
+                        //             tableHtml += '</tr>';
+                        //         });
 
-                                tableHtml += '</tbody>';
-                                tableHtml += '</table>';
+                        //         tableHtml += '</tbody>';
+                        //         tableHtml += '</table>';
 
-                                $('.modal-body-detail').html(tableHtml);
-                            },
-                            error: function(error) {
-                                $('#loading-overlay').hide();
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: '{{ trans('kompetensi/index.error_fetching_data') }}',
-                                    text: '{{ trans('kompetensi/index.check_error') }}',
-                                });
-                                console.error('Error:', error);
-                            },
-                        });
+                        //         $('.modal-body-detail').html(tableHtml);
+                        //     },
+                        //     error: function(error) {
+                        //         $('#loading-overlay').hide();
+                        //         Swal.fire({
+                        //             icon: 'error',
+                        //             title: '{{ trans('kompetensi/index.error_fetching_data') }}',
+                        //             text: '{{ trans('kompetensi/index.check_error') }}',
+                        //         });
+                        //         console.error('Error:', error);
+                        //     },
+                        // });
 
                     });
                 }

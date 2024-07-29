@@ -8,7 +8,7 @@
     data-deskripsi_kompetensi="{{ $model->deskripsi_kompetensi }}"
     ><i class="mdi mdi-eye"></i></button>
 
-    @can('kompetensi edit')
+    {{-- @can('kompetensi edit')
         <a href="{{ route('kompetensi.edit', $model->id) }}" class="btn btn-success btn-sm">
             <i class="mdi mdi-pencil"></i>
         </a>
@@ -24,5 +24,5 @@
                 <i class="mdi mdi-trash-can-outline"></i>
             </button>
         </form>
-    @endcan
+    @endcan --}}
 </td>

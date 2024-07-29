@@ -22,7 +22,7 @@
                         <ul class="nav nav-sm flex-column">
                             @can('kompetensi view')
                                 <li class="nav-item">
-                                    <a href="{{ route('kompetensi-api.index') }}"
+                                    <a href="{{ route('kompetensi.index') }}"
                                         class="nav-link {{ request()->routeIs('kompetensi*') ? 'active' : '' }}"
                                         data-key="t-basic-elements">{{ __('sidebar.kompetensi_dictionary') }}</a>
                                 </li>
