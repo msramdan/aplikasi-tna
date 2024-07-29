@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('jabatan')->nullable();
             $table->string('avatar')->nullable();
             $table->string('kode_unit')->nullable();
+            $table->string('key_sort_unit')->nullable();
             $table->string('nama_unit')->nullable();
             $table->timestamps();
         });

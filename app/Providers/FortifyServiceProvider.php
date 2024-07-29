@@ -79,6 +79,7 @@ class FortifyServiceProvider extends ServiceProvider
                             'email' => $data['data']['user_info']['email'],
                             'jabatan' => $data['data']['user_info']['jabatan'],
                             'kode_unit' => $kode_unit,
+                            'key_sort_unit' => $data['data']['user_info']['key_sort_unit'],
                             'nama_unit' => $data['data']['user_info']['namaunit']
                         ]);
                         $role = Role::where('id', 3)->first();

@@ -28,6 +28,7 @@ class User extends Authenticatable
         'jabatan',
         'nama_unit',
         'kode_unit',
+        'key_sort_unit',
         'avatar'
     ];
 
@@ -40,7 +41,7 @@ class User extends Authenticatable
     {
         return LogOptions::defaults()
             ->useLogName('log_users')
-            ->logOnly(['user_nip', 'name', 'phone', 'email', 'jabatan', 'nama_unit', 'avatar'])
+            ->logOnly(['user_nip', 'name', 'phone', 'email', 'jabatan', 'nama_unit', 'avatar','key_sort_unit'])
             ->logOnlyDirty()
             ->dontSubmitEmptyLogs();
     }
