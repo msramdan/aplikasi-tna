@@ -474,28 +474,6 @@
     </script>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <script>
         $(document).ready(function() {
             $('#pilihButton').prop('disabled', true);

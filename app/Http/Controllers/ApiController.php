@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class ApiController extends Controller
 {
@@ -21,8 +22,8 @@ class ApiController extends Controller
                 return response()->json(['message' => 'User is not authenticated.'], 400);
             }
 
-            $tahun = 2023;
-            $unit_kerja = '07001500001900';
+            $tahun = date('Y');
+            $unit_kerja = Auth::user()->kode_unit;
 
             if ($jenisProgram === 'Renstra') {
                 $endpoint = config('stara.endpoint') . '/simaren/indikator-kinerja/es2';
