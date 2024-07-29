@@ -495,6 +495,8 @@
                         .replace(':jenisProgram', jenisProgram),
                     type: 'GET',
                     success: function(response) {
+                        console.log(response.data);
+
                         var modalBody = $('#indikatorModal .modal-body');
                         modalBody.empty();
                         var table =

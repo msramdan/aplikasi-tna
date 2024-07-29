@@ -24,21 +24,19 @@ class ApiController extends Controller
 
             $tahun = date('Y');
             $unit_kerja = Auth::user()->kode_unit;
-
             if ($jenisProgram === 'Renstra') {
                 $endpoint = config('stara.endpoint') . '/simaren/indikator-kinerja/es2';
+                $endpoint .= '?tahun=' . urlencode($tahun) . '&unit_kerja=' . urlencode($unit_kerja);
             } elseif ($jenisProgram === 'APP') {
                 $endpoint = config('stara.endpoint') . '/simaren/topik-app';
+                $endpoint .= '?unit_kerja=' . urlencode($unit_kerja);
             } elseif ($jenisProgram === 'APEP') {
                 $endpoint = config('stara.endpoint') . '/simaren/topik-apep';
+                $endpoint .= '?unit_kerja=' . urlencode($unit_kerja);
             } else {
                 return response()->json(['message' => 'Coming soon'], 501);
             }
 
-            // Append query parameters
-            $endpoint .= '?tahun=' . urlencode($tahun) . '&unit_kerja=' . urlencode($unit_kerja);
-
-            // Make the API call
             $response = Http::withToken($token)->get($endpoint);
 
             // Check if the request was successful
