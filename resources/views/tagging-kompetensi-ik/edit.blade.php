@@ -51,8 +51,15 @@
                                             placeholder="Search for available">
                                         <select id="available" class="form-control" multiple size="20">
                                             @foreach ($availableItems as $item)
-                                                <option value="{{ $item['indikator_kinerja'] }}">
-                                                    {{ $item['indikator_kinerja'] }}</option>
+                                                @if ($type === 'renstra')
+                                                    <option value="{{ $item['indikator_kinerja'] }}">
+                                                        {{ $item['indikator_kinerja'] }}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $item['nama_topik'] }}">
+                                                        {{ $item['nama_topik'] }}
+                                                    </option>
+                                                @endif
                                             @endforeach
                                         </select>
                                     </div>

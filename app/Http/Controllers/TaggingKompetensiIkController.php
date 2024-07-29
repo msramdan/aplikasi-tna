@@ -83,18 +83,17 @@ class TaggingKompetensiIkController extends Controller
             $endpoint = config('stara.endpoint') . '/simaren/ref-topik-app';
         } elseif ($type === 'apep') {
             $endpoint = config('stara.endpoint') . '/simaren/ref-topik-apep';
+        } elseif ($type === 'apip') {
+            $endpoint = config('stara.endpoint') . '/simaren/ref-topik-apep';
         } else {
-            dd('Coming soon');
+            dd('error');
         }
 
         $response = Http::withToken($token)->get($endpoint);
         $availableItems = [];
-
         if ($response->successful()) {
             $apiData = $response->json();
             $apiItems = $apiData['data'] ?? [];
-
-            // Filter availableItems to exclude those containing assignedItems
             $availableItems = array_filter($apiItems, function ($item) use ($assignedItems) {
                 foreach ($assignedItems as $assignedItem) {
                     if (strpos($item['indikator_kinerja'], $assignedItem) !== false) {

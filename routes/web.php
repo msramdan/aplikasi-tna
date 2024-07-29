@@ -13,6 +13,7 @@ use App\Http\Controllers\{
     JadwalKapTahunanController,
     KalenderPembelajaranController,
     KompetensiController,
+    KompetensiApiController,
     KotaController,
     LocalizationController,
     LokasiController,
@@ -51,6 +52,9 @@ Route::middleware(['auth', 'web'])->group(function () {
         Route::post('/importKompetensi', 'importKompetensi')->name('importKompetensi');
         Route::get('/download-format-kompetensi', 'formatImport')->name('download-format-kompetensi');
         Route::get('/getKompetensiById/{id}', 'getKompetensiById')->name('getKompetensiById');
+    });
+    Route::controller(KompetensiApiController::class)->group(function () {
+        Route::get('/kompetensi-api', 'index')->name('kompetensi-api.index');
     });
     Route::controller(KalenderPembelajaranController::class)->group(function () {
         Route::get('/kalender-pembelajaran/{tahun}/{topik}', 'index')->name('kalender-pembelajaran.index')->where('topik', '.*');
