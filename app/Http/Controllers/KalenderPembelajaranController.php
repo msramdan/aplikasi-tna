@@ -52,7 +52,7 @@ class KalenderPembelajaranController extends Controller
             'pengajuan_kap.tujuan_program_pembelajaran',
             'lokasi.type as type_lokasi',
             'lokasi.nama_lokasi',
-            'topik.nama_topik' // Kolom dari tabel topik
+            'topik.nama_topik'
         )->get();
 
         $events = $events->map(function ($event) {
