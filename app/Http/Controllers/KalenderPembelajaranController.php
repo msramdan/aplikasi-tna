@@ -63,7 +63,7 @@ class KalenderPembelajaranController extends Controller
                 'frekuensi_pelaksanaan' => $event->frekuensi_pelaksanaan,
                 'title' => $event->nama_topik,
                 'start' => \Carbon\Carbon::parse($event->start)->format('Y-m-d\TH:i:s'),
-                'end' => \Carbon\Carbon::parse($event->end)->format('Y-m-d\TH:i:s'),
+                'end' => \Carbon\Carbon::parse($event->end)->addDay()->format('Y-m-d\TH:i:s'),
                 'description' => $event->tujuan_program_pembelajaran,
                 'allDay' => true,
             ];

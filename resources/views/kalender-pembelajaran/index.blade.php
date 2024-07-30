@@ -200,6 +200,7 @@
                         _token: $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function(data) {
+                        console.log(data);
                         calendar.removeAllEvents();
                         calendar.addEventSource(data);
 
