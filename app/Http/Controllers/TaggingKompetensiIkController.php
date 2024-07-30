@@ -74,37 +74,39 @@ class TaggingKompetensiIkController extends Controller
 
         $token = session('api_token');
         if (!$token) {
-            dd('User is not authenticated.');
             return redirect()->back()->with('error', 'User is not authenticated.');
         }
-        if ($type === 'renstra') {
-            $endpoint = config('stara.endpoint') . '/simaren/ref-indikator-kinerja-es2';
-        } elseif ($type === 'app') {
-            $endpoint = config('stara.endpoint') . '/simaren/ref-topik-app';
-        } elseif ($type === 'apep') {
-            $endpoint = config('stara.endpoint') . '/simaren/ref-topik-apep';
-        } elseif ($type === 'apip') {
-            $endpoint = config('stara.endpoint') . '/simaren/ref-topik-apep';
-        } else {
-            dd('error');
+
+        $endpoints = [
+            'renstra' => '/simaren/ref-indikator-kinerja-es2',
+            'app'     => '/simaren/ref-topik-app',
+            'apep'    => '/simaren/ref-topik-apep',
+            'apip'    => '/simaren/ref-topik-apep',
+        ];
+
+        if (!array_key_exists($type, $endpoints)) {
+            return redirect()->back()->with('error', 'Invalid type provided.');
         }
 
+        $endpoint = config('stara.endpoint') . $endpoints[$type];
+
         $response = Http::withToken($token)->get($endpoint);
-        $availableItems = [];
-        if ($response->successful()) {
-            $apiData = $response->json();
-            $apiItems = $apiData['data'] ?? [];
-            $availableItems = array_filter($apiItems, function ($item) use ($assignedItems) {
-                foreach ($assignedItems as $assignedItem) {
-                    if (strpos($item['indikator_kinerja'], $assignedItem) !== false) {
-                        return false;
-                    }
-                }
-                return true;
-            });
-        } else {
+        if (!$response->successful()) {
             return redirect()->back()->with('error', 'Failed to retrieve data from the API.');
         }
+
+        $apiData = $response->json();
+        $apiItems = $apiData['data'] ?? [];
+
+        $availableItems = array_filter($apiItems, function ($item) use ($assignedItems, $type) {
+            foreach ($assignedItems as $assignedItem) {
+                $searchField = $type === 'renstra' ? 'indikator_kinerja' : 'nama_topik';
+                if (strpos($item[$searchField], $assignedItem) !== false) {
+                    return false;
+                }
+            }
+            return true;
+        });
 
         return view('tagging-kompetensi-ik.edit', compact('kompetensi', 'assignedItems', 'availableItems', 'type'));
     }
