@@ -24,18 +24,21 @@ class ApiController extends Controller
 
             $tahun = date('Y');
             $unit_kerja = Auth::user()->kode_unit;
-            if ($jenisProgram === 'Renstra') {
-                $endpoint = config('stara.endpoint') . '/simaren/indikator-kinerja/es2';
-                $endpoint .= '?tahun=' . urlencode($tahun) . '&unit_kerja=' . urlencode($unit_kerja);
-            } elseif ($jenisProgram === 'APP') {
-                $endpoint = config('stara.endpoint') . '/simaren/topik-app';
-                $endpoint .= '?unit_kerja=' . urlencode($unit_kerja);
-            } elseif ($jenisProgram === 'APEP') {
-                $endpoint = config('stara.endpoint') . '/simaren/topik-apep';
-                $endpoint .= '?unit_kerja=' . urlencode($unit_kerja);
-            } else {
-                return response()->json(['message' => 'Coming soon'], 501);
+            switch ($jenisProgram) {
+                case 'Renstra':
+                    $endpoint = config('stara.endpoint') . '/simaren/indikator-kinerja/es2';
+                    break;
+                case 'APP':
+                    $endpoint = config('stara.endpoint') . '/simaren/topik-app';
+                    break;
+                case 'APEP':
+                    $endpoint = config('stara.endpoint') . '/simaren/topik-apep';
+                    break;
+                default:
+                    return response()->json(['message' => 'Coming soon'], 501);
             }
+
+            $endpoint .= '?tahun=' . urlencode($tahun) . '&unit_kerja=' . urlencode($unit_kerja);
 
             $response = Http::withToken($token)->get($endpoint);
 
