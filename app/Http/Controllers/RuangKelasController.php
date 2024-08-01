@@ -35,9 +35,20 @@ class RuangKelasController extends Controller
                 ->addColumn('keterangan', function ($row) {
                     return str($row->keterangan)->limit(100);
                 })
+                ->addColumn('kuota', function ($row) {
+                    return $row->kuota .' Peserta';
+                })
+                ->addColumn('status_ruang_kelas', function ($row) {
+                    if ($row->status_ruang_kelas == 'Available') {
+                        return '<button class="btn btn-success btn-sm btn-block">Available</button>';
+                    } else {
+                        return '<button class="btn btn-danger btn-sm btn-block">Not Available</button>';
+                    }
+                })
                 ->addColumn('nama_lokasi', function ($row) {
                     return $row->nama_lokasi;
                 })->addColumn('action', 'ruang-kelas.include.action')
+                ->rawColumns(['status_ruang_kelas', 'action'])
                 ->toJson();
         }
 

@@ -36,9 +36,20 @@ class AsramaController extends Controller
                 ->addColumn('keterangan', function ($row) {
                     return str($row->keterangan)->limit(100);
                 })
+                ->addColumn('kuota', function ($row) {
+                    return $row->kuota . ' Peserta';
+                })
+                ->addColumn('status_asrama', function ($row) {
+                    if ($row->status_asrama == 'Available') {
+                        return '<button class="btn btn-success btn-sm">Available</button>';
+                    } else {
+                        return '<button class="btn btn-danger btn-sm">Not Available</button>';
+                    }
+                })
                 ->addColumn('lokasi', function ($row) {
                     return $row->nama_lokasi;
                 })->addColumn('action', 'asrama.include.action')
+                ->rawColumns(['status_asrama', 'action'])
                 ->toJson();
         }
         return view('asrama.index');
