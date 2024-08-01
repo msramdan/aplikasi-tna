@@ -58,18 +58,19 @@ class FortifyServiceProvider extends ServiceProvider
                     $data = $response->json();
                     $user = User::where('user_nip', $data['data']['user_info']['user_nip'])->first();
                     if (!$user) {
-                        $endpointUnitKerja = config('stara.endpoint') . '/unit-kerja';
-                        $unitKerjaResponse = Http::withToken($data['data']['token'])->get($endpointUnitKerja);
-                        if ($unitKerjaResponse->successful()) {
-                            $unitKerjaData = $unitKerjaResponse->json()['data'];
-                            $matchedUnit = collect($unitKerjaData)->firstWhere('nama_unit', $data['data']['user_info']['namaunit']);
-                            if ($matchedUnit) {
-                                $kode_unit = $matchedUnit['kode_unit'];
+                        $nip_lama = $data['data']['user_info']['user_nip'];
+                        $api_token = config('stara.map_api_token_employee');
+                        $endpointUnitKerja = config('stara.map_endpoint') . '/v2/pegawai/sima/atlas?api_token=' . $api_token . '&s_nip=' . $nip_lama;
+                        try {
+                            $response = Http::get($endpointUnitKerja);
+                            if ($response->successful()) {
+                                $unitKerjaData = $response->json();
+                                $kode_eselon2 = $unitKerjaData['result'][0]['kode_eselon2'];
                             } else {
-                                $kode_unit = '';
+                                dd('Request to endpoint unit kerja failed.');
                             }
-                        } else {
-                            dd('Failed to hit the unit-kerja endpoint');
+                        } catch (\Exception $e) {
+                            dd('Error: ' . $e->getMessage());
                         }
 
                         $user = User::create([
@@ -78,7 +79,7 @@ class FortifyServiceProvider extends ServiceProvider
                             'phone' => $data['data']['user_info']['nomorhp'],
                             'email' => $data['data']['user_info']['email'],
                             'jabatan' => $data['data']['user_info']['jabatan'],
-                            'kode_unit' => $kode_unit,
+                            'kode_unit' => $kode_eselon2,
                             'key_sort_unit' => $data['data']['user_info']['key_sort_unit'],
                             'nama_unit' => $data['data']['user_info']['namaunit']
                         ]);
