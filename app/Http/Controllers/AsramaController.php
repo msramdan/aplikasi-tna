@@ -41,9 +41,9 @@ class AsramaController extends Controller
                 })
                 ->addColumn('status_asrama', function ($row) {
                     if ($row->status_asrama == 'Available') {
-                        return '<button class="btn btn-success btn-sm">Available</button>';
+                        return '<button class="btn btn-success btn-sm"><i class="fa fa-check" aria-hidden="true"></i> Available</button>';
                     } else {
-                        return '<button class="btn btn-danger btn-sm">Not Available</button>';
+                        return '<button class="btn btn-danger btn-sm"><i class="fa fa-times" aria-hidden="true"></i> Not Available</button>';
                     }
                 })
                 ->addColumn('lokasi', function ($row) {

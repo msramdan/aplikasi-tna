@@ -40,9 +40,9 @@ class RuangKelasController extends Controller
                 })
                 ->addColumn('status_ruang_kelas', function ($row) {
                     if ($row->status_ruang_kelas == 'Available') {
-                        return '<button class="btn btn-success btn-sm btn-block">Available</button>';
+                        return '<button class="btn btn-success btn-sm btn-block"><i class="fa fa-check" aria-hidden="true"></i> Available</button>';
                     } else {
-                        return '<button class="btn btn-danger btn-sm btn-block">Not Available</button>';
+                        return '<button class="btn btn-danger btn-sm btn-block"><i class="fa fa-times" aria-hidden="true"></i> Not Available</button>';
                     }
                 })
                 ->addColumn('nama_lokasi', function ($row) {
