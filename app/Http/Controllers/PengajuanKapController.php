@@ -81,11 +81,17 @@ class PengajuanKapController extends Controller
                 ->rawColumns(['status_pengajuan', 'action'])
                 ->toJson();
         }
-        $tahun = '2024';
+        $tahun = date('Y');
+        $userId = Auth::id();
+        $reviewRemarks = DB::table('config_step_review')
+            ->where('user_review_id', $userId)
+            ->pluck('remark')
+            ->toArray();
         return view('pengajuan-kap.index', [
             'year' => $tahun,
             'is_bpkp' => $is_bpkp,
             'frekuensi' => $frekuensi,
+            'reviewRemarks' => $reviewRemarks,
         ]);
     }
 

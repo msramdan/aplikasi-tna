@@ -117,6 +117,7 @@ Route::middleware(['auth', 'web'])->group(function () {
     Route::get('/get-indikator/{jenisProgram}', [ApiController::class, 'getIndikator'])->name('getIndikator');
     Route::get('/get-kompetensi-support-ik', [ApiController::class, 'getKompetensiSupportIK'])->name('getKompetensiSupportIK');
     Route::get('/get-topik-support-kompetensi', [ApiController::class, 'getTopikSupportKompetensi'])->name('getTopikSupportKompetensi');
+    // Route::get('/check-review-exists', [ApiController::class, 'checkReviewExists'])->name('checkReviewExists');
 });
 
 Route::post('/verify-otp', [OtpController::class, 'verifyOtp'])->name('verify-otp');

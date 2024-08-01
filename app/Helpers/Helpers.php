@@ -78,8 +78,17 @@ function formatTanggalIndonesia($tanggal)
 function reviewExistsForUser()
 {
     $userId = Auth::id();
-
     return DB::table('config_step_review')
         ->where('user_review_id', $userId)
+        ->exists();
+}
+
+
+function reviewExistsForUserWithRemark($remark)
+{
+    $userId = Auth::id();
+    return DB::table('config_step_review')
+        ->where('user_review_id', $userId)
+        ->where('remark', $remark)
         ->exists();
 }

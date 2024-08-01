@@ -92,4 +92,12 @@ class ApiController extends Controller
             return response()->json(['message' => $e->getMessage()], 500);
         }
     }
+
+    // public function checkReviewExists(Request $request)
+    // {
+    //     $remark = $request->input('remark');
+    //     $userId = Auth::id();
+    //     $exists = reviewExistsForUserWithRemark($userId, $remark);
+    //     return response()->json(['exists' => $exists]);
+    // }
 }

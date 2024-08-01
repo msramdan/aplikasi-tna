@@ -241,6 +241,7 @@
 
 @push('js')
     <script>
+        let reviewRemarks = @json($reviewRemarks);
         let columns = [
             @if ($reviewExistsForUser)
                 {
@@ -251,8 +252,13 @@
                             return '<input type="checkbox" class="select-item" value="' + full
                                 .id + '" disabled>';
                         } else {
-                            return '<input type="checkbox" class="select-item" value="' + full
-                                .id + '">';
+                            let isDisabled = !reviewRemarks.includes(full.remark);
+                            if (isDisabled) {
+                                return '<input type="checkbox" class="select-item" value="' + full.id +
+                                    '" disabled>';
+                            } else {
+                                return '<input type="checkbox" class="select-item" value="' + full.id + '">';
+                            }
                         }
                     }
                 },
