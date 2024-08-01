@@ -229,11 +229,13 @@
                                         data-key="t-basic-elements">{{ __('sidebar.annual_kap_schedule') }}</a>
                                 </li>
                             @endcan
-                            <li class="nav-item">
-                                <a href="{{ route('config-step-review.index') }}"
-                                    class="nav-link {{ request()->routeIs('config-step-review*') ? 'active' : '' }}"
-                                    data-key="t-basic-elements">Config Step Review</a>
-                            </li>
+                            @can('config step review view')
+                                <li class="nav-item">
+                                    <a href="{{ route('config-step-review.index') }}"
+                                        class="nav-link {{ request()->routeIs('config-step-review*') ? 'active' : '' }}"
+                                        data-key="t-basic-elements">Config Step Review</a>
+                                </li>
+                            @endcan
                             @can('setting app view')
                                 <li class="nav-item">
                                     <a href="{{ route('setting-apps.index') }}"

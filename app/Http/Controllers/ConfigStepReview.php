@@ -10,11 +10,11 @@ use Illuminate\Support\Facades\DB;
 
 class ConfigStepReview extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('permission:config step review view')->only('index');
-    //     $this->middleware('permission:config step review edit')->only('update');
-    // }
+    public function __construct()
+    {
+        $this->middleware('permission:config step review view')->only('index');
+        $this->middleware('permission:config step review edit')->only('update');
+    }
 
     public function index()
     {
