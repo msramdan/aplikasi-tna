@@ -1,8 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 function set_show($uri)
 {
@@ -74,4 +73,13 @@ function formatTanggalIndonesia($tanggal)
     $tanggalIndonesia = $tanggal . ' ' . $bulan . ' ' . $tahun;
 
     return $tanggalIndonesia;
+}
+
+function reviewExistsForUser()
+{
+    $userId = Auth::id();
+
+    return DB::table('config_step_review')
+        ->where('user_review_id', $userId)
+        ->exists();
 }

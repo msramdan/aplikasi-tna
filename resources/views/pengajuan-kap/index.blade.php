@@ -117,28 +117,38 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="input-group mb-2">
-                                        <button id="approve-selected" class="btn btn-md btn-success" disabled>
-                                            {{ __('Approved') }}
-                                        </button>
-                                        &nbsp;
-                                        <button id="reject-selected" class="btn btn-md btn-danger" disabled>
-                                            {{ __('Rejected') }}
-                                        </button>
-                                        &nbsp;
-                                        <button id="skiped-selected" class="btn btn-md btn-warning" disabled>
-                                            {{ __('Skiped Review') }}
-                                        </button>
+
+                                @php
+                                    $reviewExistsForUser = reviewExistsForUser();
+                                @endphp
+                                @if ($reviewExistsForUser)
+                                    <div class="col-md-4">
+                                        <div class="input-group mb-2">
+                                            <button id="approve-selected" class="btn btn-md btn-success" disabled>
+                                                {{ __('Approved') }}
+                                            </button>
+                                            &nbsp;
+                                            <button id="reject-selected" class="btn btn-md btn-danger" disabled>
+                                                {{ __('Rejected') }}
+                                            </button>
+                                            @can('pengajuan kap skiped')
+                                                &nbsp;
+                                                <button id="skiped-selected" class="btn btn-md btn-warning" disabled>
+                                                    {{ __('Skiped Review') }}
+                                                </button>
+                                            @endcan
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
                             </div>
                             <hr>
                             <div class="table-responsive p-1">
                                 <table class="table table-striped" id="data-table">
                                     <thead class="table-dark">
                                         <tr>
-                                            <th><input type="checkbox" id="select-all"></th>
+                                            @if ($reviewExistsForUser)
+                                                <th><input type="checkbox" id="select-all"></th>
+                                            @endif
                                             <th>#</th>
                                             <th>{{ __('Kode') }}</th>
                                             <th>{{ __('Indikator Kinerja') }}</th>
@@ -231,20 +241,22 @@
 
 @push('js')
     <script>
-        let columns = [{
-                orderable: false,
-                searchable: false,
-                render: function(data, type, full, meta) {
-                    if (full.status_kap === 'Approved' || full.status_kap === 'Rejected') {
-                        return '<input type="checkbox" class="select-item" value="' + full
-                            .id + '" disabled>';
-                    } else {
-                        return '<input type="checkbox" class="select-item" value="' + full
-                            .id + '">';
+        let columns = [
+            @if ($reviewExistsForUser)
+                {
+                    orderable: false,
+                    searchable: false,
+                    render: function(data, type, full, meta) {
+                        if (full.status_kap === 'Approved' || full.status_kap === 'Rejected') {
+                            return '<input type="checkbox" class="select-item" value="' + full
+                                .id + '" disabled>';
+                        } else {
+                            return '<input type="checkbox" class="select-item" value="' + full
+                                .id + '">';
+                        }
                     }
-                }
-            },
-            {
+                },
+            @endif {
                 data: 'DT_RowIndex',
                 name: 'DT_RowIndex',
                 orderable: false,

@@ -206,23 +206,30 @@
                                     'is_bpkp' => $is_bpkp,
                                     'frekuensi' => $frekuensi,
                                 ]) }}"
-                                   class="btn btn-secondary"><i class="fa fa-arrow-left" aria-hidden="true"></i> {{ __('Back') }}</a>
-                                @if ($pengajuanKap->status_pengajuan == 'Rejected' || $pengajuanKap->status_pengajuan == 'Approved')
-                                    <button type="button" disabled class="btn btn-success">
-                                        <i class="fa fa-check" aria-hidden="true"></i> Approved
-                                    </button>
-                                    <button type="button" disabled class="btn btn-danger">
-                                        <i class="fa fa-times" aria-hidden="true"></i> Rejected
-                                    </button>
-                                @else
-                                    <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                        data-bs-target="#approveModal" {{ $userHasAccess ? '' : 'disabled' }}>
-                                        <i class="fa fa-check" aria-hidden="true"></i> Approved
-                                    </button>
-                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                        data-bs-target="#rejectModal" {{ $userHasAccess ? '' : 'disabled' }}>
-                                        <i class="fa fa-times" aria-hidden="true"></i> Rejected
-                                    </button>
+                                    class="btn btn-secondary"><i class="fa fa-arrow-left" aria-hidden="true"></i>
+                                    {{ __('Back') }}</a>
+
+                                @php
+                                    $reviewExistsForUser = reviewExistsForUser();
+                                @endphp
+                                @if ($reviewExistsForUser)
+                                    @if ($pengajuanKap->status_pengajuan == 'Rejected' || $pengajuanKap->status_pengajuan == 'Approved')
+                                        <button type="button" disabled class="btn btn-success">
+                                            <i class="fa fa-check" aria-hidden="true"></i> Approved
+                                        </button>
+                                        <button type="button" disabled class="btn btn-danger">
+                                            <i class="fa fa-times" aria-hidden="true"></i> Rejected
+                                        </button>
+                                    @else
+                                        <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                            data-bs-target="#approveModal" {{ $userHasAccess ? '' : 'disabled' }}>
+                                            <i class="fa fa-check" aria-hidden="true"></i> Approved
+                                        </button>
+                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                            data-bs-target="#rejectModal" {{ $userHasAccess ? '' : 'disabled' }}>
+                                            <i class="fa fa-times" aria-hidden="true"></i> Rejected
+                                        </button>
+                                    @endif
                                 @endif
                             </div>
                             <br>
@@ -317,8 +324,10 @@
                                         </tr>
 
                                         <tr>
-                                            <td class="fw-bold">{{ __('Indikator Dampak Terhadap Kinerja Organisasi') }}</td>
-                                            <td>{{ $pengajuanKap->indikator_dampak_terhadap_kinerja_organisasi ?: '-' }}</td>
+                                            <td class="fw-bold">{{ __('Indikator Dampak Terhadap Kinerja Organisasi') }}
+                                            </td>
+                                            <td>{{ $pengajuanKap->indikator_dampak_terhadap_kinerja_organisasi ?: '-' }}
+                                            </td>
                                         </tr>
 
                                         <tr>
@@ -338,7 +347,8 @@
 
                                         <tr>
                                             <td class="fw-bold">{{ __('Current step') }}</td>
-                                            <td>Step {{ $pengajuanKap->current_step ?: '-' }} - {{ $currentStepRemark }}</td>
+                                            <td>Step {{ $pengajuanKap->current_step ?: '-' }} - {{ $currentStepRemark }}
+                                            </td>
                                         </tr>
 
                                         <tr>
