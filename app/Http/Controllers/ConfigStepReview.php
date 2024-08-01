@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
 
 
 class ConfigStepReview extends Controller
@@ -55,9 +55,9 @@ class ConfigStepReview extends Controller
 
             // Get existing user IDs for this remark
             $existingUserIds = DB::table('config_step_review')
-                                ->where('remark', $remark)
-                                ->pluck('user_review_id')
-                                ->toArray();
+                ->where('remark', $remark)
+                ->pluck('user_review_id')
+                ->toArray();
 
             // Determine which user IDs to add
             $userIdsToAdd = array_diff($newUserIds, $existingUserIds);
@@ -81,7 +81,7 @@ class ConfigStepReview extends Controller
                 ->whereIn('user_review_id', $userIdsToRemove)
                 ->delete();
         }
-
-        return redirect()->back()->with('success', 'Reviewers assigned successfully.');
+        Alert::toast('Config review berhasil diupdate', 'success');
+        return redirect()->back();
     }
 }
