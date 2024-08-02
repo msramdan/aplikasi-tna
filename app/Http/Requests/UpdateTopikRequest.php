@@ -24,7 +24,8 @@ class UpdateTopikRequest extends FormRequest
     public function rules()
     {
         return [
-            'nama_topik' => 'required|string|max:255',
+            'rumpun_pembelajaran' => 'required|string',
+            'nama_topik' => 'required|string',
         ];
     }
 }

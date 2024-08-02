@@ -190,6 +190,7 @@ return [
         ['group' => 'lokasi', 'access' => ['lokasi view', 'lokasi create', 'lokasi edit', 'lokasi delete']],
         ['group' => 'ruang kelass', 'access' => ['ruang kelas view', 'ruang kelas create', 'ruang kelas edit', 'ruang kelas delete']],
         ['group' => 'asrama', 'access' => ['asrama view', 'asrama create', 'asrama edit', 'asrama delete']],
+        ['group' => 'rumpun pembelajaran', 'access' => ['rumpun pembelajaran view', 'rumpun pembelajaran create', 'rumpun pembelajaran edit', 'rumpun pembelajaran delete']],
         ['group' => 'topik', 'access' => ['topik view', 'topik create', 'topik edit', 'topik delete']],
         ['group' => 'jadwal kap tahunan', 'access' => ['jadwal kap tahunan view', 'jadwal kap tahunan create', 'jadwal kap tahunan edit', 'jadwal kap tahunan delete']],
         ['group' => 'tagging pembelajaran kompetensi', 'access' => ['tagging pembelajaran kompetensi view', 'tagging pembelajaran kompetensi edit', 'tagging pembelajaran kompetensi delete']],

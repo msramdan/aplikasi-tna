@@ -124,6 +124,7 @@
                                     <thead class="table-dark">
                                         <tr>
                                             <th>ID</th>
+                                            <th>Rumpun pembelajaran</th>
                                             <th>{{ __('topik/index.nama_pembelajaran') }}</th>
                                             <th>{{ __('topik/index.action') }}</th>
                                         </tr>
@@ -149,6 +150,10 @@
                 {
                     data: 'id',
                     name: 'id',
+                },
+                {
+                    data: 'rumpun_pembelajaran',
+                    name: 'rumpun_pembelajaran',
                 },
                 {
                     data: 'nama_topik',

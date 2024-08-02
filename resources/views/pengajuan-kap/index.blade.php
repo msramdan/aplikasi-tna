@@ -103,17 +103,48 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
+                                    <div class="input-group mb-2">
+                                        <select name="topik" id="topik"
+                                            class="form-control js-example-basic-multiple">
+                                            <option value="All">-- All Program pembelajaran --</option>
+                                            @foreach ($topiks as $topik)
+                                                <option value="{{ $topik->id }}"
+                                                    {{ $topik_id == $topik->id ? 'selected' : '' }}>
+                                                    {{ $topik->nama_topik }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="input-group mb-2">
+                                        <select name="sumber_dana" id="sumber_dana"
+                                            class="form-control js-example-basic-multiple">
+                                            <option value="All">-- All Sumber dana --</option>
+                                            <option value="RM" {{ $sumberDana == 'RM' ? 'selected' : '' }}>RM</option>
+                                            <option value="PNBP" {{ $sumberDana == 'PNBP' ? 'selected' : '' }}>PNBP
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
                                     <div class="input-group mb-2">
                                         <select name="step" id="step"
                                             class="form-control js-example-basic-multiple">
                                             <option value="All">-- All Step --</option>
-                                            <option value="1">Tim Unit Pengelola Pembelajaran</option>
-                                            <option value="2">Keuangan</option>
-                                            <option value="3">Penjaminan Mutu</option>
-                                            <option value="4">Subkoordinator</option>
-                                            <option value="5">Koordinator</option>
-                                            <option value="6">Kepala Unit Pengelola Pembelajaran</option>
+                                            <option value="1" {{ $curretnStep == 1 ? 'selected' : '' }}>Tim Unit
+                                                Pengelola Pembelajaran</option>
+                                            <option value="2" {{ $curretnStep == 2 ? 'selected' : '' }}>Keuangan
+                                            </option>
+                                            <option value="3" {{ $curretnStep == 3 ? 'selected' : '' }}>Penjaminan
+                                                Mutu</option>
+                                            <option value="4" {{ $curretnStep == 4 ? 'selected' : '' }}>Subkoordinator
+                                            </option>
+                                            <option value="5" {{ $curretnStep == 5 ? 'selected' : '' }}>Koordinator
+                                            </option>
+                                            <option value="6" {{ $curretnStep == 6 ? 'selected' : '' }}>Kepala Unit
+                                                Pengelola Pembelajaran</option>
                                         </select>
                                     </div>
                                 </div>
@@ -151,11 +182,11 @@
                                             @endif
                                             <th>#</th>
                                             <th>{{ __('Kode') }}</th>
-                                            <th>{{ __('Indikator Kinerja') }}</th>
+                                            <th>{{ __('Indikator kinerja') }}</th>
                                             <th>{{ __('Kompetensi') }}</th>
                                             <th>{{ __('Program pembelajaran') }}</th>
-                                            <th>{{ __('User') }}</th>
-                                            <th>{{ __('Current Step') }}</th>
+                                            <th>{{ __('Sumber dana') }}</th>
+                                            <th>{{ __('Current step') }}</th>
                                             <th>{{ __('Status') }}</th>
                                             <th>{{ __('Action') }}</th>
                                         </tr>
@@ -285,8 +316,8 @@
                 name: 'nama_topik'
             },
             {
-                data: 'user_name',
-                name: 'user_name'
+                data: 'sumber_dana',
+                name: 'sumber_dana'
             },
             {
                 data: 'remark',
@@ -318,6 +349,8 @@
                     data: function(d) {
                         d.checkboxAll = $('#select-all').prop('checked') ? 1 : 0;
                         d.tahun = $('select[name=tahun] option').filter(':selected').val()
+                        d.topik = $('select[name=topik] option').filter(':selected').val()
+                        d.sumber_dana = $('select[name=sumber_dana] option').filter(':selected').val()
                         d.step = $('select[name=step] option').filter(':selected').val()
                     }
                 },
@@ -331,7 +364,11 @@
                 var params = new URLSearchParams();
                 var tahunSelected = $('select[name=tahun]').val();
                 var currentStep = $('select[name=step]').val();
+                var topikSelected = $('select[name=topik]').val();
+                var sumberDanaSelected = $('select[name=sumber_dana]').val();
                 if (tahunSelected) params.set('tahun', tahunSelected);
+                if (topikSelected) params.set('topik', topikSelected);
+                if (sumberDanaSelected) params.set('sumber_dana', sumberDanaSelected);
                 if (currentStep) params.set('step', currentStep);
                 var newURL =
                     "{{ route('pengajuan-kap.index', ['is_bpkp' => ':is_bpkp', 'frekuensi' => ':frekuensi']) }}"
@@ -341,6 +378,16 @@
             }
 
             $('#tahun').change(function() {
+                table.draw();
+                replaceURLParams()
+            })
+
+            $('#topik').change(function() {
+                table.draw();
+                replaceURLParams()
+            })
+
+            $('#sumber_dana').change(function() {
                 table.draw();
                 replaceURLParams()
             })

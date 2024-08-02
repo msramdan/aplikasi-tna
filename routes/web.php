@@ -56,7 +56,7 @@ Route::middleware(['auth', 'web'])->group(function () {
         Route::get('/kompetensi-api', 'index')->name('kompetensi-api.index');
     });
     Route::controller(KalenderPembelajaranController::class)->group(function () {
-        Route::get('/kalender-pembelajaran/{tahun}/{topik}', 'index')->name('kalender-pembelajaran.index')->where('topik', '.*');
+        Route::get('/kalender-pembelajaran/{tahun}/{topik}/{sumber_dana}', 'index')->name('kalender-pembelajaran.index')->where('topik', '.*');
         Route::get('/events', 'getEvents')->name('getEvents');
     });
     Route::resource('reporting', ReportingController::class);
@@ -69,6 +69,7 @@ Route::middleware(['auth', 'web'])->group(function () {
         Route::get('/exportTopik', 'exportTopik')->name('exportTopik');
         Route::post('/importTopik', 'importTopik')->name('importTopik');
     });
+    Route::resource('rumpun-pembelajaran', App\Http\Controllers\RumpunPembelajaranController::class);
     Route::resource('jadwal-kap-tahunan', JadwalKapTahunanController::class);
     Route::controller(TaggingPembelajaranKompetensiController::class)->group(function () {
         Route::get('/tagging-pembelajaran-kompetensi', 'index')->name('tagging-pembelajaran-kompetensi.index');
@@ -117,7 +118,6 @@ Route::middleware(['auth', 'web'])->group(function () {
     Route::get('/get-indikator/{jenisProgram}', [ApiController::class, 'getIndikator'])->name('getIndikator');
     Route::get('/get-kompetensi-support-ik', [ApiController::class, 'getKompetensiSupportIK'])->name('getKompetensiSupportIK');
     Route::get('/get-topik-support-kompetensi', [ApiController::class, 'getTopikSupportKompetensi'])->name('getTopikSupportKompetensi');
-    // Route::get('/check-review-exists', [ApiController::class, 'checkReviewExists'])->name('checkReviewExists');
 });
 
 Route::post('/verify-otp', [OtpController::class, 'verifyOtp'])->name('verify-otp');

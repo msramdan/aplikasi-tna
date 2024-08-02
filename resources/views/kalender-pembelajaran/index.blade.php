@@ -53,7 +53,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-2">
                                     <div class="input-group mb-4">
                                         <select name="tahun" id="tahun" class="form-control select2-form">
                                             @php
@@ -71,7 +71,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-4">
+                                <div class="col-md-2">
                                     <div class="input-group mb-2">
                                         <select name="topik" id="topik"
                                             class="form-control js-example-basic-multiple">
@@ -82,6 +82,16 @@
                                                     {{ $topik->nama_topik }}
                                                 </option>
                                             @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="input-group mb-2">
+                                        <select name="sumber_dana" id="sumber_dana"
+                                            class="form-control js-example-basic-multiple">
+                                            <option value="All">-- All Sumber dana --</option>
+                                            <option value="RM" {{ $sumberDana == 'RM' ? 'selected' : '' }}>RM</option>
+                                            <option value="PNBP" {{ $sumberDana == 'PNBP' ? 'selected' : '' }}>PNBP</option>
                                         </select>
                                     </div>
                                 </div>
@@ -102,7 +112,6 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <!-- Data will be dynamically added here -->
                                         </tbody>
                                     </table>
                                 </div>
@@ -189,7 +198,7 @@
                 $('#loading-indicator').hide();
             }
 
-            function fetchEvents(year, topik) {
+            function fetchEvents(year, topik, sumber_dana) {
                 showLoading();
                 $.ajax({
                     url: '{{ route('getEvents') }}',
@@ -197,6 +206,7 @@
                     data: {
                         year: year,
                         topik: topik,
+                        sumber_dana:sumber_dana,
                         _token: $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function(data) {
@@ -220,7 +230,7 @@
                 });
             }
 
-            function initializeCalendar(year, topik) {
+            function initializeCalendar(year, topik , sumber_dana) {
                 var startOfYear = moment(year + '-01-01').format('YYYY-MM-DD');
                 var endOfYear = moment(year + '-12-31').format('YYYY-MM-DD');
 
@@ -251,28 +261,30 @@
                     dayMaxEventRows: true,
                 });
 
-                fetchEvents(year, topik);
+                fetchEvents(year, topik, sumber_dana);
                 calendar.render();
             }
 
-            function updateURL(year, topik) {
-                var newUrl = '{{ url('/kalender-pembelajaran') }}/' + year + '/' + topik;
+            function updateURL(year, topik, sumber_dana) {
+                var newUrl = '{{ url('/kalender-pembelajaran') }}/' + year + '/' + topik + '/' + sumber_dana;
                 window.history.replaceState({
                     path: newUrl
                 }, '', newUrl);
             }
 
-            $('#tahun, #topik').on('change', function() {
+            $('#tahun, #topik,#sumber_dana').on('change', function() {
                 var selectedYear = $('#tahun').val();
                 var selectedTopik = $('#topik').val();
-                fetchEvents(selectedYear, selectedTopik);
-                updateURL(selectedYear, selectedTopik);
+                var selectedSumberDana = $('#sumber_dana').val();
+                fetchEvents(selectedYear, selectedTopik,selectedSumberDana);
+                updateURL(selectedYear, selectedTopik,selectedSumberDana);
             });
 
             // Initialize the calendar with the current year and topic or the selected year and topic from the controller
             var initialYear = $('#tahun').val();
             var initialTopik = $('#topik').val();
-            initializeCalendar(initialYear, initialTopik);
+            var initialSumberDana = $('#sumber_dana').val();
+            initializeCalendar(initialYear, initialTopik, initialSumberDana);
         });
     </script>
 @endpush

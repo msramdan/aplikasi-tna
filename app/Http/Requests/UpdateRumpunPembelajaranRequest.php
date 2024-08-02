@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreTopikRequest extends FormRequest
+class UpdateRumpunPembelajaranRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,6 @@ class StoreTopikRequest extends FormRequest
     {
         return [
             'rumpun_pembelajaran' => 'required|string',
-            'nama_topik' => 'required|string',
         ];
     }
 }

@@ -13,10 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('topik', function (Blueprint $table) {
+        Schema::create('rumpun_pembelajarans', function (Blueprint $table) {
             $table->id();
             $table->text('rumpun_pembelajaran');
-            $table->text('nama_topik');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('topik');
+        Schema::dropIfExists('rumpun_pembelajarans');
     }
 };

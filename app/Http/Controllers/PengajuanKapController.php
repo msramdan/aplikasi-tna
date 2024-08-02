@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Composer\Semver\Interval;
 use PDF;
 
 
@@ -27,6 +28,8 @@ class PengajuanKapController extends Controller
     {
         if (request()->ajax()) {
             $tahun = $request->query('tahun');
+            $topik = intval($request->query('topik'));
+            $sumber_dana = $request->query('sumber_dana');
             $current_step = intval($request->query('step'));
             $pengajuanKaps = DB::table('pengajuan_kap')
                 ->select(
@@ -48,13 +51,25 @@ class PengajuanKapController extends Controller
 
             if (isset($tahun) && !empty($tahun)) {
                 if ($tahun != 'All') {
-                    $pengajuanKaps = $pengajuanKaps->where('tahun', $tahun);
+                    $pengajuanKaps = $pengajuanKaps->where('pengajuan_kap.tahun', $tahun);
+                }
+            }
+
+            if (isset($topik) && !empty($topik)) {
+                if ($topik != 'All') {
+                    $pengajuanKaps = $pengajuanKaps->where('pengajuan_kap.topik_id', $topik);
+                }
+            }
+
+            if (isset($sumber_dana) && !empty($sumber_dana)) {
+                if ($sumber_dana != 'All') {
+                    $pengajuanKaps = $pengajuanKaps->where('pengajuan_kap.sumber_dana', $sumber_dana);
                 }
             }
 
             if (isset($current_step) && !empty($current_step)) {
                 if ($current_step != 'All') {
-                    $pengajuanKaps = $pengajuanKaps->where('current_step', $current_step);
+                    $pengajuanKaps = $pengajuanKaps->where('pengajuan_kap.current_step', $current_step);
                 }
             }
             $pengajuanKaps = $pengajuanKaps->orderBy('pengajuan_kap.id', 'DESC');
@@ -81,17 +96,26 @@ class PengajuanKapController extends Controller
                 ->rawColumns(['status_pengajuan', 'action'])
                 ->toJson();
         }
+
+        $topiks = DB::table('topik')->get();
         $tahun = date('Y');
         $userId = Auth::id();
         $reviewRemarks = DB::table('config_step_review')
             ->where('user_review_id', $userId)
             ->pluck('remark')
             ->toArray();
+        $topik = intval($request->query('topik'))  ?? 'All';
+        $sumber_dana = $request->query('sumber_dana') ?? 'All';
+        $curretnStep = intval($request->query('step'))  ?? 'All';
         return view('pengajuan-kap.index', [
             'year' => $tahun,
             'is_bpkp' => $is_bpkp,
             'frekuensi' => $frekuensi,
             'reviewRemarks' => $reviewRemarks,
+            'topiks' => $topiks,
+            'topik_id' => $topik,
+            'sumberDana' => $sumber_dana,
+            'curretnStep' => $curretnStep
         ]);
     }
 

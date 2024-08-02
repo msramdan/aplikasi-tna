@@ -15,13 +15,13 @@ class KalenderPembelajaranController extends Controller
         $this->middleware('permission:kalender pembelajaran delete')->only('destroy');
     }
 
-    public function index($tahun, $topik)
+    public function index($tahun, $topik, $sumber_dana)
     {
         $topiks = DB::table('topik')->get();
-
         return view('kalender-pembelajaran.index', [
             'year' => $tahun,
             'topiks' => $topiks,
+            'sumberDana' => $sumber_dana,
             'selectedTopik' => $topik,
         ]);
     }
@@ -30,6 +30,7 @@ class KalenderPembelajaranController extends Controller
     {
         $year = $request->input('year');
         $topik = $request->input('topik');
+        $sumber_dana = $request->input('sumber_dana');
 
         $query = DB::table('waktu_tempat')
             ->leftJoin('pengajuan_kap', 'waktu_tempat.pengajuan_kap_id', '=', 'pengajuan_kap.id')
@@ -40,6 +41,10 @@ class KalenderPembelajaranController extends Controller
 
         if ($topik && $topik != 'All') {
             $query->where('pengajuan_kap.topik_id', $topik);
+        }
+
+        if ($sumber_dana && $sumber_dana != 'All') {
+            $query->where('pengajuan_kap.sumber_dana', $sumber_dana);
         }
 
         $events = $query->select(

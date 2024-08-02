@@ -119,7 +119,8 @@ return [
             'asrama view',
             'topik view',
             'tagging pembelajaran kompetensi view',
-            'pengajuan kap view'
+            'pengajuan kap view',
+            'rumpun pembelajaran view'
         ],
         'menus' => [
             [
@@ -142,7 +143,8 @@ return [
                     'asrama view',
                     'topik view',
                     'tagging pembelajaran kompetensi view',
-                    'pengajuan kap view'
+                    'pengajuan kap view',
+                    'rumpun pembelajaran view'
                 ],
                 'submenus' => [
                     [
@@ -184,6 +186,11 @@ return [
                         'title' => 'Pengajuan Kaps',
                         'route' => '/pengajuan-kap',
                         'permission' => 'pengajuan kap view'
+                    ],
+                    [
+                        'title' => 'Rumpun Pembelajarans',
+                        'route' => '/rumpun-pembelajarans',
+                        'permission' => 'rumpun pembelajaran view'
                     ]
                 ]
             ]
