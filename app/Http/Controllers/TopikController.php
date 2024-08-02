@@ -9,6 +9,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ExportTopikPembelajaran;
 use App\Imports\ImportTopik;
+use Illuminate\Support\Facades\DB;
 
 
 class TopikController extends Controller
@@ -29,7 +30,10 @@ class TopikController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $topik = Topik::query();
+            $topik = DB::table('topik')
+                ->leftJoin('rumpun_pembelajaran', 'topik.rumpun_pembelajaran_id', '=', 'rumpun_pembelajaran.id')
+                ->select('topik.*', 'rumpun_pembelajaran.rumpun_pembelajaran')
+                ->get();
             return DataTables::of($topik)
                 ->addIndexColumn()
                 ->addColumn('id', function ($row) {
@@ -49,7 +53,10 @@ class TopikController extends Controller
      */
     public function create()
     {
-        return view('topik.create');
+        $rumpunPembelajaran = DB::table('rumpun_pembelajaran')->get();
+        return view('topik.create', [
+            'rumpunPembelajaran' => $rumpunPembelajaran
+        ]);
     }
 
     /**
@@ -60,7 +67,6 @@ class TopikController extends Controller
      */
     public function store(StoreTopikRequest $request)
     {
-
         Topik::create($request->validated());
         Alert::toast('The topik was created successfully.', 'success');
         return redirect()->route('topik.index');
@@ -85,7 +91,8 @@ class TopikController extends Controller
      */
     public function edit(Topik $topik)
     {
-        return view('topik.edit', compact('topik'));
+        $rumpunPembelajaran = DB::table('rumpun_pembelajaran')->get();
+        return view('topik.edit', compact('topik', 'rumpunPembelajaran'));
     }
 
     /**

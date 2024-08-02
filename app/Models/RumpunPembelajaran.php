@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class RumpunPembelajaran extends Model
 {
     use HasFactory;
+    protected $table = 'rumpun_pembelajaran';
 
     /**
      * The attributes that are mass assignable.
@@ -23,6 +24,6 @@ class RumpunPembelajaran extends Model
      */
     protected $casts = ['rumpun_pembelajaran' => 'string', 'created_at' => 'datetime:d/m/Y H:i', 'updated_at' => 'datetime:d/m/Y H:i'];
 
-    
+
 
 }

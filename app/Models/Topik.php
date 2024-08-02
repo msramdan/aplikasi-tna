@@ -15,13 +15,13 @@ class Topik extends Model
     protected $table = 'topik';
     protected static $logUnguarded = true;
 
-    protected $fillable = ['rumpun_pembelajaran', 'nama_topik'];
+    protected $fillable = ['rumpun_pembelajaran_id', 'nama_topik'];
 
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
             ->useLogName('log_topik_pembelajaran')
-            ->logOnly(['rumpun_pembelajaran', 'nama_topik'])
+            ->logOnly(['rumpun_pembelajaran_id', 'nama_topik'])
             ->logOnlyDirty()
             ->dontSubmitEmptyLogs();
     }

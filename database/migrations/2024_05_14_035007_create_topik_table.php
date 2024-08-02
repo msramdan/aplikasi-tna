@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('topik', function (Blueprint $table) {
             $table->id();
-            $table->text('rumpun_pembelajaran');
+            $table->foreignId('rumpun_pembelajaran_id')->nullable()->constrained('rumpun_pembelajaran')->restrictOnUpdate()->nullOnDelete();
             $table->text('nama_topik');
             $table->timestamps();
         });
