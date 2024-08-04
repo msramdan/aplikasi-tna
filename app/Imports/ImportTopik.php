@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 
+use App\Models\RumpunPembelajaran;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Concerns\Importable;
@@ -16,14 +17,20 @@ class ImportTopik implements ToCollection, WithHeadingRow, SkipsEmptyRows
     public function collection(Collection $collection)
     {
         Validator::make($collection->toArray(), [
-            '*.nama_topik' => 'required',
+            '*.rumpun_pembelajaran' => 'required',
+            '*.program_pembelajaran' => 'required',
         ])->validate();
+        // dd($collection);
+
         foreach ($collection as $row) {
-                DB::table('topik')->insert([
-                    'nama_topik' => $row['nama_topik'],
-                    'created_at' => now(),
-                    'updated_at' => now()
-                ]);
+            // dd($row['program_pembelajaran']);
+
+            DB::table('topik')->insert([
+                'rumpun_pembelajaran_id' => RumpunPembelajaran::where('rumpun_pembelajaran', $row['rumpun_pembelajaran'])->first()->id,
+                'nama_topik' => $row['program_pembelajaran'],
+                'created_at' => now(),
+                'updated_at' => now()
+            ]);
         }
     }
 }

@@ -8,7 +8,9 @@ use Yajra\DataTables\Facades\DataTables;
 use RealRashid\SweetAlert\Facades\Alert;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ExportTopikPembelajaran;
+use App\FormatImport\GenerateTopikMultiSheet;
 use App\Imports\ImportTopik;
+use App\Imports\ImportTopikMultiSheet;
 use Illuminate\Support\Facades\DB;
 
 
@@ -138,8 +140,15 @@ class TopikController extends Controller
 
     public function importTopik(ImportTopikRequest $request)
     {
-        Excel::import(new ImportTopik, $request->file('import_topik'));
+        Excel::import(new ImportTopikMultiSheet, $request->file('import_topik'));
         Alert::toast('Pembelajaran has been successfully imported.', 'success');
         return back();
+    }
+
+    public function formatImport()
+    {
+        $date = date('d-m-Y');
+        $nameFile = 'format_import_program_pembelajaran' . $date;
+        return Excel::download(new GenerateTopikMultiSheet(), $nameFile . '.xlsx');
     }
 }

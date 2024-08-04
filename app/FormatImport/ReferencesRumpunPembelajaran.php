@@ -1,31 +1,27 @@
 <?php
 
-namespace App\Exports;
+namespace App\FormatImport;
 
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
-use Illuminate\Support\Facades\DB;
+use App\Models\Kompetensi;
 use Maatwebsite\Excel\Concerns\WithTitle;
+use Illuminate\Support\Facades\DB;
 
-class ExportTopikPembelajaran implements FromView, ShouldAutoSize, WithEvents, WithTitle
+class ReferencesRumpunPembelajaran implements FromView, ShouldAutoSize, WithEvents, WithTitle
 {
     public function title(): string
     {
-        return 'Data pembelajaran';
+        return 'References rumpun pembelajaran';
     }
-
 
     public function view(): View
     {
-
-        $data = DB::table('topik')
-            ->leftJoin('rumpun_pembelajaran', 'topik.rumpun_pembelajaran_id', '=', 'rumpun_pembelajaran.id')
-            ->select('topik.*', 'rumpun_pembelajaran.rumpun_pembelajaran')
-            ->get();
-        return view('topik.topik_pembelajaran_excel', [
+        $data = DB::table('rumpun_pembelajaran')->orderBy('id', 'desc')->get();
+        return view('topik.references_rumpun_pembelajaran', [
             'data' => $data
         ]);
     }
@@ -34,7 +30,7 @@ class ExportTopikPembelajaran implements FromView, ShouldAutoSize, WithEvents, W
     {
         return [
             AfterSheet::class    => function (AfterSheet $event) {
-                $cellRange = 'A1:C1';
+                $cellRange = 'A1:A1';
                 $event->sheet->getStyle($cellRange)->applyFromArray([
                     'borders' => [
                         'allBorders' => [

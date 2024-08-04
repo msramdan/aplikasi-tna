@@ -1,40 +1,36 @@
 <?php
 
-namespace App\Exports;
+namespace App\FormatImport;
 
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
+use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
+use PhpOffice\PhpSpreadsheet\Cell\DataValidation;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\WithTitle;
 
-class ExportTopikPembelajaran implements FromView, ShouldAutoSize, WithEvents, WithTitle
+
+class GenerateTopikFormat implements FromView, ShouldAutoSize, WithEvents, WithStrictNullComparison,WithTitle
 {
     public function title(): string
     {
-        return 'Data pembelajaran';
+        return 'Format import program pembelajaran';
     }
 
 
     public function view(): View
     {
-
-        $data = DB::table('topik')
-            ->leftJoin('rumpun_pembelajaran', 'topik.rumpun_pembelajaran_id', '=', 'rumpun_pembelajaran.id')
-            ->select('topik.*', 'rumpun_pembelajaran.rumpun_pembelajaran')
-            ->get();
-        return view('topik.topik_pembelajaran_excel', [
-            'data' => $data
-        ]);
+        return view('topik.format_import');
     }
 
     public function registerEvents(): array
     {
         return [
             AfterSheet::class    => function (AfterSheet $event) {
-                $cellRange = 'A1:C1';
+                $cellRange = 'A1:B1';
                 $event->sheet->getStyle($cellRange)->applyFromArray([
                     'borders' => [
                         'allBorders' => [
