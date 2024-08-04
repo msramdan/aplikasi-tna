@@ -866,8 +866,10 @@ class PengajuanKapController extends Controller
     public function skipSelected(Request $request)
     {
         $ids = $request->ids;
-        $rejectionNote = $request->note;
+        $approvalNote = $request->note;
+
         DB::beginTransaction();
+
         try {
             foreach ($ids as $id) {
                 // Retrieve the PengajuanKap record by its ID
@@ -887,28 +889,46 @@ class PengajuanKapController extends Controller
                     DB::table('log_review_pengajuan_kap')
                         ->where('id', $logReview->id)
                         ->update([
-                            'status' => 'Rejected',
+                            'status' => 'Skiped',
                             'tanggal_review' => Carbon::now(),
-                            'catatan' => $rejectionNote,
+                            'catatan' => $approvalNote,
                             'user_review_id' => Auth::id(),
                             'created_at' => Carbon::now(),
                             'updated_at' => Carbon::now(),
                         ]);
 
-                    // Update pengajuan_kap status to 'Rejected'
-                    DB::table('pengajuan_kap')
-                        ->where('id', $id)
-                        ->update([
-                            'status_pengajuan' => 'Rejected',
-                            'updated_at' => Carbon::now(),
-                        ]);
+                    // After updating log review, get the maximum step from log_review_pengajuan_kap
+                    $maxStep = DB::table('log_review_pengajuan_kap')
+                        ->where('pengajuan_kap_id', $id)
+                        ->max('step');
+
+                    // Update logic based on the maximum step found
+                    if ($maxStep === $currentStep) {
+                        // If the current step matches the max step, update pengajuan_kap status
+                        DB::table('pengajuan_kap')
+                            ->where('id', $id)
+                            ->update([
+                                'status_pengajuan' => 'Approved',
+                                'updated_at' => Carbon::now(),
+                            ]);
+                    } else {
+                        // Otherwise, increment the current step in the pengajuan_kap table
+                        DB::table('pengajuan_kap')
+                            ->where('id', $id)
+                            ->update([
+                                'current_step' => $currentStep + 1,
+                                'status_pengajuan' => 'Process',
+                                'updated_at' => Carbon::now(),
+                            ]);
+                    }
                 }
             }
             DB::commit();
             return response()->json(['success' => true, 'message' => 'Pengajuan Kap skiped successfully.']);
         } catch (\Exception $e) {
             DB::rollback();
-            return response()->json(['success' => false, 'message' => 'Failed to skip Pengajuan Kap. Please try again.']);
+            return response()->json(['success' => false, 'message' => 'Failed to approve Pengajuan Kap. Please try again.']);
         }
     }
+
 }

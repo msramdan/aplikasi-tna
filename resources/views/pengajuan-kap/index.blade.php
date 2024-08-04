@@ -271,6 +271,7 @@
 @endsection
 
 @push('js')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         let reviewRemarks = @json($reviewRemarks);
         let columns = [
@@ -446,19 +447,34 @@
                             _token: '{{ csrf_token() }}'
                         },
                         success: function(response) {
-                            alert(response.message);
-                            $('#approveModal').modal('hide'); // Close modal
-                            $('#approvalNote').val(''); // Clear note
-                            $('#select-all').prop('checked', false).trigger(
-                                'change'); // Uncheck all
-                            table.ajax.reload();
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: response.message
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    $('#approveModal').modal('hide'); // Close modal
+                                    $('#approvalNote').val(''); // Clear note
+                                    $('#select-all').prop('checked', false).trigger(
+                                        'change'); // Uncheck all
+                                    table.ajax.reload();
+                                }
+                            });
                         },
                         error: function(xhr) {
-                            alert('Something went wrong.');
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Something went wrong.'
+                            });
                         }
                     });
                 } else {
-                    alert('Catatan approved perlu diisi');
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Warning',
+                        text: 'Catatan approved perlu diisi'
+                    });
                 }
             });
 
@@ -479,21 +495,38 @@
                             _token: '{{ csrf_token() }}'
                         },
                         success: function(response) {
-                            alert(response.message);
-                            $('#rejectModal').modal('hide'); // Close modal
-                            $('#rejectedNote').val(''); // Clear note
-                            $('#select-all').prop('checked', false).trigger(
-                                'change'); // Uncheck all
-                            table.ajax.reload();
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: response.message
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    $('#rejectModal').modal('hide'); // Close modal
+                                    $('#rejectedNote').val(''); // Clear note
+                                    $('#select-all').prop('checked', false).trigger(
+                                        'change'); // Uncheck all
+                                    table.ajax.reload();
+                                }
+                            });
                         },
                         error: function(xhr) {
-                            alert('Something went wrong.');
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Something went wrong.'
+                            });
                         }
                     });
                 } else {
-                    alert('Catatan rejected perlu diisi');
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Warning',
+                        text: 'Catatan rejected perlu diisi'
+                    });
                 }
             });
+
+
 
             // Handle skiped confirm
             $('#btn-confirm-skiped').on('click', function() {
@@ -511,21 +544,37 @@
                             _token: '{{ csrf_token() }}'
                         },
                         success: function(response) {
-                            alert(response.message);
-                            $('#rejectModal').modal('hide'); // Close modal
-                            $('#skipedNote').val(''); // Clear note
-                            $('#select-all').prop('checked', false).trigger(
-                                'change'); // Uncheck all
-                            table.ajax.reload();
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: response.message
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    $('#rejectModal').modal('hide'); // Close modal
+                                    $('#skipedNote').val(''); // Clear note
+                                    $('#select-all').prop('checked', false).trigger(
+                                        'change'); // Uncheck all
+                                    table.ajax.reload();
+                                }
+                            });
                         },
                         error: function(xhr) {
-                            alert('Something went wrong.');
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Something went wrong.'
+                            });
                         }
                     });
                 } else {
-                    alert('Catatan skiped perlu diisi');
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Warning',
+                        text: 'Catatan skiped perlu diisi'
+                    });
                 }
             });
+
         });
     </script>
 @endpush
