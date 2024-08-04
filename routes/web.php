@@ -114,6 +114,7 @@ Route::middleware(['auth', 'web'])->group(function () {
         // for selected
         Route::post('/approve', 'approveSelected')->name('pengajuan-kap-selected.approve');
         Route::post('/reject', 'rejectSelected')->name('pengajuan-kap-selected.reject');
+        Route::post('/skip', 'skipSelected')->name('pengajuan-kap-selected.skip');
     });
     Route::get('/backup', [BackupController::class, 'index'])->name('backup.index');
     Route::get('/backup/download', [BackupController::class, 'downloadBackup'])->name('backup.download');

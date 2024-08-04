@@ -862,4 +862,53 @@ class PengajuanKapController extends Controller
             return response()->json(['success' => false, 'message' => 'Failed to reject Pengajuan Kap. Please try again.']);
         }
     }
+
+    public function skipSelected(Request $request)
+    {
+        $ids = $request->ids;
+        $rejectionNote = $request->note;
+        DB::beginTransaction();
+        try {
+            foreach ($ids as $id) {
+                // Retrieve the PengajuanKap record by its ID
+                $pengajuanKap = DB::table('pengajuan_kap')->find($id);
+
+                // Check for the current_step in PengajuanKap
+                $currentStep = $pengajuanKap->current_step;
+
+                // Query the log_review_pengajuan_kap table for the first matching record
+                $logReview = DB::table('log_review_pengajuan_kap')
+                    ->where('pengajuan_kap_id', $id)
+                    ->where('step', $currentStep)
+                    ->first();
+
+                // If a matching log review is found, update its fields
+                if ($logReview) {
+                    DB::table('log_review_pengajuan_kap')
+                        ->where('id', $logReview->id)
+                        ->update([
+                            'status' => 'Rejected',
+                            'tanggal_review' => Carbon::now(),
+                            'catatan' => $rejectionNote,
+                            'user_review_id' => Auth::id(),
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now(),
+                        ]);
+
+                    // Update pengajuan_kap status to 'Rejected'
+                    DB::table('pengajuan_kap')
+                        ->where('id', $id)
+                        ->update([
+                            'status_pengajuan' => 'Rejected',
+                            'updated_at' => Carbon::now(),
+                        ]);
+                }
+            }
+            DB::commit();
+            return response()->json(['success' => true, 'message' => 'Pengajuan Kap skiped successfully.']);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json(['success' => false, 'message' => 'Failed to skip Pengajuan Kap. Please try again.']);
+        }
+    }
 }
