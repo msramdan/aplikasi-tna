@@ -11,7 +11,7 @@ return [
     'kategori' => 'Kategori',
     'akademi' => 'Akademi',
     'nama_kompetensi' => 'Nama Kompetensi',
-    'deskripsi_kompetensi' => 'Kompetensi Dasari',
+    'deskripsi_kompetensi' => 'Kompetensi Dasar',
     'dashboard' => 'Dasboard',
     'failed' => 'Gagal',
     'create_new' => 'Buat Data Baru',

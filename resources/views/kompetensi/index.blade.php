@@ -157,13 +157,13 @@
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="card-header">
-                            {{-- @can('kompetensi create')
+                            {{-- @can('kompetensi create') --}}
                                 <button type="button" class="btn btn-warning" data-bs-toggle="modal"
                                     data-bs-target="#exampleModal">
                                     <i class='fa fa-upload'></i>
                                     {{ trans('kompetensi/index.import') }}
                                 </button>
-                            @endcan --}}
+                            {{-- @endcan --}}
                             <button id="btnExport" class="btn btn-success">
                                 <i class='fas fa-file-excel'></i>
                                 {{ trans('kompetensi/index.export') }}
