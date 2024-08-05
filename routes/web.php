@@ -68,7 +68,9 @@ Route::middleware(['auth', 'web'])->group(function () {
     Route::controller(TopikController::class)->group(function () {
         Route::get('/exportTopik', 'exportTopik')->name('exportTopik');
         Route::post('/importTopik', 'importTopik')->name('importTopik');
+        Route::get('/download-format-topik', 'formatImport')->name('download-format-topik');
     });
+
     Route::resource('rumpun-pembelajaran', App\Http\Controllers\RumpunPembelajaranController::class);
     Route::resource('jadwal-kap-tahunan', JadwalKapTahunanController::class);
     Route::controller(TaggingPembelajaranKompetensiController::class)->group(function () {
@@ -112,6 +114,7 @@ Route::middleware(['auth', 'web'])->group(function () {
         // for selected
         Route::post('/approve', 'approveSelected')->name('pengajuan-kap-selected.approve');
         Route::post('/reject', 'rejectSelected')->name('pengajuan-kap-selected.reject');
+        Route::post('/skip', 'skipSelected')->name('pengajuan-kap-selected.skip');
     });
     Route::get('/backup', [BackupController::class, 'index'])->name('backup.index');
     Route::get('/backup/download', [BackupController::class, 'downloadBackup'])->name('backup.download');

@@ -234,8 +234,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="skipedNote" class="form-label">Catatan</label>
-                        <textarea class="form-control" id="skipedNote" rows="3" required></textarea>
+                        <label for="rejectedNote" class="form-label">Catatan</label>
+                        <textarea class="form-control" id="rejectedNote" rows="3" required></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -271,6 +271,7 @@
 @endsection
 
 @push('js')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         let reviewRemarks = @json($reviewRemarks);
         let columns = [
@@ -446,19 +447,34 @@
                             _token: '{{ csrf_token() }}'
                         },
                         success: function(response) {
-                            alert(response.message);
-                            $('#approveModal').modal('hide'); // Close modal
-                            $('#approvalNote').val(''); // Clear note
-                            $('#select-all').prop('checked', false).trigger(
-                                'change'); // Uncheck all
-                            table.ajax.reload();
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: response.message
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    $('#approveModal').modal('hide'); // Close modal
+                                    $('#approvalNote').val(''); // Clear note
+                                    $('#select-all').prop('checked', false).trigger(
+                                        'change'); // Uncheck all
+                                    table.ajax.reload();
+                                }
+                            });
                         },
                         error: function(xhr) {
-                            alert('Something went wrong.');
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Something went wrong.'
+                            });
                         }
                     });
                 } else {
-                    alert('Catatan approved perlu diisi');
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Warning',
+                        text: 'Catatan approved perlu diisi'
+                    });
                 }
             });
 
@@ -467,33 +483,50 @@
                 var selectedIds = $('.select-item:checked').map(function() {
                     return $(this).val();
                 }).get();
-                var skipedNote = $('#skipedNote').val().trim();
+                var rejectedNote = $('#rejectedNote').val().trim();
 
-                if (selectedIds.length > 0 && skipedNote !== '') {
+                if (selectedIds.length > 0 && rejectedNote !== '') {
                     $.ajax({
                         url: "{{ route('pengajuan-kap-selected.reject') }}",
                         type: 'POST',
                         data: {
                             ids: selectedIds,
-                            note: skipedNote,
+                            note: rejectedNote,
                             _token: '{{ csrf_token() }}'
                         },
                         success: function(response) {
-                            alert(response.message);
-                            $('#rejectModal').modal('hide'); // Close modal
-                            $('#skipedNote').val(''); // Clear note
-                            $('#select-all').prop('checked', false).trigger(
-                                'change'); // Uncheck all
-                            table.ajax.reload();
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: response.message
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    $('#rejectModal').modal('hide'); // Close modal
+                                    $('#rejectedNote').val(''); // Clear note
+                                    $('#select-all').prop('checked', false).trigger(
+                                        'change'); // Uncheck all
+                                    table.ajax.reload();
+                                }
+                            });
                         },
                         error: function(xhr) {
-                            alert('Something went wrong.');
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Something went wrong.'
+                            });
                         }
                     });
                 } else {
-                    alert('Catatan rejected perlu diisi');
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Warning',
+                        text: 'Catatan rejected perlu diisi'
+                    });
                 }
             });
+
+
 
             // Handle skiped confirm
             $('#btn-confirm-skiped').on('click', function() {
@@ -501,10 +534,9 @@
                     return $(this).val();
                 }).get();
                 var skipedNote = $('#skipedNote').val().trim();
-
                 if (selectedIds.length > 0 && skipedNote !== '') {
                     $.ajax({
-                        url: "{{ route('pengajuan-kap-selected.reject') }}",
+                        url: "{{ route('pengajuan-kap-selected.skip') }}",
                         type: 'POST',
                         data: {
                             ids: selectedIds,
@@ -512,21 +544,37 @@
                             _token: '{{ csrf_token() }}'
                         },
                         success: function(response) {
-                            alert(response.message);
-                            $('#rejectModal').modal('hide'); // Close modal
-                            $('#skipedNote').val(''); // Clear note
-                            $('#select-all').prop('checked', false).trigger(
-                                'change'); // Uncheck all
-                            table.ajax.reload();
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: response.message
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    $('#rejectModal').modal('hide'); // Close modal
+                                    $('#skipedNote').val(''); // Clear note
+                                    $('#select-all').prop('checked', false).trigger(
+                                        'change'); // Uncheck all
+                                    table.ajax.reload();
+                                }
+                            });
                         },
                         error: function(xhr) {
-                            alert('Something went wrong.');
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Something went wrong.'
+                            });
                         }
                     });
                 } else {
-                    alert('Catatan rejected perlu diisi');
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Warning',
+                        text: 'Catatan skiped perlu diisi'
+                    });
                 }
             });
+
         });
     </script>
 @endpush

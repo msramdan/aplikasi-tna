@@ -132,14 +132,27 @@
         }
 
         .step.rejected .step-icon {
-            background-color: red;
+            background-color: #f06548;
             animation: pulse-red 1s infinite alternate;
         }
 
         .step.rejected .step-label {
-            color: red;
+            color: #;
         }
 
+        .step.skiped .step-icon {
+            background-color: #ffbe0b;
+            animation: pulse-orange 1s infinite alternate;
+        }
+
+        .step.skiped .step-label {
+            color: #ffbe0b;
+        }
+
+        .step.skiped:not(:last-child)::after {
+            background-color: #ffbe0b;
+            opacity: 0.2;
+        }
         @keyframes pulse {
             0% {
                 box-shadow: 0 0 0 0 rgba(128, 128, 128, 0.7);
@@ -164,10 +177,6 @@
             }
         }
     </style>
-
-
-
-
     <div class="page-body">
         <div class="container-fluid">
             <div class="page-header" style="margin-top: 5px">
@@ -518,7 +527,7 @@
 
                                 @foreach ($logReviews as $index => $log)
                                     <div
-                                        class="step {{ $pengajuanKap->current_step == $index + 1 && $log->status == 'Pending' ? 'process' : '' }} {{ $log->status == 'Approved' ? 'active' : ($log->status == 'Rejected' ? 'rejected' : '') }}">
+                                        class="step {{ $pengajuanKap->current_step == $index + 1 && $log->status == 'Pending' ? 'process' : '' }} {{ $log->status == 'Approved' ? 'active' : ($log->status == 'Rejected' ? 'rejected' : ($log->status == 'Skiped' ? 'skiped' : '')) }}">
                                         <div class="step-icon">{{ $index + 1 }}</div>
                                         <div class="step-label"><b>{{ $log->remark }}</b></div>
                                     </div>

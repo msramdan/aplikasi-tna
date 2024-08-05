@@ -60,7 +60,7 @@
                             <input type="file" class="form-control" id="import_topik" name="import_topik"
                                 aria-describedby="import_topik" accept=".xlsx" required>
                             <div id="downloadFormat" class="form-text">
-                                <a href="{{ asset('format_import/format_import_topik_pembelajaran.xlsx') }}">
+                                <a href="#">
                                     <i class="fa fa-download" aria-hidden="true"></i> {{ __('topik/index.unduh_format') }}
                                 </a>
                             </div>
@@ -200,7 +200,7 @@
                 success: function(data) {
                     var link = document.createElement('a');
                     link.href = window.URL.createObjectURL(data);
-                    var nameFile = 'Pembelajaran.xlsx';
+                    var nameFile = 'Program pembelajaran.xlsx';
                     console.log(nameFile);
                     link.download = nameFile;
                     link.click();
@@ -218,4 +218,54 @@
             });
         }
     </script>
+
+<script>
+    $(document).on('click', '#downloadFormat', function(event) {
+        event.preventDefault();
+        downloadFormat();
+    });
+
+    var downloadFormat = function() {
+        var url = '../download-format-topik';
+        $.ajax({
+            url: url,
+            type: 'GET',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            },
+            data: {},
+            xhrFields: {
+                responseType: 'blob'
+            },
+            beforeSend: function() {
+                Swal.fire({
+                    title: 'Please Wait !',
+                    html: 'Sedang melakukan download format import',
+                    allowOutsideClick: false,
+                    onBeforeOpen: () => {
+                        Swal.showLoading()
+                    },
+                });
+
+            },
+            success: function(data) {
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(data);
+                var nameFile = 'format_import_topik.xlsx'
+                link.download = nameFile;
+                link.click();
+                swal.close()
+            },
+            error: function(data) {
+                console.log(data)
+                Swal.fire({
+                    icon: 'error',
+                    title: "Download Format Import failed",
+                    text: "Please check",
+                    allowOutsideClick: false,
+                })
+            }
+        });
+    }
+</script>
 @endpush

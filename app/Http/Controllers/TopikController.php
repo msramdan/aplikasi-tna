@@ -8,7 +8,9 @@ use Yajra\DataTables\Facades\DataTables;
 use RealRashid\SweetAlert\Facades\Alert;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ExportTopikPembelajaran;
+use App\FormatImport\GenerateTopikMultiSheet;
 use App\Imports\ImportTopik;
+use App\Imports\ImportTopikMultiSheet;
 use Illuminate\Support\Facades\DB;
 
 
@@ -68,7 +70,7 @@ class TopikController extends Controller
     public function store(StoreTopikRequest $request)
     {
         Topik::create($request->validated());
-        Alert::toast('The topik was created successfully.', 'success');
+        Alert::toast('The program pembelajaran was created successfully.', 'success');
         return redirect()->route('topik.index');
     }
 
@@ -106,7 +108,7 @@ class TopikController extends Controller
     {
 
         $topik->update($request->validated());
-        Alert::toast('The topik was updated successfully.', 'success');
+        Alert::toast('The program pembelajaran was updated successfully.', 'success');
         return redirect()
             ->route('topik.index');
     }
@@ -121,10 +123,10 @@ class TopikController extends Controller
     {
         try {
             $topik->delete();
-            Alert::toast('The topik was deleted successfully.', 'success');
+            Alert::toast('The program pembelajaran was deleted successfully.', 'success');
             return redirect()->route('topik.index');
         } catch (\Throwable $th) {
-            Alert::toast('The topik cant be deleted because its related to another table.', 'error');
+            Alert::toast('The program pembelajaran cant be deleted because its related to another table.', 'error');
             return redirect()->route('topik.index');
         }
     }
@@ -132,14 +134,21 @@ class TopikController extends Controller
     public function exportTopik()
     {
         $date = date('d-m-Y');
-        $nameFile = 'Pembelajaran ' . $date;
+        $nameFile = 'Program pembelajaran ' . $date;
         return Excel::download(new ExportTopikPembelajaran(), $nameFile . '.xlsx');
     }
 
     public function importTopik(ImportTopikRequest $request)
     {
-        Excel::import(new ImportTopik, $request->file('import_topik'));
-        Alert::toast('Pembelajaran has been successfully imported.', 'success');
+        Excel::import(new ImportTopikMultiSheet, $request->file('import_topik'));
+        Alert::toast('Program pembelajaran has been successfully imported.', 'success');
         return back();
+    }
+
+    public function formatImport()
+    {
+        $date = date('d-m-Y');
+        $nameFile = 'format_import_program_pembelajaran' . $date;
+        return Excel::download(new GenerateTopikMultiSheet(), $nameFile . '.xlsx');
     }
 }

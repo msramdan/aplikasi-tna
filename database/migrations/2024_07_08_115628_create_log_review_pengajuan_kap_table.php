@@ -14,7 +14,7 @@ return new class extends Migration
             $table->tinyInteger('step');
             $table->string('remark');
             $table->unsignedBigInteger('user_review_id')->nullable();
-            $table->enum('status', ['Pending', 'Approved', 'Rejected', '']);
+            $table->enum('status', ['Pending', 'Approved', 'Rejected', 'Skiped', '']);
             $table->datetime('tanggal_review')->nullable();
             $table->text('catatan')->nullable();
             $table->timestamps();

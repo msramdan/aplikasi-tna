@@ -347,7 +347,7 @@
     </script> --}}
 
 
-    {{-- get Kompetensi Dasari --}}
+    {{-- get Kompetensi Dasar --}}
     <script>
         $(document).ready(function() {
             $('#kompetensi_id').on('change', function() {
