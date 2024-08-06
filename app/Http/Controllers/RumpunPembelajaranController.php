@@ -17,11 +17,6 @@ class RumpunPembelajaranController extends Controller
         $this->middleware('permission:rumpun pembelajaran delete')->only('destroy');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         if (request()->ajax()) {

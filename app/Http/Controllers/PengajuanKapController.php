@@ -263,9 +263,11 @@ class PengajuanKapController extends Controller
             'skill_group_owner' => 'required|string',
             'bentuk_pembelajaran' => 'nullable|string',
             'jalur_pembelajaran' => 'nullable|string',
+            'jenjang_pembelajaran' => 'nullable|string',
             'model_pembelajaran' => 'nullable|string',
             'jenis_pembelajaran' => 'nullable|string',
             'metode_pembelajaran' => 'nullable|string',
+            'peserta_pembelajaran' => 'nullable|string',
             'sasaran_peserta' => 'nullable|string',
             'kriteria_peserta' => 'nullable|string',
             'aktivitas_prapembelajaran' => 'nullable|string',
@@ -325,9 +327,11 @@ class PengajuanKapController extends Controller
                 'bentuk_pembelajaran' => $validatedData['bentuk_pembelajaran'],
                 'tujuan_program_pembelajaran' => $validatedData['tujuan_program_pembelajaran'],
                 'jalur_pembelajaran' => $validatedData['jalur_pembelajaran'],
+                'jenjang_pembelajaran' => $validatedData['jenjang_pembelajaran'],
                 'model_pembelajaran' => $validatedData['model_pembelajaran'],
                 'jenis_pembelajaran' => $validatedData['jenis_pembelajaran'],
                 'metode_pembelajaran' => $validatedData['metode_pembelajaran'],
+                'peserta_pembelajaran' => $validatedData['peserta_pembelajaran'],
                 'sasaran_peserta' => $validatedData['sasaran_peserta'],
                 'kriteria_peserta' => $validatedData['kriteria_peserta'],
                 'aktivitas_prapembelajaran' => $validatedData['aktivitas_prapembelajaran'],
@@ -427,8 +431,10 @@ class PengajuanKapController extends Controller
             'bentuk_pembelajaran' => 'nullable',
             'jalur_pembelajaran' => 'nullable',
             'model_pembelajaran' => 'nullable',
+            'jenjang_pembelajaran' => 'nullable',
             'jenis_pembelajaran' => 'nullable',
             'metode_pembelajaran' => 'nullable',
+            'peserta_pembelajaran' => 'nullable|string',
             'sasaran_peserta' => 'nullable|string',
             'kriteria_peserta' => 'nullable|string',
             'aktivitas_prapembelajaran' => 'nullable|string',
@@ -930,5 +936,4 @@ class PengajuanKapController extends Controller
             return response()->json(['success' => false, 'message' => 'Failed to approve Pengajuan Kap. Please try again.']);
         }
     }
-
 }
