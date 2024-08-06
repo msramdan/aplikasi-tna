@@ -152,7 +152,7 @@
                 var inputFields = [
                     'jenis_program', 'kompetensi_id', 'topik_id', 'bentuk_pembelajaran',
                     'jalur_pembelajaran', 'model_pembelajaran', 'jenis_pembelajaran',
-                    'metode_pembelajaran', 'penyelenggara_pembelajaran', 'prioritas_pembelajaran'
+                    'metode_pembelajaran', 'penyelenggara_pembelajaran', 'prioritas_pembelajaran','jenjang_pembelajaran','peserta_pembelajaran'
                 ];
 
                 inputFields.forEach(field => {
