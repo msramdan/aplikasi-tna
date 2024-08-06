@@ -22,7 +22,7 @@ class RumpunPembelajaranSeeder extends Seeder
             'Keuangan Desa',
             'Keuangan Negara/Daerah',
             'Komunikasi',
-            'Korporasi/BLU(D)',
+            'Korporasi/BLUD',
             'Laporan Keuangan Pemerintah Pusat/Daerah',
             'Manajemen Pembelajaran',
             'Manajemen Risiko',
@@ -33,7 +33,7 @@ class RumpunPembelajaranSeeder extends Seeder
             'Peningkatan Penggunaan Produksi Dalam Negeri (P3DN)',
             'Perencanaan dan Penganggaran',
             'Reformasi Birokrasi / Wilayah Bebas Korupsi (WBK) / Wilayah Birokrasi Bersih dan Melayani (WBBM)',
-            'SDM',
+            'Sumber Daya Manusia',
             'Sistem Pengendalian Intern Pemerintah (SPIP)',
             'Sistematika Audit Intern (KKA, LHA, dll)',
             'Teknologi Informasi dan Komunikasi'

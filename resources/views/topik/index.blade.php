@@ -251,7 +251,7 @@
             success: function(data) {
                 var link = document.createElement('a');
                 link.href = window.URL.createObjectURL(data);
-                var nameFile = 'format_import_topik.xlsx'
+                var nameFile = 'format_import_program_pembelajaran.xlsx'
                 link.download = nameFile;
                 link.click();
                 swal.close()

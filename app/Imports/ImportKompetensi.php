@@ -20,7 +20,7 @@ class ImportKompetensi implements ToCollection, WithHeadingRow, SkipsEmptyRows
             '*.kategori' => 'required',
             '*.akademi' => 'required',
             '*.nama_kompetensi' => 'required',
-            '*.kompetensi_dasar' => 'required',
+            '*.deskripsi_kompetensi' => 'required',
             '*.level' => 'required',
             '*.deskripsi_level' => 'required',
             '*.indikator_perilaku' => 'required',
@@ -45,7 +45,7 @@ class ImportKompetensi implements ToCollection, WithHeadingRow, SkipsEmptyRows
                     'kategori_kompetensi_id' => $kategoriKompetensiId,
                     'akademi_id' => $akademiId,
                     'nama_kompetensi' => $row['nama_kompetensi'],
-                    'deskripsi_kompetensi' => $row['kompetensi_dasar'],
+                    'deskripsi_kompetensi' => $row['deskripsi_kompetensi'],
                     'created_at' => now(),
                     'updated_at' => now()
                 ]);
