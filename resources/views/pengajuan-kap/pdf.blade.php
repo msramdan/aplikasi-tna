@@ -228,6 +228,11 @@
                 <td style="vertical-align: top;">{{ $pengajuanKap->jalur_pembelajaran ?: '-' }}</td>
             </tr>
             <tr>
+                <td style="vertical-align: top;">{{ __('Jenjang Pembelajaran') }}</td>
+                <td style="vertical-align: top;">:</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->jenjang_pembelajaran ?: '-' }}</td>
+            </tr>
+            <tr>
                 <td style="vertical-align: top;">{{ __('Model Pembelajaran') }}</td>
                 <td style="vertical-align: top;">:</td>
                 <td style="vertical-align: top;">{{ $pengajuanKap->model_pembelajaran ?: '-' }}</td>
@@ -247,6 +252,11 @@
         <br>
         <strong>III. Penyelenggaraan Pembelajaran</strong>
         <table style="font-size:12px; padding:15px;line-height:17px">
+            <tr>
+                <td style="width: 200px; vertical-align: top;">{{ __('Peserta Pembelajaran') }}</td>
+                <td style="vertical-align: top;">:</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->peserta_pembelajaran ?: '-' }}</td>
+            </tr>
             <tr>
                 <td style="width: 200px; vertical-align: top;">{{ __('Sasaran Peserta') }}</td>
                 <td style="vertical-align: top;">:</td>

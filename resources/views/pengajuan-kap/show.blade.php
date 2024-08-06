@@ -424,6 +424,8 @@
                                             </td>
                                         </tr>
 
+
+
                                         <tr>
                                             <td class="fw-bold">{{ __('Bentuk Pembelajaran') }}</td>
                                             <td>{{ $pengajuanKap->bentuk_pembelajaran ?: '-' }}</td>
@@ -431,6 +433,10 @@
                                         <tr>
                                             <td class="fw-bold">{{ __('Jalur Pembelajaran') }}</td>
                                             <td>{{ $pengajuanKap->jalur_pembelajaran ?: '-' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">{{ __('Jenjang Pembelajaran') }}</td>
+                                            <td>{{ $pengajuanKap->jenjang_pembelajaran ?: '-' }}</td>
                                         </tr>
                                         <tr>
                                             <td class="fw-bold">{{ __('Model Pembelajaran') }}</td>
@@ -453,6 +459,10 @@
                                 </div>
                                 <div class="tab-pane" id="icon-tabpanel-2" role="tabpanel" aria-labelledby="icon-tab-2">
                                     <table class="table table-hover table-striped table-sm">
+                                        <tr>
+                                            <td class="fw-bold">{{ __('Peserta Pembelajaran') }}</td>
+                                            <td>{{ $pengajuanKap->peserta_pembelajaran ?: '-' }}</td>
+                                        </tr>
                                         <tr>
                                             <td class="fw-bold">{{ __('Sasaran Peserta') }}</td>
                                             <td>{{ $pengajuanKap->sasaran_peserta ?: '-' }}</td>
