@@ -85,17 +85,26 @@
                                         </select>
                                     </div>
                                 </div>
+
                                 <div class="col-md-2">
                                     <div class="input-group mb-2">
                                         <select name="sumber_dana" id="sumber_dana"
                                             class="form-control js-example-basic-multiple">
                                             <option value="All">-- All Sumber dana --</option>
                                             <option value="RM" {{ $sumberDana == 'RM' ? 'selected' : '' }}>RM</option>
-                                            <option value="PNBP" {{ $sumberDana == 'PNBP' ? 'selected' : '' }}>PNBP</option>
+                                            <option value="PNBP" {{ $sumberDana == 'PNBP' ? 'selected' : '' }}>PNBP
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
 
+                                <div class="col-md-2">
+                                    <div class="input-group mb-2">
+                                        <button id="btnExport" class="btn btn-success">
+                                            <i class='fas fa-file-excel'></i> Export
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                             <hr>
                             <div class="row">
@@ -182,7 +191,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
         integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.all.min.js"></script>
     <script>
         $(document).ready(function() {
             $('.select2-form').select2();
@@ -206,7 +215,7 @@
                     data: {
                         year: year,
                         topik: topik,
-                        sumber_dana:sumber_dana,
+                        sumber_dana: sumber_dana,
                         _token: $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function(data) {
@@ -230,7 +239,7 @@
                 });
             }
 
-            function initializeCalendar(year, topik , sumber_dana) {
+            function initializeCalendar(year, topik, sumber_dana) {
                 var startOfYear = moment(year + '-01-01').format('YYYY-MM-DD');
                 var endOfYear = moment(year + '-12-31').format('YYYY-MM-DD');
 
@@ -276,8 +285,8 @@
                 var selectedYear = $('#tahun').val();
                 var selectedTopik = $('#topik').val();
                 var selectedSumberDana = $('#sumber_dana').val();
-                fetchEvents(selectedYear, selectedTopik,selectedSumberDana);
-                updateURL(selectedYear, selectedTopik,selectedSumberDana);
+                fetchEvents(selectedYear, selectedTopik, selectedSumberDana);
+                updateURL(selectedYear, selectedTopik, selectedSumberDana);
             });
 
             // Initialize the calendar with the current year and topic or the selected year and topic from the controller
@@ -286,5 +295,62 @@
             var initialSumberDana = $('#sumber_dana').val();
             initializeCalendar(initialYear, initialTopik, initialSumberDana);
         });
+    </script>
+
+    <script>
+        $(document).on('click', '#btnExport', function(event) {
+            event.preventDefault();
+            var initialYear = $('#tahun').val();
+            var initialTopik = $('#topik').val();
+            var initialSumberDana = $('#sumber_dana').val();
+            exportData(initialYear, initialTopik, initialSumberDana);
+        });
+
+        var exportData = function(year, topik, sumberDana) {
+            var url = '/exportKalenderPembelajaran';
+            $.ajax({
+                url: url,
+                type: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                },
+                data: {
+                    year: year,
+                    topik: topik,
+                    sumber_dana: sumberDana
+                },
+                xhrFields: {
+                    responseType: 'blob'
+                },
+                beforeSend: function() {
+                    Swal.fire({
+                        title: 'Please Wait !',
+                        html: 'Sedang melakukan proses export data',
+                        allowOutsideClick: false,
+                        onBeforeOpen: () => {
+                            Swal.showLoading()
+                        },
+                    });
+                },
+                success: function(data) {
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(data);
+                    var nameFile = 'Kalender pembelajaran tahun 2024 pola dana RM.xlsx'
+                    console.log(nameFile)
+                    link.download = nameFile;
+                    link.click();
+                    swal.close()
+                },
+                error: function(data) {
+                    console.log(data)
+                    Swal.fire({
+                        icon: 'error',
+                        title: "Data export failed",
+                        text: "Please check",
+                        allowOutsideClick: false,
+                    })
+                }
+            });
+        }
     </script>
 @endpush

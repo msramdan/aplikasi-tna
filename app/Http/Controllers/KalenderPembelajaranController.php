@@ -2,18 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ExportKalenderPembelajaran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class KalenderPembelajaranController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('permission:kalender pembelajaran view')->only('index', 'show');
-        $this->middleware('permission:kalender pembelajaran create')->only('create', 'store');
-        $this->middleware('permission:kalender pembelajaran edit')->only('edit', 'update');
-        $this->middleware('permission:kalender pembelajaran delete')->only('destroy');
-    }
 
     public function index($tahun, $topik, $sumber_dana)
     {
@@ -75,5 +71,14 @@ class KalenderPembelajaranController extends Controller
         });
 
         return response()->json($events);
+    }
+
+    public function exportKalenderPembelajaran(Request $request)
+    {
+        $tahun = $request->query('year');
+        $topik = $request->query('topik');
+        $sumber_dana = $request->query('sumber_dana');
+        $nameFile = 'Kalender pembelajaran ' . now()->format('Ymd_His') . '.xlsx';
+        return Excel::download(new ExportKalenderPembelajaran($tahun, $topik, $sumber_dana), $nameFile);
     }
 }

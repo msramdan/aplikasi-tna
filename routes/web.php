@@ -58,6 +58,7 @@ Route::middleware(['auth', 'web'])->group(function () {
     Route::controller(KalenderPembelajaranController::class)->group(function () {
         Route::get('/kalender-pembelajaran/{tahun}/{topik}/{sumber_dana}', 'index')->name('kalender-pembelajaran.index')->where('topik', '.*');
         Route::get('/events', 'getEvents')->name('getEvents');
+        Route::get('/exportKalenderPembelajaran', 'exportKalenderPembelajaran')->name('exportKalenderPembelajaran');
     });
     Route::resource('reporting', ReportingController::class);
     Route::resource('kota', KotaController::class);
