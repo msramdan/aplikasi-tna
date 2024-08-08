@@ -541,8 +541,8 @@ class PengajuanKapController extends Controller
             ->select('waktu_tempat.*', 'lokasi.nama_lokasi')
             ->get();
         $steps = [
+            'Biro SDM',
             'Tim Unit Pengelola Pembelajaran',
-            'Keuangan',
             'Penjaminan Mutu',
             'Subkoordinator',
             'Koordinator',

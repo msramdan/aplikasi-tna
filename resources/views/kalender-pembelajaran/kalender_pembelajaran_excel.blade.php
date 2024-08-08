@@ -2,9 +2,18 @@
     <thead>
         <tr>
             <th style="background-color:#D3D3D3 ">No</th>
-            <th style="background-color:#D3D3D3 ">Tanggal</th>
-            <th style="background-color:#D3D3D3 ">Program pembelajaran</th>
-
+            <th style="background-color:#D3D3D3 ">Kode pembelajaran</th>
+            <th style="background-color:#D3D3D3 ">Bentuk</th>
+            <th style="background-color:#D3D3D3 ">Jalur</th>
+            <th style="background-color:#D3D3D3 ">Model</th>
+            <th style="background-color:#D3D3D3 ">Jenis</th>
+            <th style="background-color:#D3D3D3 ">Metode</th>
+            <th style="background-color:#D3D3D3 ">Kompetensi</th>
+            <th style="background-color:#D3D3D3 ">Judul</th>
+            <th style="background-color:#D3D3D3 ">Jadwal</th>
+            <th style="background-color:#D3D3D3 ">Lokasi</th>
+            <th style="background-color:#D3D3D3 ">Penyelenggara</th>
+            <th style="background-color:#D3D3D3 ">Keterangan</th>
         </tr>
     </thead>
     <tbody>

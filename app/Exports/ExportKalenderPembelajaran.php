@@ -11,13 +11,13 @@ use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\WithTitle;
 
 
-class ExportKalenderPembelajaran implements FromView, ShouldAutoSize, WithEvents,WithTitle
+class ExportKalenderPembelajaran implements FromView, ShouldAutoSize, WithEvents, WithTitle
 {
     public $tahun;
     public $topik;
     public $sumber_dana;
 
-    public function __construct($tahun,$topik,$sumber_dana)
+    public function __construct($tahun, $topik, $sumber_dana)
     {
         $this->tahun = $tahun;
         $this->topik = $topik;
@@ -33,7 +33,6 @@ class ExportKalenderPembelajaran implements FromView, ShouldAutoSize, WithEvents
 
     public function view(): View
     {
-
         $query = DB::table('waktu_tempat')
             ->leftJoin('pengajuan_kap', 'waktu_tempat.pengajuan_kap_id', '=', 'pengajuan_kap.id')
             ->leftJoin('lokasi', 'waktu_tempat.lokasi_id', '=', 'lokasi.id')
@@ -41,13 +40,13 @@ class ExportKalenderPembelajaran implements FromView, ShouldAutoSize, WithEvents
             ->where('pengajuan_kap.tahun', $this->tahun)
             ->where('pengajuan_kap.status_pengajuan', 'Approved');
 
-        // if ($this->topik && $this->topik != 'All') {
-        //     $query->where('pengajuan_kap.topik_id', $this->topik);
-        // }
+        if ($this->topik && $this->topik != 'All') {
+            $query->where('pengajuan_kap.topik_id', $this->topik);
+        }
 
-        // if ($this->sumber_dana && $this->sumber_dana != 'All') {
-        //     $query->where('pengajuan_kap.sumber_dana', $this->sumber_dana);
-        // }
+        if ($this->sumber_dana && $this->sumber_dana != 'All') {
+            $query->where('pengajuan_kap.sumber_dana', $this->sumber_dana);
+        }
 
         $data = $query->select(
             'waktu_tempat.tanggal_mulai as start',

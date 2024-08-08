@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('config_step_review', function (Blueprint $table) {
             $table->id();
             $table->enum('remark', [
+                'Biro SDM',
                 'Tim Unit Pengelola Pembelajaran',
-                'Keuangan',
                 'Penjaminan Mutu',
                 'Subkoordinator',
                 'Koordinator',
