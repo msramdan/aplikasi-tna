@@ -73,15 +73,14 @@
 
                                 <div class="col-md-2">
                                     <div class="input-group mb-2">
-                                        <select name="topik" id="topik"
+                                        <select name="waktu_pelaksanaan" id="waktu_pelaksanaan"
                                             class="form-control js-example-basic-multiple">
-                                            <option value="All">-- All topik --</option>
-                                            @foreach ($topiks as $topik)
-                                                <option value="{{ $topik->id }}"
-                                                    {{ $selectedTopik == $topik->id ? 'selected' : '' }}>
-                                                    {{ $topik->nama_topik }}
-                                                </option>
-                                            @endforeach
+                                            <option value="All">-- All waktu pelaksanaan --</option>
+                                            <option value="Tahunan" {{ $waktuPelaksanaan == 'Tahunan' ? 'selected' : '' }}>
+                                                Tahunan</option>
+                                            <option value="Insidentil"
+                                                {{ $waktuPelaksanaan == 'Insidentil' ? 'selected' : '' }}>Insidentil
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
@@ -90,10 +89,25 @@
                                     <div class="input-group mb-2">
                                         <select name="sumber_dana" id="sumber_dana"
                                             class="form-control js-example-basic-multiple">
-                                            <option value="All">-- All Sumber dana --</option>
+                                            <option value="All">-- All sumber dana --</option>
                                             <option value="RM" {{ $sumberDana == 'RM' ? 'selected' : '' }}>RM</option>
                                             <option value="PNBP" {{ $sumberDana == 'PNBP' ? 'selected' : '' }}>PNBP
                                             </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <div class="input-group mb-2">
+                                        <select name="topik" id="topik"
+                                            class="form-control js-example-basic-multiple">
+                                            <option value="All">-- All program pembelajaran --</option>
+                                            @foreach ($topiks as $topik)
+                                                <option value="{{ $topik->id }}"
+                                                    {{ $selectedTopik == $topik->id ? 'selected' : '' }}>
+                                                    {{ $topik->nama_topik }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -207,15 +221,16 @@
                 $('#loading-indicator').hide();
             }
 
-            function fetchEvents(year, topik, sumber_dana) {
+            function fetchEvents(year, waktu_pelaksanaan, sumber_dana, topik) {
                 showLoading();
                 $.ajax({
                     url: '{{ route('getEvents') }}',
                     type: 'GET',
                     data: {
                         year: year,
-                        topik: topik,
+                        waktu_pelaksanaan: waktu_pelaksanaan,
                         sumber_dana: sumber_dana,
+                        topik: topik,
                         _token: $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function(data) {
@@ -239,7 +254,7 @@
                 });
             }
 
-            function initializeCalendar(year, topik, sumber_dana) {
+            function initializeCalendar(year, waktu_pelaksanaan, sumber_dana, topik) {
                 var startOfYear = moment(year + '-01-01').format('YYYY-MM-DD');
                 var endOfYear = moment(year + '-12-31').format('YYYY-MM-DD');
 
@@ -270,30 +285,34 @@
                     dayMaxEventRows: true,
                 });
 
-                fetchEvents(year, topik, sumber_dana);
+                fetchEvents(year, waktu_pelaksanaan, sumber_dana, topik);
                 calendar.render();
             }
 
-            function updateURL(year, topik, sumber_dana) {
-                var newUrl = '{{ url('/kalender-pembelajaran') }}/' + year + '/' + topik + '/' + sumber_dana;
+            function updateURL(year, waktu_pelaksanaan, sumber_dana, topik) {
+                var newUrl = '{{ url('/kalender-pembelajaran') }}/' + year + '/' + waktu_pelaksanaan + '/' +
+                    sumber_dana +
+                    '/' + topik;
                 window.history.replaceState({
                     path: newUrl
                 }, '', newUrl);
             }
 
-            $('#tahun, #topik,#sumber_dana').on('change', function() {
+            $('#tahun, #topik,#sumber_dana,#waktu_pelaksanaan').on('change', function() {
                 var selectedYear = $('#tahun').val();
-                var selectedTopik = $('#topik').val();
+                var selectedWaktuPelaksanaan = $('#waktu_pelaksanaan').val();
                 var selectedSumberDana = $('#sumber_dana').val();
-                fetchEvents(selectedYear, selectedTopik, selectedSumberDana);
-                updateURL(selectedYear, selectedTopik, selectedSumberDana);
+                var selectedTopik = $('#topik').val();
+                fetchEvents(selectedYear, selectedWaktuPelaksanaan, selectedSumberDana, selectedTopik);
+                updateURL(selectedYear, selectedWaktuPelaksanaan, selectedSumberDana, selectedTopik);
             });
 
             // Initialize the calendar with the current year and topic or the selected year and topic from the controller
             var initialYear = $('#tahun').val();
-            var initialTopik = $('#topik').val();
+            var initialWaktuPelaksanaan = $('#waktu_pelaksanaan').val();
             var initialSumberDana = $('#sumber_dana').val();
-            initializeCalendar(initialYear, initialTopik, initialSumberDana);
+            var initialTopik = $('#topik').val();
+            initializeCalendar(initialYear, initialWaktuPelaksanaan, initialSumberDana, initialTopik);
         });
     </script>
 
@@ -301,12 +320,13 @@
         $(document).on('click', '#btnExport', function(event) {
             event.preventDefault();
             var initialYear = $('#tahun').val();
-            var initialTopik = $('#topik').val();
+            var initialWaktuPelaksanaan = $('#waktu_pelaksanaan').val();
             var initialSumberDana = $('#sumber_dana').val();
-            exportData(initialYear, initialTopik, initialSumberDana);
+            var initialTopik = $('#topik').val();
+            exportData(initialYear, initialWaktuPelaksanaan, initialSumberDana, initialTopik);
         });
 
-        var exportData = function(year, topik, sumberDana) {
+        var exportData = function(year, waktuPelaksanaan, sumberDana, topik) {
             var url = '/exportKalenderPembelajaran';
             $.ajax({
                 url: url,
@@ -316,8 +336,9 @@
                 },
                 data: {
                     year: year,
-                    topik: topik,
-                    sumber_dana: sumberDana
+                    waktu_pelaksanaan: waktuPelaksanaan,
+                    sumber_dana: sumberDana,
+                    topik: topik
                 },
                 xhrFields: {
                     responseType: 'blob'
@@ -333,13 +354,20 @@
                     });
                 },
                 success: function(data) {
+                    var nameFile;
+                    if (topik === 'All' && sumberDana === 'All') {
+                        nameFile = `Daftar rencana pembelajaran tahunan ${year}.xlsx`;
+                    } else {
+                        var sumberDanaPart = sumberDana !== 'All' ? `pola dana ${sumberDana}` : '';
+                        nameFile =
+                            `Daftar rencana pembelajaran tahunan ${year} ${sumberDanaPart}.xlsx`;
+                    }
+
                     var link = document.createElement('a');
                     link.href = window.URL.createObjectURL(data);
-                    var nameFile = 'Kalender pembelajaran tahun 2024 pola dana RM.xlsx'
-                    console.log(nameFile)
                     link.download = nameFile;
                     link.click();
-                    swal.close()
+                    swal.close();
                 },
                 error: function(data) {
                     console.log(data)

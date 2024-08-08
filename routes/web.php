@@ -56,7 +56,7 @@ Route::middleware(['auth', 'web'])->group(function () {
         Route::get('/kompetensi-api', 'index')->name('kompetensi-api.index');
     });
     Route::controller(KalenderPembelajaranController::class)->group(function () {
-        Route::get('/kalender-pembelajaran/{tahun}/{topik}/{sumber_dana}', 'index')->name('kalender-pembelajaran.index')->where('topik', '.*');
+        Route::get('/kalender-pembelajaran/{tahun}/{waktu_pelaksanaan}/{sumber_dana}/{topik}', 'index')->name('kalender-pembelajaran.index')->where('topik', '.*');
         Route::get('/events', 'getEvents')->name('getEvents');
         Route::get('/exportKalenderPembelajaran', 'exportKalenderPembelajaran')->name('exportKalenderPembelajaran');
     });

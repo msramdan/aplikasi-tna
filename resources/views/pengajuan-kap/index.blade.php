@@ -105,6 +105,17 @@
                                 </div>
                                 <div class="col-md-2">
                                     <div class="input-group mb-2">
+                                        <select name="sumber_dana" id="sumber_dana"
+                                            class="form-control js-example-basic-multiple">
+                                            <option value="All">-- All Sumber dana --</option>
+                                            <option value="RM" {{ $sumberDana == 'RM' ? 'selected' : '' }}>RM</option>
+                                            <option value="PNBP" {{ $sumberDana == 'PNBP' ? 'selected' : '' }}>PNBP
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="input-group mb-2">
                                         <select name="topik" id="topik"
                                             class="form-control js-example-basic-multiple">
                                             <option value="All">-- All Program pembelajaran --</option>
@@ -114,17 +125,6 @@
                                                     {{ $topik->nama_topik }}
                                                 </option>
                                             @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="input-group mb-2">
-                                        <select name="sumber_dana" id="sumber_dana"
-                                            class="form-control js-example-basic-multiple">
-                                            <option value="All">-- All Sumber dana --</option>
-                                            <option value="RM" {{ $sumberDana == 'RM' ? 'selected' : '' }}>RM</option>
-                                            <option value="PNBP" {{ $sumberDana == 'PNBP' ? 'selected' : '' }}>PNBP
-                                            </option>
                                         </select>
                                     </div>
                                 </div>

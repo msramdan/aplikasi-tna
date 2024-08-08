@@ -16,12 +16,14 @@ class ExportKalenderPembelajaran implements FromView, ShouldAutoSize, WithEvents
     public $tahun;
     public $topik;
     public $sumber_dana;
+    public $waktu_pelaksanaan;
 
-    public function __construct($tahun, $topik, $sumber_dana)
+    public function __construct($tahun, $topik, $sumber_dana, $waktu_pelaksanaan)
     {
         $this->tahun = $tahun;
         $this->topik = $topik;
         $this->sumber_dana = $sumber_dana;
+        $this->waktu_pelaksanaan = $waktu_pelaksanaan;
     }
 
 
@@ -47,6 +49,10 @@ class ExportKalenderPembelajaran implements FromView, ShouldAutoSize, WithEvents
 
         if ($this->sumber_dana && $this->sumber_dana != 'All') {
             $query->where('pengajuan_kap.sumber_dana', $this->sumber_dana);
+        }
+
+        if ($this->waktu_pelaksanaan && $this->waktu_pelaksanaan != 'All') {
+            $query->where('pengajuan_kap.frekuensi_pelaksanaan', $this->waktu_pelaksanaan);
         }
 
         $data = $query->select(

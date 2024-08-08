@@ -9,15 +9,16 @@
                     <i class="fa fa-home"></i> <span data-key="t-widgets">{{ __('sidebar.dashboard') }}</span>
                 </a>
             </li>
-            @canany(['kompetensi view','rumpun pembelajaran view','topik view', 'kota view', 'lokasi view', 'ruang kelas view', 'asrama view'])
+            @canany(['kompetensi view', 'rumpun pembelajaran view', 'topik view', 'kota view', 'lokasi view', 'ruang
+                kelas view', 'asrama view'])
                 <li class="nav-item">
-                    <a class="nav-link menu-link {{ request()->routeIs('kompetensi*','rumpun-pembelajaran*','topik*', 'kota*', 'lokasi*', 'ruang-kelas*', 'asrama*') ? 'active' : '' }}"
+                    <a class="nav-link menu-link {{ request()->routeIs('kompetensi*', 'rumpun-pembelajaran*', 'topik*', 'kota*', 'lokasi*', 'ruang-kelas*', 'asrama*') ? 'active' : '' }}"
                         href="#sidebarMasterData" data-bs-toggle="collapse" role="button"
-                        aria-expanded="{{ request()->routeIs('kompetensi*','rumpun-pembelajaran*', 'topik*', 'kota*', 'lokasi*', 'ruang-kelas*', 'asrama*') ? 'true' : 'false' }}"
+                        aria-expanded="{{ request()->routeIs('kompetensi*', 'rumpun-pembelajaran*', 'topik*', 'kota*', 'lokasi*', 'ruang-kelas*', 'asrama*') ? 'true' : 'false' }}"
                         aria-controls="sidebarMasterData">
                         <i class="fa fa-list"></i> <span data-key="t-forms">{{ __('sidebar.master_data') }}</span>
                     </a>
-                    <div class="collapse menu-dropdown {{ request()->routeIs('kompetensi*','rumpun-pembelajaran*', 'topik*', 'kota*', 'lokasi*', 'ruang-kelas*', 'asrama*') ? 'show' : '' }}"
+                    <div class="collapse menu-dropdown {{ request()->routeIs('kompetensi*', 'rumpun-pembelajaran*', 'topik*', 'kota*', 'lokasi*', 'ruang-kelas*', 'asrama*') ? 'show' : '' }}"
                         id="sidebarMasterData">
                         <ul class="nav nav-sm flex-column">
                             @can('kompetensi view')
@@ -186,12 +187,12 @@
             @endcanany
             @php
                 $currentYear = date('Y');
-                $defaultTopik = 'All';
+                $default = 'All';
             @endphp
             @can('kalender pembelajaran view')
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ request()->routeIs('kalender-pembelajaran*') ? 'active' : '' }}"
-                        href="{{ route('kalender-pembelajaran.index', ['tahun' => $currentYear, 'topik' => $defaultTopik, 'sumber_dana' => $defaultTopik]) }}">
+                        href="{{ route('kalender-pembelajaran.index', ['tahun' => $currentYear, 'waktu_pelaksanaan' => $default, 'sumber_dana' => $default, 'topik' => $default]) }}">
                         <i class="fa fa-calendar"></i> <span
                             data-key="t-widgets">{{ __('sidebar.learning_calendar') }}</span>
                     </a>

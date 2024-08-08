@@ -11,12 +11,13 @@ use Maatwebsite\Excel\Facades\Excel;
 class KalenderPembelajaranController extends Controller
 {
 
-    public function index($tahun, $topik, $sumber_dana)
+    public function index($tahun, $waktu_pelaksanaan, $sumber_dana, $topik)
     {
         $topiks = DB::table('topik')->get();
         return view('kalender-pembelajaran.index', [
-            'year' => $tahun,
             'topiks' => $topiks,
+            'year' => $tahun,
+            'waktuPelaksanaan' => $waktu_pelaksanaan,
             'sumberDana' => $sumber_dana,
             'selectedTopik' => $topik,
         ]);
@@ -76,9 +77,10 @@ class KalenderPembelajaranController extends Controller
     public function exportKalenderPembelajaran(Request $request)
     {
         $tahun = $request->query('year');
-        $topik = $request->query('topik');
+        $waktu_pelaksanaan = $request->query('waktu_pelaksanaan');
         $sumber_dana = $request->query('sumber_dana');
+        $topik = $request->query('topik');
         $nameFile = 'Kalender pembelajaran ' . now()->format('Ymd_His') . '.xlsx';
-        return Excel::download(new ExportKalenderPembelajaran($tahun, $topik, $sumber_dana), $nameFile);
+        return Excel::download(new ExportKalenderPembelajaran($tahun, $waktu_pelaksanaan, $sumber_dana, $topik), $nameFile);
     }
 }
