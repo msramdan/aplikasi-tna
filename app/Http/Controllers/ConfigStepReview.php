@@ -21,8 +21,8 @@ class ConfigStepReview extends Controller
         $users = DB::table('users')->get();
         $configSteps = DB::table('config_step_review')->get();
         $steps = [
+            'Biro SDM',
             'Tim Unit Pengelola Pembelajaran',
-            'Keuangan',
             'Penjaminan Mutu',
             'Subkoordinator',
             'Koordinator',
@@ -41,8 +41,8 @@ class ConfigStepReview extends Controller
     public function submitForm(Request $request)
     {
         $steps = [
+            'Biro SDM',
             'Tim Unit Pengelola Pembelajaran',
-            'Keuangan',
             'Penjaminan Mutu',
             'Subkoordinator',
             'Koordinator',
