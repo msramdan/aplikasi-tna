@@ -356,18 +356,18 @@
                 success: function(data) {
                     var nameFile;
                     if (topik === 'All' && sumberDana === 'All') {
-                        nameFile = `Daftar rencana pembelajaran tahunan ${year}.xlsx`;
+                        nameFile = `Daftar rencana pembelajaran ${waktuPelaksanaan} ${year}.xlsx`;
                     } else {
                         var sumberDanaPart = sumberDana !== 'All' ? `pola dana ${sumberDana}` : '';
                         nameFile =
-                            `Daftar rencana pembelajaran tahunan ${year} ${sumberDanaPart}.xlsx`;
+                            `Daftar rencana pembelajaran ${waktuPelaksanaan} ${year} ${sumberDanaPart}.xlsx`;
                     }
 
                     var link = document.createElement('a');
                     link.href = window.URL.createObjectURL(data);
                     link.download = nameFile;
                     link.click();
-                    swal.close();
+                    Swal.close();
                 },
                 error: function(data) {
                     console.log(data)

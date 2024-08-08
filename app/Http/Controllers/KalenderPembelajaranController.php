@@ -26,9 +26,9 @@ class KalenderPembelajaranController extends Controller
     public function getEvents(Request $request)
     {
         $year = $request->input('year');
-        $topik = $request->input('topik');
+        $waktu_pelaksanaan = $request->input('waktu_pelaksanaan');
         $sumber_dana = $request->input('sumber_dana');
-
+        $topik = $request->input('topik');
         $query = DB::table('waktu_tempat')
             ->leftJoin('pengajuan_kap', 'waktu_tempat.pengajuan_kap_id', '=', 'pengajuan_kap.id')
             ->leftJoin('lokasi', 'waktu_tempat.lokasi_id', '=', 'lokasi.id')
@@ -36,13 +36,19 @@ class KalenderPembelajaranController extends Controller
             ->where('pengajuan_kap.tahun', $year)
             ->where('pengajuan_kap.status_pengajuan', 'Approved');
 
-        if ($topik && $topik != 'All') {
-            $query->where('pengajuan_kap.topik_id', $topik);
+        if ($waktu_pelaksanaan && $waktu_pelaksanaan != 'All') {
+            $query->where('pengajuan_kap.frekuensi_pelaksanaan', $waktu_pelaksanaan);
         }
 
         if ($sumber_dana && $sumber_dana != 'All') {
             $query->where('pengajuan_kap.sumber_dana', $sumber_dana);
         }
+
+
+        if ($topik && $topik != 'All') {
+            $query->where('pengajuan_kap.topik_id', $topik);
+        }
+
 
         $events = $query->select(
             'waktu_tempat.tanggal_mulai as start',
@@ -81,6 +87,6 @@ class KalenderPembelajaranController extends Controller
         $sumber_dana = $request->query('sumber_dana');
         $topik = $request->query('topik');
         $nameFile = 'Kalender pembelajaran ' . now()->format('Ymd_His') . '.xlsx';
-        return Excel::download(new ExportKalenderPembelajaran($tahun, $waktu_pelaksanaan, $sumber_dana, $topik), $nameFile);
+        return Excel::download(new ExportKalenderPembelajaran($tahun, $topik, $sumber_dana, $waktu_pelaksanaan), $nameFile);
     }
 }
