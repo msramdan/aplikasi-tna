@@ -117,7 +117,7 @@
                                             <tr>
                                                 <th>#</th>
                                                 <th>{{ __('Tanggal') }}</th>
-                                                <th>{{ __('Topik') }}</th>
+                                                <th>{{ __('Program pembelajaran') }}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
