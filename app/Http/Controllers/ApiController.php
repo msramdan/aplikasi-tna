@@ -64,6 +64,7 @@ class ApiController extends Controller
     public function getKompetensiSupportIK(Request $request)
     {
         $keySortUnit = Auth::user()->key_sort_unit;
+
         try {
             $indikator = $request->input('indikator');
             $data = DB::table('tagging_kompetensi_ik')
@@ -72,7 +73,46 @@ class ApiController extends Controller
                 ->select('kompetensi.id as kompetensi_id', 'kompetensi.nama_kompetensi')
                 ->get();
 
-            return response()->json(['data' => $data]);
+            $kompetensiIds = $data->pluck('kompetensi_id')->toArray();
+
+            // Construct the full endpoint URL with the API token
+            $endpoint = config('stara.map_endpoint') . '/v1/bursa/get-gap-kompetensi-match?api_token=' . config('stara.map_api_token');
+
+            // Send the POST request
+            $response = Http::post($endpoint, [
+                'id_kompetensi' => [
+                    '1',
+                    '2'
+                ],
+                'kode_unit' => $keySortUnit,
+            ]);
+
+            if ($response->failed()) {
+                return response()->json(['message' => 'Failed to hit the external API'], 500);
+            }
+
+            $responseData = $response->json();
+
+            // Extract and process kompetensi_match data
+            $kompetensiMatches = collect();
+
+            foreach ($responseData['result'] as $result) {
+                foreach ($result['kompetensi_match'] as $match) {
+                    $kompetensiMatches->push($match);
+                }
+            }
+
+            // Group by nama_kompetensi and calculate the average persentase_level_kompetensi
+            $groupedData = $kompetensiMatches->groupBy('nama_kompetensi')->map(function ($items) {
+                return [
+                     'kompetensi_id' => $items->first()['id_kompetensi'],
+                    'nama_kompetensi' => $items->first()['nama_kompetensi'],
+                    'average_persentase' => number_format($items->avg('persentase_level_kompetensi'), 2)
+                ];
+            })->values();
+            return response()->json([
+                'kompetensi_summary' => $groupedData,
+            ]);
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 500);
         }

@@ -558,7 +558,7 @@
                         indikator: indikator
                     },
                     success: function(response) {
-                        if (response.data.length === 0) {
+                        if (response.kompetensi_summary.length === 0) {
                             $('#loading-overlay').hide();
                             Swal.fire({
                                 icon: 'warning',
@@ -574,23 +574,23 @@
                             '<div class="table-responsive"><table class="table table-sm table-striped" style="font-size:14px"><thead><tr>';
                         var tableBody = '<tbody>';
                         table +=
-                            '<th>Kompetensi</th><th>Aksi</th></tr></thead>';
-                        $.each(response.data, function(key, value) {
+                            '<th>Kompetensi</th><th>Rata-rata Persentase</th><th>Aksi</th></tr></thead>';
+                        $.each(response.kompetensi_summary, function(key, value) {
                             tableBody += '<tr>';
                             tableBody += '<td>' + value.nama_kompetensi + '</td>';
+                            tableBody += '<td>' + value.average_persentase + '%</td>';
                             tableBody +=
                                 '<td><button type="button" class="btn btn-primary pilihKompetensi btn-sm" data-kompetensi="' +
                                 value.nama_kompetensi + '" data-id="' + value
-                                .kompetensi_id +
-                                '">Pilih</button></td>';
+                                .kompetensi_id + '">Pilih</button></td>';
                             tableBody += '</tr>';
                         });
                         table += tableBody + '</tbody></table></div>';
                         modalBody.append(table);
-
                         $('#kompetensiModal').modal('show');
                         $('#loading-overlay').hide();
                     },
+
                     error: function() {
                         $('#loading-overlay').hide();
                         alert('Terjadi kesalahan saat memuat data.');
