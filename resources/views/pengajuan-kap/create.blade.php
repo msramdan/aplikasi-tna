@@ -490,7 +490,7 @@
                                 tableBody += '<td>' + value.nilai_t + '</td>';
                                 tableBody += '<td>' + value.peran + '</td>';
                                 tableBody +=
-                                    '<td><button type="button" class="btn btn-primary pilihIndikator btn-sm" data-topik="' +
+                                    '<td><button type="button" class="btn btn-primary pilihIndikator btn-sm" data-indikator="' +
                                     value.nama_topik + '">Pilih</button></td>';
                                 tableBody += '</tr>';
                             });
@@ -555,7 +555,6 @@
                     }
                 });
             });
-
 
             $(document).on('click', '.pilihIndikator', function() {
                 $('#kompetensi_id').html(options_temp);
