@@ -117,6 +117,7 @@
     <script src="https://techlaboratory.net/projects/demo/jquery-smart-wizard/v6/js/demo.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/smartwizard@6/dist/js/jquery.smartWizard.min.js" type="text/javascript">
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.all.min.js"></script>
     <script type="text/javascript">
         function onConfirm() {
             let form = document.getElementById('form-3');
@@ -417,8 +418,6 @@
             });
         });
     </script>
-
-
     <script>
         $(document).ready(function() {
             const options_temp = '<option value="" selected disabled>-- Select --</option>';
@@ -445,6 +444,16 @@
                         .replace(':jenisProgram', jenisProgram),
                     type: 'GET',
                     success: function(response) {
+                        if (response.data.length === 0) {
+                            $('#loading-overlay').hide();
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Data Tidak Ditemukan',
+                                text: 'Tidak ada data yang ditemukan untuk Indikator Kinerja',
+                            });
+                            return;
+                        }
+
                         var modalBody = $('#indikatorModal .modal-body');
                         modalBody.empty();
 
@@ -549,6 +558,16 @@
                         indikator: indikator
                     },
                     success: function(response) {
+                        if (response.data.length === 0) {
+                            $('#loading-overlay').hide();
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Data Tidak Ditemukan',
+                                text: 'Tidak ada data yang ditemukan untuk Kompetensi',
+                            });
+                            return;
+                        }
+
                         var modalBody = $('#kompetensiModal .modal-body');
                         modalBody.empty();
                         var table =
