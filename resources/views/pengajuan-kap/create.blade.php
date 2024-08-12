@@ -150,7 +150,7 @@
                 });
 
                 var inputFields = [
-                    'jenis_program', 'kompetensi_id', 'topik_id', 'bentuk_pembelajaran',
+                    'jenis_program', 'topik_id', 'bentuk_pembelajaran',
                     'jalur_pembelajaran', 'model_pembelajaran', 'jenis_pembelajaran',
                     'metode_pembelajaran', 'penyelenggara_pembelajaran', 'prioritas_pembelajaran',
                     'jenjang_pembelajaran', 'peserta_pembelajaran'
@@ -593,7 +593,8 @@
                 var kompetensi = $(this).data('kompetensi');
                 var kompetensi_id = $(this).data('id');
                 getDataTopikSupportKompetensi(kompetensi_id);
-                $('#kompetensi_id').val(kompetensi);
+                $('#kompetensi_text').val(kompetensi);
+                $('#kompetensi_id').val(kompetensi_id);
                 $('#kompetensiModal').modal('hide');
             });
 

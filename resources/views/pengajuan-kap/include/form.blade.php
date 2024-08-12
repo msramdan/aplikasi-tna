@@ -98,9 +98,12 @@
                         <label for="kompetensi_id" class="col-sm-3 col-form-label">Kompetensi</label>
                         <div class="col-sm-6">
                             <div class="input-group">
-                                <input type="text" name="kompetensi_id" id="kompetensi_id"
-                                    class="form-control" placeholder="" required readonly />
-                                <button type="button" id="pilihButtonKompetensi" class="input-group-text btn btn-success">
+                                <input type="text" name="kompetensi_text" id="kompetensi_text" class="form-control"
+                                    placeholder="" required readonly />
+                                <input type="hidden" name="kompetensi_id" id="kompetensi_id" class="form-control"
+                                    placeholder="" required readonly />
+                                <button type="button" id="pilihButtonKompetensi"
+                                    class="input-group-text btn btn-success">
                                     <i class="fa fa-eye" aria-hidden="true"></i> Pilih
                                 </button>
                                 <div class="invalid-feedback">
