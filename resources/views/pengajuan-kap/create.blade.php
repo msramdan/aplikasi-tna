@@ -426,6 +426,7 @@
             $('#jenis_program').change(function() {
                 $('#indikator_kinerja').val('');
                 $('#kompetensi_id').val('');
+                $('#kompetensi_text').val('');
                 $('#topik_id').html(options_temp);
                 $('#pilihButtonKompetensi').prop('disabled', true);
                 var selectedValue = $(this).val();
@@ -601,6 +602,7 @@
             $(document).on('click', '.pilihIndikator', function() {
                 $('#kompetensi_id').html(options_temp);
                 $('#kompetensi_id').val('');
+                $('#kompetensi_text').val('');
                 $('#topik_id').html(options_temp);
                 var indikator = $(this).data('indikator');
                 $('#indikator_kinerja').val(indikator);
