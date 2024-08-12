@@ -23,22 +23,27 @@ class ApiController extends Controller
             }
 
             $tahun = date('Y');
-            $unit_kerja = Auth::user()->kode_unit;
             switch ($jenisProgram) {
                 case 'Renstra':
                     $endpoint = config('stara.endpoint') . '/simaren/indikator-kinerja/es2';
+                    $parameter = 'unit_kerja';
+                    $value = Auth::user()->kode_unit;
                     break;
                 case 'APP':
                     $endpoint = config('stara.endpoint') . '/simaren/topik-app';
+                    $parameter = 'id_unit_kontributor';
+                    $value = Auth::user()->kode_unit;
                     break;
                 case 'APEP':
                     $endpoint = config('stara.endpoint') . '/simaren/topik-apep';
+                    $parameter = 'id_unit_kontributor';
+                    $value = Auth::user()->kode_unit;
                     break;
                 default:
                     return response()->json(['message' => 'Coming soon'], 501);
             }
 
-            $endpoint .= '?tahun=' . urlencode($tahun) . '&unit_kerja=' . urlencode($unit_kerja);
+            $endpoint .= '?tahun=' . urlencode($tahun) . '&' . urlencode($parameter) . '=' . urlencode($value);
 
             $response = Http::withToken($token)->get($endpoint);
 
