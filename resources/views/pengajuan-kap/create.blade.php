@@ -292,60 +292,6 @@
         });
     </script>
 
-    {{-- <script>
-        $(document).ready(function() {
-            function checkCheckboxes() {
-                let anyChecked = $('input[name="fasilitator_pembelajaran[]"]:checked').length > 0;
-
-                if (anyChecked) {
-                    $('input[name="fasilitator_pembelajaran[]"]').removeAttr('required');
-                    $('#invalid-fasilitator').hide();
-                } else {
-                    $('input[name="fasilitator_pembelajaran[]"]').attr('required', 'required');
-                    if ($('input[name="fasilitator_pembelajaran[]"]').is(':focus')) {
-                        $('#invalid-fasilitator').show();
-                    }
-                }
-            }
-
-            $('input[name="fasilitator_pembelajaran[]"]').on('change', function() {
-                checkCheckboxes();
-            });
-
-            // Remove required attribute on load to ensure the message is not displayed initially
-            $('input[name="fasilitator_pembelajaran[]"]').removeAttr('required');
-
-            // Initial check to handle pre-checked checkboxes
-            checkCheckboxes();
-        });
-    </script>
-
-    <script>
-        $(document).ready(function() {
-            function checkInputInstrumen() {
-                let allEmptyInstrumen = true;
-
-                $('input[name="level_evaluasi_instrumen[]"]').each(function() {
-                    if ($(this).val() !== '') {
-                        allEmptyInstrumen = false;
-                        return false; // Break out of the loop
-                    }
-                });
-
-                if (allEmptyInstrumen) {
-                    $('input[name="level_evaluasi_instrumen[]"]').attr('required', 'required');
-                } else {
-                    $('input[name="level_evaluasi_instrumen[]"]').removeAttr('required');
-                }
-            }
-
-            $('input[name="level_evaluasi_instrumen[]"]').on('input', function() {
-                checkInputInstrumen();
-            });
-
-            checkInputInstrumen();
-        });
-    </script> --}}
 
 
     {{-- get Kompetensi Dasar --}}
@@ -479,8 +425,10 @@
         $(document).ready(function() {
             $('#pilihButton').prop('disabled', true);
             $('#pilihButtonKompetensi').prop('disabled', true);
-
             $('#jenis_program').change(function() {
+                $('#indikator_kinerja').val('');
+                $('#kompetensi_id').val('');
+                $('#topik_id').val('');
                 var selectedValue = $(this).val();
                 if (selectedValue !== '') {
                     $('#pilihButton').prop('disabled', false);
@@ -556,7 +504,6 @@
 
                         $('#indikatorModal').modal('show');
                         $('#loading-overlay').hide();
-
                         $('.pilihIndikator').click(function() {
                             $('#pilihButtonKompetensi').prop('disabled', false);
                         });
@@ -590,7 +537,8 @@
                             tableBody += '<td>' + value.nama_kompetensi + '</td>';
                             tableBody +=
                                 '<td><button type="button" class="btn btn-primary pilihKompetensi btn-sm" data-kompetensi="' +
-                                value.nama_kompetensi + '" data-id="' + value.kompetensi_id +
+                                value.nama_kompetensi + '" data-id="' + value
+                                .kompetensi_id +
                                 '">Pilih</button></td>';
                             tableBody += '</tr>';
                         });
@@ -610,6 +558,8 @@
             const options_temp = '<option value="" selected disabled>-- Select --</option>';
             $(document).on('click', '.pilihIndikator', function() {
                 $('#kompetensi_id').html(options_temp);
+                $('#kompetensi_id').val('');
+                $('#topik_id').val('');
                 var indikator = $(this).data('indikator');
                 $('#indikator_kinerja').val(indikator);
                 $('#indikatorModal').modal('hide');
@@ -617,10 +567,9 @@
 
             $(document).on('click', '.pilihKompetensi', function() {
                 $('#topik_id').html(options_temp);
+                $('#topik_id').val('');
                 var kompetensi = $(this).data('kompetensi');
                 var kompetensi_id = $(this).data('id');
-                console.log(kompetensi);
-                console.log(kompetensi_id);
                 getDataTopikSupportKompetensi(kompetensi_id);
                 $('#kompetensi_id').val(kompetensi);
                 $('#kompetensiModal').modal('hide');
