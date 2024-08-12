@@ -59,9 +59,6 @@ class ApiController extends Controller
     public function getKompetensiSupportIK(Request $request)
     {
         $keySortUnit = Auth::user()->key_sort_unit;
-        var_dump($keySortUnit);
-        die();
-
         try {
             $indikator = $request->input('indikator');
             $data = DB::table('tagging_kompetensi_ik')

@@ -578,8 +578,6 @@
                         indikator: indikator
                     },
                     success: function(response) {
-                        console.log(response);
-
                         var modalBody = $('#kompetensiModal .modal-body');
                         modalBody.empty();
                         var table =
@@ -592,10 +590,10 @@
                             tableBody += '<td>' + value.nama_kompetensi + '</td>';
                             tableBody +=
                                 '<td><button type="button" class="btn btn-primary pilihKompetensi btn-sm" data-kompetensi="' +
-                                value.kompetensi + '">Pilih</button></td>';
+                                value.nama_kompetensi + '" data-id="' + value.kompetensi_id +
+                                '">Pilih</button></td>';
                             tableBody += '</tr>';
                         });
-
                         table += tableBody + '</tbody></table></div>';
                         modalBody.append(table);
 
@@ -609,8 +607,6 @@
                 });
             });
 
-
-
             const options_temp = '<option value="" selected disabled>-- Select --</option>';
             $(document).on('click', '.pilihIndikator', function() {
                 $('#kompetensi_id').html(options_temp);
@@ -619,12 +615,16 @@
                 $('#indikatorModal').modal('hide');
             });
 
-            $('#kompetensi_id').change(function() {
+            $(document).on('click', '.pilihKompetensi', function() {
                 $('#topik_id').html(options_temp);
-                if ($(this).val() != "") {
-                    getDataTopikSupportKompetensi($(this).val());
-                }
-            })
+                var kompetensi = $(this).data('kompetensi');
+                var kompetensi_id = $(this).data('id');
+                console.log(kompetensi);
+                console.log(kompetensi_id);
+                getDataTopikSupportKompetensi(kompetensi_id);
+                $('#kompetensi_id').val(kompetensi);
+                $('#kompetensiModal').modal('hide');
+            });
 
             function getDataTopikSupportKompetensi(kompetensi_id) {
                 $.ajax({
