@@ -152,7 +152,8 @@
                 var inputFields = [
                     'jenis_program', 'kompetensi_id', 'topik_id', 'bentuk_pembelajaran',
                     'jalur_pembelajaran', 'model_pembelajaran', 'jenis_pembelajaran',
-                    'metode_pembelajaran', 'penyelenggara_pembelajaran', 'prioritas_pembelajaran','jenjang_pembelajaran','peserta_pembelajaran'
+                    'metode_pembelajaran', 'penyelenggara_pembelajaran', 'prioritas_pembelajaran',
+                    'jenjang_pembelajaran', 'peserta_pembelajaran'
                 ];
 
                 inputFields.forEach(field => {
@@ -477,6 +478,7 @@
     <script>
         $(document).ready(function() {
             $('#pilihButton').prop('disabled', true);
+            $('#pilihButtonKompetensi').prop('disabled', true);
 
             $('#jenis_program').change(function() {
                 var selectedValue = $(this).val();
@@ -495,8 +497,6 @@
                         .replace(':jenisProgram', jenisProgram),
                     type: 'GET',
                     success: function(response) {
-                        console.log(response.data);
-
                         var modalBody = $('#indikatorModal .modal-body');
                         modalBody.empty();
 
@@ -556,6 +556,51 @@
 
                         $('#indikatorModal').modal('show');
                         $('#loading-overlay').hide();
+
+                        $('.pilihIndikator').click(function() {
+                            $('#pilihButtonKompetensi').prop('disabled', false);
+                        });
+                    },
+                    error: function() {
+                        $('#loading-overlay').hide();
+                        alert('Terjadi kesalahan saat memuat data.');
+                    }
+                });
+            });
+
+            $('#pilihButtonKompetensi').click(function() {
+                var indikator = $('#indikator_kinerja').val();
+                $('#loading-overlay').show();
+                $.ajax({
+                    url: '{{ route('getKompetensiSupportIK') }}',
+                    type: 'GET',
+                    data: {
+                        indikator: indikator
+                    },
+                    success: function(response) {
+                        console.log(response);
+
+                        var modalBody = $('#kompetensiModal .modal-body');
+                        modalBody.empty();
+                        var table =
+                            '<div class="table-responsive"><table class="table table-sm table-striped" style="font-size:14px"><thead><tr>';
+                        var tableBody = '<tbody>';
+                        table +=
+                            '<th>Kompetensi</th><th>Aksi</th></tr></thead>';
+                        $.each(response.data, function(key, value) {
+                            tableBody += '<tr>';
+                            tableBody += '<td>' + value.nama_kompetensi + '</td>';
+                            tableBody +=
+                                '<td><button type="button" class="btn btn-primary pilihKompetensi btn-sm" data-kompetensi="' +
+                                value.kompetensi + '">Pilih</button></td>';
+                            tableBody += '</tr>';
+                        });
+
+                        table += tableBody + '</tbody></table></div>';
+                        modalBody.append(table);
+
+                        $('#kompetensiModal').modal('show');
+                        $('#loading-overlay').hide();
                     },
                     error: function() {
                         $('#loading-overlay').hide();
@@ -572,32 +617,7 @@
                 var indikator = $(this).data('indikator');
                 $('#indikator_kinerja').val(indikator);
                 $('#indikatorModal').modal('hide');
-                getDataKompetensiSupportIK(indikator);
             });
-
-            function getDataKompetensiSupportIK(indikator) {
-                $.ajax({
-                    url: '{{ route('getKompetensiSupportIK') }}', // Ganti dengan nama route yang sesuai di Laravel
-                    type: 'GET',
-                    data: {
-                        indikator: indikator
-                    },
-                    beforeSend: function() {
-                        $('#kompetensi_id').prop('disabled', true);
-                    },
-                    success: function(res) {
-                        $('#kompetensi-description').empty();
-                        const options = res.data.map(value => {
-                            return `<option value="${value.kompetensi_id}">${value.nama_kompetensi}</option>`;
-                        });
-                        $('#kompetensi_id').html(options_temp + options.join(''));
-                        $('#kompetensi_id').prop('disabled', false);
-                    },
-                    error: function() {
-                        alert('Terjadi kesalahan saat memuat data kompetensi.');
-                    }
-                });
-            }
 
             $('#kompetensi_id').change(function() {
                 $('#topik_id').html(options_temp);

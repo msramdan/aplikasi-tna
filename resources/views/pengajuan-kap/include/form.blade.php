@@ -15,6 +15,22 @@
     </div>
 </div>
 
+<div class="modal fade" id="kompetensiModal" tabindex="-1" aria-labelledby="kompetensiModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="kompetensiModalLabel">Pilih Kompetensi</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div id="smartwizard" dir="" class="sw sw-theme-arrows sw-justified">
     <ul class="nav nav-progress">
@@ -79,6 +95,22 @@
                     </div>
 
                     <div class="form-group row mb-3">
+                        <label for="kompetensi_id" class="col-sm-3 col-form-label">Kompetensi</label>
+                        <div class="col-sm-6">
+                            <div class="input-group">
+                                <input type="text" name="kompetensi_id" id="kompetensi_id"
+                                    class="form-control" placeholder="" required readonly />
+                                <button type="button" id="pilihButtonKompetensi" class="input-group-text btn btn-success">
+                                    <i class="fa fa-eye" aria-hidden="true"></i> Pilih
+                                </button>
+                                <div class="invalid-feedback">
+                                    Mohon untuk pilih Kompetensi
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- <div class="form-group row mb-3">
                         <label for="kompetensi_id" class="col-sm-3 col-form-label">{{ __('Kompetensi') }}</label>
                         <div class="col-sm-6">
                             <select
@@ -92,7 +124,7 @@
                             <div id="kompetensi-description" class="mt-2">
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <div class="form-group row mb-3">
                         <label for="topik_id" class="col-sm-3 col-form-label">{{ __('Program pembelajaran') }}</label>
