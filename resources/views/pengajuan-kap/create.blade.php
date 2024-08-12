@@ -423,12 +423,13 @@
 
     <script>
         $(document).ready(function() {
+            const options_temp = '<option value="" selected disabled>-- Select --</option>';
             $('#pilihButton').prop('disabled', true);
             $('#pilihButtonKompetensi').prop('disabled', true);
             $('#jenis_program').change(function() {
                 $('#indikator_kinerja').val('');
                 $('#kompetensi_id').val('');
-                $('#topik_id').val('');
+                $('#topik_id').html(options_temp);
                 var selectedValue = $(this).val();
                 if (selectedValue !== '') {
                     $('#pilihButton').prop('disabled', false);
@@ -555,11 +556,11 @@
                 });
             });
 
-            const options_temp = '<option value="" selected disabled>-- Select --</option>';
+
             $(document).on('click', '.pilihIndikator', function() {
                 $('#kompetensi_id').html(options_temp);
                 $('#kompetensi_id').val('');
-                $('#topik_id').val('');
+                $('#topik_id').html(options_temp);
                 var indikator = $(this).data('indikator');
                 $('#indikator_kinerja').val(indikator);
                 $('#indikatorModal').modal('hide');
@@ -567,7 +568,6 @@
 
             $(document).on('click', '.pilihKompetensi', function() {
                 $('#topik_id').html(options_temp);
-                $('#topik_id').val('');
                 var kompetensi = $(this).data('kompetensi');
                 var kompetensi_id = $(this).data('id');
                 getDataTopikSupportKompetensi(kompetensi_id);

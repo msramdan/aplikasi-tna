@@ -110,22 +110,6 @@
                         </div>
                     </div>
 
-                    {{-- <div class="form-group row mb-3">
-                        <label for="kompetensi_id" class="col-sm-3 col-form-label">{{ __('Kompetensi') }}</label>
-                        <div class="col-sm-6">
-                            <select
-                                class="form-control js-example-basic-multiple @error('kompetensi_id') is-invalid @enderror"
-                                name="kompetensi_id" id="kompetensi_id" required>
-                                <option value="" selected disabled>-- {{ __('Select kompetensi') }} --</option>
-                            </select>
-                            <div class="invalid-feedback">
-                                Mohon untuk pilih Kompetensi
-                            </div>
-                            <div id="kompetensi-description" class="mt-2">
-                            </div>
-                        </div>
-                    </div> --}}
-
                     <div class="form-group row mb-3">
                         <label for="topik_id" class="col-sm-3 col-form-label">{{ __('Program pembelajaran') }}</label>
                         <div class="col-sm-6">
