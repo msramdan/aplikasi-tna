@@ -336,8 +336,6 @@
             });
         });
     </script>
-
-
     <script>
         $(document).ready(function() {
             var i = 1;
@@ -482,22 +480,18 @@
                             });
                         } else if (jenisProgram === 'APP') {
                             table +=
-                                '<th>Kategori</th><th>Nama Sektor</th><th>Nama Tema</th><th>Nama Topik</th><th>PJ APP</th><th>ID Unit PJ</th><th>Nama PJ APP</th><th>Unit Kontributor</th><th>TW APP</th><th>Tahun</th><th>Stat Nilai</th><th>Nilai T</th><th>Peran</th><th>Aksi</th></tr></thead>';
+                                '<th>Nama Sektor</th><th>Nama Tema</th><th>Nama Topik</th><th>Nama PJ APP</th><th>Unit Kontributor</th><th>TW APP</th><th>Tahun</th><th>Stat Nilai</th><th>Nilai T</th><th>Aksi</th></tr></thead>';
                             $.each(response.data, function(key, value) {
                                 tableBody += '<tr>';
-                                tableBody += '<td>' + value.kategori + '</td>';
                                 tableBody += '<td>' + value.nama_sektor + '</td>';
                                 tableBody += '<td>' + value.nama_tema + '</td>';
                                 tableBody += '<td>' + value.nama_topik + '</td>';
-                                tableBody += '<td>' + value.pj_app + '</td>';
-                                tableBody += '<td>' + value.id_unit_pj + '</td>';
                                 tableBody += '<td>' + value.nama_pj_app + '</td>';
                                 tableBody += '<td>' + value.unit_kontributor + '</td>';
                                 tableBody += '<td>' + value.tw_app + '</td>';
                                 tableBody += '<td>' + value.tahun + '</td>';
                                 tableBody += '<td>' + value.stat_nilai + '</td>';
                                 tableBody += '<td>' + value.nilai_t + '</td>';
-                                tableBody += '<td>' + value.peran + '</td>';
                                 tableBody +=
                                     '<td><button type="button" class="btn btn-primary pilihIndikator btn-sm" data-indikator="' +
                                     value.nama_topik + '">Pilih</button></td>';
@@ -506,22 +500,18 @@
 
                         } else if (jenisProgram === 'APEP') {
                             table +=
-                                '<th>Kategori</th><th>Nama Sektor</th><th>Nama Tema</th><th>Nama Topik</th><th>PJ APP</th><th>ID Unit PJ</th><th>Nama PJ APP</th><th>Unit Kontributor</th><th>TW APP</th><th>Tahun</th><th>Stat Nilai</th><th>Nilai T</th><th>Peran</th><th>Aksi</th></tr></thead>';
+                                '<th>Nama Sektor</th><th>Nama Tema</th><th>Nama Topik</th><th>Nama PJ APP</th><th>Unit Kontributor</th><th>TW APP</th><th>Tahun</th><th>Stat Nilai</th><th>Nilai T</th><th>Aksi</th></tr></thead>';
                             $.each(response.data, function(key, value) {
                                 tableBody += '<tr>';
-                                tableBody += '<td>' + value.kategori + '</td>';
                                 tableBody += '<td>' + value.nama_sektor + '</td>';
                                 tableBody += '<td>' + value.nama_tema + '</td>';
                                 tableBody += '<td>' + value.nama_topik + '</td>';
-                                tableBody += '<td>' + value.pj_app + '</td>';
-                                tableBody += '<td>' + value.id_unit_pj + '</td>';
                                 tableBody += '<td>' + value.nama_pj_app + '</td>';
                                 tableBody += '<td>' + value.unit_kontributor + '</td>';
                                 tableBody += '<td>' + value.tw_app + '</td>';
                                 tableBody += '<td>' + value.tahun + '</td>';
                                 tableBody += '<td>' + value.stat_nilai + '</td>';
                                 tableBody += '<td>' + value.nilai_t + '</td>';
-                                tableBody += '<td>' + value.peran + '</td>';
                                 tableBody +=
                                     '<td><button type="button" class="btn btn-primary pilihIndikator btn-sm" data-indikator="' +
                                     value.nama_topik + '">Pilih</button></td>';
@@ -587,11 +577,11 @@
                             tableBody += '<td>' + value.nama_kompetensi + '</td>';
 
                             tableBody += '<td>' + value.total_employees +
-                            '</td>'; // Total Karyawan
+                                '</td>'; // Total Karyawan
                             tableBody += '<td>' + value.count_100 +
-                            '</td>'; // Count 100%
+                                '</td>'; // Count 100%
                             tableBody += '<td>' + value.count_less_than_100 +
-                            '</td>'; // Count < 100%
+                                '</td>'; // Count < 100%
                             tableBody += '<td>' + value.average_persentase + '%</td>';
                             tableBody +=
                                 '<td><button type="button" class="btn btn-primary pilihKompetensi btn-sm" data-kompetensi="' +
