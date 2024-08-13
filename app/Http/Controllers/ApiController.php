@@ -74,16 +74,12 @@ class ApiController extends Controller
                 ->get();
 
             $kompetensiIds = $data->pluck('kompetensi_id')->toArray();
-
+            $kompetensiIds = array_map('strval', $kompetensiIds);
             // Construct the full endpoint URL with the API token
             $endpoint = config('stara.map_endpoint') . '/v1/bursa/get-gap-kompetensi-match?api_token=' . config('stara.map_api_token');
-
             // Send the POST request
             $response = Http::post($endpoint, [
-                'id_kompetensi' => [
-                    "1",
-                    "2"
-                ],
+                'id_kompetensi' => $kompetensiIds,
                 'kode_unit' => $keySortUnit,
             ]);
 
