@@ -81,8 +81,8 @@ class ApiController extends Controller
             // Send the POST request
             $response = Http::post($endpoint, [
                 'id_kompetensi' => [
-                    '1',
-                    '2'
+                    "1",
+                    "2"
                 ],
                 'kode_unit' => $keySortUnit,
             ]);
@@ -98,18 +98,34 @@ class ApiController extends Controller
 
             foreach ($responseData['result'] as $result) {
                 foreach ($result['kompetensi_match'] as $match) {
-                    $kompetensiMatches->push($match);
+                    $kompetensiMatches->push([
+                        'id_kompetensi' => $match['id_kompetensi'],
+                        'nama_kompetensi' => $match['nama_kompetensi'],
+                        'persentase_level_kompetensi' => $match['persentase_level_kompetensi'],
+                        'nama' => $result['nama'], // Extract the employee's name
+                    ]);
                 }
             }
 
-            // Group by nama_kompetensi and calculate the average persentase_level_kompetensi
-            $groupedData = $kompetensiMatches->groupBy('nama_kompetensi')->map(function ($items) {
+            // Group by kompetensi_id and calculate the required data
+            $groupedData = $kompetensiMatches->groupBy('id_kompetensi')->map(function ($items) {
+                // Count the number of employees for this kompetensi
+                $totalEmployees = $items->unique('nama')->count();
+
+                // Count how many persentase_level_kompetensi are 100% and less than 100%
+                $count100 = $items->where('persentase_level_kompetensi', 100)->count();
+                $countLessThan100 = $items->where('persentase_level_kompetensi', '<', 100)->count();
+
                 return [
-                     'kompetensi_id' => $items->first()['id_kompetensi'],
+                    'kompetensi_id' => $items->first()['id_kompetensi'],
                     'nama_kompetensi' => $items->first()['nama_kompetensi'],
-                    'average_persentase' => number_format($items->avg('persentase_level_kompetensi'), 2)
+                    'average_persentase' => number_format($items->avg('persentase_level_kompetensi'), 2),
+                    'total_employees' => $totalEmployees,
+                    'count_100' => $count100,
+                    'count_less_than_100' => $countLessThan100
                 ];
             })->values();
+
             return response()->json([
                 'kompetensi_summary' => $groupedData,
             ]);

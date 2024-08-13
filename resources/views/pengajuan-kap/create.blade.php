@@ -574,11 +574,24 @@
                         var table =
                             '<div class="table-responsive"><table class="table table-sm table-striped" style="font-size:14px"><thead><tr>';
                         var tableBody = '<tbody>';
+                        var table =
+                            '<div class="table-responsive"><table class="table table-sm table-striped" style="font-size:14px"><thead><tr>';
+                        var tableBody = '<tbody>';
+
+                        // Update table headers to include the new columns
                         table +=
-                            '<th>Kompetensi</th><th>Rata-rata Persentase</th><th>Aksi</th></tr></thead>';
+                            '<th>Kompetensi</th><th>Total pegawai</th><th>Pegawai kompeten</th><th>Pegawai belum kompeten</th><th>Persentase kompetensi</th><th>Aksi</th></tr></thead>';
+
                         $.each(response.kompetensi_summary, function(key, value) {
                             tableBody += '<tr>';
                             tableBody += '<td>' + value.nama_kompetensi + '</td>';
+
+                            tableBody += '<td>' + value.total_employees +
+                            '</td>'; // Total Karyawan
+                            tableBody += '<td>' + value.count_100 +
+                            '</td>'; // Count 100%
+                            tableBody += '<td>' + value.count_less_than_100 +
+                            '</td>'; // Count < 100%
                             tableBody += '<td>' + value.average_persentase + '%</td>';
                             tableBody +=
                                 '<td><button type="button" class="btn btn-primary pilihKompetensi btn-sm" data-kompetensi="' +
@@ -586,6 +599,7 @@
                                 .kompetensi_id + '">Pilih</button></td>';
                             tableBody += '</tr>';
                         });
+
                         table += tableBody + '</tbody></table></div>';
                         modalBody.append(table);
                         $('#kompetensiModal').modal('show');
