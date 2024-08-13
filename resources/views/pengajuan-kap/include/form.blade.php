@@ -225,7 +225,7 @@
                                             </tr>
                                         @endforeach
                                     @else
-                                        @for ($i = 1; $i <= 10; $i++)
+                                        @for ($i = 1; $i <= 5; $i++)
                                             <tr>
                                                 <td>{{ $i }}</td>
                                                 <td>
