@@ -381,6 +381,10 @@
                 $('#indikator_kinerja').val('');
                 $('#kompetensi_id').val('');
                 $('#kompetensi_text').val('');
+                $('#total_pegawai').val('');
+                $('#pegawai_kompeten').val('');
+                $('#pegawai_belum_kompeten').val('');
+                $('#persentase_kompetensi').val('');
                 $('#topik_id').html(options_temp);
                 $('#pilihButtonKompetensi').prop('disabled', true);
                 var selectedValue = $(this).val();
@@ -531,18 +535,25 @@
                         $.each(response.kompetensi_summary, function(key, value) {
                             tableBody += '<tr>';
                             tableBody += '<td>' + value.nama_kompetensi + '</td>';
-
                             tableBody += '<td>' + value.total_employees +
-                                '</td>'; // Total Karyawan
+                            '</td>'; // Total Karyawan
                             tableBody += '<td>' + value.count_100 +
-                                '</td>'; // Count 100%
+                            '</td>'; // Count 100%
                             tableBody += '<td>' + value.count_less_than_100 +
-                                '</td>'; // Count < 100%
+                            '</td>'; // Count < 100%
                             tableBody += '<td>' + value.average_persentase + '%</td>';
                             tableBody +=
-                                '<td><button type="button" class="btn btn-primary pilihKompetensi btn-sm" data-kompetensi="' +
-                                value.nama_kompetensi + '" data-id="' + value
-                                .kompetensi_id + '">Pilih</button></td>';
+                                '<td><button type="button" class="btn btn-primary pilihKompetensi btn-sm" ' +
+                                'data-kompetensi="' + value.nama_kompetensi + '" ' +
+                                'data-id="' + value.kompetensi_id + '" ' +
+                                'data-total-employees="' + value.total_employees +
+                                '" ' +
+                                'data-count-100="' + value.count_100 + '" ' +
+                                'data-count-less-than-100="' + value
+                                .count_less_than_100 + '" ' +
+                                'data-average-persentase="' + value.average_persentase +
+                                '">' +
+                                'Pilih</button></td>';
                             tableBody += '</tr>';
                         });
 
@@ -563,6 +574,10 @@
                 $('#kompetensi_id').html(options_temp);
                 $('#kompetensi_id').val('');
                 $('#kompetensi_text').val('');
+                $('#total_pegawai').val('');
+                $('#pegawai_kompeten').val('');
+                $('#pegawai_belum_kompeten').val('');
+                $('#persentase_kompetensi').val('');
                 $('#topik_id').html(options_temp);
                 var indikator = $(this).data('indikator');
                 $('#indikator_kinerja').val(indikator);
@@ -573,9 +588,17 @@
                 $('#topik_id').html(options_temp);
                 var kompetensi = $(this).data('kompetensi');
                 var kompetensi_id = $(this).data('id');
+                var total_employees = $(this).data('total-employees');
+                var count_100 = $(this).data('count-100');
+                var count_less_than_100 = $(this).data('count-less-than-100');
+                var average_persentase = $(this).data('average-persentase');
                 getDataTopikSupportKompetensi(kompetensi_id);
                 $('#kompetensi_text').val(kompetensi);
                 $('#kompetensi_id').val(kompetensi_id);
+                $('#total_pegawai').val(total_employees);
+                $('#pegawai_kompeten').val(count_100);
+                $('#pegawai_belum_kompeten').val(count_less_than_100);
+                $('#persentase_kompetensi').val(average_persentase);
                 $('#kompetensiModal').modal('hide');
             });
 

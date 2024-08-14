@@ -113,13 +113,13 @@
                         </div>
                     </div>
 
-                    <input type="text" name="total_pegawai" id="total_pegawai" class="form-control"
+                    <input type="hidden" name="total_pegawai" id="total_pegawai" class="form-control"
                         placeholder="" required readonly />
-                    <input type="text" name="pegawai_kompeten" id="pegawai_kompeten" class="form-control"
+                    <input type="hidden" name="pegawai_kompeten" id="pegawai_kompeten" class="form-control"
                         placeholder="" required readonly />
-                    <input type="text" name="pegawai_belum_kompeten" id="pegawai_belum_kompeten"
+                    <input type="hidden" name="pegawai_belum_kompeten" id="pegawai_belum_kompeten"
                         class="form-control" placeholder="" required readonly />
-                    <input type="text" name="persentase_kompetensi" id="persentase_kompetensi"
+                    <input type="hidden" name="persentase_kompetensi" id="persentase_kompetensi"
                         class="form-control" placeholder="" required readonly />
 
                     <div class="form-group row mb-3">
