@@ -113,6 +113,15 @@
                         </div>
                     </div>
 
+                    <input type="text" name="total_pegawai" id="total_pegawai" class="form-control"
+                        placeholder="" required readonly />
+                    <input type="text" name="pegawai_kompeten" id="pegawai_kompeten" class="form-control"
+                        placeholder="" required readonly />
+                    <input type="text" name="pegawai_belum_kompeten" id="pegawai_belum_kompeten"
+                        class="form-control" placeholder="" required readonly />
+                    <input type="text" name="persentase_kompetensi" id="persentase_kompetensi"
+                        class="form-control" placeholder="" required readonly />
+
                     <div class="form-group row mb-3">
                         <label for="topik_id" class="col-sm-3 col-form-label">{{ __('Program pembelajaran') }}</label>
                         <div class="col-sm-6">

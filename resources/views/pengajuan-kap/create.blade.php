@@ -292,50 +292,6 @@
             checkInputs(); // Initial check on page load
         });
     </script>
-
-    {{-- get Kompetensi Dasar --}}
-    <script>
-        $(document).ready(function() {
-            $('#kompetensi_id').on('change', function() {
-                var kompetensiId = $(this).val();
-                if (kompetensiId) {
-                    // Show spinner
-                    $('#kompetensi-description').html(
-                        '<div class="spinner-border text-primary" role="status">' +
-                        '<span class="visually-hidden">Loading...</span>' +
-                        '</div>'
-                    );
-
-                    $.ajax({
-                        url: '/getKompetensiById/' + kompetensiId,
-                        type: 'GET',
-                        success: function(data) {
-                            if (data.error) {
-                                $('#kompetensi-description').html(
-                                    '<div class="alert alert-danger mt-2" role="alert">' +
-                                    data.error + '</div>');
-                            } else {
-                                $('#kompetensi-description').html(
-                                    '<div class="alert alert-primary mt-2" role="alert">' +
-                                    '<strong>Kompetensi Dasar:</strong><br>' +
-                                    '<div style="text-align: justify">' + data
-                                    .deskripsi_kompetensi + '</div>' +
-                                    '</div>'
-                                );
-                            }
-                        },
-                        error: function() {
-                            $('#kompetensi-description').html(
-                                '<div class="alert alert-danger mt-2" role="alert">Error fetching data.</div>'
-                            );
-                        }
-                    });
-                } else {
-                    $('#kompetensi-description').empty();
-                }
-            });
-        });
-    </script>
     <script>
         $(document).ready(function() {
             var i = 1;

@@ -75,6 +75,14 @@ class ApiController extends Controller
 
             $kompetensiIds = $data->pluck('kompetensi_id')->toArray();
             $kompetensiIds = array_map('strval', $kompetensiIds);
+
+
+            // Check if kompetensiIds is empty
+            if (empty($kompetensiIds)) {
+                return response()->json([
+                    'kompetensi_summary' => [],
+                ]);
+            }
             // Construct the full endpoint URL with the API token
             $endpoint = config('stara.map_endpoint') . '/v1/bursa/get-gap-kompetensi-match?api_token=' . config('stara.map_api_token');
             // Send the POST request

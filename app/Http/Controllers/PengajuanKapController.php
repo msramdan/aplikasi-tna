@@ -150,8 +150,10 @@ class PengajuanKapController extends Controller
         $jalur_pembelajaran = [
             'Pelatihan',
             'Seminar/konferensi/sarasehan',
-            'Kursus', 'Lokakarya (workshop)',
-            'Belajar mandiri', 'Coaching',
+            'Kursus',
+            'Lokakarya (workshop)',
+            'Belajar mandiri',
+            'Coaching',
             'Mentoring',
             'Bimbingan teknis',
             'Sosialisasi',
@@ -188,8 +190,10 @@ class PengajuanKapController extends Controller
         $jalur_pembelajaran = [
             'Pelatihan',
             'Seminar/konferensi/sarasehan',
-            'Kursus', 'Lokakarya (workshop)',
-            'Belajar mandiri', 'Coaching',
+            'Kursus',
+            'Lokakarya (workshop)',
+            'Belajar mandiri',
+            'Coaching',
             'Mentoring',
             'Bimbingan teknis',
             'Sosialisasi',
@@ -358,6 +362,16 @@ class PengajuanKapController extends Controller
                     'updated_at' => now(),
                 ]);
             }
+            // insert table gap_kompetensi_pengajuan_kap
+            DB::table('gap_kompetensi_pengajuan_kap')->insert([
+                'pengajuan_kap_id' => $pengajuanKapId,
+                'total_pegawai' => 1,
+                'pegawai_kompeten' => 1,
+                'pegawai_belum_kompeten' => 1,
+                'persentase_kompetensi' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
 
             foreach ($validatedData['indikator_keberhasilan'] as $index => $row) {
                 DB::table('indikator_keberhasilan_kap')->insert([
