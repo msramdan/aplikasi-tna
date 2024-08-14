@@ -365,10 +365,10 @@ class PengajuanKapController extends Controller
             // insert table gap_kompetensi_pengajuan_kap
             DB::table('gap_kompetensi_pengajuan_kap')->insert([
                 'pengajuan_kap_id' => $pengajuanKapId,
-                'total_pegawai' => 1,
-                'pegawai_kompeten' => 1,
-                'pegawai_belum_kompeten' => 1,
-                'persentase_kompetensi' => 1,
+                'total_pegawai' => $request->total_pegawai,
+                'pegawai_kompeten' => $request->pegawai_kompeten,
+                'pegawai_belum_kompeten' => $request->pegawai_belum_kompeten,
+                'persentase_kompetensi' => $request->persentase_kompetensi,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
