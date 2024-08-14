@@ -113,7 +113,37 @@
             <tr>
                 <td style="vertical-align: top;">{{ __('Kompetensi') }}</td>
                 <td style="vertical-align: top;">:</td>
-                <td style="vertical-align: top;">{{ $pengajuanKap->nama_kompetensi }}</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->nama_kompetensi }}
+                    @if (isset($gap_kompetensi_pengajuan_kap))
+                        <table style="width: 450px; border-collapse: collapse;">
+                            <thead>
+                                <tr>
+                                    <th style="background-color: #f2f2f2; ; padding: 2px;text-align: center;">Total pegawai</th>
+                                    <th style="background-color: #f2f2f2; ; padding: 2px;text-align: center;">Pegawai kompeten</th>
+                                    <th style="background-color: #f2f2f2; ; padding: 2px;text-align: center;">Pegawai belum
+                                        kompeten</th>
+                                    <th style="background-color: #f2f2f2; ; padding: 2px;text-align: center;">Persentase kompetensi
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: center">
+                                        {{ $gap_kompetensi_pengajuan_kap->total_pegawai }}</td>
+                                    <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: center">
+                                        {{ $gap_kompetensi_pengajuan_kap->pegawai_kompeten }}
+                                    </td>
+                                    <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: center">
+                                        {{ $gap_kompetensi_pengajuan_kap->pegawai_belum_kompeten }}
+                                    </td>
+                                    <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: center">
+                                        {{ $gap_kompetensi_pengajuan_kap->persentase_kompetensi }}
+                                        %</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td style="vertical-align: top;">{{ __('Program pembelajaran') }}</td>

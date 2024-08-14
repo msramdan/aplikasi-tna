@@ -153,6 +153,7 @@
             background-color: #ffbe0b;
             opacity: 0.2;
         }
+
         @keyframes pulse {
             0% {
                 box-shadow: 0 0 0 0 rgba(128, 128, 128, 0.7);
@@ -290,9 +291,38 @@
 
                                         <tr>
                                             <td class="fw-bold">{{ __('Kompetensi') }}</td>
-                                            <td>{{ $pengajuanKap->nama_kompetensi ?: '-' }}</td>
+                                            <td>{{ $pengajuanKap->nama_kompetensi ?: '-' }}
+                                                @if (isset($gap_kompetensi_pengajuan_kap))
+                                                    <table class="table table-bordered table-sm">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col" class="text-center">Total pegawai</th>
+                                                                <th scope="col" class="text-center">Pegawai kompeten</th>
+                                                                <th scope="col" class="text-center">Pegawai belum
+                                                                    kompeten</th>
+                                                                <th scope="col" class="text-center">Persentase kompetensi
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="text-center">
+                                                                    {{ $gap_kompetensi_pengajuan_kap->total_pegawai }}</td>
+                                                                <td class="text-center">
+                                                                    {{ $gap_kompetensi_pengajuan_kap->pegawai_kompeten }}
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    {{ $gap_kompetensi_pengajuan_kap->pegawai_belum_kompeten }}
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    {{ $gap_kompetensi_pengajuan_kap->persentase_kompetensi }}
+                                                                    %</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                @endif
+                                            </td>
                                         </tr>
-
                                         <tr>
                                             <td class="fw-bold">{{ __('Program pembelajaran') }}</td>
                                             <td>{{ $pengajuanKap->nama_topik ?: '-' }}</td>
@@ -312,7 +342,7 @@
                                             <td class="fw-bold">{{ __('Indikator Keberhasilan') }}</td>
                                             <td>
                                                 @if (!$indikator_keberhasilan_kap->isEmpty())
-                                                    <table class="table table-striped table-sm">
+                                                    <table class="table table-bordered table-sm">
                                                         <thead>
                                                             <tr>
                                                                 <th scope="col">#</th>
@@ -340,7 +370,8 @@
                                         </tr>
 
                                         <tr>
-                                            <td class="fw-bold">{{ __('Penugasan Yang Terkait Dengan Pembelajaran') }}</td>
+                                            <td class="fw-bold">{{ __('Penugasan Yang Terkait Dengan Pembelajaran') }}
+                                            </td>
                                             <td>{{ $pengajuanKap->penugasan_yang_terkait_dengan_pembelajaran ?: '-' }}</td>
                                         </tr>
 

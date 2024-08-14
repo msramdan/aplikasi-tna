@@ -570,6 +570,9 @@ class PengajuanKapController extends Controller
             ->where('remark', $currentStepRemark)
             ->where('user_review_id', Auth::id())
             ->exists();
+        $gap_kompetensi_pengajuan_kap = DB::table('gap_kompetensi_pengajuan_kap')
+            ->where('pengajuan_kap_id', $id)
+            ->first();
 
         return view('pengajuan-kap.show', [
             'pengajuanKap' => $pengajuanKap,
@@ -580,7 +583,8 @@ class PengajuanKapController extends Controller
             'is_bpkp' => $is_bpkp,
             'frekuensi' => $frekuensi,
             'currentStepRemark' => $currentStepRemark,
-            'userHasAccess' => $userHasAccess
+            'userHasAccess' => $userHasAccess,
+            'gap_kompetensi_pengajuan_kap' => $gap_kompetensi_pengajuan_kap
         ]);
     }
 
@@ -750,6 +754,9 @@ class PengajuanKapController extends Controller
             ->where('waktu_tempat.pengajuan_kap_id', $id)
             ->select('waktu_tempat.*', 'lokasi.nama_lokasi')
             ->get();
+        $gap_kompetensi_pengajuan_kap = DB::table('gap_kompetensi_pengajuan_kap')
+            ->where('pengajuan_kap_id', $id)
+            ->first();
 
         $pdf = PDF::loadview('pengajuan-kap.pdf', [
             'pengajuanKap' => $pengajuanKap,
@@ -759,6 +766,7 @@ class PengajuanKapController extends Controller
             'waktu_tempat' => $waktu_tempat,
             'is_bpkp' => $is_bpkp,
             'frekuensi' => $frekuensi,
+            'gap_kompetensi_pengajuan_kap' => $gap_kompetensi_pengajuan_kap
         ]);
         return $pdf->stream('pengajuan-kap.pdf');
     }
