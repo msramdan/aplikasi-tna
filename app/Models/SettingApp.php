@@ -19,14 +19,15 @@ class SettingApp extends Model
     protected $fillable = [
         'aplication_name',
         'logo',
-        'favicon'
+        'favicon',
+        'is_maintenance'
     ];
 
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
             ->useLogName('log_setting_app')
-            ->logOnly(['aplication_name', 'logo', 'favicon'])
+            ->logOnly(['aplication_name', 'logo', 'favicon','is_maintenance'])
             ->logOnlyDirty()
             ->dontSubmitEmptyLogs();
     }

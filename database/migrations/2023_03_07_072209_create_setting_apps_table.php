@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('aplication_name', 150);
             $table->string('logo', 200);
             $table->string('favicon', 200);
+            $table->enum('is_maintenance', ['Yes', 'No']);
             $table->timestamps();
         });
     }

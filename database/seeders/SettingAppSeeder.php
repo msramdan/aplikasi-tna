@@ -14,6 +14,7 @@ class SettingAppSeeder extends Seeder
             'aplication_name' => 'Aplikasi TNA',
             'logo' => '',
             'favicon' => '',
+            'is_maintenance' => 'No',
         ]);
     }
 }

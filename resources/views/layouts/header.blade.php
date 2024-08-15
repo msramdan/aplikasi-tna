@@ -2,8 +2,8 @@
     <meta charset="utf-8" />
     <title>{{ setting_web()->aplication_name }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
-    <meta content="Themesbrand" name="author" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
     <link rel="icon"
         @if (setting_web()->favicon != null) href="{{ Storage::url('public/img/setting_app/') . setting_web()->favicon }}" @endif
         type="image/x-icon">

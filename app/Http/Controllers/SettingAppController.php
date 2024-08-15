@@ -53,6 +53,7 @@ class SettingAppController extends Controller
 
         $setting_app->update([
             'aplication_name' => $request->aplication_name,
+            'is_maintenance' => $request->is_maintenance,
         ]);
 
         Alert::toast('The settingApp was updated successfully.', 'success');

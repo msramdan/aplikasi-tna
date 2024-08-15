@@ -28,13 +28,15 @@ use App\Http\Controllers\{
 };
 use App\Http\Controllers\Auth\OtpController;
 
+Route::get('/maintenance', function () {
+    return view('maintenance');
+})->name('maintenance')->middleware('redirect.if.not.maintenance');
 
-Route::get('/localization/{language}', [LocalizationController::class, 'switch'])->name('localization.switch');
-Route::get('/dashboard', function () {
-    return redirect()->route('dashboard');
-});
-
-Route::middleware(['auth', 'web'])->group(function () {
+Route::middleware(['auth', 'web', 'check.maintenance'])->group(function () {
+    Route::get('/dashboard', function () {
+        return redirect()->route('dashboard');
+    });
+    Route::get('/localization/{language}', [LocalizationController::class, 'switch'])->name('localization.switch');
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile', ProfileController::class)->name('profile');
     Route::resource('users', UserController::class);

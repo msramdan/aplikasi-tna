@@ -43,6 +43,25 @@
                     </span>
                 @enderror
             </div>
+
+            <div class="col-md-12 mb-3">
+                <label for="is_maintenance">Is Maintenance</label>
+                <select class="form-control js-example-basic-multiple @error('is_maintenance') is-invalid @enderror" name="is_maintenance"
+                    id="is_maintenance" required>
+                    <option value="" selected disabled>-- Pilih --</option>
+                    <option value="Yes"
+                        {{ isset($settingApp) && $settingApp->is_maintenance == 'Yes' ? 'selected' : (old('is_maintenance') == 'Yes' ? 'selected' : '') }}>
+                        Yes</option>
+                    <option value="No"
+                        {{ isset($settingApp) && $settingApp->is_maintenance == 'No' ? 'selected' : (old('is_maintenance') == 'No' ? 'selected' : '') }}>
+                        No</option>
+                </select>
+                @error('is_maintenance')
+                    <span class="text-danger">
+                        {{ $message }}
+                    </span>
+                @enderror
+            </div>
         </div>
     </div>
 </div>
