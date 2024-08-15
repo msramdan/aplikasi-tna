@@ -72,7 +72,7 @@
                                 </div>
                                 <div class="mt-5">
                                     <h4>Silakan kembali beberapa saat lagi !</h4>
-                                    <p class="text-muted">Jika Anda memiliki pertanyaan atau memerlukan bantuan, silakan hubungi admin aplikasi dengan mengklik tombol di pojok kanan bawah.</p>
+                                    {{-- <p class="text-muted">Jika Anda memiliki pertanyaan atau memerlukan bantuan, silakan hubungi admin aplikasi dengan mengklik tombol di pojok kanan bawah.</p> --}}
                                     <div class="progress-bar-wrapper">
                                         <div class="progress-bar"></div>
                                     </div>
