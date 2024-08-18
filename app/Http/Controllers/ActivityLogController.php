@@ -108,11 +108,14 @@ class ActivityLogController extends Controller
 
         $arrLog = [
             'log_auth',
-            'log_jadwal_kap_tahunan',
             'log_kompetensi',
-            'log_setting_app',
+            'log_rumpun_pembelajaran',
             'log_topik_pembelajaran',
             'log_users',
+            'log_role',
+            'log_jadwal_kap_tahunan',
+            'log_setting_app',
+            'log_backup_database',
         ];
 
         return view('activity_log.index', [
