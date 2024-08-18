@@ -9,8 +9,16 @@
                     <i class="fa fa-home"></i> <span data-key="t-widgets">{{ __('sidebar.dashboard') }}</span>
                 </a>
             </li>
-            @canany(['kompetensi view', 'rumpun pembelajaran view', 'topik view', 'kota view', 'lokasi view', 'ruang
-                kelas view', 'asrama view'])
+            @canany([
+                'kompetensi view',
+                'rumpun pembelajaran view',
+                'topik view',
+                'kota view',
+                'lokasi view',
+                'ruang
+                kelas view',
+                'asrama view',
+                ])
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ request()->routeIs('kompetensi*', 'rumpun-pembelajaran*', 'topik*', 'kota*', 'lokasi*', 'ruang-kelas*', 'asrama*') ? 'active' : '' }}"
                         href="#sidebarMasterData" data-bs-toggle="collapse" role="button"
@@ -195,6 +203,15 @@
                         href="{{ route('kalender-pembelajaran.index', ['tahun' => $currentYear, 'waktu_pelaksanaan' => $default, 'sumber_dana' => $default, 'topik' => $default]) }}">
                         <i class="fa fa-calendar"></i> <span
                             data-key="t-widgets">{{ __('sidebar.learning_calendar') }}</span>
+                    </a>
+                </li>
+            @endcan
+
+            @can('sinkronisasi view')
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ request()->routeIs('kalender-pembelajaran*') ? 'active' : '' }}"
+                        href="{{ route('kalender-pembelajaran.index', ['tahun' => $currentYear, 'waktu_pelaksanaan' => $default, 'sumber_dana' => $default, 'topik' => $default]) }}">
+                        <i class="fa fa-refresh"></i> <span data-key="t-widgets">Sync Pusdiklatwas</span>
                     </a>
                 </li>
             @endcan

@@ -198,6 +198,7 @@ return [
         ['group' => 'pengajuan kap', 'access' => ['pengajuan kap view', 'pengajuan kap create', 'pengajuan kap edit', 'pengajuan kap delete', 'pengajuan kap skiped']],
         ['group' => 'activity log', 'access' => ['activity log view']],
         ['group' => 'backup database', 'access' => ['backup database view']],
+        ['group' => 'sync pusdiklatwas ', 'access' => ['sinkronisasi view']],
         ['group' => 'config step review', 'access' => ['config step review view', 'config step review edit']],
     ],
 ];
