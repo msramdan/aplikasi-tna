@@ -114,6 +114,7 @@ class ActivityLogController extends Controller
             'log_users',
             'log_role',
             'log_jadwal_kap_tahunan',
+            'log_config_step_review',
             'log_setting_app',
             'log_backup_database',
         ];
