@@ -20,13 +20,13 @@
                 'asrama view',
                 ])
                 <li class="nav-item">
-                    <a class="nav-link menu-link {{ request()->routeIs('kompetensi*', 'rumpun-pembelajaran*', 'topik*', 'kota*', 'lokasi*', 'ruang-kelas*', 'asrama*') ? 'active' : '' }}"
+                    <a class="nav-link menu-link {{ request()->routeIs('kompetensi*', 'rumpun-pembelajaran*', 'topik*') ? 'active' : '' }}"
                         href="#sidebarMasterData" data-bs-toggle="collapse" role="button"
-                        aria-expanded="{{ request()->routeIs('kompetensi*', 'rumpun-pembelajaran*', 'topik*', 'kota*', 'lokasi*', 'ruang-kelas*', 'asrama*') ? 'true' : 'false' }}"
+                        aria-expanded="{{ request()->routeIs('kompetensi*', 'rumpun-pembelajaran*', 'topik*') ? 'true' : 'false' }}"
                         aria-controls="sidebarMasterData">
                         <i class="fa fa-list"></i> <span data-key="t-forms">{{ __('sidebar.master_data') }}</span>
                     </a>
-                    <div class="collapse menu-dropdown {{ request()->routeIs('kompetensi*', 'rumpun-pembelajaran*', 'topik*', 'kota*', 'lokasi*', 'ruang-kelas*', 'asrama*') ? 'show' : '' }}"
+                    <div class="collapse menu-dropdown {{ request()->routeIs('kompetensi*', 'rumpun-pembelajaran*', 'topik*') ? 'show' : '' }}"
                         id="sidebarMasterData">
                         <ul class="nav nav-sm flex-column">
                             @can('kompetensi view')
@@ -48,34 +48,6 @@
                                     <a href="{{ route('topik.index') }}"
                                         class="nav-link {{ request()->routeIs('topik*') ? 'active' : '' }}"
                                         data-key="t-basic-elements">{{ __('sidebar.learning') }}</a>
-                                </li>
-                            @endcan
-                            @can('kota view')
-                                <li class="nav-item">
-                                    <a href="{{ route('kota.index') }}"
-                                        class="nav-link {{ request()->routeIs('kota*') ? 'active' : '' }}"
-                                        data-key="t-basic-elements">{{ __('sidebar.city_list') }}</a>
-                                </li>
-                            @endcan
-                            @can('lokasi view')
-                                <li class="nav-item">
-                                    <a href="{{ route('lokasi.index') }}"
-                                        class="nav-link {{ request()->routeIs('lokasi*') ? 'active' : '' }}"
-                                        data-key="t-basic-elements">{{ __('sidebar.location') }}</a>
-                                </li>
-                            @endcan
-                            @can('ruang kelas view')
-                                <li class="nav-item">
-                                    <a href="{{ route('ruang-kelas.index') }}"
-                                        class="nav-link {{ request()->routeIs('ruang-kelas*') ? 'active' : '' }}"
-                                        data-key="t-basic-elements">{{ __('sidebar.classroom') }}</a>
-                                </li>
-                            @endcan
-                            @can('asrama view')
-                                <li class="nav-item">
-                                    <a href="{{ route('asrama.index') }}"
-                                        class="nav-link {{ request()->routeIs('asrama*') ? 'active' : '' }}"
-                                        data-key="t-basic-elements">{{ __('sidebar.dormitory') }}</a>
                                 </li>
                             @endcan
                         </ul>

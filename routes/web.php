@@ -8,18 +8,14 @@ use App\Http\Controllers\{
     RoleAndPermissionController,
     ActivityLogController,
     ApiController,
-    AsramaController,
     BackupController,
     JadwalKapTahunanController,
     KalenderPembelajaranController,
     KompetensiController,
     KompetensiApiController,
-    KotaController,
     LocalizationController,
-    LokasiController,
     PengajuanKapController,
     ReportingController,
-    RuangKelasController,
     SettingAppController,
     ConfigStepReview,
     TaggingPembelajaranKompetensiController,
@@ -63,10 +59,6 @@ Route::middleware(['auth', 'web', 'check.maintenance'])->group(function () {
         Route::get('/exportKalenderPembelajaran', 'exportKalenderPembelajaran')->name('exportKalenderPembelajaran');
     });
     Route::resource('reporting', ReportingController::class);
-    Route::resource('kota', KotaController::class);
-    Route::resource('lokasi', LokasiController::class);
-    Route::resource('ruang-kelas', RuangKelasController::class);
-    Route::resource('asrama', AsramaController::class);
     Route::resource('topik', TopikController::class);
     Route::controller(TopikController::class)->group(function () {
         Route::get('/exportTopik', 'exportTopik')->name('exportTopik');
