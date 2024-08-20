@@ -40,6 +40,10 @@ class RoleAndPermissionSeeder extends Seeder
             'kalender pembelajaran edit',
             'kalender pembelajaran delete',
             'pengajuan kap view',
+            'kompetensi view',
+            'topik view',
+            'rumpun pembelajaran view',
+
         ];
         foreach ($permissionAdminUnit as $x) {
             $roleAdminUnit->givePermissionTo($x);
@@ -52,6 +56,9 @@ class RoleAndPermissionSeeder extends Seeder
         $permissionUser = [
             'kalender pembelajaran view',
             'pengajuan kap view',
+            'kompetensi view',
+            'topik view',
+            'rumpun pembelajaran view',
         ];
         foreach ($permissionUser as $y) {
             $roleUser->givePermissionTo($y);
