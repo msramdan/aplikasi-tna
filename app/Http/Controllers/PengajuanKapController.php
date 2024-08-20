@@ -167,13 +167,13 @@ class PengajuanKapController extends Controller
             'Library cafe',
             'Magang/praktik kerja'
         ];
-        $lokasiData = DB::table('lokasi')->get();
+        // $lokasiData = DB::table('lokasi')->get();
         return view('pengajuan-kap.create', [
             'is_bpkp' => $is_bpkp,
             'frekuensi' => $frekuensi,
             'jenis_program' => $jenis_program,
             'jalur_pembelajaran' => $jalur_pembelajaran,
-            'lokasiData' => $lokasiData,
+            // 'lokasiData' => $lokasiData,
         ]);
     }
 

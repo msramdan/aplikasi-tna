@@ -30,13 +30,13 @@ class ApiController extends Controller
                     $value = Auth::user()->kode_unit;
                     break;
                 case 'APP':
-                    $endpoint = config('stara.endpoint') . '/simaren/topik-app';
-                    $parameter = 'id_unit_kontributor';
+                    $endpoint = config('stara.endpoint') . '/simaren/topik-app-pjtopik';
+                    $parameter = 'id_unit_pj';
                     $value = Auth::user()->kode_unit;
                     break;
                 case 'APEP':
-                    $endpoint = config('stara.endpoint') . '/simaren/topik-apep';
-                    $parameter = 'id_unit_kontributor';
+                    $endpoint = config('stara.endpoint') . '/simaren/topik-apep-pjtopik';
+                    $parameter = 'id_unit_pj';
                     $value = Auth::user()->kode_unit;
                     break;
                 default:

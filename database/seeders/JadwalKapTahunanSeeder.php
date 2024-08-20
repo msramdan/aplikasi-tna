@@ -12,7 +12,7 @@ class JadwalKapTahunanSeeder extends Seeder
     {
         $now = Carbon::now();
         $startDate = $now->copy()->startOfMonth()->addMonth();
-        $endDate = $startDate->copy()->addMonth()->subDay(); // Menghitung tanggal akhir (sebulan dari startDate)
+        $endDate = $startDate->copy()->addMonth()->subDay();
 
         DB::table('jadwal_kap_tahunan')->insert([
             'tahun' => $now->year,

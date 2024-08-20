@@ -324,12 +324,6 @@
                                                             required>
                                                             <option value="" selected disabled>-- Pilih --
                                                             </option>
-                                                            @foreach ($lokasiData as $lokasi)
-                                                                <option value="{{ $lokasi->id }}"
-                                                                    {{ $lokasi->id == $row->lokasi_id ? 'selected' : '' }}>
-                                                                    {{ $lokasi->nama_lokasi }}
-                                                                </option>
-                                                            @endforeach
                                                         </select>
                                                     </td>
                                                     <td>
@@ -357,10 +351,6 @@
                                                     class="form-control @error('lokasi') is-invalid @enderror"
                                                     @if (!isset($pengajuanKap)) required @endif>
                                                     <option value="" selected disabled>-- Pilih --</option>
-                                                    @foreach ($lokasiData as $lokasi)
-                                                        <option value="{{ $lokasi->id }}">
-                                                            {{ $lokasi->nama_lokasi }}</option>
-                                                    @endforeach
                                                 </select>
                                             </td>
                                             <td>

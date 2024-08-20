@@ -346,25 +346,6 @@
                 calculateAlokasiWaktu();
             });
 
-            $('#add_waktu_tempat').click(function() {
-                i++;
-                var newRow = '<tr id="row' + i + '">' +
-                    '<td>' +
-                    '<select name="tempat_acara[]" class="form-control" required>' +
-                    '<option value="" selected disabled>-- Pilih --</option>' +
-                    '@foreach ($lokasiData as $lokasi)' +
-                    '<option value="{{ $lokasi->id }}">{{ $lokasi->nama_lokasi }}</option>' +
-                    '@endforeach' +
-                    '</select>' +
-                    '</td>' +
-                    '<td><input type="date" name="tanggal_mulai[]" class="form-control tanggal_mulai" required /></td>' +
-                    '<td><input type="date" name="tanggal_selesai[]" class="form-control tanggal_selesai" required /></td>' +
-                    '<td><button type="button" name="remove" id="' + i +
-                    '" class="btn btn-danger btn_remove">X</button></td>' +
-                    '</tr>';
-                $('#dynamic_field').append(newRow);
-            });
-
             $(document).on('click', '.btn_remove', function() {
                 var button_id = $(this).attr("id");
                 $('#row' + button_id + '').remove();
@@ -440,14 +421,13 @@
                             });
                         } else if (jenisProgram === 'APP') {
                             table +=
-                                '<th>Nama Sektor</th><th>Nama Tema</th><th>Nama Topik</th><th>Nama PJ APP</th><th>Unit Kontributor</th><th>TW APP</th><th>Tahun</th><th>Stat Nilai</th><th>Nilai T</th><th>Aksi</th></tr></thead>';
+                                '<th>Nama Sektor</th><th>Nama Tema</th><th>Nama Topik</th><th>Nama PJ APP</th><th>TW APP</th><th>Tahun</th><th>Stat Nilai</th><th>Nilai T</th><th>Aksi</th></tr></thead>';
                             $.each(response.data, function(key, value) {
                                 tableBody += '<tr>';
                                 tableBody += '<td>' + value.nama_sektor + '</td>';
                                 tableBody += '<td>' + value.nama_tema + '</td>';
                                 tableBody += '<td>' + value.nama_topik + '</td>';
                                 tableBody += '<td>' + value.nama_pj_app + '</td>';
-                                tableBody += '<td>' + value.unit_kontributor + '</td>';
                                 tableBody += '<td>' + value.tw_app + '</td>';
                                 tableBody += '<td>' + value.tahun + '</td>';
                                 tableBody += '<td>' + value.stat_nilai + '</td>';
@@ -460,14 +440,13 @@
 
                         } else if (jenisProgram === 'APEP') {
                             table +=
-                                '<th>Nama Sektor</th><th>Nama Tema</th><th>Nama Topik</th><th>Nama PJ APP</th><th>Unit Kontributor</th><th>TW APP</th><th>Tahun</th><th>Stat Nilai</th><th>Nilai T</th><th>Aksi</th></tr></thead>';
+                                '<th>Nama Sektor</th><th>Nama Tema</th><th>Nama Topik</th><th>Nama PJ APP</th><th>TW APP</th><th>Tahun</th><th>Stat Nilai</th><th>Nilai T</th><th>Aksi</th></tr></thead>';
                             $.each(response.data, function(key, value) {
                                 tableBody += '<tr>';
                                 tableBody += '<td>' + value.nama_sektor + '</td>';
                                 tableBody += '<td>' + value.nama_tema + '</td>';
                                 tableBody += '<td>' + value.nama_topik + '</td>';
                                 tableBody += '<td>' + value.nama_pj_app + '</td>';
-                                tableBody += '<td>' + value.unit_kontributor + '</td>';
                                 tableBody += '<td>' + value.tw_app + '</td>';
                                 tableBody += '<td>' + value.tahun + '</td>';
                                 tableBody += '<td>' + value.stat_nilai + '</td>';
