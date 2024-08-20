@@ -73,14 +73,31 @@ class ConfigStepReview extends Controller
                     'created_at' => now(),
                     'updated_at' => now()
                 ]);
+
+                // Log the addition activity
+                activity()
+                    ->useLog('log_config_step_review')
+                    ->causedBy(auth()->user())
+                    ->withProperties(['remark' => $remark, 'user_review_id' => $userId])
+                    ->log("User ID {$userId} ditambahkan ke config review {$remark}");
             }
 
             // Remove user IDs that are no longer selected
-            DB::table('config_step_review')
-                ->where('remark', $remark)
-                ->whereIn('user_review_id', $userIdsToRemove)
-                ->delete();
+            foreach ($userIdsToRemove as $userId) {
+                DB::table('config_step_review')
+                    ->where('remark', $remark)
+                    ->where('user_review_id', $userId)
+                    ->delete();
+
+                // Log the removal activity
+                activity()
+                    ->useLog('log_config_step_review')
+                    ->causedBy(auth()->user())
+                    ->withProperties(['remark' => $remark, 'user_review_id' => $userId])
+                    ->log("User ID {$userId} dihapus dari config review {$remark}");
+            }
         }
+
         Alert::toast('Config review berhasil diupdate', 'success');
         return redirect()->back();
     }

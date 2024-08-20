@@ -19,5 +19,6 @@ class DatabaseSeeder extends Seeder
         $this->call(AkademiSeeder::class);
         $this->call(KategoriKompetensiSeeder::class);
         $this->call(RumpunPembelajaranSeeder::class);
+        $this->call(JadwalKapTahunanSeeder::class);
     }
 }
