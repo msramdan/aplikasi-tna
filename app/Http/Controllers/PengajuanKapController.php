@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PengajuanKap;
-use App\Http\Requests\{StorePengajuanKapRequest, UpdatePengajuanKapRequest};
 use Yajra\DataTables\Facades\DataTables;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
-use Composer\Semver\Interval;
 use PDF;
+
 
 
 class PengajuanKapController extends Controller
@@ -122,17 +120,13 @@ class PengajuanKapController extends Controller
     public function create($is_bpkp, $frekuensi)
     {
         if ($frekuensi === 'Tahunan') {
-            // Ambil tanggal hari ini
             $today = now()->toDateString();
-
-            // Ambil jadwal KAP tahunan yang aktif
             $jadwalKapTahunan = DB::table('jadwal_kap_tahunan')
                 ->whereDate('tanggal_mulai', '<=', $today)
                 ->whereDate('tanggal_selesai', '>=', $today)
                 ->orderBy('id', 'desc')
                 ->first();
 
-            // Jika jadwal KAP tahunan tidak ditemukan
             if (!$jadwalKapTahunan) {
                 Alert::info('Informasi', 'Jadwal pengajuan KAP tahunan telah berakhir / belum dibuka oleh admin.');
                 return redirect()->back();
@@ -167,13 +161,34 @@ class PengajuanKapController extends Controller
             'Library cafe',
             'Magang/praktik kerja'
         ];
-        // $lokasiData = DB::table('lokasi')->get();
+
+        $endpoint_pusdiklatwap = config('stara.endpoint_pusdiklatwap');
+        $api_key_pusdiklatwap = config('stara.api_token_pusdiklatwap');
+        $metode_data = callApiPusdiklatwas($endpoint_pusdiklatwap . '/metode', [
+            'api_key' => $api_key_pusdiklatwap
+        ]);
+
+        if (isset($metode_data['error'])) {
+            Alert::error('Error', $metode_data['error']);
+            return redirect()->back();
+        }
+
+        $diklatType_data = callApiPusdiklatwas($endpoint_pusdiklatwap . '/diklatType', [
+            'api_key' => $api_key_pusdiklatwap
+        ]);
+
+        if (isset($diklatType_data['error'])) {
+            Alert::error('Error', $diklatType_data['error']);
+            return redirect()->back();
+        }
+
         return view('pengajuan-kap.create', [
             'is_bpkp' => $is_bpkp,
             'frekuensi' => $frekuensi,
             'jenis_program' => $jenis_program,
             'jalur_pembelajaran' => $jalur_pembelajaran,
-            // 'lokasiData' => $lokasiData,
+            'metode_data' => $metode_data,
+            'diklatType_data' => $diklatType_data,
         ]);
     }
 

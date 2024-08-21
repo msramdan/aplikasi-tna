@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 function set_show($uri)
 {
@@ -91,4 +92,21 @@ function reviewExistsForUserWithRemark($remark)
         ->where('user_review_id', $userId)
         ->where('remark', $remark)
         ->exists();
+}
+
+function callApiPusdiklatwas($url, $params = [])
+{
+    $response = Http::get($url, $params);
+
+    if ($response->failed()) {
+        return ['error' => 'Tidak bisa mengakses API.'];
+    }
+
+    $data = $response->json();
+
+    if (!isset($data['data'])) {
+        return ['error' => 'Data dari API tidak valid.'];
+    }
+
+    return $data['data'];
 }

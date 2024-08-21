@@ -301,92 +301,35 @@
         <div id="step-2" class="tab-pane" role="tabpanel" aria-labelledby="step-2" style="display: none;">
             <form id="form-2" style="margin-top: 20px">
                 <div class="row" style="padding: 20px">
-                    <div class="form-group row mb-1">
-                        <label for="alokasi-waktu" class="col-sm-3 col-form-label">{{ __('Alokasi Waktu') }}</label>
+
+                    <div class="form-group row mb-3">
+                        <label for="lokasi"
+                            class="col-sm-3 col-form-label">{{ __('Lokasi') }}</label>
                         <div class="col-sm-6">
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-sm" id="dynamic_field">
-                                    <thead>
-                                        <tr>
-                                            <th>Lokasi</th>
-                                            <th>Tgl Mulai</th>
-                                            <th>Tgl Selesai</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="waktu_tempat_table">
-                                        @if (isset($pengajuanKap))
-                                            @foreach ($waktu_tempat as $row)
-                                                <tr id="detail_file{{ $row->id }}">
-                                                    <td>
-                                                        <select name="tempat_acara[]"
-                                                            class="form-control @error('lokasi') is-invalid @enderror"
-                                                            required>
-                                                            <option value="" selected disabled>-- Pilih --
-                                                            </option>
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <input type="date" name="tanggal_mulai[]"
-                                                            value="{{ $row->tanggal_mulai }}"
-                                                            class="form-control @error('tanggal_mulai') is-invalid @enderror tanggal_mulai"
-                                                            required />
-                                                    </td>
-                                                    <td>
-                                                        <input type="date" name="tanggal_selesai[]"
-                                                            value="{{ $row->tanggal_selesai }}"
-                                                            class="form-control @error('tanggal_selesai') is-invalid @enderror tanggal_selesai"
-                                                            required />
-                                                    </td>
-                                                    <td>
-                                                        <button type="button" id="{{ $row->id }}"
-                                                            class="btn btn-danger btn_remove_data">X</button>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        @endif
-                                        <tr id="placeholder_row">
-                                            <td>
-                                                <select name="tempat_acara[]"
-                                                    class="form-control @error('lokasi') is-invalid @enderror"
-                                                    @if (!isset($pengajuanKap)) required @endif>
-                                                    <option value="" selected disabled>-- Pilih --</option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <input type="date" name="tanggal_mulai[]"
-                                                    class="form-control @error('tanggal_mulai') is-invalid @enderror tanggal_mulai"
-                                                    @if (!isset($pengajuanKap)) required @endif />
-                                            </td>
-                                            <td>
-                                                <input type="date" name="tanggal_selesai[]"
-                                                    class="form-control @error('tanggal_selesai') is-invalid @enderror tanggal_selesai"
-                                                    @if (!isset($pengajuanKap)) required @endif />
-                                            </td>
-                                            <td>
-                                                <button type="button" name="add_waktu_tempat" id="add_waktu_tempat"
-                                                    class="btn btn-success"><i class="fa fa-plus"
-                                                        aria-hidden="true"></i></button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                            <select
+                                class="form-control js-example-basic-multiple @error('lokasi') is-invalid @enderror"
+                                name="lokasi" id="lokasi">
+                                <option value="" selected disabled>-- {{ __('Select lokasi') }}
+                                    --
+                                </option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Mohon untuk pilih Lokasi
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label class="col-sm-3 col-form-label"></label>
+                        <label class="col-sm-3 col-form-label"
+                            for="indikator-dampak-terhadap-kinerja-organisasi">{{ __('Detail lokasi') }}</label>
                         <div class="col-sm-6">
-                            <div class="input-group">
-                                <input type="number" name="alokasi_waktu" id="alokasi-waktu"
-                                    class="form-control @error('alokasi_waktu') is-invalid @enderror"
-                                    value="{{ isset($pengajuanKap) ? $pengajuanKap->alokasi_waktu : old('alokasi_waktu') }}"
-                                    placeholder="{{ __('Alokasi Waktu') }}" required readonly />
-                                <span class="input-group-text">Hari</span>
-                                <div class="invalid-feedback">
-                                    Mohon untuk diisi Alokasi Waktu
-                                </div>
+                            <input type="text" name="detail_lokasi"
+                                id="indikator-dampak-terhadap-kinerja-organisasi"
+                                class="form-control @error('detail_lokasi') is-invalid @enderror"
+                                value="{{ isset($pengajuanKap) ? $pengajuanKap->detail_lokasi : old('detail_lokasi') }}"
+                                placeholder="{{ __('Detail lokasi') }}" required />
+                            <div class="invalid-feedback">
+                                Mohon untuk diisi Detail lokasi
                             </div>
                         </div>
                     </div>
@@ -533,28 +476,20 @@
                             <select
                                 class="form-control js-example-basic-multiple @error('jenis_pembelajaran') is-invalid @enderror"
                                 name="jenis_pembelajaran" id="jenis_pembelajaran">
-                                <option value="" selected disabled>-- {{ __('Select jenis pembelajaran') }}
-                                    --
+                                <option value="" selected disabled>-- {{ __('Select jenis pembelajaran') }} --
                                 </option>
-                                <option value="Kedinasan"
-                                    {{ isset($pengajuanKap) && $pengajuanKap->jenis_pembelajaran == 'Kedinasan' ? 'selected' : (old('jenis_pembelajaran') == 'Kedinasan' ? 'selected' : '') }}>
-                                    Kedinasan</option>
-                                <option value="Fungsional auditor"
-                                    {{ isset($pengajuanKap) && $pengajuanKap->jenis_pembelajaran == 'Fungsional auditor' ? 'selected' : (old('jenis_pembelajaran') == 'Fungsional auditor' ? 'selected' : '') }}>
-                                    Fungsional auditor</option>
-                                <option value="Teknis substansi"
-                                    {{ isset($pengajuanKap) && $pengajuanKap->jenis_pembelajaran == 'Teknis substansi' ? 'selected' : (old('jenis_pembelajaran') == 'Teknis substansi' ? 'selected' : '') }}>
-                                    Teknis substansi</option>
-                                <option value="Sertifikasi non JFA"
-                                    {{ isset($pengajuanKap) && $pengajuanKap->jenis_pembelajaran == 'Sertifikasi non JFA' ? 'selected' : (old('jenis_pembelajaran') == 'Sertifikasi non JFA' ? 'selected' : '') }}>
-                                    Sertifikasi non JFA</option>
+                                @foreach ($diklatType_data as $jenis)
+                                    <option value="{{ $jenis['diklatTypeName'] }}"
+                                        {{ isset($pengajuanKap) && $pengajuanKap->jenis_pembelajaran == $jenis['diklatTypeName'] ? 'selected' : (old('jenis_pembelajaran') == $jenis['diklatTypeName'] ? 'selected' : '') }}>
+                                        {{ $jenis['diklatTypeName'] }}
+                                    </option>
+                                @endforeach
                             </select>
                             <div class="invalid-feedback">
                                 Mohon untuk pilih Jenis Pembelajaran
                             </div>
                         </div>
                     </div>
-
                     <div class="form-group row mb-3">
                         <label for="metode_pembelajaran"
                             class="col-sm-3 col-form-label">{{ __('Metode Pembelajaran') }}</label>
@@ -562,18 +497,14 @@
                             <select
                                 class="form-control js-example-basic-multiple @error('metode_pembelajaran') is-invalid @enderror"
                                 name="metode_pembelajaran" id="metode_pembelajaran">
-                                <option value="" selected disabled>-- {{ __('Select metode pembelajaran') }}
-                                    --
+                                <option value="" selected disabled>-- {{ __('Select metode pembelajaran') }} --
                                 </option>
-                                <option value="Synchronous learning"
-                                    {{ isset($pengajuanKap) && $pengajuanKap->metode_pembelajaran == 'Synchronous learning' ? 'selected' : (old('metode_pembelajaran') == 'Synchronous learning' ? 'selected' : '') }}>
-                                    Synchronous learning</option>
-                                <option value="Asynchronous learning"
-                                    {{ isset($pengajuanKap) && $pengajuanKap->metode_pembelajaran == 'Asynchronous learning' ? 'selected' : (old('metode_pembelajaran') == 'Asynchronous learning' ? 'selected' : '') }}>
-                                    Asynchronous learning</option>
-                                <option value="Blended learning"
-                                    {{ isset($pengajuanKap) && $pengajuanKap->metode_pembelajaran == 'Blended learning' ? 'selected' : (old('metode_pembelajaran') == 'Blended learning' ? 'selected' : '') }}>
-                                    Blended learning</option>
+                                @foreach ($metode_data as $metode)
+                                    <option value="{{ $metode['metodeName'] }}"
+                                        {{ isset($pengajuanKap) && $pengajuanKap->metode_pembelajaran == $metode['metodeName'] ? 'selected' : (old('metode_pembelajaran') == $metode['metodeName'] ? 'selected' : '') }}>
+                                        {{ $metode['metodeName'] }}
+                                    </option>
+                                @endforeach
                             </select>
                             <div class="invalid-feedback">
                                 Mohon untuk pilih Metode Pembelajaran

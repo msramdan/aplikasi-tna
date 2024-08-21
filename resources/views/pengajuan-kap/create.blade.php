@@ -294,67 +294,6 @@
     </script>
     <script>
         $(document).ready(function() {
-            var i = 1;
-
-            // Function to calculate the total allocated time in days, excluding Sundays
-            function calculateAlokasiWaktu() {
-                var totalDays = 0;
-
-                $('#waktu_tempat_table tr').each(function() {
-                    var tanggalMulai = $(this).find('input[name="tanggal_mulai[]"]').val();
-                    var tanggalSelesai = $(this).find('input[name="tanggal_selesai[]"]').val();
-
-                    if (tanggalMulai && tanggalSelesai) {
-                        var startDate = new Date(tanggalMulai);
-                        var endDate = new Date(tanggalSelesai);
-
-                        if (endDate >= startDate) {
-                            var currentDate = startDate;
-                            while (currentDate <= endDate) {
-                                if (currentDate.getDay() !== 0) { // Exclude Sundays
-                                    totalDays++;
-                                }
-                                currentDate.setDate(currentDate.getDate() + 1);
-                            }
-                        } else {
-                            alert('Tanggal Selesai harus lebih besar atau sama dengan Tanggal Mulai');
-                            $(this).find('input[name="tanggal_selesai[]"]').val('');
-                        }
-                    }
-                });
-
-                $('#alokasi-waktu').val(totalDays);
-            }
-
-            // Function to update the minimum date for tanggal_selesai
-            function updateTanggalSelesaiMinDate(tanggalMulaiInput) {
-                var tanggalMulai = tanggalMulaiInput.val();
-                var tanggalSelesaiInput = tanggalMulaiInput.closest('tr').find('input[name="tanggal_selesai[]"]');
-
-                if (tanggalMulai) {
-                    tanggalSelesaiInput.attr('min', tanggalMulai);
-                } else {
-                    tanggalSelesaiInput.removeAttr('min');
-                }
-            }
-
-            // Event listener for dynamically added tanggal_mulai and tanggal_selesai inputs
-            $(document).on('change', 'input[name="tanggal_mulai[]"], input[name="tanggal_selesai[]"]', function() {
-                if ($(this).attr('name') === 'tanggal_mulai[]') {
-                    updateTanggalSelesaiMinDate($(this));
-                }
-                calculateAlokasiWaktu();
-            });
-
-            $(document).on('click', '.btn_remove', function() {
-                var button_id = $(this).attr("id");
-                $('#row' + button_id + '').remove();
-                calculateAlokasiWaktu();
-            });
-        });
-    </script>
-    <script>
-        $(document).ready(function() {
             const options_temp = '<option value="" selected disabled>-- Select --</option>';
             $('#pilihButton').prop('disabled', true);
             $('#pilihButtonKompetensi').prop('disabled', true);
