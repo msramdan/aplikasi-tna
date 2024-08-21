@@ -303,15 +303,18 @@
                 <div class="row" style="padding: 20px">
 
                     <div class="form-group row mb-3">
-                        <label for="lokasi"
-                            class="col-sm-3 col-form-label">{{ __('Lokasi') }}</label>
+                        <label for="lokasi" class="col-sm-3 col-form-label">{{ __('Lokasi') }}</label>
                         <div class="col-sm-6">
                             <select
                                 class="form-control js-example-basic-multiple @error('lokasi') is-invalid @enderror"
                                 name="lokasi" id="lokasi">
-                                <option value="" selected disabled>-- {{ __('Select lokasi') }}
-                                    --
-                                </option>
+                                <option value="" selected disabled>-- {{ __('Select lokasi') }} --</option>
+                                @foreach($diklatLocation_data as $lokasi)
+                                    <option value="{{ $lokasi['diklatLocName'] }}"
+                                        {{ isset($pengajuanKap) && $pengajuanKap->lokasi == $lokasi['diklatLocName'] ? 'selected' : (old('lokasi') == $lokasi['diklatLocName'] ? 'selected' : '') }}>
+                                        {{ $lokasi['diklatLocName'] }}
+                                    </option>
+                                @endforeach
                             </select>
                             <div class="invalid-feedback">
                                 Mohon untuk pilih Lokasi
@@ -321,15 +324,15 @@
 
                     <div class="form-group row mb-3">
                         <label class="col-sm-3 col-form-label"
-                            for="indikator-dampak-terhadap-kinerja-organisasi">{{ __('Detail lokasi') }}</label>
+                            for="indikator-dampak-terhadap-kinerja-organisasi">{{ __('Tempat / Alamat Rinci') }}</label>
                         <div class="col-sm-6">
                             <input type="text" name="detail_lokasi"
                                 id="indikator-dampak-terhadap-kinerja-organisasi"
                                 class="form-control @error('detail_lokasi') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->detail_lokasi : old('detail_lokasi') }}"
-                                placeholder="{{ __('Detail lokasi') }}" required />
+                                placeholder="{{ __('Tempat / Alamat Rinci') }}" required />
                             <div class="invalid-feedback">
-                                Mohon untuk diisi Detail lokasi
+                                Mohon untuk diisi Tempat / Alamat Rinci
                             </div>
                         </div>
                     </div>

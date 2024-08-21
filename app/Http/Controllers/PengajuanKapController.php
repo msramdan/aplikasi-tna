@@ -164,6 +164,8 @@ class PengajuanKapController extends Controller
 
         $endpoint_pusdiklatwap = config('stara.endpoint_pusdiklatwap');
         $api_key_pusdiklatwap = config('stara.api_token_pusdiklatwap');
+
+        // Call API for metode
         $metode_data = callApiPusdiklatwas($endpoint_pusdiklatwap . '/metode', [
             'api_key' => $api_key_pusdiklatwap
         ]);
@@ -173,12 +175,23 @@ class PengajuanKapController extends Controller
             return redirect()->back();
         }
 
+        // Call API for diklatType
         $diklatType_data = callApiPusdiklatwas($endpoint_pusdiklatwap . '/diklatType', [
             'api_key' => $api_key_pusdiklatwap
         ]);
 
         if (isset($diklatType_data['error'])) {
             Alert::error('Error', $diklatType_data['error']);
+            return redirect()->back();
+        }
+
+        // Call API for diklatLocation
+        $diklatLocation_data = callApiPusdiklatwas($endpoint_pusdiklatwap . '/diklatLocation', [
+            'api_key' => $api_key_pusdiklatwap
+        ]);
+
+        if (isset($diklatLocation_data['error'])) {
+            Alert::error('Error', $diklatLocation_data['error']);
             return redirect()->back();
         }
 
@@ -189,6 +202,7 @@ class PengajuanKapController extends Controller
             'jalur_pembelajaran' => $jalur_pembelajaran,
             'metode_data' => $metode_data,
             'diklatType_data' => $diklatType_data,
+            'diklatLocation_data' => $diklatLocation_data, // Menambahkan data lokasi
         ]);
     }
 
