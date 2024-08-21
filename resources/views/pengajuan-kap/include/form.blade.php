@@ -121,35 +121,32 @@
                         class="form-control" placeholder="" required readonly />
                     <input type="hidden" name="persentase_kompetensi" id="persentase_kompetensi"
                         class="form-control" placeholder="" required readonly />
-
-                    <div class="form-group row mb-3">
-                        <label for="topik_id" class="col-sm-3 col-form-label">{{ __('Program pembelajaran') }}</label>
-                        <div class="col-sm-6">
-                            <select
-                                class="form-control js-example-basic-multiple @error('topik_id') is-invalid @enderror"
-                                name="topik_id" id="topik_id" required>
-                                <option value="" selected disabled>-- {{ __('Select program pembelajaran') }} --
-                                </option>
-                            </select>
-                            <div class="invalid-feedback">
-                                Mohon untuk pilih program pembelajaran
+                        <div class="form-group row mb-3">
+                            <label for="topik_id" class="col-sm-3 col-form-label">{{ __('Program pembelajaran') }}</label>
+                            <div class="col-sm-6">
+                                <select
+                                    class="form-control js-example-basic-multiple @error('topik_id') is-invalid @enderror"
+                                    name="topik_id" id="topik_id" required>
+                                    <option value="" selected disabled>-- {{ __('Select program pembelajaran') }} --</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Mohon untuk pilih program pembelajaran
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="form-group row mb-3">
-                        <label class="col-sm-3 col-form-label"
-                            for="judul">{{ __('Judul Program Pembelajaran') }}</label>
-                        <div class="col-sm-6">
-                            <input type="text" name="judul" id="judul"
-                                class="form-control @error('judul') is-invalid @enderror"
-                                value="{{ isset($pengajuanKap) ? $pengajuanKap->judul : old('judul') }}"
-                                placeholder="{{ __('Judul Program Pembelajaran') }}" required />
-                            <div class="invalid-feedback">
-                                Mohon untuk diisi Judul Program Pembelajaran
+                        <div class="form-group row mb-3">
+                            <label class="col-sm-3 col-form-label" for="judul">{{ __('Judul Program Pembelajaran') }}</label>
+                            <div class="col-sm-6">
+                                <input type="text" name="judul" id="judul"
+                                    class="form-control @error('judul') is-invalid @enderror"
+                                    value="{{ isset($pengajuanKap) ? $pengajuanKap->judul : old('judul') }}"
+                                    placeholder="{{ __('Judul Program Pembelajaran') }}" required />
+                                <div class="invalid-feedback">
+                                    Mohon untuk diisi Judul Program Pembelajaran
+                                </div>
                             </div>
                         </div>
-                    </div>
 
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label">{{ __('Concern Program Pembelajaran') }}</label>
@@ -309,9 +306,9 @@
                                 class="form-control js-example-basic-multiple @error('lokasi') is-invalid @enderror"
                                 name="lokasi" id="lokasi">
                                 <option value="" selected disabled>-- {{ __('Select lokasi') }} --</option>
-                                @foreach($diklatLocation_data as $lokasi)
-                                    <option value="{{ $lokasi['diklatLocName'] }}"
-                                        {{ isset($pengajuanKap) && $pengajuanKap->lokasi == $lokasi['diklatLocName'] ? 'selected' : (old('lokasi') == $lokasi['diklatLocName'] ? 'selected' : '') }}>
+                                @foreach ($diklatLocation_data as $lokasi)
+                                    <option value="{{ $lokasi['diklatLocID'] }}"
+                                        {{ isset($pengajuanKap) && $pengajuanKap->lokasi == $lokasi['diklatLocID'] ? 'selected' : (old('lokasi') == $lokasi['diklatLocID'] ? 'selected' : '') }}>
                                         {{ $lokasi['diklatLocName'] }}
                                     </option>
                                 @endforeach
@@ -482,8 +479,8 @@
                                 <option value="" selected disabled>-- {{ __('Select jenis pembelajaran') }} --
                                 </option>
                                 @foreach ($diklatType_data as $jenis)
-                                    <option value="{{ $jenis['diklatTypeName'] }}"
-                                        {{ isset($pengajuanKap) && $pengajuanKap->jenis_pembelajaran == $jenis['diklatTypeName'] ? 'selected' : (old('jenis_pembelajaran') == $jenis['diklatTypeName'] ? 'selected' : '') }}>
+                                    <option value="{{ $jenis['diklatTypeID'] }}"
+                                        {{ isset($pengajuanKap) && $pengajuanKap->jenis_pembelajaran == $jenis['diklatTypeID'] ? 'selected' : (old('jenis_pembelajaran') == $jenis['diklatTypeID'] ? 'selected' : '') }}>
                                         {{ $jenis['diklatTypeName'] }}
                                     </option>
                                 @endforeach
@@ -503,8 +500,8 @@
                                 <option value="" selected disabled>-- {{ __('Select metode pembelajaran') }} --
                                 </option>
                                 @foreach ($metode_data as $metode)
-                                    <option value="{{ $metode['metodeName'] }}"
-                                        {{ isset($pengajuanKap) && $pengajuanKap->metode_pembelajaran == $metode['metodeName'] ? 'selected' : (old('metode_pembelajaran') == $metode['metodeName'] ? 'selected' : '') }}>
+                                    <option value="{{ $metode['metodeID'] }}"
+                                        {{ isset($pengajuanKap) && $pengajuanKap->metode_pembelajaran == $metode['metodeID'] ? 'selected' : (old('metode_pembelajaran') == $metode['metodeID'] ? 'selected' : '') }}>
                                         {{ $metode['metodeName'] }}
                                     </option>
                                 @endforeach

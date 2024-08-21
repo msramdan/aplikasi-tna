@@ -183,7 +183,7 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ request()->routeIs('kalender-pembelajaran*') ? 'active' : '' }}"
                         href="{{ route('kalender-pembelajaran.index', ['tahun' => $currentYear, 'waktu_pelaksanaan' => $default, 'sumber_dana' => $default, 'topik' => $default]) }}">
-                        <i class="fa fa-refresh"></i> <span data-key="t-widgets">Sync Pusdiklatwas</span>
+                        <i class="fa fa-refresh"></i> <span data-key="t-widgets">Sync Info-Diklat</span>
                     </a>
                 </li>
             @endcan

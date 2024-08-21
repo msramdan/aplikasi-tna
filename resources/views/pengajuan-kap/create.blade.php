@@ -306,6 +306,7 @@
                 $('#pegawai_belum_kompeten').val('');
                 $('#persentase_kompetensi').val('');
                 $('#topik_id').html(options_temp);
+                $('#judul').val('');
                 $('#pilihButtonKompetensi').prop('disabled', true);
                 var selectedValue = $(this).val();
                 if (selectedValue !== '') {
@@ -454,11 +455,11 @@
                             tableBody += '<tr>';
                             tableBody += '<td>' + value.nama_kompetensi + '</td>';
                             tableBody += '<td>' + value.total_employees +
-                            '</td>'; // Total Karyawan
+                                '</td>'; // Total Karyawan
                             tableBody += '<td>' + value.count_100 +
-                            '</td>'; // Count 100%
+                                '</td>'; // Count 100%
                             tableBody += '<td>' + value.count_less_than_100 +
-                            '</td>'; // Count < 100%
+                                '</td>'; // Count < 100%
                             tableBody += '<td>' + value.average_persentase + '%</td>';
                             tableBody +=
                                 '<td><button type="button" class="btn btn-primary pilihKompetensi btn-sm" ' +
@@ -497,6 +498,7 @@
                 $('#pegawai_belum_kompeten').val('');
                 $('#persentase_kompetensi').val('');
                 $('#topik_id').html(options_temp);
+                $('#judul').val('');
                 var indikator = $(this).data('indikator');
                 $('#indikator_kinerja').val(indikator);
                 $('#indikatorModal').modal('hide');
@@ -504,6 +506,7 @@
 
             $(document).on('click', '.pilihKompetensi', function() {
                 $('#topik_id').html(options_temp);
+                $('#judul').val('');
                 var kompetensi = $(this).data('kompetensi');
                 var kompetensi_id = $(this).data('id');
                 var total_employees = $(this).data('total-employees');
@@ -532,7 +535,7 @@
                     },
                     success: function(res) {
                         const options = res.data.map(value => {
-                            return `<option value="${value.topik_id}">${value.nama_topik}</option>`;
+                            return `<option value="${value.topik_id}" data-nama-topik="${value.nama_topik}">${value.nama_topik}</option>`;
                         });
                         $('#topik_id').html(options_temp + options);
                         $('#topik_id').prop('disabled', false);
@@ -542,6 +545,19 @@
                     }
                 });
             }
+        });
+
+        $(document).ready(function() {
+            $('#topik_id').on('change', function() {
+                const selectedOption = $(this).find('option:selected');
+                const namaTopik = selectedOption.data('nama-topik');
+
+                if (namaTopik) {
+                    $('#judul').val(namaTopik);
+                } else {
+                    $('#judul').val('');
+                }
+            });
         });
     </script>
 @endpush
