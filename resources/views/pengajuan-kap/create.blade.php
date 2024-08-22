@@ -141,19 +141,10 @@
                         $('#form-laporan').append(item.cloneNode(true));
                     });
                 });
-                $('select[name^="tempat_acara"]').each(function(index, element) {
-                    var selectedValue = $(element).val();
-                    if (selectedValue !== null && selectedValue !== '') {
-                        $('#form-laporan').append(
-                            `<input type="hidden" name="${$(element).attr('name')}" value="${selectedValue}"/>`
-                        );
-                    }
-                });
-
                 var inputFields = [
                     'jenis_program', 'topik_id', 'bentuk_pembelajaran',
-                    'jalur_pembelajaran', 'model_pembelajaran', 'jenis_pembelajaran',
-                    'metode_pembelajaran', 'penyelenggara_pembelajaran', 'prioritas_pembelajaran',
+                    'jalur_pembelajaran', 'model_pembelajaran', 'diklatTypeName',
+                    'metodeName', 'penyelenggara_pembelajaran', 'prioritas_pembelajaran','lokasi',
                     'jenjang_pembelajaran', 'peserta_pembelajaran'
                 ];
 

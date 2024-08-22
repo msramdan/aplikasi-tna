@@ -332,14 +332,28 @@
 
                     <div class="form-group row mb-3">
                         <label class="col-sm-3 col-form-label"
-                            for="indikator-dampak-terhadap-kinerja-organisasi">{{ __('Tempat / Alamat Rinci') }}</label>
+                            for="detail_lokasi">{{ __('Tempat / Alamat Rinci') }}</label>
                         <div class="col-sm-6">
-                            <input type="text" name="tempatName" id="indikator-dampak-terhadap-kinerja-organisasi"
-                                class="form-control @error('tempatName') is-invalid @enderror"
-                                value="{{ isset($pengajuanKap) ? $pengajuanKap->tempatName : old('tempatName') }}"
+                            <input type="text" name="detail_lokasi" id="detail_lokasi"
+                                class="form-control @error('detail_lokasi') is-invalid @enderror"
+                                value="{{ isset($pengajuanKap) ? $pengajuanKap->detail_lokasi : old('detail_lokasi') }}"
                                 placeholder="{{ __('Tempat / Alamat Rinci') }}" />
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Tempat / Alamat Rinci
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-3">
+                        <label class="col-sm-3 col-form-label"
+                            for="kelas">{{ __('Jumlah Kelas') }}</label>
+                        <div class="col-sm-6">
+                            <input type="number" name="kelas" id="kelas"
+                                class="form-control @error('kelas') is-invalid @enderror"
+                                value="{{ isset($pengajuanKap) ? $pengajuanKap->kelas : old('kelas') }}"
+                                placeholder="{{ __('Jumlah Kelas') }}" />
+                            <div class="invalid-feedback">
+                                Mohon untuk diisi Jumlah Kelas
                             </div>
                         </div>
                     </div>

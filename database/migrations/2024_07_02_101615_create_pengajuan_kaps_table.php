@@ -31,7 +31,7 @@ return new class extends Migration
             $table->string('kelas', 255)->nullable();
             $table->text('diklatTypeName')->nullable(); // diklatTypeName
             $table->text('metodeName')->nullable();
-            $table->enum('latsar_stat', ['0', '1'])->default('0')->change();
+            $table->char('latsar_stat', 5)->nullable();
             $table->text('biayaName')->nullable(); //biayaName
             $table->enum('bentuk_pembelajaran', ['Klasikal', 'Nonklasikal'])->nullable();
             $table->enum('jalur_pembelajaran', [
