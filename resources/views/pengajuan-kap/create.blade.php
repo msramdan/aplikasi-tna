@@ -144,7 +144,7 @@
                 var inputFields = [
                     'jenis_program', 'topik_id', 'bentuk_pembelajaran',
                     'jalur_pembelajaran', 'model_pembelajaran', 'diklatTypeName',
-                    'metodeName', 'penyelenggara_pembelajaran', 'prioritas_pembelajaran','lokasi',
+                    'metodeID', 'penyelenggara_pembelajaran', 'prioritas_pembelajaran','lokasi',
                     'jenjang_pembelajaran', 'peserta_pembelajaran'
                 ];
 

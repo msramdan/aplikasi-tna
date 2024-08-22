@@ -30,7 +30,7 @@ return new class extends Migration
             $table->string('detail_lokasi', 255)->nullable(); // tempatName
             $table->string('kelas', 255)->nullable();
             $table->text('diklatTypeName')->nullable(); // diklatTypeName
-            $table->text('metodeName')->nullable();
+            $table->char('metodeID', 5)->nullable();
             $table->char('latsar_stat', 5)->nullable();
             $table->text('biayaName')->nullable(); //biayaName
             $table->enum('bentuk_pembelajaran', ['Klasikal', 'Nonklasikal'])->nullable();

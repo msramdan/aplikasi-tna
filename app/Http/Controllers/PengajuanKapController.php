@@ -296,7 +296,7 @@ class PengajuanKapController extends Controller
             'detail_lokasi' => 'nullable|string',
             'kelas' => 'nullable|string',
             'diklatTypeName' => 'nullable|string',
-            'metodeName' => 'nullable|string',
+            'metodeID' => 'nullable|string',
             'bentuk_pembelajaran' => 'nullable|string',
             'jalur_pembelajaran' => 'nullable|string',
             'jenjang_pembelajaran' => 'nullable|string',
@@ -358,7 +358,7 @@ class PengajuanKapController extends Controller
             'detail_lokasi' => $validatedData['detail_lokasi'],
             'kelas' => $validatedData['kelas'],
             'diklatTypeName' => $validatedData['diklatTypeName'],
-            'metodeName' => $validatedData['metodeName'],
+            'metodeID' => $validatedData['metodeID'],
             'latsar_stat' => '0',
             'biayaName' =>  $sumber_dana,
             'bentuk_pembelajaran' => $validatedData['bentuk_pembelajaran'],
@@ -379,7 +379,7 @@ class PengajuanKapController extends Controller
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-        $metodeType = $validatedData['metodeName'];
+        $metodeType = $validatedData['metodeID'];
         if ($metodeType === '1') {
             DB::table('waktu_pelaksanaan')->insert([
                 'pengajuan_kap_id' => $pengajuanKapId,
@@ -606,10 +606,9 @@ class PengajuanKapController extends Controller
         $indikator_keberhasilan_kap = DB::table('indikator_keberhasilan_kap')
             ->where('pengajuan_kap_id', $id)
             ->get();
-        $waktu_tempat = DB::table('waktu_tempat')
-            ->join('lokasi', 'waktu_tempat.lokasi_id', '=', 'lokasi.id')
-            ->where('waktu_tempat.pengajuan_kap_id', $id)
-            ->select('waktu_tempat.*', 'lokasi.nama_lokasi')
+        $waktu_pelaksanaan = DB::table('waktu_pelaksanaan')
+            ->where('waktu_pelaksanaan.pengajuan_kap_id', $id)
+            ->select('waktu_pelaksanaan.*')
             ->get();
         $steps = [
             'Biro SDM',
@@ -636,7 +635,7 @@ class PengajuanKapController extends Controller
             'logReviews' => $logReviews,
             'level_evaluasi_instrumen_kap' => $level_evaluasi_instrumen_kap,
             'indikator_keberhasilan_kap' => $indikator_keberhasilan_kap,
-            'waktu_tempat' => $waktu_tempat,
+            'waktu_pelaksanaan' => $waktu_pelaksanaan,
             'is_bpkp' => $is_bpkp,
             'frekuensi' => $frekuensi,
             'currentStepRemark' => $currentStepRemark,
