@@ -61,7 +61,7 @@ class PengajuanKapController extends Controller
 
             if (isset($sumber_dana) && !empty($sumber_dana)) {
                 if ($sumber_dana != 'All') {
-                    $pengajuanKaps = $pengajuanKaps->where('pengajuan_kap.sumber_dana', $sumber_dana);
+                    $pengajuanKaps = $pengajuanKaps->where('pengajuan_kap.biayaName', $sumber_dana);
                 }
             }
 
@@ -379,17 +379,46 @@ class PengajuanKapController extends Controller
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+        $metodeType = $validatedData['metodeName'];
+        if ($metodeType === '1') {
+            DB::table('waktu_pelaksanaan')->insert([
+                'pengajuan_kap_id' => $pengajuanKapId,
+                'remarkMetodeName' => $metodeType,
+                'tanggal_mulai' => $validatedData['tatap_muka_start'],
+                'tanggal_selesai' => $validatedData['tatap_muka_end'],
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        } elseif ($metodeType === '2') {
+            // Insert Tatap Muka data
+            DB::table('waktu_pelaksanaan')->insert([
+                'pengajuan_kap_id' => $pengajuanKapId,
+                'remarkMetodeName' => $metodeType,
+                'tanggal_mulai' => $validatedData['hybrid_tatap_muka_start'],
+                'tanggal_selesai' => $validatedData['hybrid_tatap_muka_end'],
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
 
-        // foreach ($validatedData['tanggal_mulai'] as $index => $row) {
-        //     DB::table('waktu_tempat')->insert([
-        //         'pengajuan_kap_id' => $pengajuanKapId,
-        //         'remarkMetodeName' => $validatedData['remarkMetodeName'][$index],
-        //         'tanggal_mulai' => $validatedData['tanggal_mulai'][$index],
-        //         'tanggal_selesai' => $validatedData['tanggal_selesai'][$index],
-        //         'created_at' => now(),
-        //         'updated_at' => now(),
-        //     ]);
-        // }
+            // Insert E-Learning data
+            DB::table('waktu_pelaksanaan')->insert([
+                'pengajuan_kap_id' => $pengajuanKapId,
+                'remarkMetodeName' => $metodeType,
+                'tanggal_mulai' => $validatedData['hybrid_elearning_start'],
+                'tanggal_selesai' => $validatedData['hybrid_elearning_end'],
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        } elseif ($metodeType === '4') {
+            DB::table('waktu_pelaksanaan')->insert([
+                'pengajuan_kap_id' => $pengajuanKapId,
+                'remarkMetodeName' => $metodeType,
+                'tanggal_mulai' => $validatedData['elearning_start'],
+                'tanggal_selesai' => $validatedData['elearning_end'],
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
         // insert table gap_kompetensi_pengajuan_kap
         DB::table('gap_kompetensi_pengajuan_kap')->insert([
             'pengajuan_kap_id' => $pengajuanKapId,

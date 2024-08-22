@@ -317,8 +317,8 @@
                 name: 'nama_topik'
             },
             {
-                data: 'sumber_dana',
-                name: 'sumber_dana'
+                data: 'biayaName',
+                name: 'biayaName'
             },
             {
                 data: 'remark',

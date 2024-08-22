@@ -185,7 +185,7 @@
                                 required>
                                 <option value="" disabled selected>
                                     {{ __('-- Select Prioritas Pembelajaran --') }}</option>
-                                @for ($i = 1; $i <= 20; $i++)
+                                @for ($i = 1; $i <= 10; $i++)
                                     <option value="Prioritas {{ $i }}"
                                         {{ (isset($pengajuanKap) && $pengajuanKap->prioritas_pembelajaran == "Prioritas $i") || old('prioritas_pembelajaran') == "Prioritas $i" ? 'selected' : '' }}>
                                         Prioritas {{ $i }}
@@ -519,13 +519,13 @@
                             class="col-sm-3 col-form-label">{{ __('Metode Pembelajaran') }}</label>
                         <div class="col-sm-6">
                             <select
-                                class="form-control js-example-basic-multiple @error('metodeName') is-invalid @enderror"
-                                name="metodeName" id="metodeName">
+                                class="form-control js-example-basic-multiple @error('metodeID') is-invalid @enderror"
+                                name="metodeID" id="metodeID">
                                 <option value="" selected disabled>-- {{ __('Select metode pembelajaran') }} --
                                 </option>
                                 @foreach ($metode_data as $metode)
-                                    <option value="{{ $metode['metodeName'] }}"
-                                        {{ isset($pengajuanKap) && $pengajuanKap->metodeName == $metode['metodeName'] ? 'selected' : (old('metodeName') == $metode['metodeName'] ? 'selected' : '') }}>
+                                    <option value="{{ $metode['metodeID'] }}"
+                                        {{ isset($pengajuanKap) && $pengajuanKap->metodeName == $metode['metodeID'] ? 'selected' : (old('metodeID') == $metode['metodeID'] ? 'selected' : '') }}>
                                         {{ $metode['metodeName'] }}
                                     </option>
                                 @endforeach
