@@ -19,13 +19,20 @@ return new class extends Migration
             $table->foreignId('kompetensi_id')->nullable()->constrained('kompetensi')->cascadeOnUpdate()->nullOnDelete();
             $table->foreignId('topik_id')->nullable()->constrained('topik')->cascadeOnUpdate()->nullOnDelete();
             $table->text('arahan_pimpinan');
-            $table->string('tahun', 10);
+            $table->string('tahun', 10); // kaldikYear
             $table->string('prioritas_pembelajaran', 50);
             $table->text('tujuan_program_pembelajaran');
-            $table->string('alokasi_waktu', 50);
             $table->text('indikator_dampak_terhadap_kinerja_organisasi');
             $table->text('penugasan_yang_terkait_dengan_pembelajaran');
             $table->text('skill_group_owner');
+            // new
+            $table->string('detail_lokasi', 255)->nullable(); // tempatName
+            $table->string('kelas', 255)->nullable();
+            $table->text('judul')->nullable(); // kaldikdesc
+            $table->text('jenis_pembelajaran')->nullable(); // diklatTypeName
+            $table->text('metode_pembelajaran')->nullable(); // metodeName
+            $table->enum('latsar_stat', ['0', '1'])->default('0')->change();
+            $table->text('sumber_dana')->nullable(); //biayaName
             $table->enum('bentuk_pembelajaran', ['Klasikal', 'Nonklasikal'])->nullable();
             $table->enum('jalur_pembelajaran', [
                 'Pelatihan',
@@ -65,8 +72,6 @@ return new class extends Migration
                 'LSP Lainnya'
             ])->nullable();
             $table->enum('model_pembelajaran', ['Pembelajaran terstruktur', 'Pembelajaran kolaboratif', 'Pembelajaran di tempat kerja', 'Pembelajaran terintegrasi'])->nullable();
-            $table->enum('jenis_pembelajaran', ['Kedinasan', 'Fungsional auditor', 'Teknis substansi', 'Sertifikasi non JFA'])->nullable();
-            $table->enum('metode_pembelajaran', ['Synchronous learning', 'Asynchronous learning', 'Blended learning'])->nullable();
             $table->enum('peserta_pembelajaran', ['Internal', 'Eksternal', 'Internal dan Eksternal'])->nullable();
             $table->text('sasaran_peserta')->nullable();
             $table->text('kriteria_peserta')->nullable();

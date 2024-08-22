@@ -290,7 +290,6 @@ class PengajuanKapController extends Controller
             'arahan_pimpinan' => 'required|string',
             'prioritas_pembelajaran' => 'required|string',
             'tujuan_program_pembelajaran' => 'required|string',
-            'alokasi_waktu' => 'required|string|max:10',
             'indikator_dampak_terhadap_kinerja_organisasi' => 'required|string',
             'penugasan_yang_terkait_dengan_pembelajaran' => 'required|string',
             'skill_group_owner' => 'required|string',
@@ -310,9 +309,6 @@ class PengajuanKapController extends Controller
             'sertifikat' => 'nullable|string',
             'level_evaluasi_instrumen' => 'nullable|array',
             'no_level' => 'nullable|array',
-            'tempat_acara' => 'required|array',
-            'tanggal_mulai' => 'required|array',
-            'tanggal_selesai' => 'required|array',
         ]);
 
         $year = date('y');

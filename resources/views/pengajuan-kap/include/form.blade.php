@@ -491,17 +491,17 @@
                         </div>
                     </div>
                     <div class="form-group row mb-3">
-                        <label for="metode_pembelajaran"
+                        <label for="metodeID"
                             class="col-sm-3 col-form-label">{{ __('Metode Pembelajaran') }}</label>
                         <div class="col-sm-6">
                             <select
-                                class="form-control js-example-basic-multiple @error('metode_pembelajaran') is-invalid @enderror"
-                                name="metode_pembelajaran" id="metode_pembelajaran">
+                                class="form-control js-example-basic-multiple @error('metodeID') is-invalid @enderror"
+                                name="metodeID" id="metodeID">
                                 <option value="" selected disabled>-- {{ __('Select metode pembelajaran') }} --
                                 </option>
                                 @foreach ($metode_data as $metode)
                                     <option value="{{ $metode['metodeID'] }}"
-                                        {{ isset($pengajuanKap) && $pengajuanKap->metode_pembelajaran == $metode['metodeID'] ? 'selected' : (old('metode_pembelajaran') == $metode['metodeID'] ? 'selected' : '') }}>
+                                        {{ isset($pengajuanKap) && $pengajuanKap->metodeID == $metode['metodeID'] ? 'selected' : (old('metodeID') == $metode['metodeID'] ? 'selected' : '') }}>
                                         {{ $metode['metodeName'] }}
                                     </option>
                                 @endforeach
