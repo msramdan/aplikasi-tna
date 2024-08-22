@@ -16,7 +16,7 @@ class JadwalKapTahunanSeeder extends Seeder
 
         DB::table('jadwal_kap_tahunan')->insert([
             'tahun' => $now->year,
-            'tanggal_mulai' => $startDate->format('Y-m-d'),
+            'tanggal_mulai' => date('Y-m-d'),
             'tanggal_selesai' => $endDate->format('Y-m-d'),
             'created_at' => $now,
             'updated_at' => $now,
