@@ -6,7 +6,6 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <!-- Konten modal akan dimuat di sini oleh AJAX -->
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
@@ -54,12 +53,14 @@
         </li>
     </ul>
 
-    <div class="tab-content" style="overflow: auto; min-height:700px" >
+    <div class="tab-content" style="overflow: auto; min-height:700px">
+        <p style="color: red; padding:10px">Note : * Wajib diisi</p>
         <div id="step-1" class="tab-pane" role="tabpanel" aria-labelledby="step-1" style="display: none;">
-            <form id="form-1" style="margin-top: 20px">
+            <form id="form-1">
                 <div class="row" style="padding: 20px">
                     <div class="form-group row mb-3">
-                        <label for="jenis_program" class="col-sm-3 col-form-label">{{ __('Jenis Program') }}</label>
+                        <label for="jenis_program" class="col-sm-3 col-form-label">{{ __('Jenis Program') }} <span
+                                style="color: red">*</span></label>
                         <div class="col-sm-6">
                             <select
                                 class="form-control js-example-basic-multiple @error('jenis_program') is-invalid @enderror"
@@ -79,7 +80,8 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label for="indikator_kinerja" class="col-sm-3 col-form-label">Indikator Kinerja</label>
+                        <label for="indikator_kinerja" class="col-sm-3 col-form-label">Indikator Kinerja <span
+                                style="color: red">*</span></label>
                         <div class="col-sm-6">
                             <div class="input-group">
                                 <input type="text" name="indikator_kinerja" id="indikator_kinerja"
@@ -95,11 +97,12 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label for="kompetensi_id" class="col-sm-3 col-form-label">Kompetensi</label>
+                        <label for="kompetensi_id" class="col-sm-3 col-form-label">Kompetensi <span
+                                style="color: red">*</span></label>
                         <div class="col-sm-6">
                             <div class="input-group">
-                                <input type="text" name="kompetensi_text" id="kompetensi_text" class="form-control"
-                                    placeholder="" required readonly />
+                                <input type="text" name="kompetensi_text" id="kompetensi_text"
+                                    class="form-control" placeholder="" required readonly />
                                 <input type="hidden" name="kompetensi_id" id="kompetensi_id" class="form-control"
                                     placeholder="" required readonly />
                                 <button type="button" id="pilihButtonKompetensi"
@@ -121,32 +124,35 @@
                         class="form-control" placeholder="" required readonly />
                     <input type="hidden" name="persentase_kompetensi" id="persentase_kompetensi"
                         class="form-control" placeholder="" required readonly />
-                        <div class="form-group row mb-3">
-                            <label for="topik_id" class="col-sm-3 col-form-label">{{ __('Program pembelajaran') }}</label>
-                            <div class="col-sm-6">
-                                <select
-                                    class="form-control js-example-basic-multiple @error('topik_id') is-invalid @enderror"
-                                    name="topik_id" id="topik_id" required>
-                                    <option value="" selected disabled>-- {{ __('Select program pembelajaran') }} --</option>
-                                </select>
-                                <div class="invalid-feedback">
-                                    Mohon untuk pilih program pembelajaran
-                                </div>
+                    <div class="form-group row mb-3">
+                        <label for="topik_id" class="col-sm-3 col-form-label">{{ __('Program pembelajaran') }} <span
+                                style="color: red">*</span></label>
+                        <div class="col-sm-6">
+                            <select
+                                class="form-control js-example-basic-multiple @error('topik_id') is-invalid @enderror"
+                                name="topik_id" id="topik_id" required>
+                                <option value="" selected disabled>-- {{ __('Select program pembelajaran') }} --
+                                </option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Mohon untuk pilih program pembelajaran
                             </div>
                         </div>
+                    </div>
 
-                        <div class="form-group row mb-3">
-                            <label class="col-sm-3 col-form-label" for="judul">{{ __('Judul Program Pembelajaran') }}</label>
-                            <div class="col-sm-6">
-                                <input type="text" name="judul" id="judul"
-                                    class="form-control @error('judul') is-invalid @enderror"
-                                    value="{{ isset($pengajuanKap) ? $pengajuanKap->judul : old('judul') }}"
-                                    placeholder="{{ __('Judul Program Pembelajaran') }}" required />
-                                <div class="invalid-feedback">
-                                    Mohon untuk diisi Judul Program Pembelajaran
-                                </div>
+                    <div class="form-group row mb-3">
+                        <label class="col-sm-3 col-form-label" for="judul">{{ __('Judul Program Pembelajaran') }}
+                            <span style="color: red">*</span></label>
+                        <div class="col-sm-6">
+                            <input type="text" name="judul" id="judul"
+                                class="form-control @error('judul') is-invalid @enderror"
+                                value="{{ isset($pengajuanKap) ? $pengajuanKap->judul : old('judul') }}"
+                                placeholder="{{ __('Judul Program Pembelajaran') }}" required />
+                            <div class="invalid-feedback">
+                                Mohon untuk diisi Judul Program Pembelajaran
                             </div>
                         </div>
+                    </div>
 
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label">{{ __('Concern Program Pembelajaran') }}</label>
@@ -155,7 +161,8 @@
 
                     <div class="form-group row mb-1">
                         <label for="arahan_pimpinan" style="padding-left: 40px"
-                            class="col-sm-3 col-form-label">{{ __('A. Arahan pimpinan/isu terkini/dll') }}</label>
+                            class="col-sm-3 col-form-label">{{ __('A. Arahan pimpinan/isu terkini/dll') }} <span
+                                style="color: red">*</span></label>
                         <div class="col-sm-6">
                             <input type="text" name="arahan_pimpinan" id="arahan_pimpinan"
                                 class="form-control @error('arahan_pimpinan') is-invalid @enderror"
@@ -170,7 +177,7 @@
                     <div class="form-group row mb-3">
                         <label for="prioritas_pembelajaran" style="padding-left: 40px"
                             class="col-sm-3 col-form-label">
-                            {{ __('B. Prioritas Pembelajaran') }}
+                            {{ __('B. Prioritas Pembelajaran') }} <span style="color: red">*</span>
                         </label>
                         <div class="col-sm-6">
                             <select name="prioritas_pembelajaran" id="prioritas_pembelajaran"
@@ -194,7 +201,8 @@
 
                     <div class="form-group row mb-3">
                         <label class="col-sm-3 col-form-label"
-                            for="tujuan_program_pembelajaran">{{ __('Tujuan Program Pembelajaran') }}</label>
+                            for="tujuan_program_pembelajaran">{{ __('Tujuan Program Pembelajaran') }} <span
+                                style="color: red">*</span></label>
                         <div class="col-sm-6">
                             <input type="text" name="tujuan_program_pembelajaran" id="tujuan_program_pembelajaran"
                                 class="form-control @error('tujuan_program_pembelajaran') is-invalid @enderror"
@@ -208,7 +216,8 @@
 
                     <div class="form-group row mb-3">
                         <label class="col-sm-3 col-form-label"
-                            for="tujuan_program_pembelajaran">{{ __('Indikator Keberhasilan') }}</label>
+                            for="tujuan_program_pembelajaran">{{ __('Indikator Keberhasilan') }} <span
+                                style="color: red">*</span></label>
                         <div class="col-sm-6">
                             <table class="table table-bordered table-sm text-center">
                                 <thead style="background-color: #cbccce">
@@ -248,7 +257,8 @@
 
                     <div class="form-group row mb-3">
                         <label class="col-sm-3 col-form-label"
-                            for="indikator-dampak-terhadap-kinerja-organisasi">{{ __('Indikator Dampak Terhadap Kinerja Organisasi') }}</label>
+                            for="indikator-dampak-terhadap-kinerja-organisasi">{{ __('Indikator Dampak Terhadap Kinerja Organisasi') }}
+                            <span style="color: red">*</span></label>
                         <div class="col-sm-6">
                             <input type="text" name="indikator_dampak_terhadap_kinerja_organisasi"
                                 id="indikator-dampak-terhadap-kinerja-organisasi"
@@ -263,7 +273,8 @@
 
                     <div class="form-group row mb-3">
                         <label class="col-sm-3 col-form-label"
-                            for="penugasan-yang-terkait-dengan-pembelajaran">{{ __('Penugasan Yang Terkait Dengan Pembelajaran') }}</label>
+                            for="penugasan-yang-terkait-dengan-pembelajaran">{{ __('Penugasan Yang Terkait Dengan Pembelajaran') }}
+                            <span style="color: red">*</span></label>
                         <div class="col-sm-6">
                             <input type="text" name="penugasan_yang_terkait_dengan_pembelajaran"
                                 id="penugasan-yang-terkait-dengan-pembelajaran"
@@ -278,8 +289,8 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label class="col-sm-3 col-form-label"
-                            for="skill-group-owner">{{ __('Skill Group Owner') }}</label>
+                        <label class="col-sm-3 col-form-label" for="skill-group-owner">{{ __('Skill Group Owner') }}
+                            <span style="color: red">*</span></label>
                         <div class="col-sm-6">
                             <input type="text" name="skill_group_owner" id="skill-group-owner"
                                 class="form-control @error('skill_group_owner') is-invalid @enderror"
@@ -296,7 +307,7 @@
         </div>
 
         <div id="step-2" class="tab-pane" role="tabpanel" aria-labelledby="step-2" style="display: none;">
-            <form id="form-2" style="margin-top: 20px">
+            <form id="form-2">
                 <div class="row" style="padding: 20px">
 
                     <div class="form-group row mb-3">
@@ -323,11 +334,10 @@
                         <label class="col-sm-3 col-form-label"
                             for="indikator-dampak-terhadap-kinerja-organisasi">{{ __('Tempat / Alamat Rinci') }}</label>
                         <div class="col-sm-6">
-                            <input type="text" name="detail_lokasi"
-                                id="indikator-dampak-terhadap-kinerja-organisasi"
-                                class="form-control @error('detail_lokasi') is-invalid @enderror"
-                                value="{{ isset($pengajuanKap) ? $pengajuanKap->detail_lokasi : old('detail_lokasi') }}"
-                                placeholder="{{ __('Tempat / Alamat Rinci') }}" required />
+                            <input type="text" name="tempatName" id="indikator-dampak-terhadap-kinerja-organisasi"
+                                class="form-control @error('tempatName') is-invalid @enderror"
+                                value="{{ isset($pengajuanKap) ? $pengajuanKap->tempatName : old('tempatName') }}"
+                                placeholder="{{ __('Tempat / Alamat Rinci') }}" />
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Tempat / Alamat Rinci
                             </div>
@@ -470,17 +480,17 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label for="jenis_pembelajaran"
+                        <label for="diklatTypeName"
                             class="col-sm-3 col-form-label">{{ __('Jenis Pembelajaran') }}</label>
                         <div class="col-sm-6">
                             <select
-                                class="form-control js-example-basic-multiple @error('jenis_pembelajaran') is-invalid @enderror"
-                                name="jenis_pembelajaran" id="jenis_pembelajaran">
+                                class="form-control js-example-basic-multiple @error('diklatTypeName') is-invalid @enderror"
+                                name="diklatTypeName" id="diklatTypeName">
                                 <option value="" selected disabled>-- {{ __('Select jenis pembelajaran') }} --
                                 </option>
                                 @foreach ($diklatType_data as $jenis)
-                                    <option value="{{ $jenis['diklatTypeID'] }}"
-                                        {{ isset($pengajuanKap) && $pengajuanKap->jenis_pembelajaran == $jenis['diklatTypeID'] ? 'selected' : (old('jenis_pembelajaran') == $jenis['diklatTypeID'] ? 'selected' : '') }}>
+                                    <option value="{{ $jenis['diklatTypeName'] }}"
+                                        {{ isset($pengajuanKap) && $pengajuanKap->diklatTypeName == $jenis['diklatTypeName'] ? 'selected' : (old('diklatTypeName') == $jenis['diklatTypeName'] ? 'selected' : '') }}>
                                         {{ $jenis['diklatTypeName'] }}
                                     </option>
                                 @endforeach
@@ -491,17 +501,17 @@
                         </div>
                     </div>
                     <div class="form-group row mb-3">
-                        <label for="metodeID"
+                        <label for="metodeName"
                             class="col-sm-3 col-form-label">{{ __('Metode Pembelajaran') }}</label>
                         <div class="col-sm-6">
                             <select
-                                class="form-control js-example-basic-multiple @error('metodeID') is-invalid @enderror"
-                                name="metodeID" id="metodeID">
+                                class="form-control js-example-basic-multiple @error('metodeName') is-invalid @enderror"
+                                name="metodeName" id="metodeName">
                                 <option value="" selected disabled>-- {{ __('Select metode pembelajaran') }} --
                                 </option>
                                 @foreach ($metode_data as $metode)
-                                    <option value="{{ $metode['metodeID'] }}"
-                                        {{ isset($pengajuanKap) && $pengajuanKap->metodeID == $metode['metodeID'] ? 'selected' : (old('metodeID') == $metode['metodeID'] ? 'selected' : '') }}>
+                                    <option value="{{ $metode['metodeName'] }}"
+                                        {{ isset($pengajuanKap) && $pengajuanKap->metodeName == $metode['metodeName'] ? 'selected' : (old('metodeName') == $metode['metodeName'] ? 'selected' : '') }}>
                                         {{ $metode['metodeName'] }}
                                     </option>
                                 @endforeach
@@ -520,10 +530,12 @@
                                 <label>Tanggal Tatap Muka:</label>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <input type="date" name="tatap_muka_start" class="form-control" placeholder="Mulai">
+                                        <input type="date" name="tatap_muka_start" class="form-control"
+                                            placeholder="Mulai">
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="date" name="tatap_muka_end" class="form-control" placeholder="Selesai">
+                                        <input type="date" name="tatap_muka_end" class="form-control"
+                                            placeholder="Selesai">
                                     </div>
                                 </div>
                             </div>
@@ -533,19 +545,23 @@
                                 <label>Tanggal Tatap Muka:</label>
                                 <div class="row mb-2">
                                     <div class="col-sm-6">
-                                        <input type="date" name="hybrid_tatap_muka_start" class="form-control" placeholder="Mulai">
+                                        <input type="date" name="hybrid_tatap_muka_start" class="form-control"
+                                            placeholder="Mulai">
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="date" name="hybrid_tatap_muka_end" class="form-control" placeholder="Selesai">
+                                        <input type="date" name="hybrid_tatap_muka_end" class="form-control"
+                                            placeholder="Selesai">
                                     </div>
                                 </div>
                                 <label>Tanggal E-Learning:</label>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <input type="date" name="hybrid_elearning_start" class="form-control" placeholder="Mulai">
+                                        <input type="date" name="hybrid_elearning_start" class="form-control"
+                                            placeholder="Mulai">
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="date" name="hybrid_elearning_end" class="form-control" placeholder="Selesai">
+                                        <input type="date" name="hybrid_elearning_end" class="form-control"
+                                            placeholder="Selesai">
                                     </div>
                                 </div>
                             </div>
@@ -555,10 +571,12 @@
                                 <label>Tanggal E-Learning:</label>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <input type="date" name="elearning_start" class="form-control" placeholder="Mulai">
+                                        <input type="date" name="elearning_start" class="form-control"
+                                            placeholder="Mulai">
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="date" name="elearning_end" class="form-control" placeholder="Selesai">
+                                        <input type="date" name="elearning_end" class="form-control"
+                                            placeholder="Selesai">
                                     </div>
                                 </div>
                             </div>
@@ -571,7 +589,7 @@
         </div>
 
         <div id="step-3" class="tab-pane" role="tabpanel" aria-labelledby="step-3">
-            <form id="form-3" style="margin-top: 20px">
+            <form id="form-3">
                 <div class="row" style="padding: 20px">
                     <div class="form-group row mb-3">
                         <label for="peserta_pembelajaran"

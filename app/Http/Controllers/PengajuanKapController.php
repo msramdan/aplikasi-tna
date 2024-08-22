@@ -293,12 +293,15 @@ class PengajuanKapController extends Controller
             'indikator_dampak_terhadap_kinerja_organisasi' => 'required|string',
             'penugasan_yang_terkait_dengan_pembelajaran' => 'required|string',
             'skill_group_owner' => 'required|string',
+            'detail_lokasi' => 'nullable|string',
+            'kelas' => 'nullable|string',
+            'diklatTypeName' => 'nullable|string',
+            'metodeName' => 'nullable|string',
+            'latsar_stat' => 'nullable|string',
             'bentuk_pembelajaran' => 'nullable|string',
             'jalur_pembelajaran' => 'nullable|string',
             'jenjang_pembelajaran' => 'nullable|string',
             'model_pembelajaran' => 'nullable|string',
-            'jenis_pembelajaran' => 'nullable|string',
-            'metode_pembelajaran' => 'nullable|string',
             'peserta_pembelajaran' => 'nullable|string',
             'sasaran_peserta' => 'nullable|string',
             'kriteria_peserta' => 'nullable|string',
@@ -326,129 +329,130 @@ class PengajuanKapController extends Controller
 
         $kodePembelajaran = $year . $topikId . $newNoUrut;
 
-        DB::beginTransaction();
-        try {
-            $fasilitator_pembelajaran = $request->input('fasilitator_pembelajaran');
-            $fasilitator_pembelajaran_json = empty($fasilitator_pembelajaran) ? null : json_encode($fasilitator_pembelajaran);
-            foreach ($validatedData as $key => $value) {
-                if ($value === 'null') {
-                    $validatedData[$key] = null;
-                }
+        // DB::beginTransaction();
+        // try {
+        $fasilitator_pembelajaran = $request->input('fasilitator_pembelajaran');
+        $fasilitator_pembelajaran_json = empty($fasilitator_pembelajaran) ? null : json_encode($fasilitator_pembelajaran);
+        foreach ($validatedData as $key => $value) {
+            if ($value === 'null') {
+                $validatedData[$key] = null;
             }
-            $sumber_dana = ($is_bpkp == 'BPKP') ? 'RM' : 'PNBP';
-
-            $pengajuanKapId = DB::table('pengajuan_kap')->insertGetId([
-                'kode_pembelajaran' => $kodePembelajaran,
-                'institusi_sumber' => $is_bpkp,
-                'jenis_program' => $validatedData['jenis_program'],
-                'frekuensi_pelaksanaan' => $frekuensi,
-                'indikator_kinerja' => $validatedData['indikator_kinerja'],
-                'kompetensi_id' => $validatedData['kompetensi_id'],
-                'topik_id' => $validatedData['topik_id'],
-                'judul' => $validatedData['judul'],
-                'tahun' => date('Y'),
-                'arahan_pimpinan' => $validatedData['arahan_pimpinan'],
-                'prioritas_pembelajaran' => $validatedData['prioritas_pembelajaran'],
-                'alokasi_waktu' => $validatedData['alokasi_waktu'],
-                'indikator_dampak_terhadap_kinerja_organisasi' => $validatedData['indikator_dampak_terhadap_kinerja_organisasi'],
-                'penugasan_yang_terkait_dengan_pembelajaran' => $validatedData['penugasan_yang_terkait_dengan_pembelajaran'],
-                'skill_group_owner' => $validatedData['skill_group_owner'],
-                'bentuk_pembelajaran' => $validatedData['bentuk_pembelajaran'],
-                'tujuan_program_pembelajaran' => $validatedData['tujuan_program_pembelajaran'],
-                'jalur_pembelajaran' => $validatedData['jalur_pembelajaran'],
-                'jenjang_pembelajaran' => $validatedData['jenjang_pembelajaran'],
-                'model_pembelajaran' => $validatedData['model_pembelajaran'],
-                'jenis_pembelajaran' => $validatedData['jenis_pembelajaran'],
-                'metode_pembelajaran' => $validatedData['metode_pembelajaran'],
-                'peserta_pembelajaran' => $validatedData['peserta_pembelajaran'],
-                'sasaran_peserta' => $validatedData['sasaran_peserta'],
-                'kriteria_peserta' => $validatedData['kriteria_peserta'],
-                'aktivitas_prapembelajaran' => $validatedData['aktivitas_prapembelajaran'],
-                'penyelenggara_pembelajaran' => $validatedData['penyelenggara_pembelajaran'],
-                'fasilitator_pembelajaran' => $fasilitator_pembelajaran_json,
-                'sertifikat' => $validatedData['sertifikat'],
-                'tanggal_created' => date('Y-m-d H:i:s'),
-                'status_pengajuan' => 'Pending',
-                'user_created' => Auth::id(),
-                'current_step' => 1,
-                'sumber_dana' => $sumber_dana,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-
-            foreach ($validatedData['tanggal_mulai'] as $index => $row) {
-                DB::table('waktu_tempat')->insert([
-                    'pengajuan_kap_id' => $pengajuanKapId,
-                    'batch' => $index + 1,
-                    'lokasi_id' => $validatedData['tempat_acara'][$index],
-                    'tanggal_mulai' => $validatedData['tanggal_mulai'][$index],
-                    'tanggal_selesai' => $validatedData['tanggal_selesai'][$index],
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
-            }
-            // insert table gap_kompetensi_pengajuan_kap
-            DB::table('gap_kompetensi_pengajuan_kap')->insert([
-                'pengajuan_kap_id' => $pengajuanKapId,
-                'total_pegawai' => $request->total_pegawai,
-                'pegawai_kompeten' => $request->pegawai_kompeten,
-                'pegawai_belum_kompeten' => $request->pegawai_belum_kompeten,
-                'persentase_kompetensi' => $request->persentase_kompetensi,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-
-            foreach ($validatedData['indikator_keberhasilan'] as $index => $row) {
-                DB::table('indikator_keberhasilan_kap')->insert([
-                    'pengajuan_kap_id' => $pengajuanKapId,
-                    'indikator_keberhasilan' => $row,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
-            }
-
-            foreach ($validatedData['level_evaluasi_instrumen'] as $index => $x) {
-                DB::table('level_evaluasi_instrumen_kap')->insert([
-                    'pengajuan_kap_id' => $pengajuanKapId,
-                    'level' => $validatedData['no_level'][$index],
-                    'keterangan' => $x,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
-            }
-
-            $remarks = [
-                'Biro SDM',
-                'Tim Unit Pengelola Pembelajaran',
-                'Penjaminan Mutu',
-                'Subkoordinator',
-                'Koordinator',
-                'Kepala Unit Pengelola Pembelajaran'
-            ];
-
-            foreach ($remarks as $index => $remark) {
-                DB::table('log_review_pengajuan_kap')->insert([
-                    'pengajuan_kap_id' => $pengajuanKapId,
-                    'step' => $index + 1,
-                    'remark' => $remark,
-                    'user_review_id' => null,
-                    'status' => 'Pending',
-                    'tanggal_review' => null,
-                    'catatan' => '',
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
-            }
-
-            DB::commit();
-            Alert::toast('Pengajuan KAP berhasil disimpan.', 'success');
-            return redirect()->route('pengajuan-kap.index', ['is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi]);
-        } catch (\Exception $e) {
-            DB::rollBack();
-            \Log::error('Error: ' . $e->getMessage());
-            Alert::toast('Pengajuan KAP gagal disimpan.', 'error');
-            return redirect()->route('pengajuan-kap.index', ['is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi]);
         }
+        $sumber_dana = ($is_bpkp == 'BPKP') ? 'RM' : 'PNBP';
+
+        $pengajuanKapId = DB::table('pengajuan_kap')->insertGetId([
+            'kode_pembelajaran' => $kodePembelajaran,
+            'institusi_sumber' => $is_bpkp,
+            'jenis_program' => $validatedData['jenis_program'],
+            'frekuensi_pelaksanaan' => $frekuensi,
+            'indikator_kinerja' => $validatedData['indikator_kinerja'],
+            'kompetensi_id' => $validatedData['kompetensi_id'],
+            'topik_id' => $validatedData['topik_id'],
+            'judul' => $validatedData['judul'],
+            'arahan_pimpinan' => $validatedData['arahan_pimpinan'],
+            'tahun' => date('Y'),
+            'prioritas_pembelajaran' => $validatedData['prioritas_pembelajaran'],
+            'tujuan_program_pembelajaran' => $validatedData['tujuan_program_pembelajaran'],
+            'indikator_dampak_terhadap_kinerja_organisasi' => $validatedData['indikator_dampak_terhadap_kinerja_organisasi'],
+            'penugasan_yang_terkait_dengan_pembelajaran' => $validatedData['penugasan_yang_terkait_dengan_pembelajaran'],
+            'skill_group_owner' => $validatedData['skill_group_owner'],
+            'detail_lokasi' => $validatedData['detail_lokasi'],
+            'kelas' => $validatedData['kelas'],
+            'diklatTypeName' => $validatedData['diklatTypeName'],
+            'metodeName' => $validatedData['metodeName'],
+            'latsar_stat' => $validatedData['latsar_stat'],
+            'biayaName' =>  $sumber_dana,
+            'bentuk_pembelajaran' => $validatedData['bentuk_pembelajaran'],
+            'jalur_pembelajaran' => $validatedData['jalur_pembelajaran'],
+            'jenjang_pembelajaran' => $validatedData['jenjang_pembelajaran'],
+            'model_pembelajaran' => $validatedData['model_pembelajaran'],
+            'peserta_pembelajaran' => $validatedData['peserta_pembelajaran'],
+            'sasaran_peserta' => $validatedData['sasaran_peserta'],
+            'kriteria_peserta' => $validatedData['kriteria_peserta'],
+            'aktivitas_prapembelajaran' => $validatedData['aktivitas_prapembelajaran'],
+            'penyelenggara_pembelajaran' => $validatedData['penyelenggara_pembelajaran'],
+            'fasilitator_pembelajaran' => $fasilitator_pembelajaran_json,
+            'sertifikat' => $validatedData['sertifikat'],
+            'tanggal_created' => date('Y-m-d H:i:s'),
+            'status_pengajuan' => 'Pending',
+            'user_created' => Auth::id(),
+            'current_step' => 1,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        // foreach ($validatedData['tanggal_mulai'] as $index => $row) {
+        //     DB::table('waktu_tempat')->insert([
+        //         'pengajuan_kap_id' => $pengajuanKapId,
+        //         'remarkMetodeName' => $validatedData['remarkMetodeName'][$index],
+        //         'tanggal_mulai' => $validatedData['tanggal_mulai'][$index],
+        //         'tanggal_selesai' => $validatedData['tanggal_selesai'][$index],
+        //         'created_at' => now(),
+        //         'updated_at' => now(),
+        //     ]);
+        // }
+        // insert table gap_kompetensi_pengajuan_kap
+        DB::table('gap_kompetensi_pengajuan_kap')->insert([
+            'pengajuan_kap_id' => $pengajuanKapId,
+            'total_pegawai' => $request->total_pegawai,
+            'pegawai_kompeten' => $request->pegawai_kompeten,
+            'pegawai_belum_kompeten' => $request->pegawai_belum_kompeten,
+            'persentase_kompetensi' => $request->persentase_kompetensi,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        foreach ($validatedData['indikator_keberhasilan'] as $index => $row) {
+            DB::table('indikator_keberhasilan_kap')->insert([
+                'pengajuan_kap_id' => $pengajuanKapId,
+                'indikator_keberhasilan' => $row,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
+
+        foreach ($validatedData['level_evaluasi_instrumen'] as $index => $x) {
+            DB::table('level_evaluasi_instrumen_kap')->insert([
+                'pengajuan_kap_id' => $pengajuanKapId,
+                'level' => $validatedData['no_level'][$index],
+                'keterangan' => $x,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
+
+        $remarks = [
+            'Biro SDM',
+            'Tim Unit Pengelola Pembelajaran',
+            'Penjaminan Mutu',
+            'Subkoordinator',
+            'Koordinator',
+            'Kepala Unit Pengelola Pembelajaran'
+        ];
+
+        foreach ($remarks as $index => $remark) {
+            DB::table('log_review_pengajuan_kap')->insert([
+                'pengajuan_kap_id' => $pengajuanKapId,
+                'step' => $index + 1,
+                'remark' => $remark,
+                'user_review_id' => null,
+                'status' => 'Pending',
+                'tanggal_review' => null,
+                'catatan' => '',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
+
+        //     DB::commit();
+        //     Alert::toast('Pengajuan KAP berhasil disimpan.', 'success');
+        //     return redirect()->route('pengajuan-kap.index', ['is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi]);
+        // } catch (\Exception $e) {
+        //     DB::rollBack();
+        //     \Log::error('Error: ' . $e->getMessage());
+        //     Alert::toast('Pengajuan KAP gagal disimpan.', 'error');
+        //     return redirect()->route('pengajuan-kap.index', ['is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi]);
+        // }
     }
 
     public function update(Request $request, $id, $is_bpkp, $frekuensi)

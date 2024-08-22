@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('indikator_kinerja');
             $table->foreignId('kompetensi_id')->nullable()->constrained('kompetensi')->cascadeOnUpdate()->nullOnDelete();
             $table->foreignId('topik_id')->nullable()->constrained('topik')->cascadeOnUpdate()->nullOnDelete();
+            $table->text('judul')->nullable(); // kaldikdesc
             $table->text('arahan_pimpinan');
             $table->string('tahun', 10); // kaldikYear
             $table->string('prioritas_pembelajaran', 50);
@@ -28,11 +29,10 @@ return new class extends Migration
             // new
             $table->string('detail_lokasi', 255)->nullable(); // tempatName
             $table->string('kelas', 255)->nullable();
-            $table->text('judul')->nullable(); // kaldikdesc
-            $table->text('jenis_pembelajaran')->nullable(); // diklatTypeName
-            $table->text('metode_pembelajaran')->nullable(); // metodeName
+            $table->text('diklatTypeName')->nullable(); // diklatTypeName
+            $table->text('metodeName')->nullable();
             $table->enum('latsar_stat', ['0', '1'])->default('0')->change();
-            $table->text('sumber_dana')->nullable(); //biayaName
+            $table->text('biayaName')->nullable(); //biayaName
             $table->enum('bentuk_pembelajaran', ['Klasikal', 'Nonklasikal'])->nullable();
             $table->enum('jalur_pembelajaran', [
                 'Pelatihan',
