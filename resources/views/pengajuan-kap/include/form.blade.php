@@ -54,7 +54,7 @@
         </li>
     </ul>
 
-    <div class="tab-content" style="overflow: auto">
+    <div class="tab-content" style="overflow: auto; min-height:700px" >
         <div id="step-1" class="tab-pane" role="tabpanel" aria-labelledby="step-1" style="display: none;">
             <form id="form-1" style="margin-top: 20px">
                 <div class="row" style="padding: 20px">
@@ -511,6 +511,61 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="form-group row mb-3" id="additional_fields" style="display: none;">
+                        <label class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-6">
+                            <!-- Tatap Muka Fields -->
+                            <div id="tatap_muka_fields" style="display: none;">
+                                <label>Tanggal Tatap Muka:</label>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <input type="date" name="tatap_muka_start" class="form-control" placeholder="Mulai">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="date" name="tatap_muka_end" class="form-control" placeholder="Selesai">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hybrid Fields -->
+                            <div id="hybrid_fields" style="display: none;">
+                                <label>Tanggal Tatap Muka:</label>
+                                <div class="row mb-2">
+                                    <div class="col-sm-6">
+                                        <input type="date" name="hybrid_tatap_muka_start" class="form-control" placeholder="Mulai">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="date" name="hybrid_tatap_muka_end" class="form-control" placeholder="Selesai">
+                                    </div>
+                                </div>
+                                <label>Tanggal E-Learning:</label>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <input type="date" name="hybrid_elearning_start" class="form-control" placeholder="Mulai">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="date" name="hybrid_elearning_end" class="form-control" placeholder="Selesai">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- E-Learning Fields -->
+                            <div id="elearning_fields" style="display: none;">
+                                <label>Tanggal E-Learning:</label>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <input type="date" name="elearning_start" class="form-control" placeholder="Mulai">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="date" name="elearning_end" class="form-control" placeholder="Selesai">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
                 </div>
             </form>
         </div>

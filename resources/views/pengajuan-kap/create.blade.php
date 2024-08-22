@@ -560,5 +560,15 @@
             });
         });
     </script>
+    <script>
+        $(document).ready(function() {
+            $('#metode_pembelajaran').on('change', function() {
+                var value = $(this).val();
+                $('#additional_fields').show();
+                $('#tatap_muka_fields').toggle(value == '1');
+                $('#hybrid_fields').toggle(value == '2');
+                $('#elearning_fields').toggle(value == '4');
+            });
+        });
+    </script>
 @endpush
-1
