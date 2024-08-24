@@ -717,6 +717,14 @@ class PengajuanKapController extends Controller
                             'status_pengajuan' => 'Approved',
                             'updated_at' => Carbon::now(),
                         ]);
+                    if (env('OTOMATIS_SYNC_INFO_DIKLAT', false)) {
+                        $syncResult = syncData($pengajuanKap);
+                        if (!$syncResult) {
+                            DB::rollBack();
+                            Alert::toast('Failed to sync data with the external API.', 'error');
+                            return redirect()->back();
+                        }
+                    }
                 } else {
                     // Otherwise, increment the current step in the pengajuan_kap table
                     DB::table('pengajuan_kap')
@@ -903,6 +911,14 @@ class PengajuanKapController extends Controller
                                 'status_pengajuan' => 'Approved',
                                 'updated_at' => Carbon::now(),
                             ]);
+                        if (env('OTOMATIS_SYNC_INFO_DIKLAT', false)) {
+                            $syncResult = syncData($pengajuanKap);
+                            if (!$syncResult) {
+                                DB::rollBack();
+                                Alert::toast('Failed to sync data with the external API.', 'error');
+                                return redirect()->back();
+                            }
+                        }
                     } else {
                         // Otherwise, increment the current step in the pengajuan_kap table
                         DB::table('pengajuan_kap')
@@ -1016,13 +1032,20 @@ class PengajuanKapController extends Controller
 
                     // Update logic based on the maximum step found
                     if ($maxStep === $currentStep) {
-                        // If the current step matches the max step, update pengajuan_kap status
                         DB::table('pengajuan_kap')
                             ->where('id', $id)
                             ->update([
                                 'status_pengajuan' => 'Approved',
                                 'updated_at' => Carbon::now(),
                             ]);
+                        if (env('OTOMATIS_SYNC_INFO_DIKLAT', false)) {
+                            $syncResult = syncData($pengajuanKap);
+                            if (!$syncResult) {
+                                DB::rollBack();
+                                Alert::toast('Failed to sync data with the external API.', 'error');
+                                return redirect()->back();
+                            }
+                        }
                     } else {
                         // Otherwise, increment the current step in the pengajuan_kap table
                         DB::table('pengajuan_kap')

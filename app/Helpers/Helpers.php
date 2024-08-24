@@ -110,3 +110,32 @@ function callApiPusdiklatwas($url, $params = [])
 
     return $data['data'];
 }
+
+function syncData($pengajuanKap)
+{
+    $endpoint_pusdiklatwap = config('stara.endpoint_pusdiklatwap');
+    $api_key_pusdiklatwap = config('stara.api_token_pusdiklatwap');
+    $apiUrl = $endpoint_pusdiklatwap . '/kaldik/store?api_key=' . $api_key_pusdiklatwap;
+    $payload = [
+        "kaldikID" => $pengajuanKap->kode_pembelajaran,
+        "kaldikYear" => $pengajuanKap->tahun,
+        "biayaID" => $pengajuanKap->biayaID,
+        "diklatLocID" => $pengajuanKap->diklatLocID,
+        "kelas" => $pengajuanKap->kelas,
+        "metodeID" => $pengajuanKap->metodeID,
+        "kaldikdesc" => $pengajuanKap->judul,
+        "tempatName" => $pengajuanKap->detail_lokasi,
+        "latsar_stat" => $pengajuanKap->latsar_stat,
+        "id_jenis_diklat" => $pengajuanKap->diklatTypeID,
+        "tgl_mulai_el" => $pengajuanKap->tgl_mulai_el,
+        "tgl_selesai_el" => $pengajuanKap->tgl_selesai_el,
+        "tgl_mulai_tm" => $pengajuanKap->tgl_mulai_tm,
+        "tgl_selesai_tm" => $pengajuanKap->tgl_selesai_tm,
+    ];
+    $response = Http::post($apiUrl, $payload);
+    if ($response->successful()) {
+        return true;
+    } else {
+        return false;
+    }
+}
