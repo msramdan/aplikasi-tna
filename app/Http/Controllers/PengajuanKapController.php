@@ -680,6 +680,7 @@ class PengajuanKapController extends Controller
     public function approve(Request $request, $id)
     {
         DB::beginTransaction();
+        $syncResult = null;
 
         try {
             // Retrieve the PengajuanKap record by its ID
@@ -744,20 +745,22 @@ class PengajuanKapController extends Controller
                 }
             }
             DB::commit();
-            if (!$syncResult) {
+            if ($syncResult === null) {
+                // Sync was not attempted
+                Alert::toast('Pengajuan Kap berhasil disetujui.', 'success');
+            } else if (!$syncResult) {
                 Alert::toast('Pengajuan Kap disetujui, namun gagal sync dengan Info Diklat', 'warning');
             } else {
-                Alert::toast('Pengajuan Kap berhasil disetujui.', 'success');
+                Alert::toast('Pengajuan Kap berhasil disetujui dan berhasil disinkronkan dengan Info Diklat.', 'success');
             }
+
             return redirect()->route('pengajuan-kap.index', [
                 'is_bpkp' => $pengajuanKap->institusi_sumber,
                 'frekuensi' => $pengajuanKap->frekuensi_pelaksanaan,
             ]);
         } catch (\Exception $e) {
             DB::rollback();
-            Alert::toast('Gagal menyetujui Pengajuan Kap. Silakan coba lagi.', 'error');
-
-            // Handle the exception, optionally log it or notify the user
+            Alert::toast('Gagal menyetujui Pengajuan Kap. Error: ' . $e->getMessage(), 'error');
             return redirect()->back();
         }
     }
