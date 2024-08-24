@@ -27,12 +27,17 @@ return new class extends Migration
             $table->text('penugasan_yang_terkait_dengan_pembelajaran');
             $table->text('skill_group_owner');
             // new
+            $table->char('diklatLocID', 5)->nullable();
+            $table->text('diklatLocName')->nullable();
             $table->string('detail_lokasi', 255)->nullable(); // tempatName
-            $table->string('kelas', 255)->nullable();
-            $table->text('diklatTypeName')->nullable(); // diklatTypeName
+            $table->integer('kelas')->nullable();
+            $table->char('diklatTypeID', 5)->nullable();
+            $table->text('diklatTypeName')->nullable();
             $table->char('metodeID', 5)->nullable();
+            $table->text('metodeName')->nullable();
+            $table->char('biayaID', 5)->nullable();
+            $table->text('biayaName')->nullable();
             $table->char('latsar_stat', 5)->nullable();
-            $table->text('biayaName')->nullable(); //biayaName
             $table->enum('bentuk_pembelajaran', ['Klasikal', 'Nonklasikal'])->nullable();
             $table->enum('jalur_pembelajaran', [
                 'Pelatihan',
