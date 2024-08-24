@@ -715,22 +715,18 @@ class PengajuanKapController extends Controller
                             'status_pengajuan' => 'Approved',
                             'updated_at' => Carbon::now(),
                         ]);
+
                     if (env('OTOMATIS_SYNC_INFO_DIKLAT', false)) {
                         $syncResult = syncData($pengajuanKap);
                         $statusSync = $syncResult ? 'Success' : 'Failed';
 
+                        // Update status_sync based on sync result
                         DB::table('pengajuan_kap')
                             ->where('id', $id)
                             ->update([
                                 'status_sync' => $statusSync,
                                 'updated_at' => Carbon::now(),
                             ]);
-
-                        if (!$syncResult) {
-                            DB::rollBack();
-                            Alert::toast('Failed to sync data with the external API.', 'error');
-                            return redirect()->back();
-                        }
                     }
                 } else {
                     // Otherwise, increment the current step in the pengajuan_kap table
@@ -743,17 +739,20 @@ class PengajuanKapController extends Controller
                         ]);
                 }
             }
-
             DB::commit();
-            Alert::toast('Pengajuan Kap approved successfully.', 'success');
-            // Redirect with success message
+            if (!$syncResult) {
+                Alert::toast('Pengajuan Kap disetujui, namun gagal sync dengan Info Diklat', 'warning');
+            } else {
+                Alert::toast('Pengajuan Kap berhasil disetujui.', 'success');
+            }
             return redirect()->route('pengajuan-kap.index', [
                 'is_bpkp' => $pengajuanKap->institusi_sumber,
                 'frekuensi' => $pengajuanKap->frekuensi_pelaksanaan,
             ]);
         } catch (\Exception $e) {
+            // Rollback on any exception
             DB::rollback();
-            Alert::toast('Failed to approve Pengajuan Kap. Please try again', 'error');
+            Alert::toast('Gagal menyetujui Pengajuan Kap. Silakan coba lagi.', 'error');
 
             // Handle the exception, optionally log it or notify the user
             return redirect()->back();
@@ -800,7 +799,7 @@ class PengajuanKapController extends Controller
             }
 
             DB::commit();
-            Alert::toast('Pengajuan Kap rejected successfully.', 'success');
+            Alert::toast('Pengajuan Kap berhasil ditolak.', 'success');
 
             // Redirect with success message
             return redirect()->route('pengajuan-kap.index', [
@@ -809,7 +808,7 @@ class PengajuanKapController extends Controller
             ]);
         } catch (\Exception $e) {
             DB::rollback();
-            Alert::toast('Failed to reject Pengajuan Kap. Please try again', 'error');
+            Alert::toast('Gagal menolak Pengajuan Kap. Silakan coba lagi', 'error');
 
             // Handle the exception, optionally log it or notify the user
             return redirect()->back();
@@ -874,6 +873,7 @@ class PengajuanKapController extends Controller
     {
         $ids = $request->ids;
         $approvalNote = $request->note;
+        $syncErrors = [];
 
         DB::beginTransaction();
 
@@ -918,25 +918,21 @@ class PengajuanKapController extends Controller
                                 'status_pengajuan' => 'Approved',
                                 'updated_at' => Carbon::now(),
                             ]);
+
                         if (env('OTOMATIS_SYNC_INFO_DIKLAT', false)) {
                             $syncResult = syncData($pengajuanKap);
                             $statusSync = $syncResult ? 'Success' : 'Failed';
-
                             DB::table('pengajuan_kap')
                                 ->where('id', $id)
                                 ->update([
                                     'status_sync' => $statusSync,
                                     'updated_at' => Carbon::now(),
                                 ]);
-
                             if (!$syncResult) {
-                                DB::rollBack();
-                                Alert::toast('Failed to sync data with the external API.', 'error');
-                                return redirect()->back();
+                                $syncErrors[] = $id;
                             }
                         }
                     } else {
-                        // Otherwise, increment the current step in the pengajuan_kap table
                         DB::table('pengajuan_kap')
                             ->where('id', $id)
                             ->update([
@@ -947,11 +943,28 @@ class PengajuanKapController extends Controller
                     }
                 }
             }
+
+            // Commit transaction if all operations are successful
             DB::commit();
-            return response()->json(['success' => true, 'message' => 'Pengajuan Kap approved successfully.']);
+
+            // Handle sync errors if there are any
+            if (!empty($syncErrors)) {
+                $message = 'Pengajuan Kap disetujui. Beberapa data gagal sync dengan Aplikasi Info Diklat';
+            } else {
+                $message = 'Pengajuan Kap berhasil disetujui.';
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => $message
+            ]);
         } catch (\Exception $e) {
+            // Rollback on any exception
             DB::rollback();
-            return response()->json(['success' => false, 'message' => 'Failed to approve Pengajuan Kap. Please try again.']);
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal menyetujui Pengajuan Kap. Silakan coba lagi.'
+            ]);
         }
     }
 
@@ -1000,10 +1013,10 @@ class PengajuanKapController extends Controller
             }
 
             DB::commit();
-            return response()->json(['success' => true, 'message' => 'Pengajuan Kap rejected successfully.']);
+            return response()->json(['success' => true, 'message' => 'Pengajuan Kap berhasil ditolak.']);
         } catch (\Exception $e) {
             DB::rollback();
-            return response()->json(['success' => false, 'message' => 'Failed to reject Pengajuan Kap. Please try again.']);
+            return response()->json(['success' => false, 'message' => 'Gagal menolak Pengajuan Kap. Silakan coba lagi.']);
         }
     }
 
@@ -1011,29 +1024,26 @@ class PengajuanKapController extends Controller
     {
         $ids = $request->ids;
         $approvalNote = $request->note;
+        $syncErrors = [];
 
         DB::beginTransaction();
 
         try {
             foreach ($ids as $id) {
-                // Retrieve the PengajuanKap record by its ID
                 $pengajuanKap = DB::table('pengajuan_kap')->find($id);
 
-                // Check for the current_step in PengajuanKap
                 $currentStep = $pengajuanKap->current_step;
 
-                // Query the log_review_pengajuan_kap table for the first matching record
                 $logReview = DB::table('log_review_pengajuan_kap')
                     ->where('pengajuan_kap_id', $id)
                     ->where('step', $currentStep)
                     ->first();
 
-                // If a matching log review is found, update its fields
                 if ($logReview) {
                     DB::table('log_review_pengajuan_kap')
                         ->where('id', $logReview->id)
                         ->update([
-                            'status' => 'Skiped',
+                            'status' => 'Skipped',
                             'tanggal_review' => Carbon::now(),
                             'catatan' => $approvalNote,
                             'user_review_id' => Auth::id(),
@@ -1041,12 +1051,10 @@ class PengajuanKapController extends Controller
                             'updated_at' => Carbon::now(),
                         ]);
 
-                    // After updating log review, get the maximum step from log_review_pengajuan_kap
                     $maxStep = DB::table('log_review_pengajuan_kap')
                         ->where('pengajuan_kap_id', $id)
                         ->max('step');
 
-                    // Update logic based on the maximum step found
                     if ($maxStep === $currentStep) {
                         DB::table('pengajuan_kap')
                             ->where('id', $id)
@@ -1054,25 +1062,21 @@ class PengajuanKapController extends Controller
                                 'status_pengajuan' => 'Approved',
                                 'updated_at' => Carbon::now(),
                             ]);
+
                         if (env('OTOMATIS_SYNC_INFO_DIKLAT', false)) {
                             $syncResult = syncData($pengajuanKap);
                             $statusSync = $syncResult ? 'Success' : 'Failed';
-
                             DB::table('pengajuan_kap')
                                 ->where('id', $id)
                                 ->update([
                                     'status_sync' => $statusSync,
                                     'updated_at' => Carbon::now(),
                                 ]);
-
                             if (!$syncResult) {
-                                DB::rollBack();
-                                Alert::toast('Failed to sync data with the external API.', 'error');
-                                return redirect()->back();
+                                $syncErrors[] = $id;
                             }
                         }
                     } else {
-                        // Otherwise, increment the current step in the pengajuan_kap table
                         DB::table('pengajuan_kap')
                             ->where('id', $id)
                             ->update([
@@ -1084,10 +1088,23 @@ class PengajuanKapController extends Controller
                 }
             }
             DB::commit();
-            return response()->json(['success' => true, 'message' => 'Pengajuan Kap skiped successfully.']);
+
+            if (!empty($syncErrors)) {
+                $message = 'Pengajuan Kap di-skip. Beberapa data gagal sync dengan Aplikasi Info Diklat';
+            } else {
+                $message = 'Pengajuan Kap berhasil di-skip.';
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => $message
+            ]);
         } catch (\Exception $e) {
             DB::rollback();
-            return response()->json(['success' => false, 'message' => 'Failed to approve Pengajuan Kap. Please try again.']);
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal skip Pengajuan Kap. Silakan coba lagi.'
+            ]);
         }
     }
 }
