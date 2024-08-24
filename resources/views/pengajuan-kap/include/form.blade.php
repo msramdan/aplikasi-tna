@@ -543,6 +543,7 @@
                             <div id="tatap_muka_fields" style="display: none;">
                                 <label>Tanggal Tatap Muka:</label>
                                 <div class="row">
+                                    <input type="hidden" name="tatap_muka_1" class="form-control">
                                     <div class="col-sm-6">
                                         <input type="date" name="tatap_muka_start" class="form-control"
                                             placeholder="Mulai">
@@ -558,6 +559,7 @@
                             <div id="hybrid_fields" style="display: none;">
                                 <label>Tanggal Tatap Muka:</label>
                                 <div class="row mb-2">
+                                    <input type="hidden" name="tatap_muka_2" class="form-control">
                                     <div class="col-sm-6">
                                         <input type="date" name="hybrid_tatap_muka_start" class="form-control"
                                             placeholder="Mulai">

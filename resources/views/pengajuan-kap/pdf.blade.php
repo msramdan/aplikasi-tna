@@ -118,11 +118,15 @@
                         <table style="width: 450px; border-collapse: collapse;">
                             <thead>
                                 <tr>
-                                    <th style="background-color: #f2f2f2; ; padding: 2px;text-align: center;">Total pegawai</th>
-                                    <th style="background-color: #f2f2f2; ; padding: 2px;text-align: center;">Pegawai kompeten</th>
-                                    <th style="background-color: #f2f2f2; ; padding: 2px;text-align: center;">Pegawai belum
+                                    <th style="background-color: #f2f2f2; ; padding: 2px;text-align: center;">Total
+                                        pegawai</th>
+                                    <th style="background-color: #f2f2f2; ; padding: 2px;text-align: center;">Pegawai
                                         kompeten</th>
-                                    <th style="background-color: #f2f2f2; ; padding: 2px;text-align: center;">Persentase kompetensi
+                                    <th style="background-color: #f2f2f2; ; padding: 2px;text-align: center;">Pegawai
+                                        belum
+                                        kompeten</th>
+                                    <th style="background-color: #f2f2f2; ; padding: 2px;text-align: center;">Persentase
+                                        kompetensi
                                     </th>
                                 </tr>
                             </thead>
@@ -215,37 +219,9 @@
         <strong>II. Detail Pembelajaran</strong>
         <table style="font-size:12px; padding:15px;line-height:17px">
             <tr>
-                <td style="width: 200px; vertical-align: top;">{{ __('Alokasi Waktu') }}</td>
+                <td style="vertical-align: top;">{{ __('Tempat / Alamat Rinci') }}</td>
                 <td style="vertical-align: top;">:</td>
-                <td style="vertical-align: top;">{{ $pengajuanKap->alokasi_waktu }} Hari</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td>
-                    <table style="width: 450px; border-collapse: collapse;">
-                        <thead>
-                            <tr>
-                                <th style="background-color: #f2f2f2; ; padding: 2px;text-align: left;">
-                                    Lokasi</th>
-                                <th style="background-color: #f2f2f2; ; padding: 2px;text-align: left;">
-                                    Tanggal Mulai</th>
-                                <th style="background-color: #f2f2f2; ; padding: 2px;text-align: left;">
-                                    Tanggal Selesai</th>
-                            </tr>
-                        </thead>
-                        @foreach ($waktu_tempat as $row)
-                            <tr>
-                                <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: justify">
-                                    {{ $row->nama_lokasi }}</td>
-                                <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: justify">
-                                    {{ $row->tanggal_mulai }}</td>
-                                <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: justify">
-                                    {{ $row->tanggal_selesai }}</td>
-                            </tr>
-                        @endforeach
-                    </table>
-                </td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->detail_lokasi ?: '-' }}</td>
             </tr>
             <tr>
                 <td style="vertical-align: top;">{{ __('Bentuk Pembelajaran') }}</td>
@@ -270,12 +246,55 @@
             <tr>
                 <td style="vertical-align: top;">{{ __('Jenis Pembelajaran') }}</td>
                 <td style="vertical-align: top;">:</td>
-                <td style="vertical-align: top;">{{ $pengajuanKap->jenis_pembelajaran ?: '-' }}</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->diklatTypeName ?: '-' }}</td>
             </tr>
             <tr>
                 <td style="vertical-align: top;">{{ __('Metode Pembelajaran') }}</td>
                 <td style="vertical-align: top;">:</td>
-                <td style="vertical-align: top;">{{ $pengajuanKap->metode_pembelajaran ?: '-' }}</td>
+                <td style="vertical-align: top;">
+                    @if ($pengajuanKap->metodeID == 1)
+                        Full Tatap Muka
+                    @elseif ($pengajuanKap->metodeID == 2)
+                        Blended Learning
+                    @else
+                        Full E-Learning
+                    @endif
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td>
+                    <table style="width: 450px; border-collapse: collapse;">
+                        <thead>
+                            <tr>
+                                <th style="background-color: #f2f2f2; ; padding: 2px;text-align: left;">
+                                    Pelaksanaan</th>
+                                <th style="background-color: #f2f2f2; ; padding: 2px;text-align: left;">
+                                    Tanggal Mulai</th>
+                                <th style="background-color: #f2f2f2; ; padding: 2px;text-align: left;">
+                                    Tanggal Selesai</th>
+                            </tr>
+                        </thead>
+                        @foreach ($waktu_pelaksanaan as $row)
+                            <tr>
+                                <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: justify">
+                                    @if ($row->remarkMetodeName == 1)
+                                        Full Tatap Muka
+                                    @elseif ($row->remarkMetodeName == 2)
+                                        Blended Learning
+                                    @else
+                                        Full E-Learning
+                                    @endif
+                                </td>
+                                <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: justify">
+                                    {{ $row->tanggal_mulai }}</td>
+                                <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: justify">
+                                    {{ $row->tanggal_selesai }}</td>
+                            </tr>
+                        @endforeach
+                    </table>
+                </td>
             </tr>
         </table>
 
