@@ -181,8 +181,8 @@
 
             @can('sinkronisasi view')
                 <li class="nav-item">
-                    <a class="nav-link menu-link {{ request()->routeIs('kalender-pembelajaran*') ? 'active' : '' }}"
-                        href="{{ route('kalender-pembelajaran.index', ['tahun' => $currentYear, 'waktu_pelaksanaan' => $default, 'sumber_dana' => $default, 'topik' => $default]) }}">
+                    <a class="nav-link menu-link {{ request()->routeIs('sync-info-diklat*') ? 'active' : '' }}"
+                        href="{{ route('sync-info-diklat.index') }}">
                         <i class="fa fa-refresh"></i> <span data-key="t-widgets">Sync Info-Diklat</span>
                     </a>
                 </li>

@@ -15,6 +15,7 @@ use App\Http\Controllers\{
     KompetensiApiController,
     LocalizationController,
     PengajuanKapController,
+    SyncInfoIDiklatController,
     ReportingController,
     SettingAppController,
     ConfigStepReview,
@@ -111,6 +112,14 @@ Route::middleware(['auth', 'web', 'check.maintenance'])->group(function () {
         Route::post('/reject', 'rejectSelected')->name('pengajuan-kap-selected.reject');
         Route::post('/skip', 'skipSelected')->name('pengajuan-kap-selected.skip');
     });
+
+    Route::controller(SyncInfoIDiklatController::class)->group(function () {
+        Route::get('/sync-info-diklat', 'index')->name('sync-info-diklat.index');
+        // Route untuk show
+        Route::get('/sync-info-diklat-show/{id}', 'show')->name('sync-info-diklat.show');
+        Route::get('/sync-info-diklat-pdf/{id}', 'cetak_pdf')->name('sync-info-diklat.pdf');
+    });
+
     Route::get('/backup', [BackupController::class, 'index'])->name('backup.index');
     Route::get('/backup/download', [BackupController::class, 'downloadBackup'])->name('backup.download');
     Route::get('/get-indikator/{jenisProgram}', [ApiController::class, 'getIndikator'])->name('getIndikator');
