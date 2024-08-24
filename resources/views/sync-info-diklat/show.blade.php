@@ -388,6 +388,25 @@
                                         </tr>
 
                                         <tr>
+                                            <td class="fw-bold">{{ __('Status Sync') }}</td>
+                                            <td>
+                                                @if ($pengajuanKap->status_sync == 'Waiting')
+                                                    <button style="width:150px" class="btn btn-gray btn-sm btn-block">
+                                                        <i class="fa fa-clock" aria-hidden="true"></i> Waiting
+                                                    </button>
+                                                @elseif ($pengajuanKap->status_sync == 'Success')
+                                                    <button style="width:150px" class="btn btn-success btn-sm btn-block">
+                                                        <i class="fa fa-check" aria-hidden="true"></i> Success
+                                                    </button>
+                                                @elseif ($pengajuanKap->status_sync == 'Failed')
+                                                    <button style="width:150px" class="btn btn-danger btn-sm btn-block">
+                                                        <i class="fa fa-times" aria-hidden="true"></i> Failed
+                                                    </button>
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                        <tr>
                                             <td class="fw-bold">{{ __('User created') }}</td>
                                             <td>{{ $pengajuanKap->user_name ?: '-' }}</td>
                                         </tr>

@@ -70,22 +70,17 @@ class SyncInfoIDiklatController extends Controller
             $pengajuanKaps = $pengajuanKaps->orderBy('pengajuan_kap.id', 'DESC');
             return DataTables::of($pengajuanKaps)
                 ->addIndexColumn()
-                ->addColumn('status_kap', function ($row) {
-                    return $row->status_pengajuan;
-                })
-                ->addColumn('status_pengajuan', function ($row) {
-                    if ($row->status_pengajuan == 'Pending') {
-                        return '<button style="width:90px" class="btn btn-gray btn-sm btn-block"><i class="fa fa-clock" aria-hidden="true"></i> Pending</button>';
-                    } else if ($row->status_pengajuan == 'Approved') {
-                        return '<button style="width:90px" class="btn btn-success btn-sm btn-block"><i class="fa fa-check" aria-hidden="true"></i> Approved</button>';
-                    } else if ($row->status_pengajuan == 'Rejected') {
-                        return '<button style="width:90px" class="btn btn-danger btn-sm btn-block"><i class="fa fa-times" aria-hidden="true"></i> Rejected</button>';
-                    } else if ($row->status_pengajuan == 'Process') {
-                        return '<button style="width:90px" class="btn btn-primary btn-sm btn-block"><i class="fa fa-spinner" aria-hidden="true"></i> Process</button>';
+                ->addColumn('status_sync', function ($row) {
+                    if ($row->status_sync == 'Waiting') {
+                        return '<button style="width:90px" class="btn btn-gray btn-sm btn-block"><i class="fa fa-clock" aria-hidden="true"></i> Waiting</button>';
+                    } else if ($row->status_sync == 'Success') {
+                        return '<button style="width:90px" class="btn btn-success btn-sm btn-block"><i class="fa fa-check" aria-hidden="true"></i> Success</button>';
+                    } else if ($row->status_sync == 'Failed') {
+                        return '<button style="width:90px" class="btn btn-danger btn-sm btn-block"><i class="fa fa-times" aria-hidden="true"></i> Failed</button>';
                     }
                 })
                 ->addColumn('action', 'sync-info-diklat.include.action')
-                ->rawColumns(['status_pengajuan', 'action'])
+                ->rawColumns(['status_sync', 'action'])
                 ->toJson();
         }
 

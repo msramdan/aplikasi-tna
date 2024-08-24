@@ -419,22 +419,22 @@ class PengajuanKapController extends Controller
                     'updated_at' => now(),
                 ]);
             } elseif ($metodeID === '2') {
-                // Insert Tatap Muka data
+                // Insert E-Learning data
                 DB::table('waktu_pelaksanaan')->insert([
                     'pengajuan_kap_id' => $pengajuanKapId,
                     'remarkMetodeName' => $validatedData['remark_2'],
-                    'tanggal_mulai' => $validatedData['hybrid_tatap_muka_start'],
-                    'tanggal_selesai' => $validatedData['hybrid_tatap_muka_end'],
+                    'tanggal_mulai' => $validatedData['hybrid_elearning_start'],
+                    'tanggal_selesai' => $validatedData['hybrid_elearning_end'],
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
 
-                // Insert E-Learning data
+                // Insert Tatap Muka data
                 DB::table('waktu_pelaksanaan')->insert([
                     'pengajuan_kap_id' => $pengajuanKapId,
                     'remarkMetodeName' => $validatedData['remark_3'],
-                    'tanggal_mulai' => $validatedData['hybrid_elearning_start'],
-                    'tanggal_selesai' => $validatedData['hybrid_elearning_end'],
+                    'tanggal_mulai' => $validatedData['hybrid_tatap_muka_start'],
+                    'tanggal_selesai' => $validatedData['hybrid_tatap_muka_end'],
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);

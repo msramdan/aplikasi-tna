@@ -155,10 +155,10 @@ function syncData($pengajuanKap)
         // Get the two records from the collection
         $records = $waktuPelaksanaan->toArray();
         if ($pengajuanKap->metodeID == '2') {
-            $payload["tgl_mulai_tm"] = $records[0]->tanggal_mulai;
-            $payload["tgl_selesai_tm"] = $records[0]->tanggal_selesai;
-            $payload["tgl_mulai_el"] = $records[1]->tanggal_mulai;
-            $payload["tgl_selesai_el"] = $records[1]->tanggal_selesai;
+            $payload["tgl_mulai_el"] = $records[0]->tanggal_mulai;
+            $payload["tgl_selesai_el"] = $records[0]->tanggal_selesai;
+            $payload["tgl_mulai_tm"] = $records[1]->tanggal_mulai;
+            $payload["tgl_selesai_tm"] = $records[1]->tanggal_selesai;
         }
     }
     // Make the API request

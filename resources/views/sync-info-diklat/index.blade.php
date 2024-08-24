@@ -178,8 +178,8 @@
                 name: 'biayaName'
             },
             {
-                data: 'status_pengajuan',
-                name: 'status_pengajuan'
+                data: 'status_sync',
+                name: 'status_sync'
             },
             {
                 data: 'action',
