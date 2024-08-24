@@ -232,20 +232,16 @@ class SyncInfoIDiklatController extends Controller
         try {
             foreach ($ids as $id) {
                 $pengajuanKap = DB::table('pengajuan_kap')->find($id);
-
-                if (env('OTOMATIS_SYNC_INFO_DIKLAT', false)) {
-                    $syncResult = syncData($pengajuanKap);
-
-                    $statusSync = $syncResult ? 'Success' : 'Failed';
-                    DB::table('pengajuan_kap')
-                        ->where('id', $id)
-                        ->update([
-                            'status_sync' => $statusSync,
-                            'updated_at' => Carbon::now(),
-                        ]);
-                    if (!$syncResult) {
-                        $syncErrors[] = $id;
-                    }
+                $syncResult = syncData($pengajuanKap);
+                $statusSync = $syncResult ? 'Success' : 'Failed';
+                DB::table('pengajuan_kap')
+                    ->where('id', $id)
+                    ->update([
+                        'status_sync' => $statusSync,
+                        'updated_at' => Carbon::now(),
+                    ]);
+                if (!$syncResult) {
+                    $syncErrors[] = $id;
                 }
             }
 

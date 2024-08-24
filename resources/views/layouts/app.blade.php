@@ -3,6 +3,7 @@
     data-sidebar-image="none">
 {{-- head --}}
 @include('layouts.header')
+
 <body>
     <div id="layout-wrapper">
         <header id="page-topbar">
@@ -18,39 +19,8 @@
                                 <span></span>
                             </span>
                         </button>
-                        {{-- <form class="app-search d-none d-md-block">
-                            <div class="position-relative">
-                                <select class="form-select" aria-label="Default select example">
-                                    <option value="2024">2024</option>
-                                    <option value="2025">2025</option>
-                                    <option value="2026">2026</option>
-                                </select>
-                            </div>
-                        </form> --}}
                     </div>
-
-                    {{-- ramdan --}}
                     <div class="d-flex align-items-center">
-                        {{-- <div class="dropdown d-md-none topbar-head-dropdown header-item">
-                            <button type="button"
-                                class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle shadow-none"
-                                id="page-header-search-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false">
-                                <i class="bx bx-search fs-22"></i>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
-                                aria-labelledby="page-header-search-dropdown" style="">
-                                <form class="p-3">
-                                    <select class="form-select" aria-label="Default select example">
-                                        <option value="2024">2024</option>
-                                        <option value="2025">2025</option>
-                                        <option value="2026">2026</option>
-                                    </select>
-                                </form>
-                            </div>
-                        </div> --}}
-
-
                         <div class="dropdown ms-1 topbar-head-dropdown header-item">
                             @switch(app()->getLocale())
                                 @case('id')
@@ -96,13 +66,6 @@
                                 </a>
                             </div>
                         </div>
-
-                        {{-- <div class="ms-1 header-item d-sm-flex">
-                            <button type="button"
-                                class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle shadow-none">
-                                <i class='bx bx-qr fs-22'></i>
-                            </button>
-                        </div> --}}
 
                         <div class="ms-1 header-item  d-sm-flex">
                             <button type="button"
@@ -212,26 +175,41 @@
     <button onclick="topFunction()" class="btn btn-danger btn-icon" id="back-to-top">
         <i class="ri-arrow-up-line"></i>
     </button>
-    {{-- script --}}
+    <a href="https://wa.me/62818965879?text=Hello%20Admin,%20saya%20ingin%20bertanya%20mengenai%20Aplikasi%20TNA.%20Mohon%20bantuan%20dan%20informasinya.%20Terima%20kasih."
+       target="_blank" id="whatsapp-button">
+        <img src="{{ asset('wa.png') }}" alt="WhatsApp" style="width: 60px;">
+        <span id="whatsapp-text">Hubungi kami</span>
+    </a>
+
+
     @include('layouts.script')
-
     @stack('js-libs')
-
     @stack('js-scripts')
-    {{-- <script>
-        $(document).ready(function() {
-            var lang = localStorage.getItem('language');
-            var us =
-                '<img id="header-lang-img" src="{{ asset('/material/assets/images/flags/us.svg') }}" alt="Header Language" height="20" class="rounded">';
-            var id =
-                '<img id="header-lang-img" src="{{ asset('/material/assets/images/flags/indonesia.png') }}" alt="Header Language" height="20" class="rounded">';
-            if (lang === 'en') {
-                $('#header-lang-img').html(us);
-            } else if (lang === 'in') {
-                $('#header-lang-img').html(id);
-            }
-        })
-    </script> --}}
+
+    <style>
+        #whatsapp-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        #whatsapp-text {
+            margin-left: 10px;
+            font-size: 16px;
+            color: #25D366;
+            /* Warna hijau khas WhatsApp */
+            font-weight: bold;
+        }
+
+        #whatsapp-button:hover #whatsapp-text {
+            color: #128C7E;
+            /* Warna hijau lebih gelap untuk efek hover */
+        }
+    </style>
 </body>
 
 </html>
