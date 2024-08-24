@@ -219,9 +219,19 @@
         <strong>II. Detail Pembelajaran</strong>
         <table style="font-size:12px; padding:15px;line-height:17px">
             <tr>
+                <td style="vertical-align: top;">{{ __('Lokasi') }}</td>
+                <td style="vertical-align: top;">:</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->diklatLocName ?: '-' }}</td>
+            </tr>
+            <tr>
                 <td style="vertical-align: top;">{{ __('Tempat / Alamat Rinci') }}</td>
                 <td style="vertical-align: top;">:</td>
                 <td style="vertical-align: top;">{{ $pengajuanKap->detail_lokasi ?: '-' }}</td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top;">{{ __('Jumlah Kelas') }}</td>
+                <td style="vertical-align: top;">:</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->kelas ?: '-' }} Kelas</td>
             </tr>
             <tr>
                 <td style="vertical-align: top;">{{ __('Bentuk Pembelajaran') }}</td>
@@ -251,15 +261,7 @@
             <tr>
                 <td style="vertical-align: top;">{{ __('Metode Pembelajaran') }}</td>
                 <td style="vertical-align: top;">:</td>
-                <td style="vertical-align: top;">
-                    @if ($pengajuanKap->metodeID == 1)
-                        Full Tatap Muka
-                    @elseif ($pengajuanKap->metodeID == 2)
-                        Blended Learning
-                    @else
-                        Full E-Learning
-                    @endif
-                </td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->metodeName ?: '-' }}</td>
             </tr>
             <tr>
                 <td></td>
@@ -279,14 +281,7 @@
                         @foreach ($waktu_pelaksanaan as $row)
                             <tr>
                                 <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: justify">
-                                    @if ($row->remarkMetodeName == 1)
-                                        Full Tatap Muka
-                                    @elseif ($row->remarkMetodeName == 2)
-                                        Blended Learning
-                                    @else
-                                        Full E-Learning
-                                    @endif
-                                </td>
+                                    {{ $row->remarkMetodeName }}</td>
                                 <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: justify">
                                     {{ $row->tanggal_mulai }}</td>
                                 <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: justify">

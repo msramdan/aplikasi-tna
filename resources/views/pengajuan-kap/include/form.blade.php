@@ -309,16 +309,16 @@
         <div id="step-2" class="tab-pane" role="tabpanel" aria-labelledby="step-2" style="display: none;">
             <form id="form-2">
                 <div class="row" style="padding: 20px">
-
                     <div class="form-group row mb-3">
-                        <label for="lokasi" class="col-sm-3 col-form-label">{{ __('Lokasi') }}</label>
+                        <label for="diklatLocID" class="col-sm-3 col-form-label">{{ __('Lokasi') }}</label>
                         <div class="col-sm-6">
                             <select
-                                class="form-control js-example-basic-multiple @error('lokasi') is-invalid @enderror"
-                                name="lokasi" id="lokasi">
+                                class="form-control js-example-basic-multiple @error('diklatLocID') is-invalid @enderror"
+                                name="diklatLocID" id="diklatLocID">
                                 <option value="" selected disabled>-- {{ __('Select lokasi') }} --</option>
                                 @foreach ($diklatLocation_data as $lokasi)
                                     <option value="{{ $lokasi['diklatLocID'] }}"
+                                        data-diklatlocname="{{ $lokasi['diklatLocName'] }}"
                                         {{ isset($pengajuanKap) && $pengajuanKap->lokasi == $lokasi['diklatLocID'] ? 'selected' : (old('lokasi') == $lokasi['diklatLocID'] ? 'selected' : '') }}>
                                         {{ $lokasi['diklatLocName'] }}
                                     </option>
@@ -328,6 +328,7 @@
                                 Mohon untuk pilih Lokasi
                             </div>
                         </div>
+                        <input type="hidden" name="diklatLocName" id="diklatLocName" value="{{ isset($pengajuanKap) ? $pengajuanKap->diklatLocName : old('diklatLocName') }}">
                     </div>
 
                     <div class="form-group row mb-3">
@@ -345,8 +346,7 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label class="col-sm-3 col-form-label"
-                            for="kelas">{{ __('Jumlah Kelas') }}</label>
+                        <label class="col-sm-3 col-form-label" for="kelas">{{ __('Jumlah Kelas') }}</label>
                         <div class="col-sm-6">
                             <input type="number" name="kelas" id="kelas"
                                 class="form-control @error('kelas') is-invalid @enderror"
@@ -494,17 +494,16 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label for="diklatTypeName"
-                            class="col-sm-3 col-form-label">{{ __('Jenis Pembelajaran') }}</label>
+                        <label for="diklatTypeID" class="col-sm-3 col-form-label">{{ __('Jenis Pembelajaran') }}</label>
                         <div class="col-sm-6">
                             <select
-                                class="form-control js-example-basic-multiple @error('diklatTypeName') is-invalid @enderror"
-                                name="diklatTypeName" id="diklatTypeName">
-                                <option value="" selected disabled>-- {{ __('Select jenis pembelajaran') }} --
-                                </option>
+                                class="form-control js-example-basic-multiple @error('diklatTypeID') is-invalid @enderror"
+                                name="diklatTypeID" id="diklatTypeID">
+                                <option value="" selected disabled>-- {{ __('Select jenis pembelajaran') }} --</option>
                                 @foreach ($diklatType_data as $jenis)
-                                    <option value="{{ $jenis['diklatTypeName'] }}"
-                                        {{ isset($pengajuanKap) && $pengajuanKap->diklatTypeName == $jenis['diklatTypeName'] ? 'selected' : (old('diklatTypeName') == $jenis['diklatTypeName'] ? 'selected' : '') }}>
+                                    <option value="{{ $jenis['diklatTypeID'] }}"
+                                        data-diklattypename="{{ $jenis['diklatTypeName'] }}"
+                                        {{ isset($pengajuanKap) && $pengajuanKap->diklatTypeID == $jenis['diklatTypeID'] ? 'selected' : (old('diklatTypeID') == $jenis['diklatTypeID'] ? 'selected' : '') }}>
                                         {{ $jenis['diklatTypeName'] }}
                                     </option>
                                 @endforeach
@@ -513,19 +512,20 @@
                                 Mohon untuk pilih Jenis Pembelajaran
                             </div>
                         </div>
+                        <input type="hidden" name="diklatTypeName" id="diklatTypeName" value="{{ isset($pengajuanKap) ? $pengajuanKap->diklatTypeName : old('diklatTypeName') }}">
                     </div>
+
                     <div class="form-group row mb-3">
-                        <label for="metodeName"
-                            class="col-sm-3 col-form-label">{{ __('Metode Pembelajaran') }}</label>
+                        <label for="metodeID" class="col-sm-3 col-form-label">{{ __('Metode Pembelajaran') }}</label>
                         <div class="col-sm-6">
                             <select
                                 class="form-control js-example-basic-multiple @error('metodeID') is-invalid @enderror"
                                 name="metodeID" id="metodeID">
-                                <option value="" selected disabled>-- {{ __('Select metode pembelajaran') }} --
-                                </option>
+                                <option value="" selected disabled>-- {{ __('Select metode pembelajaran') }} --</option>
                                 @foreach ($metode_data as $metode)
                                     <option value="{{ $metode['metodeID'] }}"
-                                        {{ isset($pengajuanKap) && $pengajuanKap->metodeName == $metode['metodeID'] ? 'selected' : (old('metodeID') == $metode['metodeID'] ? 'selected' : '') }}>
+                                        data-metoName="{{ $metode['metodeName'] }}"
+                                        {{ isset($pengajuanKap) && $pengajuanKap->metodeID == $metode['metodeID'] ? 'selected' : (old('metodeID') == $metode['metodeID'] ? 'selected' : '') }}>
                                         {{ $metode['metodeName'] }}
                                     </option>
                                 @endforeach
@@ -534,6 +534,7 @@
                                 Mohon untuk pilih Metode Pembelajaran
                             </div>
                         </div>
+                        <input type="hidden" name="metodeName" id="metodeName" value="{{ isset($pengajuanKap) ? $pengajuanKap->metodeName : old('metodeName') }}">
                     </div>
 
                     <div class="form-group row mb-3" id="additional_fields" style="display: none;">
@@ -543,7 +544,7 @@
                             <div id="tatap_muka_fields" style="display: none;">
                                 <label>Tanggal Tatap Muka:</label>
                                 <div class="row">
-                                    <input type="hidden" name="tatap_muka_1" class="form-control">
+                                    <input type="hidden" name="remark_1" class="form-control" value="Tatap Muka">
                                     <div class="col-sm-6">
                                         <input type="date" name="tatap_muka_start" class="form-control"
                                             placeholder="Mulai">
@@ -559,7 +560,7 @@
                             <div id="hybrid_fields" style="display: none;">
                                 <label>Tanggal Tatap Muka:</label>
                                 <div class="row mb-2">
-                                    <input type="hidden" name="tatap_muka_2" class="form-control">
+                                    <input type="hidden" name="remark_2" class="form-control" value="Tatap Muka">
                                     <div class="col-sm-6">
                                         <input type="date" name="hybrid_tatap_muka_start" class="form-control"
                                             placeholder="Mulai">
@@ -571,6 +572,7 @@
                                 </div>
                                 <label>Tanggal E-Learning:</label>
                                 <div class="row">
+                                    <input type="hidden" name="remark_3" class="form-control" value="E-Learning">
                                     <div class="col-sm-6">
                                         <input type="date" name="hybrid_elearning_start" class="form-control"
                                             placeholder="Mulai">
@@ -586,6 +588,7 @@
                             <div id="elearning_fields" style="display: none;">
                                 <label>Tanggal E-Learning:</label>
                                 <div class="row">
+                                    <input type="hidden" name="remark_4" class="form-control" value="E-Learning">
                                     <div class="col-sm-6">
                                         <input type="date" name="elearning_start" class="form-control"
                                             placeholder="Mulai">

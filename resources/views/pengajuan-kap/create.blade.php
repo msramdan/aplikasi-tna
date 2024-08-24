@@ -143,8 +143,8 @@
                 });
                 var inputFields = [
                     'jenis_program', 'topik_id', 'bentuk_pembelajaran',
-                    'jalur_pembelajaran', 'model_pembelajaran', 'diklatTypeName',
-                    'metodeID', 'penyelenggara_pembelajaran', 'prioritas_pembelajaran','lokasi',
+                    'jalur_pembelajaran', 'model_pembelajaran', 'diklatLocID',
+                    'metodeID', 'penyelenggara_pembelajaran', 'prioritas_pembelajaran', 'diklatLocID', 'diklatTypeID',
                     'jenjang_pembelajaran', 'peserta_pembelajaran'
                 ];
 
@@ -551,7 +551,43 @@
             });
         });
     </script>
+
+    {{-- auto fill name  --}}
     <script>
+        $(document).ready(function() {
+            function updateDiklatTypeName() {
+                var selectedOption = $('#diklatTypeID option:selected');
+                var diklatTypeName = selectedOption.data('diklattypename');
+                $('#diklatTypeName').val(diklatTypeName);
+            }
+            $('#diklatTypeID').on('change', function() {
+                updateDiklatTypeName();
+            });
+            updateDiklatTypeName();
+        });
+        $(document).ready(function() {
+            function updateDiklatLocName() {
+                var selectedOption = $('#diklatLocID option:selected');
+                var diklatLocName = selectedOption.data('diklatlocname');
+                $('#diklatLocName').val(diklatLocName);
+            }
+            $('#diklatLocID').on('change', function() {
+                updateDiklatLocName();
+            });
+            updateDiklatLocName();
+        });
+        $(document).ready(function() {
+            function updateMetodeName() {
+                var selectedOption = $('#metodeID option:selected');
+                var metodeName = selectedOption.data('metoname');
+                $('#metodeName').val(metodeName);
+            }
+            $('#metodeID').on('change', function() {
+                updateMetodeName();
+            });
+            updateMetodeName();
+        });
+
         $(document).ready(function() {
             $('#metodeID').on('change', function() {
                 var value = $(this).val();

@@ -426,8 +426,16 @@
                                 <div class="tab-pane" id="icon-tabpanel-1" role="tabpanel" aria-labelledby="icon-tab-1">
                                     <table class="table table-hover table-striped table-sm">
                                         <tr>
+                                            <td class="fw-bold">{{ __('Lokasi') }}</td>
+                                            <td>{{ $pengajuanKap->diklatLocName ?: '-' }}</td>
+                                        </tr>
+                                        <tr>
                                             <td class="fw-bold">{{ __('Tempat / Alamat Rinci') }}</td>
                                             <td>{{ $pengajuanKap->detail_lokasi ?: '-' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">{{ __('Jumlah Kelas') }}</td>
+                                            <td>{{ $pengajuanKap->kelas ?: '-' }} Kelas</td>
                                         </tr>
                                         <tr>
                                             <td class="fw-bold">{{ __('Bentuk Pembelajaran') }}</td>
@@ -451,15 +459,7 @@
                                         </tr>
                                         <tr>
                                             <td class="fw-bold">{{ __('Metode Pembelajaran') }}</td>
-                                            <td>
-                                                @if ($pengajuanKap->metodeID == 1)
-                                                    Full Tatap Muka
-                                                @elseif ($pengajuanKap->metodeID == 2)
-                                                    Blended Learning
-                                                @else
-                                                    Full E-Learning
-                                                @endif
-                                            </td>
+                                            <td>{{ $pengajuanKap->metodeName ?: '-' }}</td>
                                         </tr>
                                         <tr>
                                             <td class="fw-bold"></td>
@@ -477,15 +477,7 @@
                                                         </thead>
                                                         @foreach ($waktu_pelaksanaan as $row)
                                                             <tr>
-                                                                <td>
-                                                                    @if ($row->remarkMetodeName == 1)
-                                                                        Full Tatap Muka
-                                                                    @elseif ($row->remarkMetodeName == 2)
-                                                                        Blended Learning
-                                                                    @else
-                                                                        Full E-Learning
-                                                                    @endif
-                                                                </td>
+                                                                <td>{{ $row->remarkMetodeName ?: '-' }}</td>
                                                                 <td>{{ $row->tanggal_mulai ?: '-' }}</td>
                                                                 <td>{{ $row->tanggal_selesai ?: '-' }}</td>
                                                             </tr>
