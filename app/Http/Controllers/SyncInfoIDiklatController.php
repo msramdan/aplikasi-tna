@@ -40,7 +40,9 @@ class SyncInfoIDiklatController extends Controller
                 ->join('log_review_pengajuan_kap', function ($join) {
                     $join->on('pengajuan_kap.id', '=', 'log_review_pengajuan_kap.pengajuan_kap_id')
                         ->whereColumn('log_review_pengajuan_kap.step', 'pengajuan_kap.current_step');
-                });
+                })
+                ->where('pengajuan_kap.status_pengajuan', '=', 'Approved');
+
 
             if (isset($tahun) && !empty($tahun)) {
                 if ($tahun != 'All') {
