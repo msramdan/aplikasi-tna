@@ -93,6 +93,15 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="col-md-4">
+                                    <div class="input-group mb-2">
+                                        <button id="sync-selected" class="btn btn-md btn-danger" disabled> <i
+                                                class="fas fa-sync"></i>
+                                            {{ __('Sync Data') }}
+                                        </button>
+                                    </div>
+                                </div>
+
                             </div>
                             <hr>
                             <div class="table-responsive p-1">
@@ -148,7 +157,8 @@
                 orderable: false,
                 searchable: false,
                 render: function(data, type, full, meta) {
-                    return '<input type="checkbox" class="select-item" value="' + full.id + '">';
+                    let isDisabled = full.sync_data === 'Success' ? 'disabled' : '';
+                    return '<input type="checkbox" class="select-item" value="' + full.id + '" ' + isDisabled + '>';
                 }
             },
             {
@@ -194,7 +204,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: "{{ route('sync-info-diklat.index') }}", // Missing comma was here
+                    url: "{{ route('sync-info-diklat.index') }}",
                     data: function(d) {
                         d.checkboxAll = $('#select-all').prop('checked') ? 1 : 0;
                         d.tahun = $('select[name=tahun] option').filter(':selected').val();
@@ -217,7 +227,7 @@
             $('#tahun').change(function() {
                 table.draw();
                 replaceURLParams()
-            })
+            });
 
             $('#select-all').on('change', function() {
                 var isChecked = $(this).prop('checked');
@@ -231,63 +241,59 @@
             // Handle individual checkboxes
             $('#data-table tbody').on('change', '.select-item', function() {
                 var selectedCount = $('.select-item:checked').length;
-                $('#approve-selected, #reject-selected, #skiped-selected').prop('disabled',
-                    selectedCount === 0);
+                $('#sync-selected').prop('disabled', selectedCount === 0);
             });
 
-            // Handle approve button click
-            $('#approve-selected').on('click', function() {
-                $('#approveModal').modal('show');
-            });
+            // Handle Sync Data button click
+            $('#sync-selected').on('click', function() {
+                Swal.fire({
+                    title: 'Konfirmasi',
+                    text: "Apakah Anda yakin ingin melakukan sinkronisasi data?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, Sinkronkan!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var selectedIds = $('.select-item:checked').map(function() {
+                            return $(this).val();
+                        }).get();
 
-            // Handle approve confirm
-            $('#btn-confirm-approve').on('click', function() {
-                var selectedIds = $('.select-item:checked').map(function() {
-                    return $(this).val();
-                }).get();
-                var approvalNote = $('#approvalNote').val().trim();
-
-                if (selectedIds.length > 0 && approvalNote !== '') {
-                    $.ajax({
-                        url: "{{ route('pengajuan-kap-selected.approve') }}",
-                        type: 'POST',
-                        data: {
-                            ids: selectedIds,
-                            note: approvalNote,
-                            _token: '{{ csrf_token() }}'
-                        },
-                        success: function(response) {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Success',
-                                text: response.message
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    $('#approveModal').modal('hide'); // Close modal
-                                    $('#approvalNote').val(''); // Clear note
-                                    $('#select-all').prop('checked', false).trigger(
-                                        'change'); // Uncheck all
+                        $.ajax({
+                            url: "{{ route('sync-info-diklat.syncSelected') }}",
+                            type: 'POST',
+                            data: {
+                                ids: selectedIds,
+                                _token: '{{ csrf_token() }}'
+                            },
+                            beforeSend: function() {
+                                $('#loading-overlay').show();
+                            },
+                            success: function(response) {
+                                $('#loading-overlay').hide();
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berhasil!',
+                                    text: response.message
+                                }).then(() => {
+                                    $('#select-all').prop('checked', false)
+                                        .trigger('change');
                                     table.ajax.reload();
-                                }
-                            });
-                        },
-                        error: function(xhr) {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: 'Something went wrong.'
-                            });
-                        }
-                    });
-                } else {
-                    Swal.fire({
-                        icon: 'warning',
-                        title: 'Warning',
-                        text: 'Catatan approved perlu diisi'
-                    });
-                }
+                                });
+                            },
+                            error: function(xhr) {
+                                $('#loading-overlay').hide();
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal',
+                                    text: 'Terjadi kesalahan saat sinkronisasi. Silakan coba lagi.'
+                                });
+                            }
+                        });
+                    }
+                });
             });
-
         });
     </script>
 @endpush

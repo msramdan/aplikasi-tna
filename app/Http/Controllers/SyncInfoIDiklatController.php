@@ -70,6 +70,9 @@ class SyncInfoIDiklatController extends Controller
             $pengajuanKaps = $pengajuanKaps->orderBy('pengajuan_kap.id', 'DESC');
             return DataTables::of($pengajuanKaps)
                 ->addIndexColumn()
+                ->addColumn('sync_data', function ($row) {
+                    return $row->status_sync;
+                })
                 ->addColumn('status_sync', function ($row) {
                     if ($row->status_sync == 'Waiting') {
                         return '<button style="width:90px" class="btn btn-gray btn-sm btn-block"><i class="fa fa-clock" aria-hidden="true"></i> Waiting</button>';
@@ -219,5 +222,53 @@ class SyncInfoIDiklatController extends Controller
             'gap_kompetensi_pengajuan_kap' => $gap_kompetensi_pengajuan_kap
         ]);
         return $pdf->stream('pengajuan-kap.pdf');
+    }
+
+    public function syncSelected(Request $request)
+    {
+        $ids = $request->ids;
+        $syncErrors = [];
+        DB::beginTransaction();
+        try {
+            foreach ($ids as $id) {
+                $pengajuanKap = DB::table('pengajuan_kap')->find($id);
+
+                if (env('OTOMATIS_SYNC_INFO_DIKLAT', false)) {
+                    $syncResult = syncData($pengajuanKap);
+
+                    $statusSync = $syncResult ? 'Success' : 'Failed';
+                    DB::table('pengajuan_kap')
+                        ->where('id', $id)
+                        ->update([
+                            'status_sync' => $statusSync,
+                            'updated_at' => Carbon::now(),
+                        ]);
+                    if (!$syncResult) {
+                        $syncErrors[] = $id;
+                    }
+                }
+            }
+
+            DB::commit();
+            if (count($syncErrors) > 0) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Data tersinkronisasi dengan Aplikasi Info Diklat, namun sebagian gagal.',
+                    'failed_ids' => $syncErrors,
+                ]);
+            } else {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Data berhasil disinkronisasikan dengan Aplikasi Info Diklat.',
+                ]);
+            }
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Failed to sync data with Info Diklat', ['error' => $e->getMessage()]);
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal menyinkronkan data dengan Aplikasi Info Diklat. Silakan coba lagi.',
+            ]);
+        }
     }
 }

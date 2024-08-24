@@ -115,9 +115,9 @@ Route::middleware(['auth', 'web', 'check.maintenance'])->group(function () {
 
     Route::controller(SyncInfoIDiklatController::class)->group(function () {
         Route::get('/sync-info-diklat', 'index')->name('sync-info-diklat.index');
-        // Route untuk show
         Route::get('/sync-info-diklat-show/{id}', 'show')->name('sync-info-diklat.show');
         Route::get('/sync-info-diklat-pdf/{id}', 'cetak_pdf')->name('sync-info-diklat.pdf');
+        Route::post('/sync-info-diklat-selected', 'syncSelected')->name('sync-info-diklat.syncSelected');
     });
 
     Route::get('/backup', [BackupController::class, 'index'])->name('backup.index');
