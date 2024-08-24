@@ -131,6 +131,7 @@
                                             <tr>
                                                 <th>#</th>
                                                 <th>{{ __('Tanggal') }}</th>
+                                                <th>{{ __('Metode') }}</th>
                                                 <th>{{ __('Program pembelajaran') }}</th>
                                             </tr>
                                         </thead>
@@ -234,7 +235,6 @@
                         _token: $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function(data) {
-                        console.log(data);
                         calendar.removeAllEvents();
                         calendar.addEventSource(data);
 
@@ -243,7 +243,7 @@
                         $.each(data, function(index, event) {
                             tableBody.append('<tr><td>' + (index + 1) + '</td><td>' + event
                                 .start.split('T')[0] + ' - ' + event.end.split('T')[0] +
-                                '</td><td>' + event.title + '</td></tr>');
+                                '</td><td>' + event.remarkMetodeName + '</td><td>' + event.title + '</td></tr>');
                         });
                         hideLoading();
                     },

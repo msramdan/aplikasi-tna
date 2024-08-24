@@ -29,9 +29,8 @@ class KalenderPembelajaranController extends Controller
         $waktu_pelaksanaan = $request->input('waktu_pelaksanaan');
         $sumber_dana = $request->input('sumber_dana');
         $topik = $request->input('topik');
-        $query = DB::table('waktu_tempat')
-            ->leftJoin('pengajuan_kap', 'waktu_tempat.pengajuan_kap_id', '=', 'pengajuan_kap.id')
-            ->leftJoin('lokasi', 'waktu_tempat.lokasi_id', '=', 'lokasi.id')
+        $query = DB::table('waktu_pelaksanaan')
+            ->leftJoin('pengajuan_kap', 'waktu_pelaksanaan.pengajuan_kap_id', '=', 'pengajuan_kap.id')
             ->leftJoin('topik', 'pengajuan_kap.topik_id', '=', 'topik.id') // Menggunakan leftJoin jika topik bisa null
             ->where('pengajuan_kap.tahun', $year)
             ->where('pengajuan_kap.status_pengajuan', 'Approved');
@@ -51,15 +50,14 @@ class KalenderPembelajaranController extends Controller
 
 
         $events = $query->select(
-            'waktu_tempat.tanggal_mulai as start',
-            'waktu_tempat.tanggal_selesai as end',
+            'waktu_pelaksanaan.tanggal_mulai as start',
+            'waktu_pelaksanaan.tanggal_selesai as end',
+            'waktu_pelaksanaan.remarkMetodeName',
             'pengajuan_kap.kode_pembelajaran',
             'pengajuan_kap.institusi_sumber',
             'pengajuan_kap.jenis_program',
             'pengajuan_kap.frekuensi_pelaksanaan',
             'pengajuan_kap.tujuan_program_pembelajaran',
-            'lokasi.type as type_lokasi',
-            'lokasi.nama_lokasi',
             'topik.nama_topik'
         )->get();
 
@@ -70,6 +68,7 @@ class KalenderPembelajaranController extends Controller
                 'jenis_program' => $event->jenis_program,
                 'frekuensi_pelaksanaan' => $event->frekuensi_pelaksanaan,
                 'title' => $event->nama_topik,
+                'remarkMetodeName' => $event->remarkMetodeName,
                 'start' => \Carbon\Carbon::parse($event->start)->format('Y-m-d\TH:i:s'),
                 'end' => \Carbon\Carbon::parse($event->end)->addDay()->format('Y-m-d\TH:i:s'),
                 'description' => $event->tujuan_program_pembelajaran,
