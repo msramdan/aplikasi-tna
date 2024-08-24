@@ -113,6 +113,7 @@ function callApiPusdiklatwas($url, $params = [])
 
 function syncData($pengajuanKap)
 {
+
     $endpoint_pusdiklatwap = config('stara.endpoint_pusdiklatwap');
     $api_key_pusdiklatwap = config('stara.api_token_pusdiklatwap');
     $apiUrl = $endpoint_pusdiklatwap . '/kaldik/store?api_key=' . $api_key_pusdiklatwap;
@@ -121,6 +122,7 @@ function syncData($pengajuanKap)
     $waktuPelaksanaan = DB::table('waktu_pelaksanaan')
         ->where('pengajuan_kap_id', $pengajuanKap->id)
         ->get();
+
 
     // Initialize payload
     $payload = [
@@ -136,30 +138,29 @@ function syncData($pengajuanKap)
         "id_jenis_diklat" => $pengajuanKap->diklatTypeID,
     ];
 
+
     // Determine date fields based on waktu_pelaksanaan records and metodeID
     if ($waktuPelaksanaan->count() == 1) {
         // Get the single record from the collection
         $record = $waktuPelaksanaan->first();
 
         if ($pengajuanKap->metodeID == '1') {
-            $payload["tgl_mulai_tm"] = $record->tgl_mulai_tm;
-            $payload["tgl_selesai_tm"] = $record->tgl_selesai_tm;
+            $payload["tgl_mulai_tm"] = $record->tanggal_mulai;
+            $payload["tgl_selesai_tm"] = $record->tanggal_selesai;
         } elseif ($pengajuanKap->metodeID == '4') {
-            $payload["tgl_mulai_el"] = $record->tgl_mulai_el;
-            $payload["tgl_selesai_el"] = $record->tgl_selesai_el;
+            $payload["tgl_mulai_el"] = $record->tanggal_mulai;
+            $payload["tgl_selesai_el"] = $record->tanggal_selesai;
         }
     } elseif ($waktuPelaksanaan->count() == 2) {
         // Get the two records from the collection
         $records = $waktuPelaksanaan->toArray();
-
         if ($pengajuanKap->metodeID == '2') {
-            $payload["tgl_mulai_tm"] = $records[0]->tgl_mulai_tm;
-            $payload["tgl_selesai_tm"] = $records[0]->tgl_selesai_tm;
-            $payload["tgl_mulai_el"] = $records[1]->tgl_mulai_el;
-            $payload["tgl_selesai_el"] = $records[1]->tgl_selesai_el;
+            $payload["tgl_mulai_tm"] = $records[0]->tanggal_mulai;
+            $payload["tgl_selesai_tm"] = $records[0]->tanggal_selesai;
+            $payload["tgl_mulai_el"] = $records[1]->tanggal_mulai;
+            $payload["tgl_selesai_el"] = $records[1]->tanggal_selesai;
         }
     }
-
     // Make the API request
     $response = Http::post($apiUrl, $payload);
 

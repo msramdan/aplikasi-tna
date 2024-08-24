@@ -526,8 +526,6 @@
                 }
             });
 
-
-
             // Handle skiped confirm
             $('#btn-confirm-skiped').on('click', function() {
                 var selectedIds = $('.select-item:checked').map(function() {
