@@ -709,7 +709,6 @@ class PengajuanKapController extends Controller
 
                 // Update logic based on the maximum step found
                 if ($maxStep === $currentStep) {
-                    // If the current step matches the max step, update pengajuan_kap status
                     DB::table('pengajuan_kap')
                         ->where('id', $id)
                         ->update([
@@ -718,6 +717,15 @@ class PengajuanKapController extends Controller
                         ]);
                     if (env('OTOMATIS_SYNC_INFO_DIKLAT', false)) {
                         $syncResult = syncData($pengajuanKap);
+                        $statusSync = $syncResult ? 'Success' : 'Failed';
+
+                        DB::table('pengajuan_kap')
+                            ->where('id', $id)
+                            ->update([
+                                'status_sync' => $statusSync,
+                                'updated_at' => Carbon::now(),
+                            ]);
+
                         if (!$syncResult) {
                             DB::rollBack();
                             Alert::toast('Failed to sync data with the external API.', 'error');
@@ -912,6 +920,15 @@ class PengajuanKapController extends Controller
                             ]);
                         if (env('OTOMATIS_SYNC_INFO_DIKLAT', false)) {
                             $syncResult = syncData($pengajuanKap);
+                            $statusSync = $syncResult ? 'Success' : 'Failed';
+
+                            DB::table('pengajuan_kap')
+                                ->where('id', $id)
+                                ->update([
+                                    'status_sync' => $statusSync,
+                                    'updated_at' => Carbon::now(),
+                                ]);
+
                             if (!$syncResult) {
                                 DB::rollBack();
                                 Alert::toast('Failed to sync data with the external API.', 'error');
@@ -1039,6 +1056,15 @@ class PengajuanKapController extends Controller
                             ]);
                         if (env('OTOMATIS_SYNC_INFO_DIKLAT', false)) {
                             $syncResult = syncData($pengajuanKap);
+                            $statusSync = $syncResult ? 'Success' : 'Failed';
+
+                            DB::table('pengajuan_kap')
+                                ->where('id', $id)
+                                ->update([
+                                    'status_sync' => $statusSync,
+                                    'updated_at' => Carbon::now(),
+                                ]);
+
                             if (!$syncResult) {
                                 DB::rollBack();
                                 Alert::toast('Failed to sync data with the external API.', 'error');

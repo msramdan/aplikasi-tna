@@ -113,18 +113,14 @@ function callApiPusdiklatwas($url, $params = [])
 
 function syncData($pengajuanKap)
 {
-
     $endpoint_pusdiklatwap = config('stara.endpoint_pusdiklatwap');
     $api_key_pusdiklatwap = config('stara.api_token_pusdiklatwap');
     $apiUrl = $endpoint_pusdiklatwap . '/kaldik/store?api_key=' . $api_key_pusdiklatwap;
 
-    // Fetch data from waktu_pelaksanaan table
     $waktuPelaksanaan = DB::table('waktu_pelaksanaan')
         ->where('pengajuan_kap_id', $pengajuanKap->id)
         ->get();
 
-
-    // Initialize payload
     $payload = [
         "kaldikID" => $pengajuanKap->kode_pembelajaran,
         "kaldikYear" => $pengajuanKap->tahun,
@@ -138,12 +134,8 @@ function syncData($pengajuanKap)
         "id_jenis_diklat" => $pengajuanKap->diklatTypeID,
     ];
 
-
-    // Determine date fields based on waktu_pelaksanaan records and metodeID
     if ($waktuPelaksanaan->count() == 1) {
-        // Get the single record from the collection
         $record = $waktuPelaksanaan->first();
-
         if ($pengajuanKap->metodeID == '1') {
             $payload["tgl_mulai_tm"] = $record->tanggal_mulai;
             $payload["tgl_selesai_tm"] = $record->tanggal_selesai;
@@ -152,7 +144,6 @@ function syncData($pengajuanKap)
             $payload["tgl_selesai_el"] = $record->tanggal_selesai;
         }
     } elseif ($waktuPelaksanaan->count() == 2) {
-        // Get the two records from the collection
         $records = $waktuPelaksanaan->toArray();
         if ($pengajuanKap->metodeID == '2') {
             $payload["tgl_mulai_el"] = $records[0]->tanggal_mulai;
@@ -161,12 +152,8 @@ function syncData($pengajuanKap)
             $payload["tgl_selesai_tm"] = $records[1]->tanggal_selesai;
         }
     }
-    // Make the API request
+
     $response = Http::post($apiUrl, $payload);
 
-    if ($response->successful()) {
-        return true;
-    } else {
-        return false;
-    }
+    return $response->successful();
 }
