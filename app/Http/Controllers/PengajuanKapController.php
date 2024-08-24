@@ -729,7 +729,6 @@ class PengajuanKapController extends Controller
                             ]);
                     }
                 } else {
-                    // Otherwise, increment the current step in the pengajuan_kap table
                     DB::table('pengajuan_kap')
                         ->where('id', $id)
                         ->update([
@@ -750,7 +749,6 @@ class PengajuanKapController extends Controller
                 'frekuensi' => $pengajuanKap->frekuensi_pelaksanaan,
             ]);
         } catch (\Exception $e) {
-            // Rollback on any exception
             DB::rollback();
             Alert::toast('Gagal menyetujui Pengajuan Kap. Silakan coba lagi.', 'error');
 
@@ -1043,7 +1041,7 @@ class PengajuanKapController extends Controller
                     DB::table('log_review_pengajuan_kap')
                         ->where('id', $logReview->id)
                         ->update([
-                            'status' => 'Skipped',
+                            'status' => 'Skiped',
                             'tanggal_review' => Carbon::now(),
                             'catatan' => $approvalNote,
                             'user_review_id' => Auth::id(),
@@ -1103,7 +1101,7 @@ class PengajuanKapController extends Controller
             DB::rollback();
             return response()->json([
                 'success' => false,
-                'message' => 'Gagal skip Pengajuan Kap. Silakan coba lagi.'
+                'message' => 'Gagal skip Pengajuan Kap: ' . $e->getMessage()
             ]);
         }
     }

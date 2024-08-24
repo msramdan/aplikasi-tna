@@ -548,7 +548,7 @@
                                 text: response.message
                             }).then((result) => {
                                 if (result.isConfirmed) {
-                                    $('#rejectModal').modal('hide'); // Close modal
+                                    $('#skipedModal').modal('hide'); // Close modal
                                     $('#skipedNote').val(''); // Clear note
                                     $('#select-all').prop('checked', false).trigger(
                                         'change'); // Uncheck all
