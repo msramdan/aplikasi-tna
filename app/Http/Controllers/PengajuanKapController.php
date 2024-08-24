@@ -477,16 +477,21 @@ class PengajuanKapController extends Controller
                     'updated_at' => now(),
                 ]);
             }
-
-            $remarks = [
-                'Biro SDM',
-                'Tim Unit Pengelola Pembelajaran',
-                'Penjaminan Mutu',
-                'Subkoordinator',
-                'Koordinator',
-                'Kepala Unit Pengelola Pembelajaran'
-            ];
-
+            $remarks = ($frekuensi == 'Tahunan') ?
+                [
+                    'Biro SDM',
+                    'Tim Unit Pengelola Pembelajaran',
+                    'Penjaminan Mutu',
+                    'Subkoordinator',
+                    'Koordinator',
+                    'Kepala Unit Pengelola Pembelajaran'
+                ] :
+                [
+                    'Biro SDM',
+                    'Tim Unit Pengelola Pembelajaran',
+                    'Penjaminan Mutu',
+                    'Subkoordinator'
+                ];
             foreach ($remarks as $index => $remark) {
                 DB::table('log_review_pengajuan_kap')->insert([
                     'pengajuan_kap_id' => $pengajuanKapId,
