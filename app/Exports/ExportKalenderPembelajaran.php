@@ -35,9 +35,8 @@ class ExportKalenderPembelajaran implements FromView, ShouldAutoSize, WithEvents
 
     public function view(): View
     {
-        $query = DB::table('waktu_tempat')
-            ->leftJoin('pengajuan_kap', 'waktu_tempat.pengajuan_kap_id', '=', 'pengajuan_kap.id')
-            ->leftJoin('lokasi', 'waktu_tempat.lokasi_id', '=', 'lokasi.id')
+        $query = DB::table('waktu_pelaksanaan')
+            ->leftJoin('pengajuan_kap', 'waktu_pelaksanaan.pengajuan_kap_id', '=', 'pengajuan_kap.id')
             ->leftJoin('topik', 'pengajuan_kap.topik_id', '=', 'topik.id')
             ->leftJoin('kompetensi', 'pengajuan_kap.kompetensi_id', '=', 'kompetensi.id')
             ->where('pengajuan_kap.tahun', $this->tahun)
@@ -56,10 +55,10 @@ class ExportKalenderPembelajaran implements FromView, ShouldAutoSize, WithEvents
         }
 
         $data = $query->select(
-            'waktu_tempat.tanggal_mulai as start',
-            'waktu_tempat.tanggal_selesai as end',
+            'waktu_pelaksanaan.tanggal_mulai as start',
+            'waktu_pelaksanaan.tanggal_selesai as end',
+            'waktu_pelaksanaan.remarkMetodeName',
             'pengajuan_kap.*',
-            'lokasi.nama_lokasi',
             'kompetensi.nama_kompetensi as nama_kompetensi',
             'topik.nama_topik'
         )->get();
