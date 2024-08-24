@@ -105,7 +105,7 @@ function callApiPusdiklatwas($url, $params = [])
     $data = $response->json();
 
     if (!isset($data['data'])) {
-        return ['error' => 'Data dari API tidak valid.'];
+        return ['error' => 'Data dari API Pusdiklatmas tidak valid.'];
     }
 
     return $data['data'];
@@ -117,10 +117,12 @@ function syncData($pengajuanKap)
     $api_key_pusdiklatwap = config('stara.api_token_pusdiklatwap');
     $apiUrl = $endpoint_pusdiklatwap . '/kaldik/store?api_key=' . $api_key_pusdiklatwap;
 
+    // Fetch data from waktu_pelaksanaan table
     $waktuPelaksanaan = DB::table('waktu_pelaksanaan')
         ->where('pengajuan_kap_id', $pengajuanKap->id)
         ->get();
 
+    // Initialize payload
     $payload = [
         "kaldikID" => $pengajuanKap->kode_pembelajaran,
         "kaldikYear" => $pengajuanKap->tahun,
@@ -134,6 +136,7 @@ function syncData($pengajuanKap)
         "id_jenis_diklat" => $pengajuanKap->diklatTypeID,
     ];
 
+    // Determine date fields based on waktu_pelaksanaan records and metodeID
     if ($waktuPelaksanaan->count() == 1) {
         $record = $waktuPelaksanaan->first();
         if ($pengajuanKap->metodeID == '1') {
@@ -153,7 +156,14 @@ function syncData($pengajuanKap)
         }
     }
 
+    // Make the API request
     $response = Http::post($apiUrl, $payload);
 
-    return $response->successful();
+    // Check the response status
+    if ($response->ok()) {
+        $responseBody = $response->json();
+        return isset($responseBody['status']) && $responseBody['status'] === true;
+    }
+
+    return false;
 }
