@@ -187,6 +187,14 @@
                     </a>
                 </li>
             @endcan
+
+            <li class="nav-item">
+                <a class="nav-link menu-link {{ request()->routeIs('sync-info-diklat*') ? 'active' : '' }}"
+                    href="{{ route('sync-info-diklat.index') }}">
+                    <i class="fa fa-info"></i> <span data-key="t-widgets">Nomenklatur Pembelajaran</span>
+                </a>
+            </li>
+
             @canany([
                 'user view',
                 'role & permission view',
