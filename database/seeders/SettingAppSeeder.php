@@ -15,6 +15,7 @@ class SettingAppSeeder extends Seeder
             'logo' => '',
             'favicon' => '',
             'is_maintenance' => 'No',
+            'otomatis_sync_info_diklat' => 'No',
         ]);
     }
 }
