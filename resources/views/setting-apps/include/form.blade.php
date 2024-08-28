@@ -62,6 +62,25 @@
                     </span>
                 @enderror
             </div>
+
+            <div class="col-md-12 mb-3">
+                <label for="otomatis_sync_info_diklat">Otomatis Sync Info Diklat</label>
+                <select class="form-control js-example-basic-multiple @error('otomatis_sync_info_diklat') is-invalid @enderror" name="otomatis_sync_info_diklat"
+                    id="otomatis_sync_info_diklat" required>
+                    <option value="" selected disabled>-- Pilih --</option>
+                    <option value="Yes"
+                        {{ isset($settingApp) && $settingApp->otomatis_sync_info_diklat == 'Yes' ? 'selected' : (old('otomatis_sync_info_diklat') == 'Yes' ? 'selected' : '') }}>
+                        Yes</option>
+                    <option value="No"
+                        {{ isset($settingApp) && $settingApp->otomatis_sync_info_diklat == 'No' ? 'selected' : (old('otomatis_sync_info_diklat') == 'No' ? 'selected' : '') }}>
+                        No</option>
+                </select>
+                @error('otomatis_sync_info_diklat')
+                    <span class="text-danger">
+                        {{ $message }}
+                    </span>
+                @enderror
+            </div>
         </div>
     </div>
 </div>
