@@ -83,7 +83,13 @@
                         </div>
 
                         @php
-                            $data = getPendingNomenklaturData();
+                            $pendingCount = DB::table('nomenklatur_pembelajaran')->where('status', 'Pending')->count();
+
+                            $latestPending = DB::table('nomenklatur_pembelajaran')
+                                ->where('status', 'Pending')
+                                ->orderBy('created_at', 'desc')
+                                ->limit(5)
+                                ->get();
                         @endphp
 
                         @can('nomenklatur pembelajaran view')
@@ -94,7 +100,7 @@
                                     data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
                                     <i class='bx bx-bell fs-22'></i>
                                     <span
-                                        class="position-absolute topbar-badge fs-10 translate-middle badge rounded-pill bg-danger">{{ $data['pendingCount'] }}<span
+                                        class="position-absolute topbar-badge fs-10 translate-middle badge rounded-pill bg-danger">{{ $pendingCount }}<span
                                             class="visually-hidden">unread messages</span></span>
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
@@ -122,7 +128,7 @@
                                     <div class="tab-content position-relative" id="notificationItemsTabContent">
                                         <div class="tab-pane fade show active py-2 ps-2" id="all-noti-tab" role="tabpanel">
                                             <div data-simplebar style="max-height: 300px;" class="pe-2">
-                                                @foreach ($data['latestPending'] as $item)
+                                                @foreach ($latestPending as $item)
                                                     <div
                                                         class="text-reset notification-item d-block dropdown-item position-relative">
                                                         <div class="d-flex">
@@ -131,7 +137,8 @@
                                                                     aria-hidden="true"></i>
                                                             </div>
                                                             <div class="flex-grow-1">
-                                                                <a href="{{ route('nomenklatur-pembelajaran.edit', $item->id) }}" class="stretched-link">
+                                                                <a href="{{ route('nomenklatur-pembelajaran.edit', $item->id) }}"
+                                                                    class="stretched-link">
                                                                     <h6 class="mt-0 mb-2 lh-base">
                                                                         Ada pengusulan nomenklatur pembelajaran baru :
                                                                         <b> {{ $item->nama_topik }}</b>
@@ -142,7 +149,7 @@
                                                     </div>
                                                 @endforeach
                                                 <div class="my-3 text-center view-all">
-                                                    <a href="{{route('nomenklatur-pembelajaran.index')}}"
+                                                    <a href="{{ route('nomenklatur-pembelajaran.index') }}"
                                                         class="btn btn-soft-success waves-effect waves-light">Lihat Semua
                                                         Notifikasi<i class="ri-arrow-right-line align-middle"></i></a>
                                                 </div>
@@ -185,7 +192,8 @@
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     <i class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i>
-                                    <span class="align-middle" data-key="t-logout">{{ trans('navbar.logout') }}</span>
+                                    <span class="align-middle"
+                                        data-key="t-logout">{{ trans('navbar.logout') }}</span>
                                 </a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST"
                                     class="d-none">

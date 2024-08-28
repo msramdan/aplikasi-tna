@@ -167,18 +167,3 @@ function syncData($pengajuanKap)
 
     return false;
 }
-
-function getPendingNomenklaturData()
-{
-    $pendingCount = DB::table('nomenklatur_pembelajaran')
-        ->where('status', 'pending')
-        ->count();
-
-    $latestPending = DB::table('nomenklatur_pembelajaran')
-        ->where('status', 'pending')
-        ->orderBy('created_at', 'desc')
-        ->limit(5)
-        ->get();
-
-    return compact('pendingCount', 'latestPending');
-}
