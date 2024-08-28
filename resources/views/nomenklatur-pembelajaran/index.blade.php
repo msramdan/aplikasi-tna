@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('Nomenklatur Pembelajaran'))
+@section('title', __('Usulan Nomenklatur Pembelajaran'))
 
 @section('content')
     <div class="page-content">
@@ -8,11 +8,11 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">{{ __('Nomenklatur Pembelajaran') }}</h4>
+                        <h4 class="mb-sm-0">{{ __('Usulan Nomenklatur Pembelajaran') }}</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
-                                <li class="breadcrumb-item active">{{ __('Nomenklatur Pembelajaran') }}</li>
+                                <li class="breadcrumb-item active">{{ __('Usulan Nomenklatur Pembelajaran') }}</li>
                             </ol>
                         </div>
 
@@ -30,9 +30,9 @@
                                             <th>#</th>
                                             <th>{{ __('Rumpun Pembelajaran') }}</th>
                                             <th>{{ __('Nama Topik') }}</th>
-                                            <th>{{ __('Pembuat') }}</th>
-                                            <th>{{ __('Tanggal') }}</th>
-                                            <th>{{ __('Catatan') }}</th>
+                                            <th>{{ __('User Pembuat') }}</th>
+                                            <th>{{ __('Tanggal Pengajuan') }}</th>
+                                            <th>{{ __('Catatan User') }}</th>
                                             <th>{{ __('Status') }}</th>
                                             <th>{{ __('Action') }}</th>
                                         </tr>

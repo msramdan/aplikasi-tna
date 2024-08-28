@@ -19,6 +19,7 @@ use App\Http\Controllers\{
     ReportingController,
     SettingAppController,
     ConfigStepReview,
+    NomenklaturPembelajaranController,
     TaggingPembelajaranKompetensiController,
     TopikController,
     TaggingKompetensiIkController
@@ -119,7 +120,12 @@ Route::middleware(['auth', 'web', 'check.maintenance'])->group(function () {
         Route::get('/sync-info-diklat-pdf/{id}', 'cetak_pdf')->name('sync-info-diklat.pdf');
         Route::post('/sync-info-diklat-selected', 'syncSelected')->name('sync-info-diklat.syncSelected');
     });
-    Route::resource('nomenklatur-pembelajaran', App\Http\Controllers\NomenklaturPembelajaranController::class);
+    Route::resource('nomenklatur-pembelajaran', NomenklaturPembelajaranController::class);
+    Route::controller(NomenklaturPembelajaranController::class)->group(function () {
+        Route::patch('nomenklatur-pembelajaran/{id}/approve', 'approve')->name('nomenklatur-pembelajaran.approve');
+        Route::patch('nomenklatur-pembelajaran/{id}/reject', 'reject')->name('nomenklatur-pembelajaran.reject');
+    });
+
     Route::get('/backup', [BackupController::class, 'index'])->name('backup.index');
     Route::get('/backup/download', [BackupController::class, 'downloadBackup'])->name('backup.download');
     Route::get('/get-indikator/{jenisProgram}', [ApiController::class, 'getIndikator'])->name('getIndikator');
@@ -128,5 +134,3 @@ Route::middleware(['auth', 'web', 'check.maintenance'])->group(function () {
 });
 
 Route::post('/verify-otp', [OtpController::class, 'verifyOtp'])->name('verify-otp');
-
-

@@ -16,14 +16,15 @@ return new class extends Migration
         Schema::create('nomenklatur_pembelajaran', function (Blueprint $table) {
             $table->id();
             $table->foreignId('rumpun_pembelajaran_id')->constrained('rumpun_pembelajaran')->restrictOnUpdate()->cascadeOnDelete();
-			$table->string('nama_topik', 255);
-			$table->enum('status', ['Pending', 'Approved', 'Rejected']);
-			$table->foreignId('user_created')->constrained('users')->restrictOnUpdate()->cascadeOnDelete();
-			$table->dateTime('tanggal_pengajuan');
-			$table->text('catatan_user_created');
-			$table->foreignId('user_review')->constrained('users')->restrictOnUpdate()->cascadeOnDelete();
-			$table->dateTime('tanggal_review');
-			$table->text('catatan_user_review');
+            $table->string('nama_topik', 255);
+            $table->enum('status', ['Pending', 'Approved', 'Rejected']);
+            $table->foreignId('user_created')->constrained('users')->restrictOnUpdate()->cascadeOnDelete();
+            $table->dateTime('tanggal_pengajuan');
+            $table->text('catatan_user_created');
+            $table->foreignId('user_review')->nullable()->constrained('users')->restrictOnUpdate()->cascadeOnDelete();
+            $table->dateTime('tanggal_review')->nullable();
+            $table->text('catatan_user_review')->nullable();
+
             $table->timestamps();
         });
     }
