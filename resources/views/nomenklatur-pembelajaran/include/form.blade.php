@@ -35,9 +35,9 @@
         <label for="status">{{ __('Status') }}</label>
         <select class="form-control @error('status') is-invalid @enderror" name="status" id="status" required>
             <option value="" selected disabled>-- {{ __('Select status') }} --</option>
-            <option value="Pendding"
-                {{ isset($nomenklaturPembelajaran) && $nomenklaturPembelajaran->status == 'Pendding' ? 'selected' : (old('status') == 'Pendding' ? 'selected' : '') }}>
-                Pendding</option>
+            <option value="Pending"
+                {{ isset($nomenklaturPembelajaran) && $nomenklaturPembelajaran->status == 'Pending' ? 'selected' : (old('status') == 'Pending' ? 'selected' : '') }}>
+                Pending</option>
             <option value="Approved"
                 {{ isset($nomenklaturPembelajaran) && $nomenklaturPembelajaran->status == 'Approved' ? 'selected' : (old('status') == 'Approved' ? 'selected' : '') }}>
                 Approved</option>

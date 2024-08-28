@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('rumpun_pembelajaran_id')->constrained('rumpun_pembelajaran')->restrictOnUpdate()->cascadeOnDelete();
 			$table->string('nama_topik', 255);
-			$table->enum('status', ['Pendding', 'Approved', 'Rejected']);
+			$table->enum('status', ['Pending', 'Approved', 'Rejected']);
 			$table->foreignId('user_created')->constrained('users')->restrictOnUpdate()->cascadeOnDelete();
 			$table->dateTime('tanggal_pengajuan');
 			$table->text('catatan_user_created');

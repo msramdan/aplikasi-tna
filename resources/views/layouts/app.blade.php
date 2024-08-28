@@ -82,100 +82,123 @@
                             </button>
                         </div>
 
-                        <div class="dropdown topbar-head-dropdown ms-1 header-item" id="notificationDropdown">
-                            <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle shadow-none" id="page-header-notifications-dropdown" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
-                                <i class='bx bx-bell fs-22'></i>
-                                <span class="position-absolute topbar-badge fs-10 translate-middle badge rounded-pill bg-danger">3<span class="visually-hidden">unread messages</span></span>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0" aria-labelledby="page-header-notifications-dropdown">
+                        @can('nomenklatur pembelajaran view')
+                            <div class="dropdown topbar-head-dropdown ms-1 header-item" id="notificationDropdown">
+                                <button type="button"
+                                    class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle shadow-none"
+                                    id="page-header-notifications-dropdown" data-bs-toggle="dropdown"
+                                    data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
+                                    <i class='bx bx-bell fs-22'></i>
+                                    <span
+                                        class="position-absolute topbar-badge fs-10 translate-middle badge rounded-pill bg-danger">3<span
+                                            class="visually-hidden">unread messages</span></span>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
+                                    aria-labelledby="page-header-notifications-dropdown">
 
-                                <div class="dropdown-head bg-primary bg-pattern rounded-top">
-                                    <div class="p-3">
-                                        <div class="row align-items-center">
-                                            <div class="col">
-                                                <h6 class="m-0 fs-16 fw-semibold text-white"> Pemberitahuan </h6>
+                                    <div class="dropdown-head bg-primary bg-pattern rounded-top">
+                                        <div class="p-3">
+                                            <div class="row align-items-center">
+                                                <div class="col">
+                                                    <h6 class="m-0 fs-16 fw-semibold text-white"> Pemberitahuan </h6>
+                                                </div>
                                             </div>
                                         </div>
+
+                                        <div class="px-2 pt-2">
+                                            <ul class="nav nav-tabs dropdown-tabs nav-tabs-custom" data-dropdown-tabs="true"
+                                                id="notificationItemsTab" role="tablist">
+                                                <li class="nav-item waves-effect waves-light">
+                                                    <a class="nav-link active" data-bs-toggle="tab" href="#all-noti-tab"
+                                                        role="tab" aria-selected="true">
+                                                        Nomenklatur Pembelajaran
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+
                                     </div>
 
-                                    <div class="px-2 pt-2">
-                                        <ul class="nav nav-tabs dropdown-tabs nav-tabs-custom" data-dropdown-tabs="true" id="notificationItemsTab" role="tablist">
-                                            <li class="nav-item waves-effect waves-light">
-                                                <a class="nav-link active" data-bs-toggle="tab" href="#all-noti-tab" role="tab" aria-selected="true">
-                                                    Nomenklatur Pembelajaran
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-
-                                </div>
-
-                                <div class="tab-content position-relative" id="notificationItemsTabContent">
-                                    <div class="tab-pane fade show active py-2 ps-2" id="all-noti-tab" role="tabpanel">
-                                        <div data-simplebar style="max-height: 300px;" class="pe-2">
-                                            <div class="text-reset notification-item d-block dropdown-item position-relative">
-                                                <div class="d-flex">
-                                                    <div class="avatar-xs me-3 flex-shrink-0">
-                                                        <span class="avatar-title bg-info-subtle text-info rounded-circle fs-16">
-                                                            <i class="bx bx-badge-check"></i>
-                                                        </span>
-                                                    </div>
-                                                    <div class="flex-grow-1">
-                                                        <a href="#!" class="stretched-link">
-                                                            <h6 class="mt-0 mb-2 lh-base">Your <b>Elite</b> author Graphic
-                                                                Optimization <span class="text-secondary">reward</span> is
-                                                                ready!
-                                                            </h6>
-                                                        </a>
+                                    <div class="tab-content position-relative" id="notificationItemsTabContent">
+                                        <div class="tab-pane fade show active py-2 ps-2" id="all-noti-tab" role="tabpanel">
+                                            <div data-simplebar style="max-height: 300px;" class="pe-2">
+                                                <div
+                                                    class="text-reset notification-item d-block dropdown-item position-relative">
+                                                    <div class="d-flex">
+                                                        <div class="avatar-xs me-3 flex-shrink-0">
+                                                            <span
+                                                                class="avatar-title bg-info-subtle text-info rounded-circle fs-16">
+                                                                <i class="bx bx-badge-check"></i>
+                                                            </span>
+                                                        </div>
+                                                        <div class="flex-grow-1">
+                                                            <a href="#!" class="stretched-link">
+                                                                <h6 class="mt-0 mb-2 lh-base">Your <b>Elite</b> author
+                                                                    Graphic
+                                                                    Optimization <span class="text-secondary">reward</span>
+                                                                    is
+                                                                    ready!
+                                                                </h6>
+                                                            </a>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="text-reset notification-item d-block dropdown-item position-relative">
-                                                <div class="d-flex">
-                                                    <div class="avatar-xs me-3 flex-shrink-0">
-                                                        <span class="avatar-title bg-info-subtle text-info rounded-circle fs-16">
-                                                            <i class="bx bx-badge-check"></i>
-                                                        </span>
-                                                    </div>
-                                                    <div class="flex-grow-1">
-                                                        <a href="#!" class="stretched-link">
-                                                            <h6 class="mt-0 mb-2 lh-base">Your <b>Elite</b> author Graphic
-                                                                Optimization <span class="text-secondary">reward</span> is
-                                                                ready!
-                                                            </h6>
-                                                        </a>
+                                                <div
+                                                    class="text-reset notification-item d-block dropdown-item position-relative">
+                                                    <div class="d-flex">
+                                                        <div class="avatar-xs me-3 flex-shrink-0">
+                                                            <span
+                                                                class="avatar-title bg-info-subtle text-info rounded-circle fs-16">
+                                                                <i class="bx bx-badge-check"></i>
+                                                            </span>
+                                                        </div>
+                                                        <div class="flex-grow-1">
+                                                            <a href="#!" class="stretched-link">
+                                                                <h6 class="mt-0 mb-2 lh-base">Your <b>Elite</b> author
+                                                                    Graphic
+                                                                    Optimization <span class="text-secondary">reward</span>
+                                                                    is
+                                                                    ready!
+                                                                </h6>
+                                                            </a>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="text-reset notification-item d-block dropdown-item position-relative">
-                                                <div class="d-flex">
-                                                    <div class="avatar-xs me-3 flex-shrink-0">
-                                                        <span class="avatar-title bg-info-subtle text-info rounded-circle fs-16">
-                                                            <i class="bx bx-badge-check"></i>
-                                                        </span>
-                                                    </div>
-                                                    <div class="flex-grow-1">
-                                                        <a href="#!" class="stretched-link">
-                                                            <h6 class="mt-0 mb-2 lh-base">Your <b>Elite</b> author Graphic
-                                                                Optimization <span class="text-secondary">reward</span> is
-                                                                ready!
-                                                            </h6>
-                                                        </a>
+                                                <div
+                                                    class="text-reset notification-item d-block dropdown-item position-relative">
+                                                    <div class="d-flex">
+                                                        <div class="avatar-xs me-3 flex-shrink-0">
+                                                            <span
+                                                                class="avatar-title bg-info-subtle text-info rounded-circle fs-16">
+                                                                <i class="bx bx-badge-check"></i>
+                                                            </span>
+                                                        </div>
+                                                        <div class="flex-grow-1">
+                                                            <a href="#!" class="stretched-link">
+                                                                <h6 class="mt-0 mb-2 lh-base">Your <b>Elite</b> author
+                                                                    Graphic
+                                                                    Optimization <span class="text-secondary">reward</span>
+                                                                    is
+                                                                    ready!
+                                                                </h6>
+                                                            </a>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="my-3 text-center view-all">
-                                                <button type="button" class="btn btn-soft-success waves-effect waves-light">Lihat Semua Notifikasi<i class="ri-arrow-right-line align-middle"></i></button>
+                                                <div class="my-3 text-center view-all">
+                                                    <button type="button"
+                                                        class="btn btn-soft-success waves-effect waves-light">Lihat Semua
+                                                        Notifikasi<i class="ri-arrow-right-line align-middle"></i></button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
+                        @endcan
 
                         <div class="dropdown ms-sm-3 header-item topbar-user">
                             <button type="button" class="btn shadow-none" id="page-header-user-dropdown"
@@ -272,7 +295,7 @@
         <i class="ri-arrow-up-line"></i>
     </button>
     <a href="https://wa.me/62818965879?text=Hello%20Admin,%20saya%20ingin%20bertanya%20mengenai%20Aplikasi%20TNA.%20Mohon%20bantuan%20dan%20informasinya.%20Terima%20kasih."
-       target="_blank" id="whatsapp-button">
+        target="_blank" id="whatsapp-button">
         <img src="{{ asset('wa.png') }}" alt="WhatsApp" style="width: 60px;">
         <span id="whatsapp-text">Hubungi kami</span>
     </a>

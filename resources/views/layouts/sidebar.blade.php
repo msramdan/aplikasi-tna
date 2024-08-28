@@ -179,20 +179,20 @@
                 </li>
             @endcan
 
+            @can('nomenklatur pembelajaran view')
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ request()->routeIs('nomenklatur-pembelajaran*') ? 'active' : '' }}"
+                        href="{{ route('nomenklatur-pembelajaran.index') }}">
+                        <i class="fa fa-info"></i> <span data-key="t-widgets">Nomenklatur Pembelajaran</span>
+                    </a>
+                </li>
+            @endcan
+
             @can('sinkronisasi view')
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ request()->routeIs('sync-info-diklat*') ? 'active' : '' }}"
                         href="{{ route('sync-info-diklat.index') }}">
                         <i class="fa fa-refresh"></i> <span data-key="t-widgets">Sync Info-Diklat</span>
-                    </a>
-                </li>
-            @endcan
-
-            @can('nomenklatur pembelajaran view')
-                <li class="nav-item">
-                    <a class="nav-link menu-link {{ request()->routeIs('nomenklatur-pembelajaran*') ? 'active' : '' }}"
-                        href="{{route('nomenklatur-pembelajaran.index')}}">
-                        <i class="fa fa-info"></i> <span data-key="t-widgets">Nomenklatur Pembelajaran</span>
                     </a>
                 </li>
             @endcan

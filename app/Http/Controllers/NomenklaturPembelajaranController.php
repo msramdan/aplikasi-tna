@@ -42,7 +42,18 @@ class NomenklaturPembelajaranController extends Controller
                 ->addColumn('user_review', function ($row) {
                     return $row->user_review_name ?: '';
                 })
+
+                ->addColumn('status', function ($row) {
+                    if ($row->status == 'Pending') {
+                        return '<button style="width:90px" class="btn btn-gray btn-sm btn-block"><i class="fa fa-clock" aria-hidden="true"></i> Pending</button>';
+                    } else if ($row->status == 'Approved') {
+                        return '<button style="width:90px" class="btn btn-success btn-sm btn-block"><i class="fa fa-check" aria-hidden="true"></i> Approved</button>';
+                    } else if ($row->status == 'Rejected') {
+                        return '<button style="width:90px" class="btn btn-danger btn-sm btn-block"><i class="fa fa-times" aria-hidden="true"></i> Rejected</button>';
+                    }
+                })
                 ->addColumn('action', 'nomenklatur-pembelajaran.include.action')
+                ->rawColumns(['status', 'action'])
                 ->toJson();
         }
 
