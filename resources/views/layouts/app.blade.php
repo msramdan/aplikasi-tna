@@ -111,7 +111,7 @@
                                                 <li class="nav-item waves-effect waves-light">
                                                     <a class="nav-link active" data-bs-toggle="tab" href="#all-noti-tab"
                                                         role="tab" aria-selected="true">
-                                                        Nomenklatur Pembelajaran
+                                                        Usulan Nomenklatur
                                                     </a>
                                                 </li>
                                             </ul>

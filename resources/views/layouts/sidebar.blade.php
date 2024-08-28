@@ -183,7 +183,7 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ request()->routeIs('nomenklatur-pembelajaran*') ? 'active' : '' }}"
                         href="{{ route('nomenklatur-pembelajaran.index') }}">
-                        <i class="fa fa-info"></i> <span data-key="t-widgets">Nomenklatur Pembelajaran</span>
+                        <i class="fa fa-info"></i> <span data-key="t-widgets">Usulan Nomenklatur</span>
                     </a>
                 </li>
             @endcan
