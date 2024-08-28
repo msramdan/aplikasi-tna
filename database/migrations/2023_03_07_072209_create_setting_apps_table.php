@@ -19,15 +19,11 @@ return new class extends Migration
             $table->string('logo', 200);
             $table->string('favicon', 200);
             $table->enum('is_maintenance', ['Yes', 'No']);
+            $table->enum('otomatis_sync_info_diklat', ['Yes', 'No']);
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('setting_apps');

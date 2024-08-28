@@ -722,7 +722,7 @@ class PengajuanKapController extends Controller
                             'updated_at' => Carbon::now(),
                         ]);
 
-                    if (env('OTOMATIS_SYNC_INFO_DIKLAT', false)) {
+                    if (setting_web()->otomatis_sync_info_diklat == 'Yes') {
                         $syncResult = syncData($pengajuanKap);
                         $statusSync = $syncResult ? 'Success' : 'Failed';
 
@@ -925,7 +925,7 @@ class PengajuanKapController extends Controller
                                 'updated_at' => Carbon::now(),
                             ]);
 
-                        if (env('OTOMATIS_SYNC_INFO_DIKLAT', false)) {
+                        if (setting_web()->otomatis_sync_info_diklat == 'Yes') {
                             $syncResult = syncData($pengajuanKap);
                             $statusSync = $syncResult ? 'Success' : 'Failed';
                             DB::table('pengajuan_kap')
@@ -1069,7 +1069,7 @@ class PengajuanKapController extends Controller
                                 'updated_at' => Carbon::now(),
                             ]);
 
-                        if (env('OTOMATIS_SYNC_INFO_DIKLAT', false)) {
+                        if (setting_web()->otomatis_sync_info_diklat == 'Yes') {
                             $syncResult = syncData($pengajuanKap);
                             $statusSync = $syncResult ? 'Success' : 'Failed';
                             DB::table('pengajuan_kap')
