@@ -119,7 +119,7 @@ Route::middleware(['auth', 'web', 'check.maintenance'])->group(function () {
         Route::get('/sync-info-diklat-pdf/{id}', 'cetak_pdf')->name('sync-info-diklat.pdf');
         Route::post('/sync-info-diklat-selected', 'syncSelected')->name('sync-info-diklat.syncSelected');
     });
-
+    Route::resource('nomenklatur-pembelajaran', App\Http\Controllers\NomenklaturPembelajaranController::class);
     Route::get('/backup', [BackupController::class, 'index'])->name('backup.index');
     Route::get('/backup/download', [BackupController::class, 'downloadBackup'])->name('backup.download');
     Route::get('/get-indikator/{jenisProgram}', [ApiController::class, 'getIndikator'])->name('getIndikator');
@@ -128,3 +128,5 @@ Route::middleware(['auth', 'web', 'check.maintenance'])->group(function () {
 });
 
 Route::post('/verify-otp', [OtpController::class, 'verifyOtp'])->name('verify-otp');
+
+

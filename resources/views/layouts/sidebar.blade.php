@@ -188,12 +188,14 @@
                 </li>
             @endcan
 
-            <li class="nav-item">
-                <a class="nav-link menu-link {{ request()->routeIs('sync-info-diklat*') ? 'active' : '' }}"
-                    href="{{ route('sync-info-diklat.index') }}">
-                    <i class="fa fa-info"></i> <span data-key="t-widgets">Nomenklatur Pembelajaran</span>
-                </a>
-            </li>
+            @can('nomenklatur pembelajaran view')
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ request()->routeIs('nomenklatur-pembelajaran*') ? 'active' : '' }}"
+                        href="{{route('nomenklatur-pembelajaran.index')}}">
+                        <i class="fa fa-info"></i> <span data-key="t-widgets">Nomenklatur Pembelajaran</span>
+                    </a>
+                </li>
+            @endcan
 
             @canany([
                 'user view',

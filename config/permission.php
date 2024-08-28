@@ -191,5 +191,6 @@ return [
         ['group' => 'backup database', 'access' => ['backup database view']],
         ['group' => 'sync pusdiklatwas ', 'access' => ['sinkronisasi view']],
         ['group' => 'config step review', 'access' => ['config step review view', 'config step review edit']],
+        ['group' => 'nomenklatur pembelajaran', 'access' => ['nomenklatur pembelajaran view', 'nomenklatur pembelajaran edit', 'nomenklatur pembelajaran delete']],
     ],
 ];

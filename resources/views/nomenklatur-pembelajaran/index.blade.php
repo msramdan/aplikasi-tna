@@ -1,0 +1,96 @@
+@extends('layouts.app')
+
+@section('title', __('Nomenklatur Pembelajaran'))
+
+@section('content')
+    <div class="page-content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                        <h4 class="mb-sm-0">{{ __('Nomenklatur Pembelajaran') }}</h4>
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                                <li class="breadcrumb-item active">{{ __('Nomenklatur Pembelajaran') }}</li>
+                            </ol>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive p-1">
+                                <table class="table table-striped" id="data-table">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>#</th>
+                                            <th>{{ __('Rumpun Pembelajaran') }}</th>
+                                            <th>{{ __('Nama Topik') }}</th>
+                                            <th>{{ __('Pembuat') }}</th>
+                                            <th>{{ __('Tanggal') }}</th>
+                                            <th>{{ __('Catatan') }}</th>
+                                            <th>{{ __('Status') }}</th>
+                                            <th>{{ __('Action') }}</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+
+@push('js')
+    <script>
+        $('#data-table').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('nomenklatur-pembelajaran.index') }}",
+            columns: [{
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex',
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: 'rumpun_pembelajaran',
+                    name: 'rumpun_pembelajaran'
+                },
+                {
+                    data: 'nama_topik',
+                    name: 'nama_topik',
+                },
+                {
+                    data: 'user_created',
+                    name: 'user_created'
+                },
+                {
+                    data: 'tanggal_pengajuan',
+                    name: 'tanggal_pengajuan',
+                },
+                {
+                    data: 'catatan_user_created',
+                    name: 'catatan_user_created',
+                },
+                {
+                    data: 'status',
+                    name: 'status',
+                },
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
+                    searchable: false
+                }
+            ],
+        });
+    </script>
+@endpush

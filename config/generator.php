@@ -120,7 +120,8 @@ return [
             'topik view',
             'tagging pembelajaran kompetensi view',
             'pengajuan kap view',
-            'rumpun pembelajaran view'
+            'rumpun pembelajaran view',
+            'nomenklatur pembelajaran view'
         ],
         'menus' => [
             [
@@ -144,7 +145,8 @@ return [
                     'topik view',
                     'tagging pembelajaran kompetensi view',
                     'pengajuan kap view',
-                    'rumpun pembelajaran view'
+                    'rumpun pembelajaran view',
+                    'nomenklatur pembelajaran view'
                 ],
                 'submenus' => [
                     [
@@ -191,6 +193,11 @@ return [
                         'title' => 'Rumpun Pembelajarans',
                         'route' => '/rumpun-pembelajarans',
                         'permission' => 'rumpun pembelajaran view'
+                    ],
+                    [
+                        'title' => 'Nomenklatur Pembelajarans',
+                        'route' => '/nomenklatur-pembelajarans',
+                        'permission' => 'nomenklatur pembelajaran view'
                     ]
                 ]
             ]
