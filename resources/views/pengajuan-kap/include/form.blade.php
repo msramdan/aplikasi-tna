@@ -39,8 +39,9 @@
             </div>
             <div class="modal-body">
                 <div id="alertContainer" class="alert alert-danger" role="alert">
-                    Jika Program pembelajaran yang dipilih tidak ada. Silakan mengajukan program pembelajaran baru
-                    dengan mengisi form berikut.
+                    Jika program pembelajaran yang Anda pilih tidak tersedia, silakan ajukan program pembelajaran baru
+                    dengan mengisi formulir di bawah ini. Usulan Anda akan ditinjau dan disetujui oleh admin sebelum
+                    ditambahkan.
                 </div>
                 <form id="usulanForm" method="POST" action="{{ route('usulanProgramPembelajaran') }}">
                     @csrf
