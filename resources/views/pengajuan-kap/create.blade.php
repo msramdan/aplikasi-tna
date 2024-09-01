@@ -614,7 +614,7 @@
                         const select = $('#rumpunPembelajaran');
                         select.empty(); // Kosongkan dropdown
                         select.append(
-                            '<option value="" disabled selected>Pilih Rumpun Pembelajaran</option>'
+                            '<option value="" disabled selected>-- Pilih --</option>'
                             );
                         data.forEach(function(item) {
                             select.append(
