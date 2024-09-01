@@ -6,6 +6,8 @@ use App\Models\RumpunPembelajaran;
 use App\Http\Requests\{StoreRumpunPembelajaranRequest, UpdateRumpunPembelajaranRequest};
 use Yajra\DataTables\Facades\DataTables;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\DB;
+
 
 class RumpunPembelajaranController extends Controller
 {
@@ -30,10 +32,10 @@ class RumpunPembelajaranController extends Controller
                     return $row->updated_at->format('d M Y H:i:s');
                 })
 
-                ->addColumn('rumpun_pembelajaran', function($row){
+                ->addColumn('rumpun_pembelajaran', function ($row) {
                     return str($row->rumpun_pembelajaran)->limit(100);
                 })
-				->addColumn('action', 'rumpun-pembelajaran.include.action')
+                ->addColumn('action', 'rumpun-pembelajaran.include.action')
                 ->toJson();
         }
 
@@ -62,7 +64,6 @@ class RumpunPembelajaranController extends Controller
         RumpunPembelajaran::create($request->validated());
         Alert::toast('Rumpun pembelajaran was created successfully.', 'success');
         return redirect()->route('rumpun-pembelajaran.index');
-
     }
 
     /**
@@ -119,5 +120,15 @@ class RumpunPembelajaranController extends Controller
             Alert::toast('Rumpun pembelajaran cant be deleted because its related to another table.', 'error');
             return redirect()->route('rumpun-pembelajaran.index');
         }
+    }
+
+    public function getRumpunPembelajaran()
+    {
+        $rumpunPembelajaran = DB::table('rumpun_pembelajaran')
+            ->select('id', 'rumpun_pembelajaran')
+            ->orderBy('rumpun_pembelajaran', 'asc')
+            ->get();
+
+        return response()->json($rumpunPembelajaran);
     }
 }

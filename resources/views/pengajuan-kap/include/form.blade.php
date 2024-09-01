@@ -30,6 +30,45 @@
     </div>
 </div>
 
+<div class="modal fade" id="usulanModal" tabindex="-1" aria-labelledby="usulanModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="usulanModalLabel">Usulan Program Pembelajaran</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="alertContainer" class="alert alert-danger" role="alert">
+                    Jika Program pembelajaran yang dipilih tidak ada. Silakan mengajukan program pembelajaran baru
+                    dengan mengisi form berikut.
+                </div>
+                <form id="usulanForm" method="POST" action="{{ route('usulanProgramPembelajaran') }}">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="rumpunPembelajaran" class="form-label">Rumpun Pembelajaran</label>
+                        <select id="rumpunPembelajaran" required name="rumpun_pembelajaran_id" class="form-select"
+                            aria-label="Rumpun Pembelajaran">
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="namaTopik" class="form-label">Nama Program Pembelajaran</label>
+                        <input type="text" required name="nama_topik" class="form-control" id="namaTopik">
+                    </div>
+                    <div class="mb-3">
+                        <label for="catatanUserCreated" class="form-label">Catatan</label>
+                        <textarea required name="catatan_user_created" id="catatanUserCreated" class="form-control" rows="3"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-primary" id="kirimUsulan" disabled>Kirim Usulan</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <div id="smartwizard" dir="" class="sw sw-theme-arrows sw-justified">
     <ul class="nav nav-progress">
@@ -65,7 +104,8 @@
                             <select
                                 class="form-control js-example-basic-multiple @error('jenis_program') is-invalid @enderror"
                                 name="jenis_program" id="jenis_program" required>
-                                <option value="" selected disabled>-- {{ __('Select jenis program') }} --</option>
+                                <option value="" selected disabled>-- {{ __('Select jenis program') }} --
+                                </option>
                                 @foreach ($jenis_program as $program)
                                     <option value="{{ $program }}"
                                         {{ isset($pengajuanKap) && $pengajuanKap->jenis_program == $program ? 'selected' : (old('jenis_program') == $program ? 'selected' : '') }}>
@@ -87,7 +127,7 @@
                                 <input type="text" name="indikator_kinerja" id="indikator_kinerja"
                                     class="form-control" placeholder="" required readonly />
                                 <button type="button" id="pilihButton" class="input-group-text btn btn-success">
-                                    <i class="fa fa-eye" aria-hidden="true"></i> Pilih
+                                    Pilih
                                 </button>
                                 <div class="invalid-feedback">
                                     Mohon diisi Indikator Kinerja.
@@ -107,7 +147,7 @@
                                     placeholder="" required readonly />
                                 <button type="button" id="pilihButtonKompetensi"
                                     class="input-group-text btn btn-success">
-                                    <i class="fa fa-eye" aria-hidden="true"></i> Pilih
+                                    Pilih
                                 </button>
                                 <div class="invalid-feedback">
                                     Mohon untuk pilih Kompetensi
@@ -124,21 +164,31 @@
                         class="form-control" placeholder="" required readonly />
                     <input type="hidden" name="persentase_kompetensi" id="persentase_kompetensi"
                         class="form-control" placeholder="" required readonly />
+
                     <div class="form-group row mb-3">
-                        <label for="topik_id" class="col-sm-3 col-form-label">{{ __('Program pembelajaran') }} <span
-                                style="color: red">*</span></label>
+                        <label for="topik_id" class="col-sm-3 col-form-label">
+                            {{ __('Program pembelajaran') }} <span style="color: red">*</span>
+                        </label>
                         <div class="col-sm-6">
-                            <select
-                                class="form-control js-example-basic-multiple @error('topik_id') is-invalid @enderror"
-                                name="topik_id" id="topik_id" required>
-                                <option value="" selected disabled>-- {{ __('Select program pembelajaran') }} --
-                                </option>
-                            </select>
-                            <div class="invalid-feedback">
-                                Mohon untuk pilih program pembelajaran
+                            <div class="d-flex">
+                                <select
+                                    class="form-control js-example-basic-multiple @error('topik_id') is-invalid @enderror"
+                                    name="topik_id" id="topik_id" required>
+                                    <option value="" selected disabled>-- {{ __('Select program pembelajaran') }}
+                                        --</option>
+                                </select>
+                                <button type="button" id="usulanButton" class="btn btn-danger ms-2"
+                                    data-bs-toggle="modal" data-bs-target="#usulanModal">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                </button>
+                                <div class="invalid-feedback">
+                                    Mohon untuk pilih program pembelajaran
+                                </div>
                             </div>
                         </div>
                     </div>
+
+
 
                     <div class="form-group row mb-3">
                         <label class="col-sm-3 col-form-label" for="judul">{{ __('Judul Program Pembelajaran') }}
@@ -328,7 +378,8 @@
                                 Mohon untuk pilih Lokasi
                             </div>
                         </div>
-                        <input type="hidden" name="diklatLocName" id="diklatLocName" value="{{ isset($pengajuanKap) ? $pengajuanKap->diklatLocName : old('diklatLocName') }}">
+                        <input type="hidden" name="diklatLocName" id="diklatLocName"
+                            value="{{ isset($pengajuanKap) ? $pengajuanKap->diklatLocName : old('diklatLocName') }}">
                     </div>
 
                     <div class="form-group row mb-3">
@@ -494,12 +545,14 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label for="diklatTypeID" class="col-sm-3 col-form-label">{{ __('Jenis Pembelajaran') }}</label>
+                        <label for="diklatTypeID"
+                            class="col-sm-3 col-form-label">{{ __('Jenis Pembelajaran') }}</label>
                         <div class="col-sm-6">
                             <select
                                 class="form-control js-example-basic-multiple @error('diklatTypeID') is-invalid @enderror"
                                 name="diklatTypeID" id="diklatTypeID">
-                                <option value="" selected disabled>-- {{ __('Select jenis pembelajaran') }} --</option>
+                                <option value="" selected disabled>-- {{ __('Select jenis pembelajaran') }} --
+                                </option>
                                 @foreach ($diklatType_data as $jenis)
                                     <option value="{{ $jenis['diklatTypeID'] }}"
                                         data-diklattypename="{{ $jenis['diklatTypeName'] }}"
@@ -512,7 +565,8 @@
                                 Mohon untuk pilih Jenis Pembelajaran
                             </div>
                         </div>
-                        <input type="hidden" name="diklatTypeName" id="diklatTypeName" value="{{ isset($pengajuanKap) ? $pengajuanKap->diklatTypeName : old('diklatTypeName') }}">
+                        <input type="hidden" name="diklatTypeName" id="diklatTypeName"
+                            value="{{ isset($pengajuanKap) ? $pengajuanKap->diklatTypeName : old('diklatTypeName') }}">
                     </div>
 
                     <div class="form-group row mb-3">
@@ -521,7 +575,8 @@
                             <select
                                 class="form-control js-example-basic-multiple @error('metodeID') is-invalid @enderror"
                                 name="metodeID" id="metodeID">
-                                <option value="" selected disabled>-- {{ __('Select metode pembelajaran') }} --</option>
+                                <option value="" selected disabled>-- {{ __('Select metode pembelajaran') }} --
+                                </option>
                                 @foreach ($metode_data as $metode)
                                     <option value="{{ $metode['metodeID'] }}"
                                         data-metoName="{{ $metode['metodeName'] }}"
@@ -534,7 +589,8 @@
                                 Mohon untuk pilih Metode Pembelajaran
                             </div>
                         </div>
-                        <input type="hidden" name="metodeName" id="metodeName" value="{{ isset($pengajuanKap) ? $pengajuanKap->metodeName : old('metodeName') }}">
+                        <input type="hidden" name="metodeName" id="metodeName"
+                            value="{{ isset($pengajuanKap) ? $pengajuanKap->metodeName : old('metodeName') }}">
                     </div>
 
                     <div class="form-group row mb-3" id="additional_fields" style="display: none;">

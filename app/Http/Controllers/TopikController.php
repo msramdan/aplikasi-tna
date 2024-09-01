@@ -12,6 +12,8 @@ use App\FormatImport\GenerateTopikMultiSheet;
 use App\Imports\ImportTopik;
 use App\Imports\ImportTopikMultiSheet;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 
 class TopikController extends Controller
@@ -150,5 +152,29 @@ class TopikController extends Controller
         $date = date('d-m-Y');
         $nameFile = 'format_import_program_pembelajaran' . $date;
         return Excel::download(new GenerateTopikMultiSheet(), $nameFile . '.xlsx');
+    }
+
+    public function usulanProgramPembelajaran(Request $request)
+    {
+        $validatedData = $request->validate([
+            'rumpun_pembelajaran_id' => 'required|exists:rumpun_pembelajaran,id',
+            'nama_topik' => 'required|string|max:255',
+            'catatan_user_created' => 'nullable|string',
+        ]);
+
+        $userId = Auth::id(); // Ambil ID user yang sedang login
+        $tanggalPengajuan = now(); // Ambil waktu saat ini
+        DB::table('nomenklatur_pembelajaran')->insert([
+            'rumpun_pembelajaran_id' => $validatedData['rumpun_pembelajaran_id'],
+            'nama_topik' => $validatedData['nama_topik'],
+            'status' => 'Pending',
+            'user_created' => $userId,
+            'tanggal_pengajuan' => $tanggalPengajuan,
+            'catatan_user_created' => $validatedData['catatan_user_created'],
+            'created_at' => $tanggalPengajuan,
+            'updated_at' => $tanggalPengajuan,
+        ]);
+
+        return response()->json(['message' => 'Usulan berhasil disimpan.']);
     }
 }
