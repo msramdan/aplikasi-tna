@@ -14,7 +14,7 @@ class NomenklaturPembelajaranController extends Controller
     public function __construct()
     {
         $this->middleware('permission:nomenklatur pembelajaran view')->only('index', 'show');
-        $this->middleware('permission:nomenklatur pembelajaran edit')->only('edit', 'update');
+        $this->middleware('permission:nomenklatur pembelajaran edit')->only('update');
     }
 
     public function index()

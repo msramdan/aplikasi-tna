@@ -16,7 +16,8 @@
                                     <a href="/">Dashboard</a>
                                 </li>
                                 <li class="breadcrumb-item">
-                                    <a href="{{ route('nomenklatur-pembelajaran.index') }}">{{ __('Usulan Nomenklatur Pembelajaran') }}</a>
+                                    <a
+                                        href="{{ route('nomenklatur-pembelajaran.index') }}">{{ __('Usulan Nomenklatur Pembelajaran') }}</a>
                                 </li>
                                 <li class="breadcrumb-item active" aria-current="page">
                                     {{ __('Edit') }}
@@ -84,22 +85,26 @@
                                     <td>{{ $nomenklaturPembelajaran->catatan_user_review ?? '-' }}</td>
                                 </tr>
                             </table>
+
+                            <div class="row mt-4">
+                                <div class="col-md-12">
+                                    <a href="{{ route('nomenklatur-pembelajaran.index') }}"
+                                        class="btn btn-secondary">Back</a>
+                                    @can('nomenklatur pembelajaran edit')
+                                        @if ($nomenklaturPembelajaran->status == 'Pending')
+                                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                                data-bs-target="#approvalModal">Approved</button>
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                                data-bs-target="#rejectionModal">Rejected</button>
+                                        @else
+                                            <button type="button" class="btn btn-success" disabled>Approved</button>
+                                            <button type="button" class="btn btn-danger" disabled>Rejected</button>
+                                        @endif
+                                    @endcan
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <!-- Action Buttons -->
-            <div class="row mt-4">
-                <div class="col-md-12">
-                    <a href="{{ route('nomenklatur-pembelajaran.index') }}" class="btn btn-secondary">Back</a>
-                    @if ($nomenklaturPembelajaran->status == 'Pending')
-                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#approvalModal">Approved</button>
-                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#rejectionModal">Rejected</button>
-                    @else
-                        <button type="button" class="btn btn-success" disabled>Approved</button>
-                        <button type="button" class="btn btn-danger" disabled>Rejected</button>
-                    @endif
                 </div>
             </div>
         </div>

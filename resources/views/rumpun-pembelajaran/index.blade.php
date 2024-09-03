@@ -22,12 +22,12 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card">
-                        <div class="card-header">
-                            @can('rumpun pembelajaran create')
+                        @can('rumpun pembelajaran create')
+                            <div class="card-header">
                                 <a href="{{ route('rumpun-pembelajaran.create') }}" class="btn btn-md btn-primary"> <i
                                         class="mdi mdi-plus"></i> {{ __('Create a new rumpun pembelajaran') }}</a>
-                            @endcan
-                        </div>
+                            </div>
+                        @endcan
 
                         <div class="card-body">
                             <div class="table-responsive p-1">

@@ -104,8 +104,8 @@
 
                 <div class="col-sm-12">
                     <div class="card">
-                        <div class="card-header">
-                            @can('topik create')
+                        @can('topik create')
+                            <div class="card-header">
                                 <a href="{{ route('topik.create') }}" class="btn btn-md btn-primary">
                                     <i class="mdi mdi-plus"></i> {{ __('topik/index.create_new') }}
                                 </a>
@@ -113,11 +113,11 @@
                                     data-bs-target="#exampleModal">
                                     <i class='fa fa-upload'></i> {{ __('topik/index.import') }}
                                 </button>
-                            @endcan
-                            <button id="btnExport" class="btn btn-success">
-                                <i class='fas fa-file-excel'></i> {{ __('topik/index.export') }}
-                            </button>
-                        </div>
+                                <button id="btnExport" class="btn btn-success">
+                                    <i class='fas fa-file-excel'></i> {{ __('topik/index.export') }}
+                                </button>
+                            </div>
+                        @endcan
 
                         <div class="card-body">
                             <div class="table-responsive p-1">
