@@ -598,4 +598,103 @@
             });
         });
     </script>
+
+
+    {{-- Usulan program pembelajaran --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function() {
+            // Ketika modal ditampilkan
+            $('#usulanModal').on('shown.bs.modal', function() {
+                // Memuat data dropdown saat modal ditampilkan
+                $.ajax({
+                    url: '{{ route('getRumpunPembelajaran') }}',
+                    type: 'GET',
+                    success: function(data) {
+                        const select = $('#rumpunPembelajaran');
+                        select.empty(); // Kosongkan dropdown
+                        select.append(
+                            '<option value="" disabled selected>-- Pilih --</option>'
+                            );
+                        data.forEach(function(item) {
+                            select.append(
+                                `<option value="${item.id}">${item.rumpun_pembelajaran}</option>`
+                                );
+                        });
+                        validateForm(); // Validasi saat modal ditampilkan
+                    },
+                    error: function(xhr) {
+                        console.error('Error loading rumpun pembelajaran:', xhr.responseText);
+                    }
+                });
+
+                validateForm(); // Validasi saat modal ditampilkan
+            });
+
+            // Fungsi untuk memvalidasi form
+            function validateForm() {
+                const form = $('#usulanForm');
+                const rumpunPembelajaranSelect = $('#rumpunPembelajaran');
+                const namaTopikInput = $('#namaTopik');
+                const catatanUserCreatedTextarea = $('#catatanUserCreated');
+                const kirimUsulanButton = $('#kirimUsulan');
+
+                // Ambil data dari form
+                const rumpunPembelajaranSelected = rumpunPembelajaranSelect.val();
+                const namaTopikFilled = namaTopikInput.val().trim() !== '';
+                const catatanUserCreatedFilled = catatanUserCreatedTextarea.val().trim() !== '';
+
+                // Periksa setiap field untuk memastikan semua field terisi
+                if (rumpunPembelajaranSelected && namaTopikFilled && catatanUserCreatedFilled) {
+                    kirimUsulanButton.prop('disabled', false);
+                } else {
+                    kirimUsulanButton.prop('disabled', true);
+                }
+            }
+
+            // Tangani perubahan pada input field untuk validasi live
+            $('#usulanForm').on('input change', function() {
+                validateForm();
+            });
+
+            // Tangani klik tombol Kirim Usulan
+            $('#kirimUsulan').on('click', function() {
+                if ($(this).is(':disabled')) {
+                    // Jika tombol dinonaktifkan, tidak lakukan apa-apa
+                    return;
+                }
+
+                const form = $('#usulanForm');
+
+                // Kirim data menggunakan AJAX
+                $.ajax({
+                    url: form.attr('action'),
+                    type: form.attr('method'),
+                    data: form.serialize(),
+                    success: function(response) {
+                        // Tanggapan sukses dengan SweetAlert
+                        Swal.fire({
+                            title: 'Sukses!',
+                            text: 'Usulan berhasil dikirim!',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            // Refresh halaman setelah konfirmasi
+                            location.reload();
+                        });
+                    },
+                    error: function(xhr) {
+                        // Tangani error dengan SweetAlert
+                        Swal.fire({
+                            title: 'Gagal!',
+                            text: 'Terjadi kesalahan saat mengirim usulan.',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                        console.error(xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
 @endpush

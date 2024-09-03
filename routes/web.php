@@ -20,6 +20,7 @@ use App\Http\Controllers\{
     SettingAppController,
     ConfigStepReview,
     NomenklaturPembelajaranController,
+    RumpunPembelajaranController,
     TaggingPembelajaranKompetensiController,
     TopikController,
     TaggingKompetensiIkController
@@ -60,15 +61,18 @@ Route::middleware(['auth', 'web', 'check.maintenance'])->group(function () {
         Route::get('/events', 'getEvents')->name('getEvents');
         Route::get('/exportKalenderPembelajaran', 'exportKalenderPembelajaran')->name('exportKalenderPembelajaran');
     });
-    Route::resource('reporting', ReportingController::class);
     Route::resource('topik', TopikController::class);
     Route::controller(TopikController::class)->group(function () {
         Route::get('/exportTopik', 'exportTopik')->name('exportTopik');
         Route::post('/importTopik', 'importTopik')->name('importTopik');
         Route::get('/download-format-topik', 'formatImport')->name('download-format-topik');
+        Route::post('/usulanProgramPembelajaran', 'usulanProgramPembelajaran')->name('usulanProgramPembelajaran');
     });
 
-    Route::resource('rumpun-pembelajaran', App\Http\Controllers\RumpunPembelajaranController::class);
+    Route::resource('rumpun-pembelajaran', RumpunPembelajaranController::class);
+    Route::controller(RumpunPembelajaranController::class)->group(function () {
+        Route::get('/getRumpunPembelajaran', 'getRumpunPembelajaran')->name('getRumpunPembelajaran');
+    });
     Route::resource('jadwal-kap-tahunan', JadwalKapTahunanController::class);
     Route::controller(TaggingPembelajaranKompetensiController::class)->group(function () {
         Route::get('/tagging-pembelajaran-kompetensi', 'index')->name('tagging-pembelajaran-kompetensi.index');
