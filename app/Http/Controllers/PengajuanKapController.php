@@ -346,8 +346,8 @@ class PengajuanKapController extends Controller
 
         $kodePembelajaran = $year . $topikId . $newNoUrut;
 
-        // DB::beginTransaction();
-        // try {
+        DB::beginTransaction();
+        try {
             $fasilitator_pembelajaran = $request->input('fasilitator_pembelajaran');
             $fasilitator_pembelajaran_json = empty($fasilitator_pembelajaran) ? null : json_encode($fasilitator_pembelajaran);
             foreach ($validatedData as $key => $value) {
@@ -508,12 +508,12 @@ class PengajuanKapController extends Controller
             DB::commit();
             Alert::toast('Pengajuan KAP berhasil disimpan.', 'success');
             return redirect()->route('pengajuan-kap.index', ['is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi]);
-        // } catch (\Exception $e) {
-        //     DB::rollBack();
-        //     \Log::error('Error: ' . $e->getMessage());
-        //     Alert::toast('Pengajuan KAP gagal disimpan.', 'error');
-        //     return redirect()->route('pengajuan-kap.index', ['is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi]);
-        // }
+        } catch (\Exception $e) {
+            DB::rollBack();
+            \Log::error('Error: ' . $e->getMessage());
+            Alert::toast('Pengajuan KAP gagal disimpan.', 'error');
+            return redirect()->route('pengajuan-kap.index', ['is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi]);
+        }
     }
 
     public function update(Request $request, $id, $is_bpkp, $frekuensi)
@@ -663,6 +663,64 @@ class PengajuanKapController extends Controller
             ->where('pengajuan_kap_id', $id)
             ->first();
 
+        if ($pengajuanKap->current_step == 2) {
+
+
+            $endpoint_pusdiklatwap = config('stara.endpoint_pusdiklatwap');
+            $api_key_pusdiklatwap = config('stara.api_token_pusdiklatwap');
+
+            // Call API for metode
+            $metode_data = callApiPusdiklatwas($endpoint_pusdiklatwap . '/metode', [
+                'api_key' => $api_key_pusdiklatwap
+            ]);
+
+            if (isset($metode_data['error'])) {
+                Alert::error('Error', $metode_data['error']);
+                return redirect()->back();
+            }
+
+            // Call API for diklatType
+            $diklatType_data = callApiPusdiklatwas($endpoint_pusdiklatwap . '/diklatType', [
+                'api_key' => $api_key_pusdiklatwap
+            ]);
+
+            if (isset($diklatType_data['error'])) {
+                Alert::error('Error', $diklatType_data['error']);
+                return redirect()->back();
+            }
+
+            // Call API for diklatLocation
+            $diklatLocation_data = callApiPusdiklatwas($endpoint_pusdiklatwap . '/diklatLocation', [
+                'api_key' => $api_key_pusdiklatwap
+            ]);
+
+            if (isset($diklatLocation_data['error'])) {
+                Alert::error('Error', $diklatLocation_data['error']);
+                return redirect()->back();
+            }
+
+            $jalur_pembelajaran = [
+                'Pelatihan',
+                'Seminar/konferensi/sarasehan',
+                'Kursus',
+                'Lokakarya (workshop)',
+                'Belajar mandiri',
+                'Coaching',
+                'Mentoring',
+                'Bimbingan teknis',
+                'Sosialisasi',
+                'Detasering (secondment)',
+                'Job shadowing',
+                'Outbond',
+                'Benchmarking',
+                'Pertukaran PNS',
+                'Community of practices',
+                'Pelatihan di kantor sendiri',
+                'Library cafe',
+                'Magang/praktik kerja'
+            ];
+        }
+
         return view('pengajuan-kap.show', [
             'pengajuanKap' => $pengajuanKap,
             'logReviews' => $logReviews,
@@ -673,7 +731,11 @@ class PengajuanKapController extends Controller
             'frekuensi' => $frekuensi,
             'currentStepRemark' => $currentStepRemark,
             'userHasAccess' => $userHasAccess,
-            'gap_kompetensi_pengajuan_kap' => $gap_kompetensi_pengajuan_kap
+            'gap_kompetensi_pengajuan_kap' => $gap_kompetensi_pengajuan_kap,
+            'jalur_pembelajaran' => isset($jalur_pembelajaran) ? $jalur_pembelajaran : null,
+            'metode_data' => isset($metode_data) ? $metode_data : null,
+            'diklatType_data' => isset($diklatType_data) ? $diklatType_data : null,
+            'diklatLocation_data' => isset($diklatLocation_data) ? $diklatLocation_data : null,
         ]);
     }
 

@@ -642,15 +642,21 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="diklatLocID" class="form-label">{{ __('Lokasi') }}</label>
-                                        <select class="form-control" name="diklatLocID" id="diklatLocID">
+                                        <select class="form-control" name="diklatLocID" id="diklatLocID" required>
                                             <option value="" selected disabled>-- Pilih --</option>
+                                            @foreach ($diklatLocation_data as $lokasi)
+                                                <option value="{{ $lokasi['diklatLocID'] }}"
+                                                    data-diklatlocname="{{ $lokasi['diklatLocName'] }}">
+                                                    {{ $lokasi['diklatLocName'] }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
 
                                     <div class="mb-3">
                                         <label class="form-label"
                                             for="detail_lokasi">{{ __('Tempat / Alamat Rinci') }}</label>
-                                        <input type="text" name="detail_lokasi" id="detail_lokasi"
+                                        <input type="text" name="detail_lokasi" id="detail_lokasi" required
                                             class="form-control" value=""
                                             placeholder="{{ __('Tempat / Alamat Rinci') }}" />
                                     </div>
@@ -658,13 +664,14 @@
                                     <div class="mb-3">
                                         <label class="form-label" for="kelas">{{ __('Jumlah Kelas') }}</label>
                                         <input type="number" name="kelas" id="kelas" class="form-control"
-                                            value="" placeholder="{{ __('Jumlah Kelas') }}" />
+                                            required value="" placeholder="{{ __('Jumlah Kelas') }}" />
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="bentuk_pembelajaran"
                                             class="form-label">{{ __('Bentuk Pembelajaran') }}</label>
-                                        <select class="form-control" name="bentuk_pembelajaran" id="bentuk_pembelajaran">
+                                        <select class="form-control" name="bentuk_pembelajaran" id="bentuk_pembelajaran"
+                                            required>
                                             <option value="" selected disabled>-- Pilih --</option>
                                             <option value="Klasikal">Klasikal</option>
                                             <option value="Nonklasikal">Nonklasikal</option>
@@ -674,15 +681,21 @@
                                     <div class="mb-3">
                                         <label for="jalur_pembelajaran"
                                             class="form-label">{{ __('Jalur Pembelajaran') }}</label>
-                                        <select class="form-control" name="jalur_pembelajaran" id="jalur_pembelajaran">
+                                        <select class="form-control" name="jalur_pembelajaran" id="jalur_pembelajaran"
+                                            required>
                                             <option value="" selected disabled>-- Pilih --</option>
+                                            @foreach ($jalur_pembelajaran as $row)
+                                                <option value="{{ $row }}">
+                                                    {{ $row }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="jenjang_pembelajaran"
                                             class="form-label">{{ __('Jenjang Pembelajaran') }}</label>
-                                        <select class="form-control" name="jenjang_pembelajaran"
+                                        <select class="form-control" name="jenjang_pembelajaran" required
                                             id="jenjang_pembelajaran">
                                             <option value="" selected disabled>-- Pilih --</option>
                                             <option value="CPNS">
@@ -721,8 +734,8 @@
                                     <div class="mb-3">
                                         <label for="model_pembelajaran"
                                             class="form-label">{{ __('Model Pembelajaran') }}</label>
-                                        <select class="form-control  @error('model_pembelajaran') is-invalid @enderror"
-                                            name="model_pembelajaran" id="model_pembelajaran">
+                                        <select class="form-control " required name="model_pembelajaran"
+                                            id="model_pembelajaran">
                                             <option value="" selected disabled>-- Pilih --</option>
                                             <option value="Pembelajaran terstruktur">
                                                 Pembelajaran terstruktur</option>
@@ -738,11 +751,17 @@
                                     <div class="mb-3">
                                         <label for="diklatTypeID"
                                             class="form-label">{{ __('Jenis Pembelajaran') }}</label>
-                                        <select class="form-control" name="diklatTypeID" id="diklatTypeID">
+                                        <select class="form-control" name="diklatTypeID" id="diklatTypeID" required>
                                             <option value="" selected disabled>-- Pilih --</option>
+                                            @foreach ($diklatType_data as $jenis)
+                                                <option value="{{ $jenis['diklatTypeID'] }}"
+                                                    data-diklattypename="{{ $jenis['diklatTypeName'] }}">
+                                                    {{ $jenis['diklatTypeName'] }}
+                                                </option>
+                                            @endforeach
+
                                         </select>
                                     </div>
-
                                     <button type="button" class="btn btn-info btn-next">Next <i
                                             class="fa fa-arrow-right"></i></button>
                                 </div>
@@ -755,7 +774,7 @@
                                     <div class="mb-3">
                                         <label for="peserta_pembelajaran"
                                             class="form-label">{{ __('Peserta Pembelajaran') }}</label>
-                                        <select class="form-control" name="peserta_pembelajaran"
+                                        <select class="form-control" name="peserta_pembelajaran" required
                                             id="peserta_pembelajaran">
                                             <option value="" selected disabled>-- Pilih --
                                             </option>
@@ -770,7 +789,7 @@
                                     <div class="mb-3">
                                         <label for="sasaran_peserta"
                                             class="form-label">{{ __('Sasaran Peserta') }}</label>
-                                        <input type="text" name="sasaran_peserta" id="sasaran_peserta"
+                                        <input type="text" name="sasaran_peserta" id="sasaran_peserta" required
                                             class="form-control" value=""
                                             placeholder="{{ __('Sasaran Peserta') }}" />
                                     </div>
@@ -778,7 +797,7 @@
                                     <div class="mb-3">
                                         <label for="kriteria_peserta"
                                             class="form-label">{{ __('Kriteria Peserta') }}</label>
-                                        <input type="text" name="kriteria_peserta" id="kriteria_peserta"
+                                        <input type="text" name="kriteria_peserta" id="kriteria_peserta" required
                                             class="form-control" value=""
                                             placeholder="{{ __('Sasaran Peserta') }}" />
                                     </div>
@@ -786,7 +805,7 @@
                                     <div class="mb-3">
                                         <label for="aktivitas_prapembelajaran"
                                             class="form-label">{{ __('Aktivitas Prapembelajaran') }}</label>
-                                        <input type="text" name="aktivitas_prapembelajaran"
+                                        <input type="text" name="aktivitas_prapembelajaran" required
                                             id="aktivitas_prapembelajaran" class="form-control" value=""
                                             placeholder="{{ __('Aktivitas Prapembelajaran') }}" />
                                     </div>
@@ -794,7 +813,7 @@
                                     <div class="mb-3">
                                         <label for="penyelenggara_pembelajaran"
                                             class="form-label">{{ __('Penyelenggara Pembelajaran') }}</label>
-                                        <select class="form-control" name="penyelenggara_pembelajaran"
+                                        <select class="form-control" name="penyelenggara_pembelajaran" required
                                             id="penyelenggara_pembelajaran">
                                             <option value="" selected disabled>-- Pilih --</option>
                                             <option value="Pusdiklatwas BPKP">
@@ -811,7 +830,7 @@
                                         @foreach (['Widyaiswara', 'Instruktur', 'Praktisi', 'Pakar', 'Tutor', 'Coach', 'Mentor', 'Narasumber lainnya'] as $fasilitator)
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox"
-                                                    name="fasilitator_pembelajaran[]"
+                                                    name="fasilitator_pembelajaran[]" required
                                                     id="fasilitator_{{ $fasilitator }}" value="{{ $fasilitator }}">
                                                 <label class="form-check-label" for="fasilitator_{{ $fasilitator }}">
                                                     {{ $fasilitator }}
@@ -823,6 +842,7 @@
                                     <div class="mb-3">
                                         <label for="sertifikat" class="form-label">{{ __('Sertifikat') }}</label>
                                         <input type="text" name="sertifikat" id="sertifikat" class="form-control"
+                                            required
                                             value="{{ isset($pengajuanKap) ? $pengajuanKap->sertifikat : old('sertifikat') }}"
                                             placeholder="{{ __('Sertifikat') }}" />
                                     </div>
@@ -844,8 +864,8 @@
                                                         <td>
                                                             <input type="hidden" name="no_level[]"
                                                                 value="{{ $i }}" class="form-control" />
-                                                            <input type="text" name="level_evaluasi_instrumen[]"
-                                                                class="form-control" />
+                                                            <input type="text" required
+                                                                name="level_evaluasi_instrumen[]" class="form-control" />
                                                         </td>
                                                     </tr>
                                                 @endfor
@@ -866,7 +886,7 @@
                                     </div>
 
                                     <div class="mb-3">
-                                        <textarea class="form-control" id="approveNotes" name="approveNotes" rows="3"></textarea>
+                                        <textarea class="form-control" id="approveNotes" name="approveNotes" rows="3" required></textarea>
                                     </div>
 
                                     <button type="button" class="btn btn-info btn-prev"> <i
