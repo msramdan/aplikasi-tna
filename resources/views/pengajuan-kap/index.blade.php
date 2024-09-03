@@ -280,7 +280,8 @@
                     orderable: false,
                     searchable: false,
                     render: function(data, type, full, meta) {
-                        if (full.status_kap === 'Approved' || full.status_kap === 'Rejected' || full.current_step === 2) {
+                        if (full.status_kap === 'Approved' || full.status_kap === 'Rejected' || full
+                            .current_step === 2) {
                             return '<input type="checkbox" class="select-item" value="' + full
                                 .id + '" disabled>';
                         } else {

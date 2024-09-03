@@ -634,11 +634,243 @@
                         <form action="{{ route('pengajuan-kap.approve', $pengajuanKap->id) }}" method="POST">
                             @csrf
                             @method('PUT')
-                            <div class="mb-3">
-                                <label for="approveNotes" class="form-label">{{ __('Notes') }}</label>
-                                <textarea required class="form-control" id="approveNotes" name="approveNotes" rows="3"></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-success">{{ __('Submit') }}</button>
+
+                            @if ($pengajuanKap->current_step == 2)
+                                <div class="form-1">
+                                    <div class="alert alert-info" role="alert">
+                                        Detail Pembelajaran
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="diklatLocID" class="form-label">{{ __('Lokasi') }}</label>
+                                        <select required class="form-control" name="diklatLocID" id="diklatLocID">
+                                            <option value="" selected disabled>-- Pilih --</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label"
+                                            for="detail_lokasi">{{ __('Tempat / Alamat Rinci') }}</label>
+                                        <input type="text" name="detail_lokasi" id="detail_lokasi"
+                                            class="form-control" required value=""
+                                            placeholder="{{ __('Tempat / Alamat Rinci') }}" />
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label" for="kelas">{{ __('Jumlah Kelas') }}</label>
+                                        <input type="number" name="kelas" id="kelas" class="form-control"
+                                            required value="" placeholder="{{ __('Jumlah Kelas') }}" />
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="bentuk_pembelajaran"
+                                            class="form-label">{{ __('Bentuk Pembelajaran') }}</label>
+                                        <select class="form-control  @error('bentuk_pembelajaran') is-invalid @enderror"
+                                            name="bentuk_pembelajaran" id="bentuk_pembelajaran">
+                                            <option value="" selected disabled>-- Pilih --</option>
+                                            <option value="Klasikal">Klasikal</option>
+                                            <option value="Nonklasikal">Nonklasikal</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="jalur_pembelajaran"
+                                            class="form-label">{{ __('Jalur Pembelajaran') }}</label>
+                                        <select class="form-control  @error('jalur_pembelajaran') is-invalid @enderror"
+                                            name="jalur_pembelajaran" id="jalur_pembelajaran">
+                                            <option value="" selected disabled>-- Pilih --</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="jenjang_pembelajaran"
+                                            class="form-label">{{ __('Jenjang Pembelajaran') }}</label>
+                                        <select class="form-control  @error('jenjang_pembelajaran') is-invalid @enderror"
+                                            name="jenjang_pembelajaran" id="jenjang_pembelajaran">
+                                            <option value="" selected disabled>-- Pilih --</option>
+                                            <option value="CPNS">
+                                                CPNS</option>
+                                            <option value="P3K">
+                                                P3K</option>
+                                            <option value="PKN I">
+                                                PKN I</option>
+                                            <option value="PKN II">
+                                                PKN II</option>
+                                            <option value="Kepemimpinan Administrator">
+                                                Kepemimpinan Administrator</option>
+                                            <option value="Kepemimpinan Pengawas">
+                                                Kepemimpinan Pengawas</option>
+                                            <option value="Penjenjangan Auditor Utama">
+                                                Penjenjangan Auditor Utama</option>
+                                            <option value="Penjenjangan Auditor Madya">
+                                                Penjenjangan Auditor Madya</option>
+                                            <option value="Penjenjangan Auditor Muda">
+                                                Penjenjangan Auditor Muda</option>
+                                            <option value="Pembentukan Auditor Pertama">
+                                                Pembentukan Auditor Pertama</option>
+                                            <option value="Pembentukan Auditor Terampil">
+                                                Pembentukan Auditor Terampil</option>
+                                            <option value="APIP">
+                                                APIP</option>
+                                            <option value="SPIP">
+                                                SPIP</option>
+                                            <option value="LSP BPKP">
+                                                LSP BPKP</option>
+                                            <option value="LSP Lainnya">
+                                                LSP Lainnya</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="model_pembelajaran"
+                                            class="form-label">{{ __('Model Pembelajaran') }}</label>
+                                        <select class="form-control  @error('model_pembelajaran') is-invalid @enderror"
+                                            name="model_pembelajaran" id="model_pembelajaran">
+                                            <option value="" selected disabled>-- Pilih --</option>
+                                            <option value="Pembelajaran terstruktur">
+                                                Pembelajaran terstruktur</option>
+                                            <option value="Pembelajaran kolaboratif">
+                                                Pembelajaran kolaboratif</option>
+                                            <option value="Pembelajaran di tempat kerja">
+                                                Pembelajaran di tempat kerja</option>
+                                            <option value="Pembelajaran terintegrasi">
+                                                Pembelajaran terintegrasi</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="diklatTypeID"
+                                            class="form-label">{{ __('Jenis Pembelajaran') }}</label>
+                                        <select class="form-control  @error('diklatTypeID') is-invalid @enderror"
+                                            name="diklatTypeID" id="diklatTypeID">
+                                            <option value="" selected disabled>-- Pilih --</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-2">
+                                    <div class="alert alert-info" role="alert">
+                                        Peserta dan Fasilitator
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="peserta_pembelajaran"
+                                            class="form-label">{{ __('Peserta Pembelajaran') }}</label>
+                                        <select
+                                            class="form-control js-example-basic-multiple @error('peserta_pembelajaran') is-invalid @enderror"
+                                            name="peserta_pembelajaran" id="peserta_pembelajaran">
+                                            <option value="" selected disabled>-- Pilih --
+                                            </option>
+                                            <option value="Internal">
+                                                Internal</option>
+                                            <option value="Eksternal">
+                                                Eksternal</option>
+                                            <option value="Internal dan Eksternal">
+                                                Internal dan Eksternal</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="sasaran_peserta"
+                                            class="form-label">{{ __('Sasaran Peserta') }}</label>
+                                        <input type="text" name="sasaran_peserta" id="sasaran_peserta"
+                                            class="form-control" value=""
+                                            placeholder="{{ __('Sasaran Peserta') }}" />
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="kriteria_peserta"
+                                            class="form-label">{{ __('Kriteria Peserta') }}</label>
+                                        <input type="text" name="kriteria_peserta" id="kriteria_peserta"
+                                            class="form-control" value=""
+                                            placeholder="{{ __('Sasaran Peserta') }}" />
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="aktivitas_prapembelajaran"
+                                            class="form-label">{{ __('Aktivitas Prapembelajaran') }}</label>
+                                        <input type="text" name="aktivitas_prapembelajaran"
+                                            id="aktivitas_prapembelajaran" class="form-control" value=""
+                                            placeholder="{{ __('Aktivitas Prapembelajaran') }}" />
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="penyelenggara_pembelajaran"
+                                            class="form-label">{{ __('Penyelenggara Pembelajaran') }}</label>
+                                        <select
+                                            class="form-control js-example-basic-multiple @error('penyelenggara_pembelajaran') is-invalid @enderror"
+                                            name="penyelenggara_pembelajaran" id="penyelenggara_pembelajaran">
+                                            <option value="" selected disabled>-- Pilih --</option>
+                                            <option value="Pusdiklatwas BPKP">
+                                                Pusdiklatwas BPKP</option>
+                                            <option value="Unit kerja">
+                                                Unit kerja</option>
+                                            <option value="Lainnya">
+                                                Lainnya</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">{{ __('Fasilitator Pembelajaran') }}</label>
+                                        @foreach (['Widyaiswara', 'Instruktur', 'Praktisi', 'Pakar', 'Tutor', 'Coach', 'Mentor', 'Narasumber lainnya'] as $fasilitator)
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox"
+                                                    name="fasilitator_pembelajaran[]"
+                                                    id="fasilitator_{{ $fasilitator }}" value="{{ $fasilitator }}">
+                                                <label class="form-check-label" for="fasilitator_{{ $fasilitator }}">
+                                                    {{ $fasilitator }}
+                                                </label>
+                                            </div>
+                                        @endforeach
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="sertifikat" class="form-label">{{ __('Sertifikat') }}</label>
+                                        <input type="text" name="sertifikat" id="sertifikat" class="form-control"
+                                            value="{{ isset($pengajuanKap) ? $pengajuanKap->sertifikat : old('sertifikat') }}"
+                                            placeholder="{{ __('Sertifikat') }}" />
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="level_evaluasi_instrumen"
+                                            class="form-label">{{ __('Level Evaluasi dan Instrumennya') }}</label>
+                                        <table class="table table-bordered table-sm text-center">
+                                            <thead style="background-color: #cbccce">
+                                                <tr>
+                                                    <th>Level</th>
+                                                    <th>Instrumen</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @for ($i = 1; $i <= 5; $i++)
+                                                    <tr>
+                                                        <td>{{ $i }}</td>
+                                                        <td>
+                                                            <input type="hidden" name="no_level[]"
+                                                                value="{{ $i }}"
+                                                                class="form-control @error('no_level') is-invalid @enderror" />
+                                                            <input type="text" name="level_evaluasi_instrumen[]"
+                                                                class="form-control @error('level_evaluasi_instrumen') is-invalid @enderror" />
+                                                        </td>
+                                                    </tr>
+                                                @endfor
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-3">
+                                    <div class="alert alert-info" role="alert">
+                                        Catatan
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <textarea required class="form-control" id="approveNotes" name="approveNotes" rows="3"></textarea>
+                                    </div>
+                                </div>
+                            @endif
+                            <br>
+                            <button type="submit" class="btn btn-success"
+                                style="float: right">{{ __('Submit') }}</button>
                         </form>
                     </div>
                 </div>
@@ -658,10 +890,11 @@
                             @csrf
                             @method('PUT')
                             <div class="mb-3">
-                                <label for="rejectNotes" class="form-label">{{ __('Notes') }}</label>
+                                <label for="rejectNotes" class="form-label">Catatan</label>
                                 <textarea required class="form-control" id="rejectNotes" name="rejectNotes" rows="3"></textarea>
                             </div>
-                            <button type="submit" class="btn btn-danger">{{ __('Submit') }}</button>
+                            <button type="submit" class="btn btn-danger"
+                                style="float: right">{{ __('Submit') }}</button>
                         </form>
                     </div>
                 </div>
