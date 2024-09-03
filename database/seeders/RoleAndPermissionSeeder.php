@@ -36,10 +36,8 @@ class RoleAndPermissionSeeder extends Seeder
         ]);
         $permissionAdminUnit = [
             'kalender pembelajaran view',
-            'kalender pembelajaran create',
-            'kalender pembelajaran edit',
-            'kalender pembelajaran delete',
             'pengajuan kap view',
+            'pengajuan kap create',
             'kompetensi view',
             'topik view',
             'rumpun pembelajaran view',

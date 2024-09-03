@@ -24,7 +24,7 @@
                         href="#sidebarMasterData" data-bs-toggle="collapse" role="button"
                         aria-expanded="{{ request()->routeIs('kompetensi*', 'rumpun-pembelajaran*', 'topik*') ? 'true' : 'false' }}"
                         aria-controls="sidebarMasterData">
-                        <i class="fa fa-list"></i> <span data-key="t-forms">{{ __('sidebar.master_data') }}</span>
+                        <i class="fa fa-list"></i> <span data-key="t-forms">Master Data</span>
                     </a>
                     <div class="collapse menu-dropdown {{ request()->routeIs('kompetensi*', 'rumpun-pembelajaran*', 'topik*') ? 'show' : '' }}"
                         id="sidebarMasterData">
