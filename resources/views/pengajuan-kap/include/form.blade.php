@@ -310,6 +310,95 @@
             <form id="form-2">
                 <div class="row" style="padding: 20px">
                     <div class="form-group row mb-3">
+                        <label for="metodeID" class="col-sm-3 col-form-label">{{ __('Metode Pembelajaran') }} <span
+                                style="color: red">*</span></label>
+                        <div class="col-sm-6">
+                            <select class="form-control @error('metodeID') is-invalid @enderror" name="metodeID"
+                                id="metodeID" required>
+                                <option value="" selected disabled>-- {{ __('Select metode pembelajaran') }} --
+                                </option>
+                                @foreach ($metode_data as $metode)
+                                    <option value="{{ $metode['metodeID'] }}"
+                                        data-metoName="{{ $metode['metodeName'] }}"
+                                        {{ isset($pengajuanKap) && $pengajuanKap->metodeID == $metode['metodeID'] ? 'selected' : (old('metodeID') == $metode['metodeID'] ? 'selected' : '') }}>
+                                        {{ $metode['metodeName'] }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <div class="invalid-feedback">
+                                Mohon untuk pilih Metode Pembelajaran
+                            </div>
+                        </div>
+                        <input type="hidden" name="metodeName" id="metodeName"
+                            value="{{ isset($pengajuanKap) ? $pengajuanKap->metodeName : old('metodeName') }}">
+                    </div>
+
+                    <div class="form-group row mb-3" id="additional_fields" style="display: none;">
+                        <label class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-6">
+                            <!-- Tatap Muka Fields -->
+                            <div id="tatap_muka_fields" style="display: none;">
+                                <label>Tanggal Tatap Muka:</label>
+                                <div class="row">
+                                    <input type="hidden" name="remark_1" class="form-control" value="Tatap Muka">
+                                    <div class="col-sm-6">
+                                        <input type="date" name="tatap_muka_start" class="form-control" required
+                                            placeholder="Mulai">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="date" name="tatap_muka_end" class="form-control"
+                                            placeholder="Selesai">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hybrid Fields -->
+                            <div id="hybrid_fields" style="display: none;">
+                                <label>Tanggal E-Learning:</label>
+                                <div class="row">
+                                    <input type="hidden" name="remark_2" class="form-control" value="E-Learning">
+                                    <div class="col-sm-6">
+                                        <input type="date" name="hybrid_elearning_start" class="form-control"
+                                            placeholder="Mulai">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="date" name="hybrid_elearning_end" class="form-control"
+                                            placeholder="Selesai">
+                                    </div>
+                                </div>
+                                <label>Tanggal Tatap Muka:</label>
+                                <div class="row mb-2">
+                                    <input type="hidden" name="remark_3" class="form-control" value="Tatap Muka">
+                                    <div class="col-sm-6">
+                                        <input type="date" name="hybrid_tatap_muka_start" class="form-control"
+                                            placeholder="Mulai">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="date" name="hybrid_tatap_muka_end" class="form-control"
+                                            placeholder="Selesai">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- E-Learning Fields -->
+                            <div id="elearning_fields" style="display: none;">
+                                <label>Tanggal E-Learning:</label>
+                                <div class="row">
+                                    <input type="hidden" name="remark_4" class="form-control" value="E-Learning">
+                                    <div class="col-sm-6">
+                                        <input type="date" name="elearning_start" class="form-control"
+                                            placeholder="Mulai">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="date" name="elearning_end" class="form-control"
+                                            placeholder="Selesai">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-3">
                         <label for="diklatLocID" class="col-sm-3 col-form-label">{{ __('Lokasi') }}</label>
                         <div class="col-sm-6">
                             <select
@@ -328,7 +417,8 @@
                                 Mohon untuk pilih Lokasi
                             </div>
                         </div>
-                        <input type="hidden" name="diklatLocName" id="diklatLocName" value="{{ isset($pengajuanKap) ? $pengajuanKap->diklatLocName : old('diklatLocName') }}">
+                        <input type="hidden" name="diklatLocName" id="diklatLocName"
+                            value="{{ isset($pengajuanKap) ? $pengajuanKap->diklatLocName : old('diklatLocName') }}">
                     </div>
 
                     <div class="form-group row mb-3">
@@ -494,12 +584,14 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label for="diklatTypeID" class="col-sm-3 col-form-label">{{ __('Jenis Pembelajaran') }}</label>
+                        <label for="diklatTypeID"
+                            class="col-sm-3 col-form-label">{{ __('Jenis Pembelajaran') }}</label>
                         <div class="col-sm-6">
                             <select
                                 class="form-control js-example-basic-multiple @error('diklatTypeID') is-invalid @enderror"
                                 name="diklatTypeID" id="diklatTypeID">
-                                <option value="" selected disabled>-- {{ __('Select jenis pembelajaran') }} --</option>
+                                <option value="" selected disabled>-- {{ __('Select jenis pembelajaran') }} --
+                                </option>
                                 @foreach ($diklatType_data as $jenis)
                                     <option value="{{ $jenis['diklatTypeID'] }}"
                                         data-diklattypename="{{ $jenis['diklatTypeName'] }}"
@@ -512,96 +604,9 @@
                                 Mohon untuk pilih Jenis Pembelajaran
                             </div>
                         </div>
-                        <input type="hidden" name="diklatTypeName" id="diklatTypeName" value="{{ isset($pengajuanKap) ? $pengajuanKap->diklatTypeName : old('diklatTypeName') }}">
+                        <input type="hidden" name="diklatTypeName" id="diklatTypeName"
+                            value="{{ isset($pengajuanKap) ? $pengajuanKap->diklatTypeName : old('diklatTypeName') }}">
                     </div>
-
-                    <div class="form-group row mb-3">
-                        <label for="metodeID" class="col-sm-3 col-form-label">{{ __('Metode Pembelajaran') }}</label>
-                        <div class="col-sm-6">
-                            <select
-                                class="form-control js-example-basic-multiple @error('metodeID') is-invalid @enderror"
-                                name="metodeID" id="metodeID">
-                                <option value="" selected disabled>-- {{ __('Select metode pembelajaran') }} --</option>
-                                @foreach ($metode_data as $metode)
-                                    <option value="{{ $metode['metodeID'] }}"
-                                        data-metoName="{{ $metode['metodeName'] }}"
-                                        {{ isset($pengajuanKap) && $pengajuanKap->metodeID == $metode['metodeID'] ? 'selected' : (old('metodeID') == $metode['metodeID'] ? 'selected' : '') }}>
-                                        {{ $metode['metodeName'] }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            <div class="invalid-feedback">
-                                Mohon untuk pilih Metode Pembelajaran
-                            </div>
-                        </div>
-                        <input type="hidden" name="metodeName" id="metodeName" value="{{ isset($pengajuanKap) ? $pengajuanKap->metodeName : old('metodeName') }}">
-                    </div>
-
-                    <div class="form-group row mb-3" id="additional_fields" style="display: none;">
-                        <label class="col-sm-3 col-form-label"></label>
-                        <div class="col-sm-6">
-                            <!-- Tatap Muka Fields -->
-                            <div id="tatap_muka_fields" style="display: none;">
-                                <label>Tanggal Tatap Muka:</label>
-                                <div class="row">
-                                    <input type="hidden" name="remark_1" class="form-control" value="Tatap Muka">
-                                    <div class="col-sm-6">
-                                        <input type="date" name="tatap_muka_start" class="form-control"
-                                            placeholder="Mulai">
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <input type="date" name="tatap_muka_end" class="form-control"
-                                            placeholder="Selesai">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Hybrid Fields -->
-                            <div id="hybrid_fields" style="display: none;">
-                                <label>Tanggal E-Learning:</label>
-                                <div class="row">
-                                    <input type="hidden" name="remark_2" class="form-control" value="E-Learning">
-                                    <div class="col-sm-6">
-                                        <input type="date" name="hybrid_elearning_start" class="form-control"
-                                            placeholder="Mulai">
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <input type="date" name="hybrid_elearning_end" class="form-control"
-                                            placeholder="Selesai">
-                                    </div>
-                                </div>
-                                <label>Tanggal Tatap Muka:</label>
-                                <div class="row mb-2">
-                                    <input type="hidden" name="remark_3" class="form-control" value="Tatap Muka">
-                                    <div class="col-sm-6">
-                                        <input type="date" name="hybrid_tatap_muka_start" class="form-control"
-                                            placeholder="Mulai">
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <input type="date" name="hybrid_tatap_muka_end" class="form-control"
-                                            placeholder="Selesai">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- E-Learning Fields -->
-                            <div id="elearning_fields" style="display: none;">
-                                <label>Tanggal E-Learning:</label>
-                                <div class="row">
-                                    <input type="hidden" name="remark_4" class="form-control" value="E-Learning">
-                                    <div class="col-sm-6">
-                                        <input type="date" name="elearning_start" class="form-control"
-                                            placeholder="Mulai">
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <input type="date" name="elearning_end" class="form-control"
-                                            placeholder="Selesai">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
 
                 </div>
             </form>

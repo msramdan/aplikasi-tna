@@ -36,7 +36,9 @@
                                         <tr>
                                             <th>#</th>
                                             <th>{{ __('Rumpun Pembelajaran') }}</th>
-                                            <th>{{ __('Action') }}</th>
+                                            @canany(['rumpun pembelajaran edit', 'rumpun pembelajaran delete'])
+                                                <th>{{ __('Action') }}</th>
+                                            @endcanany
                                         </tr>
                                     </thead>
                                 </table>
@@ -49,14 +51,10 @@
     </div>
 @endsection
 
-
 @push('js')
     <script>
-        $('#data-table').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: "{{ route('rumpun-pembelajaran.index') }}",
-            columns: [{
+        $(document).ready(function() {
+            let columns = [{
                     data: 'DT_RowIndex',
                     name: 'DT_RowIndex',
                     orderable: false,
@@ -65,14 +63,24 @@
                 {
                     data: 'rumpun_pembelajaran',
                     name: 'rumpun_pembelajaran',
-                },
-                {
+                }
+            ];
+
+            @canany(['rumpun pembelajaran edit', 'rumpun pembelajaran delete'])
+                columns.push({
                     data: 'action',
                     name: 'action',
                     orderable: false,
                     searchable: false
-                }
-            ],
+                });
+            @endcanany
+
+            $('#data-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('rumpun-pembelajaran.index') }}",
+                columns: columns,
+            });
         });
     </script>
 @endpush

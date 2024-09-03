@@ -67,7 +67,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('topik/index.close') }}</button>
+                        <button type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">{{ __('topik/index.close') }}</button>
                         <button type="submit" class="btn btn-primary">{{ __('topik/index.submit') }}</button>
                     </div>
                 </form>
@@ -126,7 +127,9 @@
                                             <th>ID</th>
                                             <th>Rumpun pembelajaran</th>
                                             <th>{{ __('topik/index.nama_pembelajaran') }}</th>
-                                            <th>{{ __('topik/index.action') }}</th>
+                                            @canany(['topik edit', 'topik delete'])
+                                                <th>{{ __('Action') }}</th>
+                                            @endcanany
                                         </tr>
                                     </thead>
                                 </table>
@@ -142,12 +145,8 @@
 @push('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.all.min.js"></script>
     <script>
-        $('#data-table').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: "{{ route('topik.index') }}",
-            columns: [
-                {
+        $(document).ready(function() {
+            let columns = [{
                     data: 'id',
                     name: 'id',
                 },
@@ -158,14 +157,24 @@
                 {
                     data: 'nama_topik',
                     name: 'nama_topik',
-                },
-                {
+                }
+            ];
+
+            @canany(['topik edit', 'topik delete'])
+                columns.push({
                     data: 'action',
                     name: 'action',
                     orderable: false,
                     searchable: false
-                }
-            ],
+                });
+            @endcanany
+
+            $('#data-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('topik.index') }}",
+                columns: columns,
+            });
         });
     </script>
 
@@ -219,53 +228,53 @@
         }
     </script>
 
-<script>
-    $(document).on('click', '#downloadFormat', function(event) {
-        event.preventDefault();
-        downloadFormat();
-    });
-
-    var downloadFormat = function() {
-        var url = '../download-format-topik';
-        $.ajax({
-            url: url,
-            type: 'GET',
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-            },
-            data: {},
-            xhrFields: {
-                responseType: 'blob'
-            },
-            beforeSend: function() {
-                Swal.fire({
-                    title: 'Please Wait !',
-                    html: 'Sedang melakukan download format import',
-                    allowOutsideClick: false,
-                    onBeforeOpen: () => {
-                        Swal.showLoading()
-                    },
-                });
-
-            },
-            success: function(data) {
-                var link = document.createElement('a');
-                link.href = window.URL.createObjectURL(data);
-                var nameFile = 'format_import_program_pembelajaran.xlsx'
-                link.download = nameFile;
-                link.click();
-                swal.close()
-            },
-            error: function(data) {
-                console.log(data)
-                Swal.fire({
-                    icon: 'error',
-                    title: "Download Format Import failed",
-                    text: "Please check",
-                    allowOutsideClick: false,
-                })
-            }
+    <script>
+        $(document).on('click', '#downloadFormat', function(event) {
+            event.preventDefault();
+            downloadFormat();
         });
-    }
-</script>
+
+        var downloadFormat = function() {
+            var url = '../download-format-topik';
+            $.ajax({
+                url: url,
+                type: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                },
+                data: {},
+                xhrFields: {
+                    responseType: 'blob'
+                },
+                beforeSend: function() {
+                    Swal.fire({
+                        title: 'Please Wait !',
+                        html: 'Sedang melakukan download format import',
+                        allowOutsideClick: false,
+                        onBeforeOpen: () => {
+                            Swal.showLoading()
+                        },
+                    });
+
+                },
+                success: function(data) {
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(data);
+                    var nameFile = 'format_import_program_pembelajaran.xlsx'
+                    link.download = nameFile;
+                    link.click();
+                    swal.close()
+                },
+                error: function(data) {
+                    console.log(data)
+                    Swal.fire({
+                        icon: 'error',
+                        title: "Download Format Import failed",
+                        text: "Please check",
+                        allowOutsideClick: false,
+                    })
+                }
+            });
+        }
+    </script>
 @endpush
