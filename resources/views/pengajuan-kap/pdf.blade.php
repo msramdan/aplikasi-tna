@@ -219,6 +219,39 @@
         <strong>II. Detail Pembelajaran</strong>
         <table style="font-size:12px; padding:15px;line-height:17px">
             <tr>
+                <td style="vertical-align: top;">{{ __('Metode Pembelajaran') }}</td>
+                <td style="vertical-align: top;">:</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->metodeName ?: '-' }}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td>
+                    <table style="width: 450px; border-collapse: collapse;">
+                        <thead>
+                            <tr>
+                                <th style="background-color: #f2f2f2; ; padding: 2px;text-align: left;">
+                                    Pelaksanaan</th>
+                                <th style="background-color: #f2f2f2; ; padding: 2px;text-align: left;">
+                                    Tanggal Mulai</th>
+                                <th style="background-color: #f2f2f2; ; padding: 2px;text-align: left;">
+                                    Tanggal Selesai</th>
+                            </tr>
+                        </thead>
+                        @foreach ($waktu_pelaksanaan as $row)
+                            <tr>
+                                <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: justify">
+                                    {{ $row->remarkMetodeName }}</td>
+                                <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: justify">
+                                    {{ $row->tanggal_mulai }}</td>
+                                <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: justify">
+                                    {{ $row->tanggal_selesai }}</td>
+                            </tr>
+                        @endforeach
+                    </table>
+                </td>
+            </tr>
+            <tr>
                 <td style="vertical-align: top;">{{ __('Lokasi') }}</td>
                 <td style="vertical-align: top;">:</td>
                 <td style="vertical-align: top;">{{ $pengajuanKap->diklatLocName ?: '-' }}</td>
@@ -257,39 +290,6 @@
                 <td style="vertical-align: top;">{{ __('Jenis Pembelajaran') }}</td>
                 <td style="vertical-align: top;">:</td>
                 <td style="vertical-align: top;">{{ $pengajuanKap->diklatTypeName ?: '-' }}</td>
-            </tr>
-            <tr>
-                <td style="vertical-align: top;">{{ __('Metode Pembelajaran') }}</td>
-                <td style="vertical-align: top;">:</td>
-                <td style="vertical-align: top;">{{ $pengajuanKap->metodeName ?: '-' }}</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td>
-                    <table style="width: 450px; border-collapse: collapse;">
-                        <thead>
-                            <tr>
-                                <th style="background-color: #f2f2f2; ; padding: 2px;text-align: left;">
-                                    Pelaksanaan</th>
-                                <th style="background-color: #f2f2f2; ; padding: 2px;text-align: left;">
-                                    Tanggal Mulai</th>
-                                <th style="background-color: #f2f2f2; ; padding: 2px;text-align: left;">
-                                    Tanggal Selesai</th>
-                            </tr>
-                        </thead>
-                        @foreach ($waktu_pelaksanaan as $row)
-                            <tr>
-                                <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: justify">
-                                    {{ $row->remarkMetodeName }}</td>
-                                <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: justify">
-                                    {{ $row->tanggal_mulai }}</td>
-                                <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: justify">
-                                    {{ $row->tanggal_selesai }}</td>
-                            </tr>
-                        @endforeach
-                    </table>
-                </td>
             </tr>
         </table>
 

@@ -183,7 +183,7 @@
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                 </button>
                                 <div class="invalid-feedback">
-                                    Mohon untuk pilih program pembelajaran
+                                     Mohon untuk pilih program pembelajaran
                                 </div>
                             </div>
                         </div>

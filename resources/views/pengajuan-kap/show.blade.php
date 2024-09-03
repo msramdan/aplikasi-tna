@@ -445,6 +445,35 @@
                                 <div class="tab-pane" id="icon-tabpanel-1" role="tabpanel" aria-labelledby="icon-tab-1">
                                     <table class="table table-hover table-striped table-sm">
                                         <tr>
+                                            <td class="fw-bold">{{ __('Metode Pembelajaran') }}</td>
+                                            <td>{{ $pengajuanKap->metodeName ?: '-' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold"></td>
+                                            <td>
+                                                @if ($waktu_pelaksanaan->isEmpty())
+                                                    <span class="text-muted">-</span>
+                                                @else
+                                                    <table class="table table-striped table-sm">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Pelaksanaan</th>
+                                                                <th scope="col">Tgl Mulai</th>
+                                                                <th scope="col">Tgl Selesai</th>
+                                                            </tr>
+                                                        </thead>
+                                                        @foreach ($waktu_pelaksanaan as $row)
+                                                            <tr>
+                                                                <td>{{ $row->remarkMetodeName ?: '-' }}</td>
+                                                                <td>{{ $row->tanggal_mulai ?: '-' }}</td>
+                                                                <td>{{ $row->tanggal_selesai ?: '-' }}</td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </table>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        <tr>
                                             <td class="fw-bold">{{ __('Lokasi') }}</td>
                                             <td>{{ $pengajuanKap->diklatLocName ?: '-' }}</td>
                                         </tr>
@@ -475,35 +504,6 @@
                                         <tr>
                                             <td class="fw-bold">{{ __('Jenis Pembelajaran') }}</td>
                                             <td>{{ $pengajuanKap->diklatTypeName ?: '-' }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="fw-bold">{{ __('Metode Pembelajaran') }}</td>
-                                            <td>{{ $pengajuanKap->metodeName ?: '-' }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="fw-bold"></td>
-                                            <td>
-                                                @if ($waktu_pelaksanaan->isEmpty())
-                                                    <span class="text-muted">-</span>
-                                                @else
-                                                    <table class="table table-striped table-sm">
-                                                        <thead>
-                                                            <tr>
-                                                                <th scope="col">Pelaksanaan</th>
-                                                                <th scope="col">Tgl Mulai</th>
-                                                                <th scope="col">Tgl Selesai</th>
-                                                            </tr>
-                                                        </thead>
-                                                        @foreach ($waktu_pelaksanaan as $row)
-                                                            <tr>
-                                                                <td>{{ $row->remarkMetodeName ?: '-' }}</td>
-                                                                <td>{{ $row->tanggal_mulai ?: '-' }}</td>
-                                                                <td>{{ $row->tanggal_selesai ?: '-' }}</td>
-                                                            </tr>
-                                                        @endforeach
-                                                    </table>
-                                                @endif
-                                            </td>
                                         </tr>
                                         <tr>
                                             <td class="fw-bold">{{ __('Sumber dana') }}</td>
