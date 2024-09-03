@@ -209,9 +209,8 @@
                         <div class="card-body">
 
                             <div class="col-md-12">
-                                <a href="{{ route('sync-info-diklat.index') }}" class="btn btn-secondary"><i
-                                        class="fa fa-arrow-left" aria-hidden="true"></i>
-                                    {{ __('Back') }}</a>
+                                <a href="{{ route('sync-info-diklat.index') }}" class="btn btn-secondary"><i class="fa fa-arrow-left" aria-hidden="true"></i>
+                                    {{ __('Kembali') }}</a>
                             </div>
                             <br>
                             <ul class="nav nav-tabs" role="tablist">

@@ -42,8 +42,8 @@
                                 'is_bpkp' => $is_bpkp,
                                 'frekuensi' => $frekuensi,
                             ]) }}"
-                                class="btn btn-secondary"><i class="mdi mdi-arrow-left-thin"></i>
-                                {{ __('Back') }}</a>
+                                class="btn btn-secondary"><i class="fa fa-arrow-left" aria-hidden="true"></i>
+                                {{ __('Kembali') }}</a>
                         </div>
                         <div class="card-body">
                             @if ($errors->any())

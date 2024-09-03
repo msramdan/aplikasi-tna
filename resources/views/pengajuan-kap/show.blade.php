@@ -217,7 +217,7 @@
                                     'frekuensi' => $frekuensi,
                                 ]) }}"
                                     class="btn btn-secondary"><i class="fa fa-arrow-left" aria-hidden="true"></i>
-                                    {{ __('Back') }}</a>
+                                    {{ __('Kembali') }}</a>
 
                                 @php
                                     $reviewExistsForUser = reviewExistsForUser();

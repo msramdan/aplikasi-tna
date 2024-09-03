@@ -88,7 +88,7 @@
                                 <div class="mt-3">
                                     <a href="{{ route('tagging-kompetensi-ik', ['type' => $type]) }}"
                                         class="btn btn-secondary">
-                                        <i class="mdi mdi-arrow-left-thin"></i> {{ __('Back') }}
+                                        <i class="fa fa-arrow-left" aria-hidden="true"></i> {{ __('Kembali') }}
                                     </a>
                                     <button type="submit" class="btn btn-primary">
                                         <i class="mdi mdi-content-save"></i> {{ __('Update') }}

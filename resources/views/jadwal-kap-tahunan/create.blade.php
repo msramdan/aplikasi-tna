@@ -36,8 +36,7 @@
 
                                 @include('jadwal-kap-tahunan.include.form')
 
-                                <a href="{{ url()->previous() }}" class="btn btn-secondary"><i
-                                        class="mdi mdi-arrow-left-thin"></i> {{ __('jadwal-kap-tahunan/create.Back') }}</a>
+                                <a href="{{ url()->previous() }}" class="btn btn-secondary"><i class="fa fa-arrow-left" aria-hidden="true"></i> {{ __('jadwal-kap-tahunan/create.Back') }}</a>
 
                                 <button type="submit" class="btn btn-primary"><i class="mdi mdi-content-save"></i>
                                     {{ __('jadwal-kap-tahunan/create.Save') }}</button>

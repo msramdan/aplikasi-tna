@@ -40,8 +40,7 @@
 
                                 @include('roles.include.form')
 
-                                <a href="{{ url()->previous() }}" class="btn btn-secondary"><i
-                                        class="mdi mdi-arrow-left-thin"></i> {{ __('roles/edit.Back') }}</a>
+                                <a href="{{ url()->previous() }}" class="btn btn-secondary"><i class="fa fa-arrow-left" aria-hidden="true"></i> {{ __('roles/edit.Back') }}</a>
 
                                 <button type="submit" class="btn btn-primary"><i class="mdi mdi-content-save"></i>
                                     {{ __('roles/edit.Update') }}</button>

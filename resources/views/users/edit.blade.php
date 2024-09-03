@@ -39,11 +39,9 @@
 
                                 @include('users.include.form')
 
-                                <a href="{{ url()->previous() }}" class="btn btn-secondary"><i
-                                        class="mdi mdi-arrow-left-thin"></i> {{ __('users/edit.Back') }}</a>
+                                <a href="{{ url()->previous() }}" class="btn btn-secondary"><i class="fa fa-arrow-left" aria-hidden="true"></i> Kembali</a>
 
-                                <button type="submit" class="btn btn-primary"> <i class="mdi mdi-content-save"></i>
-                                    {{ __('users/edit.Update') }}</button>
+                                <button type="submit" class="btn btn-primary"> <i class="mdi mdi-content-save"></i> Perbarui</button>
                             </form>
                         </div>
                     </div>
