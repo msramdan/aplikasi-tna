@@ -631,18 +631,18 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('pengajuan-kap.approve', $pengajuanKap->id) }}" method="POST">
+                        <form id="multiStepForm" action="{{ route('pengajuan-kap.approve', $pengajuanKap->id) }}"
+                            method="POST">
                             @csrf
                             @method('PUT')
-
                             @if ($pengajuanKap->current_step == 2)
-                                <div class="form-1">
+                                <div class="form-step form-step-1">
                                     <div class="alert alert-info" role="alert">
                                         Detail Pembelajaran
                                     </div>
                                     <div class="mb-3">
                                         <label for="diklatLocID" class="form-label">{{ __('Lokasi') }}</label>
-                                        <select required class="form-control" name="diklatLocID" id="diklatLocID">
+                                        <select class="form-control" name="diklatLocID" id="diklatLocID">
                                             <option value="" selected disabled>-- Pilih --</option>
                                         </select>
                                     </div>
@@ -651,21 +651,20 @@
                                         <label class="form-label"
                                             for="detail_lokasi">{{ __('Tempat / Alamat Rinci') }}</label>
                                         <input type="text" name="detail_lokasi" id="detail_lokasi"
-                                            class="form-control" required value=""
+                                            class="form-control" value=""
                                             placeholder="{{ __('Tempat / Alamat Rinci') }}" />
                                     </div>
 
                                     <div class="mb-3">
                                         <label class="form-label" for="kelas">{{ __('Jumlah Kelas') }}</label>
                                         <input type="number" name="kelas" id="kelas" class="form-control"
-                                            required value="" placeholder="{{ __('Jumlah Kelas') }}" />
+                                            value="" placeholder="{{ __('Jumlah Kelas') }}" />
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="bentuk_pembelajaran"
                                             class="form-label">{{ __('Bentuk Pembelajaran') }}</label>
-                                        <select class="form-control  @error('bentuk_pembelajaran') is-invalid @enderror"
-                                            name="bentuk_pembelajaran" id="bentuk_pembelajaran">
+                                        <select class="form-control" name="bentuk_pembelajaran" id="bentuk_pembelajaran">
                                             <option value="" selected disabled>-- Pilih --</option>
                                             <option value="Klasikal">Klasikal</option>
                                             <option value="Nonklasikal">Nonklasikal</option>
@@ -675,8 +674,7 @@
                                     <div class="mb-3">
                                         <label for="jalur_pembelajaran"
                                             class="form-label">{{ __('Jalur Pembelajaran') }}</label>
-                                        <select class="form-control  @error('jalur_pembelajaran') is-invalid @enderror"
-                                            name="jalur_pembelajaran" id="jalur_pembelajaran">
+                                        <select class="form-control" name="jalur_pembelajaran" id="jalur_pembelajaran">
                                             <option value="" selected disabled>-- Pilih --</option>
                                         </select>
                                     </div>
@@ -684,8 +682,8 @@
                                     <div class="mb-3">
                                         <label for="jenjang_pembelajaran"
                                             class="form-label">{{ __('Jenjang Pembelajaran') }}</label>
-                                        <select class="form-control  @error('jenjang_pembelajaran') is-invalid @enderror"
-                                            name="jenjang_pembelajaran" id="jenjang_pembelajaran">
+                                        <select class="form-control" name="jenjang_pembelajaran"
+                                            id="jenjang_pembelajaran">
                                             <option value="" selected disabled>-- Pilih --</option>
                                             <option value="CPNS">
                                                 CPNS</option>
@@ -740,14 +738,16 @@
                                     <div class="mb-3">
                                         <label for="diklatTypeID"
                                             class="form-label">{{ __('Jenis Pembelajaran') }}</label>
-                                        <select class="form-control  @error('diklatTypeID') is-invalid @enderror"
-                                            name="diklatTypeID" id="diklatTypeID">
+                                        <select class="form-control" name="diklatTypeID" id="diklatTypeID">
                                             <option value="" selected disabled>-- Pilih --</option>
                                         </select>
                                     </div>
+
+                                    <button type="button" class="btn btn-info btn-next">Next <i
+                                            class="fa fa-arrow-right"></i></button>
                                 </div>
 
-                                <div class="form-2">
+                                <div class="form-step form-step-2" style="display: none;">
                                     <div class="alert alert-info" role="alert">
                                         Peserta dan Fasilitator
                                     </div>
@@ -755,9 +755,8 @@
                                     <div class="mb-3">
                                         <label for="peserta_pembelajaran"
                                             class="form-label">{{ __('Peserta Pembelajaran') }}</label>
-                                        <select
-                                            class="form-control js-example-basic-multiple @error('peserta_pembelajaran') is-invalid @enderror"
-                                            name="peserta_pembelajaran" id="peserta_pembelajaran">
+                                        <select class="form-control" name="peserta_pembelajaran"
+                                            id="peserta_pembelajaran">
                                             <option value="" selected disabled>-- Pilih --
                                             </option>
                                             <option value="Internal">
@@ -795,9 +794,8 @@
                                     <div class="mb-3">
                                         <label for="penyelenggara_pembelajaran"
                                             class="form-label">{{ __('Penyelenggara Pembelajaran') }}</label>
-                                        <select
-                                            class="form-control js-example-basic-multiple @error('penyelenggara_pembelajaran') is-invalid @enderror"
-                                            name="penyelenggara_pembelajaran" id="penyelenggara_pembelajaran">
+                                        <select class="form-control" name="penyelenggara_pembelajaran"
+                                            id="penyelenggara_pembelajaran">
                                             <option value="" selected disabled>-- Pilih --</option>
                                             <option value="Pusdiklatwas BPKP">
                                                 Pusdiklatwas BPKP</option>
@@ -845,10 +843,9 @@
                                                         <td>{{ $i }}</td>
                                                         <td>
                                                             <input type="hidden" name="no_level[]"
-                                                                value="{{ $i }}"
-                                                                class="form-control @error('no_level') is-invalid @enderror" />
+                                                                value="{{ $i }}" class="form-control" />
                                                             <input type="text" name="level_evaluasi_instrumen[]"
-                                                                class="form-control @error('level_evaluasi_instrumen') is-invalid @enderror" />
+                                                                class="form-control" />
                                                         </td>
                                                     </tr>
                                                 @endfor
@@ -856,21 +853,37 @@
                                         </table>
                                     </div>
 
+                                    <button type="button" class="btn btn-info btn-prev"> <i
+                                            class="fa fa-arrow-left"></i>
+                                        Previous</button>
+                                    <button type="button" class="btn btn-info btn-next">Next <i
+                                            class="fa fa-arrow-right"></i></button>
                                 </div>
 
-                                <div class="form-3">
+                                <div class="form-step form-step-3" style="display: none;">
                                     <div class="alert alert-info" role="alert">
                                         Catatan
                                     </div>
 
                                     <div class="mb-3">
-                                        <textarea required class="form-control" id="approveNotes" name="approveNotes" rows="3"></textarea>
+                                        <textarea class="form-control" id="approveNotes" name="approveNotes" rows="3"></textarea>
                                     </div>
+
+                                    <button type="button" class="btn btn-info btn-prev"> <i
+                                            class="fa fa-arrow-left"></i>
+                                        Previous</button>
+                                    <button type="submit" class="btn btn-success"
+                                        style="float: right">{{ __('Submit') }}</button>
                                 </div>
+                            @else
+                                <div class="mb-3">
+                                    <label for="approveNotes" class="form-label">Catatan</label>
+                                    <textarea required class="form-control" id="approveNotes" name="approveNotes" rows="3"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-success"
+                                    style="float: right">{{ __('Submit') }}</button>
                             @endif
-                            <br>
-                            <button type="submit" class="btn btn-success"
-                                style="float: right">{{ __('Submit') }}</button>
+
                         </form>
                     </div>
                 </div>
@@ -911,6 +924,44 @@
                     $('.wizard-content .content').removeClass('active');
                     $('.wizard-content .content').eq(index).addClass('active');
                 });
+            });
+        </script>
+
+        <script>
+            $(document).ready(function() {
+                let currentStep = 1;
+
+                function showStep(step) {
+                    $('.form-step').hide();
+                    $('.form-step-' + step).show();
+                }
+
+                function validateStep(step) {
+                    let isValid = true;
+                    $('.form-step-' + step + ' :input[required]').each(function() {
+                        if (!this.value) {
+                            isValid = false;
+                            $(this).addClass('is-invalid');
+                        } else {
+                            $(this).removeClass('is-invalid');
+                        }
+                    });
+                    return isValid;
+                }
+
+                $('.btn-next').on('click', function() {
+                    if (validateStep(currentStep)) {
+                        currentStep++;
+                        showStep(currentStep);
+                    }
+                });
+
+                $('.btn-prev').on('click', function() {
+                    currentStep--;
+                    showStep(currentStep);
+                });
+
+                showStep(currentStep);
             });
         </script>
     @endpush
