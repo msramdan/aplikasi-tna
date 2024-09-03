@@ -592,9 +592,26 @@
             $('#metodeID').on('change', function() {
                 var value = $(this).val();
                 $('#additional_fields').show();
-                $('#tatap_muka_fields').toggle(value == '1');
-                $('#hybrid_fields').toggle(value == '2');
-                $('#elearning_fields').toggle(value == '4');
+
+                // Reset values and hide fields
+                $('#tatap_muka_fields').hide().find('input').val('').removeAttr('required');
+                $('#hybrid_fields').hide().find('input').val('').removeAttr('required');
+                $('#elearning_fields').hide().find('input').val('').removeAttr('required');
+
+                // Show relevant fields and set required attribute
+                if (value == '1') {
+                    $('#tatap_muka_fields').show().find(
+                        'input[name="tatap_muka_start"], input[name="tatap_muka_end"]').attr('required',
+                        true);
+                } else if (value == '2') {
+                    $('#hybrid_fields').show().find(
+                        'input[name="hybrid_elearning_start"], input[name="hybrid_elearning_end"], input[name="hybrid_tatap_muka_start"], input[name="hybrid_tatap_muka_end"]'
+                        ).attr('required', true);
+                } else if (value == '4') {
+                    $('#elearning_fields').show().find(
+                        'input[name="elearning_start"], input[name="elearning_end"]').attr('required',
+                        true);
+                }
             });
         });
     </script>
@@ -615,11 +632,11 @@
                         select.empty(); // Kosongkan dropdown
                         select.append(
                             '<option value="" disabled selected>-- Pilih --</option>'
-                            );
+                        );
                         data.forEach(function(item) {
                             select.append(
                                 `<option value="${item.id}">${item.rumpun_pembelajaran}</option>`
-                                );
+                            );
                         });
                         validateForm(); // Validasi saat modal ditampilkan
                     },
