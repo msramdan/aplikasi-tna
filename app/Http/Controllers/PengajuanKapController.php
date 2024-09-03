@@ -346,8 +346,8 @@ class PengajuanKapController extends Controller
 
         $kodePembelajaran = $year . $topikId . $newNoUrut;
 
-        DB::beginTransaction();
-        try {
+        // DB::beginTransaction();
+        // try {
             $fasilitator_pembelajaran = $request->input('fasilitator_pembelajaran');
             $fasilitator_pembelajaran_json = empty($fasilitator_pembelajaran) ? null : json_encode($fasilitator_pembelajaran);
             foreach ($validatedData as $key => $value) {
@@ -508,12 +508,12 @@ class PengajuanKapController extends Controller
             DB::commit();
             Alert::toast('Pengajuan KAP berhasil disimpan.', 'success');
             return redirect()->route('pengajuan-kap.index', ['is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi]);
-        } catch (\Exception $e) {
-            DB::rollBack();
-            \Log::error('Error: ' . $e->getMessage());
-            Alert::toast('Pengajuan KAP gagal disimpan.', 'error');
-            return redirect()->route('pengajuan-kap.index', ['is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi]);
-        }
+        // } catch (\Exception $e) {
+        //     DB::rollBack();
+        //     \Log::error('Error: ' . $e->getMessage());
+        //     Alert::toast('Pengajuan KAP gagal disimpan.', 'error');
+        //     return redirect()->route('pengajuan-kap.index', ['is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi]);
+        // }
     }
 
     public function update(Request $request, $id, $is_bpkp, $frekuensi)

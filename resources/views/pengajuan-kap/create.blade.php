@@ -593,10 +593,13 @@
                 var value = $(this).val();
                 $('#additional_fields').show();
 
-                // Reset values and hide fields
-                $('#tatap_muka_fields').hide().find('input').val('').removeAttr('required');
-                $('#hybrid_fields').hide().find('input').val('').removeAttr('required');
-                $('#elearning_fields').hide().find('input').val('').removeAttr('required');
+                // Reset values and hide fields, except for remark_1, remark_2, and remark_3
+                $('#tatap_muka_fields').hide().find('input:not([name="remark_1"])').val('').removeAttr(
+                    'required');
+                $('#hybrid_fields').hide().find('input:not([name="remark_2"], [name="remark_3"])').val('')
+                    .removeAttr('required');
+                $('#elearning_fields').hide().find('input:not([name="remark_4"])').val('').removeAttr(
+                    'required');
 
                 // Show relevant fields and set required attribute
                 if (value == '1') {
