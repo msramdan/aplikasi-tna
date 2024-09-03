@@ -107,7 +107,7 @@
                         @can('topik create')
                             <div class="card-header">
                                 <a href="{{ route('topik.create') }}" class="btn btn-md btn-primary">
-                                    <i class="mdi mdi-plus"></i> {{ __('topik/index.create_new') }}
+                                    <i class="mdi mdi-plus"></i> Tambah program pembelajaran
                                 </a>
                                 <button type="button" class="btn btn-warning" data-bs-toggle="modal"
                                     data-bs-target="#exampleModal">

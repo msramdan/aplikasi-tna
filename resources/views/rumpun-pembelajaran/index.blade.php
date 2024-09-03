@@ -25,7 +25,7 @@
                         @can('rumpun pembelajaran create')
                             <div class="card-header">
                                 <a href="{{ route('rumpun-pembelajaran.create') }}" class="btn btn-md btn-primary"> <i
-                                        class="mdi mdi-plus"></i> {{ __('Create a new rumpun pembelajaran') }}</a>
+                                        class="mdi mdi-plus"></i> {{ __('Tambah rumpun pembelajaran') }}</a>
                             </div>
                         @endcan
 

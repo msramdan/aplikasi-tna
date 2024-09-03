@@ -144,10 +144,10 @@
                         <div class="card-header">
                             <button type="button" class="btn btn-warning" data-bs-toggle="modal"
                                 data-bs-target="#exampleModal">
-                                <i class='fa fa-upload'></i> {{ __('tagging-pembelajaran-kompetensi/index.import') }}
+                                <i class='fa fa-upload'></i> Import data
                             </button>
                             <button id="btnExport" class="btn btn-success">
-                                <i class='fas fa-file-excel'></i> {{ __('tagging-pembelajaran-kompetensi/index.export') }}
+                                <i class='fas fa-file-excel'></i> Export data
                             </button>
                         </div>
 

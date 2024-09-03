@@ -25,7 +25,7 @@
                         <div class="card-header">
                             @can('jadwal kap tahunan create')
                                 <a href="{{ route('jadwal-kap-tahunan.create') }}" class="btn btn-md btn-primary"> <i
-                                        class="mdi mdi-plus"></i> {{ __('jadwal-kap-tahunan/index.Create a new jadwal kap tahunan') }}</a>
+                                        class="mdi mdi-plus"></i> Tambah jadwal KAP Tahunan</a>
                             @endcan
                         </div>
 

@@ -97,7 +97,7 @@
                                     <div class="input-group mb-2">
                                         <button id="sync-selected" class="btn btn-md btn-danger" disabled> <i
                                                 class="fas fa-sync"></i>
-                                            {{ __('Sync Data') }}
+                                            {{ __('Sync data') }}
                                         </button>
                                     </div>
                                 </div>

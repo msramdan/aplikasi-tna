@@ -77,7 +77,7 @@
                             @can('pengajuan kap create')
                                 <a href="{{ route('pengajuan-kap.create', ['is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi]) }}"
                                     class="btn btn-md btn-primary">
-                                    <i class="mdi mdi-plus"></i> {{ __('Create a new Pengusulan Pembelajaran') }}
+                                    <i class="mdi mdi-plus"></i> {{ __('Tambah pengusulan pembelajaran') }}
                                 </a>
                             @endcan
                         </div>

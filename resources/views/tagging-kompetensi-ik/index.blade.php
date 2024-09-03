@@ -146,12 +146,12 @@
                         <div class="card-header">
                             <button type="button" class="btn btn-warning" data-bs-toggle="modal"
                                 data-bs-target="#exampleModal">
-                                <i class='fa fa-upload'></i> Import
+                                <i class='fa fa-upload'></i> Import data
                             </button>
 
                             <button id="btnExport" class="btn btn-success">
                                 <i class='fas fa-file-excel'></i>
-                                {{ __('Export') }}
+                                {{ __('Export data') }}
                             </button>
                         </div>
 

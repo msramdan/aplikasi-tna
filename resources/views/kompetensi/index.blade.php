@@ -161,11 +161,11 @@
                                 <button type="button" class="btn btn-warning" data-bs-toggle="modal"
                                     data-bs-target="#exampleModal">
                                     <i class='fa fa-upload'></i>
-                                    {{ trans('kompetensi/index.import') }}
+                                Import data
                                 </button>
                                 <button id="btnExport" class="btn btn-success">
                                     <i class='fas fa-file-excel'></i>
-                                    {{ trans('kompetensi/index.export') }}
+                                    Export data
                                 </button>
                             </div>
                         @endcan
