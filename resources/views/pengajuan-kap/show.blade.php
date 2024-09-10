@@ -830,7 +830,7 @@
                                         @foreach (['Widyaiswara', 'Instruktur', 'Praktisi', 'Pakar', 'Tutor', 'Coach', 'Mentor', 'Narasumber lainnya'] as $fasilitator)
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox"
-                                                    name="fasilitator_pembelajaran[]" required
+                                                    name="fasilitator_pembelajaran[]"
                                                     id="fasilitator_{{ $fasilitator }}" value="{{ $fasilitator }}">
                                                 <label class="form-check-label" for="fasilitator_{{ $fasilitator }}">
                                                     {{ $fasilitator }}
@@ -846,11 +846,11 @@
                                             value="{{ isset($pengajuanKap) ? $pengajuanKap->sertifikat : old('sertifikat') }}"
                                             placeholder="{{ __('Sertifikat') }}" />
                                     </div>
-
+                                    {{-- ramdan --}}
                                     <div class="mb-3">
                                         <label for="level_evaluasi_instrumen"
                                             class="form-label">{{ __('Level Evaluasi dan Instrumennya') }}</label>
-                                        <table class="table table-bordered table-sm text-center">
+                                        <table id="evaluationTable" class="table table-bordered table-sm text-center">
                                             <thead style="background-color: #cbccce">
                                                 <tr>
                                                     <th>Level</th>
@@ -872,6 +872,7 @@
                                             </tbody>
                                         </table>
                                     </div>
+
 
                                     <button type="button" class="btn btn-info btn-prev"> <i
                                             class="fa fa-arrow-left"></i>
@@ -946,7 +947,6 @@
                 });
             });
         </script>
-
         <script>
             $(document).ready(function() {
                 let currentStep = 1;
@@ -958,6 +958,8 @@
 
                 function validateStep(step) {
                     let isValid = true;
+
+                    // Validate required inputs in the current step
                     $('.form-step-' + step + ' :input[required]').each(function() {
                         if (!this.value) {
                             isValid = false;
@@ -966,6 +968,35 @@
                             $(this).removeClass('is-invalid');
                         }
                     });
+
+                    // Additional validation for the table (step 2)
+                    if (step === 2) {
+                        let filledInputs = 0;
+
+                        // Count how many inputs are filled in the table
+                        $('#evaluationTable input[name="level_evaluasi_instrumen[]"]').each(function() {
+                            if ($(this).val()) {
+                                filledInputs++;
+                            }
+                        });
+
+                        console.log(filledInputs);
+
+
+                        // If at least one input is filled, remove 'required' from all and remove 'is-invalid' class
+                        if (filledInputs > 0) {
+                            $('#evaluationTable input[name="level_evaluasi_instrumen[]"]').each(function() {
+                                $(this).prop('required', false).removeClass('is-invalid');
+                            });
+                        } else {
+                            // If none are filled, mark them all as invalid
+                            isValid = false;
+                            $('#evaluationTable input[name="level_evaluasi_instrumen[]"]').each(function() {
+                                $(this).prop('required', true).addClass('is-invalid');
+                            });
+                        }
+                    }
+
                     return isValid;
                 }
 
