@@ -782,7 +782,37 @@ class PengajuanKapController extends Controller
                         ->update([
                             'status_pengajuan' => 'Approved',
                             'updated_at' => Carbon::now(),
+                            'diklatLocID' => $request->diklatLocID,
+                            'detail_lokasi' => $request->detail_lokasi,
+                            'kelas' => $request->kelas,
+                            'bentuk_pembelajaran' => $request->bentuk_pembelajaran,
+                            'jalur_pembelajaran' => $request->jalur_pembelajaran,
+                            'jenjang_pembelajaran' => $request->jenjang_pembelajaran,
+                            'model_pembelajaran' => $request->model_pembelajaran,
+                            'diklatTypeID' => $request->diklatTypeID,
+                            'peserta_pembelajaran' => $request->peserta_pembelajaran,
+                            'sasaran_peserta' => $request->sasaran_peserta,
+                            'kriteria_peserta' => $request->kriteria_peserta,
+                            'aktivitas_prapembelajaran' => $request->aktivitas_prapembelajaran,
+                            'penyelenggara_pembelajaran' => $request->penyelenggara_pembelajaran,
+                            'sertifikat' => $request->sertifikat,
                         ]);
+
+                    // Insert data into `level_evaluasi_instrumen_kap`
+                    if (isset($request->no_level) && isset($request->level_evaluasi_instrumen)) {
+                        foreach ($request->no_level as $index => $level) {
+                            // Ensure the level_evaluasi_instrumen array has a matching index
+                            if (isset($request->level_evaluasi_instrumen[$index])) {
+                                DB::table('level_evaluasi_instrumen_kap')->insert([
+                                    'pengajuan_kap_id' => $id,  // Assuming $id is the correct pengajuan_kap_id
+                                    'level' => $level,
+                                    'keterangan' => $request->level_evaluasi_instrumen[$index],
+                                    'created_at' => now(),
+                                    'updated_at' => now(),
+                                ]);
+                            }
+                        }
+                    }
 
                     if (setting_web()->otomatis_sync_info_diklat == 'Yes') {
                         $syncResult = syncData($pengajuanKap);
