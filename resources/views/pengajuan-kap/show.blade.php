@@ -824,19 +824,21 @@
                                                 Lainnya</option>
                                         </select>
                                     </div>
-
+                                    {{-- ramdan --}}
                                     <div class="mb-3">
                                         <label class="form-label">{{ __('Fasilitator Pembelajaran') }}</label>
                                         @foreach (['Widyaiswara', 'Instruktur', 'Praktisi', 'Pakar', 'Tutor', 'Coach', 'Mentor', 'Narasumber lainnya'] as $fasilitator)
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox"
-                                                    name="fasilitator_pembelajaran[]"
-                                                    id="fasilitator_{{ $fasilitator }}" value="{{ $fasilitator }}">
-                                                <label class="form-check-label" for="fasilitator_{{ $fasilitator }}">
+                                                <input class="form-check-input facilitator-checkbox" type="checkbox"
+                                                    value="{{ $fasilitator }}" id="invalidCheck_{{ $fasilitator }}">
+                                                <label class="form-check-label" for="invalidCheck_{{ $fasilitator }}">
                                                     {{ $fasilitator }}
                                                 </label>
                                             </div>
                                         @endforeach
+                                        <div class="invalid-feedback d-block" style="display: none;">
+                                            Silakan pilih setidaknya satu fasilitator.
+                                        </div>
                                     </div>
 
                                     <div class="mb-3">
@@ -846,7 +848,6 @@
                                             value="{{ isset($pengajuanKap) ? $pengajuanKap->sertifikat : old('sertifikat') }}"
                                             placeholder="{{ __('Sertifikat') }}" />
                                     </div>
-                                    {{-- ramdan --}}
                                     <div class="mb-3">
                                         <label for="level_evaluasi_instrumen"
                                             class="form-label">{{ __('Level Evaluasi dan Instrumennya') }}</label>
@@ -969,8 +970,9 @@
                         }
                     });
 
-                    // Additional validation for the table (step 2)
+                    // Additional validation for the table and checkboxes (step 2)
                     if (step === 2) {
+                        // Validation for the evaluation table
                         let filledInputs = 0;
 
                         // Count how many inputs are filled in the table
@@ -979,10 +981,6 @@
                                 filledInputs++;
                             }
                         });
-
-                        console.log(filledInputs);
-
-
                         // If at least one input is filled, remove 'required' from all and remove 'is-invalid' class
                         if (filledInputs > 0) {
                             $('#evaluationTable input[name="level_evaluasi_instrumen[]"]').each(function() {
@@ -995,13 +993,31 @@
                                 $(this).prop('required', true).addClass('is-invalid');
                             });
                         }
+
+                        let isAnyCheckboxChecked = false;
+                        $('.facilitator-checkbox').each(function() {
+                            if ($(this).is(':checked')) {
+                                isAnyCheckboxChecked = true;
+                            }
+                        });
+                        if (!isAnyCheckboxChecked) {
+                            isValid = false;
+                            $('.facilitator-checkbox').addClass('is-invalid');
+                            $('.invalid-feedback').show();
+                        } else {
+                            $('.facilitator-checkbox').removeClass('is-invalid');
+                            $('.invalid-feedback').hide();
+                        }
                     }
 
                     return isValid;
                 }
 
+
                 $('.btn-next').on('click', function() {
                     if (validateStep(currentStep)) {
+                        console.log('next');
+
                         currentStep++;
                         showStep(currentStep);
                     }
