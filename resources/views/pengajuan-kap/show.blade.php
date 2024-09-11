@@ -805,7 +805,7 @@
                                         <select class="form-control" name="penyelenggara_pembelajaran" required
                                             id="penyelenggara_pembelajaran">
                                             <option value="" disabled>-- Pilih --</option>
-                                            @foreach (['Pusdiklatwas', 'Pusdiklat PKN', 'Pusdiklat Belanegara', 'Pusdiklat Anggaran', 'Pusdiklat PSDM', 'Kantor Pusat'] as $penyelenggara)
+                                            @foreach (['Pusdiklatwas BPKP', 'Unit kerja', 'Lainnya'] as $penyelenggara)
                                                 <option value="{{ $penyelenggara }}"
                                                     {{ isset($pengajuanKap) && $pengajuanKap->penyelenggara_pembelajaran == $penyelenggara ? 'selected' : '' }}>
                                                     {{ $penyelenggara }}
@@ -843,8 +843,7 @@
                                             placeholder="{{ __('Sertifikat') }}" />
                                     </div>
                                     <div class="mb-3">
-                                        <label for="level_evaluasi_instrumen"
-                                            class="form-label">{{ __('Level Evaluasi dan Instrumennya') }}</label>
+                                        <label for="level_evaluasi_instrumen" class="form-label">{{ __('Level Evaluasi dan Instrumennya') }}</label>
                                         <table id="evaluationTable" class="table table-bordered table-sm text-center">
                                             <thead style="background-color: #cbccce">
                                                 <tr>
@@ -854,19 +853,23 @@
                                             </thead>
                                             <tbody>
                                                 @for ($i = 1; $i <= 5; $i++)
+                                                    @php
+                                                        // Temukan data keterangan untuk level saat ini
+                                                        $instrumen = $level_evaluasi_instrumen_kap->firstWhere('level', $i);
+                                                        $keteranganValue = $instrumen ? $instrumen->keterangan : ''; // Jika ada, ambil nilai keterangan
+                                                    @endphp
                                                     <tr>
                                                         <td>{{ $i }}</td>
                                                         <td>
-                                                            <input type="hidden" name="no_level[]"
-                                                                value="{{ $i }}" class="form-control" />
-                                                            <input type="text" required
-                                                                name="level_evaluasi_instrumen[]" class="form-control" />
+                                                            <input type="hidden" name="no_level[]" value="{{ $i }}" class="form-control" />
+                                                            <input type="text" required name="level_evaluasi_instrumen[]" class="form-control" value="{{ $keteranganValue }}" />
                                                         </td>
                                                     </tr>
                                                 @endfor
                                             </tbody>
                                         </table>
                                     </div>
+
 
                                     <button type="button" class="btn btn-info btn-prev"> <i
                                             class="fa fa-arrow-left"></i>

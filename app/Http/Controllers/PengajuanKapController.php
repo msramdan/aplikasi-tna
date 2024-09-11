@@ -833,15 +833,32 @@ class PengajuanKapController extends Controller
 
                     if (isset($request->no_level) && isset($request->level_evaluasi_instrumen)) {
                         foreach ($request->no_level as $index => $level) {
-                            // Ensure the level_evaluasi_instrumen array has a matching index
+                            // Pastikan bahwa array level_evaluasi_instrumen memiliki index yang sesuai
                             if (isset($request->level_evaluasi_instrumen[$index])) {
-                                DB::table('level_evaluasi_instrumen_kap')->insert([
-                                    'pengajuan_kap_id' => $id,  // Assuming $id is the correct pengajuan_kap_id
-                                    'level' => $level,
-                                    'keterangan' => $request->level_evaluasi_instrumen[$index],
-                                    'created_at' => now(),
-                                    'updated_at' => now(),
-                                ]);
+                                // Periksa apakah data sudah ada di database
+                                $existingRecord = DB::table('level_evaluasi_instrumen_kap')
+                                    ->where('pengajuan_kap_id', $id)
+                                    ->where('level', $level)
+                                    ->first();
+
+                                if ($existingRecord) {
+                                    // Jika ada, lakukan update
+                                    DB::table('level_evaluasi_instrumen_kap')
+                                        ->where('id', $existingRecord->id)
+                                        ->update([
+                                            'keterangan' => $request->level_evaluasi_instrumen[$index],
+                                            'updated_at' => now(),
+                                        ]);
+                                } else {
+                                    // Jika tidak ada, lakukan insert
+                                    DB::table('level_evaluasi_instrumen_kap')->insert([
+                                        'pengajuan_kap_id' => $id,
+                                        'level' => $level,
+                                        'keterangan' => $request->level_evaluasi_instrumen[$index],
+                                        'created_at' => now(),
+                                        'updated_at' => now(),
+                                    ]);
+                                }
                             }
                         }
                     }
