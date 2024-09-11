@@ -652,7 +652,7 @@
                                                 </option>
                                             @endforeach
                                         </select>
-                                        <input type="text" name="diklatLocName" id="diklatLocName"
+                                        <input type="hidden" name="diklatLocName" id="diklatLocName"
                                             value="{{ isset($pengajuanKap) ? $pengajuanKap->diklatLocName : '' }}">
                                     </div>
 
@@ -815,17 +815,17 @@
                                     </div>
 
 
-
-
-
-
                                     <div class="mb-3">
                                         <label class="form-label">{{ __('Fasilitator Pembelajaran') }}</label>
                                         @foreach (['Widyaiswara', 'Instruktur', 'Praktisi', 'Pakar', 'Tutor', 'Coach', 'Mentor', 'Narasumber lainnya'] as $fasilitator)
                                             <div class="form-check">
-                                                <input class="form-check-input facilitator-checkbox" type="checkbox"
-                                                    name="fasilitator_pembelajaran[]" value="{{ $fasilitator }}"
-                                                    id="invalidCheck_{{ $fasilitator }}">
+                                                <input
+                                                    class="form-check-input facilitator-checkbox"
+                                                    type="checkbox"
+                                                    name="fasilitator_pembelajaran[]"
+                                                    value="{{ $fasilitator }}"
+                                                    id="invalidCheck_{{ $fasilitator }}"
+                                                    {{ in_array($fasilitator, $fasilitator_selected) ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="invalidCheck_{{ $fasilitator }}">
                                                     {{ $fasilitator }}
                                                 </label>
@@ -867,7 +867,6 @@
                                             </tbody>
                                         </table>
                                     </div>
-
 
                                     <button type="button" class="btn btn-info btn-prev"> <i
                                             class="fa fa-arrow-left"></i>

@@ -608,6 +608,7 @@ class PengajuanKapController extends Controller
 
     public function show($id, $is_bpkp, $frekuensi)
     {
+
         $pengajuanKap = DB::table('pengajuan_kap')
             ->select(
                 'pengajuan_kap.*',
@@ -720,9 +721,11 @@ class PengajuanKapController extends Controller
                 'Magang/praktik kerja'
             ];
         }
+        $fasilitator_selected = json_decode($pengajuanKap->fasilitator_pembelajaran, true) ?? [];
 
         return view('pengajuan-kap.show', [
             'pengajuanKap' => $pengajuanKap,
+            'fasilitator_selected' => $fasilitator_selected,
             'logReviews' => $logReviews,
             'level_evaluasi_instrumen_kap' => $level_evaluasi_instrumen_kap,
             'indikator_keberhasilan_kap' => $indikator_keberhasilan_kap,
@@ -842,8 +845,6 @@ class PengajuanKapController extends Controller
                             }
                         }
                     }
-
-
                 }
             }
             DB::commit();
