@@ -741,6 +741,9 @@ class PengajuanKapController extends Controller
 
     public function approve(Request $request, $id)
     {
+        // ramdan
+        // dd($request);
+
         DB::beginTransaction();
         $syncResult = null;
 
@@ -798,6 +801,8 @@ class PengajuanKapController extends Controller
                             ]);
                     }
                 } else {
+                    $fasilitator_pembelajaran = $request->input('fasilitator_pembelajaran');
+                    $fasilitator_pembelajaran_json = empty($fasilitator_pembelajaran) ? null : json_encode($fasilitator_pembelajaran);
                     DB::table('pengajuan_kap')
                         ->where('id', $id)
                         ->update([
@@ -805,6 +810,7 @@ class PengajuanKapController extends Controller
                             'status_pengajuan' => 'Process',
                             'updated_at' => Carbon::now(),
                             'diklatLocID' => $request->diklatLocID,
+                            'diklatLocName' => $request->diklatLocName,
                             'detail_lokasi' => $request->detail_lokasi,
                             'kelas' => $request->kelas,
                             'bentuk_pembelajaran' => $request->bentuk_pembelajaran,
@@ -812,12 +818,14 @@ class PengajuanKapController extends Controller
                             'jenjang_pembelajaran' => $request->jenjang_pembelajaran,
                             'model_pembelajaran' => $request->model_pembelajaran,
                             'diklatTypeID' => $request->diklatTypeID,
+                            'diklatTypeName' => $request->diklatTypeName,
                             'peserta_pembelajaran' => $request->peserta_pembelajaran,
                             'sasaran_peserta' => $request->sasaran_peserta,
                             'kriteria_peserta' => $request->kriteria_peserta,
                             'aktivitas_prapembelajaran' => $request->aktivitas_prapembelajaran,
                             'penyelenggara_pembelajaran' => $request->penyelenggara_pembelajaran,
                             'sertifikat' => $request->sertifikat,
+                            'fasilitator_pembelajaran' => $fasilitator_pembelajaran_json
                         ]);
 
                     if (isset($request->no_level) && isset($request->level_evaluasi_instrumen)) {
@@ -834,6 +842,8 @@ class PengajuanKapController extends Controller
                             }
                         }
                     }
+
+
                 }
             }
             DB::commit();

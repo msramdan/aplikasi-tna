@@ -651,6 +651,8 @@
                                                 </option>
                                             @endforeach
                                         </select>
+                                        <input type="hidden" name="diklatLocName" id="diklatLocName"
+                                        value="">
                                     </div>
 
                                     <div class="mb-3">
@@ -761,6 +763,9 @@
                                             @endforeach
 
                                         </select>
+
+                                        <input type="hidden" name="diklatTypeName" id="diklatTypeName" value="">
+
                                     </div>
                                     <button type="button" class="btn btn-info btn-next">Next <i
                                             class="fa fa-arrow-right"></i></button>
@@ -824,13 +829,13 @@
                                                 Lainnya</option>
                                         </select>
                                     </div>
-                                    {{-- ramdan --}}
                                     <div class="mb-3">
                                         <label class="form-label">{{ __('Fasilitator Pembelajaran') }}</label>
                                         @foreach (['Widyaiswara', 'Instruktur', 'Praktisi', 'Pakar', 'Tutor', 'Coach', 'Mentor', 'Narasumber lainnya'] as $fasilitator)
                                             <div class="form-check">
                                                 <input class="form-check-input facilitator-checkbox" type="checkbox"
-                                                    value="{{ $fasilitator }}" id="invalidCheck_{{ $fasilitator }}">
+                                                    name="fasilitator_pembelajaran[]" value="{{ $fasilitator }}"
+                                                    id="invalidCheck_{{ $fasilitator }}">
                                                 <label class="form-check-label" for="invalidCheck_{{ $fasilitator }}">
                                                     {{ $fasilitator }}
                                                 </label>
@@ -1029,6 +1034,32 @@
                 });
 
                 showStep(currentStep);
+            });
+        </script>
+
+        <script>
+            $(document).ready(function() {
+                function updateDiklatTypeName() {
+                    var selectedOption = $('#diklatTypeID option:selected');
+                    var diklatTypeName = selectedOption.data('diklattypename');
+                    $('#diklatTypeName').val(diklatTypeName);
+                }
+                $('#diklatTypeID').on('change', function() {
+                    updateDiklatTypeName();
+                });
+                updateDiklatTypeName();
+            });
+
+            $(document).ready(function() {
+                function updateDiklatLocName() {
+                    var selectedOption = $('#diklatLocID option:selected');
+                    var diklatLocName = selectedOption.data('diklatlocname');
+                    $('#diklatLocName').val(diklatLocName);
+                }
+                $('#diklatLocID').on('change', function() {
+                    updateDiklatLocName();
+                });
+                updateDiklatLocName();
             });
         </script>
     @endpush
