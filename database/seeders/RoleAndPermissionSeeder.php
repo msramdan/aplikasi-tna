@@ -51,7 +51,7 @@ class RoleAndPermissionSeeder extends Seeder
             $roleAdminUnit->givePermissionTo($x);
         }
 
-        // User biasa
+        // User biasa / default user pertama login
         $roleUser = Role::create([
             'name' => 'User'
         ]);
@@ -65,6 +65,42 @@ class RoleAndPermissionSeeder extends Seeder
         ];
         foreach ($permissionUser as $y) {
             $roleUser->givePermissionTo($y);
+        }
+
+        // User Admin Pusbin JFA
+        $roleAdminPusbinJFA = Role::create([
+            'name' => 'Admin Pusbin JFA'
+        ]);
+        $permissionAdminPusbinJFA = [
+            'kalender pembelajaran view',
+            'pengajuan kap view',
+            'pengajuan kap tahunan bpkp',
+            'pengajuan kap tahunan non bpkp',
+            'pengajuan kap insidentil bpkp',
+            'kompetensi view',
+            'topik view',
+            'rumpun pembelajaran view',
+            'nomenklatur pembelajaran view'
+        ];
+        foreach ($permissionAdminPusbinJFA as $y) {
+            $roleAdminPusbinJFA->givePermissionTo($y);
+        }
+
+        // User Admin APIP
+        $roleAdminAPIP = Role::create([
+            'name' => 'Admin APIP'
+        ]);
+        $permissionAdminAPIP = [
+            'kalender pembelajaran view',
+            'pengajuan kap view',
+            'kompetensi view',
+            'topik view',
+            'rumpun pembelajaran view',
+            'nomenklatur pembelajaran view',
+            'pengajuan kap insidentil non bpkp'
+        ];
+        foreach ($permissionAdminAPIP as $y) {
+            $roleAdminAPIP->givePermissionTo($y);
         }
     }
 }
