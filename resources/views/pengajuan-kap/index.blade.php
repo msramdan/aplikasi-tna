@@ -74,16 +74,39 @@
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="card-header">
-                            @can('pengajuan kap create')
-                                <a href="{{ route('pengajuan-kap.create', ['is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi]) }}"
-                                    class="btn btn-md btn-primary">
-                                    <i class="mdi mdi-plus"></i> {{ __('Tambah pengusulan pembelajaran') }}
-                                </a>
-                            @endcan
+                            @if ($is_bpkp == 'BPKP' && $frekuensi == 'Tahunan')
+                                @can('pengajuan kap tahunan bpkp')
+                                    <a href="{{ route('pengajuan-kap.create', ['is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi]) }}"
+                                        class="btn btn-md btn-primary">
+                                        <i class="mdi mdi-plus"></i> {{ __('Tambah pengusulan pembelajaran') }}
+                                    </a>
+                                @endcan
+                            @elseif($is_bpkp == 'Non BPKP' && $frekuensi == 'Tahunan')
+                                @can('pengajuan kap tahunan non bpkp')
+                                    <a href="{{ route('pengajuan-kap.create', ['is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi]) }}"
+                                        class="btn btn-md btn-primary">
+                                        <i class="mdi mdi-plus"></i> {{ __('Tambah pengusulan pembelajaran') }}
+                                    </a>
+                                @endcan
+                            @elseif($is_bpkp == 'BPKP' && $frekuensi == 'Insidentil')
+                                @can('pengajuan kap insidentil bpkp')
+                                    <a href="{{ route('pengajuan-kap.create', ['is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi]) }}"
+                                        class="btn btn-md btn-primary">
+                                        <i class="mdi mdi-plus"></i> {{ __('Tambah pengusulan pembelajaran') }}
+                                    </a>
+                                @endcan
+                            @elseif($is_bpkp == 'Non BPKP' && $frekuensi == 'Insidentil')
+                                @can('pengajuan kap insidentil non bpkp')
+                                    <a href="{{ route('pengajuan-kap.create', ['is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi]) }}"
+                                        class="btn btn-md btn-primary">
+                                        <i class="mdi mdi-plus"></i> {{ __('Tambah pengusulan pembelajaran') }}
+                                    </a>
+                                @endcan
+                            @endif
                         </div>
 
-                        <div class="card-body">
 
+                        <div class="card-body">
                             <div class="row">
                                 <div class="col-md-2">
                                     <div class="input-group mb-2">

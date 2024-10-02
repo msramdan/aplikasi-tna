@@ -19,7 +19,8 @@ return new class extends Migration
             $table->foreignId('kategori_kompetensi_id')->nullable()->constrained('kategori_kompetensi')->restrictOnUpdate()->nullOnDelete();
             $table->foreignId('akademi_id')->nullable()->constrained('akademi')->restrictOnUpdate()->nullOnDelete();
             $table->string('nama_kompetensi', 255);
-			$table->text('deskripsi_kompetensi');
+			$table->text('deskripsi_kompetensi')->nullable();
+            $table->enum('is_apip', ['Yes', 'No'])->default('No'); // Tambahan field is_apip
             $table->timestamps();
         });
     }

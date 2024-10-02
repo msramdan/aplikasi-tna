@@ -41,9 +41,19 @@ class KompetensiController extends Controller
 
             return DataTables::of($kompetensi)
                 ->addIndexColumn()
-                ->addColumn('deskripsi_kompetensi', function ($row) {
-                    return str($row->deskripsi_kompetensi)->limit(100);
+                ->addColumn('nama_kelompok_besar', function ($row) {
+                    return $row->nama_kelompok_besar ? $row->nama_kelompok_besar : '-';
                 })
+                ->addColumn('nama_kategori_kompetensi', function ($row) {
+                    return $row->nama_kategori_kompetensi ? $row->nama_kategori_kompetensi : '-';
+                })
+                ->addColumn('nama_akademi', function ($row) {
+                    return $row->nama_akademi ? $row->nama_akademi : '-';
+                })
+                ->addColumn('deskripsi_kompetensi', function ($row) {
+                    return $row->deskripsi_kompetensi ? str($row->deskripsi_kompetensi)->limit(100) : '-';
+                })
+
                 ->addColumn('action', 'kompetensi.include.action')
                 ->toJson();
         }

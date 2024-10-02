@@ -183,7 +183,7 @@ return [
         ['group' => 'rumpun pembelajaran', 'access' => ['rumpun pembelajaran view', 'rumpun pembelajaran create', 'rumpun pembelajaran edit', 'rumpun pembelajaran delete']],
         ['group' => 'topik', 'access' => ['topik view', 'topik create', 'topik edit', 'topik delete']],
         ['group' => 'jadwal kap tahunan', 'access' => ['jadwal kap tahunan view', 'jadwal kap tahunan create', 'jadwal kap tahunan edit', 'jadwal kap tahunan delete']],
-        ['group' => 'pengajuan kap', 'access' => ['pengajuan kap view', 'pengajuan kap create', 'pengajuan kap edit', 'pengajuan kap delete', 'pengajuan kap skiped']],
+        ['group' => 'pengajuan kap', 'access' => ['pengajuan kap view', 'pengajuan kap tahunan bpkp','pengajuan kap tahunan non bpkp','pengajuan kap insidentil bpkp','pengajuan kap insidentil non bpkp', 'pengajuan kap edit', 'pengajuan kap delete', 'pengajuan kap skiped']],
         ['group' => 'config step review', 'access' => ['config step review view', 'config step review edit']],
         ['group' => 'nomenklatur pembelajaran', 'access' => ['nomenklatur pembelajaran view', 'nomenklatur pembelajaran edit']],
         ['group' => 'setting apps', 'access' => ['setting app view', 'setting app edit']],
