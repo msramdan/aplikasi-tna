@@ -19,7 +19,9 @@ class ReferencesKompetensi implements FromView, ShouldAutoSize, WithEvents, With
 
     public function view(): View
     {
-        $data = Kompetensi::orderBy('id', 'desc')->get();
+        $data = Kompetensi::where('is_apip', '!=', 'Yes')
+            ->orderBy('id', 'desc')
+            ->get();
         return view('tagging-pembelajaran-kompetensi.references_kompetensi', [
             'data' => $data
         ]);

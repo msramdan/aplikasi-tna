@@ -17,7 +17,7 @@ class PengajuanKapController extends Controller
     public function __construct()
     {
         $this->middleware('permission:pengajuan kap view')->only('index', 'show');
-        $this->middleware('permission:pengajuan kap create')->only('create', 'store');
+        // $this->middleware('permission:pengajuan kap create')->only('create', 'store');
         $this->middleware('permission:pengajuan kap edit')->only('edit', 'update');
         $this->middleware('permission:pengajuan kap delete')->only('destroy');
     }

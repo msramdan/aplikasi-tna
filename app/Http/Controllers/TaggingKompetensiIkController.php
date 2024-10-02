@@ -38,9 +38,9 @@ class TaggingKompetensiIkController extends Controller
                     DB::raw('COUNT(tagging_kompetensi_ik.id) as jumlah_tagging'),
                     DB::raw('MIN(tagging_kompetensi_ik.id) as tagging_kompetensi_ik_id')
                 )
+                ->where('kompetensi.is_apip', '!=', 'Yes') // Tambahkan kondisi where di sini
                 ->groupBy('kompetensi.id')
                 ->get();
-
             return DataTables::of($taggingKompetensiIk)
                 ->addIndexColumn()
                 ->addColumn('jumlah_tagging', function ($row) {
@@ -81,7 +81,6 @@ class TaggingKompetensiIkController extends Controller
             'renstra' => '/simaren/ref-indikator-kinerja-es2',
             'app'     => '/simaren/ref-topik-app',
             'apep'    => '/simaren/ref-topik-apep',
-            'apip'    => '/simaren/ref-topik-apep',
         ];
 
         if (!array_key_exists($type, $endpoints)) {

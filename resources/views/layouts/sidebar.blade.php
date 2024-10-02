@@ -98,11 +98,11 @@
                                                     class="nav-link {{ (request()->segment(1) === 'tagging-kompetensi-ik' && request()->segment(2) === 'apep') || (request()->segment(1) === 'tagging-kompetensi-ik' && request()->segment(3) === 'apep') ? 'active' : '' }}"
                                                     data-key="t-level-2.1">{{ __('sidebar.apep') }}</a>
                                             </li>
-                                            <li class="nav-item">
+                                            {{-- <li class="nav-item">
                                                 <a href="{{ route('tagging-kompetensi-ik', ['type' => 'apip']) }}"
                                                     class="nav-link {{ (request()->segment(1) === 'tagging-kompetensi-ik' && request()->segment(2) === 'apip') || (request()->segment(1) === 'tagging-kompetensi-ik' && request()->segment(3) === 'apip') ? 'active' : '' }}"
                                                     data-key="t-level-2.1">{{ __('sidebar.apip') }}</a>
-                                            </li>
+                                            </li> --}}
                                         </ul>
                                     </div>
                                 </li>
