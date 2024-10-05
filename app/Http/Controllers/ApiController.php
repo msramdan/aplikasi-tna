@@ -158,4 +158,27 @@ class ApiController extends Controller
             return response()->json(['message' => $e->getMessage()], 500);
         }
     }
+
+    public function getKompetensiApip(Request $request)
+    {
+        try {
+            $kompetensiData = DB::table('kompetensi')
+                ->select('id as id_kompetensi', 'nama_kompetensi')
+                ->where('is_apip', 'Yes')
+                ->get();
+
+            // Prepare array data with 'target' and 'capaian' as placeholders
+            $data = $kompetensiData->map(function ($item) {
+                return [
+                    'id_kompetensi' => $item->id_kompetensi,
+                    'nama_kompetensi' => $item->nama_kompetensi,
+                    'target' => null,
+                    'capaian' => null,
+                ];
+            });
+            return response()->json(['data' => $data]);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
+    }
 }

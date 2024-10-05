@@ -11,10 +11,10 @@ return new class extends Migration
         Schema::create('gap_kompetensi_pengajuan_kap', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('pengajuan_kap_id');
-            $table->integer('total_pegawai');
-            $table->integer('pegawai_kompeten');
-            $table->integer('pegawai_belum_kompeten');
-            $table->integer('persentase_kompetensi');
+            $table->integer('total_pegawai')->nullable();
+            $table->integer('pegawai_kompeten')->nullable();
+            $table->integer('pegawai_belum_kompeten')->nullable();
+            $table->integer('persentase_kompetensi')->nullable();
             $table->timestamps();
             $table->foreign('pengajuan_kap_id')->references('id')->on('pengajuan_kap')->onDelete('cascade');
         });

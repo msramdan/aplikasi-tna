@@ -195,14 +195,14 @@ class PengajuanKapController extends Controller
             return redirect()->back();
         }
 
-        return view('pengajuan-kap.create', [
+        return view($is_bpkp == 'BPKP' ? 'pengajuan-kap.create' : 'pengajuan-kap.create-apip', [
             'is_bpkp' => $is_bpkp,
             'frekuensi' => $frekuensi,
             'jenis_program' => $jenis_program,
             'jalur_pembelajaran' => $jalur_pembelajaran,
             'metode_data' => $metode_data,
             'diklatType_data' => $diklatType_data,
-            'diklatLocation_data' => $diklatLocation_data, // Menambahkan data lokasi
+            'diklatLocation_data' => $diklatLocation_data,
         ]);
     }
 
@@ -282,7 +282,7 @@ class PengajuanKapController extends Controller
     {
         $validatedData = $request->validate([
             'jenis_program' => 'required|in:Renstra,APP,APEP,APIP',
-            'indikator_kinerja' => 'required|string',
+            'indikator_kinerja' => 'string',
             'kompetensi_id' => 'nullable|exists:kompetensi,id',
             'topik_id' => 'nullable|exists:topik,id',
             'judul' => 'required|string',
@@ -368,7 +368,7 @@ class PengajuanKapController extends Controller
                 'institusi_sumber' => $is_bpkp,
                 'jenis_program' => $validatedData['jenis_program'],
                 'frekuensi_pelaksanaan' => $frekuensi,
-                'indikator_kinerja' => $validatedData['indikator_kinerja'],
+                'indikator_kinerja' => isset($validatedData['indikator_kinerja']) ? $validatedData['indikator_kinerja'] : null,
                 'kompetensi_id' => $validatedData['kompetensi_id'],
                 'topik_id' => $validatedData['topik_id'],
                 'judul' => $validatedData['judul'],
@@ -451,10 +451,10 @@ class PengajuanKapController extends Controller
             // insert table gap_kompetensi_pengajuan_kap
             DB::table('gap_kompetensi_pengajuan_kap')->insert([
                 'pengajuan_kap_id' => $pengajuanKapId,
-                'total_pegawai' => $request->total_pegawai,
-                'pegawai_kompeten' => $request->pegawai_kompeten,
-                'pegawai_belum_kompeten' => $request->pegawai_belum_kompeten,
-                'persentase_kompetensi' => $request->persentase_kompetensi,
+                'total_pegawai' => $request->total_pegawai ?? 0,
+                'pegawai_kompeten' => $request->pegawai_kompeten ?? 0,
+                'pegawai_belum_kompeten' => $request->pegawai_belum_kompeten ?? 0,
+                'persentase_kompetensi' => $request->persentase_kompetensi ?? 0,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
@@ -744,8 +744,6 @@ class PengajuanKapController extends Controller
 
     public function approve(Request $request, $id)
     {
-        // ramdan
-        // dd($request);
 
         DB::beginTransaction();
         $syncResult = null;
