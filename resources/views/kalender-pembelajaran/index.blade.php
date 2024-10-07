@@ -241,11 +241,15 @@
                         var tableBody = $('#data-table tbody');
                         tableBody.empty();
                         $.each(data, function(index, event) {
+                            var endDate = moment(event.end.split('T')[0]).subtract(1, 'days')
+                                .format('YYYY-MM-DD'); // Mengurangi 1 hari dari event.end
                             tableBody.append('<tr><td>' + (index + 1) + '</td><td>' + event
-                                .start.split('T')[0] + ' - ' + event.end.split('T')[0] +
-                                '</td><td>' + event.remarkMetodeName + '</td><td>' + event
-                                .title + '</td></tr>');
+                                .start.split('T')[0] +
+                                ' - ' + endDate + '</td><td>' + event.remarkMetodeName +
+                                '</td><td>' + event.title +
+                                '</td></tr>');
                         });
+
                         hideLoading();
                     },
                     error: function(xhr, status, error) {
@@ -282,7 +286,8 @@
                         $('#eventFrekuensi').text(info.event.extendedProps.frekuensi_pelaksanaan);
                         $('#eventTitle').text(info.event.title);
                         $('#eventDateStart').text(moment(info.event.start).format("YYYY-MM-DD"));
-                        $('#eventDateEnd').text(moment(info.event.end).format("YYYY-MM-DD"));
+                        $('#eventDateEnd').text(moment(info.event.end).subtract(1, 'days').format(
+                            "YYYY-MM-DD"));
                         $('#eventDescription').text(info.event.extendedProps.description);
                         var modal = new bootstrap.Modal(document.getElementById('eventModal'));
                         modal.show();
@@ -320,8 +325,6 @@
             initializeCalendar(initialYear, initialWaktuPelaksanaan, initialSumberDana, initialTopik);
         });
     </script>
-
-
 
     <script>
         $(document).on('click', '#btnExport', function(event) {
