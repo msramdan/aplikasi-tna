@@ -243,7 +243,8 @@
                         $.each(data, function(index, event) {
                             tableBody.append('<tr><td>' + (index + 1) + '</td><td>' + event
                                 .start.split('T')[0] + ' - ' + event.end.split('T')[0] +
-                                '</td><td>' + event.remarkMetodeName + '</td><td>' + event.title + '</td></tr>');
+                                '</td><td>' + event.remarkMetodeName + '</td><td>' + event
+                                .title + '</td></tr>');
                         });
                         hideLoading();
                     },
@@ -257,6 +258,10 @@
             function initializeCalendar(year, waktu_pelaksanaan, sumber_dana, topik) {
                 var startOfYear = moment(year + '-01-01').format('YYYY-MM-DD');
                 var endOfYear = moment(year + '-12-31').format('YYYY-MM-DD');
+
+                if (calendar) {
+                    calendar.destroy(); // Destroy existing calendar before reinitializing
+                }
 
                 calendar = new FullCalendar.Calendar(calendarEl, {
                     initialView: 'dayGridMonth',
@@ -291,8 +296,7 @@
 
             function updateURL(year, waktu_pelaksanaan, sumber_dana, topik) {
                 var newUrl = '{{ url('/kalender-pembelajaran') }}/' + year + '/' + waktu_pelaksanaan + '/' +
-                    sumber_dana +
-                    '/' + topik;
+                    sumber_dana + '/' + topik;
                 window.history.replaceState({
                     path: newUrl
                 }, '', newUrl);
@@ -303,7 +307,8 @@
                 var selectedWaktuPelaksanaan = $('#waktu_pelaksanaan').val();
                 var selectedSumberDana = $('#sumber_dana').val();
                 var selectedTopik = $('#topik').val();
-                fetchEvents(selectedYear, selectedWaktuPelaksanaan, selectedSumberDana, selectedTopik);
+                initializeCalendar(selectedYear, selectedWaktuPelaksanaan, selectedSumberDana,
+                    selectedTopik); // Reinitialize calendar
                 updateURL(selectedYear, selectedWaktuPelaksanaan, selectedSumberDana, selectedTopik);
             });
 
@@ -315,6 +320,8 @@
             initializeCalendar(initialYear, initialWaktuPelaksanaan, initialSumberDana, initialTopik);
         });
     </script>
+
+
 
     <script>
         $(document).on('click', '#btnExport', function(event) {
