@@ -70,5 +70,6 @@ class Kernel extends HttpKernel
         'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
         'check.maintenance' => \App\Http\Middleware\CheckMaintenanceMode::class,
         'redirect.if.not.maintenance' => \App\Http\Middleware\RedirectIfNotMaintenance::class,
+        'api_key' => \App\Http\Middleware\ApiKeyMiddleware::class,
     ];
 }
