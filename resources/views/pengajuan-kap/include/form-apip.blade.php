@@ -1,3 +1,4 @@
+
 <div class="modal fade" id="kompetensiModal" tabindex="-1" aria-labelledby="kompetensiModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
@@ -52,6 +53,7 @@
         </div>
     </div>
 </div>
+
 
 <div id="smartwizard" dir="" class="sw sw-theme-arrows sw-justified">
     <ul class="nav nav-progress">
@@ -110,7 +112,7 @@
                         class="form-control" placeholder="" required readonly />
                     <input type="hidden" name="persentase_kompetensi" id="persentase_kompetensi"
                         class="form-control" placeholder="" required readonly />
-
+                        <input type="hidden" name="tahun" id="tahun" class="form-control" placeholder="" value="{{$tahun}}" required readonly />
                     <div class="form-group row mb-3">
                         <label for="topik_id" class="col-sm-3 col-form-label">
                             {{ __('Program pembelajaran') }} <span style="color: red">*</span>

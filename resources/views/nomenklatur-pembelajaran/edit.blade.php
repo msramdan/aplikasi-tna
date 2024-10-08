@@ -81,7 +81,7 @@
                                     <td>{{ $nomenklaturPembelajaran->tanggal_review ?? '-' }}</td>
                                 </tr>
                                 <tr>
-                                    <td class="fw-bold">{{ __('Catatan User Review') }}</td>
+                                    <td class="fw-bold">{{ __('Catatan Reviewer') }}</td>
                                     <td>{{ $nomenklaturPembelajaran->catatan_user_review ?? '-' }}</td>
                                 </tr>
                             </table>
@@ -147,6 +147,11 @@
                         </div>
 
                         <div class="form-group mb-2">
+                            <label for="catatan_user_created">Catatan User Created</label>
+                            <textarea readonly name="catatan_user_created" id="catatan_user_created" class="form-control" required>{{ $nomenklaturPembelajaran->catatan_user_created }}</textarea>
+                        </div>
+
+                        <div class="form-group mb-2">
                             <label for="user_created_name">User Pembuat</label>
                             <input readonly type="text" name="user_created_name" id="user_created_name" class="form-control"
                                 value="{{ $nomenklaturPembelajaran->user_created_name }}" required>
@@ -157,7 +162,7 @@
                                 value="{{ $nomenklaturPembelajaran->tanggal_pengajuan }}" required>
                         </div>
                         <div class="form-group mb-2">
-                            <label for="catatan_user_review">Catatan User</label>
+                            <label for="catatan_user_review">Catatan Reviewer</label>
                             <textarea name="catatan_user_review" id="catatan_user_review" class="form-control" rows="4" required></textarea>
                         </div>
                     </div>

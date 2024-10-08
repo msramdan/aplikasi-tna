@@ -132,7 +132,6 @@ class PengajuanKapController extends Controller
                 return redirect()->back();
             }
         }
-
         if ($is_bpkp === 'BPKP') {
             $jenis_program = ['Renstra', 'APP', 'APEP'];
         } elseif ($is_bpkp === 'Non BPKP') {
@@ -140,6 +139,8 @@ class PengajuanKapController extends Controller
         } else {
             $jenis_program = [];
         }
+
+        $tahun = $frekuensi ? $jadwalKapTahunan->tahun : date('y');
 
         $jalur_pembelajaran = [
             'Pelatihan',
@@ -203,6 +204,7 @@ class PengajuanKapController extends Controller
             'metode_data' => $metode_data,
             'diklatType_data' => $diklatType_data,
             'diklatLocation_data' => $diklatLocation_data,
+            'tahun' => $tahun,
         ]);
     }
 
@@ -331,10 +333,10 @@ class PengajuanKapController extends Controller
             'remark_4' => 'nullable|string',
         ]);
 
-        $year = date('y');
+        $year =  $request->tahun;
         $topikId = sprintf('%03d', $validatedData['topik_id']);
         $lastPengajuan = DB::table('pengajuan_kap')
-            ->where('tahun', date('Y'))
+            ->where('tahun', $year)
             ->orderBy('kode_pembelajaran', 'desc')
             ->first();
         if ($lastPengajuan) {
@@ -373,7 +375,7 @@ class PengajuanKapController extends Controller
                 'topik_id' => $validatedData['topik_id'],
                 'judul' => $validatedData['judul'],
                 'arahan_pimpinan' => $validatedData['arahan_pimpinan'],
-                'tahun' => date('Y'),
+                'tahun' => $year,
                 'prioritas_pembelajaran' => $validatedData['prioritas_pembelajaran'],
                 'tujuan_program_pembelajaran' => $validatedData['tujuan_program_pembelajaran'],
                 'indikator_dampak_terhadap_kinerja_organisasi' => $validatedData['indikator_dampak_terhadap_kinerja_organisasi'],

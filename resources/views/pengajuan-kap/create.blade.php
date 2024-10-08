@@ -411,6 +411,8 @@
 
             $('#pilihButtonKompetensi').click(function() {
                 var indikator = $('#indikator_kinerja').val();
+                console.log(indikator);
+
                 $('#loading-overlay').show();
                 $.ajax({
                     url: '{{ route('getKompetensiSupportIK') }}',

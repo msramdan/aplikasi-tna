@@ -1,3 +1,5 @@
+
+<input type="hidden" name="tahun" id="tahun" class="form-control" placeholder="" value="{{$tahun}}" required readonly />
 <div class="modal fade" id="indikatorModal" tabindex="-1" aria-labelledby="indikatorModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content">
