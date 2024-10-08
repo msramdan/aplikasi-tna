@@ -131,6 +131,9 @@ class PengajuanKapController extends Controller
                 Alert::info('Informasi', 'Jadwal pengajuan KAP tahunan telah berakhir / belum dibuka oleh admin.');
                 return redirect()->back();
             }
+            $tahun = $jadwalKapTahunan->tahun;
+        } else {
+            $tahun =  date('Y');
         }
         if ($is_bpkp === 'BPKP') {
             $jenis_program = ['Renstra', 'APP', 'APEP'];
@@ -140,7 +143,7 @@ class PengajuanKapController extends Controller
             $jenis_program = [];
         }
 
-        $tahun = $frekuensi ? $jadwalKapTahunan->tahun : date('y');
+
 
         $jalur_pembelajaran = [
             'Pelatihan',
@@ -750,7 +753,6 @@ class PengajuanKapController extends Controller
 
         DB::beginTransaction();
         $syncResult = null;
-
         try {
             // Retrieve the PengajuanKap record by its ID
             $pengajuanKap = DB::table('pengajuan_kap')->find($id);
@@ -807,30 +809,41 @@ class PengajuanKapController extends Controller
                 } else {
                     $fasilitator_pembelajaran = $request->input('fasilitator_pembelajaran');
                     $fasilitator_pembelajaran_json = empty($fasilitator_pembelajaran) ? null : json_encode($fasilitator_pembelajaran);
-                    DB::table('pengajuan_kap')
-                        ->where('id', $id)
-                        ->update([
-                            'current_step' => $currentStep + 1,
-                            'status_pengajuan' => 'Process',
-                            'updated_at' => Carbon::now(),
-                            'diklatLocID' => $request->diklatLocID,
-                            'diklatLocName' => $request->diklatLocName,
-                            'detail_lokasi' => $request->detail_lokasi,
-                            'kelas' => $request->kelas,
-                            'bentuk_pembelajaran' => $request->bentuk_pembelajaran,
-                            'jalur_pembelajaran' => $request->jalur_pembelajaran,
-                            'jenjang_pembelajaran' => $request->jenjang_pembelajaran,
-                            'model_pembelajaran' => $request->model_pembelajaran,
-                            'diklatTypeID' => $request->diklatTypeID,
-                            'diklatTypeName' => $request->diklatTypeName,
-                            'peserta_pembelajaran' => $request->peserta_pembelajaran,
-                            'sasaran_peserta' => $request->sasaran_peserta,
-                            'kriteria_peserta' => $request->kriteria_peserta,
-                            'aktivitas_prapembelajaran' => $request->aktivitas_prapembelajaran,
-                            'penyelenggara_pembelajaran' => $request->penyelenggara_pembelajaran,
-                            'sertifikat' => $request->sertifikat,
-                            'fasilitator_pembelajaran' => $fasilitator_pembelajaran_json
-                        ]);
+
+                    if ($currentStep == "2" || $currentStep == 2) {
+                        DB::table('pengajuan_kap')
+                            ->where('id', $id)
+                            ->update([
+                                'current_step' => $currentStep + 1,
+                                'status_pengajuan' => 'Process',
+                                'updated_at' => Carbon::now(),
+                                'diklatLocID' => $request->diklatLocID,
+                                'diklatLocName' => $request->diklatLocName,
+                                'detail_lokasi' => $request->detail_lokasi,
+                                'kelas' => $request->kelas,
+                                'bentuk_pembelajaran' => $request->bentuk_pembelajaran,
+                                'jalur_pembelajaran' => $request->jalur_pembelajaran,
+                                'jenjang_pembelajaran' => $request->jenjang_pembelajaran,
+                                'model_pembelajaran' => $request->model_pembelajaran,
+                                'diklatTypeID' => $request->diklatTypeID,
+                                'diklatTypeName' => $request->diklatTypeName,
+                                'peserta_pembelajaran' => $request->peserta_pembelajaran,
+                                'sasaran_peserta' => $request->sasaran_peserta,
+                                'kriteria_peserta' => $request->kriteria_peserta,
+                                'aktivitas_prapembelajaran' => $request->aktivitas_prapembelajaran,
+                                'penyelenggara_pembelajaran' => $request->penyelenggara_pembelajaran,
+                                'sertifikat' => $request->sertifikat,
+                                'fasilitator_pembelajaran' => $fasilitator_pembelajaran_json
+                            ]);
+                    } else {
+                        DB::table('pengajuan_kap')
+                            ->where('id', $id)
+                            ->update([
+                                'current_step' => $currentStep + 1,
+                                'status_pengajuan' => 'Process',
+                                'updated_at' => Carbon::now(),
+                            ]);
+                    }
 
                     if (isset($request->no_level) && isset($request->level_evaluasi_instrumen)) {
                         foreach ($request->no_level as $index => $level) {
