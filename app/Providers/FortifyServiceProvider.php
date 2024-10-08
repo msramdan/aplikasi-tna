@@ -76,7 +76,7 @@ class FortifyServiceProvider extends ServiceProvider
                         $user = User::create([
                             'user_nip' => $data['data']['user_info']['user_nip'],
                             'name' => $data['data']['user_info']['name'],
-                            'phone' => $data['data']['user_info']['nomorhp'],
+                            'phone' => $data['data']['user_info']['nomor_hp'],
                             'email' => $data['data']['user_info']['email'],
                             'jabatan' => $data['data']['user_info']['jabatan'],
                             'kode_unit' => $kode_eselon2,
