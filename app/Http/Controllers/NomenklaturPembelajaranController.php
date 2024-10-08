@@ -62,6 +62,7 @@ class NomenklaturPembelajaranController extends Controller
 
     public function edit(NomenklaturPembelajaran $nomenklaturPembelajaran)
     {
+        // Retrieve the specific Nomenklatur Pembelajaran with joins
         $nomenklaturPembelajaran = DB::table('nomenklatur_pembelajaran')
             ->leftJoin('rumpun_pembelajaran', 'nomenklatur_pembelajaran.rumpun_pembelajaran_id', '=', 'rumpun_pembelajaran.id')
             ->leftJoin('users as user_created', 'nomenklatur_pembelajaran.user_created', '=', 'user_created.id')
@@ -74,7 +75,12 @@ class NomenklaturPembelajaranController extends Controller
             )
             ->where('nomenklatur_pembelajaran.id', $nomenklaturPembelajaran->id)
             ->first();
-        return view('nomenklatur-pembelajaran.edit', compact('nomenklaturPembelajaran'));
+
+        // Retrieve all available Rumpun Pembelajaran
+        $rumpunPembelajaranList = DB::table('rumpun_pembelajaran')->get();
+
+        // Pass the data to the view
+        return view('nomenklatur-pembelajaran.edit', compact('nomenklaturPembelajaran', 'rumpunPembelajaranList'));
     }
 
 
@@ -89,15 +95,19 @@ class NomenklaturPembelajaranController extends Controller
                 ->where('id', $id)
                 ->update([
                     'status' => 'Approved',
+                    'rumpun_pembelajaran_id' =>  $request->input('rumpun_pembelajaran_id'),
+                    'nama_topik' =>  $request->input('nama_topik'),
                     'user_review' => Auth::id(),
                     'tanggal_review' => now(),
                     'catatan_user_review' => $request->input('catatan_user_review')
                 ]);
 
+            $dataNew = DB::table('nomenklatur_pembelajaran')->where('id', $id)->first();
+
             // Insert into the topik table
             DB::table('topik')->insert([
-                'rumpun_pembelajaran_id' => $nomenklatur->rumpun_pembelajaran_id,
-                'nama_topik' => $nomenklatur->nama_topik,
+                'rumpun_pembelajaran_id' => $dataNew->rumpun_pembelajaran_id,
+                'nama_topik' => $dataNew->nama_topik,
                 'created_at' => now(),
                 'updated_at' => now()
             ]);

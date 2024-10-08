@@ -122,7 +122,41 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="form-group">
+                        <div class="form-group mb-2">
+                            <label for="rumpun_pembelajaran_id">Rumpun Pembelajaran</label>
+                            <select name="rumpun_pembelajaran_id" id="rumpun_pembelajaran_id" class="form-control" required>
+                                @foreach ($rumpunPembelajaranList as $rumpun)
+                                    <option value="{{ $rumpun->id }}"
+                                        {{ $nomenklaturPembelajaran->rumpun_pembelajaran_id == $rumpun->id ? 'selected' : '' }}>
+                                        {{ $rumpun->rumpun_pembelajaran }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="form-group mb-2">
+                            <label for="nama_topik">Nama Topik</label>
+                            <input type="text" name="nama_topik" id="nama_topik" class="form-control"
+                                value="{{ $nomenklaturPembelajaran->nama_topik }}" required>
+                        </div>
+
+                        <div class="form-group mb-2">
+                            <label for="">Status</label>
+                            <input readonly type="text" name="" id="" class="form-control"
+                                value="{{ $nomenklaturPembelajaran->status }}" required>
+                        </div>
+
+                        <div class="form-group mb-2">
+                            <label for="user_created_name">User Pembuat</label>
+                            <input readonly type="text" name="user_created_name" id="user_created_name" class="form-control"
+                                value="{{ $nomenklaturPembelajaran->user_created_name }}" required>
+                        </div>
+                        <div class="form-group mb-2">
+                            <label for="tanggal_pengajuan">Tanggal Pengajuan</label>
+                            <input readonly type="text" name="tanggal_pengajuan" id="tanggal_pengajuan" class="form-control"
+                                value="{{ $nomenklaturPembelajaran->tanggal_pengajuan }}" required>
+                        </div>
+                        <div class="form-group mb-2">
                             <label for="catatan_user_review">Catatan User</label>
                             <textarea name="catatan_user_review" id="catatan_user_review" class="form-control" rows="4" required></textarea>
                         </div>
@@ -137,7 +171,8 @@
     </div>
 
     <!-- Rejection Modal -->
-    <div class="modal fade" id="rejectionModal" tabindex="-1" aria-labelledby="rejectionModalLabel" aria-hidden="true">
+    <div class="modal fade" id="rejectionModal" tabindex="-1" aria-labelledby="rejectionModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
             <form action="{{ route('nomenklatur-pembelajaran.reject', $nomenklaturPembelajaran->id) }}" method="POST">
                 @csrf
