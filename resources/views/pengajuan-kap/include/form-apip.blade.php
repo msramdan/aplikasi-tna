@@ -1,4 +1,3 @@
-
 <div class="modal fade" id="kompetensiModal" tabindex="-1" aria-labelledby="kompetensiModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
@@ -81,6 +80,8 @@
         <p style="color: red; padding:10px">Note : * Wajib diisi</p>
         <div id="step-1" class="tab-pane" role="tabpanel" aria-labelledby="step-1" style="display: none;">
             <form id="form-1">
+                <input type="hidden" name="tahun" id="tahun" class="form-control" placeholder=""
+                value="{{ $tahun }}" required readonly />
                 <div class="row" style="padding: 20px">
                     <input type="hidden" name="jenis_program" id="jenis_program" class="form-control" value="APIP"
                         placeholder="" required readonly />
@@ -112,7 +113,6 @@
                         class="form-control" placeholder="" required readonly />
                     <input type="hidden" name="persentase_kompetensi" id="persentase_kompetensi"
                         class="form-control" placeholder="" required readonly />
-                        <input type="hidden" name="tahun" id="tahun" class="form-control" placeholder="" value="{{$tahun}}" required readonly />
                     <div class="form-group row mb-3">
                         <label for="topik_id" class="col-sm-3 col-form-label">
                             {{ __('Program pembelajaran') }} <span style="color: red">*</span>
@@ -130,7 +130,7 @@
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                 </button>
                                 <div class="invalid-feedback">
-                                     Mohon untuk pilih program pembelajaran
+                                    Mohon untuk pilih program pembelajaran
                                 </div>
                             </div>
                         </div>

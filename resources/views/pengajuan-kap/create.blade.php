@@ -346,8 +346,8 @@
                                 tableBody += '<td>' + value.realisasi_tw4 + '</td>';
                                 tableBody += '<td>' + value.persen_realisasi + '</td>';
                                 tableBody +=
-                                    '<td><button type="button" class="btn btn-primary pilihIndikator btn-sm" data-indikator="' +
-                                    value.indikator_kinerja + '">Pilih</button></td>';
+                                    '<td><button type="button" class="btn btn-primary pilihIndikator btn-sm" data-indikator=\'' +
+                                    value.indikator_kinerja + '\'>Pilih</button></td>';
                                 tableBody += '</tr>';
                             });
                         } else if (jenisProgram === 'APP') {
@@ -364,8 +364,8 @@
                                 tableBody += '<td>' + value.stat_nilai + '</td>';
                                 tableBody += '<td>' + value.nilai_t + '</td>';
                                 tableBody +=
-                                    '<td><button type="button" class="btn btn-primary pilihIndikator btn-sm" data-indikator="' +
-                                    value.nama_topik + '">Pilih</button></td>';
+                                    '<td><button type="button" class="btn btn-primary pilihIndikator btn-sm" data-indikator=\'' +
+                                    value.nama_topik + '\'>Pilih</button></td>';
                                 tableBody += '</tr>';
                             });
 
@@ -383,8 +383,8 @@
                                 tableBody += '<td>' + value.stat_nilai + '</td>';
                                 tableBody += '<td>' + value.nilai_t + '</td>';
                                 tableBody +=
-                                    '<td><button type="button" class="btn btn-primary pilihIndikator btn-sm" data-indikator="' +
-                                    value.nama_topik + '">Pilih</button></td>';
+                                    '<td><button type="button" class="btn btn-primary pilihIndikator btn-sm" data-indikator=\'' +
+                                    value.nama_topik + '\'>Pilih</button></td>';
                                 tableBody += '</tr>';
                             });
                         } else {
@@ -494,6 +494,8 @@
                 $('#judul').val('');
                 var indikator = $(this).data('indikator');
                 $('#indikator_kinerja').val(indikator);
+                console.log(indikator);
+
                 $('#indikatorModal').modal('hide');
             });
 
@@ -611,7 +613,7 @@
                 } else if (value == '2') {
                     $('#hybrid_fields').show().find(
                         'input[name="hybrid_elearning_start"], input[name="hybrid_elearning_end"], input[name="hybrid_tatap_muka_start"], input[name="hybrid_tatap_muka_end"]'
-                        ).attr('required', true);
+                    ).attr('required', true);
                 } else if (value == '4') {
                     $('#elearning_fields').show().find(
                         'input[name="elearning_start"], input[name="elearning_end"]').attr('required',

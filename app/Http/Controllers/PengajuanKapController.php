@@ -288,6 +288,7 @@ class PengajuanKapController extends Controller
             'kompetensi_id' => 'nullable|exists:kompetensi,id',
             'topik_id' => 'nullable|exists:topik,id',
             'judul' => 'required|string',
+            'tahun' => 'required',
             'indikator_keberhasilan' => 'required|array',
             'arahan_pimpinan' => 'required|string',
             'prioritas_pembelajaran' => 'required|string',
