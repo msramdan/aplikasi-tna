@@ -189,6 +189,7 @@ return [
         ['group' => 'setting apps', 'access' => ['setting app view', 'setting app edit']],
         ['group' => 'kompetensi', 'access' => ['kompetensi view','kompetensi create']],
         ['group' => 'activity log', 'access' => ['activity log view']],
+        ['group' => 'lokasi', 'access' => ['lokasi view']],
         ['group' => 'backup database', 'access' => ['backup database view']],
         ['group' => 'sync pusdiklatwas ', 'access' => ['sinkronisasi view']],
         ['group' => 'kalender pembelajaran', 'access' => ['kalender pembelajaran view']],

@@ -19,6 +19,7 @@ use App\Http\Controllers\{
     ReportingController,
     SettingAppController,
     ConfigStepReview,
+    LokasiController,
     NomenklaturPembelajaranController,
     RumpunPembelajaranController,
     TaggingPembelajaranKompetensiController,
@@ -73,6 +74,11 @@ Route::middleware(['auth', 'web', 'check.maintenance'])->group(function () {
     Route::controller(RumpunPembelajaranController::class)->group(function () {
         Route::get('/getRumpunPembelajaran', 'getRumpunPembelajaran')->name('getRumpunPembelajaran');
     });
+
+    Route::controller(LokasiController::class)->group(function () {
+        Route::get('/lokasi', 'index')->name('lokasi.index');
+    });
+
     Route::resource('jadwal-kap-tahunan', JadwalKapTahunanController::class);
     Route::controller(TaggingPembelajaranKompetensiController::class)->group(function () {
         Route::get('/tagging-pembelajaran-kompetensi', 'index')->name('tagging-pembelajaran-kompetensi.index');

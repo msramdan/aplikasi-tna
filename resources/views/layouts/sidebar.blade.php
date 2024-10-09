@@ -9,24 +9,15 @@
                     <i class="fa fa-home"></i> <span data-key="t-widgets">{{ __('sidebar.dashboard') }}</span>
                 </a>
             </li>
-            @canany([
-                'kompetensi view',
-                'rumpun pembelajaran view',
-                'topik view',
-                'kota view',
-                'lokasi view',
-                'ruang
-                kelas view',
-                'asrama view',
-                ])
+            @canany(['kompetensi view', 'rumpun pembelajaran view', 'topik view', 'lokasi view'])
                 <li class="nav-item">
-                    <a class="nav-link menu-link {{ request()->routeIs('kompetensi*', 'rumpun-pembelajaran*', 'topik*') ? 'active' : '' }}"
+                    <a class="nav-link menu-link {{ request()->routeIs('kompetensi*', 'rumpun-pembelajaran*', 'topik*','lokasi*') ? 'active' : '' }}"
                         href="#sidebarMasterData" data-bs-toggle="collapse" role="button"
-                        aria-expanded="{{ request()->routeIs('kompetensi*', 'rumpun-pembelajaran*', 'topik*') ? 'true' : 'false' }}"
+                        aria-expanded="{{ request()->routeIs('kompetensi*', 'rumpun-pembelajaran*', 'topik*','lokasi*') ? 'true' : 'false' }}"
                         aria-controls="sidebarMasterData">
                         <i class="fa fa-list"></i> <span data-key="t-forms">Master Data</span>
                     </a>
-                    <div class="collapse menu-dropdown {{ request()->routeIs('kompetensi*', 'rumpun-pembelajaran*', 'topik*') ? 'show' : '' }}"
+                    <div class="collapse menu-dropdown {{ request()->routeIs('kompetensi*', 'rumpun-pembelajaran*', 'topik*','lokasi*') ? 'show' : '' }}"
                         id="sidebarMasterData">
                         <ul class="nav nav-sm flex-column">
                             @can('kompetensi view')
@@ -48,6 +39,13 @@
                                     <a href="{{ route('topik.index') }}"
                                         class="nav-link {{ request()->routeIs('topik*') ? 'active' : '' }}"
                                         data-key="t-basic-elements">{{ __('sidebar.learning') }}</a>
+                                </li>
+                            @endcan
+                            @can('lokasi view')
+                                <li class="nav-item">
+                                    <a href="{{ route('lokasi.index') }}"
+                                        class="nav-link {{ request()->routeIs('lokasi*') ? 'active' : '' }}"
+                                        data-key="t-basic-elements">Daftar Lokasi</a>
                                 </li>
                             @endcan
                         </ul>

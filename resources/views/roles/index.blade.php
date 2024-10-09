@@ -49,38 +49,33 @@
         </div>
     @endsection
 
-@push('js')
-    <script>
-        let columns = [{
-                data: 'DT_RowIndex',
-                name: 'DT_RowIndex',
-                orderable: false,
-                searchable: false
-            },
-            {
-                data: 'name',
-                name: 'name'
-            },
-            {
-                data: 'action',
-                name: 'action',
-                orderable: false,
-                searchable: false
-            }
-        ];
-        var table = $('#data-table').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: {
-                url: "{{ route('roles.index') }}",
-                data: function(s) {
-                    s.hospital_id = $('select[name=hospital_id] option').filter(':selected').val()
+    @push('js')
+        <script>
+            let columns = [{
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex',
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: 'name',
+                    name: 'name'
+                },
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
+                    searchable: false
                 }
-            },
-            columns: columns
-        })
-        $('#hospital_id').change(function() {
-            table.draw();
-        })
-    </script>
-@endpush
+            ];
+            var table = $('#data-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: "{{ route('roles.index') }}",
+                    data: function(s) {}
+                },
+                columns: columns
+            })
+        </script>
+    @endpush
