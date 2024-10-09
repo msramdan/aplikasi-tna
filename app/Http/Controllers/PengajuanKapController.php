@@ -143,8 +143,6 @@ class PengajuanKapController extends Controller
             $jenis_program = [];
         }
 
-
-
         $jalur_pembelajaran = [
             'Pelatihan',
             'Seminar/konferensi/sarasehan',
@@ -256,7 +254,6 @@ class PengajuanKapController extends Controller
             ->where('pengajuan_kap.institusi_sumber', '=', $is_bpkp)
             ->where('pengajuan_kap.frekuensi_pelaksanaan', '=', $frekuensi)
             ->first();
-        $lokasiData = DB::table('lokasi')->get();
 
         $level_evaluasi_instrumen_kap = DB::table('level_evaluasi_instrumen_kap')
             ->where('pengajuan_kap_id', $id)
@@ -264,11 +261,44 @@ class PengajuanKapController extends Controller
         $indikator_keberhasilan_kap = DB::table('indikator_keberhasilan_kap')
             ->where('pengajuan_kap_id', $id)
             ->get();
-        $waktu_tempat = DB::table('waktu_tempat')
-            ->join('lokasi', 'waktu_tempat.lokasi_id', '=', 'lokasi.id')
-            ->where('waktu_tempat.pengajuan_kap_id', $id)
-            ->select('waktu_tempat.*', 'lokasi.nama_lokasi')
+        $waktu_pelaksanaan = DB::table('waktu_pelaksanaan')
+            ->where('pengajuan_kap_id', $id)
             ->get();
+
+        $endpoint_pusdiklatwap = config('stara.endpoint_pusdiklatwap');
+        $api_key_pusdiklatwap = config('stara.api_token_pusdiklatwap');
+
+        // Call API for metode
+        $metode_data = callApiPusdiklatwas($endpoint_pusdiklatwap . '/metode', [
+            'api_key' => $api_key_pusdiklatwap
+        ]);
+
+        if (isset($metode_data['error'])) {
+            Alert::error('Error', $metode_data['error']);
+            return redirect()->back();
+        }
+
+        // Call API for diklatType
+        $diklatType_data = callApiPusdiklatwas($endpoint_pusdiklatwap . '/diklatType', [
+            'api_key' => $api_key_pusdiklatwap
+        ]);
+
+        if (isset($diklatType_data['error'])) {
+            Alert::error('Error', $diklatType_data['error']);
+            return redirect()->back();
+        }
+
+        // Call API for diklatLocation
+        $diklatLocation_data = callApiPusdiklatwas($endpoint_pusdiklatwap . '/diklatLocation', [
+            'api_key' => $api_key_pusdiklatwap
+        ]);
+
+        if (isset($diklatLocation_data['error'])) {
+            Alert::error('Error', $diklatLocation_data['error']);
+            return redirect()->back();
+        }
+
+        // dd( $diklatLocation_data);
 
         return view('pengajuan-kap.edit', [
             'pengajuanKap' => $pengajuanKap,
@@ -276,10 +306,13 @@ class PengajuanKapController extends Controller
             'frekuensi' => $frekuensi,
             'jenis_program' => $jenis_program,
             'jalur_pembelajaran' => $jalur_pembelajaran,
-            'lokasiData' => $lokasiData,
             'level_evaluasi_instrumen_kap' => $level_evaluasi_instrumen_kap,
             'indikator_keberhasilan_kap' => $indikator_keberhasilan_kap,
-            'waktu_tempat' => $waktu_tempat,
+            'waktu_pelaksanaan' => $waktu_pelaksanaan,
+            'metode_data' => $metode_data,
+            'diklatType_data' => $diklatType_data,
+            'diklatLocation_data' => $diklatLocation_data,
+            'tahun' => $pengajuanKap->tahun,
         ]);
     }
 

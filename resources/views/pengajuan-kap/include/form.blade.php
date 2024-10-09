@@ -1,4 +1,3 @@
-
 <div class="modal fade" id="indikatorModal" tabindex="-1" aria-labelledby="indikatorModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content">
@@ -98,7 +97,8 @@
         <p style="color: red; padding:10px">Note : * Wajib diisi</p>
         <div id="step-1" class="tab-pane" role="tabpanel" aria-labelledby="step-1" style="display: none;">
             <form id="form-1">
-                <input type="hidden" name="tahun" id="tahun" class="form-control" placeholder="" value="{{$tahun}}" required readonly />
+                <input type="hidden" name="tahun" id="tahun" class="form-control" placeholder=""
+                    value="{{ $tahun }}" required readonly />
                 <div class="row" style="padding: 20px">
                     <div class="form-group row mb-3">
                         <label for="jenis_program" class="col-sm-3 col-form-label">{{ __('Jenis Program') }} <span
@@ -185,7 +185,7 @@
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                 </button>
                                 <div class="invalid-feedback">
-                                     Mohon untuk pilih program pembelajaran
+                                    Mohon untuk pilih program pembelajaran
                                 </div>
                             </div>
                         </div>
@@ -461,7 +461,7 @@
                                 @foreach ($diklatLocation_data as $lokasi)
                                     <option value="{{ $lokasi['diklatLocID'] }}"
                                         data-diklatlocname="{{ $lokasi['diklatLocName'] }}"
-                                        {{ isset($pengajuanKap) && $pengajuanKap->lokasi == $lokasi['diklatLocID'] ? 'selected' : (old('lokasi') == $lokasi['diklatLocID'] ? 'selected' : '') }}>
+                                        {{ isset($pengajuanKap) && $pengajuanKap->diklatLocID == $lokasi['diklatLocID'] ? 'selected' : (old('lokasi') == $lokasi['diklatLocID'] ? 'selected' : '') }}>
                                         {{ $lokasi['diklatLocName'] }}
                                     </option>
                                 @endforeach
@@ -761,11 +761,19 @@
                     <div class="form-group row mb-3">
                         <label class="col-sm-3 col-form-label">{{ __('Fasilitator Pembelajaran') }}</label>
                         <div class="col-sm-6">
+                            @php
+                                $fasilitatorPembelajaran = isset($pengajuanKap)
+                                    ? json_decode($pengajuanKap->fasilitator_pembelajaran, true)
+                                    : old('fasilitator_pembelajaran', []);
+                                $fasilitatorPembelajaran = is_array($fasilitatorPembelajaran)
+                                    ? $fasilitatorPembelajaran
+                                    : [];
+                            @endphp
                             @foreach (['Widyaiswara', 'Instruktur', 'Praktisi', 'Pakar', 'Tutor', 'Coach', 'Mentor', 'Narasumber lainnya'] as $fasilitator)
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="fasilitator_pembelajaran[]"
                                         id="fasilitator_{{ $fasilitator }}" value="{{ $fasilitator }}"
-                                        {{ isset($pengajuanKap) ? (in_array($fasilitator, json_decode($pengajuanKap->fasilitator_pembelajaran)) ? 'checked' : '') : (in_array($fasilitator, old('fasilitator_pembelajaran', [])) ? 'checked' : '') }}>
+                                        {{ in_array($fasilitator, $fasilitatorPembelajaran) ? 'checked' : '' }}>
                                     <label class="form-check-label" for="fasilitator_{{ $fasilitator }}">
                                         {{ $fasilitator }}
                                     </label>

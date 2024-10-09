@@ -74,6 +74,7 @@
     <script src="https://techlaboratory.net/projects/demo/jquery-smart-wizard/v6/js/demo.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/smartwizard@6/dist/js/jquery.smartWizard.min.js" type="text/javascript">
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.all.min.js"></script>
     <script type="text/javascript">
         function onConfirm() {
             let form = document.getElementById('form-3');
@@ -88,7 +89,7 @@
 
                 var csrf = "{{ csrf_token() }}";
                 $('#form-laporan').append(`<input type="hidden" name="_token" value="${csrf}"/>`);
-                $('#form-laporan').append('@method('PUT')'); // Spoofing metode PUT
+                $('#form-laporan').append('@method('POST')'); // Spoofing metode PUT
 
                 var forms = ['form-1', 'form-2', 'form-3'];
                 forms.forEach(formId => {
@@ -97,27 +98,17 @@
                         $('#form-laporan').append(item.cloneNode(true));
                     });
                 });
-
-                $('select[name^="tempat_acara"]').each(function(index, element) {
-                    var selectedValue = $(element).val();
-                    if (selectedValue !== null && selectedValue !== '') {
-                        $('#form-laporan').append(
-                            `<input type="hidden" name="${$(element).attr('name')}" value="${selectedValue}"/>`
-                        );
-                    }
-                });
-
                 var inputFields = [
-                    'jenis_program', 'kompetensi_id', 'topik_id', 'bentuk_pembelajaran',
-                    'jalur_pembelajaran', 'model_pembelajaran', 'jenis_pembelajaran',
-                    'metode_pembelajaran', 'penyelenggara_pembelajaran', 'prioritas_pembelajaran'
+                    'jenis_program', 'topik_id', 'bentuk_pembelajaran',
+                    'jalur_pembelajaran', 'model_pembelajaran', 'diklatLocID',
+                    'metodeID', 'penyelenggara_pembelajaran', 'prioritas_pembelajaran', 'diklatLocID', 'diklatTypeID',
+                    'jenjang_pembelajaran', 'peserta_pembelajaran'
                 ];
 
                 inputFields.forEach(field => {
                     var fieldValue = $(`#${field}`).val();
                     $('#form-laporan').append(`<input type="hidden" name="${field}" value="${fieldValue}"/>`);
                 });
-
                 $('#form-laporan').submit();
             }
         }
@@ -249,139 +240,441 @@
             checkInputs(); // Initial check on page load
         });
     </script>
-
-    {{-- <script>
+    <script>
         $(document).ready(function() {
-            function checkCheckboxes() {
-                let anyChecked = $('input[name="fasilitator_pembelajaran[]"]:checked').length > 0;
-
-                if (anyChecked) {
-                    $('input[name="fasilitator_pembelajaran[]"]').removeAttr('required');
-                    $('#invalid-fasilitator').hide();
+            const options_temp = '<option value="" selected disabled>-- Select --</option>';
+            $('#pilihButton').prop('disabled', true);
+            $('#pilihButtonKompetensi').prop('disabled', true);
+            $('#jenis_program').change(function() {
+                $('#indikator_kinerja').val('');
+                $('#kompetensi_id').val('');
+                $('#kompetensi_text').val('');
+                $('#total_pegawai').val('');
+                $('#pegawai_kompeten').val('');
+                $('#pegawai_belum_kompeten').val('');
+                $('#persentase_kompetensi').val('');
+                $('#topik_id').html(options_temp);
+                $('#judul').val('');
+                $('#pilihButtonKompetensi').prop('disabled', true);
+                var selectedValue = $(this).val();
+                if (selectedValue !== '') {
+                    $('#pilihButton').prop('disabled', false);
                 } else {
-                    $('input[name="fasilitator_pembelajaran[]"]').attr('required', 'required');
-                    if ($('input[name="fasilitator_pembelajaran[]"]').is(':focus')) {
-                        $('#invalid-fasilitator').show();
-                    }
+                    $('#pilihButton').prop('disabled', true);
                 }
-            }
-
-            $('input[name="fasilitator_pembelajaran[]"]').on('change', function() {
-                checkCheckboxes();
             });
 
-            // Remove required attribute on load to ensure the message is not displayed initially
-            $('input[name="fasilitator_pembelajaran[]"]').removeAttr('required');
+            $('#pilihButton').click(function() {
+                var jenisProgram = $('#jenis_program').val();
+                $('#loading-overlay').show();
+                $.ajax({
+                    url: '{{ route('getIndikator', ['jenisProgram' => ':jenisProgram']) }}'
+                        .replace(':jenisProgram', jenisProgram),
+                    type: 'GET',
+                    success: function(response) {
+                        if (response.data.length === 0) {
+                            $('#loading-overlay').hide();
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Data Tidak Ditemukan',
+                                text: 'Tidak ada data yang ditemukan untuk Indikator Kinerja',
+                            });
+                            return;
+                        }
 
-            // Initial check to handle pre-checked checkboxes
-            checkCheckboxes();
+                        var modalBody = $('#indikatorModal .modal-body');
+                        modalBody.empty();
+
+                        var table =
+                            '<div class="table-responsive"><table class="table table-sm table-striped" style="font-size:14px"><thead><tr>';
+                        var tableBody = '<tbody>';
+
+                        if (jenisProgram === 'Renstra') {
+                            table +=
+                                '<th>Indikator</th><th>Satuan Target</th><th>Target</th><th>Realisasi TW1</th><th>Realisasi TW2</th><th>Realisasi TW3</th><th>Realisasi TW4</th><th>Persen Realisasi</th><th>Aksi</th></tr></thead>';
+                            $.each(response.data, function(key, value) {
+                                tableBody += '<tr>';
+                                tableBody += '<td>' + value.indikator_kinerja + '</td>';
+                                tableBody += '<td>' + value.satuan_target + '</td>';
+                                tableBody += '<td>' + value.target + '</td>';
+                                tableBody += '<td>' + value.realisasi_tw1 + '</td>';
+                                tableBody += '<td>' + value.realisasi_tw2 + '</td>';
+                                tableBody += '<td>' + value.realisasi_tw3 + '</td>';
+                                tableBody += '<td>' + value.realisasi_tw4 + '</td>';
+                                tableBody += '<td>' + value.persen_realisasi + '</td>';
+                                tableBody +=
+                                    '<td><button type="button" class="btn btn-primary pilihIndikator btn-sm" data-indikator=\'' +
+                                    value.indikator_kinerja + '\'>Pilih</button></td>';
+                                tableBody += '</tr>';
+                            });
+                        } else if (jenisProgram === 'APP') {
+                            table +=
+                                '<th>Nama Sektor</th><th>Nama Tema</th><th>Nama Topik</th><th>Nama PJ APP</th><th>TW APP</th><th>Tahun</th><th>Stat Nilai</th><th>Nilai T</th><th>Aksi</th></tr></thead>';
+                            $.each(response.data, function(key, value) {
+                                tableBody += '<tr>';
+                                tableBody += '<td>' + value.nama_sektor + '</td>';
+                                tableBody += '<td>' + value.nama_tema + '</td>';
+                                tableBody += '<td>' + value.nama_topik + '</td>';
+                                tableBody += '<td>' + value.nama_pj_app + '</td>';
+                                tableBody += '<td>' + value.tw_app + '</td>';
+                                tableBody += '<td>' + value.tahun + '</td>';
+                                tableBody += '<td>' + value.stat_nilai + '</td>';
+                                tableBody += '<td>' + value.nilai_t + '</td>';
+                                tableBody +=
+                                    '<td><button type="button" class="btn btn-primary pilihIndikator btn-sm" data-indikator=\'' +
+                                    value.nama_topik + '\'>Pilih</button></td>';
+                                tableBody += '</tr>';
+                            });
+
+                        } else if (jenisProgram === 'APEP') {
+                            table +=
+                                '<th>Nama Sektor</th><th>Nama Tema</th><th>Nama Topik</th><th>Nama PJ APP</th><th>TW APP</th><th>Tahun</th><th>Stat Nilai</th><th>Nilai T</th><th>Aksi</th></tr></thead>';
+                            $.each(response.data, function(key, value) {
+                                tableBody += '<tr>';
+                                tableBody += '<td>' + value.nama_sektor + '</td>';
+                                tableBody += '<td>' + value.nama_tema + '</td>';
+                                tableBody += '<td>' + value.nama_topik + '</td>';
+                                tableBody += '<td>' + value.nama_pj_app + '</td>';
+                                tableBody += '<td>' + value.tw_app + '</td>';
+                                tableBody += '<td>' + value.tahun + '</td>';
+                                tableBody += '<td>' + value.stat_nilai + '</td>';
+                                tableBody += '<td>' + value.nilai_t + '</td>';
+                                tableBody +=
+                                    '<td><button type="button" class="btn btn-primary pilihIndikator btn-sm" data-indikator=\'' +
+                                    value.nama_topik + '\'>Pilih</button></td>';
+                                tableBody += '</tr>';
+                            });
+                        } else {
+                            $('#loading-overlay').hide();
+                            alert('API belum fix. Data tidak dapat dimuat.');
+                            return;
+                        }
+
+                        table += tableBody + '</tbody></table></div>';
+                        modalBody.append(table);
+
+                        $('#indikatorModal').modal('show');
+                        $('#loading-overlay').hide();
+                        $('.pilihIndikator').click(function() {
+                            $('#pilihButtonKompetensi').prop('disabled', false);
+                        });
+                    },
+                    error: function() {
+                        $('#loading-overlay').hide();
+                        alert('Terjadi kesalahan saat memuat data.');
+                    }
+                });
+            });
+
+            $('#pilihButtonKompetensi').click(function() {
+                var indikator = $('#indikator_kinerja').val();
+                console.log(indikator);
+
+                $('#loading-overlay').show();
+                $.ajax({
+                    url: '{{ route('getKompetensiSupportIK') }}',
+                    type: 'GET',
+                    data: {
+                        indikator: indikator
+                    },
+                    success: function(response) {
+                        if (response.kompetensi_summary.length === 0) {
+                            $('#loading-overlay').hide();
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Data Tidak Ditemukan',
+                                text: 'Tidak ada data yang ditemukan untuk Kompetensi',
+                            });
+                            return;
+                        }
+
+                        var modalBody = $('#kompetensiModal .modal-body');
+                        modalBody.empty();
+                        var table =
+                            '<div class="table-responsive"><table class="table table-sm table-striped" style="font-size:14px"><thead><tr>';
+                        var tableBody = '<tbody>';
+                        var table =
+                            '<div class="table-responsive"><table class="table table-sm table-striped" style="font-size:14px"><thead><tr>';
+                        var tableBody = '<tbody>';
+
+                        // Update table headers to include the new columns
+                        table +=
+                            '<th>Kompetensi</th><th>Total pegawai</th><th>Pegawai kompeten</th><th>Pegawai belum kompeten</th><th>Persentase kompetensi</th><th>Aksi</th></tr></thead>';
+
+                        $.each(response.kompetensi_summary, function(key, value) {
+                            tableBody += '<tr>';
+                            tableBody += '<td>' + value.nama_kompetensi + '</td>';
+                            tableBody += '<td>' + value.total_employees +
+                                '</td>'; // Total Karyawan
+                            tableBody += '<td>' + value.count_100 +
+                                '</td>'; // Count 100%
+                            tableBody += '<td>' + value.count_less_than_100 +
+                                '</td>'; // Count < 100%
+                            tableBody += '<td>' + value.average_persentase + '%</td>';
+                            tableBody +=
+                                '<td><button type="button" class="btn btn-primary pilihKompetensi btn-sm" ' +
+                                'data-kompetensi="' + value.nama_kompetensi + '" ' +
+                                'data-id="' + value.kompetensi_id + '" ' +
+                                'data-total-employees="' + value.total_employees +
+                                '" ' +
+                                'data-count-100="' + value.count_100 + '" ' +
+                                'data-count-less-than-100="' + value
+                                .count_less_than_100 + '" ' +
+                                'data-average-persentase="' + value.average_persentase +
+                                '">' +
+                                'Pilih</button></td>';
+                            tableBody += '</tr>';
+                        });
+
+                        table += tableBody + '</tbody></table></div>';
+                        modalBody.append(table);
+                        $('#kompetensiModal').modal('show');
+                        $('#loading-overlay').hide();
+                    },
+
+                    error: function() {
+                        $('#loading-overlay').hide();
+                        alert('Terjadi kesalahan saat memuat data.');
+                    }
+                });
+            });
+
+            $(document).on('click', '.pilihIndikator', function() {
+                $('#kompetensi_id').html(options_temp);
+                $('#kompetensi_id').val('');
+                $('#kompetensi_text').val('');
+                $('#total_pegawai').val('');
+                $('#pegawai_kompeten').val('');
+                $('#pegawai_belum_kompeten').val('');
+                $('#persentase_kompetensi').val('');
+                $('#topik_id').html(options_temp);
+                $('#judul').val('');
+                var indikator = $(this).data('indikator');
+                $('#indikator_kinerja').val(indikator);
+                console.log(indikator);
+
+                $('#indikatorModal').modal('hide');
+            });
+
+            $(document).on('click', '.pilihKompetensi', function() {
+                $('#topik_id').html(options_temp);
+                $('#judul').val('');
+                var kompetensi = $(this).data('kompetensi');
+                var kompetensi_id = $(this).data('id');
+                var total_employees = $(this).data('total-employees');
+                var count_100 = $(this).data('count-100');
+                var count_less_than_100 = $(this).data('count-less-than-100');
+                var average_persentase = $(this).data('average-persentase');
+                getDataTopikSupportKompetensi(kompetensi_id);
+                $('#kompetensi_text').val(kompetensi);
+                $('#kompetensi_id').val(kompetensi_id);
+                $('#total_pegawai').val(total_employees);
+                $('#pegawai_kompeten').val(count_100);
+                $('#pegawai_belum_kompeten').val(count_less_than_100);
+                $('#persentase_kompetensi').val(average_persentase);
+                $('#kompetensiModal').modal('hide');
+            });
+
+            function getDataTopikSupportKompetensi(kompetensi_id) {
+                $.ajax({
+                    url: '{{ route('getTopikSupportKompetensi') }}',
+                    type: 'GET',
+                    data: {
+                        kompetensi_id: kompetensi_id
+                    },
+                    beforeSend: function() {
+                        $('#topik_id').prop('disabled', true);
+                    },
+                    success: function(res) {
+                        const options = res.data.map(value => {
+                            return `<option value="${value.topik_id}" data-nama-topik="${value.nama_topik}">${value.nama_topik}</option>`;
+                        });
+                        $('#topik_id').html(options_temp + options);
+                        $('#topik_id').prop('disabled', false);
+                    },
+                    error: function() {
+                        alert('Terjadi kesalahan saat memuat data topik.');
+                    }
+                });
+            }
+        });
+
+        $(document).ready(function() {
+            $('#topik_id').on('change', function() {
+                const selectedOption = $(this).find('option:selected');
+                const namaTopik = selectedOption.data('nama-topik');
+
+                if (namaTopik) {
+                    $('#judul').val(namaTopik);
+                } else {
+                    $('#judul').val('');
+                }
+            });
         });
     </script>
 
+    {{-- auto fill name  --}}
     <script>
         $(document).ready(function() {
-            function checkInputInstrumen() {
-                let allEmptyInstrumen = true;
+            function updateDiklatTypeName() {
+                var selectedOption = $('#diklatTypeID option:selected');
+                var diklatTypeName = selectedOption.data('diklattypename');
+                $('#diklatTypeName').val(diklatTypeName);
+            }
+            $('#diklatTypeID').on('change', function() {
+                updateDiklatTypeName();
+            });
+            updateDiklatTypeName();
+        });
+        $(document).ready(function() {
+            function updateDiklatLocName() {
+                var selectedOption = $('#diklatLocID option:selected');
+                var diklatLocName = selectedOption.data('diklatlocname');
+                $('#diklatLocName').val(diklatLocName);
+            }
+            $('#diklatLocID').on('change', function() {
+                updateDiklatLocName();
+            });
+            updateDiklatLocName();
+        });
+        $(document).ready(function() {
+            function updateMetodeName() {
+                var selectedOption = $('#metodeID option:selected');
+                var metodeName = selectedOption.data('metoname');
+                $('#metodeName').val(metodeName);
+            }
+            $('#metodeID').on('change', function() {
+                updateMetodeName();
+            });
+            updateMetodeName();
+        });
 
-                $('input[name="level_evaluasi_instrumen[]"]').each(function() {
-                    if ($(this).val() !== '') {
-                        allEmptyInstrumen = false;
-                        return false; // Break out of the loop
+        $(document).ready(function() {
+            $('#metodeID').on('change', function() {
+                var value = $(this).val();
+                $('#additional_fields').show();
+
+                // Reset values and hide fields, except for remark_1, remark_2, and remark_3
+                $('#tatap_muka_fields').hide().find('input:not([name="remark_1"])').val('').removeAttr(
+                    'required');
+                $('#hybrid_fields').hide().find('input:not([name="remark_2"], [name="remark_3"])').val('')
+                    .removeAttr('required');
+                $('#elearning_fields').hide().find('input:not([name="remark_4"])').val('').removeAttr(
+                    'required');
+
+                // Show relevant fields and set required attribute
+                if (value == '1') {
+                    $('#tatap_muka_fields').show().find(
+                        'input[name="tatap_muka_start"], input[name="tatap_muka_end"]').attr('required',
+                        true);
+                } else if (value == '2') {
+                    $('#hybrid_fields').show().find(
+                        'input[name="hybrid_elearning_start"], input[name="hybrid_elearning_end"], input[name="hybrid_tatap_muka_start"], input[name="hybrid_tatap_muka_end"]'
+                    ).attr('required', true);
+                } else if (value == '4') {
+                    $('#elearning_fields').show().find(
+                        'input[name="elearning_start"], input[name="elearning_end"]').attr('required',
+                        true);
+                }
+            });
+        });
+    </script>
+
+
+    {{-- Usulan program pembelajaran --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function() {
+            // Ketika modal ditampilkan
+            $('#usulanModal').on('shown.bs.modal', function() {
+                // Memuat data dropdown saat modal ditampilkan
+                $.ajax({
+                    url: '{{ route('getRumpunPembelajaran') }}',
+                    type: 'GET',
+                    success: function(data) {
+                        const select = $('#rumpunPembelajaran');
+                        select.empty(); // Kosongkan dropdown
+                        select.append(
+                            '<option value="" disabled selected>-- Pilih --</option>'
+                        );
+                        data.forEach(function(item) {
+                            select.append(
+                                `<option value="${item.id}">${item.rumpun_pembelajaran}</option>`
+                            );
+                        });
+                        validateForm(); // Validasi saat modal ditampilkan
+                    },
+                    error: function(xhr) {
+                        console.error('Error loading rumpun pembelajaran:', xhr.responseText);
                     }
                 });
 
-                if (allEmptyInstrumen) {
-                    $('input[name="level_evaluasi_instrumen[]"]').attr('required', 'required');
+                validateForm(); // Validasi saat modal ditampilkan
+            });
+
+            // Fungsi untuk memvalidasi form
+            function validateForm() {
+                const form = $('#usulanForm');
+                const rumpunPembelajaranSelect = $('#rumpunPembelajaran');
+                const namaTopikInput = $('#namaTopik');
+                const catatanUserCreatedTextarea = $('#catatanUserCreated');
+                const kirimUsulanButton = $('#kirimUsulan');
+
+                // Ambil data dari form
+                const rumpunPembelajaranSelected = rumpunPembelajaranSelect.val();
+                const namaTopikFilled = namaTopikInput.val().trim() !== '';
+                const catatanUserCreatedFilled = catatanUserCreatedTextarea.val().trim() !== '';
+
+                // Periksa setiap field untuk memastikan semua field terisi
+                if (rumpunPembelajaranSelected && namaTopikFilled && catatanUserCreatedFilled) {
+                    kirimUsulanButton.prop('disabled', false);
                 } else {
-                    $('input[name="level_evaluasi_instrumen[]"]').removeAttr('required');
+                    kirimUsulanButton.prop('disabled', true);
                 }
             }
 
-            $('input[name="level_evaluasi_instrumen[]"]').on('input', function() {
-                checkInputInstrumen();
+            // Tangani perubahan pada input field untuk validasi live
+            $('#usulanForm').on('input change', function() {
+                validateForm();
             });
 
-            checkInputInstrumen();
-        });
-    </script> --}}
-
-    <script>
-        $(document).on('click', '.btn_remove_data', function() {
-            var bid = this.id;
-            console.log(bid)
-            var trid = $(this).closest('tr').attr('id');
-            $('#' + trid + '').remove();
-        });
-    </script>
-
-    <script>
-        $(document).ready(function() {
-            var i = 1;
-            $('#add_waktu_tempat').click(function() {
-                i++;
-                var newRow = '<tr id="row' + i + '">' +
-                    '<td>' +
-                    '<select name="tempat_acara[]" class="form-control">' +
-                    '<option value="" selected disabled>-- Pilih --</option>' +
-                    '@foreach ($lokasiData as $lokasi)' +
-                    '<option value="{{ $lokasi->id }}">{{ $lokasi->nama_lokasi }}</option>' +
-                    '@endforeach' +
-                    '</select>' +
-                    '</td>' +
-                    '<td><input type="date" name="tanggal_mulai[]" class="form-control" /></td>' +
-                    '<td><input type="date" name="tanggal_selesai[]" class="form-control" /></td>' +
-                    '<td><button type="button" name="remove" id="' + i +
-                    '" class="btn btn-danger btn_remove">X</button></td>' +
-                    '</tr>';
-                $('#dynamic_field').append(newRow);
-            });
-
-            $(document).on('click', '.btn_remove', function() {
-                var button_id = $(this).attr("id");
-                $('#row' + button_id + '').remove();
-            });
-        });
-    </script>
-    {{-- get Kompetensi Dasar --}}
-    <script>
-        $(document).ready(function() {
-            $('#kompetensi_id').on('change', function() {
-                var kompetensiId = $(this).val();
-                if (kompetensiId) {
-                    // Show spinner
-                    $('#kompetensi-description').html(
-                        '<div class="spinner-border text-primary" role="status">' +
-                        '<span class="visually-hidden">Loading...</span>' +
-                        '</div>'
-                    );
-
-                    $.ajax({
-                        url: '/getKompetensiById/' + kompetensiId,
-                        type: 'GET',
-                        success: function(data) {
-                            if (data.error) {
-                                $('#kompetensi-description').html(
-                                    '<div class="alert alert-danger mt-2" role="alert">' +
-                                    data.error + '</div>');
-                            } else {
-                                $('#kompetensi-description').html(
-                                    '<div class="alert alert-primary mt-2" role="alert">' +
-                                    '<strong>Kompetensi Dasar:</strong><br>' +
-                                    '<div style="text-align: justify">' + data
-                                    .deskripsi_kompetensi + '</div>' +
-                                    '</div>'
-                                );
-                            }
-                        },
-                        error: function() {
-                            $('#kompetensi-description').html(
-                                '<div class="alert alert-danger mt-2" role="alert">Error fetching data.</div>'
-                            );
-                        }
-                    });
-                } else {
-                    $('#kompetensi-description').empty();
+            // Tangani klik tombol Kirim Usulan
+            $('#kirimUsulan').on('click', function() {
+                if ($(this).is(':disabled')) {
+                    // Jika tombol dinonaktifkan, tidak lakukan apa-apa
+                    return;
                 }
+
+                const form = $('#usulanForm');
+
+                // Kirim data menggunakan AJAX
+                $.ajax({
+                    url: form.attr('action'),
+                    type: form.attr('method'),
+                    data: form.serialize(),
+                    success: function(response) {
+                        // Tanggapan sukses dengan SweetAlert
+                        Swal.fire({
+                            title: 'Sukses!',
+                            text: 'Usulan berhasil dikirim!',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            // Refresh halaman setelah konfirmasi
+                            location.reload();
+                        });
+                    },
+                    error: function(xhr) {
+                        // Tangani error dengan SweetAlert
+                        Swal.fire({
+                            title: 'Gagal!',
+                            text: 'Terjadi kesalahan saat mengirim usulan.',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                        console.error(xhr.responseText);
+                    }
+                });
             });
         });
     </script>
