@@ -18,8 +18,8 @@
             <i class="mdi mdi-eye"></i>
         </a>
 
-        @if ($model->status_pengajuan == 'Pending')
-            @can('pengajuan kap edit')
+        @can('pengajuan kap edit')
+            @if ($model->current_step < 5)
                 <a href="{{ route('pengajuan-kap.edit', [
                     'id' => $model->id,
                     'is_bpkp' => $model->institusi_sumber,
@@ -28,7 +28,14 @@
                     class="btn btn-success btn-sm">
                     <i class="mdi mdi-pencil"></i>
                 </a>
-            @endcan
+            @else
+                <a href="javascript:void(0);" class="btn btn-success btn-sm disabled" aria-disabled="true">
+                    <i class="mdi mdi-pencil"></i>
+                </a>
+            @endif
+        @endcan
+
+        @if ($model->status_pengajuan == 'Pending')
             @can('pengajuan kap delete')
                 <form
                     action="{{ route('pengajuan-kap.destroy', [
@@ -46,11 +53,6 @@
                 </form>
             @endcan
         @else
-            {{-- @can('pengajuan kap edit')
-                <button disabled class="btn btn-success btn-sm">
-                    <i class="mdi mdi-pencil"></i>
-                </button>
-            @endcan --}}
             @can('pengajuan kap delete')
                 <button disabled class="btn btn-danger btn-sm">
                     <i class="mdi mdi-trash-can-outline"></i>
