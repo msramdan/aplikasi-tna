@@ -96,7 +96,14 @@ class PengajuanKapController extends Controller
         }
 
         $topiks = DB::table('topik')->get();
-        $tahun = date('Y');
+        if ($frekuensi === 'Tahunan') {
+            $jadwalKapTahunan = DB::table('jadwal_kap_tahunan')
+                ->orderBy('id', 'desc')
+                ->first();
+            $tahun = $jadwalKapTahunan->tahun;
+        } else {
+            $tahun =  date('Y');
+        }
         $userId = Auth::id();
         $reviewRemarks = DB::table('config_step_review')
             ->where('user_review_id', $userId)
