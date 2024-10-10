@@ -165,7 +165,7 @@
                                 <td id="eventKode"></td>
                             </tr>
                             <tr>
-                                <th scope="row">Institusi Sumber</th>
+                                <th scope="row">Institusi</th>
                                 <td id="eventSumber"></td>
                             </tr>
                             <tr>

@@ -656,6 +656,7 @@ class PengajuanKapController extends Controller
             ->select(
                 'pengajuan_kap.*',
                 'users.name as user_name',
+                'users.nama_unit as nama_unit',
                 'kompetensi.nama_kompetensi',
                 'topik.nama_topik'
             )
@@ -997,6 +998,7 @@ class PengajuanKapController extends Controller
             ->select(
                 'pengajuan_kap.*',
                 'users.name as user_name',
+                'users.nama_unit as nama_unit',
                 'kompetensi.nama_kompetensi',
                 'topik.nama_topik'
             )

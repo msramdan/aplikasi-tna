@@ -89,7 +89,7 @@
             </tr>
 
             <tr>
-                <td style="vertical-align: top;">{{ __('Institusi Sumber') }}</td>
+                <td style="vertical-align: top;">{{ __('Institusi') }}</td>
                 <td style="vertical-align: top;">:</td>
                 <td style="vertical-align: top;">{{ $pengajuanKap->institusi_sumber }}</td>
             </tr>

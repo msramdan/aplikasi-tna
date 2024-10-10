@@ -270,8 +270,18 @@
                                         </tr>
 
                                         <tr>
-                                            <td class="fw-bold">{{ __('Institusi Sumber') }}</td>
+                                            <td class="fw-bold">{{ __('Institusi') }}</td>
                                             <td>{{ $pengajuanKap->institusi_sumber ?: '-' }}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="fw-bold">{{ __('Unit Pengusul') }}</td>
+                                            <td>{{ $pengajuanKap->nama_unit ?: '-' }}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="fw-bold">{{ __('Nama Pengusul') }}</td>
+                                            <td>{{ $pengajuanKap->user_name ?: '-' }}</td>
                                         </tr>
 
                                         <tr>

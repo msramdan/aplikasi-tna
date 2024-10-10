@@ -240,7 +240,7 @@
                                         </tr>
 
                                         <tr>
-                                            <td class="fw-bold">{{ __('Institusi Sumber') }}</td>
+                                            <td class="fw-bold">{{ __('Institusi') }}</td>
                                             <td>{{ $pengajuanKap->institusi_sumber ?: '-' }}</td>
                                         </tr>
 
