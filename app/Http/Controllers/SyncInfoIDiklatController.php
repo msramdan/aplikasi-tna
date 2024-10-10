@@ -221,7 +221,7 @@ class SyncInfoIDiklatController extends Controller
             'waktu_pelaksanaan' => $waktu_pelaksanaan,
             'gap_kompetensi_pengajuan_kap' => $gap_kompetensi_pengajuan_kap
         ]);
-        $namePdf = $pengajuanKap->kode_pembelajaran.'_unit_kerja_pengusul.pdf';
+        $namePdf = $pengajuanKap->kode_pembelajaran . '_' . $pengajuanKap->user_name . '.pdf';
         return $pdf->stream($namePdf);
     }
 
