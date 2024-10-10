@@ -548,66 +548,6 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label for="jenjang_pembelajaran"
-                            class="col-sm-3 col-form-label">{{ __('Jenjang Pembelajaran') }}</label>
-                        <div class="col-sm-6">
-                            <select
-                                class="form-control js-example-basic-multiple @error('jenjang_pembelajaran') is-invalid @enderror"
-                                name="jenjang_pembelajaran" id="jenjang_pembelajaran">
-                                <option value="" selected disabled>-- {{ __('Select jenjang pembelajaran') }} --
-                                </option>
-                                <option value="CPNS"
-                                    {{ isset($pengajuanKap) && $pengajuanKap->jenjang_pembelajaran == 'CPNS' ? 'selected' : (old('jenjang_pembelajaran') == 'CPNS' ? 'selected' : '') }}>
-                                    CPNS</option>
-                                <option value="P3K"
-                                    {{ isset($pengajuanKap) && $pengajuanKap->jenjang_pembelajaran == 'P3K' ? 'selected' : (old('jenjang_pembelajaran') == 'P3K' ? 'selected' : '') }}>
-                                    P3K</option>
-                                <option value="PKN I"
-                                    {{ isset($pengajuanKap) && $pengajuanKap->jenjang_pembelajaran == 'PKN I' ? 'selected' : (old('jenjang_pembelajaran') == 'PKN I' ? 'selected' : '') }}>
-                                    PKN I</option>
-                                <option value="PKN II"
-                                    {{ isset($pengajuanKap) && $pengajuanKap->jenjang_pembelajaran == 'PKN II' ? 'selected' : (old('jenjang_pembelajaran') == 'PKN II' ? 'selected' : '') }}>
-                                    PKN II</option>
-                                <option value="Kepemimpinan Administrator"
-                                    {{ isset($pengajuanKap) && $pengajuanKap->jenjang_pembelajaran == 'Kepemimpinan Administrator' ? 'selected' : (old('jenjang_pembelajaran') == 'Kepemimpinan Administrator' ? 'selected' : '') }}>
-                                    Kepemimpinan Administrator</option>
-                                <option value="Kepemimpinan Pengawas"
-                                    {{ isset($pengajuanKap) && $pengajuanKap->jenjang_pembelajaran == 'Kepemimpinan Pengawas' ? 'selected' : (old('jenjang_pembelajaran') == 'Kepemimpinan Pengawas' ? 'selected' : '') }}>
-                                    Kepemimpinan Pengawas</option>
-                                <option value="Penjenjangan Auditor Utama"
-                                    {{ isset($pengajuanKap) && $pengajuanKap->jenjang_pembelajaran == 'Penjenjangan Auditor Utama' ? 'selected' : (old('jenjang_pembelajaran') == 'Penjenjangan Auditor Utama' ? 'selected' : '') }}>
-                                    Penjenjangan Auditor Utama</option>
-                                <option value="Penjenjangan Auditor Madya"
-                                    {{ isset($pengajuanKap) && $pengajuanKap->jenjang_pembelajaran == 'Penjenjangan Auditor Madya' ? 'selected' : (old('jenjang_pembelajaran') == 'Penjenjangan Auditor Madya' ? 'selected' : '') }}>
-                                    Penjenjangan Auditor Madya</option>
-                                <option value="Penjenjangan Auditor Muda"
-                                    {{ isset($pengajuanKap) && $pengajuanKap->jenjang_pembelajaran == 'Penjenjangan Auditor Muda' ? 'selected' : (old('jenjang_pembelajaran') == 'Penjenjangan Auditor Muda' ? 'selected' : '') }}>
-                                    Penjenjangan Auditor Muda</option>
-                                <option value="Pembentukan Auditor Pertama"
-                                    {{ isset($pengajuanKap) && $pengajuanKap->jenjang_pembelajaran == 'Pembentukan Auditor Pertama' ? 'selected' : (old('jenjang_pembelajaran') == 'Pembentukan Auditor Pertama' ? 'selected' : '') }}>
-                                    Pembentukan Auditor Pertama</option>
-                                <option value="Pembentukan Auditor Terampil"
-                                    {{ isset($pengajuanKap) && $pengajuanKap->jenjang_pembelajaran == 'Pembentukan Auditor Terampil' ? 'selected' : (old('jenjang_pembelajaran') == 'Pembentukan Auditor Terampil' ? 'selected' : '') }}>
-                                    Pembentukan Auditor Terampil</option>
-                                <option value="APIP"
-                                    {{ isset($pengajuanKap) && $pengajuanKap->jenjang_pembelajaran == 'APIP' ? 'selected' : (old('jenjang_pembelajaran') == 'APIP' ? 'selected' : '') }}>
-                                    APIP</option>
-                                <option value="SPIP"
-                                    {{ isset($pengajuanKap) && $pengajuanKap->jenjang_pembelajaran == 'SPIP' ? 'selected' : (old('jenjang_pembelajaran') == 'SPIP' ? 'selected' : '') }}>
-                                    SPIP</option>
-                                <option value="LSP BPKP"
-                                    {{ isset($pengajuanKap) && $pengajuanKap->jenjang_pembelajaran == 'LSP BPKP' ? 'selected' : (old('jenjang_pembelajaran') == 'LSP BPKP' ? 'selected' : '') }}>
-                                    LSP BPKP</option>
-                                <option value="LSP Lainnya"
-                                    {{ isset($pengajuanKap) && $pengajuanKap->jenjang_pembelajaran == 'LSP Lainnya' ? 'selected' : (old('jenjang_pembelajaran') == 'LSP Lainnya' ? 'selected' : '') }}>
-                                    LSP Lainnya</option>
-                            </select>
-                            <div class="invalid-feedback">
-                                Mohon untuk pilih Jenjang Pembelajaran
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group row mb-3">
                         <label for="model_pembelajaran"
                             class="col-sm-3 col-form-label">{{ __('Model Pembelajaran') }}</label>
                         <div class="col-sm-6">

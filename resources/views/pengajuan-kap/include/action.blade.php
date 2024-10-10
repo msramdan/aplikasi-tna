@@ -1,6 +1,6 @@
 <td>
     <div>
-        <a href="{{ route('pengajuan-kap.pdf', [
+        <a target="_blank" href="{{ route('pengajuan-kap.pdf', [
             'id' => $model->id,
             'is_bpkp' => $model->institusi_sumber,
             'frekuensi' => $model->frekuensi_pelaksanaan,

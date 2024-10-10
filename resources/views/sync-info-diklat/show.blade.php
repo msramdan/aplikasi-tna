@@ -435,10 +435,6 @@
                                             <td>{{ $pengajuanKap->jalur_pembelajaran ?: '-' }}</td>
                                         </tr>
                                         <tr>
-                                            <td class="fw-bold">{{ __('Jenjang Pembelajaran') }}</td>
-                                            <td>{{ $pengajuanKap->jenjang_pembelajaran ?: '-' }}</td>
-                                        </tr>
-                                        <tr>
                                             <td class="fw-bold">{{ __('Model Pembelajaran') }}</td>
                                             <td>{{ $pengajuanKap->model_pembelajaran ?: '-' }}</td>
                                         </tr>

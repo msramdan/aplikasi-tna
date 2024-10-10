@@ -277,11 +277,6 @@
                 <td style="vertical-align: top;">{{ $pengajuanKap->jalur_pembelajaran ?: '-' }}</td>
             </tr>
             <tr>
-                <td style="vertical-align: top;">{{ __('Jenjang Pembelajaran') }}</td>
-                <td style="vertical-align: top;">:</td>
-                <td style="vertical-align: top;">{{ $pengajuanKap->jenjang_pembelajaran ?: '-' }}</td>
-            </tr>
-            <tr>
                 <td style="vertical-align: top;">{{ __('Model Pembelajaran') }}</td>
                 <td style="vertical-align: top;">:</td>
                 <td style="vertical-align: top;">{{ $pengajuanKap->model_pembelajaran ?: '-' }}</td>

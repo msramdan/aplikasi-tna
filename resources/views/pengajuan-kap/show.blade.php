@@ -494,10 +494,6 @@
                                             <td>{{ $pengajuanKap->jalur_pembelajaran ?: '-' }}</td>
                                         </tr>
                                         <tr>
-                                            <td class="fw-bold">{{ __('Jenjang Pembelajaran') }}</td>
-                                            <td>{{ $pengajuanKap->jenjang_pembelajaran ?: '-' }}</td>
-                                        </tr>
-                                        <tr>
                                             <td class="fw-bold">{{ __('Model Pembelajaran') }}</td>
                                             <td>{{ $pengajuanKap->model_pembelajaran ?: '-' }}</td>
                                         </tr>
@@ -697,21 +693,6 @@
                                                 <option value="{{ $row }}"
                                                     {{ isset($pengajuanKap) && $pengajuanKap->jalur_pembelajaran == $row ? 'selected' : '' }}>
                                                     {{ $row }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="jenjang_pembelajaran"
-                                            class="form-label">{{ __('Jenjang Pembelajaran') }}</label>
-                                        <select class="form-control" name="jenjang_pembelajaran" required
-                                            id="jenjang_pembelajaran">
-                                            <option value="" disabled>-- Pilih --</option>
-                                            @foreach (['CPNS', 'P3K', 'PKN I', 'PKN II', 'Kepemimpinan Administrator', 'Kepemimpinan Pengawas', 'Penjenjangan Auditor Utama', 'Penjenjangan Auditor Madya', 'Penjenjangan Auditor Muda', 'Pembentukan Auditor Pertama', 'Pembentukan Auditor Terampil', 'APIP', 'SPIP', 'LSP BPKP', 'LSP Lainnya'] as $jenjang)
-                                                <option value="{{ $jenjang }}"
-                                                    {{ isset($pengajuanKap) && $pengajuanKap->jenjang_pembelajaran == $jenjang ? 'selected' : '' }}>
-                                                    {{ $jenjang }}
                                                 </option>
                                             @endforeach
                                         </select>

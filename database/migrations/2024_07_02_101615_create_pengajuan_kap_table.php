@@ -59,23 +59,6 @@ return new class extends Migration
                 'Library cafe',
                 'Magang/praktik kerja'
             ])->nullable();
-            $table->enum('jenjang_pembelajaran', [
-                'CPNS',
-                'P3K',
-                'PKN I',
-                'PKN II',
-                'Kepemimpinan Administrator',
-                'Kepemimpinan Pengawas',
-                'Penjenjangan Auditor Utama',
-                'Penjenjangan Auditor Madya',
-                'Penjenjangan Auditor Muda',
-                'Pembentukan Auditor Pertama',
-                'Pembentukan Auditor Terampil',
-                'APIP',
-                'SPIP',
-                'LSP BPKP',
-                'LSP Lainnya'
-            ])->nullable();
             $table->enum('model_pembelajaran', ['Pembelajaran terstruktur', 'Pembelajaran kolaboratif', 'Pembelajaran di tempat kerja', 'Pembelajaran terintegrasi'])->nullable();
             $table->enum('peserta_pembelajaran', ['Internal', 'Eksternal', 'Internal dan Eksternal'])->nullable();
             $table->text('sasaran_peserta')->nullable();
