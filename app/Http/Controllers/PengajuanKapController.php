@@ -924,11 +924,7 @@ class PengajuanKapController extends Controller
             } else {
                 Alert::toast('Pengajuan Kap berhasil disetujui dan berhasil disinkronkan dengan Info Diklat.', 'success');
             }
-
-            return redirect()->route('pengajuan-kap.index', [
-                'is_bpkp' => $pengajuanKap->institusi_sumber,
-                'frekuensi' => $pengajuanKap->frekuensi_pelaksanaan,
-            ]);
+            return redirect()->back();
         } catch (\Exception $e) {
             DB::rollback();
             Alert::toast('Gagal menyetujui Pengajuan Kap. Error: ' . $e->getMessage(), 'error');
@@ -977,12 +973,7 @@ class PengajuanKapController extends Controller
 
             DB::commit();
             Alert::toast('Pengajuan Kap berhasil ditolak.', 'success');
-
-            // Redirect with success message
-            return redirect()->route('pengajuan-kap.index', [
-                'is_bpkp' => $pengajuanKap->institusi_sumber,
-                'frekuensi' => $pengajuanKap->frekuensi_pelaksanaan,
-            ]);
+            return redirect()->back();
         } catch (\Exception $e) {
             DB::rollback();
             Alert::toast('Gagal menolak Pengajuan Kap. Silakan coba lagi', 'error');
