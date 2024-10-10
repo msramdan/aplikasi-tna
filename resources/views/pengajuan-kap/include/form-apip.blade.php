@@ -340,12 +340,10 @@
                                 <div class="row">
                                     <input type="hidden" name="remark_1" class="form-control" value="Tatap Muka">
                                     <div class="col-sm-6">
-                                        <input type="date" name="tatap_muka_start" class="form-control" required
-                                            placeholder="Mulai">
+                                        <input type="date" name="tatap_muka_start" class="form-control" required placeholder="Mulai">
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="date" name="tatap_muka_end" class="form-control"
-                                            placeholder="Selesai">
+                                        <input type="date" name="tatap_muka_end" class="form-control" placeholder="Selesai">
                                     </div>
                                 </div>
                             </div>
@@ -356,24 +354,20 @@
                                 <div class="row">
                                     <input type="hidden" name="remark_2" class="form-control" value="E-Learning">
                                     <div class="col-sm-6">
-                                        <input type="date" name="hybrid_elearning_start" class="form-control"
-                                            placeholder="Mulai">
+                                        <input type="date" name="hybrid_elearning_start" class="form-control" placeholder="Mulai">
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="date" name="hybrid_elearning_end" class="form-control"
-                                            placeholder="Selesai">
+                                        <input type="date" name="hybrid_elearning_end" class="form-control" placeholder="Selesai">
                                     </div>
                                 </div>
                                 <label>Tanggal Tatap Muka:</label>
                                 <div class="row mb-2">
                                     <input type="hidden" name="remark_3" class="form-control" value="Tatap Muka">
                                     <div class="col-sm-6">
-                                        <input type="date" name="hybrid_tatap_muka_start" class="form-control"
-                                            placeholder="Mulai">
+                                        <input type="date" name="hybrid_tatap_muka_start" class="form-control" placeholder="Mulai">
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="date" name="hybrid_tatap_muka_end" class="form-control"
-                                            placeholder="Selesai">
+                                        <input type="date" name="hybrid_tatap_muka_end" class="form-control" placeholder="Selesai">
                                     </div>
                                 </div>
                             </div>
@@ -384,12 +378,10 @@
                                 <div class="row">
                                     <input type="hidden" name="remark_4" class="form-control" value="E-Learning">
                                     <div class="col-sm-6">
-                                        <input type="date" name="elearning_start" class="form-control"
-                                            placeholder="Mulai">
+                                        <input type="date" name="elearning_start" class="form-control" placeholder="Mulai">
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="date" name="elearning_end" class="form-control"
-                                            placeholder="Selesai">
+                                        <input type="date" name="elearning_end" class="form-control" placeholder="Selesai">
                                     </div>
                                 </div>
                             </div>
