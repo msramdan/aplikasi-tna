@@ -550,4 +550,33 @@
             });
         });
     </script>
+    {{-- Disable selec tahun --}}
+    <script>
+        $(document).ready(function() {
+            var tahun = {{ $tahun }}; // Ambil tahun dari controller
+
+            // Fungsi untuk set batas tanggal
+            function setDateLimits(fieldName, year) {
+                // Set batas min dan max berdasarkan tahun
+                var startDate = year + "-01-01"; // Awal tahun
+                var endDate = year + "-12-31"; // Akhir tahun
+
+                // Set batas min dan max untuk input date
+                $('input[name="' + fieldName + '"]').attr('min', startDate);
+                $('input[name="' + fieldName + '"]').attr('max', endDate);
+            }
+
+            // Panggil fungsi setDateLimits untuk setiap field input tanggal
+            setDateLimits('tatap_muka_start', tahun);
+            setDateLimits('tatap_muka_end', tahun);
+            setDateLimits('hybrid_elearning_start', tahun);
+            setDateLimits('hybrid_elearning_end', tahun);
+            setDateLimits('hybrid_tatap_muka_start', tahun);
+            setDateLimits('hybrid_tatap_muka_end', tahun);
+            setDateLimits('elearning_start', tahun);
+            setDateLimits('elearning_end', tahun);
+
+            // Menambahkan logika tambahan jika ada interaksi lain
+        });
+    </script>
 @endpush
