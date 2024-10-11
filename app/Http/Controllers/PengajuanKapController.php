@@ -461,6 +461,7 @@ class PengajuanKapController extends Controller
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
+
             $metodeID = $validatedData['metodeID'];
             if ($metodeID === '1') {
                 DB::table('waktu_pelaksanaan')->insert([
@@ -530,6 +531,7 @@ class PengajuanKapController extends Controller
                     'updated_at' => now(),
                 ]);
             }
+
             $remarks = ($frekuensi == 'Tahunan') ?
                 [
                     'Biro SDM',
@@ -674,6 +676,90 @@ class PengajuanKapController extends Controller
                 'user_created' => Auth::id(),
                 'updated_at' => now(),
             ]);
+
+        $metodeID = $validatedData['metodeID'];
+        DB::table('waktu_pelaksanaan')
+            ->where('pengajuan_kap_id', $id)
+            ->delete();
+        if ($metodeID === '1') {
+            DB::table('waktu_pelaksanaan')->insert([
+                'pengajuan_kap_id' => $id,
+                'remarkMetodeName' => $validatedData['remark_1'],
+                'tanggal_mulai' => $validatedData['tatap_muka_start'],
+                'tanggal_selesai' => $validatedData['tatap_muka_end'],
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        } elseif ($metodeID === '2') {
+            // Insert E-Learning data
+            DB::table('waktu_pelaksanaan')->insert([
+                'pengajuan_kap_id' => $id,
+                'remarkMetodeName' => $validatedData['remark_2'],
+                'tanggal_mulai' => $validatedData['hybrid_elearning_start'],
+                'tanggal_selesai' => $validatedData['hybrid_elearning_end'],
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+            // Insert Tatap Muka data
+            DB::table('waktu_pelaksanaan')->insert([
+                'pengajuan_kap_id' => $id,
+                'remarkMetodeName' => $validatedData['remark_3'],
+                'tanggal_mulai' => $validatedData['hybrid_tatap_muka_start'],
+                'tanggal_selesai' => $validatedData['hybrid_tatap_muka_end'],
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        } else {
+            DB::table('waktu_pelaksanaan')->insert([
+                'pengajuan_kap_id' => $id,
+                'remarkMetodeName' => $validatedData['remark_4'],
+                'tanggal_mulai' => $validatedData['elearning_start'],
+                'tanggal_selesai' => $validatedData['elearning_end'],
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
+
+        // insert table gap_kompetensi_pengajuan_kap
+        DB::table('gap_kompetensi_pengajuan_kap')
+            ->where('pengajuan_kap_id', $id)
+            ->delete();
+        DB::table('gap_kompetensi_pengajuan_kap')->insert([
+            'pengajuan_kap_id' => $id,
+            'total_pegawai' => $request->total_pegawai ?? 0,
+            'pegawai_kompeten' => $request->pegawai_kompeten ?? 0,
+            'pegawai_belum_kompeten' => $request->pegawai_belum_kompeten ?? 0,
+            'persentase_kompetensi' => $request->persentase_kompetensi ?? 0,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        DB::table('indikator_keberhasilan_kap')
+            ->where('pengajuan_kap_id', $id)
+            ->delete();
+        foreach ($validatedData['indikator_keberhasilan'] as $index => $row) {
+            DB::table('indikator_keberhasilan_kap')->insert([
+                'pengajuan_kap_id' => $id,
+                'indikator_keberhasilan' => $row,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
+
+        DB::table('level_evaluasi_instrumen_kap')
+            ->where('pengajuan_kap_id', $id)
+            ->delete();
+        foreach ($validatedData['level_evaluasi_instrumen'] as $index => $x) {
+            DB::table('level_evaluasi_instrumen_kap')->insert([
+                'pengajuan_kap_id' => $id,
+                'level' => $validatedData['no_level'][$index],
+                'keterangan' => $x,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
+
         Alert::toast('Pengajuan KAP berhasil diperbarui.', 'success');
         return redirect()->route('pengajuan-kap.index', ['is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi]);
     }
