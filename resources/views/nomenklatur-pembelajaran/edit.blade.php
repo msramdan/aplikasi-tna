@@ -89,7 +89,7 @@
                             <div class="row mt-4">
                                 <div class="col-md-12">
                                     <a href="{{ route('nomenklatur-pembelajaran.index') }}"
-                                        class="btn btn-secondary">Back</a>
+                                        class="btn btn-secondary">Kembali</a>
                                     @can('nomenklatur pembelajaran edit')
                                         @if ($nomenklaturPembelajaran->status == 'Pending')
                                             <button type="button" class="btn btn-success" data-bs-toggle="modal"
