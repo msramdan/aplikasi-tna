@@ -268,9 +268,10 @@ class PengajuanKapController extends Controller
         $indikator_keberhasilan_kap = DB::table('indikator_keberhasilan_kap')
             ->where('pengajuan_kap_id', $id)
             ->get();
-        $waktu_pelaksanaan = DB::table('waktu_pelaksanaan')
+            $waktu_pelaksanaan = DB::table('waktu_pelaksanaan')
             ->where('pengajuan_kap_id', $id)
-            ->get();
+            ->get()
+            ->toArray(); // Dapatkan data dalam bentuk array
         $gap_kompetensi_pengajuan_kap = DB::table('gap_kompetensi_pengajuan_kap')
             ->where('pengajuan_kap_id', $id)
             ->first();
@@ -322,7 +323,7 @@ class PengajuanKapController extends Controller
             'jalur_pembelajaran' => $jalur_pembelajaran,
             'level_evaluasi_instrumen_kap' => $level_evaluasi_instrumen_kap,
             'indikator_keberhasilan_kap' => $indikator_keberhasilan_kap,
-            'waktu_pelaksanaan' => $waktu_pelaksanaan,
+            'waktuPelaksanaanData' => json_encode($waktu_pelaksanaan),
             'metode_data' => $metode_data,
             'diklatType_data' => $diklatType_data,
             'diklatLocation_data' => $diklatLocation_data,

@@ -334,7 +334,7 @@
                                 </option>
                                 @foreach ($metode_data as $metode)
                                     <option value="{{ $metode['metodeID'] }}"
-                                        data-metoName="{{ $metode['metodeName'] }}"
+                                        data-metode-name="{{ $metode['metodeName'] }}"
                                         {{ isset($pengajuanKap) && $pengajuanKap->metodeID == $metode['metodeID'] ? 'selected' : (old('metodeID') == $metode['metodeID'] ? 'selected' : '') }}>
                                         {{ $metode['metodeName'] }}
                                     </option>

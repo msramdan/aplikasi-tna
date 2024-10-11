@@ -540,7 +540,7 @@
         $(document).ready(function() {
             function updateMetodeName() {
                 var selectedOption = $('#metodeID option:selected');
-                var metodeName = selectedOption.data('metoname');
+                var metodeName = selectedOption.data('metode-name');
                 $('#metodeName').val(metodeName);
             }
             $('#metodeID').on('change', function() {
@@ -548,35 +548,63 @@
             });
             updateMetodeName();
         });
+    </script>
 
+    <!-- Add script for waktuPelaksanaanData -->
+    <script>
+        // Ambil data waktu_pelaksanaan dari controller
+        var waktuPelaksanaanData = {!! $waktuPelaksanaanData !!};
+    </script>
+
+    <!-- Include your existing JavaScript for form handling -->
+    <script>
         $(document).ready(function() {
-            $('#metodeID').on('change', function() {
-                var value = $(this).val();
-                $('#additional_fields').show();
+            // Saat halaman pertama kali di-load, cek metodeID yang ada
+            var metodeID = $('#metodeID').val(); // Ambil value dari metodeID yang disimpan di form
+            handleMetodeFields(metodeID); // Jalankan fungsi untuk menampilkan fields sesuai metode yang ada
 
-                // Reset values and hide fields, except for remark_1, remark_2, and remark_3
-                $('#tatap_muka_fields').hide().find('input:not([name="remark_1"])').val('').removeAttr(
-                    'required');
+            // Event listener untuk handle change pada metodeID
+            $('#metodeID').on('change', function() {
+                var metodeID = $(this).val();
+                handleMetodeFields(metodeID); // Panggil fungsi handleMetodeFields saat ada perubahan metode
+            });
+
+            // Fungsi untuk menampilkan dan mengisi field sesuai metode yang dipilih
+            function handleMetodeFields(metodeID) {
+                var pengajuanMetodeID = "{{ $pengajuanKap->metodeID }}";
+                $('#additional_fields').show();
+                $('#tatap_muka_fields').hide().find('input:not([name="remark_1"])').val('').removeAttr('required');
                 $('#hybrid_fields').hide().find('input:not([name="remark_2"], [name="remark_3"])').val('')
                     .removeAttr('required');
-                $('#elearning_fields').hide().find('input:not([name="remark_4"])').val('').removeAttr(
-                    'required');
-
-                // Show relevant fields and set required attribute
-                if (value == '1') {
+                $('#elearning_fields').hide().find('input:not([name="remark_4"])').val('').removeAttr('required');
+                if (metodeID == '1') {
                     $('#tatap_muka_fields').show().find(
-                        'input[name="tatap_muka_start"], input[name="tatap_muka_end"]').attr('required',
-                        true);
-                } else if (value == '2') {
+                        'input[name="tatap_muka_start"], input[name="tatap_muka_end"]').attr('required', true);
+                    if (waktuPelaksanaanData.length > 0 && pengajuanMetodeID == '1') {
+                        $('input[name="tatap_muka_start"]').val(waktuPelaksanaanData[0].tanggal_mulai);
+                        $('input[name="tatap_muka_end"]').val(waktuPelaksanaanData[0].tanggal_selesai);
+                    }
+                } else if (metodeID == '2') {
                     $('#hybrid_fields').show().find(
                         'input[name="hybrid_elearning_start"], input[name="hybrid_elearning_end"], input[name="hybrid_tatap_muka_start"], input[name="hybrid_tatap_muka_end"]'
                     ).attr('required', true);
-                } else if (value == '4') {
+                    if (waktuPelaksanaanData.length > 0 && pengajuanMetodeID == '2') {
+                        $('input[name="hybrid_elearning_start"]').val(waktuPelaksanaanData[0].tanggal_mulai);
+                        $('input[name="hybrid_elearning_end"]').val(waktuPelaksanaanData[0].tanggal_selesai);
+                        $('input[name="hybrid_tatap_muka_start"]').val(waktuPelaksanaanData[1]?.tanggal_mulai ||
+                            '');
+                        $('input[name="hybrid_tatap_muka_end"]').val(waktuPelaksanaanData[1]?.tanggal_selesai ||
+                            '');
+                    }
+                } else if (metodeID == '4') {
                     $('#elearning_fields').show().find(
-                        'input[name="elearning_start"], input[name="elearning_end"]').attr('required',
-                        true);
+                        'input[name="elearning_start"], input[name="elearning_end"]').attr('required', true);
+                    if (waktuPelaksanaanData.length > 0 && pengajuanMetodeID == '4') {
+                        $('input[name="elearning_start"]').val(waktuPelaksanaanData[0].tanggal_mulai);
+                        $('input[name="elearning_end"]').val(waktuPelaksanaanData[0].tanggal_selesai);
+                    }
                 }
-            });
+            }
         });
     </script>
 

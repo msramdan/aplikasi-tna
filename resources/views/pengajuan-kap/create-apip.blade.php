@@ -426,7 +426,7 @@
         $(document).ready(function() {
             function updateMetodeName() {
                 var selectedOption = $('#metodeID option:selected');
-                var metodeName = selectedOption.data('metoname');
+                var metodeName = selectedOption.data('metode-name');
                 $('#metodeName').val(metodeName);
             }
             $('#metodeID').on('change', function() {
