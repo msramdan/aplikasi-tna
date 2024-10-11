@@ -101,7 +101,8 @@
                 var inputFields = [
                     'jenis_program', 'topik_id', 'bentuk_pembelajaran',
                     'jalur_pembelajaran', 'model_pembelajaran', 'diklatLocID',
-                    'metodeID', 'penyelenggara_pembelajaran', 'prioritas_pembelajaran', 'diklatLocID', 'diklatTypeID', 'peserta_pembelajaran'
+                    'metodeID', 'penyelenggara_pembelajaran', 'prioritas_pembelajaran', 'diklatLocID', 'diklatTypeID',
+                    'peserta_pembelajaran'
                 ];
 
                 inputFields.forEach(field => {
@@ -502,7 +503,7 @@
             $('#topik_id').on('change', function() {
                 const selectedOption = $(this).find('option:selected');
                 const namaTopik = selectedOption.data('nama-topik');
-
+                console.log(namaTopik);
                 if (namaTopik) {
                     $('#judul').val(namaTopik);
                 } else {

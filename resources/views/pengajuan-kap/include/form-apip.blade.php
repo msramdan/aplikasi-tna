@@ -122,39 +122,38 @@
                         class="form-control" placeholder="" required readonly
                         value="{{ isset($pengajuanKap) ? $gap_kompetensi_pengajuan_kap->persentase_kompetensi : old('persentase_kompetensi') }}" />
 
+                    <div class="form-group row mb-3">
+                        <label for="topik_id" class="col-sm-3 col-form-label">
+                            {{ __('Program pembelajaran') }} <span style="color: red">*</span>
+                        </label>
+                        <div class="col-sm-6">
+                            <div class="d-flex">
+                                <select
+                                    class="form-control js-example-basic-multiple @error('topik_id') is-invalid @enderror"
+                                    name="topik_id" id="topik_id" required>
+                                    <option value="" selected disabled>--
+                                        {{ __('Select program pembelajaran') }} --</option>
 
-                        <div class="form-group row mb-3">
-                            <label for="topik_id" class="col-sm-3 col-form-label">
-                                {{ __('Program pembelajaran') }} <span style="color: red">*</span>
-                            </label>
-                            <div class="col-sm-6">
-                                <div class="d-flex">
-                                    <select
-                                        class="form-control js-example-basic-multiple @error('topik_id') is-invalid @enderror"
-                                        name="topik_id" id="topik_id" required>
-                                        <option value="" selected disabled>-- {{ __('Select program pembelajaran') }} --</option>
-
-                                        @if(isset($pengajuanKap))
-                                            @foreach($topikOptions as $topik)
-                                                <option value="{{ $topik->id }}"
-                                                    {{ $topik->id == $pengajuanKap->topik_id ? 'selected' : '' }}>
-                                                    {{ $topik->nama_topik }}
-                                                </option>
-                                            @endforeach
-                                        @endif
-                                    </select>
-                                    <button type="button" id="usulanButton" class="btn btn-danger ms-2" data-bs-toggle="modal"
-                                        data-bs-target="#usulanModal">
-                                        <i class="fa fa-plus" aria-hidden="true"></i>
-                                    </button>
-                                    <div class="invalid-feedback">
-                                        Mohon untuk pilih program pembelajaran
-                                    </div>
+                                    @if (isset($pengajuanKap))
+                                        @foreach ($topikOptions as $topik)
+                                            <option value="{{ $topik->id }}"
+                                                data-nama-topik="{{ $topik->nama_topik }}"
+                                                {{ $topik->id == $pengajuanKap->topik_id ? 'selected' : '' }}>
+                                                {{ $topik->nama_topik }}
+                                            </option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                                <button type="button" id="usulanButton" class="btn btn-danger ms-2"
+                                    data-bs-toggle="modal" data-bs-target="#usulanModal">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                </button>
+                                <div class="invalid-feedback">
+                                    Mohon untuk pilih program pembelajaran
                                 </div>
                             </div>
                         </div>
-
-
+                    </div>
 
                     <div class="form-group row mb-3">
                         <label class="col-sm-3 col-form-label" for="judul">{{ __('Judul Program Pembelajaran') }}
