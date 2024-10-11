@@ -271,6 +271,14 @@ class PengajuanKapController extends Controller
         $waktu_pelaksanaan = DB::table('waktu_pelaksanaan')
             ->where('pengajuan_kap_id', $id)
             ->get();
+        $gap_kompetensi_pengajuan_kap = DB::table('gap_kompetensi_pengajuan_kap')
+            ->where('pengajuan_kap_id', $id)
+            ->first();
+        $topikOptions = DB::table('tagging_pembelajaran_kompetensi')
+            ->join('topik', 'tagging_pembelajaran_kompetensi.topik_id', '=', 'topik.id')
+            ->select('topik.id', 'topik.nama_topik')
+            ->where('tagging_pembelajaran_kompetensi.kompetensi_id', $pengajuanKap->kompetensi_id)
+            ->get();
 
         $endpoint_pusdiklatwap = config('stara.endpoint_pusdiklatwap');
         $api_key_pusdiklatwap = config('stara.api_token_pusdiklatwap');
@@ -306,7 +314,6 @@ class PengajuanKapController extends Controller
         }
 
         // dd( $diklatLocation_data);
-
         return view('pengajuan-kap.edit', [
             'pengajuanKap' => $pengajuanKap,
             'is_bpkp' => $is_bpkp,
@@ -319,6 +326,8 @@ class PengajuanKapController extends Controller
             'metode_data' => $metode_data,
             'diklatType_data' => $diklatType_data,
             'diklatLocation_data' => $diklatLocation_data,
+            'gap_kompetensi_pengajuan_kap' => $gap_kompetensi_pengajuan_kap,
+            'topikOptions' => $topikOptions ,
             'tahun' => $pengajuanKap->tahun,
         ]);
     }

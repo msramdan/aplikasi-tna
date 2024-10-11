@@ -98,7 +98,8 @@
         <div id="step-1" class="tab-pane" role="tabpanel" aria-labelledby="step-1" style="display: none;">
             <form id="form-1">
                 <input type="hidden" name="tahun" id="tahun" class="form-control" placeholder=""
-                    value="{{ $tahun }}" required readonly />
+                value="{{ $tahun }}" required readonly />
+
                 <div class="row" style="padding: 20px">
                     <div class="form-group row mb-3">
                         <label for="jenis_program" class="col-sm-3 col-form-label">{{ __('Jenis Program') }} <span
@@ -128,7 +129,7 @@
                         <div class="col-sm-6">
                             <div class="input-group">
                                 <input type="text" name="indikator_kinerja" id="indikator_kinerja"
-                                    class="form-control" placeholder="" required readonly />
+                                    class="form-control" placeholder="" required readonly value="{{ isset($pengajuanKap) ? $pengajuanKap->indikator_kinerja : old('indikator_kinerja') }} "/>
                                 <button type="button" id="pilihButton" class="input-group-text btn btn-success">
                                     Pilih
                                 </button>
@@ -144,9 +145,9 @@
                                 style="color: red">*</span></label>
                         <div class="col-sm-6">
                             <div class="input-group">
-                                <input type="text" name="kompetensi_text" id="kompetensi_text"
+                                <input type="text" value="{{ isset($pengajuanKap) ? $pengajuanKap->nama_kompetensi : old('nama_kompetensi') }}" name="kompetensi_text" id="kompetensi_text"
                                     class="form-control" placeholder="" required readonly />
-                                <input type="hidden" name="kompetensi_id" id="kompetensi_id" class="form-control"
+                                <input type="hidden" value="{{ isset($pengajuanKap) ? $pengajuanKap->kompetensi_id : old('kompetensi_id') }}" name="kompetensi_id" id="kompetensi_id" class="form-control"
                                     placeholder="" required readonly />
                                 <button type="button" id="pilihButtonKompetensi"
                                     class="input-group-text btn btn-success">
@@ -160,13 +161,13 @@
                     </div>
 
                     <input type="hidden" name="total_pegawai" id="total_pegawai" class="form-control"
-                        placeholder="" required readonly />
+                        placeholder="" required readonly value="{{ isset($pengajuanKap) ? $gap_kompetensi_pengajuan_kap->total_pegawai : old('total_pegawai') }}" />
                     <input type="hidden" name="pegawai_kompeten" id="pegawai_kompeten" class="form-control"
-                        placeholder="" required readonly />
+                        placeholder="" required readonly value="{{ isset($pengajuanKap) ? $gap_kompetensi_pengajuan_kap->pegawai_kompeten : old('pegawai_kompeten') }}" />
                     <input type="hidden" name="pegawai_belum_kompeten" id="pegawai_belum_kompeten"
-                        class="form-control" placeholder="" required readonly />
+                        class="form-control" placeholder="" required readonly value="{{ isset($pengajuanKap) ? $gap_kompetensi_pengajuan_kap->pegawai_belum_kompeten : old('pegawai_belum_kompeten') }}" />
                     <input type="hidden" name="persentase_kompetensi" id="persentase_kompetensi"
-                        class="form-control" placeholder="" required readonly />
+                        class="form-control" placeholder="" required readonly value="{{ isset($pengajuanKap) ? $gap_kompetensi_pengajuan_kap->persentase_kompetensi : old('persentase_kompetensi') }}" />
 
                     <div class="form-group row mb-3">
                         <label for="topik_id" class="col-sm-3 col-form-label">
@@ -177,11 +178,19 @@
                                 <select
                                     class="form-control js-example-basic-multiple @error('topik_id') is-invalid @enderror"
                                     name="topik_id" id="topik_id" required>
-                                    <option value="" selected disabled>-- {{ __('Select program pembelajaran') }}
-                                        --</option>
+                                    <option value="" selected disabled>-- {{ __('Select program pembelajaran') }} --</option>
+
+                                    @if(isset($pengajuanKap))
+                                        @foreach($topikOptions as $topik)
+                                            <option value="{{ $topik->id }}"
+                                                {{ $topik->id == $pengajuanKap->topik_id ? 'selected' : '' }}>
+                                                {{ $topik->nama_topik }}
+                                            </option>
+                                        @endforeach
+                                    @endif
                                 </select>
-                                <button type="button" id="usulanButton" class="btn btn-danger ms-2"
-                                    data-bs-toggle="modal" data-bs-target="#usulanModal">
+                                <button type="button" id="usulanButton" class="btn btn-danger ms-2" data-bs-toggle="modal"
+                                    data-bs-target="#usulanModal">
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                 </button>
                                 <div class="invalid-feedback">
@@ -190,8 +199,6 @@
                             </div>
                         </div>
                     </div>
-
-
 
                     <div class="form-group row mb-3">
                         <label class="col-sm-3 col-form-label" for="judul">{{ __('Judul Program Pembelajaran') }}

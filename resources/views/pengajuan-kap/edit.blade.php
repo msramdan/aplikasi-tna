@@ -242,8 +242,8 @@
     <script>
         $(document).ready(function() {
             const options_temp = '<option value="" selected disabled>-- Select --</option>';
-            $('#pilihButton').prop('disabled', true);
-            $('#pilihButtonKompetensi').prop('disabled', true);
+            $('#pilihButton').prop('disabled', false);
+            $('#pilihButtonKompetensi').prop('disabled', false);
             $('#jenis_program').change(function() {
                 $('#indikator_kinerja').val('');
                 $('#kompetensi_id').val('');
