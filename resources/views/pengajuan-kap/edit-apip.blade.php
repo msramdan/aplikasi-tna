@@ -245,190 +245,49 @@
     <script>
         $(document).ready(function() {
             const options_temp = '<option value="" selected disabled>-- Select --</option>';
-            $('#pilihButton').prop('disabled', false);
             $('#pilihButtonKompetensi').prop('disabled', false);
-            $('#jenis_program').change(function() {
-                $('#indikator_kinerja').val('');
-                $('#kompetensi_id').val('');
-                $('#kompetensi_text').val('');
-                $('#total_pegawai').val('');
-                $('#pegawai_kompeten').val('');
-                $('#pegawai_belum_kompeten').val('');
-                $('#persentase_kompetensi').val('');
-                $('#topik_id').html(options_temp);
-                $('#judul').val('');
-                $('#pilihButtonKompetensi').prop('disabled', true);
-                var selectedValue = $(this).val();
-                if (selectedValue !== '') {
-                    $('#pilihButton').prop('disabled', false);
-                } else {
-                    $('#pilihButton').prop('disabled', true);
-                }
-            });
-
-            $('#pilihButton').click(function() {
-                var jenisProgram = $('#jenis_program').val();
-                $('#loading-overlay').show();
-                $.ajax({
-                    url: '{{ route('getIndikator', ['jenisProgram' => ':jenisProgram']) }}'
-                        .replace(':jenisProgram', jenisProgram),
-                    type: 'GET',
-                    success: function(response) {
-                        if (response.data.length === 0) {
-                            $('#loading-overlay').hide();
-                            Swal.fire({
-                                icon: 'warning',
-                                title: 'Data Tidak Ditemukan',
-                                text: 'Tidak ada data yang ditemukan untuk Indikator Kinerja',
-                            });
-                            return;
-                        }
-
-                        var modalBody = $('#indikatorModal .modal-body');
-                        modalBody.empty();
-
-                        var table =
-                            '<div class="table-responsive"><table class="table table-sm table-striped" style="font-size:14px"><thead><tr>';
-                        var tableBody = '<tbody>';
-
-                        if (jenisProgram === 'Renstra') {
-                            table +=
-                                '<th>Indikator</th><th>Satuan Target</th><th>Target</th><th>Realisasi TW1</th><th>Realisasi TW2</th><th>Realisasi TW3</th><th>Realisasi TW4</th><th>Persen Realisasi</th><th>Aksi</th></tr></thead>';
-                            $.each(response.data, function(key, value) {
-                                tableBody += '<tr>';
-                                tableBody += '<td>' + value.indikator_kinerja + '</td>';
-                                tableBody += '<td>' + value.satuan_target + '</td>';
-                                tableBody += '<td>' + value.target + '</td>';
-                                tableBody += '<td>' + value.realisasi_tw1 + '</td>';
-                                tableBody += '<td>' + value.realisasi_tw2 + '</td>';
-                                tableBody += '<td>' + value.realisasi_tw3 + '</td>';
-                                tableBody += '<td>' + value.realisasi_tw4 + '</td>';
-                                tableBody += '<td>' + value.persen_realisasi + '</td>';
-                                tableBody +=
-                                    '<td><button type="button" class="btn btn-primary pilihIndikator btn-sm" data-indikator=\'' +
-                                    value.indikator_kinerja + '\'>Pilih</button></td>';
-                                tableBody += '</tr>';
-                            });
-                        } else if (jenisProgram === 'APP') {
-                            table +=
-                                '<th>Nama Sektor</th><th>Nama Tema</th><th>Nama Topik</th><th>Nama PJ APP</th><th>TW APP</th><th>Tahun</th><th>Stat Nilai</th><th>Nilai T</th><th>Aksi</th></tr></thead>';
-                            $.each(response.data, function(key, value) {
-                                tableBody += '<tr>';
-                                tableBody += '<td>' + value.nama_sektor + '</td>';
-                                tableBody += '<td>' + value.nama_tema + '</td>';
-                                tableBody += '<td>' + value.nama_topik + '</td>';
-                                tableBody += '<td>' + value.nama_pj_app + '</td>';
-                                tableBody += '<td>' + value.tw_app + '</td>';
-                                tableBody += '<td>' + value.tahun + '</td>';
-                                tableBody += '<td>' + value.stat_nilai + '</td>';
-                                tableBody += '<td>' + value.nilai_t + '</td>';
-                                tableBody +=
-                                    '<td><button type="button" class="btn btn-primary pilihIndikator btn-sm" data-indikator=\'' +
-                                    value.nama_topik + '\'>Pilih</button></td>';
-                                tableBody += '</tr>';
-                            });
-
-                        } else if (jenisProgram === 'APEP') {
-                            table +=
-                                '<th>Nama Sektor</th><th>Nama Tema</th><th>Nama Topik</th><th>Nama PJ APP</th><th>TW APP</th><th>Tahun</th><th>Stat Nilai</th><th>Nilai T</th><th>Aksi</th></tr></thead>';
-                            $.each(response.data, function(key, value) {
-                                tableBody += '<tr>';
-                                tableBody += '<td>' + value.nama_sektor + '</td>';
-                                tableBody += '<td>' + value.nama_tema + '</td>';
-                                tableBody += '<td>' + value.nama_topik + '</td>';
-                                tableBody += '<td>' + value.nama_pj_app + '</td>';
-                                tableBody += '<td>' + value.tw_app + '</td>';
-                                tableBody += '<td>' + value.tahun + '</td>';
-                                tableBody += '<td>' + value.stat_nilai + '</td>';
-                                tableBody += '<td>' + value.nilai_t + '</td>';
-                                tableBody +=
-                                    '<td><button type="button" class="btn btn-primary pilihIndikator btn-sm" data-indikator=\'' +
-                                    value.nama_topik + '\'>Pilih</button></td>';
-                                tableBody += '</tr>';
-                            });
-                        } else {
-                            $('#loading-overlay').hide();
-                            alert('API belum fix. Data tidak dapat dimuat.');
-                            return;
-                        }
-
-                        table += tableBody + '</tbody></table></div>';
-                        modalBody.append(table);
-
-                        $('#indikatorModal').modal('show');
-                        $('#loading-overlay').hide();
-                        $('.pilihIndikator').click(function() {
-                            $('#pilihButtonKompetensi').prop('disabled', false);
-                        });
-                    },
-                    error: function() {
-                        $('#loading-overlay').hide();
-                        alert('Terjadi kesalahan saat memuat data.');
-                    }
-                });
-            });
 
             $('#pilihButtonKompetensi').click(function() {
-                var indikator = $('#indikator_kinerja').val();
-                console.log(indikator);
-
                 $('#loading-overlay').show();
                 $.ajax({
-                    url: '{{ route('getKompetensiSupportIK') }}',
+                    url: '{{ route('getKompetensiApip') }}',
                     type: 'GET',
-                    data: {
-                        indikator: indikator
-                    },
+                    data: {},
                     success: function(response) {
-                        if (response.kompetensi_summary.length === 0) {
-                            $('#loading-overlay').hide();
-                            Swal.fire({
-                                icon: 'warning',
-                                title: 'Data Tidak Ditemukan',
-                                text: 'Tidak ada data yang ditemukan untuk Kompetensi',
-                            });
-                            return;
-                        }
-
                         var modalBody = $('#kompetensiModal .modal-body');
                         modalBody.empty();
-                        var table =
-                            '<div class="table-responsive"><table class="table table-sm table-striped" style="font-size:14px"><thead><tr>';
-                        var tableBody = '<tbody>';
+
                         var table =
                             '<div class="table-responsive"><table class="table table-sm table-striped" style="font-size:14px"><thead><tr>';
                         var tableBody = '<tbody>';
 
                         // Update table headers to include the new columns
                         table +=
-                            '<th>Kompetensi</th><th>Total pegawai</th><th>Pegawai kompeten</th><th>Pegawai belum kompeten</th><th>Persentase kompetensi</th><th>Aksi</th></tr></thead>';
+                            '<th>Kompetensi</th><th>Target</th><th>Capaian</th><th>Aksi</th></tr></thead>';
 
-                        $.each(response.kompetensi_summary, function(key, value) {
+                        // Assuming 'response.data' contains the kompetensi data from the API
+                        $.each(response.data, function(key, value) {
                             tableBody += '<tr>';
-                            tableBody += '<td>' + value.nama_kompetensi + '</td>';
-                            tableBody += '<td>' + value.total_employees +
-                                '</td>'; // Total Karyawan
-                            tableBody += '<td>' + value.count_100 +
-                                '</td>'; // Count 100%
-                            tableBody += '<td>' + value.count_less_than_100 +
-                                '</td>'; // Count < 100%
-                            tableBody += '<td>' + value.average_persentase + '%</td>';
+                            tableBody += '<td>' + value.nama_kompetensi +
+                                '</td>'; // Nama Kompetensi
+                            tableBody += '<td>' + (value.target !== null ? value
+                                .target : 'N/A') + '</td>'; // Target
+                            tableBody += '<td>' + (value.capaian !== null ? value
+                                .capaian : 'N/A') + '</td>'; // Capaian
                             tableBody +=
                                 '<td><button type="button" class="btn btn-primary pilihKompetensi btn-sm" ' +
                                 'data-kompetensi="' + value.nama_kompetensi + '" ' +
-                                'data-id="' + value.kompetensi_id + '" ' +
-                                'data-total-employees="' + value.total_employees +
-                                '" ' +
-                                'data-count-100="' + value.count_100 + '" ' +
-                                'data-count-less-than-100="' + value
-                                .count_less_than_100 + '" ' +
-                                'data-average-persentase="' + value.average_persentase +
-                                '">' +
+                                'data-id="' + value.id_kompetensi + '" ' +
+                                'data-target="' + (value.target !== null ? value
+                                    .target : 'N/A') + '" ' +
+                                'data-capaian="' + (value.capaian !== null ? value
+                                    .capaian : 'N/A') + '">' +
                                 'Pilih</button></td>';
                             tableBody += '</tr>';
                         });
 
                         table += tableBody + '</tbody></table></div>';
+
                         modalBody.append(table);
                         $('#kompetensiModal').modal('show');
                         $('#loading-overlay').hide();
@@ -439,23 +298,6 @@
                         alert('Terjadi kesalahan saat memuat data.');
                     }
                 });
-            });
-
-            $(document).on('click', '.pilihIndikator', function() {
-                $('#kompetensi_id').html(options_temp);
-                $('#kompetensi_id').val('');
-                $('#kompetensi_text').val('');
-                $('#total_pegawai').val('');
-                $('#pegawai_kompeten').val('');
-                $('#pegawai_belum_kompeten').val('');
-                $('#persentase_kompetensi').val('');
-                $('#topik_id').html(options_temp);
-                $('#judul').val('');
-                var indikator = $(this).data('indikator');
-                $('#indikator_kinerja').val(indikator);
-                console.log(indikator);
-
-                $('#indikatorModal').modal('hide');
             });
 
             $(document).on('click', '.pilihKompetensi', function() {
