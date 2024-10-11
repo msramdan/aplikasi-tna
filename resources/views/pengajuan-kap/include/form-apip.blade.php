@@ -94,7 +94,7 @@
                                     value="{{ isset($pengajuanKap) ? $pengajuanKap->nama_kompetensi : old('nama_kompetensi') }}"
                                     name="kompetensi_text" id="kompetensi_text" class="form-control" placeholder=""
                                     required readonly />
-                                <input type="text"
+                                <input type="hidden"
                                     value="{{ isset($pengajuanKap) ? $pengajuanKap->kompetensi_id : old('kompetensi_id') }}"
                                     name="kompetensi_id" id="kompetensi_id" class="form-control" placeholder=""
                                     required readonly />

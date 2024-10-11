@@ -268,7 +268,7 @@ class PengajuanKapController extends Controller
         $indikator_keberhasilan_kap = DB::table('indikator_keberhasilan_kap')
             ->where('pengajuan_kap_id', $id)
             ->get();
-            $waktu_pelaksanaan = DB::table('waktu_pelaksanaan')
+        $waktu_pelaksanaan = DB::table('waktu_pelaksanaan')
             ->where('pengajuan_kap_id', $id)
             ->get()
             ->toArray(); // Dapatkan data dalam bentuk array
@@ -314,8 +314,7 @@ class PengajuanKapController extends Controller
             return redirect()->back();
         }
 
-        // dd( $diklatLocation_data);
-        return view('pengajuan-kap.edit', [
+        return view($is_bpkp == 'BPKP' ? 'pengajuan-kap.edit' : 'pengajuan-kap.edit-apip', [
             'pengajuanKap' => $pengajuanKap,
             'is_bpkp' => $is_bpkp,
             'frekuensi' => $frekuensi,
@@ -328,7 +327,7 @@ class PengajuanKapController extends Controller
             'diklatType_data' => $diklatType_data,
             'diklatLocation_data' => $diklatLocation_data,
             'gap_kompetensi_pengajuan_kap' => $gap_kompetensi_pengajuan_kap,
-            'topikOptions' => $topikOptions ,
+            'topikOptions' => $topikOptions,
             'tahun' => $pengajuanKap->tahun,
         ]);
     }
@@ -574,69 +573,106 @@ class PengajuanKapController extends Controller
     {
         $validatedData = $request->validate([
             'jenis_program' => 'required|in:Renstra,APP,APEP,APIP',
-            'indikator_kinerja' => 'required|string',
+            'indikator_kinerja' => 'string',
             'kompetensi_id' => 'nullable|exists:kompetensi,id',
             'topik_id' => 'nullable|exists:topik,id',
             'judul' => 'required|string',
+            'tahun' => 'required',
             'indikator_keberhasilan' => 'required|array',
             'arahan_pimpinan' => 'required|string',
             'prioritas_pembelajaran' => 'required|string',
             'tujuan_program_pembelajaran' => 'required|string',
-            'alokasi_waktu' => 'required|string|max:10',
             'indikator_dampak_terhadap_kinerja_organisasi' => 'required|string',
             'penugasan_yang_terkait_dengan_pembelajaran' => 'required|string',
             'skill_group_owner' => 'required|string',
-            'bentuk_pembelajaran' => 'nullable',
-            'jalur_pembelajaran' => 'nullable',
-            'model_pembelajaran' => 'nullable',
-            'jenis_pembelajaran' => 'nullable',
-            'metode_pembelajaran' => 'nullable',
+            'diklatLocID' => 'nullable|string',
+            'diklatLocName' => 'nullable|string',
+            'detail_lokasi' => 'nullable|string',
+            'kelas' => 'nullable',
+            'diklatTypeID' => 'nullable|string',
+            'diklatTypeName' => 'nullable|string',
+            'metodeID' => 'nullable|string',
+            'metodeName' => 'nullable|string',
+            'biayaID' => 'nullable|string',
+            'biayaName' => 'nullable|string',
+            'bentuk_pembelajaran' => 'nullable|string',
+            'jalur_pembelajaran' => 'nullable|string',
+            'model_pembelajaran' => 'nullable|string',
             'peserta_pembelajaran' => 'nullable|string',
             'sasaran_peserta' => 'nullable|string',
             'kriteria_peserta' => 'nullable|string',
             'aktivitas_prapembelajaran' => 'nullable|string',
-            'penyelenggara_pembelajaran' => 'nullable',
+            'penyelenggara_pembelajaran' => 'nullable|string',
             'fasilitator_pembelajaran' => 'nullable|array',
-            'fasilitator_pembelajaran.*' => 'nullable|string|in:Widyaiswara,Instruktur,Praktisi,Pakar,Tutor,Coach,Mentor,Narasumber lainnya',
+            'fasilitator_pembelajaran.*' => 'nullable|string',
             'sertifikat' => 'nullable|string',
-            'user_created' => 'nullable|exists:users,id',
             'level_evaluasi_instrumen' => 'nullable|array',
             'no_level' => 'nullable|array',
-            'lokasi' => 'required|array',
-            'tanggal_mulai' => 'required|array',
-            'tanggal_selesai' => 'required|array',
+            'tatap_muka_start' => 'nullable|string',
+            'tatap_muka_end' => 'nullable|string',
+            'hybrid_tatap_muka_start' => 'nullable|string',
+            'hybrid_tatap_muka_end' => 'nullable|string',
+            'hybrid_elearning_start' => 'nullable|string',
+            'hybrid_elearning_end' => 'nullable|string',
+            'elearning_start' => 'nullable|string',
+            'elearning_end' => 'nullable|string',
+            'remark_1' => 'nullable|string',
+            'remark_2' => 'nullable|string',
+            'remark_3' => 'nullable|string',
+            'remark_4' => 'nullable|string',
         ]);
-        $fasilitator_pembelajaran = json_encode($validatedData['fasilitator_pembelajaran']);
 
+        $fasilitator_pembelajaran = $request->input('fasilitator_pembelajaran');
+        $fasilitator_pembelajaran_json = empty($fasilitator_pembelajaran) ? null : json_encode($fasilitator_pembelajaran);
+        foreach ($validatedData as $key => $value) {
+            if ($value === 'null') {
+                $validatedData[$key] = null;
+            }
+        }
+        if ($is_bpkp == 'BPKP') {
+            $biayaID = "1";
+            $biayaName = "RM";
+        } else {
+            $biayaID = "3";
+            $biayaName = "PNBP";
+        }
         DB::table('pengajuan_kap')
             ->where('id', $id)
             ->update([
                 'jenis_program' => $validatedData['jenis_program'],
-                'indikator_kinerja' => $validatedData['indikator_kinerja'],
+                'indikator_kinerja' => isset($validatedData['indikator_kinerja']) ? $validatedData['indikator_kinerja'] : null,
                 'kompetensi_id' => $validatedData['kompetensi_id'],
                 'topik_id' => $validatedData['topik_id'],
                 'judul' => $validatedData['judul'],
                 'arahan_pimpinan' => $validatedData['arahan_pimpinan'],
                 'prioritas_pembelajaran' => $validatedData['prioritas_pembelajaran'],
-                'alokasi_waktu' => $validatedData['alokasi_waktu'],
+                'tujuan_program_pembelajaran' => $validatedData['tujuan_program_pembelajaran'],
                 'indikator_dampak_terhadap_kinerja_organisasi' => $validatedData['indikator_dampak_terhadap_kinerja_organisasi'],
                 'penugasan_yang_terkait_dengan_pembelajaran' => $validatedData['penugasan_yang_terkait_dengan_pembelajaran'],
                 'skill_group_owner' => $validatedData['skill_group_owner'],
+                'diklatLocID' => $validatedData['diklatLocID'],
+                'diklatLocName' => $validatedData['diklatLocName'],
+                'detail_lokasi' => $validatedData['detail_lokasi'],
+                'kelas' => $validatedData['kelas'],
+                'diklatTypeID' => $validatedData['diklatTypeID'],
+                'diklatTypeName' => $validatedData['diklatTypeName'],
+                'metodeID' => $validatedData['metodeID'],
+                'metodeName' => $validatedData['metodeName'],
+                'biayaID' =>  $biayaID,
+                'biayaName' =>  $biayaName,
+                'latsar_stat' => '0',
                 'bentuk_pembelajaran' => $validatedData['bentuk_pembelajaran'],
-                'tujuan_program_pembelajaran' => $validatedData['tujuan_program_pembelajaran'],
                 'jalur_pembelajaran' => $validatedData['jalur_pembelajaran'],
                 'model_pembelajaran' => $validatedData['model_pembelajaran'],
-                'jenis_pembelajaran' => $validatedData['jenis_pembelajaran'],
-                'metode_pembelajaran' => $validatedData['metode_pembelajaran'],
+                'peserta_pembelajaran' => $validatedData['peserta_pembelajaran'],
                 'sasaran_peserta' => $validatedData['sasaran_peserta'],
                 'kriteria_peserta' => $validatedData['kriteria_peserta'],
                 'aktivitas_prapembelajaran' => $validatedData['aktivitas_prapembelajaran'],
                 'penyelenggara_pembelajaran' => $validatedData['penyelenggara_pembelajaran'],
-                'fasilitator_pembelajaran' => $fasilitator_pembelajaran,
+                'fasilitator_pembelajaran' => $fasilitator_pembelajaran_json,
                 'sertifikat' => $validatedData['sertifikat'],
-                'sertifikat' => $validatedData['level_evaluasi_instrumen'],
+                'user_created' => Auth::id(),
                 'updated_at' => now(),
-
             ]);
         Alert::toast('Pengajuan KAP berhasil diperbarui.', 'success');
         return redirect()->route('pengajuan-kap.index', ['is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi]);
