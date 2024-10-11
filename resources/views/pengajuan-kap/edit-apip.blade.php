@@ -55,7 +55,7 @@
                                     </ul>
                                 </div>
                             @endif
-                            @include('pengajuan-kap.include.form')
+                            @include('pengajuan-kap.include.form-apip')
                         </div>
                     </div>
                 </div>

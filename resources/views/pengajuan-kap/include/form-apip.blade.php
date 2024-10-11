@@ -423,7 +423,7 @@
                                 @foreach ($diklatLocation_data as $lokasi)
                                     <option value="{{ $lokasi['diklatLocID'] }}"
                                         data-diklatlocname="{{ $lokasi['diklatLocName'] }}"
-                                        {{ isset($pengajuanKap) && $pengajuanKap->lokasi == $lokasi['diklatLocID'] ? 'selected' : (old('lokasi') == $lokasi['diklatLocID'] ? 'selected' : '') }}>
+                                        {{ isset($pengajuanKap) && $pengajuanKap->diklatLocID == $lokasi['diklatLocID'] ? 'selected' : (old('lokasi') == $lokasi['diklatLocID'] ? 'selected' : '') }}>
                                         {{ $lokasi['diklatLocName'] }}
                                     </option>
                                 @endforeach
