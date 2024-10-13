@@ -113,24 +113,30 @@ class PengajuanKapController extends Controller
             ->groupBy('nama_unit')
             ->get();
 
-        if ($frekuensi === 'Tahunan') {
-            $jadwalKapTahunan = DB::table('jadwal_kap_tahunan')
-                ->orderBy('id', 'desc')
-                ->first();
-            $tahun = $jadwalKapTahunan->tahun;
-        } else {
-            $tahun =  date('Y');
-        }
+
         $userId = Auth::id();
         $reviewRemarks = DB::table('config_step_review')
             ->where('user_review_id', $userId)
             ->pluck('remark')
             ->toArray();
+        $tahunSelected = $request->query('tahun');
+        if ($tahunSelected != null) {
+            $tahun = $tahunSelected;
+        } else {
+            if ($frekuensi === 'Tahunan') {
+                $jadwalKapTahunan = DB::table('jadwal_kap_tahunan')
+                    ->orderBy('id', 'desc')
+                    ->first();
+                $tahun = $jadwalKapTahunan->tahun;
+            } else {
+                $tahun =  date('Y');
+            }
+        }
         $topik = intval($request->query('topik'))  ?? 'All';
         $sumber_dana = $request->query('sumber_dana') ?? 'All';
         $curretnStep = intval($request->query('step'))  ?? 'All';
-        $unit_kerja = $request->query('unit_kerja', []); // Default to empty array if not set
-        $prioritas = $request->query('prioritas', []); // Default to empty array if not set
+        $unit_kerja = $request->query('unit_kerja', []);
+        $prioritas = $request->query('prioritas', []);
 
         // Convert unit_kerja and prioritas from comma-separated strings to arrays
         $unit_kerja = is_array($unit_kerja) ? $unit_kerja : explode(',', $unit_kerja);
