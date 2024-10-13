@@ -189,7 +189,6 @@
                                         </select>
                                     </div>
                                 </div>
-
                                 <div class="col-md-4">
                                     <div class="input-group mb-2">
                                         <select class="form-control js-example-basic-multiple" name="prioritas[]" multiple="multiple" id="prioritas-select">

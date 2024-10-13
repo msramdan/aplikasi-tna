@@ -29,6 +29,11 @@ class PengajuanKapController extends Controller
             $topik = intval($request->query('topik'));
             $sumber_dana = $request->query('sumber_dana');
             $current_step = intval($request->query('step'));
+
+            // Retrieve filters from the request
+            $unit_kerja = $request->query('unit_kerja', []); // Assuming this is an array
+            $prioritas = $request->query('prioritas', []); // Assuming this is also an array
+
             $pengajuanKaps = DB::table('pengajuan_kap')
                 ->select(
                     'pengajuan_kap.*',
@@ -47,29 +52,36 @@ class PengajuanKapController extends Controller
                 ->where('pengajuan_kap.institusi_sumber', '=', $is_bpkp)
                 ->where('pengajuan_kap.frekuensi_pelaksanaan', '=', $frekuensi);
 
-            if (isset($tahun) && !empty($tahun)) {
-                if ($tahun != 'All') {
-                    $pengajuanKaps = $pengajuanKaps->where('pengajuan_kap.tahun', $tahun);
-                }
+            // Filter based on tahun
+            if (isset($tahun) && !empty($tahun) && $tahun != 'All') {
+                $pengajuanKaps = $pengajuanKaps->where('pengajuan_kap.tahun', $tahun);
             }
 
-            if (isset($topik) && !empty($topik)) {
-                if ($topik != 'All') {
-                    $pengajuanKaps = $pengajuanKaps->where('pengajuan_kap.topik_id', $topik);
-                }
+            // Filter based on topik
+            if (isset($topik) && !empty($topik) && $topik != 'All') {
+                $pengajuanKaps = $pengajuanKaps->where('pengajuan_kap.topik_id', $topik);
             }
 
-            if (isset($sumber_dana) && !empty($sumber_dana)) {
-                if ($sumber_dana != 'All') {
-                    $pengajuanKaps = $pengajuanKaps->where('pengajuan_kap.biayaName', $sumber_dana);
-                }
+            // Filter based on sumber_dana
+            if (isset($sumber_dana) && !empty($sumber_dana) && $sumber_dana != 'All') {
+                $pengajuanKaps = $pengajuanKaps->where('pengajuan_kap.biayaName', $sumber_dana);
             }
 
-            if (isset($current_step) && !empty($current_step)) {
-                if ($current_step != 'All') {
-                    $pengajuanKaps = $pengajuanKaps->where('pengajuan_kap.current_step', $current_step);
-                }
+            // Filter based on current_step
+            if (isset($current_step) && !empty($current_step) && $current_step != 'All') {
+                $pengajuanKaps = $pengajuanKaps->where('pengajuan_kap.current_step', $current_step);
             }
+
+            // Filter based on unit_kerja
+            if (!empty($unit_kerja)) {
+                $pengajuanKaps = $pengajuanKaps->whereIn('users.nama_unit', $unit_kerja);
+            }
+
+            // Filter based on prioritas_pembelajaran
+            if (!empty($prioritas)) {
+                $pengajuanKaps = $pengajuanKaps->whereIn('pengajuan_kap.prioritas_pembelajaran', $prioritas);
+            }
+
             $pengajuanKaps = $pengajuanKaps->orderBy('pengajuan_kap.id', 'DESC');
             return DataTables::of($pengajuanKaps)
                 ->addIndexColumn()
@@ -132,7 +144,7 @@ class PengajuanKapController extends Controller
             'topik_id' => $topik,
             'sumberDana' => $sumber_dana,
             'curretnStep' => $curretnStep,
-            'units' => $units ,
+            'units' => $units,
             'unit_kerja' => $unit_kerja, // Pass unit_kerja to the view
             'prioritas' => $prioritas // Pass prioritas to the view
         ]);
