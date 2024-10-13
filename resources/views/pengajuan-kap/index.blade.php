@@ -45,6 +45,13 @@
                 transform: rotate(360deg);
             }
         }
+
+        .select2-container--default .select2-selection--multiple {
+            height: 70px;
+            /* Sesuaikan tinggi sesuai kebutuhan */
+            overflow-y: auto;
+            /* Tambahkan overflow agar bisa scroll jika opsi banyak */
+        }
     </style>
 
     <div id="loading-overlay">
@@ -108,7 +115,7 @@
 
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <div class="input-group mb-2">
                                         <select name="tahun" id="tahun"
                                             class="form-control js-example-basic-multiple">
@@ -126,7 +133,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <div class="input-group mb-2">
                                         <select name="sumber_dana" id="sumber_dana"
                                             class="form-control js-example-basic-multiple">
@@ -137,7 +144,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <div class="input-group mb-2">
                                         <select name="topik" id="topik"
                                             class="form-control js-example-basic-multiple">
@@ -151,7 +158,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <div class="input-group mb-2">
                                         <select name="step" id="step"
                                             class="form-control js-example-basic-multiple">
@@ -171,13 +178,30 @@
                                         </select>
                                     </div>
                                 </div>
-
+                                <div class="col-md-4">
+                                    <div class="input-group mb-2">
+                                        <select class="form-control js-example-basic-multiple" name=""
+                                            multiple="multiple" id="unit-kerja-select">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group mb-2">
+                                        <select class="form-control js-example-basic-multiple" name=""
+                                            multiple="multiple" id="prioritas-select">
+                                        </select>
+                                    </div>
+                                </div>
                                 @php
                                     $reviewExistsForUser = reviewExistsForUser();
                                 @endphp
-                                @if ($reviewExistsForUser)
-                                    <div class="col-md-4">
-                                        <div class="input-group mb-2">
+                                <div class="col-md-4">
+                                    <div class="input-group mb-2">
+                                        <button class="btn btn-md btn-success">
+                                            {{ __('Export') }}
+                                        </button>
+                                        &nbsp;
+                                        @if ($reviewExistsForUser)
                                             <button id="approve-selected" class="btn btn-md btn-success" disabled>
                                                 {{ __('Approved') }}
                                             </button>
@@ -188,12 +212,12 @@
                                             @can('pengajuan kap skiped')
                                                 &nbsp;
                                                 <button id="skiped-selected" class="btn btn-md btn-warning" disabled>
-                                                    {{ __('Skiped Review') }}
+                                                    {{ __('Skiped') }}
                                                 </button>
                                             @endcan
-                                        </div>
+                                        @endif
                                     </div>
-                                @endif
+                                </div>
                             </div>
                             <hr>
                             <div class="table-responsive p-1">

@@ -337,6 +337,7 @@ class PengajuanKapController extends Controller
         $validatedData = $request->validate([
             'jenis_program' => 'required|in:Renstra,APP,APEP,APIP',
             'indikator_kinerja' => 'string',
+            'referensi_indikator_kinerja' => 'string',
             'kompetensi_id' => 'nullable|exists:kompetensi,id',
             'topik_id' => 'nullable|exists:topik,id',
             'judul' => 'required|string',
@@ -423,6 +424,7 @@ class PengajuanKapController extends Controller
                 'jenis_program' => $validatedData['jenis_program'],
                 'frekuensi_pelaksanaan' => $frekuensi,
                 'indikator_kinerja' => isset($validatedData['indikator_kinerja']) ? $validatedData['indikator_kinerja'] : null,
+                'referensi_indikator_kinerja' => isset($validatedData['referensi_indikator_kinerja']) ? $validatedData['referensi_indikator_kinerja'] : null,
                 'kompetensi_id' => $validatedData['kompetensi_id'],
                 'topik_id' => $validatedData['topik_id'],
                 'judul' => $validatedData['judul'],
@@ -576,6 +578,7 @@ class PengajuanKapController extends Controller
         $validatedData = $request->validate([
             'jenis_program' => 'required|in:Renstra,APP,APEP,APIP',
             'indikator_kinerja' => 'string',
+            'referensi_indikator_kinerja' => 'string',
             'kompetensi_id' => 'nullable|exists:kompetensi,id',
             'topik_id' => 'nullable|exists:topik,id',
             'judul' => 'required|string',
@@ -643,6 +646,7 @@ class PengajuanKapController extends Controller
             ->update([
                 'jenis_program' => $validatedData['jenis_program'],
                 'indikator_kinerja' => isset($validatedData['indikator_kinerja']) ? $validatedData['indikator_kinerja'] : null,
+                'referensi_indikator_kinerja' => isset($validatedData['referensi_indikator_kinerja']) ? $validatedData['referensi_indikator_kinerja'] : null,
                 'kompetensi_id' => $validatedData['kompetensi_id'],
                 'topik_id' => $validatedData['topik_id'],
                 'judul' => $validatedData['judul'],

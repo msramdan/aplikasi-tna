@@ -200,7 +200,7 @@
                                 required>
                                 <option value="" disabled selected>
                                     {{ __('-- Select Prioritas Pembelajaran --') }}</option>
-                                @for ($i = 1; $i <= 10; $i++)
+                                @for ($i = 1; $i <= 50; $i++)
                                     <option value="Prioritas {{ $i }}"
                                         {{ (isset($pengajuanKap) && $pengajuanKap->prioritas_pembelajaran == "Prioritas $i") || old('prioritas_pembelajaran') == "Prioritas $i" ? 'selected' : '' }}>
                                         Prioritas {{ $i }}

@@ -142,6 +142,20 @@
                     </div>
 
                     <div class="form-group row mb-3">
+                        <label class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-6">
+                            <input type="text" name="referensi_indikator_kinerja" id="referensi_indikator_kinerja"
+                                class="form-control @error('referensi_indikator_kinerja') is-invalid @enderror"
+                                value="{{ isset($pengajuanKap) ? $pengajuanKap->referensi_indikator_kinerja : old('referensi_indikator_kinerja') }}"
+                                placeholder="{{ __('Indikator Kinerja ' . $tahun) }}" required />
+                            <div class="invalid-feedback">
+                                Mohon untuk diisi Indikator Kinerja {{$tahun}}
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row mb-3">
                         <label for="kompetensi_id" class="col-sm-3 col-form-label">Kompetensi <span
                                 style="color: red">*</span></label>
                         <div class="col-sm-6">
@@ -256,7 +270,7 @@
                                 required>
                                 <option value="" disabled selected>
                                     {{ __('-- Select Prioritas Pembelajaran --') }}</option>
-                                @for ($i = 1; $i <= 10; $i++)
+                                @for ($i = 1; $i <= 50; $i++)
                                     <option value="Prioritas {{ $i }}"
                                         {{ (isset($pengajuanKap) && $pengajuanKap->prioritas_pembelajaran == "Prioritas $i") || old('prioritas_pembelajaran') == "Prioritas $i" ? 'selected' : '' }}>
                                         Prioritas {{ $i }}
