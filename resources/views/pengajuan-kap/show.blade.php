@@ -342,7 +342,14 @@
                                             <td class="fw-bold">{{ __('Judul Program pembelajaran') }}</td>
                                             <td>{{ $pengajuanKap->judul ?: '-' }}</td>
                                         </tr>
-
+                                        <tr>
+                                            <td class="fw-bold">{{ __('Arahan pimpinan/isu terkini/dll') }}</td>
+                                            <td>{{ $pengajuanKap->arahan_pimpinan ?: '-' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">{{ __('Prioritas Pembelajaran') }}</td>
+                                            <td>{{ $pengajuanKap->prioritas_pembelajaran ?: '-' }}</td>
+                                        </tr>
                                         <tr>
                                             <td class="fw-bold">{{ __('Tujuan Program Pembelajaran') }}</td>
                                             <td>{{ $pengajuanKap->tujuan_program_pembelajaran ?: '-' }}</td>
