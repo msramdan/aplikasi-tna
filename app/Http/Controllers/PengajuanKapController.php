@@ -96,6 +96,11 @@ class PengajuanKapController extends Controller
         }
 
         $topiks = DB::table('topik')->get();
+        $units = DB::table('users')
+            ->select('nama_unit')
+            ->groupBy('nama_unit')
+            ->get();
+
         if ($frekuensi === 'Tahunan') {
             $jadwalKapTahunan = DB::table('jadwal_kap_tahunan')
                 ->orderBy('id', 'desc')
@@ -112,6 +117,12 @@ class PengajuanKapController extends Controller
         $topik = intval($request->query('topik'))  ?? 'All';
         $sumber_dana = $request->query('sumber_dana') ?? 'All';
         $curretnStep = intval($request->query('step'))  ?? 'All';
+        $unit_kerja = $request->query('unit_kerja', []); // Default to empty array if not set
+        $prioritas = $request->query('prioritas', []); // Default to empty array if not set
+
+        // Convert unit_kerja and prioritas from comma-separated strings to arrays
+        $unit_kerja = is_array($unit_kerja) ? $unit_kerja : explode(',', $unit_kerja);
+        $prioritas = is_array($prioritas) ? $prioritas : explode(',', $prioritas);
         return view('pengajuan-kap.index', [
             'year' => $tahun,
             'is_bpkp' => $is_bpkp,
@@ -120,7 +131,10 @@ class PengajuanKapController extends Controller
             'topiks' => $topiks,
             'topik_id' => $topik,
             'sumberDana' => $sumber_dana,
-            'curretnStep' => $curretnStep
+            'curretnStep' => $curretnStep,
+            'units' => $units ,
+            'unit_kerja' => $unit_kerja, // Pass unit_kerja to the view
+            'prioritas' => $prioritas // Pass prioritas to the view
         ]);
     }
 

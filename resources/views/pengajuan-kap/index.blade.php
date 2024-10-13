@@ -180,15 +180,24 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="input-group mb-2">
-                                        <select class="form-control js-example-basic-multiple" name=""
-                                            multiple="multiple" id="unit-kerja-select">
+                                        <select class="form-control js-example-basic-multiple" name="unit_kerja[]" multiple="multiple" id="unit-kerja-select">
+                                            @foreach ($units as $unit)
+                                                <option value="{{ $unit->nama_unit }}" {{ in_array($unit->nama_unit, (array)$unit_kerja) ? 'selected' : '' }}>
+                                                    {{ $unit->nama_unit }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
+
                                 <div class="col-md-4">
                                     <div class="input-group mb-2">
-                                        <select class="form-control js-example-basic-multiple" name=""
-                                            multiple="multiple" id="prioritas-select">
+                                        <select class="form-control js-example-basic-multiple" name="prioritas[]" multiple="multiple" id="prioritas-select">
+                                            @for ($i = 1; $i <= 50; $i++)
+                                                <option value="Prioritas {{ $i }}" {{ in_array("Prioritas {$i}", (array)$prioritas) ? 'selected' : '' }}>
+                                                    Prioritas {{ $i }}
+                                                </option>
+                                            @endfor
                                         </select>
                                     </div>
                                 </div>
@@ -404,6 +413,8 @@
                         d.topik = $('select[name=topik] option').filter(':selected').val()
                         d.sumber_dana = $('select[name=sumber_dana] option').filter(':selected').val()
                         d.step = $('select[name=step] option').filter(':selected').val()
+                        d.unit_kerja = $('#unit-kerja-select').val(); // Tambahkan ini
+                        d.prioritas = $('#prioritas-select').val(); // Tambahkan ini
                     }
                 },
                 columns: columns,
@@ -418,16 +429,33 @@
                 var currentStep = $('select[name=step]').val();
                 var topikSelected = $('select[name=topik]').val();
                 var sumberDanaSelected = $('select[name=sumber_dana]').val();
+                var unitKerjaSelected = $('#unit-kerja-select').val(); // Tambahkan ini
+                var prioritasSelected = $('#prioritas-select').val(); // Tambahkan ini
+
                 if (tahunSelected) params.set('tahun', tahunSelected);
                 if (topikSelected) params.set('topik', topikSelected);
                 if (sumberDanaSelected) params.set('sumber_dana', sumberDanaSelected);
                 if (currentStep) params.set('step', currentStep);
+                if (unitKerjaSelected) params.set('unit_kerja', unitKerjaSelected.join(',')); // Tambahkan ini
+                if (prioritasSelected) params.set('prioritas', prioritasSelected.join(',')); // Tambahkan ini
+
                 var newURL =
                     "{{ route('pengajuan-kap.index', ['is_bpkp' => ':is_bpkp', 'frekuensi' => ':frekuensi']) }}"
                     .replace(':is_bpkp', is_bpkp)
                     .replace(':frekuensi', frekuensi) + '?' + params.toString();
                 history.replaceState(null, null, newURL);
             }
+
+            // Handler untuk unit_kerja dan prioritas
+            $('#unit-kerja-select').change(function() {
+                table.draw();
+                replaceURLParams();
+            });
+
+            $('#prioritas-select').change(function() {
+                table.draw();
+                replaceURLParams();
+            });
 
             $('#tahun').change(function() {
                 table.draw();
@@ -626,4 +654,20 @@
 
         });
     </script>
+    <script>
+        $(document).ready(function() {
+            $('#unit-kerja-select').select2({
+                placeholder: "All Unit Kerja",
+                allowClear: true,
+                width: '100%' // Mengatur lebar select agar sesuai
+            });
+
+            $('#prioritas-select').select2({
+                placeholder: "All Prioritas",
+                allowClear: true,
+                width: '100%' // Mengatur lebar select agar sesuai
+            });
+        });
+    </script>
+
 @endpush
