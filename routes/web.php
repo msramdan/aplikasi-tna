@@ -21,6 +21,7 @@ use App\Http\Controllers\{
     ConfigStepReview,
     LokasiController,
     NomenklaturPembelajaranController,
+    PengumumanController,
     RumpunPembelajaranController,
     TaggingPembelajaranKompetensiController,
     TopikController,
@@ -42,6 +43,7 @@ Route::middleware(['auth', 'web', 'check.maintenance'])->group(function () {
     Route::resource('users', UserController::class);
     Route::resource('roles', RoleAndPermissionController::class);
     Route::resource('setting-apps', SettingAppController::class);
+    Route::resource('pengumuman', PengumumanController::class)->middleware('auth');
     Route::controller(ConfigStepReview::class)->group(function () {
         Route::get('/config-step-review', 'index')->name('config-step-review.index');
         Route::put('/submit-config-step-review', 'submitForm')->name('config-step-review.store');

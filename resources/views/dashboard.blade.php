@@ -5,7 +5,7 @@
 @section('content')
     <div class="page-content">
         <div class="container-fluid">
-            <!-- Modal HTML -->
+
             <div class="modal fade" id="announcementModal" tabindex="-1" aria-labelledby="announcementModalLabel"
                 aria-hidden="true" data-bs-backdrop="static">
                 <div class="modal-dialog">
@@ -16,14 +16,19 @@
                         </div>
                         <div class="modal-body">
                             <p style="text-align: justify">
-                                Yuk, segera ajukan KAP untuk tahun
+                                @php
+                                    $pengumuman = DB::table('pengumuman')->first();
+                                    $tahun = session('jadwal_kap_tahunan')
+                                        ? session('jadwal_kap_tahunan')->tahun
+                                        : '{placeholder_tahun}';
+                                @endphp
 
-                                @if (session('jadwal_kap_tahunan'))
-                                    {{ session('jadwal_kap_tahunan')->tahun }}
+                                @if ($pengumuman)
+                                    {{-- Ganti placeholder dengan tahun --}}
+                                    {!! str_replace('{placeholder_tahun}', $tahun, $pengumuman->pengumuman) !!}
+                                @else
+                                    Tidak ada pengumuman saat ini.
                                 @endif
-                                ! Isi formulirnya sekarang agar bisa direview dan masuk ke dalam kalender pembelajaran.
-                                Dengan begitu, kita bisa merencanakan pembelajaran yang efektif dan terstruktur untuk tahun
-                                depan!
                             </p>
                             @if (session('jadwal_kap_tahunan'))
                                 <div class="text-center">
@@ -37,7 +42,7 @@
                             <br>
                             <div class="text-center">
                                 <p>
-                                    <u><b>Klik link di bawah ini untuk pengajuan KAP</b> </u>
+                                    <u><b>Klik link di bawah ini untuk pengajuan KAP</b></u>
                                 </p>
                                 <div class="row">
                                     <div class="col">
@@ -54,6 +59,7 @@
                     </div>
                 </div>
             </div>
+
 
 
             <div class="row">

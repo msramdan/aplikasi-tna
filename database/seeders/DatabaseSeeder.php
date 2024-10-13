@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call(KategoriKompetensiSeeder::class);
         $this->call(RumpunPembelajaranSeeder::class);
         $this->call(JadwalKapTahunanSeeder::class);
+        $this->call(PengumumanSeeder::class);
         // $this->call(KompetensiSeeder::class);
     }
 }

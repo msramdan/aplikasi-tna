@@ -203,7 +203,6 @@ return [
             ]
         ]
     ],
-
     [
         'header' => 'Kalender Pembelajaran',
         'permissions' => [
@@ -243,7 +242,8 @@ return [
             'role & permission view',
             'user view',
             'setting app view',
-            'jadwal kap tahunan view'
+            'jadwal kap tahunan view',
+            'pengumuman view'
         ],
         'menus' => [
             [
@@ -262,7 +262,8 @@ return [
                     'role & permission view',
                     'user view',
                     'setting app view',
-                    'jadwal kap tahunan view'
+                    'jadwal kap tahunan view',
+                    'pengumuman view'
                 ],
                 'submenus' => [
                     [
@@ -289,6 +290,11 @@ return [
                         'title' => 'Setting Apps',
                         'route' => '/setting-apps',
                         'permission' => 'setting app view'
+                    ],
+                    [
+                        'title' => 'Pengumumen',
+                        'route' => '/pengumumen',
+                        'permission' => 'pengumuman view'
                     ]
                 ]
             ]

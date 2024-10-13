@@ -200,17 +200,18 @@
                 'role & permission view',
                 'jadwal kap tahunan view',
                 'setting app view',
+                'pengumuman view',
                 'activity
                 log',
                 ])
                 <li class="nav-item">
-                    <a class="nav-link menu-link collapsed {{ request()->routeIs('users*', 'roles*', 'jadwal-kap-tahunan*', 'config-step-review*', 'activity-log*', 'setting-apps*') ? 'active' : '' }}"
+                    <a class="nav-link menu-link collapsed {{ request()->routeIs('users*', 'roles*', 'jadwal-kap-tahunan*', 'config-step-review*', 'activity-log*', 'setting-apps*', 'pengumuman*') ? 'active' : '' }}"
                         href="#sidebarUtilities" data-bs-toggle="collapse" role="button"
-                        aria-expanded="{{ request()->routeIs('users*', 'roles*', 'jadwal-kap-tahunan*', 'config-step-review*', 'activity-log*', 'setting-apps*', 'backup*') ? 'true' : 'false' }}"
+                        aria-expanded="{{ request()->routeIs('users*', 'roles*', 'jadwal-kap-tahunan*', 'config-step-review*', 'activity-log*', 'setting-apps*', 'backup*', 'pengumuman*') ? 'true' : 'false' }}"
                         aria-controls="sidebarUtilities">
                         <i class="fa fa-cogs"></i> <span data-key="t-forms">{{ __('sidebar.utilities') }}</span>
                     </a>
-                    <div class="collapse menu-dropdown {{ request()->routeIs('users*', 'roles*', 'jadwal-kap-tahunan*', 'config-step-review*', 'activity-log*', 'setting-apps*', 'backup*') ? 'show' : '' }}"
+                    <div class="collapse menu-dropdown {{ request()->routeIs('users*', 'roles*', 'jadwal-kap-tahunan*', 'config-step-review*', 'activity-log*', 'setting-apps*', 'backup*', 'pengumuman*') ? 'show' : '' }}"
                         id="sidebarUtilities">
                         <ul class="nav nav-sm flex-column">
                             @can('user view')
@@ -248,6 +249,13 @@
                                         data-key="t-basic-elements">{{ __('sidebar.setting_app') }}</a>
                                 </li>
                             @endcan
+                            @can('pengumuman view')
+                            <li class="nav-item">
+                                <a href="{{ route('pengumuman.index') }}"
+                                    class="nav-link {{ request()->routeIs('pengumuman*') ? 'active' : '' }}"
+                                    data-key="t-basic-elements">Pengumuman</a>
+                            </li>
+                        @endcan
                             @can('activity log view')
                                 <li class="nav-item">
                                     <a href="{{ route('activity-log.index') }}"
