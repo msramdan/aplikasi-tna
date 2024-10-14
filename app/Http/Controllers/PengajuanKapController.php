@@ -238,6 +238,24 @@ class PengajuanKapController extends Controller
             return redirect()->back();
         }
 
+        $pengajuanKaps = DB::table('pengajuan_kap')
+            ->select(
+                'pengajuan_kap.*',
+                'users.name as user_name',
+                'pengajuan_kap.prioritas_pembelajaran',
+                'pengajuan_kap.kode_pembelajaran'
+            )
+            ->leftJoin('users', 'pengajuan_kap.user_created', '=', 'users.id')
+            ->where('pengajuan_kap.institusi_sumber', '=', $is_bpkp)
+            ->where('pengajuan_kap.frekuensi_pelaksanaan', '=', $frekuensi)
+            ->where('pengajuan_kap.tahun', '=', $tahun)
+            ->get();
+
+        // Ambil prioritas yang sudah digunakan beserta kode_pembelajaran
+        $usedPrioritas = $pengajuanKaps->pluck('prioritas_pembelajaran')->toArray();
+        $kodePembelajaran = $pengajuanKaps->pluck('kode_pembelajaran', 'prioritas_pembelajaran')->toArray();
+
+
         return view($is_bpkp == 'BPKP' ? 'pengajuan-kap.create' : 'pengajuan-kap.create-apip', [
             'is_bpkp' => $is_bpkp,
             'frekuensi' => $frekuensi,
@@ -247,6 +265,8 @@ class PengajuanKapController extends Controller
             'diklatType_data' => $diklatType_data,
             'diklatLocation_data' => $diklatLocation_data,
             'tahun' => $tahun,
+            'usedPrioritas' => $usedPrioritas,  // Tambahkan ini
+            'kodePembelajaran' => $kodePembelajaran,  // Tambahkan ini
         ]);
     }
 
@@ -348,6 +368,22 @@ class PengajuanKapController extends Controller
             return redirect()->back();
         }
 
+        $pengajuanKaps = DB::table('pengajuan_kap')
+            ->select(
+                'pengajuan_kap.*',
+                'users.name as user_name',
+                'pengajuan_kap.prioritas_pembelajaran',
+                'pengajuan_kap.kode_pembelajaran'
+            )
+            ->leftJoin('users', 'pengajuan_kap.user_created', '=', 'users.id')
+            ->where('pengajuan_kap.institusi_sumber', '=', $is_bpkp)
+            ->where('pengajuan_kap.frekuensi_pelaksanaan', '=', $frekuensi)
+            ->where('pengajuan_kap.tahun', '=', $pengajuanKap->tahun)
+            ->get();
+
+        $usedPrioritas = $pengajuanKaps->pluck('prioritas_pembelajaran')->toArray();
+        $kodePembelajaran = $pengajuanKaps->pluck('kode_pembelajaran', 'prioritas_pembelajaran')->toArray();
+
         return view($is_bpkp == 'BPKP' ? 'pengajuan-kap.edit' : 'pengajuan-kap.edit-apip', [
             'pengajuanKap' => $pengajuanKap,
             'is_bpkp' => $is_bpkp,
@@ -363,6 +399,8 @@ class PengajuanKapController extends Controller
             'gap_kompetensi_pengajuan_kap' => $gap_kompetensi_pengajuan_kap,
             'topikOptions' => $topikOptions,
             'tahun' => $pengajuanKap->tahun,
+            'usedPrioritas' => $usedPrioritas,  // Tambahkan ini
+            'kodePembelajaran' => $kodePembelajaran,  // Tambahkan ini
         ]);
     }
 

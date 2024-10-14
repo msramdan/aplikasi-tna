@@ -190,23 +190,27 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label for="prioritas_pembelajaran" style="padding-left: 40px"
-                            class="col-sm-3 col-form-label">
+                        <label for="prioritas_pembelajaran" style="padding-left: 40px" class="col-sm-3 col-form-label">
                             {{ __('B. Prioritas Pembelajaran') }} <span style="color: red">*</span>
                         </label>
                         <div class="col-sm-6">
                             <select name="prioritas_pembelajaran" id="prioritas_pembelajaran"
-                                class="form-control js-example-basic-multiple @error('prioritas_pembelajaran') is-invalid @enderror"
-                                required>
+                                class="form-control js-example-basic-multiple @error('prioritas_pembelajaran') is-invalid @enderror" required>
                                 <option value="" disabled selected>
-                                    {{ __('-- Select Prioritas Pembelajaran --') }}</option>
+                                    {{ __('-- Select Prioritas Pembelajaran --') }}
+                                </option>
                                 @for ($i = 1; $i <= 50; $i++)
-                                    <option value="Prioritas {{ $i }}"
-                                        {{ (isset($pengajuanKap) && $pengajuanKap->prioritas_pembelajaran == "Prioritas $i") || old('prioritas_pembelajaran') == "Prioritas $i" ? 'selected' : '' }}>
-                                        Prioritas {{ $i }}
+                                    @php
+                                        $prioritasValue = "Prioritas $i";
+                                        $isUsed = in_array($prioritasValue, $usedPrioritas);
+                                        $kodePemb = $isUsed ? $kodePembelajaran[$prioritasValue] : '';
+                                    @endphp
+                                    <option value="{{ $prioritasValue }}"
+                                        {{ (isset($pengajuanKap) && $pengajuanKap->prioritas_pembelajaran == $prioritasValue) || old('prioritas_pembelajaran') == $prioritasValue ? 'selected' : '' }}
+                                        {{ $isUsed && (!isset($pengajuanKap) || $pengajuanKap->prioritas_pembelajaran != $prioritasValue) ? 'disabled' : '' }}>
+                                        {{ $prioritasValue }} {{ $kodePemb ? ' - Kode: ' . $kodePemb : '' }}
                                     </option>
                                 @endfor
-
                             </select>
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Prioritas Pembelajaran
