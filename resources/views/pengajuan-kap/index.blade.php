@@ -684,11 +684,14 @@
             var initialStep = $('#step').val();
             var initialFrekuensi = "{{ $frekuensi }}";
             var initialBpkp = "{{ $is_bpkp }}";
-            exportData(initialYear, initialSumberDana, initialTopik, initialStep, initialBpkp, initialFrekuensi);
+            var unitKerja = $('#unit-kerja-select').val(); // array
+            var prioritas = $('#prioritas-select').val(); // array
+            exportData(initialYear, initialSumberDana, initialTopik, initialStep, initialBpkp, initialFrekuensi,
+                unitKerja, prioritas);
         });
 
-        var exportData = function(initialYear, initialSumberDana, initialTopik, initialStep, initialBpkp,
-        initialFrekuensi) {
+        var exportData = function(initialYear, initialSumberDana, initialTopik, initialStep, initialBpkp, initialFrekuensi,
+            unitKerja, prioritas) {
             var url = '/exportPengajuanKap';
             $.ajax({
                 url: url,
@@ -703,6 +706,8 @@
                     step: initialStep,
                     is_bpkp: initialBpkp,
                     frekuensi: initialFrekuensi,
+                    unit_kerja: unitKerja,
+                    prioritas: prioritas
                 },
                 xhrFields: {
                     responseType: 'blob'
@@ -718,13 +723,13 @@
                     });
                 },
                 success: function(data) {
-                var link = document.createElement('a');
-                link.href = window.URL.createObjectURL(data);
-                var nameFile = `pengajuan_kap_${initialBpkp}_${initialFrekuensi}_${initialYear}.xlsx`;
-                link.download = nameFile;
-                link.click();
-                swal.close();
-            },
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(data);
+                    var nameFile = `pengajuan_kap_${initialBpkp}_${initialFrekuensi}_${initialYear}.xlsx`;
+                    link.download = nameFile;
+                    link.click();
+                    swal.close();
+                },
                 error: function(data) {
                     console.log(data)
                     Swal.fire({

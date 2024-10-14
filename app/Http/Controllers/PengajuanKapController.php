@@ -1450,15 +1450,29 @@ class PengajuanKapController extends Controller
 
     public function exportPengajuanKap(Request $request)
     {
+        // Ambil data dari query string
         $tahun = $request->query('year');
         $sumber_dana = $request->query('sumber_dana');
         $topik = $request->query('topik');
         $step = $request->query('step');
         $is_bpkp = $request->query('is_bpkp');
         $frekuensi = $request->query('frekuensi');
-        $unit_kerja = $request->query('unit_kerja');
-        $prioritas = $request->query('prioritas');
+        $unit_kerja = $request->query('unit_kerja'); // array dari select multiple
+        $prioritas = $request->query('prioritas');   // array dari select multiple
+
+        // Penamaan file yang akan didownload
         $nameFile = 'Kalender pembelajaran ' . now()->format('Ymd_His') . '.xlsx';
-        return Excel::download(new ExportPengajuanKap($tahun, $sumber_dana, $topik, $step, $is_bpkp, $frekuensi, $unit_kerja, $prioritas), $nameFile);
+
+        // Unduh file Excel dengan data yang dihasilkan oleh ExportPengajuanKap
+        return Excel::download(new ExportPengajuanKap(
+            $tahun,
+            $sumber_dana,
+            $topik,
+            $step,
+            $is_bpkp,
+            $frekuensi,
+            $unit_kerja,
+            $prioritas
+        ), $nameFile);
     }
 }

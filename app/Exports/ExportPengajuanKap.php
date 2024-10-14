@@ -103,7 +103,7 @@ class ExportPengajuanKap implements FromView, ShouldAutoSize, WithEvents, WithTi
     {
         return [
             AfterSheet::class    => function (AfterSheet $event) {
-                $cellRange = 'A1:I1';
+                $cellRange = 'A1:J1';
                 $event->sheet->getStyle($cellRange)->applyFromArray([
                     'borders' => [
                         'allBorders' => [
