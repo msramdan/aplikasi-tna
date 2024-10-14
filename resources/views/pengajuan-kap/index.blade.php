@@ -674,6 +674,7 @@
             });
         });
     </script>
+
     <script>
         $(document).on('click', '#btnExport', function(event) {
             event.preventDefault();
@@ -717,14 +718,13 @@
                     });
                 },
                 success: function(data) {
-                    var link = document.createElement('a');
-                    link.href = window.URL.createObjectURL(data);
-                    var nameFile = 'pengajuan_kap.xlsx'
-                    console.log(nameFile)
-                    link.download = nameFile;
-                    link.click();
-                    swal.close()
-                },
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(data);
+                var nameFile = `pengajuan_kap_${initialBpkp}_${initialFrekuensi}_${initialYear}.xlsx`;
+                link.download = nameFile;
+                link.click();
+                swal.close();
+            },
                 error: function(data) {
                     console.log(data)
                     Swal.fire({
