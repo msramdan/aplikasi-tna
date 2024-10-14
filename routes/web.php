@@ -124,6 +124,8 @@ Route::middleware(['auth', 'web', 'check.maintenance'])->group(function () {
         Route::post('/approve', 'approveSelected')->name('pengajuan-kap-selected.approve');
         Route::post('/reject', 'rejectSelected')->name('pengajuan-kap-selected.reject');
         Route::post('/skip', 'skipSelected')->name('pengajuan-kap-selected.skip');
+        // for export data
+        Route::get('/exportPengajuanKap', 'exportPengajuanKap')->name('exportPengajuanKap');
     });
 
     Route::controller(SyncInfoIDiklatController::class)->group(function () {

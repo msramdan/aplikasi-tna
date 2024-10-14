@@ -180,9 +180,11 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="input-group mb-2">
-                                        <select class="form-control js-example-basic-multiple" name="unit_kerja[]" multiple="multiple" id="unit-kerja-select">
+                                        <select class="form-control js-example-basic-multiple" name="unit_kerja[]"
+                                            multiple="multiple" id="unit-kerja-select">
                                             @foreach ($units as $unit)
-                                                <option value="{{ $unit->nama_unit }}" {{ in_array($unit->nama_unit, (array)$unit_kerja) ? 'selected' : '' }}>
+                                                <option value="{{ $unit->nama_unit }}"
+                                                    {{ in_array($unit->nama_unit, (array) $unit_kerja) ? 'selected' : '' }}>
                                                     {{ $unit->nama_unit }}
                                                 </option>
                                             @endforeach
@@ -191,9 +193,11 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="input-group mb-2">
-                                        <select class="form-control js-example-basic-multiple" name="prioritas[]" multiple="multiple" id="prioritas-select">
+                                        <select class="form-control js-example-basic-multiple" name="prioritas[]"
+                                            multiple="multiple" id="prioritas-select">
                                             @for ($i = 1; $i <= 50; $i++)
-                                                <option value="Prioritas {{ $i }}" {{ in_array("Prioritas {$i}", (array)$prioritas) ? 'selected' : '' }}>
+                                                <option value="Prioritas {{ $i }}"
+                                                    {{ in_array("Prioritas {$i}", (array) $prioritas) ? 'selected' : '' }}>
                                                     Prioritas {{ $i }}
                                                 </option>
                                             @endfor
@@ -205,8 +209,9 @@
                                 @endphp
                                 <div class="col-md-4">
                                     <div class="input-group mb-2">
-                                        <button class="btn btn-md btn-success">
-                                            {{ __('Export') }}
+                                        <button id="btnExport" class="btn btn-success">
+                                            <i class='fas fa-file-excel'></i>
+                                            Export
                                         </button>
                                         &nbsp;
                                         @if ($reviewExistsForUser)
@@ -668,5 +673,66 @@
             });
         });
     </script>
+    <script>
+        $(document).on('click', '#btnExport', function(event) {
+            event.preventDefault();
+            var initialYear = $('#tahun').val();
+            var initialSumberDana = $('#sumber_dana').val();
+            var initialTopik = $('#topik').val();
+            var initialStep = $('#step').val();
+            var initialFrekuensi = "{{ $frekuensi }}";
+            var initialBpkp = "{{ $is_bpkp }}";
+            exportData(initialYear, initialSumberDana, initialTopik, initialStep, initialBpkp, initialFrekuensi);
+        });
 
+        var exportData = function(initialYear, initialSumberDana, initialTopik, initialStep, initialBpkp, initialFrekuensi) {
+            var url = '/exportPengajuanKap';
+            $.ajax({
+                url: url,
+                type: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                },
+                data: {
+                    year: initialYear,
+                    sumber_dana: initialSumberDana,
+                    topik: initialTopik,
+                    step: initialStep,
+                    is_bpkp: initialBpkp,
+                    frekuensi: initialFrekuensi,
+                },
+                xhrFields: {
+                    responseType: 'blob'
+                },
+                beforeSend: function() {
+                    Swal.fire({
+                        title: 'Harap Tunggu',
+                        html: 'Mengekspor data',
+                        allowOutsideClick: false,
+                        onBeforeOpen: () => {
+                            Swal.showLoading()
+                        },
+                    });
+                },
+                success: function(data) {
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(data);
+                    var nameFile = 'pengajuan_kap.xlsx'
+                    console.log(nameFile)
+                    link.download = nameFile;
+                    link.click();
+                    swal.close()
+                },
+                error: function(data) {
+                    console.log(data)
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Ekspor Gagal',
+                        text: 'Periksa kesalahan',
+                        allowOutsideClick: false,
+                    })
+                }
+            });
+        }
+    </script>
 @endpush

@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use PDF;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ExportPengajuanKap;
 
 
 
@@ -1444,5 +1446,19 @@ class PengajuanKapController extends Controller
                 'message' => 'Gagal skip Pengajuan Kap: ' . $e->getMessage()
             ]);
         }
+    }
+
+    public function exportPengajuanKap(Request $request)
+    {
+        $tahun = $request->query('year');
+        $sumber_dana = $request->query('sumber_dana');
+        $topik = $request->query('topik');
+        $step = $request->query('step');
+        $is_bpkp = $request->query('is_bpkp');
+        $frekuensi = $request->query('frekuensi');
+        $unit_kerja = $request->query('unit_kerja');
+        $prioritas = $request->query('prioritas');
+        $nameFile = 'Kalender pembelajaran ' . now()->format('Ymd_His') . '.xlsx';
+        return Excel::download(new ExportPengajuanKap($tahun, $sumber_dana, $topik, $step, $is_bpkp, $frekuensi, $unit_kerja, $prioritas), $nameFile);
     }
 }
