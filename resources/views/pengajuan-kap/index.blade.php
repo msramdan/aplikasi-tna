@@ -19,6 +19,7 @@
             width: 100%;
             height: 100%;
             background: rgba(255, 255, 255, 0.8);
+            /* Transparan white background */
             z-index: 1000;
             text-align: center;
         }
@@ -333,7 +334,7 @@
 @endsection
 
 @push('js')
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.all.min.js"></script>
     <script>
         let reviewRemarks = @json($reviewRemarks);
         let columns = [
@@ -685,7 +686,8 @@
             exportData(initialYear, initialSumberDana, initialTopik, initialStep, initialBpkp, initialFrekuensi);
         });
 
-        var exportData = function(initialYear, initialSumberDana, initialTopik, initialStep, initialBpkp, initialFrekuensi) {
+        var exportData = function(initialYear, initialSumberDana, initialTopik, initialStep, initialBpkp,
+        initialFrekuensi) {
             var url = '/exportPengajuanKap';
             $.ajax({
                 url: url,
