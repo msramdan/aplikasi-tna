@@ -14,20 +14,20 @@ use Maatwebsite\Excel\Concerns\WithTitle;
 class ExportPengajuanKap implements FromView, ShouldAutoSize, WithEvents, WithTitle
 {
     public $tahun;
-    public $sumber_dana;
     public $topik;
     public $step;
+    public $status_pengajuan;
     public $is_bpkp;
     public $frekuensi;
     public $unit_kerja;
     public $prioritas;
 
-    public function __construct($tahun, $sumber_dana, $topik, $step, $is_bpkp, $frekuensi, $unit_kerja, $prioritas)
+    public function __construct($tahun, $topik, $step, $status_pengajuan, $is_bpkp, $frekuensi, $unit_kerja, $prioritas)
     {
         $this->tahun = $tahun;
         $this->topik = $topik;
-        $this->sumber_dana = $sumber_dana;
         $this->step = $step;
+        $this->status_pengajuan = $status_pengajuan;
         $this->is_bpkp = $is_bpkp;
         $this->frekuensi = $frekuensi;
         $this->unit_kerja = $unit_kerja;
@@ -72,14 +72,14 @@ class ExportPengajuanKap implements FromView, ShouldAutoSize, WithEvents, WithTi
             $pengajuanKaps = $pengajuanKaps->where('pengajuan_kap.topik_id', $this->topik);
         }
 
-        // Filter based on sumber_dana
-        if (isset($this->sumber_dana) && !empty($this->sumber_dana) && $this->sumber_dana != 'All') {
-            $pengajuanKaps = $pengajuanKaps->where('pengajuan_kap.biayaName', $this->sumber_dana);
-        }
-
         // Filter based on current_step
         if (isset($this->step) && !empty($this->step) && $this->step != 'All') {
             $pengajuanKaps = $pengajuanKaps->where('pengajuan_kap.current_step', $this->step);
+        }
+
+        // Filter based on status
+        if (isset($this->status_pengajuan) && !empty($this->status_pengajuan) && $this->status_pengajuan != 'All') {
+            $pengajuanKaps = $pengajuanKaps->where('pengajuan_kap.status_pengajuan', $this->status_pengajuan);
         }
 
         // Filter based on unit_kerja

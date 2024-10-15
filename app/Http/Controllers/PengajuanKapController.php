@@ -29,7 +29,7 @@ class PengajuanKapController extends Controller
         if (request()->ajax()) {
             $tahun = $request->query('tahun');
             $topik = intval($request->query('topik'));
-            $sumber_dana = $request->query('sumber_dana');
+            $status_pengajuan = $request->query('status_pengajuan');
             $current_step = intval($request->query('step'));
 
             // Retrieve filters from the request
@@ -64,10 +64,8 @@ class PengajuanKapController extends Controller
             if (isset($topik) && !empty($topik) && $topik != 'All') {
                 $pengajuanKaps = $pengajuanKaps->where('pengajuan_kap.topik_id', $topik);
             }
-
-            // Filter based on sumber_dana
-            if (isset($sumber_dana) && !empty($sumber_dana) && $sumber_dana != 'All') {
-                $pengajuanKaps = $pengajuanKaps->where('pengajuan_kap.biayaName', $sumber_dana);
+            if (isset($status_pengajuan) && !empty($status_pengajuan) && $status_pengajuan != 'All') {
+                $pengajuanKaps = $pengajuanKaps->where('pengajuan_kap.status_pengajuan', $status_pengajuan);
             }
 
             // Filter based on current_step
@@ -138,10 +136,13 @@ class PengajuanKapController extends Controller
             }
         }
         $topik = intval($request->query('topik'))  ?? 'All';
-        $sumber_dana = $request->query('sumber_dana') ?? 'All';
         $curretnStep = intval($request->query('step'))  ?? 'All';
+        $status_pengajuan = $request->query('status_pengajuan') ?? 'All';
         $unit_kerja = $request->query('unit_kerja', []);
         $prioritas = $request->query('prioritas', []);
+
+
+
 
         // Convert unit_kerja and prioritas from comma-separated strings to arrays
         $unit_kerja = is_array($unit_kerja) ? $unit_kerja : explode(',', $unit_kerja);
@@ -153,7 +154,7 @@ class PengajuanKapController extends Controller
             'reviewRemarks' => $reviewRemarks,
             'topiks' => $topiks,
             'topik_id' => $topik,
-            'sumberDana' => $sumber_dana,
+            'statusPengajuan' => $status_pengajuan,
             'curretnStep' => $curretnStep,
             'units' => $units,
             'unit_kerja' => $unit_kerja, // Pass unit_kerja to the view
@@ -1564,9 +1565,9 @@ class PengajuanKapController extends Controller
     {
         // Ambil data dari query string
         $tahun = $request->query('year');
-        $sumber_dana = $request->query('sumber_dana');
         $topik = $request->query('topik');
         $step = $request->query('step');
+        $status_pengajuan = $request->query('status_pengajuan');
         $is_bpkp = $request->query('is_bpkp');
         $frekuensi = $request->query('frekuensi');
         $unit_kerja = $request->query('unit_kerja'); // array dari select multiple
@@ -1578,9 +1579,9 @@ class PengajuanKapController extends Controller
         // Unduh file Excel dengan data yang dihasilkan oleh ExportPengajuanKap
         return Excel::download(new ExportPengajuanKap(
             $tahun,
-            $sumber_dana,
             $topik,
             $step,
+            $status_pengajuan,
             $is_bpkp,
             $frekuensi,
             $unit_kerja,

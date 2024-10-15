@@ -136,17 +136,6 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="input-group mb-2">
-                                        <select name="sumber_dana" id="sumber_dana"
-                                            class="form-control js-example-basic-multiple">
-                                            <option value="All">-- All Sumber dana --</option>
-                                            <option value="RM" {{ $sumberDana == 'RM' ? 'selected' : '' }}>RM</option>
-                                            <option value="PNBP" {{ $sumberDana == 'PNBP' ? 'selected' : '' }}>PNBP
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="input-group mb-2">
                                         <select name="topik" id="topik"
                                             class="form-control js-example-basic-multiple">
                                             <option value="All">-- All Program pembelajaran --</option>
@@ -164,17 +153,40 @@
                                         <select name="step" id="step"
                                             class="form-control js-example-basic-multiple">
                                             <option value="All">-- All Step --</option>
-                                            <option value="1" {{ $curretnStep == 1 ? 'selected' : '' }}>Biro SDM</option>
-                                            <option value="2" {{ $curretnStep == 2 ? 'selected' : '' }}>Tim Unit Pengelola Pembelajaran</option>
-                                            <option value="3" {{ $curretnStep == 3 ? 'selected' : '' }}>Penjaminan Mutu</option>
+                                            <option value="1" {{ $curretnStep == 1 ? 'selected' : '' }}>Biro SDM
+                                            </option>
+                                            <option value="2" {{ $curretnStep == 2 ? 'selected' : '' }}>Tim Unit
+                                                Pengelola Pembelajaran</option>
+                                            <option value="3" {{ $curretnStep == 3 ? 'selected' : '' }}>Penjaminan
+                                                Mutu</option>
                                             <option value="4" {{ $curretnStep == 4 ? 'selected' : '' }}>Subkoordinator
                                             </option>
                                             <option value="5" {{ $curretnStep == 5 ? 'selected' : '' }}>Koordinator
                                             </option>
-                                            <option value="6" {{ $curretnStep == 6 ? 'selected' : '' }}>Kepala Unit Pengelola Pembelajaran</option>
+                                            <option value="6" {{ $curretnStep == 6 ? 'selected' : '' }}>Kepala Unit
+                                                Pengelola Pembelajaran</option>
                                         </select>
                                     </div>
                                 </div>
+                                <div class="col-md-3">
+                                    <div class="input-group mb-2">
+                                        <select name="status_pengajuan" id="status_pengajuan"
+                                            class="form-control js-example-basic-multiple">
+                                            <option value="All">-- All Status --</option>
+                                            <option value="Pending" {{ $statusPengajuan == 'Pending' ? 'selected' : '' }}>
+                                                Pending</option>
+                                            <option value="Revision"
+                                                {{ $statusPengajuan == 'Revision' ? 'selected' : '' }}>Revision</option>
+                                            <option value="Process" {{ $statusPengajuan == 'Process' ? 'selected' : '' }}>
+                                                Process</option>
+                                            <option value="Approved"
+                                                {{ $statusPengajuan == 'Approved' ? 'selected' : '' }}>Approved</option>
+                                            <option value="Rejected"
+                                                {{ $statusPengajuan == 'Rejected' ? 'selected' : '' }}>Rejected</option>
+                                        </select>
+                                    </div>
+                                </div>
+
                                 <div class="col-md-4">
                                     <div class="input-group mb-2">
                                         <select class="form-control js-example-basic-multiple" name="unit_kerja[]"
@@ -244,7 +256,7 @@
                                             @endif
                                             <th>{{ __('Kompetensi') }}</th>
                                             <th>{{ __('Program pembelajaran') }}</th>
-                                            <th>{{ __('Sumber dana') }}</th>
+                                            <th>{{ __('Judul') }}</th>
                                             <th>{{ __('Current step') }}</th>
                                             <th>{{ __('Status') }}</th>
                                             <th>{{ __('User') }}</th>
@@ -380,8 +392,8 @@
                 name: 'nama_topik'
             },
             {
-                data: 'biayaName',
-                name: 'biayaName'
+                data: 'judul',
+                name: 'judul'
             },
             {
                 data: 'remark',
@@ -423,8 +435,9 @@
                         d.checkboxAll = $('#select-all').prop('checked') ? 1 : 0;
                         d.tahun = $('select[name=tahun] option').filter(':selected').val()
                         d.topik = $('select[name=topik] option').filter(':selected').val()
-                        d.sumber_dana = $('select[name=sumber_dana] option').filter(':selected').val()
                         d.step = $('select[name=step] option').filter(':selected').val()
+                        d.status_pengajuan = $('select[name=status_pengajuan] option').filter(
+                            ':selected').val()
                         d.unit_kerja = $('#unit-kerja-select').val(); // Tambahkan ini
                         d.prioritas = $('#prioritas-select').val(); // Tambahkan ini
                     }
@@ -439,15 +452,15 @@
                 var params = new URLSearchParams();
                 var tahunSelected = $('select[name=tahun]').val();
                 var currentStep = $('select[name=step]').val();
+                var statusPengajuan = $('select[name=status_pengajuan]').val();
                 var topikSelected = $('select[name=topik]').val();
-                var sumberDanaSelected = $('select[name=sumber_dana]').val();
                 var unitKerjaSelected = $('#unit-kerja-select').val(); // Tambahkan ini
                 var prioritasSelected = $('#prioritas-select').val(); // Tambahkan ini
 
                 if (tahunSelected) params.set('tahun', tahunSelected);
                 if (topikSelected) params.set('topik', topikSelected);
-                if (sumberDanaSelected) params.set('sumber_dana', sumberDanaSelected);
                 if (currentStep) params.set('step', currentStep);
+                if (statusPengajuan) params.set('status_pengajuan', statusPengajuan);
                 if (unitKerjaSelected) params.set('unit_kerja', unitKerjaSelected.join(',')); // Tambahkan ini
                 if (prioritasSelected) params.set('prioritas', prioritasSelected.join(',')); // Tambahkan ini
 
@@ -479,12 +492,13 @@
                 replaceURLParams()
             })
 
-            $('#sumber_dana').change(function() {
+
+            $('#step').change(function() {
                 table.draw();
                 replaceURLParams()
             })
 
-            $('#step').change(function() {
+            $('#status_pengajuan').change(function() {
                 table.draw();
                 replaceURLParams()
             })
@@ -686,18 +700,20 @@
         $(document).on('click', '#btnExport', function(event) {
             event.preventDefault();
             var initialYear = $('#tahun').val();
-            var initialSumberDana = $('#sumber_dana').val();
             var initialTopik = $('#topik').val();
             var initialStep = $('#step').val();
+            var initialStatusPengajuan = $('#status_pengajuan').val();
             var initialFrekuensi = "{{ $frekuensi }}";
             var initialBpkp = "{{ $is_bpkp }}";
             var unitKerja = $('#unit-kerja-select').val(); // array
             var prioritas = $('#prioritas-select').val(); // array
-            exportData(initialYear, initialSumberDana, initialTopik, initialStep, initialBpkp, initialFrekuensi,
+            exportData(initialYear, initialTopik, initialStep, initialStatusPengajuan, initialBpkp,
+                initialFrekuensi,
                 unitKerja, prioritas);
         });
 
-        var exportData = function(initialYear, initialSumberDana, initialTopik, initialStep, initialBpkp, initialFrekuensi,
+        var exportData = function(initialYear, initialTopik, initialStep, initialStatusPengajuan, initialBpkp,
+            initialFrekuensi,
             unitKerja, prioritas) {
             var url = '/exportPengajuanKap';
             $.ajax({
@@ -708,9 +724,9 @@
                 },
                 data: {
                     year: initialYear,
-                    sumber_dana: initialSumberDana,
                     topik: initialTopik,
                     step: initialStep,
+                    status_pengajuan: initialStatusPengajuan,
                     is_bpkp: initialBpkp,
                     frekuensi: initialFrekuensi,
                     unit_kerja: unitKerja,
