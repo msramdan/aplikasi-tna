@@ -252,6 +252,7 @@
                                             <th>{{ __('Current step') }}</th>
                                             <th>{{ __('Status') }}</th>
                                             <th>{{ __('User') }}</th>
+                                            <th>{{ __('Unit') }}</th>
                                             <th>{{ __('Action') }}</th>
                                         </tr>
                                     </thead>
@@ -398,6 +399,10 @@
             {
                 data: 'user_name',
                 name: 'user_name'
+            },
+            {
+                data: 'nama_unit',
+                name: 'nama_unit'
             },
             {
                 data: 'action',

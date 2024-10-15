@@ -40,6 +40,7 @@ class PengajuanKapController extends Controller
                 ->select(
                     'pengajuan_kap.*',
                     'users.name as user_name',
+                    'users.nama_unit',
                     'kompetensi.nama_kompetensi',
                     'topik.nama_topik',
                     'log_review_pengajuan_kap.remark'
