@@ -640,7 +640,7 @@
             </form>
         </div>
 
-        <div id="step-3" class="tab-pane" role="tabpanel" aria-labelledby="step-3">
+        <div id="step-3" class="tab-pane" role="tabpanel" aria-labelledby="step-3" style="padding-bottom: 20px">
             <form id="form-3">
                 <div class="row" style="padding: 20px">
                     <div class="form-group row mb-3">
