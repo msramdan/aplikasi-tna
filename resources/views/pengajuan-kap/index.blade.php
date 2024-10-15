@@ -164,18 +164,14 @@
                                         <select name="step" id="step"
                                             class="form-control js-example-basic-multiple">
                                             <option value="All">-- All Step --</option>
-                                            <option value="1" {{ $curretnStep == 1 ? 'selected' : '' }}>Tim Unit
-                                                Pengelola Pembelajaran</option>
-                                            <option value="2" {{ $curretnStep == 2 ? 'selected' : '' }}>Keuangan
-                                            </option>
-                                            <option value="3" {{ $curretnStep == 3 ? 'selected' : '' }}>Penjaminan
-                                                Mutu</option>
+                                            <option value="1" {{ $curretnStep == 1 ? 'selected' : '' }}>Biro SDM</option>
+                                            <option value="2" {{ $curretnStep == 2 ? 'selected' : '' }}>Tim Unit Pengelola Pembelajaran</option>
+                                            <option value="3" {{ $curretnStep == 3 ? 'selected' : '' }}>Penjaminan Mutu</option>
                                             <option value="4" {{ $curretnStep == 4 ? 'selected' : '' }}>Subkoordinator
                                             </option>
                                             <option value="5" {{ $curretnStep == 5 ? 'selected' : '' }}>Koordinator
                                             </option>
-                                            <option value="6" {{ $curretnStep == 6 ? 'selected' : '' }}>Kepala Unit
-                                                Pengelola Pembelajaran</option>
+                                            <option value="6" {{ $curretnStep == 6 ? 'selected' : '' }}>Kepala Unit Pengelola Pembelajaran</option>
                                         </select>
                                     </div>
                                 </div>
