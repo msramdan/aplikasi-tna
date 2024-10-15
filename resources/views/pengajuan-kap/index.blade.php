@@ -251,6 +251,7 @@
                                             <th>{{ __('Sumber dana') }}</th>
                                             <th>{{ __('Current step') }}</th>
                                             <th>{{ __('Status') }}</th>
+                                            <th>{{ __('User') }}</th>
                                             <th>{{ __('Action') }}</th>
                                         </tr>
                                     </thead>
@@ -389,9 +390,14 @@
                 data: 'remark',
                 name: 'remark'
             },
+
             {
                 data: 'status_pengajuan',
                 name: 'status_pengajuan'
+            },
+            {
+                data: 'user_name',
+                name: 'user_name'
             },
             {
                 data: 'action',
