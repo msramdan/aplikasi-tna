@@ -24,7 +24,7 @@
     @stack('js')
 
     <a href="https://wa.me/62818965879?text=Hello%20Admin,%20saya%20ingin%20bertanya%20mengenai%20Aplikasi%20TNA.%20Mohon%20bantuan%20dan%20informasinya.%20Terima%20kasih."
-       target="_blank" id="whatsapp-button">
+        target="_blank" id="whatsapp-button">
         <img src="{{ asset('wa.png') }}" alt="WhatsApp" style="width: 60px;">
         <span id="whatsapp-text">Hubungi kami</span>
     </a>
@@ -33,8 +33,8 @@
         #whatsapp-button {
             position: fixed;
             bottom: 20px;
-            right: 20px;
-            z-index: 1000;
+            left: 20px;
+            z-index: 2000;
             display: flex;
             align-items: center;
             text-decoration: none;
