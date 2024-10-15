@@ -42,7 +42,8 @@
 
 
         @if ($model->status_pengajuan == 'Pending')
-            @can('pengajuan kap delete')
+        @can('pengajuan kap delete')
+            @if (Auth::id() == $model->user_created)
                 <form
                     action="{{ route('pengajuan-kap.destroy', [
                         'id' => $model->id,
@@ -57,13 +58,15 @@
                         <i class="mdi mdi-trash-can-outline"></i>
                     </button>
                 </form>
-            @endcan
-        @else
-            @can('pengajuan kap delete')
-                <button disabled class="btn btn-danger btn-sm">
-                    <i class="mdi mdi-trash-can-outline"></i>
-                </button>
-            @endcan
-        @endif
+            @endif
+        @endcan
+    @else
+        @can('pengajuan kap delete')
+            <button disabled class="btn btn-danger btn-sm">
+                <i class="mdi mdi-trash-can-outline"></i>
+            </button>
+        @endcan
+    @endif
+
     </div>
 </td>
