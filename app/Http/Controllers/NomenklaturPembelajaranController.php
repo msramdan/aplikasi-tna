@@ -28,7 +28,7 @@ class NomenklaturPembelajaranController extends Controller
                     'nomenklatur_pembelajaran.*',
                     'rumpun_pembelajaran.rumpun_pembelajaran',
                     'user_created.name as user_created_name',
-                    'users.nama_unit',
+                    'user_created.nama_unit',
                     'user_review.name as user_review_name'
                 );
 
