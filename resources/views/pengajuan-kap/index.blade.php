@@ -384,13 +384,14 @@
                     data: 'indikator_kinerja',
                     name: 'indikator_kinerja'
                 },
-            @endif {
+            @endif
+            {
                 data: 'nama_kompetensi',
-                name: 'nama_kompetensi'
+                name: 'kompetensi.nama_kompetensi'
             },
             {
                 data: 'nama_topik',
-                name: 'nama_topik'
+                name: 'topik.nama_topik'
             },
             {
                 data: 'judul',
@@ -410,11 +411,11 @@
             },
             {
                 data: 'user_name',
-                name: 'user_name'
+                name: 'users.user_name'
             },
             {
                 data: 'nama_unit',
-                name: 'nama_unit'
+                name: 'users.nama_unit'
             },
             {
                 data: 'action',

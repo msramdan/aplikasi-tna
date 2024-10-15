@@ -31,10 +31,8 @@ class PengajuanKapController extends Controller
             $topik = intval($request->query('topik'));
             $status_pengajuan = $request->query('status_pengajuan');
             $current_step = intval($request->query('step'));
-
-            // Retrieve filters from the request
-            $unit_kerja = $request->query('unit_kerja', []); // Assuming this is an array
-            $prioritas = $request->query('prioritas', []); // Assuming this is also an array
+            $unit_kerja = $request->query('unit_kerja', []);
+            $prioritas = $request->query('prioritas', []);
 
             $pengajuanKaps = DB::table('pengajuan_kap')
                 ->select(
