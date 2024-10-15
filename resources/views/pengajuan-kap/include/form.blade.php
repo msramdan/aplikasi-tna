@@ -69,8 +69,6 @@
     </div>
 </div>
 
-
-
 <div id="smartwizard" dir="" class="sw sw-theme-arrows sw-justified">
     <ul class="nav nav-progress">
         <li class="nav-item">
@@ -93,9 +91,9 @@
         </li>
     </ul>
 
-    <div class="tab-content" style="overflow: auto; min-height:700px">
+    <div class="tab-content" style="padding-bottom: 20px">
         <p style="color: red; padding:10px">Note : * Wajib diisi</p>
-        <div id="step-1" class="tab-pane" role="tabpanel" aria-labelledby="step-1" style="display: none;">
+        <div id="step-1" class="tab-pane" role="tabpanel" aria-labelledby="step-1" style="padding-bottom: 20px">
             <form id="form-1">
                 <input type="hidden" name="tahun" id="tahun" class="form-control" placeholder=""
                     value="{{ $tahun }}" required readonly />
@@ -105,8 +103,7 @@
                         <label for="jenis_program" class="col-sm-3 col-form-label">{{ __('Jenis Program') }} <span
                                 style="color: red">*</span></label>
                         <div class="col-sm-6">
-                            <select
-                                class="form-control js-example-basic-multiple @error('jenis_program') is-invalid @enderror"
+                            <select class="form-control  @error('jenis_program') is-invalid @enderror"
                                 name="jenis_program" id="jenis_program" required>
                                 <option value="" selected disabled>-- {{ __('Select jenis program') }} --
                                 </option>
@@ -149,7 +146,7 @@
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->referensi_indikator_kinerja : old('referensi_indikator_kinerja') }}"
                                 placeholder="{{ __('Indikator Kinerja ' . $tahun) }}" required />
                             <div class="invalid-feedback">
-                                Mohon untuk diisi Indikator Kinerja {{$tahun}}
+                                Mohon untuk diisi Indikator Kinerja {{ $tahun }}
                             </div>
                         </div>
                     </div>
@@ -198,9 +195,8 @@
                         </label>
                         <div class="col-sm-6">
                             <div class="d-flex">
-                                <select
-                                    class="form-control js-example-basic-multiple @error('topik_id') is-invalid @enderror"
-                                    name="topik_id" id="topik_id" required>
+                                <select class="form-control @error('topik_id') is-invalid @enderror" name="topik_id"
+                                    id="topik_id" required>
                                     <option value="" selected disabled>--
                                         {{ __('Select program pembelajaran') }} --</option>
 
@@ -260,12 +256,13 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label for="prioritas_pembelajaran" style="padding-left: 40px" class="col-sm-3 col-form-label">
+                        <label for="prioritas_pembelajaran" style="padding-left: 40px"
+                            class="col-sm-3 col-form-label">
                             {{ __('B. Prioritas Pembelajaran') }} <span style="color: red">*</span>
                         </label>
                         <div class="col-sm-6">
                             <select name="prioritas_pembelajaran" id="prioritas_pembelajaran"
-                                class="form-control js-example-basic-multiple @error('prioritas_pembelajaran') is-invalid @enderror" required>
+                                class="form-control  @error('prioritas_pembelajaran') is-invalid @enderror" required>
                                 <option value="" disabled selected>
                                     {{ __('-- Select Prioritas Pembelajaran --') }}
                                 </option>
@@ -395,7 +392,7 @@
             </form>
         </div>
 
-        <div id="step-2" class="tab-pane" role="tabpanel" aria-labelledby="step-2" style="display: none;">
+        <div id="step-2" class="tab-pane" role="tabpanel" aria-labelledby="step-2" style="padding-bottom: 20px">
             <form id="form-2">
                 <div class="row" style="padding: 20px">
                     <div class="form-group row mb-3">
@@ -489,10 +486,11 @@
 
 
                     <div class="form-group row mb-3">
-                        <label for="diklatLocID" class="col-sm-3 col-form-label">{{ __('Lokasi') }}</label>
+                        <label for="diklatLocID" class="col-sm-3 col-form-label">{{ __('Lokasi') }}<span
+                                style="color: red">*</span></label>
                         <div class="col-sm-6">
-                            <select
-                                class="form-control js-example-basic-multiple @error('diklatLocID') is-invalid @enderror"
+                            <select required
+                                class="form-control js-example-basic-multiple  @error('diklatLocID') is-invalid @enderror"
                                 name="diklatLocID" id="diklatLocID">
                                 <option value="" selected disabled>-- {{ __('Select lokasi') }} --</option>
                                 @foreach ($diklatLocation_data as $lokasi)
@@ -513,9 +511,10 @@
 
                     <div class="form-group row mb-3">
                         <label class="col-sm-3 col-form-label"
-                            for="detail_lokasi">{{ __('Tempat / Alamat Rinci') }}</label>
+                            for="detail_lokasi">{{ __('Tempat / Alamat Rinci') }}<span
+                                style="color: red">*</span></label>
                         <div class="col-sm-6">
-                            <input type="text" name="detail_lokasi" id="detail_lokasi"
+                            <input type="text" name="detail_lokasi" id="detail_lokasi" required
                                 class="form-control @error('detail_lokasi') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->detail_lokasi : old('detail_lokasi') }}"
                                 placeholder="{{ __('Tempat / Alamat Rinci') }}" />
@@ -526,9 +525,10 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label class="col-sm-3 col-form-label" for="kelas">{{ __('Jumlah Kelas') }}</label>
+                        <label class="col-sm-3 col-form-label" for="kelas">{{ __('Jumlah Kelas') }}<span
+                                style="color: red">*</span></label>
                         <div class="col-sm-6">
-                            <input type="number" name="kelas" id="kelas"
+                            <input type="number" name="kelas" id="kelas" required
                                 class="form-control @error('kelas') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->kelas : old('kelas') }}"
                                 placeholder="{{ __('Jumlah Kelas') }}" />
@@ -540,10 +540,10 @@
 
                     <div class="form-group row mb-3">
                         <label for="bentuk_pembelajaran"
-                            class="col-sm-3 col-form-label">{{ __('Bentuk Pembelajaran') }}</label>
+                            class="col-sm-3 col-form-label">{{ __('Bentuk Pembelajaran') }}<span
+                                style="color: red">*</span></label>
                         <div class="col-sm-6">
-                            <select
-                                class="form-control js-example-basic-multiple @error('bentuk_pembelajaran') is-invalid @enderror"
+                            <select required class="form-control  @error('bentuk_pembelajaran') is-invalid @enderror"
                                 name="bentuk_pembelajaran" id="bentuk_pembelajaran">
                                 <option value="" selected disabled>-- {{ __('Select bentuk pembelajaran') }}
                                     --
@@ -563,10 +563,10 @@
 
                     <div class="form-group row mb-3">
                         <label for="jalur_pembelajaran"
-                            class="col-sm-3 col-form-label">{{ __('Jalur Pembelajaran') }}</label>
+                            class="col-sm-3 col-form-label">{{ __('Jalur Pembelajaran') }}<span
+                                style="color: red">*</span></label>
                         <div class="col-sm-6">
-                            <select
-                                class="form-control js-example-basic-multiple @error('jalur_pembelajaran') is-invalid @enderror"
+                            <select required class="form-control  @error('jalur_pembelajaran') is-invalid @enderror"
                                 name="jalur_pembelajaran" id="jalur_pembelajaran">
                                 <option value="" selected disabled>-- {{ __('Select jalur pembelajaran') }}
                                     --
@@ -586,10 +586,10 @@
 
                     <div class="form-group row mb-3">
                         <label for="model_pembelajaran"
-                            class="col-sm-3 col-form-label">{{ __('Model Pembelajaran') }}</label>
+                            class="col-sm-3 col-form-label">{{ __('Model Pembelajaran') }}<span
+                                style="color: red">*</span></label>
                         <div class="col-sm-6">
-                            <select
-                                class="form-control js-example-basic-multiple @error('model_pembelajaran') is-invalid @enderror"
+                            <select required class="form-control  @error('model_pembelajaran') is-invalid @enderror"
                                 name="model_pembelajaran" id="model_pembelajaran">
                                 <option value="" selected disabled>-- {{ __('Select model pembelajaran') }}
                                     --
@@ -614,11 +614,10 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label for="diklatTypeID"
-                            class="col-sm-3 col-form-label">{{ __('Jenis Pembelajaran') }}</label>
+                        <label for="diklatTypeID" class="col-sm-3 col-form-label">{{ __('Jenis Pembelajaran') }}<span
+                                style="color: red">*</span></label>
                         <div class="col-sm-6">
-                            <select
-                                class="form-control js-example-basic-multiple @error('diklatTypeID') is-invalid @enderror"
+                            <select required class="form-control  @error('diklatTypeID') is-invalid @enderror"
                                 name="diklatTypeID" id="diklatTypeID">
                                 <option value="" selected disabled>-- {{ __('Select jenis pembelajaran') }} --
                                 </option>
@@ -646,10 +645,10 @@
                 <div class="row" style="padding: 20px">
                     <div class="form-group row mb-3">
                         <label for="peserta_pembelajaran"
-                            class="col-sm-3 col-form-label">{{ __('Peserta Pembelajaran') }}</label>
+                            class="col-sm-3 col-form-label">{{ __('Peserta Pembelajaran') }}<span
+                                style="color: red">*</span></label>
                         <div class="col-sm-6">
-                            <select
-                                class="form-control js-example-basic-multiple @error('peserta_pembelajaran') is-invalid @enderror"
+                            <select required class="form-control  @error('peserta_pembelajaran') is-invalid @enderror"
                                 name="peserta_pembelajaran" id="peserta_pembelajaran">
                                 <option value="" selected disabled>-- {{ __('Select peserta pembelajaran') }} --
                                 </option>
@@ -670,9 +669,10 @@
                     </div>
                     <div class="form-group row mb-3">
                         <label for="sasaran_peserta"
-                            class="col-sm-3 col-form-label">{{ __('Sasaran Peserta') }}</label>
+                            class="col-sm-3 col-form-label">{{ __('Sasaran Peserta') }}<span
+                                style="color: red">*</span></label>
                         <div class="col-sm-6">
-                            <input type="text" name="sasaran_peserta" id="sasaran_peserta"
+                            <input type="text" name="sasaran_peserta" id="sasaran_peserta" required
                                 class="form-control @error('sasaran_peserta') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->sasaran_peserta : old('sasaran_peserta') }}"
                                 placeholder="{{ __('Sasaran Peserta') }}" />
@@ -684,9 +684,10 @@
 
                     <div class="form-group row mb-3">
                         <label for="kriteria_peserta"
-                            class="col-sm-3 col-form-label">{{ __('Kriteria Peserta') }}</label>
+                            class="col-sm-3 col-form-label">{{ __('Kriteria Peserta') }}<span
+                                style="color: red">*</span></label>
                         <div class="col-sm-6">
-                            <input type="text" name="kriteria_peserta" id="kriteria_peserta"
+                            <input type="text" name="kriteria_peserta" id="kriteria_peserta" required
                                 class="form-control @error('kriteria_peserta') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->kriteria_peserta : old('kriteria_peserta') }}"
                                 placeholder="{{ __('Sasaran Peserta') }}" />
@@ -698,10 +699,11 @@
 
                     <div class="form-group row mb-3">
                         <label for="aktivitas_prapembelajaran"
-                            class="col-sm-3 col-form-label">{{ __('Aktivitas Prapembelajaran') }}</label>
+                            class="col-sm-3 col-form-label">{{ __('Aktivitas Prapembelajaran') }}<span
+                                style="color: red">*</span></label>
                         <div class="col-sm-6">
                             <input type="text" name="aktivitas_prapembelajaran" id="aktivitas_prapembelajaran"
-                                class="form-control @error('aktivitas_prapembelajaran') is-invalid @enderror"
+                                required class="form-control @error('aktivitas_prapembelajaran') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->aktivitas_prapembelajaran : old('aktivitas_prapembelajaran') }}"
                                 placeholder="{{ __('Aktivitas Prapembelajaran') }}" />
                             <div class="invalid-feedback">
@@ -712,10 +714,11 @@
 
                     <div class="form-group row mb-3">
                         <label for="penyelenggara_pembelajaran"
-                            class="col-sm-3 col-form-label">{{ __('Penyelenggara Pembelajaran') }}</label>
+                            class="col-sm-3 col-form-label">{{ __('Penyelenggara Pembelajaran') }}<span
+                                style="color: red">*</span></label>
                         <div class="col-sm-6">
-                            <select
-                                class="form-control js-example-basic-multiple @error('penyelenggara_pembelajaran') is-invalid @enderror"
+                            <select required
+                                class="form-control  @error('penyelenggara_pembelajaran') is-invalid @enderror"
                                 name="penyelenggara_pembelajaran" id="penyelenggara_pembelajaran">
                                 <option value="" selected disabled>--
                                     {{ __('Select penyelenggara pembelajaran') }} --</option>
@@ -736,7 +739,8 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label class="col-sm-3 col-form-label">{{ __('Fasilitator Pembelajaran') }}</label>
+                        <label class="col-sm-3 col-form-label">{{ __('Fasilitator Pembelajaran') }}<span
+                                style="color: red">*</span></label>
                         <div class="col-sm-6">
                             @php
                                 $fasilitatorPembelajaran = isset($pengajuanKap)
@@ -763,9 +767,10 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label for="sertifikat" class="col-sm-3 col-form-label">{{ __('Sertifikat') }}</label>
+                        <label for="sertifikat" class="col-sm-3 col-form-label">{{ __('Sertifikat') }}<span
+                                style="color: red">*</span></label>
                         <div class="col-sm-6">
-                            <input type="text" name="sertifikat" id="sertifikat"
+                            <input type="text" name="sertifikat" id="sertifikat" required
                                 class="form-control @error('sertifikat') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->sertifikat : old('sertifikat') }}"
                                 placeholder="{{ __('Sertifikat') }}" />
@@ -777,7 +782,8 @@
 
                     <div class="form-group row mb-3">
                         <label for="level_evaluasi_instrumen"
-                            class="col-sm-3 col-form-label">{{ __('Level Evaluasi dan Instrumennya') }}</label>
+                            class="col-sm-3 col-form-label">{{ __('Level Evaluasi dan Instrumennya') }}<span
+                                style="color: red">*</span></label>
                         <div class="col-sm-6">
                             <table class="table table-bordered table-sm text-center">
                                 <thead style="background-color: #cbccce">

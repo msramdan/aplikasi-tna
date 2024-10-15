@@ -129,7 +129,7 @@
                         <div class="col-sm-6">
                             <div class="d-flex">
                                 <select
-                                    class="form-control js-example-basic-multiple @error('topik_id') is-invalid @enderror"
+                                    class="form-control  @error('topik_id') is-invalid @enderror"
                                     name="topik_id" id="topik_id" required>
                                     <option value="" selected disabled>--
                                         {{ __('Select program pembelajaran') }} --</option>
@@ -195,7 +195,7 @@
                         </label>
                         <div class="col-sm-6">
                             <select name="prioritas_pembelajaran" id="prioritas_pembelajaran"
-                                class="form-control js-example-basic-multiple @error('prioritas_pembelajaran') is-invalid @enderror" required>
+                                class="form-control  @error('prioritas_pembelajaran') is-invalid @enderror" required>
                                 <option value="" disabled selected>
                                     {{ __('-- Select Prioritas Pembelajaran --') }}
                                 </option>
@@ -421,7 +421,7 @@
                         <label for="diklatLocID" class="col-sm-3 col-form-label">{{ __('Lokasi') }}</label>
                         <div class="col-sm-6">
                             <select
-                                class="form-control js-example-basic-multiple @error('diklatLocID') is-invalid @enderror"
+                                class="form-control js-example-basic-multiple  @error('diklatLocID') is-invalid @enderror"
                                 name="diklatLocID" id="diklatLocID">
                                 <option value="" selected disabled>-- {{ __('Select lokasi') }} --</option>
                                 @foreach ($diklatLocation_data as $lokasi)
@@ -472,7 +472,7 @@
                             class="col-sm-3 col-form-label">{{ __('Bentuk Pembelajaran') }}</label>
                         <div class="col-sm-6">
                             <select
-                                class="form-control js-example-basic-multiple @error('bentuk_pembelajaran') is-invalid @enderror"
+                                class="form-control  @error('bentuk_pembelajaran') is-invalid @enderror"
                                 name="bentuk_pembelajaran" id="bentuk_pembelajaran">
                                 <option value="" selected disabled>-- {{ __('Select bentuk pembelajaran') }}
                                     --
@@ -495,7 +495,7 @@
                             class="col-sm-3 col-form-label">{{ __('Jalur Pembelajaran') }}</label>
                         <div class="col-sm-6">
                             <select
-                                class="form-control js-example-basic-multiple @error('jalur_pembelajaran') is-invalid @enderror"
+                                class="form-control  @error('jalur_pembelajaran') is-invalid @enderror"
                                 name="jalur_pembelajaran" id="jalur_pembelajaran">
                                 <option value="" selected disabled>-- {{ __('Select jalur pembelajaran') }}
                                     --
@@ -518,7 +518,7 @@
                             class="col-sm-3 col-form-label">{{ __('Model Pembelajaran') }}</label>
                         <div class="col-sm-6">
                             <select
-                                class="form-control js-example-basic-multiple @error('model_pembelajaran') is-invalid @enderror"
+                                class="form-control  @error('model_pembelajaran') is-invalid @enderror"
                                 name="model_pembelajaran" id="model_pembelajaran">
                                 <option value="" selected disabled>-- {{ __('Select model pembelajaran') }}
                                     --
@@ -547,7 +547,7 @@
                             class="col-sm-3 col-form-label">{{ __('Jenis Pembelajaran') }}</label>
                         <div class="col-sm-6">
                             <select
-                                class="form-control js-example-basic-multiple @error('diklatTypeID') is-invalid @enderror"
+                                class="form-control  @error('diklatTypeID') is-invalid @enderror"
                                 name="diklatTypeID" id="diklatTypeID">
                                 <option value="" selected disabled>-- {{ __('Select jenis pembelajaran') }} --
                                 </option>
@@ -578,7 +578,7 @@
                             class="col-sm-3 col-form-label">{{ __('Peserta Pembelajaran') }}</label>
                         <div class="col-sm-6">
                             <select
-                                class="form-control js-example-basic-multiple @error('peserta_pembelajaran') is-invalid @enderror"
+                                class="form-control  @error('peserta_pembelajaran') is-invalid @enderror"
                                 name="peserta_pembelajaran" id="peserta_pembelajaran">
                                 <option value="" selected disabled>-- {{ __('Select peserta pembelajaran') }} --
                                 </option>
@@ -644,7 +644,7 @@
                             class="col-sm-3 col-form-label">{{ __('Penyelenggara Pembelajaran') }}</label>
                         <div class="col-sm-6">
                             <select
-                                class="form-control js-example-basic-multiple @error('penyelenggara_pembelajaran') is-invalid @enderror"
+                                class="form-control  @error('penyelenggara_pembelajaran') is-invalid @enderror"
                                 name="penyelenggara_pembelajaran" id="penyelenggara_pembelajaran">
                                 <option value="" selected disabled>--
                                     {{ __('Select penyelenggara pembelajaran') }} --</option>
