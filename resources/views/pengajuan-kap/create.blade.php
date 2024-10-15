@@ -303,6 +303,28 @@
             checkInputs(); // Initial check on page load
         });
     </script>
+        <script>
+            $(document).ready(function() {
+                function validateFasilitator() {
+                    // Check if any checkbox is checked
+                    if ($('input[name="fasilitator_pembelajaran[]"]:checked').length === 0) {
+                        // Add required attribute if none is checked
+                        $('input[name="fasilitator_pembelajaran[]"]').attr('required', 'required');
+                    } else {
+                        // Remove required attribute if at least one is checked
+                        $('input[name="fasilitator_pembelajaran[]"]').removeAttr('required');
+                    }
+                }
+
+                // Run validation initially when the page loads
+                validateFasilitator();
+
+                // Also run validation when any checkbox is clicked
+                $('input[name="fasilitator_pembelajaran[]"]').on('change', function() {
+                    validateFasilitator();
+                });
+            });
+        </script>
 
 
     <script>

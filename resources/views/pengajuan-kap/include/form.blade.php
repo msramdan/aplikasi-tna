@@ -737,22 +737,18 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="form-group row mb-3">
-                        <label class="col-sm-3 col-form-label">{{ __('Fasilitator Pembelajaran') }}<span
-                                style="color: red">*</span></label>
+                        <label class="col-sm-3 col-form-label">{{ __('Fasilitator Pembelajaran') }}<span style="color: red">*</span></label>
                         <div class="col-sm-6">
                             @php
                                 $fasilitatorPembelajaran = isset($pengajuanKap)
                                     ? json_decode($pengajuanKap->fasilitator_pembelajaran, true)
                                     : old('fasilitator_pembelajaran', []);
-                                $fasilitatorPembelajaran = is_array($fasilitatorPembelajaran)
-                                    ? $fasilitatorPembelajaran
-                                    : [];
+                                $fasilitatorPembelajaran = is_array($fasilitatorPembelajaran) ? $fasilitatorPembelajaran : [];
                             @endphp
                             @foreach (['Widyaiswara', 'Instruktur', 'Praktisi', 'Pakar', 'Tutor', 'Coach', 'Mentor', 'Narasumber lainnya'] as $fasilitator)
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="fasilitator_pembelajaran[]"
+                                    <input class="form-check-input fasilitator-checkbox" type="checkbox" name="fasilitator_pembelajaran[]"
                                         id="fasilitator_{{ $fasilitator }}" value="{{ $fasilitator }}"
                                         {{ in_array($fasilitator, $fasilitatorPembelajaran) ? 'checked' : '' }}>
                                     <label class="form-check-label" for="fasilitator_{{ $fasilitator }}">

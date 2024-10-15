@@ -128,9 +128,8 @@
                         </label>
                         <div class="col-sm-6">
                             <div class="d-flex">
-                                <select
-                                    class="form-control  @error('topik_id') is-invalid @enderror"
-                                    name="topik_id" id="topik_id" required>
+                                <select class="form-control  @error('topik_id') is-invalid @enderror" name="topik_id"
+                                    id="topik_id" required>
                                     <option value="" selected disabled>--
                                         {{ __('Select program pembelajaran') }} --</option>
 
@@ -190,7 +189,8 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label for="prioritas_pembelajaran" style="padding-left: 40px" class="col-sm-3 col-form-label">
+                        <label for="prioritas_pembelajaran" style="padding-left: 40px"
+                            class="col-sm-3 col-form-label">
                             {{ __('B. Prioritas Pembelajaran') }} <span style="color: red">*</span>
                         </label>
                         <div class="col-sm-6">
@@ -419,7 +419,7 @@
 
                     <div class="form-group row mb-3">
                         <label for="diklatLocID" class="col-sm-3 col-form-label">{{ __('Lokasi') }}<span
-                            style="color: red">*</span></label>
+                                style="color: red">*</span></label>
                         <div class="col-sm-6">
                             <select required
                                 class="form-control js-example-basic-multiple  @error('diklatLocID') is-invalid @enderror"
@@ -444,7 +444,7 @@
                     <div class="form-group row mb-3">
                         <label class="col-sm-3 col-form-label"
                             for="detail_lokasi">{{ __('Tempat / Alamat Rinci') }}<span
-                            style="color: red">*</span></label>
+                                style="color: red">*</span></label>
                         <div class="col-sm-6">
                             <input type="text" name="detail_lokasi" id="detail_lokasi" required
                                 class="form-control @error('detail_lokasi') is-invalid @enderror"
@@ -458,7 +458,7 @@
 
                     <div class="form-group row mb-3">
                         <label class="col-sm-3 col-form-label" for="kelas">{{ __('Jumlah Kelas') }}<span
-                            style="color: red">*</span></label>
+                                style="color: red">*</span></label>
                         <div class="col-sm-6">
                             <input type="number" name="kelas" id="kelas" required
                                 class="form-control @error('kelas') is-invalid @enderror"
@@ -473,10 +473,9 @@
                     <div class="form-group row mb-3">
                         <label for="bentuk_pembelajaran"
                             class="col-sm-3 col-form-label">{{ __('Bentuk Pembelajaran') }}<span
-                            style="color: red">*</span></label>
+                                style="color: red">*</span></label>
                         <div class="col-sm-6">
-                            <select
-                                class="form-control  @error('bentuk_pembelajaran') is-invalid @enderror" required
+                            <select class="form-control  @error('bentuk_pembelajaran') is-invalid @enderror" required
                                 name="bentuk_pembelajaran" id="bentuk_pembelajaran">
                                 <option value="" selected disabled>-- {{ __('Select bentuk pembelajaran') }}
                                     --
@@ -497,10 +496,9 @@
                     <div class="form-group row mb-3">
                         <label for="jalur_pembelajaran"
                             class="col-sm-3 col-form-label">{{ __('Jalur Pembelajaran') }}<span
-                            style="color: red">*</span></label>
+                                style="color: red">*</span></label>
                         <div class="col-sm-6">
-                            <select
-                                class="form-control  @error('jalur_pembelajaran') is-invalid @enderror" required
+                            <select class="form-control  @error('jalur_pembelajaran') is-invalid @enderror" required
                                 name="jalur_pembelajaran" id="jalur_pembelajaran">
                                 <option value="" selected disabled>-- {{ __('Select jalur pembelajaran') }}
                                     --
@@ -521,10 +519,9 @@
                     <div class="form-group row mb-3">
                         <label for="model_pembelajaran"
                             class="col-sm-3 col-form-label">{{ __('Model Pembelajaran') }}<span
-                            style="color: red">*</span></label>
+                                style="color: red">*</span></label>
                         <div class="col-sm-6">
-                            <select required
-                                class="form-control  @error('model_pembelajaran') is-invalid @enderror"
+                            <select required class="form-control  @error('model_pembelajaran') is-invalid @enderror"
                                 name="model_pembelajaran" id="model_pembelajaran">
                                 <option value="" selected disabled>-- {{ __('Select model pembelajaran') }}
                                     --
@@ -549,12 +546,10 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label for="diklatTypeID"
-                            class="col-sm-3 col-form-label">{{ __('Jenis Pembelajaran') }}<span
-                            style="color: red">*</span></label>
+                        <label for="diklatTypeID" class="col-sm-3 col-form-label">{{ __('Jenis Pembelajaran') }}<span
+                                style="color: red">*</span></label>
                         <div class="col-sm-6">
-                            <select
-                                class="form-control  @error('diklatTypeID') is-invalid @enderror" required
+                            <select class="form-control  @error('diklatTypeID') is-invalid @enderror" required
                                 name="diklatTypeID" id="diklatTypeID">
                                 <option value="" selected disabled>-- {{ __('Select jenis pembelajaran') }} --
                                 </option>
@@ -583,10 +578,9 @@
                     <div class="form-group row mb-3">
                         <label for="peserta_pembelajaran"
                             class="col-sm-3 col-form-label">{{ __('Peserta Pembelajaran') }}<span
-                            style="color: red">*</span></label>
+                                style="color: red">*</span></label>
                         <div class="col-sm-6">
-                            <select required
-                                class="form-control  @error('peserta_pembelajaran') is-invalid @enderror"
+                            <select required class="form-control  @error('peserta_pembelajaran') is-invalid @enderror"
                                 name="peserta_pembelajaran" id="peserta_pembelajaran">
                                 <option value="" selected disabled>-- {{ __('Select peserta pembelajaran') }} --
                                 </option>
@@ -606,9 +600,8 @@
                         </div>
                     </div>
                     <div class="form-group row mb-3">
-                        <label for="sasaran_peserta"
-                            class="col-sm-3 col-form-label">{{ __('Sasaran Peserta') }}<span
-                            style="color: red">*</span></label>
+                        <label for="sasaran_peserta" class="col-sm-3 col-form-label">{{ __('Sasaran Peserta') }}<span
+                                style="color: red">*</span></label>
                         <div class="col-sm-6">
                             <input type="text" name="sasaran_peserta" id="sasaran_peserta" required
                                 class="form-control @error('sasaran_peserta') is-invalid @enderror"
@@ -623,7 +616,7 @@
                     <div class="form-group row mb-3">
                         <label for="kriteria_peserta"
                             class="col-sm-3 col-form-label">{{ __('Kriteria Peserta') }}<span
-                            style="color: red">*</span></label>
+                                style="color: red">*</span></label>
                         <div class="col-sm-6">
                             <input type="text" name="kriteria_peserta" id="kriteria_peserta" required
                                 class="form-control @error('kriteria_peserta') is-invalid @enderror"
@@ -638,10 +631,10 @@
                     <div class="form-group row mb-3">
                         <label for="aktivitas_prapembelajaran"
                             class="col-sm-3 col-form-label">{{ __('Aktivitas Prapembelajaran') }}<span
-                            style="color: red">*</span></label>
+                                style="color: red">*</span></label>
                         <div class="col-sm-6">
-                            <input type="text" name="aktivitas_prapembelajaran" id="aktivitas_prapembelajaran" required
-                                class="form-control @error('aktivitas_prapembelajaran') is-invalid @enderror"
+                            <input type="text" name="aktivitas_prapembelajaran" id="aktivitas_prapembelajaran"
+                                required class="form-control @error('aktivitas_prapembelajaran') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->aktivitas_prapembelajaran : old('aktivitas_prapembelajaran') }}"
                                 placeholder="{{ __('Aktivitas Prapembelajaran') }}" />
                             <div class="invalid-feedback">
@@ -653,7 +646,7 @@
                     <div class="form-group row mb-3">
                         <label for="penyelenggara_pembelajaran"
                             class="col-sm-3 col-form-label">{{ __('Penyelenggara Pembelajaran') }}<span
-                            style="color: red">*</span></label>
+                                style="color: red">*</span></label>
                         <div class="col-sm-6">
                             <select required
                                 class="form-control  @error('penyelenggara_pembelajaran') is-invalid @enderror"
@@ -678,13 +671,22 @@
 
                     <div class="form-group row mb-3">
                         <label class="col-sm-3 col-form-label">{{ __('Fasilitator Pembelajaran') }}<span
-                            style="color: red">*</span></label>
+                                style="color: red">*</span></label>
                         <div class="col-sm-6">
+                            @php
+                                $fasilitatorPembelajaran = isset($pengajuanKap)
+                                    ? json_decode($pengajuanKap->fasilitator_pembelajaran, true)
+                                    : old('fasilitator_pembelajaran', []);
+                                $fasilitatorPembelajaran = is_array($fasilitatorPembelajaran)
+                                    ? $fasilitatorPembelajaran
+                                    : [];
+                            @endphp
                             @foreach (['Widyaiswara', 'Instruktur', 'Praktisi', 'Pakar', 'Tutor', 'Coach', 'Mentor', 'Narasumber lainnya'] as $fasilitator)
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="fasilitator_pembelajaran[]"
-                                        id="fasilitator_{{ $fasilitator }}" value="{{ $fasilitator }}"
-                                        {{ isset($pengajuanKap) ? (in_array($fasilitator, json_decode($pengajuanKap->fasilitator_pembelajaran)) ? 'checked' : '') : (in_array($fasilitator, old('fasilitator_pembelajaran', [])) ? 'checked' : '') }}>
+                                    <input class="form-check-input fasilitator-checkbox" type="checkbox"
+                                        name="fasilitator_pembelajaran[]" id="fasilitator_{{ $fasilitator }}"
+                                        value="{{ $fasilitator }}"
+                                        {{ in_array($fasilitator, $fasilitatorPembelajaran) ? 'checked' : '' }}>
                                     <label class="form-check-label" for="fasilitator_{{ $fasilitator }}">
                                         {{ $fasilitator }}
                                     </label>
@@ -698,7 +700,7 @@
 
                     <div class="form-group row mb-3">
                         <label for="sertifikat" class="col-sm-3 col-form-label">{{ __('Sertifikat') }}<span
-                            style="color: red">*</span></label>
+                                style="color: red">*</span></label>
                         <div class="col-sm-6">
                             <input type="text" name="sertifikat" id="sertifikat" required
                                 class="form-control @error('sertifikat') is-invalid @enderror"
@@ -713,7 +715,7 @@
                     <div class="form-group row mb-3">
                         <label for="level_evaluasi_instrumen"
                             class="col-sm-3 col-form-label">{{ __('Level Evaluasi dan Instrumennya') }}<span
-                            style="color: red">*</span></label>
+                                style="color: red">*</span></label>
                         <div class="col-sm-6">
                             <table class="table table-bordered table-sm text-center">
                                 <thead style="background-color: #cbccce">

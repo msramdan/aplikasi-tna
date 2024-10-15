@@ -216,53 +216,74 @@
         });
     </script>
 
-<script>
-    $(document).ready(function() {
-        function checkInputs() {
-            let allIndikatorEmpty = true;
-            let allLevelEvaluasiEmpty = true;
+    <script>
+        $(document).ready(function() {
+            function checkInputs() {
+                let allIndikatorEmpty = true;
+                let allLevelEvaluasiEmpty = true;
 
-            // Check indikator_keberhasilan inputs
-            $('input[name="indikator_keberhasilan[]"]').each(function() {
-                if ($(this).val() !== '') {
-                    allIndikatorEmpty = false;
-                    return false; // Break out of the loop
+                // Check indikator_keberhasilan inputs
+                $('input[name="indikator_keberhasilan[]"]').each(function() {
+                    if ($(this).val() !== '') {
+                        allIndikatorEmpty = false;
+                        return false; // Break out of the loop
+                    }
+                });
+
+                // Check level_evaluasi_instrumen inputs
+                $('input[name="level_evaluasi_instrumen[]"]').each(function() {
+                    if ($(this).val() !== '') {
+                        allLevelEvaluasiEmpty = false;
+                        return false; // Break out of the loop
+                    }
+                });
+
+                // Set required attribute for indikator_keberhasilan
+                if (allIndikatorEmpty) {
+                    $('input[name="indikator_keberhasilan[]"]').attr('required', 'required');
+                } else {
+                    $('input[name="indikator_keberhasilan[]"]').removeAttr('required');
                 }
-            });
 
-            // Check level_evaluasi_instrumen inputs
-            $('input[name="level_evaluasi_instrumen[]"]').each(function() {
-                if ($(this).val() !== '') {
-                    allLevelEvaluasiEmpty = false;
-                    return false; // Break out of the loop
+                // Set required attribute for level_evaluasi_instrumen
+                if (allLevelEvaluasiEmpty) {
+                    $('input[name="level_evaluasi_instrumen[]"]').attr('required', 'required');
+                } else {
+                    $('input[name="level_evaluasi_instrumen[]"]').removeAttr('required');
                 }
-            });
-
-            // Set required attribute for indikator_keberhasilan
-            if (allIndikatorEmpty) {
-                $('input[name="indikator_keberhasilan[]"]').attr('required', 'required');
-            } else {
-                $('input[name="indikator_keberhasilan[]"]').removeAttr('required');
             }
 
-            // Set required attribute for level_evaluasi_instrumen
-            if (allLevelEvaluasiEmpty) {
-                $('input[name="level_evaluasi_instrumen[]"]').attr('required', 'required');
-            } else {
-                $('input[name="level_evaluasi_instrumen[]"]').removeAttr('required');
+            // Monitor changes on both input types
+            $('input[name="indikator_keberhasilan[]"], input[name="level_evaluasi_instrumen[]"]').on('input',
+                function() {
+                    checkInputs();
+                });
+
+            checkInputs(); // Initial check on page load
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            function validateFasilitator() {
+                // Check if any checkbox is checked
+                if ($('input[name="fasilitator_pembelajaran[]"]:checked').length === 0) {
+                    // Add required attribute if none is checked
+                    $('input[name="fasilitator_pembelajaran[]"]').attr('required', 'required');
+                } else {
+                    // Remove required attribute if at least one is checked
+                    $('input[name="fasilitator_pembelajaran[]"]').removeAttr('required');
+                }
             }
-        }
 
-        // Monitor changes on both input types
-        $('input[name="indikator_keberhasilan[]"], input[name="level_evaluasi_instrumen[]"]').on('input',
-            function() {
-                checkInputs();
+            // Run validation initially when the page loads
+            validateFasilitator();
+
+            // Also run validation when any checkbox is clicked
+            $('input[name="fasilitator_pembelajaran[]"]').on('change', function() {
+                validateFasilitator();
             });
-
-        checkInputs(); // Initial check on page load
-    });
-</script>
-
+        });
+    </script>
     <script>
         $(document).ready(function() {
             const options_temp = '<option value="" selected disabled>-- Select --</option>';
