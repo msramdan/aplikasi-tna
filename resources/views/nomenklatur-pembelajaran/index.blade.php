@@ -30,7 +30,8 @@
                                             <th>#</th>
                                             <th>{{ __('Rumpun Pembelajaran') }}</th>
                                             <th>{{ __('Nama Topik') }}</th>
-                                            <th>{{ __('User Pembuat') }}</th>
+                                            <th>{{ __('User') }}</th>
+                                            <th>{{ __('Unit') }}</th>
                                             <th>{{ __('Tanggal Pengajuan') }}</th>
                                             <th>{{ __('Catatan User') }}</th>
                                             <th>{{ __('Status') }}</th>
@@ -71,6 +72,10 @@
                 {
                     data: 'user_created',
                     name: 'user_created'
+                },
+                {
+                    data: 'nama_unit',
+                    name: 'nama_unit'
                 },
                 {
                     data: 'tanggal_pengajuan',
