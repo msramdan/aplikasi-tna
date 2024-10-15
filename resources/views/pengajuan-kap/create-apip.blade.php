@@ -298,24 +298,19 @@
                     success: function(response) {
                         var modalBody = $('#kompetensiModal .modal-body');
                         modalBody.empty();
-
                         var table =
-                            '<div id="kompetensiTable" class="table-responsive"><table class="table table-sm table-striped" style="font-size:14px"><thead><tr>';
+                            '<div class="table-responsive"><table id="kompetensiTable" class="table table-sm table-striped" style="font-size:14px"><thead><tr>';
                         var tableBody = '<tbody>';
-
-                        // Update table headers to include the new columns
                         table +=
                             '<th>Kompetensi</th><th>Target</th><th>Capaian</th><th>Aksi</th></tr></thead>';
-
-                        // Assuming 'response.data' contains the kompetensi data from the API
                         $.each(response.data, function(key, value) {
                             tableBody += '<tr>';
                             tableBody += '<td>' + value.nama_kompetensi +
-                                '</td>'; // Nama Kompetensi
+                                '</td>';
                             tableBody += '<td>' + (value.target !== null ? value
-                                .target : 'N/A') + '</td>'; // Target
+                                .target : 'N/A') + '</td>';
                             tableBody += '<td>' + (value.capaian !== null ? value
-                                .capaian : 'N/A') + '</td>'; // Capaian
+                                .capaian : 'N/A') + '</td>';
                             tableBody +=
                                 '<td><button type="button" class="btn btn-primary pilihKompetensi btn-sm" ' +
                                 'data-kompetensi="' + value.nama_kompetensi + '" ' +
