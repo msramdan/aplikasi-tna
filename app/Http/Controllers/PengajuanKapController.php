@@ -103,6 +103,8 @@ class PengajuanKapController extends Controller
                         return '<button style="width:90px" class="btn btn-danger btn-sm btn-block"><i class="fa fa-times" aria-hidden="true"></i> Rejected</button>';
                     } else if ($row->status_pengajuan == 'Process') {
                         return '<button style="width:90px" class="btn btn-primary btn-sm btn-block"><i class="fa fa-spinner" aria-hidden="true"></i> Process</button>';
+                    } else if ($row->status_pengajuan == 'Revision') {
+                        return '<button style="width:90px" class="btn btn-gray btn-sm btn-block"><i class="fa fa-refresh" aria-hidden="true"></i> Revision</button>';
                     }
                 })
                 ->addColumn('action', 'pengajuan-kap.include.action')
@@ -728,45 +730,50 @@ class PengajuanKapController extends Controller
             $biayaID = "3";
             $biayaName = "PNBP";
         }
-        DB::table('pengajuan_kap')
-            ->where('id', $id)
-            ->update([
-                'jenis_program' => $validatedData['jenis_program'],
-                'indikator_kinerja' => isset($validatedData['indikator_kinerja']) ? $validatedData['indikator_kinerja'] : null,
-                'referensi_indikator_kinerja' => isset($validatedData['referensi_indikator_kinerja']) ? $validatedData['referensi_indikator_kinerja'] : null,
-                'kompetensi_id' => $validatedData['kompetensi_id'],
-                'topik_id' => $validatedData['topik_id'],
-                'judul' => $validatedData['judul'],
-                'arahan_pimpinan' => $validatedData['arahan_pimpinan'],
-                'prioritas_pembelajaran' => $validatedData['prioritas_pembelajaran'],
-                'tujuan_program_pembelajaran' => $validatedData['tujuan_program_pembelajaran'],
-                'indikator_dampak_terhadap_kinerja_organisasi' => $validatedData['indikator_dampak_terhadap_kinerja_organisasi'],
-                'penugasan_yang_terkait_dengan_pembelajaran' => $validatedData['penugasan_yang_terkait_dengan_pembelajaran'],
-                'skill_group_owner' => $validatedData['skill_group_owner'],
-                'diklatLocID' => $validatedData['diklatLocID'],
-                'diklatLocName' => $validatedData['diklatLocName'],
-                'detail_lokasi' => $validatedData['detail_lokasi'],
-                'kelas' => $validatedData['kelas'],
-                'diklatTypeID' => $validatedData['diklatTypeID'],
-                'diklatTypeName' => $validatedData['diklatTypeName'],
-                'metodeID' => $validatedData['metodeID'],
-                'metodeName' => $validatedData['metodeName'],
-                'biayaID' =>  $biayaID,
-                'biayaName' =>  $biayaName,
-                'latsar_stat' => '0',
-                'bentuk_pembelajaran' => $validatedData['bentuk_pembelajaran'],
-                'jalur_pembelajaran' => $validatedData['jalur_pembelajaran'],
-                'model_pembelajaran' => $validatedData['model_pembelajaran'],
-                'peserta_pembelajaran' => $validatedData['peserta_pembelajaran'],
-                'sasaran_peserta' => $validatedData['sasaran_peserta'],
-                'kriteria_peserta' => $validatedData['kriteria_peserta'],
-                'aktivitas_prapembelajaran' => $validatedData['aktivitas_prapembelajaran'],
-                'penyelenggara_pembelajaran' => $validatedData['penyelenggara_pembelajaran'],
-                'fasilitator_pembelajaran' => $fasilitator_pembelajaran_json,
-                'sertifikat' => $validatedData['sertifikat'],
-                'user_created' => Auth::id(),
-                'updated_at' => now(),
-            ]);
+        $pengajuanKap = DB::table('pengajuan_kap')->where('id', $id)->first();
+
+        if ($pengajuanKap) {
+            DB::table('pengajuan_kap')
+                ->where('id', $id)
+                ->update([
+                    'jenis_program' => $validatedData['jenis_program'] ?? $pengajuanKap->jenis_program,
+                    'indikator_kinerja' => $validatedData['indikator_kinerja'] ?? $pengajuanKap->indikator_kinerja,
+                    'referensi_indikator_kinerja' => $validatedData['referensi_indikator_kinerja'] ?? $pengajuanKap->referensi_indikator_kinerja,
+                    'kompetensi_id' => $validatedData['kompetensi_id'] ?? $pengajuanKap->kompetensi_id,
+                    'topik_id' => $validatedData['topik_id'] ?? $pengajuanKap->topik_id,
+                    'judul' => $validatedData['judul'] ?? $pengajuanKap->judul,
+                    'arahan_pimpinan' => $validatedData['arahan_pimpinan'] ?? $pengajuanKap->arahan_pimpinan,
+                    'prioritas_pembelajaran' => $validatedData['prioritas_pembelajaran'] ?? $pengajuanKap->prioritas_pembelajaran,
+                    'tujuan_program_pembelajaran' => $validatedData['tujuan_program_pembelajaran'] ?? $pengajuanKap->tujuan_program_pembelajaran,
+                    'indikator_dampak_terhadap_kinerja_organisasi' => $validatedData['indikator_dampak_terhadap_kinerja_organisasi'] ?? $pengajuanKap->indikator_dampak_terhadap_kinerja_organisasi,
+                    'penugasan_yang_terkait_dengan_pembelajaran' => $validatedData['penugasan_yang_terkait_dengan_pembelajaran'] ?? $pengajuanKap->penugasan_yang_terkait_dengan_pembelajaran,
+                    'skill_group_owner' => $validatedData['skill_group_owner'] ?? $pengajuanKap->skill_group_owner,
+                    'diklatLocID' => $validatedData['diklatLocID'] ?? $pengajuanKap->diklatLocID,
+                    'diklatLocName' => $validatedData['diklatLocName'] ?? $pengajuanKap->diklatLocName,
+                    'detail_lokasi' => $validatedData['detail_lokasi'] ?? $pengajuanKap->detail_lokasi,
+                    'kelas' => $validatedData['kelas'] ?? $pengajuanKap->kelas,
+                    'diklatTypeID' => $validatedData['diklatTypeID'] ?? $pengajuanKap->diklatTypeID,
+                    'diklatTypeName' => $validatedData['diklatTypeName'] ?? $pengajuanKap->diklatTypeName,
+                    'metodeID' => $validatedData['metodeID'] ?? $pengajuanKap->metodeID,
+                    'metodeName' => $validatedData['metodeName'] ?? $pengajuanKap->metodeName,
+                    'biayaID' => $biayaID ?? $pengajuanKap->biayaID,
+                    'biayaName' => $biayaName ?? $pengajuanKap->biayaName,
+                    'latsar_stat' => '0',
+                    'bentuk_pembelajaran' => $validatedData['bentuk_pembelajaran'] ?? $pengajuanKap->bentuk_pembelajaran,
+                    'jalur_pembelajaran' => $validatedData['jalur_pembelajaran'] ?? $pengajuanKap->jalur_pembelajaran,
+                    'model_pembelajaran' => $validatedData['model_pembelajaran'] ?? $pengajuanKap->model_pembelajaran,
+                    'peserta_pembelajaran' => $validatedData['peserta_pembelajaran'] ?? $pengajuanKap->peserta_pembelajaran,
+                    'sasaran_peserta' => $validatedData['sasaran_peserta'] ?? $pengajuanKap->sasaran_peserta,
+                    'kriteria_peserta' => $validatedData['kriteria_peserta'] ?? $pengajuanKap->kriteria_peserta,
+                    'aktivitas_prapembelajaran' => $validatedData['aktivitas_prapembelajaran'] ?? $pengajuanKap->aktivitas_prapembelajaran,
+                    'penyelenggara_pembelajaran' => $validatedData['penyelenggara_pembelajaran'] ?? $pengajuanKap->penyelenggara_pembelajaran,
+                    'fasilitator_pembelajaran' => $fasilitator_pembelajaran_json ?? $pengajuanKap->fasilitator_pembelajaran,
+                    'sertifikat' => $validatedData['sertifikat'] ?? $pengajuanKap->sertifikat,
+                    'user_created' => Auth::id(),
+                    'status_pengajuan' => ($pengajuanKap->current_step == 1) ? 'Pending' : 'Process',
+                    'updated_at' => now(),
+                ]);
+        }
 
         $metodeID = $validatedData['metodeID'];
         DB::table('waktu_pelaksanaan')
@@ -1200,6 +1207,58 @@ class PengajuanKapController extends Controller
         } catch (\Exception $e) {
             DB::rollback();
             Alert::toast('Gagal menolak Pengajuan Kap. Silakan coba lagi', 'error');
+
+            // Handle the exception, optionally log it or notify the user
+            return redirect()->back();
+        }
+    }
+
+    public function revisi(Request $request, $id)
+    {
+
+        DB::beginTransaction();
+
+        try {
+            // Retrieve the PengajuanKap record by its ID
+            $pengajuanKap = DB::table('pengajuan_kap')->find($id);
+
+            // Check for the current_step in PengajuanKap
+            $currentStep = $pengajuanKap->current_step;
+
+            // Query the log_review_pengajuan_kap table for the first matching record
+            $logReview = DB::table('log_review_pengajuan_kap')
+                ->where('pengajuan_kap_id', $id)
+                ->where('step', $currentStep)
+                ->first();
+
+            // If a matching log review is found, update its fields
+            if ($logReview) {
+                DB::table('log_review_pengajuan_kap')
+                    ->where('id', $logReview->id)
+                    ->update([
+                        'status' => 'Revision',
+                        'tanggal_review' => Carbon::now(),
+                        'catatan' => $request->revisiNotes,
+                        'user_review_id' => Auth::id(),
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ]);
+
+                // Update pengajuan_kap status to 'Rejected'
+                DB::table('pengajuan_kap')
+                    ->where('id', $id)
+                    ->update([
+                        'status_pengajuan' => 'Revision',
+                        'updated_at' => Carbon::now(),
+                    ]);
+            }
+
+            DB::commit();
+            Alert::toast('Pengajuan Kap berhasil direview.', 'success');
+            return redirect()->back();
+        } catch (\Exception $e) {
+            DB::rollback();
+            Alert::toast('Gagal review Pengajuan Kap. Silakan coba lagi', 'error');
 
             // Handle the exception, optionally log it or notify the user
             return redirect()->back();

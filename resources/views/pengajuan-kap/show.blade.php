@@ -223,9 +223,12 @@
                                     $reviewExistsForUser = reviewExistsForUser();
                                 @endphp
                                 @if ($reviewExistsForUser)
-                                    @if ($pengajuanKap->status_pengajuan == 'Rejected' || $pengajuanKap->status_pengajuan == 'Approved')
+                                    @if ($pengajuanKap->status_pengajuan == 'Rejected' || $pengajuanKap->status_pengajuan == 'Approved' || $pengajuanKap->status_pengajuan == 'Revision')
                                         <button type="button" disabled class="btn btn-success">
                                             <i class="fa fa-check" aria-hidden="true"></i> Approved
+                                        </button>
+                                        <button type="button" disabled class="btn btn-gray">
+                                            <i class="fa fa-refresh" aria-hidden="true"></i> Revision
                                         </button>
                                         <button type="button" disabled class="btn btn-danger">
                                             <i class="fa fa-times" aria-hidden="true"></i> Rejected
@@ -234,6 +237,10 @@
                                         <button type="button" class="btn btn-success" data-bs-toggle="modal"
                                             data-bs-target="#approveModal" {{ $userHasAccess ? '' : 'disabled' }}>
                                             <i class="fa fa-check" aria-hidden="true"></i> Approved
+                                        </button>
+                                        <button type="button" class="btn btn-gray" data-bs-toggle="modal"
+                                            data-bs-target="#revisionModal" {{ $userHasAccess ? '' : 'disabled' }}>
+                                            <i class="fa fa-refresh" aria-hidden="true"></i> Revision
                                         </button>
                                         <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                             data-bs-target="#rejectModal" {{ $userHasAccess ? '' : 'disabled' }}>
@@ -307,10 +314,12 @@
                                                         <thead>
                                                             <tr>
                                                                 <th scope="col" class="text-center">Total pegawai</th>
-                                                                <th scope="col" class="text-center">Pegawai kompeten</th>
+                                                                <th scope="col" class="text-center">Pegawai kompeten
+                                                                </th>
                                                                 <th scope="col" class="text-center">Pegawai belum
                                                                     kompeten</th>
-                                                                <th scope="col" class="text-center">Persentase kompetensi
+                                                                <th scope="col" class="text-center">Persentase
+                                                                    kompetensi
                                                                 </th>
                                                             </tr>
                                                         </thead>
@@ -426,6 +435,10 @@
                                                 @elseif ($pengajuanKap->status_pengajuan == 'Process')
                                                     <button style="width:150px" class="btn btn-primary btn-sm btn-block">
                                                         <i class="fa fa-spinner" aria-hidden="true"></i> Process
+                                                    </button>
+                                                @elseif ($pengajuanKap->status_pengajuan == 'Revision')
+                                                    <button style="width:150px" class="btn btn-gray btn-sm btn-block">
+                                                        <i class="fa fa-refresh" aria-hidden="true"></i> Revision
                                                     </button>
                                                 @else
                                                     -
@@ -817,11 +830,8 @@
                                         <label class="form-label">{{ __('Fasilitator Pembelajaran') }}</label>
                                         @foreach (['Widyaiswara', 'Instruktur', 'Praktisi', 'Pakar', 'Tutor', 'Coach', 'Mentor', 'Narasumber lainnya'] as $fasilitator)
                                             <div class="form-check">
-                                                <input
-                                                    class="form-check-input facilitator-checkbox"
-                                                    type="checkbox"
-                                                    name="fasilitator_pembelajaran[]"
-                                                    value="{{ $fasilitator }}"
+                                                <input class="form-check-input facilitator-checkbox" type="checkbox"
+                                                    name="fasilitator_pembelajaran[]" value="{{ $fasilitator }}"
                                                     id="invalidCheck_{{ $fasilitator }}"
                                                     {{ in_array($fasilitator, $fasilitator_selected) ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="invalidCheck_{{ $fasilitator }}">
@@ -841,7 +851,8 @@
                                             placeholder="{{ __('Sertifikat') }}" />
                                     </div>
                                     <div class="mb-3">
-                                        <label for="level_evaluasi_instrumen" class="form-label">{{ __('Level Evaluasi dan Instrumennya') }}</label>
+                                        <label for="level_evaluasi_instrumen"
+                                            class="form-label">{{ __('Level Evaluasi dan Instrumennya') }}</label>
                                         <table id="evaluationTable" class="table table-bordered table-sm text-center">
                                             <thead style="background-color: #cbccce">
                                                 <tr>
@@ -853,14 +864,20 @@
                                                 @for ($i = 1; $i <= 5; $i++)
                                                     @php
                                                         // Temukan data keterangan untuk level saat ini
-                                                        $instrumen = $level_evaluasi_instrumen_kap->firstWhere('level', $i);
+                                                        $instrumen = $level_evaluasi_instrumen_kap->firstWhere(
+                                                            'level',
+                                                            $i,
+                                                        );
                                                         $keteranganValue = $instrumen ? $instrumen->keterangan : ''; // Jika ada, ambil nilai keterangan
                                                     @endphp
                                                     <tr>
                                                         <td>{{ $i }}</td>
                                                         <td>
-                                                            <input type="hidden" name="no_level[]" value="{{ $i }}" class="form-control" />
-                                                            <input type="text" required name="level_evaluasi_instrumen[]" class="form-control" value="{{ $keteranganValue }}" />
+                                                            <input type="hidden" name="no_level[]"
+                                                                value="{{ $i }}" class="form-control" />
+                                                            <input type="text" required
+                                                                name="level_evaluasi_instrumen[]" class="form-control"
+                                                                value="{{ $keteranganValue }}" />
                                                         </td>
                                                     </tr>
                                                 @endfor
@@ -900,6 +917,32 @@
                                     style="float: right">{{ __('Submit') }}</button>
                             @endif
 
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Revision Modal -->
+        <div class="modal fade" id="revisionModal" tabindex="-1" aria-labelledby="rejectModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="revisionModalLabel">{{ __('Revision Pengusulan Pembelajaran') }}
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ route('pengajuan-kap.revisi', $pengajuanKap->id) }}" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <div class="mb-3">
+                                <label for="revisiNotes" class="form-label">Catatan</label>
+                                <textarea required class="form-control" id="revisiNotes" name="revisiNotes" rows="3"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-gray"
+                                style="float: right">{{ __('Submit') }}</button>
                         </form>
                     </div>
                 </div>

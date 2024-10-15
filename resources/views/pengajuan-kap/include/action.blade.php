@@ -1,10 +1,11 @@
 <td>
     <div>
-        <a target="_blank" href="{{ route('pengajuan-kap.pdf', [
-            'id' => $model->id,
-            'is_bpkp' => $model->institusi_sumber,
-            'frekuensi' => $model->frekuensi_pelaksanaan,
-        ]) }}"
+        <a target="_blank"
+            href="{{ route('pengajuan-kap.pdf', [
+                'id' => $model->id,
+                'is_bpkp' => $model->institusi_sumber,
+                'frekuensi' => $model->frekuensi_pelaksanaan,
+            ]) }}"
             class="btn btn-gray btn-sm">
             <i class="fa fa-print"></i>
         </a>
@@ -19,7 +20,7 @@
         </a>
 
         @can('pengajuan kap edit')
-            @if ($model->current_step < 5)
+            @if ($model->current_step < 5 && !in_array($model->status_pengajuan, ['Rejected', 'Approved']))
                 <a href="{{ route('pengajuan-kap.edit', [
                     'id' => $model->id,
                     'is_bpkp' => $model->institusi_sumber,
@@ -34,6 +35,7 @@
                 </a>
             @endif
         @endcan
+
 
         @if ($model->status_pengajuan == 'Pending')
             @can('pengajuan kap delete')

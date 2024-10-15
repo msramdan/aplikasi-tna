@@ -68,7 +68,7 @@ return new class extends Migration
             $table->json('fasilitator_pembelajaran')->nullable();
             $table->text('sertifikat')->nullable();
             $table->datetime('tanggal_created');
-            $table->enum('status_pengajuan', ['Pending', 'Process', 'Approved', 'Rejected']);
+            $table->enum('status_pengajuan', ['Pending', 'Process', 'Revision', 'Approved', 'Rejected']);
             $table->enum('status_sync', ['Waiting', 'Success', 'Failed'])->default('Waiting');
             $table->foreignId('user_created')->nullable()->constrained('users')->cascadeOnUpdate()->nullOnDelete();
             $table->tinyInteger('current_step');
