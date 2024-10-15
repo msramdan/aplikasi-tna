@@ -472,13 +472,19 @@ class PengajuanKapController extends Controller
             ->where('tahun', $year)
             ->orderBy('kode_pembelajaran', 'desc')
             ->first();
+
         if ($lastPengajuan) {
+            // Ambil tiga digit terakhir dari kode_pembelajaran
             $lastKodePembelajaran = substr($lastPengajuan->kode_pembelajaran, -3);
+
+            // Ubah menjadi bilangan bulat untuk memastikan operasi matematika berjalan dengan benar
             $newNoUrut = sprintf('%03d', (int)$lastKodePembelajaran + 1);
         } else {
+            // Jika tidak ada data sebelumnya, mulai dari '001'
             $newNoUrut = '001';
         }
 
+        // Gabungkan tahun, topikId, dan newNoUrut
         $kodePembelajaran = $year . $topikId . $newNoUrut;
 
         DB::beginTransaction();
