@@ -214,9 +214,9 @@
                                     data-bs-toggle="modal" data-bs-target="#usulanModal">
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                 </button>
-                                <div class="invalid-feedback">
+                                {{-- <div class="invalid-feedback">
                                     Mohon untuk pilih program pembelajaran
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
