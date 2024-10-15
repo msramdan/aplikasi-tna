@@ -259,6 +259,7 @@
                                             <th>{{ __('Judul') }}</th>
                                             <th>{{ __('Current step') }}</th>
                                             <th>{{ __('Status') }}</th>
+                                            <th>{{ __('Prioritas') }}</th>
                                             <th>{{ __('User') }}</th>
                                             <th>{{ __('Unit') }}</th>
                                             <th>{{ __('Action') }}</th>
@@ -399,10 +400,13 @@
                 data: 'remark',
                 name: 'remark'
             },
-
             {
                 data: 'status_pengajuan',
                 name: 'status_pengajuan'
+            },
+            {
+                data: 'prioritas_pembelajaran',
+                name: 'prioritas_pembelajaran'
             },
             {
                 data: 'user_name',
