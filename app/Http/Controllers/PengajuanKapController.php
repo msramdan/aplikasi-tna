@@ -238,6 +238,9 @@ class PengajuanKapController extends Controller
             return redirect()->back();
         }
 
+        $user = Auth::user();
+        $nama_unit = $user->nama_unit;
+
         $pengajuanKaps = DB::table('pengajuan_kap')
             ->select(
                 'pengajuan_kap.*',
@@ -249,6 +252,7 @@ class PengajuanKapController extends Controller
             ->where('pengajuan_kap.institusi_sumber', '=', $is_bpkp)
             ->where('pengajuan_kap.frekuensi_pelaksanaan', '=', $frekuensi)
             ->where('pengajuan_kap.tahun', '=', $tahun)
+            ->where('users.nama_unit', '=', $nama_unit)
             ->get();
 
         // Ambil prioritas yang sudah digunakan beserta kode_pembelajaran
@@ -368,6 +372,9 @@ class PengajuanKapController extends Controller
             return redirect()->back();
         }
 
+        $user = Auth::user();
+        $nama_unit = $user->nama_unit;
+
         $pengajuanKaps = DB::table('pengajuan_kap')
             ->select(
                 'pengajuan_kap.*',
@@ -379,6 +386,7 @@ class PengajuanKapController extends Controller
             ->where('pengajuan_kap.institusi_sumber', '=', $is_bpkp)
             ->where('pengajuan_kap.frekuensi_pelaksanaan', '=', $frekuensi)
             ->where('pengajuan_kap.tahun', '=', $pengajuanKap->tahun)
+            ->where('users.nama_unit', '=', $nama_unit)
             ->get();
 
         $usedPrioritas = $pengajuanKaps->pluck('prioritas_pembelajaran')->toArray();
