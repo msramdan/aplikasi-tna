@@ -217,16 +217,16 @@
                                         &nbsp;
                                         @if ($reviewExistsForUser)
                                             <button id="approve-selected" class="btn btn-md btn-success" disabled>
-                                                {{ __('Approved') }}
+                                                {{ __('Approve') }}
                                             </button>
                                             &nbsp;
                                             <button id="reject-selected" class="btn btn-md btn-danger" disabled>
-                                                {{ __('Rejected') }}
+                                                {{ __('Reject') }}
                                             </button>
                                             @can('pengajuan kap skiped')
                                                 &nbsp;
                                                 <button id="skiped-selected" class="btn btn-md btn-warning" disabled>
-                                                    {{ __('Skiped') }}
+                                                    {{ __('Skip') }}
                                                 </button>
                                             @endcan
                                         @endif
@@ -271,7 +271,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="approveModalLabel">Approved</h5>
+                    <h5 class="modal-title" id="approveModalLabel">Approve</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -294,7 +294,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="rejectModalLabel">Rejected</h5>
+                    <h5 class="modal-title" id="rejectModalLabel">Reject</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">

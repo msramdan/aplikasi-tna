@@ -225,18 +225,18 @@
                                 @if ($reviewExistsForUser)
                                     @if ($pengajuanKap->status_pengajuan == 'Rejected' || $pengajuanKap->status_pengajuan == 'Approved' || $pengajuanKap->status_pengajuan == 'Revision')
                                         <button type="button" disabled class="btn btn-success">
-                                            <i class="fa fa-check" aria-hidden="true"></i> Approved
+                                            <i class="fa fa-check" aria-hidden="true"></i> Approve
                                         </button>
                                         <button type="button" disabled class="btn btn-gray">
                                             <i class="fa fa-refresh" aria-hidden="true"></i> Revision
                                         </button>
                                         <button type="button" disabled class="btn btn-danger">
-                                            <i class="fa fa-times" aria-hidden="true"></i> Rejected
+                                            <i class="fa fa-times" aria-hidden="true"></i> Reject
                                         </button>
                                     @else
                                         <button type="button" class="btn btn-success" data-bs-toggle="modal"
                                             data-bs-target="#approveModal" {{ $userHasAccess ? '' : 'disabled' }}>
-                                            <i class="fa fa-check" aria-hidden="true"></i> Approved
+                                            <i class="fa fa-check" aria-hidden="true"></i> Approve
                                         </button>
                                         <button type="button" class="btn btn-gray" data-bs-toggle="modal"
                                             data-bs-target="#revisionModal" {{ $userHasAccess ? '' : 'disabled' }}>
@@ -244,7 +244,7 @@
                                         </button>
                                         <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                             data-bs-target="#rejectModal" {{ $userHasAccess ? '' : 'disabled' }}>
-                                            <i class="fa fa-times" aria-hidden="true"></i> Rejected
+                                            <i class="fa fa-times" aria-hidden="true"></i> Reject
                                         </button>
                                     @endif
                                 @endif
