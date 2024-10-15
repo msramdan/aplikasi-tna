@@ -411,7 +411,7 @@
             },
             {
                 data: 'user_name',
-                name: 'users.user_name'
+                name: 'users.name'
             },
             {
                 data: 'nama_unit',
