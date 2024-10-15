@@ -258,7 +258,7 @@
                         modalBody.empty();
 
                         var table =
-                            '<div class="table-responsive"><table class="table table-sm table-striped" style="font-size:14px"><thead><tr>';
+                            '<div class="table-responsive"><table id="kompetensiTable" class="table table-sm table-striped" style="font-size:14px"><thead><tr>';
                         var tableBody = '<tbody>';
 
                         // Update table headers to include the new columns
@@ -289,6 +289,13 @@
                         table += tableBody + '</tbody></table></div>';
 
                         modalBody.append(table);
+                        $('#kompetensiTable').DataTable({
+                            responsive: true,
+                            paging: true,
+                            searching: true,
+                            ordering: true,
+                            info: true
+                        });
                         $('#kompetensiModal').modal('show');
                         $('#loading-overlay').hide();
                     },
