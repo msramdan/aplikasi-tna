@@ -20,7 +20,10 @@
         </a>
 
         @can('pengajuan kap edit')
-            @if ($model->current_step < 5 && !in_array($model->status_pengajuan, ['Rejected', 'Approved']))
+            @if (
+                $model->current_step < 5 &&
+                    !in_array($model->status_pengajuan, ['Rejected', 'Approved']) &&
+                    $model->user_created == Auth::id())
                 <a href="{{ route('pengajuan-kap.edit', [
                     'id' => $model->id,
                     'is_bpkp' => $model->institusi_sumber,
@@ -35,6 +38,7 @@
                 </a>
             @endif
         @endcan
+
 
 
         @if ($model->status_pengajuan == 'Pending')
