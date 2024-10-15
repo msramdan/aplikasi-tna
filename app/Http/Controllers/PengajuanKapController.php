@@ -470,7 +470,7 @@ class PengajuanKapController extends Controller
         $topikId = sprintf('%03d', $validatedData['topik_id']);
         $lastPengajuan = DB::table('pengajuan_kap')
             ->where('tahun', $year)
-            ->orderBy('kode_pembelajaran', 'desc')
+            ->orderBy('id', 'desc')
             ->first();
 
         if ($lastPengajuan) {
