@@ -76,13 +76,6 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.all.min.js"></script>
     <script type="text/javascript">
-        $(document).ready(function() {
-            $(document).keydown(function(e) {
-                if (e.keyCode === 37 || e.keyCode === 39) {
-                    e.preventDefault();
-                }
-            });
-        });
 
         function onConfirm() {
             let form = document.getElementById('form-3');
@@ -512,7 +505,6 @@
 
 
     {{-- Usulan program pembelajaran --}}
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(document).ready(function() {
             // Ketika modal ditampilkan

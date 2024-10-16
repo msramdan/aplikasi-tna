@@ -95,7 +95,7 @@
         <p style="color: red; padding:10px">Note : * Wajib diisi</p>
         <div id="step-1" class="tab-pane" role="tabpanel" aria-labelledby="step-1" style="padding-bottom: 20px">
             <form id="form-1">
-                <input type="hidden" name="tahun" id="tahun" class="form-control" placeholder=""
+                <input type="hidden" name="tahun" id="tahun" class="form-control"
                     value="{{ $tahun }}" required readonly />
 
                 <div class="row" style="padding: 20px">
@@ -126,7 +126,7 @@
                         <div class="col-sm-6">
                             <div class="input-group">
                                 <input type="text" name="indikator_kinerja" id="indikator_kinerja"
-                                    class="form-control" placeholder="" required readonly
+                                    class="form-control"  required readonly
                                     value="{{ isset($pengajuanKap) ? $pengajuanKap->indikator_kinerja : old('indikator_kinerja') }} " />
                                 <button type="button" id="pilihButton" class="input-group-text btn btn-success">
                                     Pilih
@@ -144,7 +144,7 @@
                             <input type="text" name="referensi_indikator_kinerja" id="referensi_indikator_kinerja"
                                 class="form-control @error('referensi_indikator_kinerja') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->referensi_indikator_kinerja : old('referensi_indikator_kinerja') }}"
-                                placeholder="{{ __('Indikator Kinerja ' . $tahun) }}" required />
+                                placeholder="{{ __('Indikator Kinerja ' . $tahun) }}" autocomplete="off" required />
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Indikator Kinerja {{ $tahun }}
                             </div>
@@ -159,11 +159,11 @@
                             <div class="input-group">
                                 <input type="text"
                                     value="{{ isset($pengajuanKap) ? $pengajuanKap->nama_kompetensi : old('nama_kompetensi') }}"
-                                    name="kompetensi_text" id="kompetensi_text" class="form-control" placeholder=""
+                                    name="kompetensi_text" id="kompetensi_text" class="form-control"
                                     required readonly />
                                 <input type="hidden"
                                     value="{{ isset($pengajuanKap) ? $pengajuanKap->kompetensi_id : old('kompetensi_id') }}"
-                                    name="kompetensi_id" id="kompetensi_id" class="form-control" placeholder=""
+                                    name="kompetensi_id" id="kompetensi_id" class="form-control"
                                     required readonly />
                                 <button type="button" id="pilihButtonKompetensi"
                                     class="input-group-text btn btn-success">
@@ -177,16 +177,16 @@
                     </div>
 
                     <input type="hidden" name="total_pegawai" id="total_pegawai" class="form-control"
-                        placeholder="" required readonly
+                         required readonly
                         value="{{ isset($pengajuanKap) ? $gap_kompetensi_pengajuan_kap->total_pegawai : old('total_pegawai') }}" />
                     <input type="hidden" name="pegawai_kompeten" id="pegawai_kompeten" class="form-control"
-                        placeholder="" required readonly
+                         required readonly
                         value="{{ isset($pengajuanKap) ? $gap_kompetensi_pengajuan_kap->pegawai_kompeten : old('pegawai_kompeten') }}" />
                     <input type="hidden" name="pegawai_belum_kompeten" id="pegawai_belum_kompeten"
-                        class="form-control" placeholder="" required readonly
+                        class="form-control"  required readonly
                         value="{{ isset($pengajuanKap) ? $gap_kompetensi_pengajuan_kap->pegawai_belum_kompeten : old('pegawai_belum_kompeten') }}" />
                     <input type="hidden" name="persentase_kompetensi" id="persentase_kompetensi"
-                        class="form-control" placeholder="" required readonly
+                        class="form-control"  required readonly
                         value="{{ isset($pengajuanKap) ? $gap_kompetensi_pengajuan_kap->persentase_kompetensi : old('persentase_kompetensi') }}" />
 
                     <div class="form-group row mb-3">
@@ -223,12 +223,16 @@
 
                     <div class="form-group row mb-3">
                         <label class="col-sm-3 col-form-label" for="judul">{{ __('Judul Program Pembelajaran') }}
-                            <span style="color: red">*</span></label>
+                            <span style="color: red">*</span>
+                        </label>
                         <div class="col-sm-6">
                             <input type="text" name="judul" id="judul"
                                 class="form-control @error('judul') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->judul : old('judul') }}"
-                                placeholder="{{ __('Judul Program Pembelajaran') }}" required />
+                                 autocomplete="off"
+                                data-bs-toggle="tooltip"
+                                title="Masukkan judul program pembelajaran yang sesuai"
+                                required />
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Judul Program Pembelajaran
                             </div>
@@ -248,7 +252,7 @@
                             <input type="text" name="arahan_pimpinan" id="arahan_pimpinan"
                                 class="form-control @error('arahan_pimpinan') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->arahan_pimpinan : old('arahan_pimpinan') }}"
-                                placeholder="{{ __('Arahan pimpinan/isu terkini/dll') }}" required />
+                                autocomplete="off" required />
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Arahan pimpinan/isu terkini/dll
                             </div>
@@ -293,7 +297,7 @@
                             <input type="text" name="tujuan_program_pembelajaran" id="tujuan_program_pembelajaran"
                                 class="form-control @error('tujuan_program_pembelajaran') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->tujuan_program_pembelajaran : old('tujuan_program_pembelajaran') }}"
-                                placeholder="{{ __('Tujuan Program Pembelajaran') }}" required />
+                                autocomplete="off" required />
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Tujuan Program Pembelajaran
                             </div>
@@ -350,7 +354,7 @@
                                 id="indikator-dampak-terhadap-kinerja-organisasi"
                                 class="form-control @error('indikator_dampak_terhadap_kinerja_organisasi') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->indikator_dampak_terhadap_kinerja_organisasi : old('indikator_dampak_terhadap_kinerja_organisasi') }}"
-                                placeholder="{{ __('Indikator Dampak Terhadap Kinerja Organisasi') }}" required />
+                                autocomplete="off" required />
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Indikator Dampak Terhadap Kinerja Organisasi
                             </div>
@@ -366,7 +370,7 @@
                                 id="penugasan-yang-terkait-dengan-pembelajaran"
                                 class="form-control @error('penugasan_yang_terkait_dengan_pembelajaran') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->penugasan_yang_terkait_dengan_pembelajaran : old('penugasan_yang_terkait_dengan_pembelajaran') }}"
-                                placeholder="{{ __('Penugasan Yang Terkait Dengan Pembelajaran') }}" required />
+                                autocomplete="off" required />
 
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Penugasan Yang Terkait Dengan Pembelajaran
@@ -381,7 +385,7 @@
                             <input type="text" name="skill_group_owner" id="skill-group-owner"
                                 class="form-control @error('skill_group_owner') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->skill_group_owner : old('skill_group_owner') }}"
-                                placeholder="{{ __('Skill Group Owner') }}" required />
+                                autocomplete="off" required />
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Skill Group Owner
                             </div>
@@ -517,7 +521,7 @@
                             <input type="text" name="detail_lokasi" id="detail_lokasi" required
                                 class="form-control @error('detail_lokasi') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->detail_lokasi : old('detail_lokasi') }}"
-                                placeholder="{{ __('Tempat / Alamat Rinci') }}" />
+                                autocomplete="off" />
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Tempat / Alamat Rinci
                             </div>
@@ -531,7 +535,7 @@
                             <input type="number" name="kelas" id="kelas" required
                                 class="form-control @error('kelas') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->kelas : old('kelas') }}"
-                                placeholder="{{ __('Jumlah Kelas') }}" />
+                                autocomplete="off" />
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Jumlah Kelas
                             </div>
@@ -675,7 +679,7 @@
                             <input type="text" name="sasaran_peserta" id="sasaran_peserta" required
                                 class="form-control @error('sasaran_peserta') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->sasaran_peserta : old('sasaran_peserta') }}"
-                                placeholder="{{ __('Sasaran Peserta') }}" />
+                                autocomplete="off" />
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Sasaran Peserta
                             </div>
@@ -690,7 +694,7 @@
                             <input type="text" name="kriteria_peserta" id="kriteria_peserta" required
                                 class="form-control @error('kriteria_peserta') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->kriteria_peserta : old('kriteria_peserta') }}"
-                                placeholder="{{ __('Sasaran Peserta') }}" />
+                                autocomplete="off" />
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Sasaran Peserta
                             </div>
@@ -705,7 +709,7 @@
                             <input type="text" name="aktivitas_prapembelajaran" id="aktivitas_prapembelajaran"
                                 required class="form-control @error('aktivitas_prapembelajaran') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->aktivitas_prapembelajaran : old('aktivitas_prapembelajaran') }}"
-                                placeholder="{{ __('Aktivitas Prapembelajaran') }}" />
+                                autocomplete="off" />
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Aktivitas Prapembelajaran
                             </div>
@@ -769,7 +773,7 @@
                             <input type="text" name="sertifikat" id="sertifikat" required
                                 class="form-control @error('sertifikat') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->sertifikat : old('sertifikat') }}"
-                                placeholder="{{ __('Sertifikat') }}" />
+                                autocomplete="off" />
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Sertifikat
                             </div>

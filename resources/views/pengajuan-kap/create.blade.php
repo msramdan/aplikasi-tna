@@ -118,16 +118,16 @@
     <script src="https://cdn.jsdelivr.net/npm/smartwizard@6/dist/js/jquery.smartWizard.min.js" type="text/javascript">
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.all.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $(document).keydown(function(e) {
-                if (e.keyCode === 37 || e.keyCode === 39) {
-                    e.preventDefault();
-                }
-            });
+    </script>
+
+    <script>
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
         });
+    </script>
 
-
+    <script type="text/javascript">
         function onConfirm() {
             let form = document.getElementById('form-3');
             if (form) {
@@ -312,6 +312,7 @@
             checkInputs(); // Initial check on page load
         });
     </script>
+
     <script>
         $(document).ready(function() {
             function validateFasilitator() {
@@ -334,7 +335,6 @@
             });
         });
     </script>
-
 
     <script>
         $(document).ready(function() {
@@ -690,9 +690,7 @@
         });
     </script>
 
-
     {{-- Usulan program pembelajaran --}}
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(document).ready(function() {
             // Ketika modal ditampilkan
