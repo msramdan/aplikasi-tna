@@ -691,14 +691,13 @@
                                                 @elseif ($log->status == 'Rejected')
                                                     <span class="badge bg-danger">Ditolak</span>
                                                 @elseif ($log->status == 'Revision')
-                                                    <span class="badge"
-                                                        style="background-color: #6c757d; color: white;">Revisi</span>
+                                                    <span class="badge" style="background-color: #6c757d; color: white;">Revisi</span>
                                                 @else
                                                     -
                                                 @endif
                                                 . {{ $log->tanggal_review ?? '-' }}
                                             </p>
-                                            <textarea id="notes-{{ $log->step }}" class="form-control" rows="10" readonly>Catatan: {{ $log->catatan }}</textarea>
+                                            <textarea id="notes-{{ $log->id }}" class="form-control" rows="10" readonly>Catatan: {{ $log->catatan }}</textarea>
                                         </div>
 
                                         <!-- Bagian balasan -->
@@ -712,38 +711,42 @@
                                                     ->get();
                                             @endphp
 
-                                            <!-- Tampilkan balasan yang ada -->
-                                            <div class="reply-list" id="reply-list-{{ $log->step }}">
+                                            <div class="reply-list" id="reply-list-{{ $log->id }}">
                                                 @foreach ($replies as $reply)
                                                     @php
-                                                        $maxLength = 100; // Panjang maksimum pesan sebelum dipotong
+                                                        $maxLength = 100; // Maximum message length before truncation
                                                         $isLong = strlen($reply->message) > $maxLength;
                                                         $shortMessage = $isLong
                                                             ? substr($reply->message, 0, $maxLength) . '...'
                                                             : $reply->message;
+
+                                                        // Fetch the user data based on the user name
+                                                        $user = \App\Models\User::where('name', $reply->user_name)->first();
+                                                        $defaultAvatar = asset('path/to/default/avatar.jpg'); // Set your default avatar path here
+                                                        $avatarPath = $defaultAvatar; // Default to the default avatar
+
+                                                        if ($user) {
+                                                            // If user exists, check for avatar
+                                                            $avatarPath = $user->avatar
+                                                                ? asset('uploads/images/avatars/' . $user->avatar)
+                                                                : 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($user->email))) . '?s=500';
+                                                        }
                                                     @endphp
 
                                                     <div class="reply-item mb-2 d-flex">
                                                         <!-- Avatar -->
                                                         <div class="user-avatar">
-                                                            <img src="path_to_user_photo.jpg" alt="User Avatar"
-                                                                class="avatar-img">
+                                                            <img src="{{ $avatarPath }}" alt="User Avatar" class="avatar-img">
                                                         </div>
 
                                                         <!-- Pesan Balasan -->
                                                         <div class="reply-content">
                                                             <strong>{{ $reply->user_name }}:</strong>
-                                                            <span class="short-message"
-                                                                id="short-message-{{ $reply->id }}">{{ $shortMessage }}</span>
-                                                            <span class="full-message"
-                                                                id="full-message-{{ $reply->id }}"
-                                                                style="display: none;">{{ $reply->message }}</span>
+                                                            <span class="short-message" id="short-message-{{ $reply->id }}">{{ $shortMessage }}</span>
+                                                            <span class="full-message" id="full-message-{{ $reply->id }}" style="display: none;">{{ $reply->message }}</span>
 
                                                             @if ($isLong)
-                                                                <a href="javascript:void(0)" class="text-primary"
-                                                                    id="toggle-link-{{ $reply->id }}"
-                                                                    onclick="toggleMessage({{ $reply->id }})">Baca
-                                                                    Selengkapnya</a>
+                                                                <a href="javascript:void(0)" class="text-primary" id="toggle-link-{{ $reply->id }}" onclick="toggleMessage({{ $reply->id }})">Baca Selengkapnya</a>
                                                             @endif
                                                             <br>
                                                             <small>{{ $reply->created_at }}</small>
@@ -754,9 +757,8 @@
 
                                             <!-- Input untuk balasan baru -->
                                             <div class="input-group mt-2">
-                                                <textarea id="reply-input-{{ $log->step }}" class="form-control reply-textarea" placeholder="Ketik balasan..."></textarea>
-                                                <button type="button" class="btn btn-primary"
-                                                    onclick="submitReply({{ $log->step }})">Kirim</button>
+                                                <textarea id="reply-input-{{ $log->id }}" class="form-control reply-textarea" placeholder="Ketik balasan..."></textarea>
+                                                <button type="button" class="btn btn-primary" onclick="submitReply({{ $log->id }})">Kirim</button>
                                             </div>
                                         </div>
                                     </div>
@@ -1100,6 +1102,7 @@
     @endsection
 
     @push('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.all.min.js"></script>
         <script>
             function toggleMessage(replyId) {
                 const shortMessage = document.getElementById(`short-message-${replyId}`);
@@ -1117,27 +1120,47 @@
                     toggleLink.innerHTML = 'Baca Selengkapnya'; // Ubah kembali teks link
                 }
             }
-        </script>
 
+            function submitReply(logReviewId) {
+                var message = $('#reply-input-' + logReviewId).val();
 
-        <script>
-            function submitReply(step) {
-                var message = document.getElementById('reply-input-' + step).value;
-                if (message.trim() !== '') {
-                    // Kirim balasan via AJAX atau form submission
-                    console.log('Balasan terkirim untuk step ' + step + ': ' + message);
-
-                    // Tambahkan balasan ke daftar balasan
-                    var replyList = document.getElementById('reply-list-' + step);
-                    var newReply =
-                        `<div class="reply-item mb-2"><strong>Anda:</strong> ${message} <br><small>Baru saja</small></div>`;
-                    replyList.innerHTML += newReply;
-
-                    // Hapus isi textarea
-                    document.getElementById('reply-input-' + step).value = '';
+                if (!message.trim()) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Oops...',
+                        text: 'Please enter a reply message.',
+                    });
+                    return;
                 }
-            }
 
+                $.ajax({
+                    url: '{{ route('replies.store') }}',
+                    type: 'POST',
+                    data: {
+                        log_review_id: logReviewId,
+                        message: message,
+                        _token: '{{ csrf_token() }}' // Include CSRF token for security
+                    },
+                    success: function(reply) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Balasan Terkirim',
+                            text: 'Balasan berhasil dikirim!',
+                        }).then(() => {
+                            location.reload(); // Reload the page to show the new reply
+                        });
+                    },
+                    error: function(xhr) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Terjadi Kesalahan',
+                            text: xhr.responseText,
+                        }); // Show error message
+                    }
+                });
+            }
+        </script>
+        <script>
             // Fungsi untuk memperbesar textarea secara otomatis
             document.querySelectorAll('.reply-textarea').forEach(function(textarea) {
                 textarea.addEventListener('input', function() {

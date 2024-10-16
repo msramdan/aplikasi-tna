@@ -22,6 +22,7 @@ use App\Http\Controllers\{
     LokasiController,
     NomenklaturPembelajaranController,
     PengumumanController,
+    ReplyController,
     RumpunPembelajaranController,
     TaggingPembelajaranKompetensiController,
     TopikController,
@@ -135,7 +136,7 @@ Route::middleware(['auth', 'web', 'check.maintenance'])->group(function () {
         // for export data
         Route::get('/exportPengajuanKap', 'exportPengajuanKap')->name('exportPengajuanKap');
     });
-
+    Route::post('/replies', [ReplyController::class, 'store'])->name('replies.store');
     Route::controller(SyncInfoIDiklatController::class)->group(function () {
         Route::get('/sync-info-diklat', 'index')->name('sync-info-diklat.index');
         Route::get('/sync-info-diklat-show/{id}', 'show')->name('sync-info-diklat.show');
