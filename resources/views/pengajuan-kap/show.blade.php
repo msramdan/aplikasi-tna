@@ -680,7 +680,7 @@
 
                             <div class="wizard-content">
                                 @foreach ($logReviews as $index => $log)
-                                    <div class="content {{ $index == 0 ? 'active' : '' }}">
+                                    <div class="content {{ $log->step == $pengajuanKap->current_step  ? 'active' : '' }}">
                                         <br>
                                         <h2>{{ $log->remark }}</h2>
                                         <div class="form-group">
