@@ -755,11 +755,12 @@
                                                 @endforeach
                                             </div>
 
-                                            <!-- Input untuk balasan baru -->
+                                            @if ($pengajuanKap->current_step == $log->step && $log->status !== 'Approved')
                                             <div class="input-group mt-2">
                                                 <textarea id="reply-input-{{ $log->id }}" class="form-control reply-textarea" placeholder="Ketik balasan..."></textarea>
                                                 <button type="button" class="btn btn-primary" onclick="submitReply({{ $log->id }})">Kirim</button>
                                             </div>
+                                        @endif
                                         </div>
                                     </div>
                                 @endforeach
