@@ -640,7 +640,8 @@
                                                 @elseif ($log->status == 'Rejected')
                                                     <span class="badge bg-danger">Rejected</span>
                                                 @elseif ($log->status == 'Revision')
-                                                    <span class="badge bg-gray">Revision</span>
+                                                    <span class="badge"
+                                                        style="background-color: #6c757d; color: white;">Revision</span>
                                                 @else
                                                     -
                                                 @endif
