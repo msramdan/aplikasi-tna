@@ -223,7 +223,10 @@
                                     $reviewExistsForUser = reviewExistsForUser();
                                 @endphp
                                 @if ($reviewExistsForUser)
-                                    @if ($pengajuanKap->status_pengajuan == 'Rejected' || $pengajuanKap->status_pengajuan == 'Approved' || $pengajuanKap->status_pengajuan == 'Revision')
+                                    @if (
+                                        $pengajuanKap->status_pengajuan == 'Rejected' ||
+                                            $pengajuanKap->status_pengajuan == 'Approved' ||
+                                            $pengajuanKap->status_pengajuan == 'Revision')
                                         <button type="button" disabled class="btn btn-success">
                                             <i class="fa fa-check" aria-hidden="true"></i> Approve
                                         </button>
@@ -617,8 +620,8 @@
                             <div class="wizard-steps">
 
                                 @foreach ($logReviews as $index => $log)
-                                    <div class="step {{ $pengajuanKap->current_step == $index + 1 && in_array($log->status, ['Pending', 'Revision']) ? 'process' : '' }} {{ $log->status == 'Approved' ? 'active' : ($log->status == 'Rejected' ? 'rejected' : ($log->status == 'Skiped' ? 'skiped' : '')) }}"
-                                        >
+                                    <div
+                                        class="step {{ $pengajuanKap->current_step == $index + 1 && in_array($log->status, ['Pending', 'Revision']) ? 'process' : '' }} {{ $log->status == 'Approved' ? 'active' : ($log->status == 'Rejected' ? 'rejected' : ($log->status == 'Skiped' ? 'skiped' : '')) }}">
                                         <div class="step-icon">{{ $index + 1 }}</div>
                                         <div class="step-label"><b>{{ $log->remark }}</b></div>
                                     </div>
@@ -630,10 +633,20 @@
                                         <br>
                                         <h2>{{ $log->remark }}</h2>
                                         <div class="form-group">
-                                            {{-- <label for="notes-{{ $log->step }}">Catatan:</label> --}}
                                             <p><strong>User:</strong> {{ $log->user_name ?? '-' }}</p>
-                                            <p><strong>Status:</strong> {{ $log->status }} . {{ $log->tanggal_review ?? '-' }} </p>
-                                            <textarea id="notes-{{ $log->step }}" class="form-control" rows="10" readonly>{{ $log->catatan }}</textarea>
+                                            <p><strong>Status:</strong>
+                                                @if ($log->status == 'Approved')
+                                                    <span class="badge bg-success">Approved</span>
+                                                @elseif ($log->status == 'Rejected')
+                                                    <span class="badge bg-danger">Rejected</span>
+                                                @elseif ($log->status == 'Revision')
+                                                    <span class="badge bg-gray">Revision</span>
+                                                @else
+                                                    -
+                                                @endif
+                                                . {{ $log->tanggal_review ?? '-' }}
+                                            </p>
+                                            <textarea id="notes-{{ $log->step }}" class="form-control" rows="10" readonly>Catatan : {{ $log->catatan }}</textarea>
                                         </div>
                                     </div>
                                 @endforeach
