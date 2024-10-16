@@ -178,6 +178,55 @@
             }
         }
     </style>
+
+    <style>
+        /* CSS untuk textarea agar otomatis lebar ke bawah */
+        .reply-textarea {
+            min-height: 40px;
+            /* Tinggi minimum */
+            max-height: 200px;
+            /* Batas tinggi maksimal */
+            overflow-y: auto;
+            /* Scroll vertikal jika melebihi batas */
+            resize: none;
+            /* Nonaktifkan pengaturan ulang manual */
+        }
+    </style>
+
+    <style>
+        .reply-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .user-avatar {
+            margin-right: 10px;
+        }
+
+        .avatar-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .reply-content {
+            background-color: #f0f2f5;
+            padding: 10px;
+            border-radius: 18px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+
+        .full-message {
+            display: none;
+        }
+
+        .d-none {
+            display: none;
+        }
+    </style>
     <div class="page-body">
         <div class="container-fluid">
             <div class="page-header" style="margin-top: 5px">
@@ -627,31 +676,96 @@
                                     </div>
                                 @endforeach
                             </div>
+
+
+
                             <div class="wizard-content">
                                 @foreach ($logReviews as $index => $log)
                                     <div class="content {{ $index == 0 ? 'active' : '' }}">
                                         <br>
                                         <h2>{{ $log->remark }}</h2>
                                         <div class="form-group">
-                                            <p><strong>User:</strong> {{ $log->user_name ?? '-' }}</p>
+                                            <p><strong>Pengguna:</strong> {{ $log->user_name ?? '-' }}</p>
                                             <p><strong>Status:</strong>
                                                 @if ($log->status == 'Approved')
-                                                    <span class="badge bg-success">Approved</span>
+                                                    <span class="badge bg-success">Disetujui</span>
                                                 @elseif ($log->status == 'Rejected')
-                                                    <span class="badge bg-danger">Rejected</span>
+                                                    <span class="badge bg-danger">Ditolak</span>
                                                 @elseif ($log->status == 'Revision')
                                                     <span class="badge"
-                                                        style="background-color: #6c757d; color: white;">Revision</span>
+                                                        style="background-color: #6c757d; color: white;">Revisi</span>
                                                 @else
                                                     -
                                                 @endif
                                                 . {{ $log->tanggal_review ?? '-' }}
                                             </p>
-                                            <textarea id="notes-{{ $log->step }}" class="form-control" rows="10" readonly>Catatan : {{ $log->catatan }}</textarea>
+                                            <textarea id="notes-{{ $log->step }}" class="form-control" rows="10" readonly>Catatan: {{ $log->catatan }}</textarea>
+                                        </div>
+
+                                        <!-- Bagian balasan -->
+                                        <div class="reply-section mt-3">
+                                            <h5>Balasan:</h5>
+
+                                            <!-- Query langsung ke tabel replies -->
+                                            @php
+                                                $replies = \DB::table('log_review_pengajuan_kap_replies')
+                                                    ->where('log_review_pengajuan_kap_id', $log->id)
+                                                    ->get();
+                                            @endphp
+
+                                            <!-- Tampilkan balasan yang ada -->
+                                            <div class="reply-list" id="reply-list-{{ $log->step }}">
+                                                @foreach ($replies as $reply)
+                                                    @php
+                                                        $maxLength = 100; // Panjang maksimum pesan sebelum dipotong
+                                                        $isLong = strlen($reply->message) > $maxLength;
+                                                        $shortMessage = $isLong
+                                                            ? substr($reply->message, 0, $maxLength) . '...'
+                                                            : $reply->message;
+                                                    @endphp
+
+                                                    <div class="reply-item mb-2 d-flex">
+                                                        <!-- Avatar -->
+                                                        <div class="user-avatar">
+                                                            <img src="path_to_user_photo.jpg" alt="User Avatar"
+                                                                class="avatar-img">
+                                                        </div>
+
+                                                        <!-- Pesan Balasan -->
+                                                        <div class="reply-content">
+                                                            <strong>{{ $reply->user_name }}:</strong>
+                                                            <span class="short-message"
+                                                                id="short-message-{{ $reply->id }}">{{ $shortMessage }}</span>
+                                                            <span class="full-message"
+                                                                id="full-message-{{ $reply->id }}"
+                                                                style="display: none;">{{ $reply->message }}</span>
+
+                                                            @if ($isLong)
+                                                                <a href="javascript:void(0)" class="text-primary"
+                                                                    id="toggle-link-{{ $reply->id }}"
+                                                                    onclick="toggleMessage({{ $reply->id }})">Baca
+                                                                    Selengkapnya</a>
+                                                            @endif
+                                                            <br>
+                                                            <small>{{ $reply->created_at }}</small>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+
+                                            <!-- Input untuk balasan baru -->
+                                            <div class="input-group mt-2">
+                                                <textarea id="reply-input-{{ $log->step }}" class="form-control reply-textarea" placeholder="Ketik balasan..."></textarea>
+                                                <button type="button" class="btn btn-primary"
+                                                    onclick="submitReply({{ $log->step }})">Kirim</button>
+                                            </div>
                                         </div>
                                     </div>
                                 @endforeach
                             </div>
+
+
+
                         </div>
                     </div>
                 </div>
@@ -987,6 +1101,53 @@
     @endsection
 
     @push('js')
+        <script>
+            function toggleMessage(replyId) {
+                const shortMessage = document.getElementById(`short-message-${replyId}`);
+                const fullMessage = document.getElementById(`full-message-${replyId}`);
+                const toggleLink = document.getElementById(`toggle-link-${replyId}`);
+
+                // Periksa apakah fullMessage sedang disembunyikan
+                if (fullMessage.style.display === 'none' || fullMessage.style.display === '') {
+                    fullMessage.style.display = 'inline'; // Tampilkan pesan lengkap
+                    shortMessage.style.display = 'none'; // Sembunyikan pesan pendek
+                    toggleLink.innerHTML = 'Sembunyikan'; // Ubah teks link
+                } else {
+                    fullMessage.style.display = 'none'; // Sembunyikan pesan lengkap
+                    shortMessage.style.display = 'inline'; // Tampilkan pesan pendek
+                    toggleLink.innerHTML = 'Baca Selengkapnya'; // Ubah kembali teks link
+                }
+            }
+        </script>
+
+
+        <script>
+            function submitReply(step) {
+                var message = document.getElementById('reply-input-' + step).value;
+                if (message.trim() !== '') {
+                    // Kirim balasan via AJAX atau form submission
+                    console.log('Balasan terkirim untuk step ' + step + ': ' + message);
+
+                    // Tambahkan balasan ke daftar balasan
+                    var replyList = document.getElementById('reply-list-' + step);
+                    var newReply =
+                        `<div class="reply-item mb-2"><strong>Anda:</strong> ${message} <br><small>Baru saja</small></div>`;
+                    replyList.innerHTML += newReply;
+
+                    // Hapus isi textarea
+                    document.getElementById('reply-input-' + step).value = '';
+                }
+            }
+
+            // Fungsi untuk memperbesar textarea secara otomatis
+            document.querySelectorAll('.reply-textarea').forEach(function(textarea) {
+                textarea.addEventListener('input', function() {
+                    this.style.height = 'auto'; // Reset tinggi textarea
+                    this.style.height = (this.scrollHeight) + 'px'; // Set tinggi sesuai konten
+                });
+            });
+        </script>
+
         <script>
             $(document).ready(function() {
                 $('.wizard-steps .step').click(function() {
