@@ -630,13 +630,10 @@
                                         <br>
                                         <h2>{{ $log->remark }}</h2>
                                         <div class="form-group">
-                                            <label for="notes-{{ $log->step }}">Catatan:</label>
-                                            <textarea id="notes-{{ $log->step }}" class="form-control" rows="20" readonly>{{ $log->catatan }}</textarea>
-                                        </div>
-                                        <div class="notes" style="margin-top: 10px">
+                                            {{-- <label for="notes-{{ $log->step }}">Catatan:</label> --}}
                                             <p><strong>User:</strong> {{ $log->user_name ?? '-' }}</p>
-                                            <p><strong>Status:</strong> {{ $log->status }}</p>
-                                            <p><strong>Tanggal:</strong> {{ $log->tanggal_review ?? '-' }}</p>
+                                            <p><strong>Status:</strong> {{ $log->status }} . {{ $log->tanggal_review ?? '-' }} </p>
+                                            <textarea id="notes-{{ $log->step }}" class="form-control" rows="10" readonly>{{ $log->catatan }}</textarea>
                                         </div>
                                     </div>
                                 @endforeach
