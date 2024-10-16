@@ -161,7 +161,7 @@
                             <input type="text" name="judul" id="judul"
                                 class="form-control @error('judul') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->judul : old('judul') }}"
-                                autocomplete="off" required />
+                                autocomplete="off" data-bs-toggle="tooltip" title="Ketikan Isian" required />
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Judul Program Pembelajaran
                             </div>
@@ -181,7 +181,7 @@
                             <input type="text" name="arahan_pimpinan" id="arahan_pimpinan"
                                 class="form-control @error('arahan_pimpinan') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->arahan_pimpinan : old('arahan_pimpinan') }}"
-                                autocomplete="off" required />
+                                autocomplete="off" data-bs-toggle="tooltip" title="Ketikan Isian" required />
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Arahan pimpinan/isu terkini/dll
                             </div>
@@ -226,7 +226,7 @@
                             <input type="text" name="tujuan_program_pembelajaran" id="tujuan_program_pembelajaran"
                                 class="form-control @error('tujuan_program_pembelajaran') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->tujuan_program_pembelajaran : old('tujuan_program_pembelajaran') }}"
-                                autocomplete="off" required />
+                                autocomplete="off" data-bs-toggle="tooltip" title="Ketikan Isian" required />
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Tujuan Program Pembelajaran
                             </div>
@@ -253,7 +253,7 @@
                                                 <td>{{ $loop->index + 1 }}</td>
                                                 <td>
                                                     <input type="text" name="indikator_keberhasilan[]"
-                                                        value="{{ $row->indikator_keberhasilan }}"
+                                                        value="{{ $row->indikator_keberhasilan }}" autocomplete="off"
                                                         class="form-control @error('indikator_keberhasilan') is-invalid @enderror" />
                                                 </td>
                                             </tr>
@@ -263,7 +263,7 @@
                                             <tr>
                                                 <td>{{ $i }}</td>
                                                 <td>
-                                                    <input type="text" name="indikator_keberhasilan[]"
+                                                    <input type="text" name="indikator_keberhasilan[]" autocomplete="off"
                                                         class="form-control @error('indikator_keberhasilan') is-invalid @enderror" />
                                                 </td>
                                             </tr>
@@ -283,7 +283,7 @@
                                 id="indikator-dampak-terhadap-kinerja-organisasi"
                                 class="form-control @error('indikator_dampak_terhadap_kinerja_organisasi') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->indikator_dampak_terhadap_kinerja_organisasi : old('indikator_dampak_terhadap_kinerja_organisasi') }}"
-                                autocomplete="off" required />
+                                autocomplete="off" data-bs-toggle="tooltip" title="Ketikan Isian" required />
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Indikator Dampak Terhadap Kinerja Organisasi
                             </div>
@@ -299,7 +299,7 @@
                                 id="penugasan-yang-terkait-dengan-pembelajaran"
                                 class="form-control @error('penugasan_yang_terkait_dengan_pembelajaran') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->penugasan_yang_terkait_dengan_pembelajaran : old('penugasan_yang_terkait_dengan_pembelajaran') }}"
-                                autocomplete="off" required />
+                                autocomplete="off" data-bs-toggle="tooltip" title="Ketikan Isian" required />
 
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Penugasan Yang Terkait Dengan Pembelajaran
@@ -314,7 +314,7 @@
                             <input type="text" name="skill_group_owner" id="skill-group-owner"
                                 class="form-control @error('skill_group_owner') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->skill_group_owner : old('skill_group_owner') }}"
-                                autocomplete="off" required />
+                                autocomplete="off" data-bs-toggle="tooltip" title="Ketikan Isian" required />
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Skill Group Owner
                             </div>
@@ -449,7 +449,7 @@
                             <input type="text" name="detail_lokasi" id="detail_lokasi" required
                                 class="form-control @error('detail_lokasi') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->detail_lokasi : old('detail_lokasi') }}"
-                                autocomplete="off" />
+                                autocomplete="off" data-bs-toggle="tooltip" title="Ketikan Isian" />
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Tempat / Alamat Rinci
                             </div>
@@ -463,7 +463,7 @@
                             <input type="number" name="kelas" id="kelas" required
                                 class="form-control @error('kelas') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->kelas : old('kelas') }}"
-                                autocomplete="off" />
+                                autocomplete="off" data-bs-toggle="tooltip" title="Ketikan Isian" />
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Jumlah Kelas
                             </div>
@@ -606,7 +606,7 @@
                             <input type="text" name="sasaran_peserta" id="sasaran_peserta" required
                                 class="form-control @error('sasaran_peserta') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->sasaran_peserta : old('sasaran_peserta') }}"
-                                autocomplete="off" />
+                                autocomplete="off" data-bs-toggle="tooltip" title="Ketikan Isian" />
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Sasaran Peserta
                             </div>
@@ -621,7 +621,7 @@
                             <input type="text" name="kriteria_peserta" id="kriteria_peserta" required
                                 class="form-control @error('kriteria_peserta') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->kriteria_peserta : old('kriteria_peserta') }}"
-                                autocomplete="off" />
+                                autocomplete="off" data-bs-toggle="tooltip" title="Ketikan Isian" />
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Sasaran Peserta
                             </div>
@@ -636,7 +636,7 @@
                             <input type="text" name="aktivitas_prapembelajaran" id="aktivitas_prapembelajaran"
                                 required class="form-control @error('aktivitas_prapembelajaran') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->aktivitas_prapembelajaran : old('aktivitas_prapembelajaran') }}"
-                                autocomplete="off" />
+                                autocomplete="off" data-bs-toggle="tooltip" title="Ketikan Isian" />
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Aktivitas Prapembelajaran
                             </div>
@@ -705,7 +705,7 @@
                             <input type="text" name="sertifikat" id="sertifikat" required
                                 class="form-control @error('sertifikat') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->sertifikat : old('sertifikat') }}"
-                                autocomplete="off" />
+                                autocomplete="off" data-bs-toggle="tooltip" title="Ketikan Isian" />
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Sertifikat
                             </div>
@@ -731,10 +731,10 @@
                                                 <td>{{ $level->level }}</td>
                                                 <td>
                                                     <input type="hidden" name="no_level[]"
-                                                        value="{{ $level->level }}"
+                                                        value="{{ $level->level }}" autocomplete="off"
                                                         class="form-control @error('no_level') is-invalid @enderror" />
                                                     <input type="text" name="level_evaluasi_instrumen[]"
-                                                        value="{{ $level->keterangan }}"
+                                                        value="{{ $level->keterangan }}" autocomplete="off"
                                                         class="form-control @error('level_evaluasi_instrumen') is-invalid @enderror" />
                                                 </td>
                                             </tr>
@@ -745,9 +745,9 @@
                                                 <td>{{ $i }}</td>
                                                 <td>
                                                     <input type="hidden" name="no_level[]"
-                                                        value="{{ $i }}"
+                                                        value="{{ $i }}" autocomplete="off"
                                                         class="form-control @error('no_level') is-invalid @enderror" />
-                                                    <input type="text" name="level_evaluasi_instrumen[]"
+                                                    <input type="text" name="level_evaluasi_instrumen[]" autocomplete="off"
                                                         class="form-control @error('level_evaluasi_instrumen') is-invalid @enderror" />
                                                 </td>
                                             </tr>
