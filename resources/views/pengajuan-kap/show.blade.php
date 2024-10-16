@@ -899,7 +899,7 @@
                                     </div>
 
                                     <div class="mb-3">
-                                        <textarea class="form-control" id="approveNotes" name="approveNotes" rows="3" required></textarea>
+                                        <textarea class="form-control" id="approveNotes" name="approveNotes" rows="10" required></textarea>
                                     </div>
 
                                     <button type="button" class="btn btn-info btn-prev"> <i
@@ -911,7 +911,7 @@
                             @else
                                 <div class="mb-3">
                                     <label for="approveNotes" class="form-label">Catatan</label>
-                                    <textarea required class="form-control" id="approveNotes" name="approveNotes" rows="3"></textarea>
+                                    <textarea required class="form-control" id="approveNotes" name="approveNotes" rows="10"></textarea>
                                 </div>
                                 <button type="submit" class="btn btn-success"
                                     style="float: right">{{ __('Submit') }}</button>
@@ -939,7 +939,7 @@
                             @method('PUT')
                             <div class="mb-3">
                                 <label for="revisiNotes" class="form-label">Catatan</label>
-                                <textarea required class="form-control" id="revisiNotes" name="revisiNotes" rows="3"></textarea>
+                                <textarea required class="form-control" id="revisiNotes" name="revisiNotes" rows="10"></textarea>
                             </div>
                             <button type="submit" class="btn btn-gray"
                                 style="float: right">{{ __('Submit') }}</button>
@@ -963,7 +963,7 @@
                             @method('PUT')
                             <div class="mb-3">
                                 <label for="rejectNotes" class="form-label">Catatan</label>
-                                <textarea required class="form-control" id="rejectNotes" name="rejectNotes" rows="3"></textarea>
+                                <textarea required class="form-control" id="rejectNotes" name="rejectNotes" rows="10"></textarea>
                             </div>
                             <button type="submit" class="btn btn-danger"
                                 style="float: right">{{ __('Submit') }}</button>
