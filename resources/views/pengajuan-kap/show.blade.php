@@ -208,7 +208,7 @@
         <div class="container-fluid">
             <div class="row">
 
-                <div class="col-md-8">
+                <div class="col-md-7">
                     <div class="card">
                         <div class="card-body">
                             <div class="col-md-12">
@@ -611,7 +611,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-5">
                     <div class="card">
                         <div class="wizard-container">
                             <div class="wizard-steps">
@@ -631,7 +631,7 @@
                                         <h2>{{ $log->remark }}</h2>
                                         <div class="form-group">
                                             <label for="notes-{{ $log->step }}">Catatan:</label>
-                                            <textarea id="notes-{{ $log->step }}" class="form-control" rows="4" readonly>{{ $log->catatan }}</textarea>
+                                            <textarea id="notes-{{ $log->step }}" class="form-control" rows="20" readonly>{{ $log->catatan }}</textarea>
                                         </div>
                                         <div class="notes" style="margin-top: 10px">
                                             <p><strong>User:</strong> {{ $log->user_name ?? '-' }}</p>
