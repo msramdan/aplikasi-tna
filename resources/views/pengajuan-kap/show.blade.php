@@ -213,6 +213,7 @@
 
         .reply-content {
             background-color: #f0f2f5;
+            text-align: justify;
             padding: 10px;
             border-radius: 18px;
             max-width: 80%;
@@ -664,7 +665,7 @@
                     </div>
                 </div>
                 <div class="col-md-5">
-                    <div class="card">
+                    <div class="card" style="position: relative;z-index: 10;">
                         <div class="wizard-container">
                             <div class="wizard-steps">
 
@@ -676,8 +677,6 @@
                                     </div>
                                 @endforeach
                             </div>
-
-
 
                             <div class="wizard-content">
                                 @foreach ($logReviews as $index => $log)
