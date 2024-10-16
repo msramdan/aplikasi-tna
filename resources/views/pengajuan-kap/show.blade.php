@@ -617,8 +617,8 @@
                             <div class="wizard-steps">
 
                                 @foreach ($logReviews as $index => $log)
-                                    <div
-                                        class="step {{ $pengajuanKap->current_step == $index + 1 && $log->status == 'Pending' ? 'process' : '' }} {{ $log->status == 'Approved' ? 'active' : ($log->status == 'Rejected' ? 'rejected' : ($log->status == 'Skiped' ? 'skiped' : '')) }}">
+                                    <div class="step {{ $pengajuanKap->current_step == $index + 1 && in_array($log->status, ['Pending', 'Revision']) ? 'process' : '' }} {{ $log->status == 'Approved' ? 'active' : ($log->status == 'Rejected' ? 'rejected' : ($log->status == 'Skiped' ? 'skiped' : '')) }}"
+                                        >
                                         <div class="step-icon">{{ $index + 1 }}</div>
                                         <div class="step-label"><b>{{ $log->remark }}</b></div>
                                     </div>
