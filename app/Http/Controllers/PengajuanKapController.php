@@ -278,6 +278,32 @@ class PengajuanKapController extends Controller
 
     public function edit($id, $is_bpkp, $frekuensi)
     {
+        $pengajuanKap = DB::table('pengajuan_kap')
+            ->select(
+                'pengajuan_kap.*',
+                'users.name as user_name',
+                'kompetensi.nama_kompetensi',
+                'topik.nama_topik'
+            )
+            ->leftJoin('users', 'pengajuan_kap.user_created', '=', 'users.id')
+            ->leftJoin('kompetensi', 'pengajuan_kap.kompetensi_id', '=', 'kompetensi.id')
+            ->leftJoin('topik', 'pengajuan_kap.topik_id', '=', 'topik.id')
+            ->where('pengajuan_kap.id', '=', $id)
+            ->where('pengajuan_kap.institusi_sumber', '=', $is_bpkp)
+            ->where('pengajuan_kap.frekuensi_pelaksanaan', '=', $frekuensi)
+            ->first();
+
+        // Cek apakah data pengajuan_kap ditemukan
+        if (!$pengajuanKap) {
+            return redirect()->route('not-found'); // Atur route ke halaman Not Found
+        }
+
+        // Cek apakah user yang login adalah user yang membuat pengajuan
+        if ($pengajuanKap->user_created !== Auth::id()) {
+            return redirect()->route('un-authorized'); // Atur route ke halaman Un-authorized
+        }
+
+        // Pengecekan jenis program
         if ($is_bpkp === 'BPKP') {
             $jenis_program = ['Renstra', 'APP', 'APEP'];
         } elseif ($is_bpkp === 'Non BPKP') {
@@ -306,21 +332,6 @@ class PengajuanKapController extends Controller
             'Library cafe',
             'Magang/praktik kerja'
         ];
-
-        $pengajuanKap = DB::table('pengajuan_kap')
-            ->select(
-                'pengajuan_kap.*',
-                'users.name as user_name',
-                'kompetensi.nama_kompetensi',
-                'topik.nama_topik'
-            )
-            ->leftJoin('users', 'pengajuan_kap.user_created', '=', 'users.id')
-            ->leftJoin('kompetensi', 'pengajuan_kap.kompetensi_id', '=', 'kompetensi.id')
-            ->leftJoin('topik', 'pengajuan_kap.topik_id', '=', 'topik.id')
-            ->where('pengajuan_kap.id', '=', $id)
-            ->where('pengajuan_kap.institusi_sumber', '=', $is_bpkp)
-            ->where('pengajuan_kap.frekuensi_pelaksanaan', '=', $frekuensi)
-            ->first();
 
         $level_evaluasi_instrumen_kap = DB::table('level_evaluasi_instrumen_kap')
             ->where('pengajuan_kap_id', $id)
@@ -409,10 +420,11 @@ class PengajuanKapController extends Controller
             'gap_kompetensi_pengajuan_kap' => $gap_kompetensi_pengajuan_kap,
             'topikOptions' => $topikOptions,
             'tahun' => $pengajuanKap->tahun,
-            'usedPrioritas' => $usedPrioritas,  // Tambahkan ini
-            'kodePembelajaran' => $kodePembelajaran,  // Tambahkan ini
+            'usedPrioritas' => $usedPrioritas,
+            'kodePembelajaran' => $kodePembelajaran,
         ]);
     }
+
 
     public function store(Request $request, $is_bpkp, $frekuensi)
     {

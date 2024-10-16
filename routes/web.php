@@ -29,6 +29,13 @@ use App\Http\Controllers\{
 };
 use App\Http\Controllers\Auth\OtpController;
 
+
+use App\Http\Controllers\ErrorController;
+
+Route::get('/not-found', [ErrorController::class, 'notFound'])->name('not-found');
+Route::get('/un-authorized', [ErrorController::class, 'unAuthorized'])->name('un-authorized');
+
+
 Route::get('/maintenance', function () {
     return view('maintenance');
 })->name('maintenance')->middleware('redirect.if.not.maintenance');
