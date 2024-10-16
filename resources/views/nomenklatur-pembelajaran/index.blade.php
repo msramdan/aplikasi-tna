@@ -75,7 +75,7 @@
                 },
                 {
                     data: 'nama_unit',
-                    name: 'nama_unit'
+                    name: 'user_created.nama_unit'
                 },
                 {
                     data: 'tanggal_pengajuan',
