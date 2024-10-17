@@ -262,7 +262,7 @@
                                             <th>{{ __('Prioritas') }}</th>
                                             <th>{{ __('User') }}</th>
                                             <th>{{ __('Unit') }}</th>
-                                            <th>{{ __('Action') }}</th>
+                                            <th style="width:80px">{{ __('Action') }}</th>
                                         </tr>
                                     </thead>
                                 </table>
