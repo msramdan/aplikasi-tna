@@ -44,6 +44,7 @@
 
         .tooltip-inner {
             text-align: justify;
+            max-width: 400px;
         }
     </style>
 @endpush
@@ -122,8 +123,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.all.min.js"></script>
     <script>
         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
             return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+    </script>
+    {{-- dinamis panjang inputan --}}
+    <script>
+        document.addEventListener('input', function(event) {
+            if (event.target.tagName.toLowerCase() === 'textarea') {
+                event.target.style.height = 'auto';
+                event.target.style.height = (event.target.scrollHeight) + 'px';
+            }
         });
     </script>
 

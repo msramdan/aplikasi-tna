@@ -140,17 +140,15 @@
                     <div class="form-group row mb-3">
                         <label class="col-sm-3 col-form-label"></label>
                         <div class="col-sm-6">
-                            <input type="text" name="referensi_indikator_kinerja" id="referensi_indikator_kinerja"
+                            <textarea name="referensi_indikator_kinerja" id="referensi_indikator_kinerja"
                                 class="form-control @error('referensi_indikator_kinerja') is-invalid @enderror"
-                                value="{{ isset($pengajuanKap) ? $pengajuanKap->referensi_indikator_kinerja : old('referensi_indikator_kinerja') }}"
-                                placeholder="{{ __('Indikator Kinerja ' . $tahun) }}" autocomplete="off"
-                                data-bs-toggle="tooltip" title="{{ config('form_tooltips.referensi_indikator_kinerja') }}" required />
+                                placeholder="{{ __('Indikator Kinerja ' . $tahun) }}" autocomplete="off" data-bs-toggle="tooltip"
+                                title="{{ config('form_tooltips.referensi_indikator_kinerja') }}" required rows="2">{{ isset($pengajuanKap) ? $pengajuanKap->referensi_indikator_kinerja : old('referensi_indikator_kinerja') }}</textarea>
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Indikator Kinerja {{ $tahun }}
                             </div>
                         </div>
                     </div>
-
 
                     <div class="form-group row mb-3">
                         <label for="kompetensi_id" class="col-sm-3 col-form-label">Kompetensi <span
@@ -222,10 +220,8 @@
                             <span style="color: red">*</span>
                         </label>
                         <div class="col-sm-6">
-                            <input type="text" name="judul" id="judul"
-                                class="form-control @error('judul') is-invalid @enderror"
-                                value="{{ isset($pengajuanKap) ? $pengajuanKap->judul : old('judul') }}"
-                                autocomplete="off" data-bs-toggle="tooltip" title="{{ config('form_tooltips.judul') }}" required />
+                            <textarea name="judul" id="judul" class="form-control @error('judul') is-invalid @enderror" autocomplete="off"
+                                data-bs-toggle="tooltip" title="{{ config('form_tooltips.judul') }}" required rows="2">{{ isset($pengajuanKap) ? $pengajuanKap->judul : old('judul') }}</textarea>
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Judul Program Pembelajaran
                             </div>
@@ -238,14 +234,14 @@
                     </div>
 
                     <div class="form-group row mb-1">
-                        <label for="arahan_pimpinan" style="padding-left: 40px"
-                            class="col-sm-3 col-form-label">{{ __('A. Arahan pimpinan/isu terkini/dll') }} <span
-                                style="color: red">*</span></label>
+                        <label for="arahan_pimpinan" style="padding-left: 40px" class="col-sm-3 col-form-label">
+                            {{ __('A. Arahan pimpinan/isu terkini/dll') }}
+                            <span style="color: red">*</span>
+                        </label>
                         <div class="col-sm-6">
-                            <input type="text" name="arahan_pimpinan" id="arahan_pimpinan"
-                                class="form-control @error('arahan_pimpinan') is-invalid @enderror"
-                                value="{{ isset($pengajuanKap) ? $pengajuanKap->arahan_pimpinan : old('arahan_pimpinan') }}"
-                                autocomplete="off" data-bs-toggle="tooltip" title="{{ config('form_tooltips.arahan_pimpinan') }}" required />
+                            <textarea name="arahan_pimpinan" id="arahan_pimpinan"
+                                class="form-control @error('arahan_pimpinan') is-invalid @enderror" autocomplete="off" data-bs-toggle="tooltip"
+                                title="{{ config('form_tooltips.arahan_pimpinan') }}" required rows="2">{{ isset($pengajuanKap) ? $pengajuanKap->arahan_pimpinan : old('arahan_pimpinan') }}</textarea>
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Arahan pimpinan/isu terkini/dll
                             </div>
@@ -283,14 +279,15 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label class="col-sm-3 col-form-label"
-                            for="tujuan_program_pembelajaran">{{ __('Tujuan Program Pembelajaran') }} <span
-                                style="color: red">*</span></label>
+                        <label class="col-sm-3 col-form-label" for="tujuan_program_pembelajaran">
+                            {{ __('Tujuan Program Pembelajaran') }}
+                            <span style="color: red">*</span>
+                        </label>
                         <div class="col-sm-6">
-                            <input type="text" name="tujuan_program_pembelajaran" id="tujuan_program_pembelajaran"
-                                class="form-control @error('tujuan_program_pembelajaran') is-invalid @enderror"
-                                value="{{ isset($pengajuanKap) ? $pengajuanKap->tujuan_program_pembelajaran : old('tujuan_program_pembelajaran') }}"
-                                autocomplete="off" data-bs-toggle="tooltip" title="{{ config('form_tooltips.tujuan_program_pembelajaran') }}" required />
+                            <textarea name="tujuan_program_pembelajaran" id="tujuan_program_pembelajaran"
+                                class="form-control @error('tujuan_program_pembelajaran') is-invalid @enderror" autocomplete="off"
+                                data-bs-toggle="tooltip" title="{{ config('form_tooltips.tujuan_program_pembelajaran') }}" required
+                                rows="2">{{ isset($pengajuanKap) ? $pengajuanKap->tujuan_program_pembelajaran : old('tujuan_program_pembelajaran') }}</textarea>
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Tujuan Program Pembelajaran
                             </div>
@@ -340,15 +337,15 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label class="col-sm-3 col-form-label"
-                            for="indikator-dampak-terhadap-kinerja-organisasi">{{ __('Indikator Dampak Terhadap Kinerja Organisasi') }}
-                            <span style="color: red">*</span></label>
+                        <label class="col-sm-3 col-form-label" for="indikator-dampak-terhadap-kinerja-organisasi">
+                            {{ __('Indikator Dampak Terhadap Kinerja Organisasi') }}
+                            <span style="color: red">*</span>
+                        </label>
                         <div class="col-sm-6">
-                            <input type="text" name="indikator_dampak_terhadap_kinerja_organisasi"
-                                id="indikator-dampak-terhadap-kinerja-organisasi"
+                            <textarea name="indikator_dampak_terhadap_kinerja_organisasi" id="indikator-dampak-terhadap-kinerja-organisasi"
                                 class="form-control @error('indikator_dampak_terhadap_kinerja_organisasi') is-invalid @enderror"
-                                value="{{ isset($pengajuanKap) ? $pengajuanKap->indikator_dampak_terhadap_kinerja_organisasi : old('indikator_dampak_terhadap_kinerja_organisasi') }}"
-                                autocomplete="off" data-bs-toggle="tooltip" title="{{ config('form_tooltips.indikator_dampak_terhadap_kinerja_organisasi') }}" required />
+                                autocomplete="off" data-bs-toggle="tooltip"
+                                title="{{ config('form_tooltips.indikator_dampak_terhadap_kinerja_organisasi') }}" required rows="2">{{ isset($pengajuanKap) ? $pengajuanKap->indikator_dampak_terhadap_kinerja_organisasi : old('indikator_dampak_terhadap_kinerja_organisasi') }}</textarea>
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Indikator Dampak Terhadap Kinerja Organisasi
                             </div>
@@ -356,16 +353,15 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label class="col-sm-3 col-form-label"
-                            for="penugasan-yang-terkait-dengan-pembelajaran">{{ __('Penugasan Yang Terkait Dengan Pembelajaran') }}
-                            <span style="color: red">*</span></label>
+                        <label class="col-sm-3 col-form-label" for="penugasan-yang-terkait-dengan-pembelajaran">
+                            {{ __('Penugasan Yang Terkait Dengan Pembelajaran') }}
+                            <span style="color: red">*</span>
+                        </label>
                         <div class="col-sm-6">
-                            <input type="text" name="penugasan_yang_terkait_dengan_pembelajaran"
-                                id="penugasan-yang-terkait-dengan-pembelajaran"
-                                class="form-control @error('penugasan_yang_terkait_dengan_pembelajaran') is-invalid @enderror"
-                                value="{{ isset($pengajuanKap) ? $pengajuanKap->penugasan_yang_terkait_dengan_pembelajaran : old('penugasan_yang_terkait_dengan_pembelajaran') }}"
-                                autocomplete="off" data-bs-toggle="tooltip" title="{{ config('form_tooltips.penugasan_yang_terkait_dengan_pembelajaran') }}" required />
-
+                            <textarea name="penugasan_yang_terkait_dengan_pembelajaran" id="penugasan-yang-terkait-dengan-pembelajaran"
+                                class="form-control @error('penugasan_yang_terkait_dengan_pembelajaran') is-invalid @enderror" autocomplete="off"
+                                data-bs-toggle="tooltip" title="{{ config('form_tooltips.penugasan_yang_terkait_dengan_pembelajaran') }}"
+                                required rows="2">{{ isset($pengajuanKap) ? $pengajuanKap->penugasan_yang_terkait_dengan_pembelajaran : old('penugasan_yang_terkait_dengan_pembelajaran') }}</textarea>
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Penugasan Yang Terkait Dengan Pembelajaran
                             </div>
@@ -373,13 +369,14 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label class="col-sm-3 col-form-label" for="skill-group-owner">{{ __('Skill Group Owner') }}
-                            <span style="color: red">*</span></label>
+                        <label class="col-sm-3 col-form-label" for="skill-group-owner">
+                            {{ __('Skill Group Owner') }}
+                            <span style="color: red">*</span>
+                        </label>
                         <div class="col-sm-6">
-                            <input type="text" name="skill_group_owner" id="skill-group-owner"
-                                class="form-control @error('skill_group_owner') is-invalid @enderror"
-                                value="{{ isset($pengajuanKap) ? $pengajuanKap->skill_group_owner : old('skill_group_owner') }}"
-                                autocomplete="off" data-bs-toggle="tooltip" title="{{ config('form_tooltips.skill_group_owner') }}" required />
+                            <textarea name="skill_group_owner" id="skill-group-owner"
+                                class="form-control @error('skill_group_owner') is-invalid @enderror" autocomplete="off"
+                                data-bs-toggle="tooltip" title="{{ config('form_tooltips.skill_group_owner') }}" required rows="2">{{ isset($pengajuanKap) ? $pengajuanKap->skill_group_owner : old('skill_group_owner') }}</textarea>
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Skill Group Owner
                             </div>
@@ -508,14 +505,13 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label class="col-sm-3 col-form-label"
-                            for="detail_lokasi">{{ __('Tempat / Alamat Rinci') }}<span
-                                style="color: red">*</span></label>
+                        <label class="col-sm-3 col-form-label" for="detail_lokasi">{{ __('Tempat / Alamat Rinci') }}<span style="color: red">*</span></label>
                         <div class="col-sm-6">
-                            <input type="text" name="detail_lokasi" id="detail_lokasi" required
+                            <textarea name="detail_lokasi" id="detail_lokasi" required
                                 class="form-control @error('detail_lokasi') is-invalid @enderror"
-                                value="{{ isset($pengajuanKap) ? $pengajuanKap->detail_lokasi : old('detail_lokasi') }}"
-                                autocomplete="off" data-bs-toggle="tooltip" title="{{ config('form_tooltips.detail_lokasi') }}" />
+                                autocomplete="off" data-bs-toggle="tooltip"
+                                title="{{ config('form_tooltips.detail_lokasi') }}"
+                                rows="2">{{ isset($pengajuanKap) ? $pengajuanKap->detail_lokasi : old('detail_lokasi') }}</textarea>
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Tempat / Alamat Rinci
                             </div>
@@ -529,7 +525,8 @@
                             <input type="number" name="kelas" id="kelas" required
                                 class="form-control @error('kelas') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->kelas : old('kelas') }}"
-                                autocomplete="off" data-bs-toggle="tooltip" title="{{ config('form_tooltips.kelas') }}" />
+                                autocomplete="off" data-bs-toggle="tooltip"
+                                title="{{ config('form_tooltips.kelas') }}" />
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Jumlah Kelas
                             </div>
@@ -665,14 +662,14 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="form-group row mb-3">
-                        <label for="sasaran_peserta" class="col-sm-3 col-form-label">{{ __('Sasaran Peserta') }}<span
-                                style="color: red">*</span></label>
+                        <label for="sasaran_peserta" class="col-sm-3 col-form-label">{{ __('Sasaran Peserta') }}<span style="color: red">*</span></label>
                         <div class="col-sm-6">
-                            <input type="text" name="sasaran_peserta" id="sasaran_peserta" required
+                            <textarea name="sasaran_peserta" id="sasaran_peserta" required
                                 class="form-control @error('sasaran_peserta') is-invalid @enderror"
-                                value="{{ isset($pengajuanKap) ? $pengajuanKap->sasaran_peserta : old('sasaran_peserta') }}"
-                                autocomplete="off" data-bs-toggle="tooltip" title="{{ config('form_tooltips.sasaran_peserta') }}" />
+                                data-bs-toggle="tooltip" title="{{ config('form_tooltips.sasaran_peserta') }}"
+                                rows="2">{{ isset($pengajuanKap) ? $pengajuanKap->sasaran_peserta : old('sasaran_peserta') }}</textarea>
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Sasaran Peserta
                             </div>
@@ -680,29 +677,25 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label for="kriteria_peserta"
-                            class="col-sm-3 col-form-label">{{ __('Kriteria Peserta') }}<span
-                                style="color: red">*</span></label>
+                        <label for="kriteria_peserta" class="col-sm-3 col-form-label">{{ __('Kriteria Peserta') }}<span style="color: red">*</span></label>
                         <div class="col-sm-6">
-                            <input type="text" name="kriteria_peserta" id="kriteria_peserta" required
+                            <textarea name="kriteria_peserta" id="kriteria_peserta" required
                                 class="form-control @error('kriteria_peserta') is-invalid @enderror"
-                                value="{{ isset($pengajuanKap) ? $pengajuanKap->kriteria_peserta : old('kriteria_peserta') }}"
-                                autocomplete="off" data-bs-toggle="tooltip" title="{{ config('form_tooltips.kriteria_peserta') }}" />
+                                data-bs-toggle="tooltip" title="{{ config('form_tooltips.kriteria_peserta') }}"
+                                rows="2">{{ isset($pengajuanKap) ? $pengajuanKap->kriteria_peserta : old('kriteria_peserta') }}</textarea>
                             <div class="invalid-feedback">
-                                Mohon untuk diisi Sasaran Peserta
+                                Mohon untuk diisi Kriteria Peserta
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label for="aktivitas_prapembelajaran"
-                            class="col-sm-3 col-form-label">{{ __('Aktivitas Prapembelajaran') }}<span
-                                style="color: red">*</span></label>
+                        <label for="aktivitas_prapembelajaran" class="col-sm-3 col-form-label">{{ __('Aktivitas Prapembelajaran') }}<span style="color: red">*</span></label>
                         <div class="col-sm-6">
-                            <input type="text" name="aktivitas_prapembelajaran" id="aktivitas_prapembelajaran"
-                                required class="form-control @error('aktivitas_prapembelajaran') is-invalid @enderror"
-                                value="{{ isset($pengajuanKap) ? $pengajuanKap->aktivitas_prapembelajaran : old('aktivitas_prapembelajaran') }}"
-                                autocomplete="off" data-bs-toggle="tooltip" title="{{ config('form_tooltips.aktivitas_prapembelajaran') }}" />
+                            <textarea name="aktivitas_prapembelajaran" id="aktivitas_prapembelajaran" required
+                                class="form-control @error('aktivitas_prapembelajaran') is-invalid @enderror"
+                                data-bs-toggle="tooltip" title="{{ config('form_tooltips.aktivitas_prapembelajaran') }}"
+                                rows="2">{{ isset($pengajuanKap) ? $pengajuanKap->aktivitas_prapembelajaran : old('aktivitas_prapembelajaran') }}</textarea>
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Aktivitas Prapembelajaran
                             </div>
@@ -770,7 +763,8 @@
                             <input type="text" name="sertifikat" id="sertifikat" required
                                 class="form-control @error('sertifikat') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->sertifikat : old('sertifikat') }}"
-                                autocomplete="off" data-bs-toggle="tooltip" title="{{ config('form_tooltips.sertifikat') }}" />
+                                autocomplete="off" data-bs-toggle="tooltip"
+                                title="{{ config('form_tooltips.sertifikat') }}" />
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Sertifikat
                             </div>
