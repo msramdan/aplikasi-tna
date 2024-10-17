@@ -53,6 +53,19 @@
             overflow-y: auto;
             /* Tambahkan overflow agar bisa scroll jika opsi banyak */
         }
+
+        .badge-width {
+            display: inline-block;
+            /* Memastikan span memiliki lebar tetap */
+            width: 120px;
+            /* Atur lebar sesuai kebutuhan */
+            text-align: center;
+            /* Untuk memastikan teks berada di tengah */
+            font-size: 0.9em;
+            /* Ukuran font lebih kecil */
+            line-height: 1.5;
+            /* Mengatur tinggi garis untuk vertikal center */
+        }
     </style>
 
     <div id="loading-overlay">
@@ -384,8 +397,7 @@
                     data: 'indikator_kinerja',
                     name: 'indikator_kinerja'
                 },
-            @endif
-            {
+            @endif {
                 data: 'nama_kompetensi',
                 name: 'kompetensi.nama_kompetensi'
             },
@@ -406,7 +418,7 @@
                 name: 'status_pengajuan'
             },
             {
-                data: 'prioritas_pembelajaran',
+                data: 'label_prioritas_pembelajaran',
                 name: 'prioritas_pembelajaran'
             },
             {

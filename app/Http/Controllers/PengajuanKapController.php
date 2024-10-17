@@ -103,8 +103,28 @@ class PengajuanKapController extends Controller
                         return '<button style="width:90px" class="btn btn-gray btn-sm btn-block"><i class="fa fa-refresh" aria-hidden="true"></i> Revision</button>';
                     }
                 })
+                ->addColumn('label_prioritas_pembelajaran', function ($row) {
+                    $prioritas = (int) preg_replace('/[^0-9]/', '', $row->prioritas_pembelajaran);
+
+                    if ($prioritas > 0 && $prioritas <= 5) {
+                        return '<span class="badge badge-label bg-danger badge-width"><i class="mdi mdi-circle-medium"></i> ' . $row->prioritas_pembelajaran . '</span>'; // Danger
+                    } elseif ($prioritas > 5 && $prioritas <= 10) {
+                        return '<span class="badge badge-label bg-warning badge-width"><i class="mdi mdi-circle-medium"></i> ' . $row->prioritas_pembelajaran . '</span>'; // Warning
+                    } elseif ($prioritas > 10 && $prioritas <= 20) {
+                        return '<span class="badge badge-label bg-info badge-width"><i class="mdi mdi-circle-medium"></i> ' . $row->prioritas_pembelajaran . '</span>'; // Info
+                    } elseif ($prioritas > 20 && $prioritas <= 30) {
+                        return '<span class="badge badge-label bg-success badge-width"><i class="mdi mdi-circle-medium"></i> ' . $row->prioritas_pembelajaran . '</span>'; // Success
+                    } elseif ($prioritas > 30 && $prioritas <= 40) {
+                        return '<span class="badge badge-label bg-primary badge-width"><i class="mdi mdi-circle-medium"></i> ' . $row->prioritas_pembelajaran . '</span>'; // Primary
+                    } elseif ($prioritas > 40 && $prioritas <= 50) {
+                        return '<span class="badge badge-label bg-secondary badge-width"><i class="mdi mdi-circle-medium"></i> ' . $row->prioritas_pembelajaran . '</span>'; // Secondary
+                    } else {
+                        return '<span class="badge badge-label badge-width"><i class="mdi mdi-circle-medium"></i> ' . $row->prioritas_pembelajaran . '</span>';
+                    }
+                })
+
                 ->addColumn('action', 'pengajuan-kap.include.action')
-                ->rawColumns(['status_pengajuan', 'action'])
+                ->rawColumns(['status_pengajuan', 'action', 'label_prioritas_pembelajaran'])
                 ->toJson();
         }
 
