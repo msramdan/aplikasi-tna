@@ -702,7 +702,7 @@
 
                                         <!-- Bagian balasan -->
                                         <div class="reply-section mt-3">
-                                            <h5>Balasan:</h5>
+                                            <h5>Chat:</h5>
 
                                             <!-- Query langsung ke tabel replies -->
                                             @php
@@ -1145,8 +1145,8 @@
                     success: function(reply) {
                         Swal.fire({
                             icon: 'success',
-                            title: 'Balasan Terkirim',
-                            text: 'Balasan berhasil dikirim!',
+                            title: 'Chat Terkirim',
+                            text: 'Chat berhasil dikirim!',
                         }).then(() => {
                             location.reload(); // Reload the page to show the new reply
                         });
