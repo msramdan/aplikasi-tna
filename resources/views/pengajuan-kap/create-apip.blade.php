@@ -45,6 +45,10 @@
                 transform: rotate(360deg);
             }
         }
+
+        .tooltip-inner {
+            text-align: justify;
+        }
     </style>
 
     <div id="loading-overlay">
@@ -118,6 +122,12 @@
     <script src="https://cdn.jsdelivr.net/npm/smartwizard@6/dist/js/jquery.smartWizard.min.js" type="text/javascript">
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.all.min.js"></script>
+    <script>
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+    </script>
     <script type="text/javascript">
         function onConfirm() {
             let form = document.getElementById('form-3');

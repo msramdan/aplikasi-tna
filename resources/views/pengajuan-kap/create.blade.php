@@ -45,6 +45,10 @@
                 transform: rotate(360deg);
             }
         }
+
+        .tooltip-inner {
+            text-align: justify;
+        }
     </style>
 
     <div id="loading-overlay">
