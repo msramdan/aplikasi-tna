@@ -411,15 +411,15 @@
             },
             {
                 data: 'remark',
-                name: 'remark'
+                name: 'log_review_pengajuan_kap.remark'
             },
             {
                 data: 'status_pengajuan',
                 name: 'status_pengajuan'
             },
             {
-                data: 'label_prioritas_pembelajaran',
-                name: 'prioritas_pembelajaran'
+                data: 'prioritas_pembelajaran',
+                name: 'pengajuan_kap.prioritas_pembelajaran'
             },
             {
                 data: 'user_name',

@@ -103,7 +103,7 @@ class PengajuanKapController extends Controller
                         return '<button style="width:90px" class="btn btn-gray btn-sm btn-block"><i class="fa fa-refresh" aria-hidden="true"></i> Revision</button>';
                     }
                 })
-                ->addColumn('label_prioritas_pembelajaran', function ($row) {
+                ->addColumn('prioritas_pembelajaran', function ($row) {
                     $prioritas = (int) preg_replace('/[^0-9]/', '', $row->prioritas_pembelajaran);
 
                     if ($prioritas > 0 && $prioritas <= 5) {
@@ -122,9 +122,8 @@ class PengajuanKapController extends Controller
                         return '<span class="badge badge-label badge-width"><i class="mdi mdi-circle-medium"></i> ' . $row->prioritas_pembelajaran . '</span>';
                     }
                 })
-
                 ->addColumn('action', 'pengajuan-kap.include.action')
-                ->rawColumns(['status_pengajuan', 'action', 'label_prioritas_pembelajaran'])
+                ->rawColumns(['status_pengajuan', 'action', 'prioritas_pembelajaran'])
                 ->toJson();
         }
 

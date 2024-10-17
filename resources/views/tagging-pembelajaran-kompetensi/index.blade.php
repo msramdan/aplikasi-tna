@@ -41,6 +41,19 @@
                 transform: rotate(360deg);
             }
         }
+
+        .badge-width {
+            display: inline-block;
+            /* Memastikan span memiliki lebar tetap */
+            width: 120px;
+            /* Atur lebar sesuai kebutuhan */
+            text-align: center;
+            /* Untuk memastikan teks berada di tengah */
+            font-size: 0.9em;
+            /* Ukuran font lebih kecil */
+            line-height: 1.5;
+            /* Mengatur tinggi garis untuk vertikal center */
+        }
     </style>
 
     <div id="loading-overlay">

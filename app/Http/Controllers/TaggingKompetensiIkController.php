@@ -45,9 +45,9 @@ class TaggingKompetensiIkController extends Controller
                 ->addIndexColumn()
                 ->addColumn('jumlah_tagging', function ($row) {
                     if ($row->jumlah_tagging > 0) {
-                        return '<span class="badge badge-label bg-info"><i class="mdi mdi-circle-medium"></i>' . $row->jumlah_tagging . ' Tagging</span>';
+                        return '<span class="badge badge-label bg-info badge-width"><i class="mdi mdi-circle-medium"></i>' . $row->jumlah_tagging . ' Tagging</span>';
                     } else {
-                        return '<span class="badge badge-label bg-danger"><i class="mdi mdi-circle-medium"></i>0 Tagging</span>';
+                        return '<span class="badge badge-label bg-danger badge-width"><i class="mdi mdi-circle-medium"></i>0 Tagging</span>';
                     }
                 })
                 ->addColumn('action', 'tagging-kompetensi-ik.include.action')
