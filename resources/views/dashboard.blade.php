@@ -84,14 +84,14 @@
                                             <div class="flex-grow-1 overflow-hidden">
                                                 <p class="text-uppercase fw-medium text-muted text-truncate mb-0">
                                                     <a href="" style="color: #A8AAB5" role="button"
-                                                        id="btn_work_order_modal">{{ trans('dashboard.total_location') }}</a>
+                                                        id="btn_work_order_modal">Total Lokasi</a>
                                                 </p>
                                             </div>
                                         </div>
                                         <div class="d-flex align-items-end justify-content-between mt-4">
                                             <div>
                                                 <h4 class="fs-22 fw-semibold ff-secondary mb-4">
-                                                    <span class="counter-value" data-target="0"></span>
+                                                    <span class="counter-value" data-target="{{ $totalLokasi }}"></span>
                                                 </h4>
                                             </div>
                                             <div class="avatar-sm flex-shrink-0">
@@ -110,14 +110,14 @@
                                             <div class="flex-grow-1 overflow-hidden">
                                                 <p class="text-uppercase fw-medium text-muted text-truncate mb-0">
                                                     <a href="" style="color: #A8AAB5" role="button"
-                                                        id="btn_equipment_modal">{{ trans('dashboard.total_classrooms') }}</a>
+                                                        id="btn_equipment_modal">Total Ruang Kelas</a>
                                                 </p>
                                             </div>
                                         </div>
                                         <div class="d-flex align-items-end justify-content-between mt-4">
                                             <div>
                                                 <h4 class="fs-22 fw-semibold ff-secondary mb-4">
-                                                    <span class="counter-value" data-target="0"></span>
+                                                    <span class="counter-value" data-target="-"></span>
                                                 </h4>
                                             </div>
                                             <div class="avatar-sm flex-shrink-0">
@@ -136,14 +136,14 @@
                                             <div class="flex-grow-1 overflow-hidden">
                                                 <p class="text-uppercase fw-medium text-muted text-truncate mb-0">
                                                     <a href="" style="color: #A8AAB5" role="button"
-                                                        id="btn_employee_modal">{{ trans('dashboard.total_dormitories') }}</a>
+                                                        id="btn_employee_modal">Total Asrama</a>
                                                 </p>
                                             </div>
                                         </div>
                                         <div class="d-flex align-items-end justify-content-between mt-4">
                                             <div>
                                                 <h4 class="fs-22 fw-semibold ff-secondary mb-4">
-                                                    <span class="counter-value" data-target="0"></span>
+                                                    <span class="counter-value" data-target="-"></span>
                                                 </h4>
                                             </div>
                                             <div class="avatar-sm flex-shrink-0">
@@ -162,7 +162,7 @@
                                             <div class="flex-grow-1 overflow-hidden">
                                                 <p class="text-uppercase fw-medium text-muted text-truncate mb-0">
                                                     <a href="" style="color: #A8AAB5" role="button"
-                                                        id="btn_vendor_modal">{{ trans('dashboard.total_users') }}</a>
+                                                        id="btn_vendor_modal">Total Pengguna</a>
                                                 </p>
                                             </div>
                                         </div>
@@ -185,81 +185,33 @@
 
                         {{-- Grafik Total --}}
                         <div class="row">
-                            <div class="col-xl-4 col-md-4">
-                                <div class="card" style="height: 500px">
-                                    <div class="card-header align-items-center d-flex">
-                                        <h4 class="card-title mb-0 flex-grow-1">
-                                            <a href="" role="button" class="text-dark"
-                                                id="btn_wo_by_status_modal">{{ trans('dashboard.training_by_funding_source') }}</a>
-                                        </h4>
-                                    </div>
-                                    <div class="card-body"
-                                        style="display: flex; justify-content: center; align-items: center;">
-                                        <div style="height: 300px;">
-                                            <canvas id="myChart1"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-4 col-md-4">
-                                <div class="card" style="height: 500px">
-                                    <div class="card-header align-items-center d-flex">
-                                        <h4 class="card-title mb-0 flex-grow-1">
-                                            <a href="" role="button" class="text-dark"
-                                                id="btn_wo_by_category_modal">{{ trans('dashboard.training_by_participants') }}</a>
-                                        </h4>
-                                    </div>
-                                    <div class="card-body"
-                                        style="display: flex; justify-content: center; align-items: center;">
-                                        <div style="height: 300px;">
-                                            <canvas id="myChart2"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-4 col-md-4">
-                                <div class="card" style="height: 500px">
-                                    <div class="card-header align-items-center d-flex">
-                                        <h4 class="card-title mb-0 flex-grow-1">
-                                            <a href="" role="button" class="text-dark"
-                                                id="btn_wo_by_type_modal">{{ trans('dashboard.training_by_status') }}</a>
-                                        </h4>
-                                    </div>
-                                    <div class="card-body"
-                                        style="display: flex; justify-content: center; align-items: center;">
-                                        <div style="height: 300px;">
-                                            <canvas id="myChart3"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
                             <div class="col-xl-6 col-md-6">
-                                <div class="card" style="height: 450px">
+                                <div class="card" style="height: 500px">
                                     <div class="card-header align-items-center d-flex">
                                         <h4 class="card-title mb-0 flex-grow-1">
-                                            {{ trans('dashboard.classroom_status_by_status') }}</h4>
+                                            <a href="" role="button" class="text-dark"
+                                                id="btn_wo_by_status_modal">
+                                                Pengusulan Pembelajaran Berdasarkan Sumber Dana
+                                            </a>
+                                        </h4>
                                     </div>
                                     <div class="card-body"
                                         style="display: flex; justify-content: center; align-items: center;">
-                                        <div style="height: 300px;">
-                                            <canvas id="myChart4"></canvas>
-                                        </div>
+                                        <canvas id="myChart1" style="max-width: 100%; max-height: 100%;"></canvas>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-6 col-md-6">
-                                <div class="card" style="height: 450px">
+                                <div class="card" style="height: 500px">
                                     <div class="card-header align-items-center d-flex">
                                         <h4 class="card-title mb-0 flex-grow-1">
-                                            {{ trans('dashboard.dormitory_status_by_status') }}</h4>
+                                            <a href="" role="button" class="text-dark"
+                                                id="btn_wo_by_type_modal">Pengusulan Pembelajaran Berdasarkan Status</a>
+                                        </h4>
                                     </div>
                                     <div class="card-body"
                                         style="display: flex; justify-content: center; align-items: center;">
-                                        <div style="height: 300px;">
-                                            <canvas id="myChart5"></canvas>
-                                        </div>
+                                        <canvas id="myChart2"></canvas>
                                     </div>
                                 </div>
                             </div>
@@ -307,6 +259,8 @@
                 }]
             },
             options: {
+                responsive: true,
+                maintainAspectRatio: false, // Ensure that the chart adjusts with the card size
                 scales: {
                     yAxes: [{
                         ticks: {
@@ -316,132 +270,37 @@
                 }
             }
         });
+
+        var labels = @json($labels); // Kirim label dari PHP
+        var data = @json($totals); // Kirim total data dari PHP
 
         // Chart 2
         var ctx2 = document.getElementById("myChart2").getContext('2d');
         var myChart2 = new Chart(ctx2, {
             type: 'bar',
             data: {
-                labels: ["BPKP", "APIP Lainya"],
+                labels: labels, // Label dinamis dari database
                 datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19],
+                    label: '# Total Data',
+                    data: data, // Data dinamis dari database
                     backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)'
+                        'rgba(255, 165, 0, 0.2)',
+                        'rgba(128, 128, 128, 0.2)', // Revision (Gray)
+                        'rgba(54, 162, 235, 0.2)', // Process (Blue)
+                        'rgba(75, 192, 192, 0.2)', // Approved (Green)
+                        'rgba(255, 99, 132, 0.2)' // Rejected (Red)
                     ],
                     borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)'
+                        'rgba(255, 165, 0, 1)', // Pending (Orange)
+                        'rgba(128, 128, 128, 1)', // Revision (Gray)
+                        'rgba(54, 162, 235, 1)', // Process (Blue)
+                        'rgba(75, 192, 192, 1)', // Approved (Green)
+                        'rgba(255, 99, 132, 1)' // Rejected (Red)
                     ],
                     borderWidth: 1
                 }]
             },
-            options: {
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                },
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
 
-        // Chart 3
-        var ctx3 = document.getElementById("myChart3").getContext('2d');
-        var myChart3 = new Chart(ctx3, {
-            type: 'pie',
-            data: {
-                labels: ["Rejected", "Approved", "Pending"],
-                datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19, 3],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-        });
-
-        // Chart 4
-        var ctx4 = document.getElementById("myChart4").getContext('2d');
-        var myChart4 = new Chart(ctx4, {
-            type: 'bar',
-            data: {
-                labels: ["Not available", "Available"],
-                datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                },
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-
-        // Chart 5
-        var ctx5 = document.getElementById("myChart5").getContext('2d');
-        var myChart5 = new Chart(ctx5, {
-            type: 'bar',
-            data: {
-                labels: ["Not available", "Available"],
-                datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
             options: {
                 plugins: {
                     legend: {
