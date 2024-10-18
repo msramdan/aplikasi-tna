@@ -185,7 +185,7 @@
 
                         {{-- Grafik Total --}}
                         <div class="row">
-                            <div class="col-xl-6 col-md-6">
+                            <div class="col-xl-4 col-md-4">
                                 <div class="card" style="height: 500px">
                                     <div class="card-header align-items-center d-flex">
                                         <h4 class="card-title mb-0 flex-grow-1">
@@ -201,7 +201,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xl-6 col-md-6">
+                            <div class="col-xl-4 col-md-4">
                                 <div class="card" style="height: 500px">
                                     <div class="card-header align-items-center d-flex">
                                         <h4 class="card-title mb-0 flex-grow-1">
