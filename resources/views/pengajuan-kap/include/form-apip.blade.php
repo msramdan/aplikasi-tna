@@ -470,13 +470,16 @@
                         <label class="col-sm-3 col-form-label" for="kelas">{{ __('Jumlah Kelas') }}<span
                                 style="color: red">*</span></label>
                         <div class="col-sm-6">
-                            <input type="number" name="kelas" id="kelas" required
+                            <div class="input-group">
+                                <input type="number" name="kelas" id="kelas" required
                                 class="form-control @error('kelas') is-invalid @enderror"
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->kelas : old('kelas') }}"
                                 autocomplete="off" data-bs-toggle="tooltip"
                                 title="{{ config('form_tooltips.kelas') }}" />
-                            <div class="invalid-feedback">
-                                Mohon untuk diisi Jumlah Kelas
+                                <label class="input-group-text" for="inputGroupFile02">Kelas</label>
+                                <div class="invalid-feedback">
+                                    Mohon untuk diisi Jumlah Kelas
+                                </div>
                             </div>
                         </div>
                     </div>
