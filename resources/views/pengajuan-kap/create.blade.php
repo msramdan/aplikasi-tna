@@ -127,13 +127,13 @@
     {{-- for tooltips --}}
     <script>
         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
             return new bootstrap.Tooltip(tooltipTriggerEl);
         });
     </script>
     {{-- dinamis panjang inputan --}}
     <script>
-        document.addEventListener('input', function (event) {
+        document.addEventListener('input', function(event) {
             if (event.target.tagName.toLowerCase() === 'textarea') {
                 event.target.style.height = 'auto';
                 event.target.style.height = (event.target.scrollHeight) + 'px';
@@ -349,6 +349,9 @@
             });
         });
     </script>
+    <script>
+        var hideForm = {{ json_encode($hideForm) }};
+    </script>
 
     <script>
         $(document).ready(function() {
@@ -363,9 +366,14 @@
                 $('#pegawai_kompeten').val('');
                 $('#pegawai_belum_kompeten').val('');
                 $('#persentase_kompetensi').val('');
-                $('#topik_id').html(options_temp);
-                $('#judul').val('');
+
+                if (!hideForm) { // Gunakan hideForm (bukan $hideForm)
+                    $('#topik_id').html(options_temp);
+                    $('#judul').val('');
+                }
+
                 $('#pilihButtonKompetensi').prop('disabled', true);
+
                 var selectedValue = $(this).val();
                 if (selectedValue !== '') {
                     $('#pilihButton').prop('disabled', false);

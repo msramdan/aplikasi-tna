@@ -347,6 +347,9 @@
         });
     </script>
     <script>
+        var hideForm = {{ json_encode($hideForm) }};
+    </script>
+    <script>
         $(document).ready(function() {
             const options_temp = '<option value="" selected disabled>-- Select --</option>';
             $('#pilihButton').prop('disabled', false);
@@ -359,9 +362,13 @@
                 $('#pegawai_kompeten').val('');
                 $('#pegawai_belum_kompeten').val('');
                 $('#persentase_kompetensi').val('');
-                $('#topik_id').html(options_temp);
-                $('#judul').val('');
+
+                if (!hideForm) { // Gunakan hideForm (bukan $hideForm)
+                    $('#topik_id').html(options_temp);
+                    $('#judul').val('');
+                }
                 $('#pilihButtonKompetensi').prop('disabled', true);
+
                 var selectedValue = $(this).val();
                 if (selectedValue !== '') {
                     $('#pilihButton').prop('disabled', false);

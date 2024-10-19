@@ -280,6 +280,17 @@ class PengajuanKapController extends Controller
         $usedPrioritas = $pengajuanKaps->pluck('prioritas_pembelajaran')->toArray();
         $kodePembelajaran = $pengajuanKaps->pluck('kode_pembelajaran', 'prioritas_pembelajaran')->toArray();
 
+        // for hidden forn
+        $userUnitKerja = auth()->user()->nama_unit; // Contoh mendapatkan unit kerja user yang sedang login
+        $unitKerjaWithoutForm = array_map('trim', explode('|', env('WITHOUT_FORM_IK_KOMPETENSI')));
+        $hideForm = in_array($userUnitKerja, $unitKerjaWithoutForm);
+        $topikOptions = [];
+        if ($hideForm) {
+            $topikOptions = DB::table('topik')
+                ->select('topik.id', 'topik.nama_topik')
+                ->get();
+        }
+
 
         return view($is_bpkp == 'BPKP' ? 'pengajuan-kap.create' : 'pengajuan-kap.create-apip', [
             'is_bpkp' => $is_bpkp,
@@ -290,8 +301,10 @@ class PengajuanKapController extends Controller
             'diklatType_data' => $diklatType_data,
             'diklatLocation_data' => $diklatLocation_data,
             'tahun' => $tahun,
-            'usedPrioritas' => $usedPrioritas,  // Tambahkan ini
-            'kodePembelajaran' => $kodePembelajaran,  // Tambahkan ini
+            'usedPrioritas' => $usedPrioritas,
+            'kodePembelajaran' => $kodePembelajaran,
+            'hideForm' => $hideForm,
+            'topikOptions' => $topikOptions,
         ]);
     }
 
@@ -365,11 +378,6 @@ class PengajuanKapController extends Controller
         $gap_kompetensi_pengajuan_kap = DB::table('gap_kompetensi_pengajuan_kap')
             ->where('pengajuan_kap_id', $id)
             ->first();
-        $topikOptions = DB::table('tagging_pembelajaran_kompetensi')
-            ->join('topik', 'tagging_pembelajaran_kompetensi.topik_id', '=', 'topik.id')
-            ->select('topik.id', 'topik.nama_topik')
-            ->where('tagging_pembelajaran_kompetensi.kompetensi_id', $pengajuanKap->kompetensi_id)
-            ->get();
 
         $endpoint_pusdiklatwap = config('stara.endpoint_pusdiklatwap');
         $api_key_pusdiklatwap = config('stara.api_token_pusdiklatwap');
@@ -424,6 +432,23 @@ class PengajuanKapController extends Controller
         $usedPrioritas = $pengajuanKaps->pluck('prioritas_pembelajaran')->toArray();
         $kodePembelajaran = $pengajuanKaps->pluck('kode_pembelajaran', 'prioritas_pembelajaran')->toArray();
 
+        // for hidden forn
+        $userUnitKerja = auth()->user()->nama_unit;
+        $unitKerjaWithoutForm = array_map('trim', explode('|', env('WITHOUT_FORM_IK_KOMPETENSI')));
+        $hideForm = in_array($userUnitKerja, $unitKerjaWithoutForm);
+
+        $topikOptions = [];
+        if ($hideForm) {
+            $topikOptions = DB::table('topik')
+                ->select('topik.id', 'topik.nama_topik')
+                ->get();
+        } else {
+            $topikOptions = DB::table('tagging_pembelajaran_kompetensi')
+                ->join('topik', 'tagging_pembelajaran_kompetensi.topik_id', '=', 'topik.id')
+                ->select('topik.id', 'topik.nama_topik')
+                ->where('tagging_pembelajaran_kompetensi.kompetensi_id', $pengajuanKap->kompetensi_id)
+                ->get();
+        }
         return view($is_bpkp == 'BPKP' ? 'pengajuan-kap.edit' : 'pengajuan-kap.edit-apip', [
             'pengajuanKap' => $pengajuanKap,
             'is_bpkp' => $is_bpkp,
@@ -441,6 +466,7 @@ class PengajuanKapController extends Controller
             'tahun' => $pengajuanKap->tahun,
             'usedPrioritas' => $usedPrioritas,
             'kodePembelajaran' => $kodePembelajaran,
+            'hideForm' => $hideForm,
         ]);
     }
 
@@ -449,7 +475,7 @@ class PengajuanKapController extends Controller
     {
         $validatedData = $request->validate([
             'jenis_program' => 'required|in:Renstra,APP,APEP,APIP',
-            'indikator_kinerja' => 'string',
+            'indikator_kinerja' => 'nullable|string',
             'referensi_indikator_kinerja' => 'string',
             'kompetensi_id' => 'nullable|exists:kompetensi,id',
             'topik_id' => 'nullable|exists:topik,id',
@@ -544,7 +570,7 @@ class PengajuanKapController extends Controller
                 'frekuensi_pelaksanaan' => $frekuensi,
                 'indikator_kinerja' => isset($validatedData['indikator_kinerja']) ? $validatedData['indikator_kinerja'] : null,
                 'referensi_indikator_kinerja' => isset($validatedData['referensi_indikator_kinerja']) ? $validatedData['referensi_indikator_kinerja'] : null,
-                'kompetensi_id' => $validatedData['kompetensi_id'],
+                'kompetensi_id' => isset($validatedData['kompetensi_id']) ? $validatedData['kompetensi_id'] : null,
                 'topik_id' => $validatedData['topik_id'],
                 'judul' => $validatedData['judul'],
                 'arahan_pimpinan' => $validatedData['arahan_pimpinan'],
@@ -696,7 +722,7 @@ class PengajuanKapController extends Controller
     {
         $validatedData = $request->validate([
             'jenis_program' => 'required|in:Renstra,APP,APEP,APIP',
-            'indikator_kinerja' => 'string',
+            'indikator_kinerja' => 'nullable|string',
             'referensi_indikator_kinerja' => 'string',
             'kompetensi_id' => 'nullable|exists:kompetensi,id',
             'topik_id' => 'nullable|exists:topik,id',
@@ -799,7 +825,6 @@ class PengajuanKapController extends Controller
                     'penyelenggara_pembelajaran' => $validatedData['penyelenggara_pembelajaran'] ?? $pengajuanKap->penyelenggara_pembelajaran,
                     'fasilitator_pembelajaran' => $fasilitator_pembelajaran_json ?? $pengajuanKap->fasilitator_pembelajaran,
                     'sertifikat' => $validatedData['sertifikat'] ?? $pengajuanKap->sertifikat,
-                    'user_created' => Auth::id(),
                     'status_pengajuan' => ($pengajuanKap->current_step == 1) ? 'Pending' : 'Process',
                     'updated_at' => now(),
                 ]);
