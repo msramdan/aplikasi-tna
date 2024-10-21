@@ -185,28 +185,26 @@
 
                         {{-- Grafik Total --}}
                         <div class="row">
-                            <div class="col-xl-4 col-md-4">
-                                <div class="card" style="height: 500px">
-                                    <div class="card-header align-items-center d-flex">
-                                        <h4 class="card-title mb-0 flex-grow-1">
-                                            <a href="" role="button" class="text-dark"
-                                                id="btn_wo_by_status_modal">
-                                                Pengusulan Pembelajaran Berdasarkan Sumber Dana
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div class="card-body"
-                                        style="display: flex; justify-content: center; align-items: center;">
-                                        <canvas id="myChart1" style="max-width: 100%; max-height: 100%;"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-4 col-md-4">
+                            <div class="col-xl-6 col-md-6">
                                 <div class="card" style="height: 500px">
                                     <div class="card-header align-items-center d-flex">
                                         <h4 class="card-title mb-0 flex-grow-1">
                                             <a href="" role="button" class="text-dark"
                                                 id="btn_wo_by_type_modal">Pengusulan Pembelajaran Berdasarkan Status</a>
+                                        </h4>
+                                    </div>
+                                    <div class="card-body"
+                                        style="display: flex; justify-content: center; align-items: center;">
+                                        <canvas id="myChart1"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-md-6">
+                                <div class="card" style="height: 500px">
+                                    <div class="card-header align-items-center d-flex">
+                                        <h4 class="card-title mb-0 flex-grow-1">
+                                            <a href="" role="button" class="text-dark"
+                                                id="btn_wo_by_type_modal">Pengusulan Pembelajaran / Tahun</a>
                                         </h4>
                                     </div>
                                     <div class="card-body"
@@ -234,49 +232,13 @@
         });
     </script>
 
-    {{-- Chart Scripts --}}
     <script>
-        // Chart 1
-        var ctx1 = document.getElementById("myChart1").getContext('2d');
-        var myChart1 = new Chart(ctx1, {
-            type: 'pie',
-            data: {
-                labels: ["RM", "Star", "PNBP"],
-                datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19, 3],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false, // Ensure that the chart adjusts with the card size
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-        });
-
         var labels = @json($labels); // Kirim label dari PHP
         var data = @json($totals); // Kirim total data dari PHP
 
-        // Chart 2
-        var ctx2 = document.getElementById("myChart2").getContext('2d');
-        var myChart2 = new Chart(ctx2, {
+        // Chart 1
+        var ctx1 = document.getElementById("myChart1").getContext('2d');
+        var myChart1 = new Chart(ctx1, {
             type: 'bar',
             data: {
                 labels: labels, // Label dinamis dari database
@@ -301,6 +263,47 @@
                 }]
             },
 
+            options: {
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                },
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+
+    <script>
+        const ctx2 = document.getElementById('myChart2').getContext('2d');
+        const myChart2 = new Chart(ctx2, {
+            type: 'line',
+            data: {
+                labels: ['2023', '2024', '2025', '2026'], // Label tahun
+                datasets: [{
+                        label: 'BPKP',
+                        data: [4, 8, 12, 5], // Data untuk BPKP
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderWidth: 1,
+                        fill: true, // Mengisi area di bawah garis
+                    },
+                    {
+                        label: 'Non BPKP',
+                        data: [2, 3, 10, 15], // Data untuk Non BPKP
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderWidth: 1,
+                        fill: true, // Mengisi area di bawah garis
+                    }
+                ]
+            },
             options: {
                 plugins: {
                     legend: {
