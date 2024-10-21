@@ -359,6 +359,7 @@
 
 @push('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.all.min.js"></script>
+
     <script>
         let reviewRemarks = @json($reviewRemarks);
         let columns = [
@@ -697,6 +698,7 @@
 
         });
     </script>
+
     <script>
         $(document).ready(function() {
             $('#unit-kerja-select').select2({
@@ -781,5 +783,46 @@
                 }
             });
         }
+    </script>
+    <script>
+        $(document).on('click', '.btn-duplikat', function(e) {
+            e.preventDefault(); // Mencegah link default
+            var href = $(this).attr('href'); // Ambil URL dari href
+
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Anda akan menduplikat Pengajuan KAP ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, duplikat!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = href;
+                }
+            });
+        });
+    </script>
+    <script>
+        $(document).on('click', '.btn-delete', function(e) {
+            e.preventDefault();
+            var formId = $(this).data('id');
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Anda tidak dapat mengembalikan data ini setelah dihapus!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#delete-form-' + formId).submit(); // Submit form delete
+                }
+            });
+        });
     </script>
 @endpush

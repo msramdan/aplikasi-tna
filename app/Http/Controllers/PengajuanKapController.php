@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use PDF;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ExportPengajuanKap;
+use Illuminate\Support\Facades\Route;
 
 
 
@@ -470,6 +471,167 @@ class PengajuanKapController extends Controller
         ]);
     }
 
+    public function duplikat($id, $is_bpkp, $frekuensi)
+    {
+        $pengajuanKap = DB::table('pengajuan_kap')
+            ->select(
+                'pengajuan_kap.*',
+                'users.name as user_name',
+                'kompetensi.nama_kompetensi',
+                'topik.nama_topik'
+            )
+            ->leftJoin('users', 'pengajuan_kap.user_created', '=', 'users.id')
+            ->leftJoin('kompetensi', 'pengajuan_kap.kompetensi_id', '=', 'kompetensi.id')
+            ->leftJoin('topik', 'pengajuan_kap.topik_id', '=', 'topik.id')
+            ->where('pengajuan_kap.id', '=', $id)
+            ->where('pengajuan_kap.institusi_sumber', '=', $is_bpkp)
+            ->where('pengajuan_kap.frekuensi_pelaksanaan', '=', $frekuensi)
+            ->first();
+
+        // Cek apakah data pengajuan_kap ditemukan
+        if (!$pengajuanKap) {
+            return redirect()->route('not-found'); // Atur route ke halaman Not Found
+        }
+
+        // Cek apakah user yang login adalah user yang membuat pengajuan
+        if ($pengajuanKap->user_created !== Auth::id()) {
+            return redirect()->route('un-authorized'); // Atur route ke halaman Un-authorized
+        }
+
+        // Pengecekan jenis program
+        if ($is_bpkp === 'BPKP') {
+            $jenis_program = ['Renstra', 'APP', 'APEP'];
+        } elseif ($is_bpkp === 'Non BPKP') {
+            $jenis_program = ['APIP'];
+        } else {
+            $jenis_program = [];
+        }
+
+        $jalur_pembelajaran = [
+            'Pelatihan',
+            'Seminar/konferensi/sarasehan',
+            'Kursus',
+            'Lokakarya (workshop)',
+            'Belajar mandiri',
+            'Coaching',
+            'Mentoring',
+            'Bimbingan teknis',
+            'Sosialisasi',
+            'Detasering (secondment)',
+            'Job shadowing',
+            'Outbond',
+            'Benchmarking',
+            'Pertukaran PNS',
+            'Community of practices',
+            'Pelatihan di kantor sendiri',
+            'Library cafe',
+            'Magang/praktik kerja'
+        ];
+
+        $level_evaluasi_instrumen_kap = DB::table('level_evaluasi_instrumen_kap')
+            ->where('pengajuan_kap_id', $id)
+            ->get();
+        $indikator_keberhasilan_kap = DB::table('indikator_keberhasilan_kap')
+            ->where('pengajuan_kap_id', $id)
+            ->get();
+        $waktu_pelaksanaan = DB::table('waktu_pelaksanaan')
+            ->where('pengajuan_kap_id', $id)
+            ->get()
+            ->toArray(); // Dapatkan data dalam bentuk array
+        $gap_kompetensi_pengajuan_kap = DB::table('gap_kompetensi_pengajuan_kap')
+            ->where('pengajuan_kap_id', $id)
+            ->first();
+
+        $endpoint_pusdiklatwap = config('stara.endpoint_pusdiklatwap');
+        $api_key_pusdiklatwap = config('stara.api_token_pusdiklatwap');
+
+        // Call API for metode
+        $metode_data = callApiPusdiklatwas($endpoint_pusdiklatwap . '/metode', [
+            'api_key' => $api_key_pusdiklatwap
+        ]);
+
+        if (isset($metode_data['error'])) {
+            Alert::error('Error', $metode_data['error']);
+            return redirect()->back();
+        }
+
+        // Call API for diklatType
+        $diklatType_data = callApiPusdiklatwas($endpoint_pusdiklatwap . '/diklatType', [
+            'api_key' => $api_key_pusdiklatwap
+        ]);
+
+        if (isset($diklatType_data['error'])) {
+            Alert::error('Error', $diklatType_data['error']);
+            return redirect()->back();
+        }
+
+        // Call API for diklatLocation
+        $diklatLocation_data = callApiPusdiklatwas($endpoint_pusdiklatwap . '/diklatLocation', [
+            'api_key' => $api_key_pusdiklatwap
+        ]);
+
+        if (isset($diklatLocation_data['error'])) {
+            Alert::error('Error', $diklatLocation_data['error']);
+            return redirect()->back();
+        }
+
+        $user = Auth::user();
+        $nama_unit = $user->nama_unit;
+
+        $pengajuanKaps = DB::table('pengajuan_kap')
+            ->select(
+                'pengajuan_kap.*',
+                'users.name as user_name',
+                'pengajuan_kap.prioritas_pembelajaran',
+                'pengajuan_kap.kode_pembelajaran'
+            )
+            ->leftJoin('users', 'pengajuan_kap.user_created', '=', 'users.id')
+            ->where('pengajuan_kap.institusi_sumber', '=', $is_bpkp)
+            ->where('pengajuan_kap.frekuensi_pelaksanaan', '=', $frekuensi)
+            ->where('pengajuan_kap.tahun', '=', $pengajuanKap->tahun)
+            ->where('users.nama_unit', '=', $nama_unit)
+            ->get();
+
+        $usedPrioritas = $pengajuanKaps->pluck('prioritas_pembelajaran')->toArray();
+        $kodePembelajaran = $pengajuanKaps->pluck('kode_pembelajaran', 'prioritas_pembelajaran')->toArray();
+
+        // for hidden forn
+        $userUnitKerja = auth()->user()->nama_unit;
+        $unitKerjaWithoutForm = array_map('trim', explode('|', env('WITHOUT_FORM_IK_KOMPETENSI')));
+        $hideForm = in_array($userUnitKerja, $unitKerjaWithoutForm);
+
+        $topikOptions = [];
+        if ($hideForm) {
+            $topikOptions = DB::table('topik')
+                ->select('topik.id', 'topik.nama_topik')
+                ->get();
+        } else {
+            $topikOptions = DB::table('tagging_pembelajaran_kompetensi')
+                ->join('topik', 'tagging_pembelajaran_kompetensi.topik_id', '=', 'topik.id')
+                ->select('topik.id', 'topik.nama_topik')
+                ->where('tagging_pembelajaran_kompetensi.kompetensi_id', $pengajuanKap->kompetensi_id)
+                ->get();
+        }
+        return view($is_bpkp == 'BPKP' ? 'pengajuan-kap.edit' : 'pengajuan-kap.edit-apip', [
+            'pengajuanKap' => $pengajuanKap,
+            'is_bpkp' => $is_bpkp,
+            'frekuensi' => $frekuensi,
+            'jenis_program' => $jenis_program,
+            'jalur_pembelajaran' => $jalur_pembelajaran,
+            'level_evaluasi_instrumen_kap' => $level_evaluasi_instrumen_kap,
+            'indikator_keberhasilan_kap' => $indikator_keberhasilan_kap,
+            'waktuPelaksanaanData' => json_encode($waktu_pelaksanaan),
+            'metode_data' => $metode_data,
+            'diklatType_data' => $diklatType_data,
+            'diklatLocation_data' => $diklatLocation_data,
+            'gap_kompetensi_pengajuan_kap' => $gap_kompetensi_pengajuan_kap,
+            'topikOptions' => $topikOptions,
+            'tahun' => $pengajuanKap->tahun,
+            'usedPrioritas' => $usedPrioritas,
+            'kodePembelajaran' => $kodePembelajaran,
+            'hideForm' => $hideForm,
+        ]);
+    }
 
     public function store(Request $request, $is_bpkp, $frekuensi)
     {

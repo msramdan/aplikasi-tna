@@ -117,6 +117,7 @@ Route::middleware(['auth', 'web', 'check.maintenance'])->group(function () {
         Route::get('/pengajuan-kap/{is_bpkp}/{frekuensi}', 'index')->name('pengajuan-kap.index');
         Route::get('/pengajuan-kap/create/{is_bpkp}/{frekuensi}', 'create')->name('pengajuan-kap.create');
         Route::get('/pengajuan-kap/{id}/{is_bpkp}/{frekuensi}/edit', 'edit')->name('pengajuan-kap.edit');
+        Route::get('/pengajuan-kap/{id}/{is_bpkp}/{frekuensi}/duplikat', 'duplikat')->name('pengajuan-kap.duplikat');
         // Route untuk submit create
         Route::post('/pengajuan-kap/{is_bpkp}/{frekuensi}', 'store')->name('pengajuan-kap.store');
         // Route untuk submit edit

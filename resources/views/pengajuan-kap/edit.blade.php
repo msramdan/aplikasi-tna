@@ -1,6 +1,12 @@
 @extends('layouts.app')
 
-@section('title', __('Edit Pengusulan Pembelajaran'))
+@section('title')
+    @if (Route::currentRouteName() == 'pengajuan-kap.edit')
+        {{ __('Edit Pengusulan Pembelajaran') }}
+    @elseif (Route::currentRouteName() == 'pengajuan-kap.duplikat')
+        {{ __('Duplikat Pengusulan Pembelajaran') }}
+    @endif
+@endsection
 @push('css')
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/smartwizard@6/dist/css/smart_wizard_all.min.css" rel="stylesheet"
@@ -72,7 +78,11 @@
                                         ]) }}">{{ __('Pengusulan Pembelajaran') }}</a>
                                 </li>
                                 <li class="breadcrumb-item active" aria-current="page">
-                                    {{ __('Edit') }}
+                                    @if (Route::currentRouteName() == 'pengajuan-kap.edit')
+                                        {{ __('Edit') }}
+                                    @elseif (Route::currentRouteName() == 'pengajuan-kap.duplikat')
+                                        {{ __('Duplikat') }}
+                                    @endif
                                 </li>
                             </ol>
                         </div>
@@ -109,12 +119,20 @@
         </div>
     </div>
 
-    <form
-        action="{{ route('pengajuan-kap.update', ['id' => $pengajuanKap->id, 'is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi]) }}"
-        id="form-laporan" method="POST" hidden enctype="multipart/form-data">
-        @csrf
-        @method('PUT')
-    </form>
+    @if (Route::currentRouteName() == 'pengajuan-kap.edit')
+        <form
+            action="{{ route('pengajuan-kap.update', ['id' => $pengajuanKap->id, 'is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi]) }}"
+            id="form-laporan" method="POST" hidden enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+        </form>
+    @else
+        <form action="{{ route('pengajuan-kap.store', ['is_bpkp' => $is_bpkp, 'frekuensi' => $frekuensi]) }}"
+            id="form-laporan" method="POST" hidden enctype="multipart/form-data">
+            @csrf
+            @method('POST')
+        </form>
+    @endif
 @endsection
 @push('js')
     <script src="https://techlaboratory.net/projects/demo/jquery-smart-wizard/v6/js/demo.js"></script>
@@ -172,7 +190,13 @@
                     var fieldValue = $(`#${field}`).val();
                     $('#form-laporan').append(`<input type="hidden" name="${field}" value="${fieldValue}"/>`);
                 });
-                $('#form-laporan').append('@method('PUT')');
+
+                var currentRouteName = "{{ Route::currentRouteName() }}";
+                if (currentRouteName == 'pengajuan-kap.edit') {
+                    $('#form-laporan').append('@method('PUT')');
+                } else if (currentRouteName == 'pengajuan-kap.duplikat') {
+                    $('#form-laporan').append('@method('POST')');
+                }
                 $('#form-laporan').submit();
             }
         }
