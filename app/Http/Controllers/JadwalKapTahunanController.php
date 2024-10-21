@@ -9,7 +9,6 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-
 class JadwalKapTahunanController extends Controller
 {
     public function __construct()
@@ -37,7 +36,6 @@ class JadwalKapTahunanController extends Controller
                 })->addColumn('updated_at', function ($row) {
                     return $row->updated_at->format('d M Y H:i:s');
                 })
-
                 ->addColumn('action', 'jadwal-kap-tahunan.include.action')
                 ->toJson();
         }
@@ -64,7 +62,7 @@ class JadwalKapTahunanController extends Controller
     public function store(StoreJadwalKapTahunanRequest $request)
     {
         JadwalKapTahunan::create($request->validated());
-        Alert::toast('The jadwal kap tahunan was created successfully.', 'success');
+        Alert::toast('Jadwal kap tahunan berhasil dibuat.', 'success');
         return redirect()->route('jadwal-kap-tahunan.index');
     }
 
@@ -97,7 +95,6 @@ class JadwalKapTahunanController extends Controller
      * @param  \App\Models\JadwalKapTahunan  $jadwalKapTahunan
      * @return \Illuminate\Http\Response
      */
-
     public function update(Request $request, JadwalKapTahunan $jadwalKapTahunan)
     {
         $request->validate([
@@ -111,7 +108,7 @@ class JadwalKapTahunanController extends Controller
         ]);
 
         $jadwalKapTahunan->update($request->all());
-        Alert::toast('The jadwal kap tahunan was updated successfully.', 'success');
+        Alert::toast('Jadwal kap tahunan berhasil diperbarui.', 'success');
         return redirect()->route('jadwal-kap-tahunan.index');
     }
 
@@ -125,10 +122,10 @@ class JadwalKapTahunanController extends Controller
     {
         try {
             $jadwalKapTahunan->delete();
-            Alert::toast('The jadwal kap tahunan was deleted successfully.', 'success');
+            Alert::toast('Jadwal kap tahunan berhasil dihapus.', 'success');
             return redirect()->route('jadwal-kap-tahunan.index');
         } catch (\Throwable $th) {
-            Alert::toast('The jadwal kap tahunan cant be deleted because its related to another table.', 'error');
+            Alert::toast('Jadwal kap tahunan tidak dapat dihapus karena terkait dengan tabel lain.', 'error');
             return redirect()->route('jadwal-kap-tahunan.index');
         }
     }

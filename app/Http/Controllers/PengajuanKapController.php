@@ -473,6 +473,24 @@ class PengajuanKapController extends Controller
 
     public function duplikat($id, $is_bpkp, $frekuensi)
     {
+
+        if ($frekuensi === 'Tahunan') {
+            $today = now()->toDateString();
+            $jadwalKapTahunan = DB::table('jadwal_kap_tahunan')
+                ->whereDate('tanggal_mulai', '<=', $today)
+                ->whereDate('tanggal_selesai', '>=', $today)
+                ->orderBy('id', 'desc')
+                ->first();
+
+            if (!$jadwalKapTahunan) {
+                Alert::info('Informasi', 'Jadwal pengajuan KAP tahunan telah berakhir / belum dibuka oleh admin.');
+                return redirect()->back();
+            }
+            $tahun = $jadwalKapTahunan->tahun;
+        } else {
+            $tahun =  date('Y');
+        }
+
         $pengajuanKap = DB::table('pengajuan_kap')
             ->select(
                 'pengajuan_kap.*',
@@ -626,7 +644,7 @@ class PengajuanKapController extends Controller
             'diklatLocation_data' => $diklatLocation_data,
             'gap_kompetensi_pengajuan_kap' => $gap_kompetensi_pengajuan_kap,
             'topikOptions' => $topikOptions,
-            'tahun' => $pengajuanKap->tahun,
+            'tahun' => $tahun,
             'usedPrioritas' => $usedPrioritas,
             'kodePembelajaran' => $kodePembelajaran,
             'hideForm' => $hideForm,

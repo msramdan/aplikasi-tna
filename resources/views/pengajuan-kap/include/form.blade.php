@@ -280,14 +280,40 @@
                                         $prioritasValue = "Prioritas $i";
                                         $isUsed = in_array($prioritasValue, $usedPrioritas);
                                         $kodePemb = $isUsed ? $kodePembelajaran[$prioritasValue] : '';
+
+                                        // Cek nama route saat ini
+                                        $currentRouteName = Route::currentRouteName();
+
+                                        // Default nilai isSelected untuk semua route
+                                        $isSelected = false;
+
+                                        if ($currentRouteName == 'pengajuan-kap.edit') {
+                                            // Logika di route 'pengajuan-kap.edit'
+                                            $isSelected =
+                                                (isset($pengajuanKap) &&
+                                                    $pengajuanKap->prioritas_pembelajaran == $prioritasValue) ||
+                                                old('prioritas_pembelajaran') == $prioritasValue;
+                                        } elseif ($currentRouteName == 'pengajuan-kap.duplikat') {
+                                            // Logika di route 'pengajuan-kap.duplikat', tidak ada yang terpilih
+                                            $isSelected = false;
+                                        }
+
+                                        // Disabled jika prioritas sudah digunakan atau di route 'pengajuan-kap.duplikat' untuk prioritas dari $pengajuanKap
+                                        $isDisabled =
+                                            ($isUsed &&
+                                                (!isset($pengajuanKap) ||
+                                                    $pengajuanKap->prioritas_pembelajaran != $prioritasValue)) ||
+                                            ($currentRouteName == 'pengajuan-kap.duplikat' &&
+                                                isset($pengajuanKap) &&
+                                                $pengajuanKap->prioritas_pembelajaran == $prioritasValue);
                                     @endphp
-                                    <option value="{{ $prioritasValue }}"
-                                        {{ (isset($pengajuanKap) && $pengajuanKap->prioritas_pembelajaran == $prioritasValue) || old('prioritas_pembelajaran') == $prioritasValue ? 'selected' : '' }}
-                                        {{ $isUsed && (!isset($pengajuanKap) || $pengajuanKap->prioritas_pembelajaran != $prioritasValue) ? 'disabled' : '' }}>
+                                    <option value="{{ $prioritasValue }}" {{ $isSelected ? 'selected' : '' }}
+                                        {{ $isDisabled ? 'disabled' : '' }}>
                                         {{ $prioritasValue }} {{ $kodePemb ? ' - Kode: ' . $kodePemb : '' }}
                                     </option>
                                 @endfor
                             </select>
+
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Prioritas Pembelajaran
                             </div>
@@ -540,10 +566,10 @@
                         <div class="col-sm-6">
                             <div class="input-group">
                                 <input type="number" name="kelas" id="kelas" required
-                                class="form-control @error('kelas') is-invalid @enderror"
-                                value="{{ isset($pengajuanKap) ? $pengajuanKap->kelas : old('kelas') }}"
-                                autocomplete="off" data-bs-toggle="tooltip"
-                                title="{{ config('form_tooltips.kelas') }}" />
+                                    class="form-control @error('kelas') is-invalid @enderror"
+                                    value="{{ isset($pengajuanKap) ? $pengajuanKap->kelas : old('kelas') }}"
+                                    autocomplete="off" data-bs-toggle="tooltip"
+                                    title="{{ config('form_tooltips.kelas') }}" />
                                 <label class="input-group-text" for="inputGroupFile02">Kelas</label>
                                 <div class="invalid-feedback">
                                     Mohon untuk diisi Jumlah Kelas
