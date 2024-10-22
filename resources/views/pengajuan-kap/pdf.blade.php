@@ -393,19 +393,12 @@
                         <td style="border-bottom: 1px solid #ddd;text-align:center">
                             {{ $log->remark }}
                         </td>
-
-                        @if (!empty($log->catatan))
-                            <td style="border-bottom: 1px solid #ddd;text-align:justify">
-                                <p
-                                    style="white-space: pre-wrap; word-wrap: break-word;border: 1px solid #ddd;padding:3px">
-                                    {{ $log->catatan }}</p>
-                            </td>
-                        @else
-                            <td style="border-bottom: 1px solid #ddd;text-align:center">
-                                <textarea rows="8" readonly style="border: 1px solid #ddd ">{{ $log->catatan }}</textarea>
-                            </td>
-                        @endif
-
+                        <td style="border-bottom: 1px solid #ddd; text-align:justify; vertical-align: top;">
+                            <p
+                                style="border: 1px solid #ddd; padding:8px; overflow-wrap: break-word; min-height: 40px;">
+                                {{ $log->catatan }}
+                            </p>
+                        </td>
                         <td style="border-bottom: 1px solid #ddd;text-align:center">{{ $log->user_name ?? '-' }}</td>
                         <td style="border-bottom: 1px solid #ddd;text-align:center">{{ $log->status }}</td>
                         <td style="border-bottom: 1px solid #ddd;text-align:center">{{ $log->tanggal_review ?? '-' }}
@@ -419,7 +412,8 @@
                         Kerangka Acuan Pembelajaran, silakan pindai kode QR.
                     </td>
                     <td colspan="3" style="border: 1px solid #ddd; text-align: center;">
-                        <img loading="lazy" src="https://quickchart.io/qr?text=Here's my text">
+                        <img loading="lazy"
+                            src="https://quickchart.io/qr?text={{ url('/pengajuan-kap/' . $pengajuanKap->id . '/' . $pengajuanKap->institusi_sumber . '/' . $pengajuanKap->frekuensi_pelaksanaan) }}">
                     </td>
                 </tr>
 
