@@ -3,6 +3,24 @@
 @section('title', 'Dashboard')
 
 @section('content')
+    <div class="modal fade" id="modalScanner" tabindex="-1" aria-labelledby="modalScannerLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalScannerLabel">Scanner QR Kode Pembelajaran</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="camera-scanner" style="width: 100%;"></div> <!-- Area kamera untuk scanning -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <div class="page-content">
         <div class="container-fluid">
 
@@ -59,23 +77,31 @@
                     </div>
                 </div>
             </div>
-
-
+            <div class="row">
+                <div class="col-md-12 mb-2">
+                    <div class="d-flex align-items-lg-center flex-lg-row flex-column">
+                        <div class="flex-grow-1">
+                            <h4 class="fs-16 mb-1">{{ trans('dashboard.welcome') }} {{ Auth::user()->name }}
+                            </h4>
+                        </div>
+                        <div class="mt-3 mt-lg-0"></div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <div class="form-group">
+                        <div class="input-group mb-2">
+                            <input readonly type="text" class="form-control" placeholder="Search Pengajuan KAP by QR"
+                                aria-label="Recipient's username">
+                            <button onclick="showQrScanner()" class="btn btn-primary" type="submit"><i
+                                    class="fa fa-qrcode"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="row">
                 <div class="col">
                     <div class="h-100">
-                        <div class="row mb-3 pb-1">
-                            <div class="col-12">
-                                <div class="d-flex align-items-lg-center flex-lg-row flex-column">
-                                    <div class="flex-grow-1">
-                                        <h4 class="fs-16 mb-1">{{ trans('dashboard.welcome') }} {{ Auth::user()->name }}
-                                        </h4>
-                                    </div>
-                                    <div class="mt-3 mt-lg-0"></div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="row">
                             <div class="col-xl-3 col-md-6">
                                 <div class="card card-animate">
@@ -223,6 +249,10 @@
 
 @push('js')
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"
+        integrity="sha512-r6rDA7W6ZeQhvl8S7yRVQUKVHdexq+GAlNkNNqVC7YyIV+NwqCTJe2hDWCiffTyRNOeGEzRRJ9ifvRm/HCzGYg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             @if (session('login_success'))
@@ -320,4 +350,66 @@
             }
         });
     </script>
+
+
+
+<script>
+    let html5QrcodeScanner;
+
+    function showQrScanner() {
+        // Tampilkan modal untuk QR scanner
+        const modalScanner = new bootstrap.Modal(document.getElementById('modalScanner'));
+        modalScanner.show();
+
+        // Inisialisasi QR code scanner
+        html5QrcodeScanner = new Html5QrcodeScanner(
+            "camera-scanner", { fps: 10, qrbox: 250 }
+        );
+
+        // Ketika QR berhasil discan
+        html5QrcodeScanner.render((decodedText, decodedResult) => {
+            // Lakukan request ke API untuk memeriksa apakah kode pembelajaran valid
+            fetch(`/check-pengajuan-kap/${decodedText}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.exists) {
+                        // Jika data ada, redirect ke halaman detail pengajuan KAP
+                        const redirectUrl = `/pengajuan-kap/${data.id}/${data.is_bpkp}/${data.frekuensi}`;
+                        modalScanner.hide(); // Tutup modal
+                        html5QrcodeScanner.clear(); // Hentikan scanner
+                        window.location.href = redirectUrl; // Arahkan ke halaman detail
+                    } else {
+                        // Jika data tidak ditemukan, tampilkan SweetAlert
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Pengajuan KAP tidak ditemukan!',
+                            confirmButtonText: 'OK'
+                        });
+                        modalScanner.hide(); // Tutup modal
+                        html5QrcodeScanner.clear(); // Hentikan scanner
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    // Tampilkan pesan error jika ada masalah pada fetch request
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Terjadi Kesalahan',
+                        text: 'Gagal mengambil data pengajuan KAP.',
+                        confirmButtonText: 'OK'
+                    });
+                    modalScanner.hide(); // Tutup modal
+                    html5QrcodeScanner.clear(); // Hentikan scanner
+                });
+        });
+    }
+
+    // Hentikan QR scanning saat modal ditutup
+    document.getElementById('modalScanner').addEventListener('hidden.bs.modal', function () {
+        if (html5QrcodeScanner) {
+            html5QrcodeScanner.clear(); // Hentikan scanner jika modal ditutup
+        }
+    });
+</script>
 @endpush

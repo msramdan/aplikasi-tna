@@ -1822,4 +1822,19 @@ class PengajuanKapController extends Controller
             $prioritas
         ), $nameFile);
     }
+
+    public function check($qrCode)
+    {
+        $pengajuan = DB::table('pengajuan_kap')->where('kode_pembelajaran', $qrCode)->first();
+        if ($pengajuan) {
+            return response()->json([
+                'exists' => true,
+                'id' => $pengajuan->id,
+                'is_bpkp' => $pengajuan->institusi_sumber,
+                'frekuensi' => $pengajuan->frekuensi_pelaksanaan
+            ]);
+        } else {
+            return response()->json(['exists' => false]);
+        }
+    }
 }

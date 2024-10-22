@@ -136,6 +136,7 @@ Route::middleware(['auth', 'web', 'check.maintenance'])->group(function () {
         Route::post('/skip', 'skipSelected')->name('pengajuan-kap-selected.skip');
         // for export data
         Route::get('/exportPengajuanKap', 'exportPengajuanKap')->name('exportPengajuanKap');
+        Route::get('/check-pengajuan-kap/{qrCode}', 'check')->name('check-pengajuan-kap');
     });
     Route::post('/replies', [ReplyController::class, 'store'])->name('replies.store');
     Route::controller(SyncInfoIDiklatController::class)->group(function () {

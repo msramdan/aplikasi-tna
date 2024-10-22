@@ -408,9 +408,10 @@
                         Kerangka Acuan Pembelajaran, silakan pindai kode QR.
                     </td>
                     <td colspan="3" style="border: 1px solid #ddd; text-align: center;">
-                        <img loading="lazy" src="https://quickchart.io/qr?text=Here's my text">
+                        <img loading="lazy" src="https://quickchart.io/qr?text={{ $pengajuanKap->kode_pembelajaran }}">
                     </td>
                 </tr>
+
 
             </tbody>
         </table>
