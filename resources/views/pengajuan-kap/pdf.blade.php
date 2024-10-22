@@ -377,7 +377,7 @@
 
         <br>
         <strong>IV. History Review</strong>
-        <table style="font-size:12px; padding:15px;line-height:17px; width:100%;border-collapse: collapse;">
+        <table style="font-size:12px; padding:15px;line-height:17px; width:100%;border: collapse;">
             <thead>
                 <tr>
                     <th style="background-color: #f2f2f2;width:15%;text-align:center">Remark</th>
@@ -390,27 +390,39 @@
             <tbody>
                 @foreach ($logReviews as $log)
                     <tr>
-                        <td style=" border-bottom: 1px solid #ddd;text-align:center">
+                        <td style="border-bottom: 1px solid #ddd;text-align:center">
                             {{ $log->remark }}
                         </td>
-                        <td style=" border-bottom: 1px solid #ddd;text-align:center">
-                            <textarea rows="8" readonly>{{ $log->catatan }}</textarea>
-                        </td>
-                        <td style=" border-bottom: 1px solid #ddd;text-align:center">{{ $log->user_name ?? '-' }}</td>
-                        <td style=" border-bottom: 1px solid #ddd;text-align:center">{{ $log->status }}</td>
-                        <td style=" border-bottom: 1px solid #ddd;text-align:center">{{ $log->tanggal_review ?? '-' }}
+
+                        @if (!empty($log->catatan))
+                            <td style="border-bottom: 1px solid #ddd;text-align:justify">
+                                <p
+                                    style="white-space: pre-wrap; word-wrap: break-word;border: 1px solid #ddd;padding:3px">
+                                    {{ $log->catatan }}</p>
+                            </td>
+                        @else
+                            <td style="border-bottom: 1px solid #ddd;text-align:center">
+                                <textarea rows="8" readonly style="border: 1px solid #ddd ">{{ $log->catatan }}</textarea>
+                            </td>
+                        @endif
+
+                        <td style="border-bottom: 1px solid #ddd;text-align:center">{{ $log->user_name ?? '-' }}</td>
+                        <td style="border-bottom: 1px solid #ddd;text-align:center">{{ $log->status }}</td>
+                        <td style="border-bottom: 1px solid #ddd;text-align:center">{{ $log->tanggal_review ?? '-' }}
                         </td>
                     </tr>
                 @endforeach
+
                 <tr>
                     <td colspan="2" style="border: 1px solid #ddd; text-align: center;">
                         Hasil cetak Kerangka Acuan Pembelajaran ini dibuat secara otomatis oleh sistem. Untuk detail
                         Kerangka Acuan Pembelajaran, silakan pindai kode QR.
                     </td>
                     <td colspan="3" style="border: 1px solid #ddd; text-align: center;">
-                        <img loading="lazy" src="https://quickchart.io/qr?text={{ url('/pengajuan-kap/' . $pengajuanKap->id . '/' . $pengajuanKap->institusi_sumber . '/' . $pengajuanKap->frekuensi_pelaksanaan) }}">
+                        <img loading="lazy" src="https://quickchart.io/qr?text=Here's my text">
                     </td>
                 </tr>
+
             </tbody>
         </table>
     </div>
