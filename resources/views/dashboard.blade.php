@@ -353,63 +353,30 @@
 
 
 
-<script>
-    let html5QrcodeScanner;
+    <script>
+        function showQrScanner() {
+            const modalScanner = new bootstrap.Modal(document.getElementById('modalScanner'));
+            modalScanner.show();
 
-    function showQrScanner() {
-        // Tampilkan modal untuk QR scanner
-        const modalScanner = new bootstrap.Modal(document.getElementById('modalScanner'));
-        modalScanner.show();
+            let html5QrcodeScanner = new Html5QrcodeScanner(
+                "camera-scanner", {
+                    fps: 10,
+                    qrbox: 250
+                }
+            );
 
-        // Inisialisasi QR code scanner
-        html5QrcodeScanner = new Html5QrcodeScanner(
-            "camera-scanner", { fps: 10, qrbox: 250 }
-        );
+            html5QrcodeScanner.render((decodedText, decodedResult) => {
+                // QR code langsung berisi URL, jadi redirect ke URL tersebut
+                modalScanner.hide(); // Tutup modal
+                html5QrcodeScanner.clear(); // Hentikan scanner
 
-        // Ketika QR berhasil discan
-        html5QrcodeScanner.render((decodedText, decodedResult) => {
-            // Lakukan request ke API untuk memeriksa apakah kode pembelajaran valid
-            fetch(`/check-pengajuan-kap/${decodedText}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.exists) {
-                        // Jika data ada, redirect ke halaman detail pengajuan KAP
-                        const redirectUrl = `/pengajuan-kap/${data.id}/${data.is_bpkp}/${data.frekuensi}`;
-                        modalScanner.hide(); // Tutup modal
-                        html5QrcodeScanner.clear(); // Hentikan scanner
-                        window.location.href = redirectUrl; // Arahkan ke halaman detail
-                    } else {
-                        // Jika data tidak ditemukan, tampilkan SweetAlert
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: 'Pengajuan KAP tidak ditemukan!',
-                            confirmButtonText: 'OK'
-                        });
-                        modalScanner.hide(); // Tutup modal
-                        html5QrcodeScanner.clear(); // Hentikan scanner
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    // Tampilkan pesan error jika ada masalah pada fetch request
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Terjadi Kesalahan',
-                        text: 'Gagal mengambil data pengajuan KAP.',
-                        confirmButtonText: 'OK'
-                    });
-                    modalScanner.hide(); // Tutup modal
-                    html5QrcodeScanner.clear(); // Hentikan scanner
-                });
-        });
-    }
+                window.location.href = decodedText; // Redirect ke URL yang ada di QR code
+            });
 
-    // Hentikan QR scanning saat modal ditutup
-    document.getElementById('modalScanner').addEventListener('hidden.bs.modal', function () {
-        if (html5QrcodeScanner) {
-            html5QrcodeScanner.clear(); // Hentikan scanner jika modal ditutup
+            // Stop scanning when modal is closed
+            document.getElementById('modalScanner').addEventListener('hidden.bs.modal', function() {
+                html5QrcodeScanner.clear(); // Hentikan scanner saat modal ditutup
+            });
         }
-    });
-</script>
+    </script>
 @endpush
