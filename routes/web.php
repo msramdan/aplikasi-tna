@@ -35,6 +35,12 @@ use App\Http\Controllers\ErrorController;
 
 Route::get('/not-found', [ErrorController::class, 'notFound'])->name('not-found');
 Route::get('/un-authorized', [ErrorController::class, 'unAuthorized'])->name('un-authorized');
+Route::post('/clear-session', function (Illuminate\Http\Request $request) {
+    session()->forget($request->key);
+    return response()->json(['success' => true]);
+})->name('clear-session');
+Route::post('/update-no-wa', [UserController::class, 'updateNoWa'])->name('update.no.wa');
+
 
 
 Route::get('/maintenance', function () {

@@ -36,13 +36,15 @@ class FortifyServiceProvider extends ServiceProvider
     {
         Fortify::authenticateUsing(function (Request $request) {
             // Bersihkan session yang mungkin tersisa dari login sebelumnya
-            session()->forget([
+            $sessionsToForget = [
                 'login_success',
                 'show_form_no_wa',
                 'jadwal_kap_tahunan',
                 'otp_user_id',
                 'otp_email'
-            ]);
+            ];
+            session()->forget($sessionsToForget);
+
             if (config('stara.is_hit')) {
                 $userId = session('otp_user_id');
                 if ($userId) {
@@ -55,8 +57,8 @@ class FortifyServiceProvider extends ServiceProvider
                     'g-recaptcha-response' => 'required|captcha',
                 ]);
 
-                $endpointStara = config('stara.endpoint') . '/auth/login';
-                $response = Http::post($endpointStara, [
+                // Hit ke Stara endpoint untuk login
+                $response = Http::post(config('stara.endpoint') . '/auth/login', [
                     'username' => $request->username,
                     'password' => $request->password,
                 ]);
@@ -64,101 +66,32 @@ class FortifyServiceProvider extends ServiceProvider
                 if ($response->successful()) {
                     $data = $response->json();
                     $user = User::where('user_nip', $data['data']['user_info']['user_nip'])->first();
-                    if (!$user) {
-                        $nip_lama = $data['data']['user_info']['user_nip'];
-                        $api_token = config('stara.map_api_token_employee');
-                        $endpointUnitKerja = config('stara.map_endpoint') . '/v2/pegawai/sima/atlas?api_token=' . $api_token . '&s_nip=' . $nip_lama;
-                        try {
-                            $response = Http::get($endpointUnitKerja);
-                            if ($response->successful()) {
-                                $unitKerjaData = $response->json();
-                                $kode_eselon2 = $unitKerjaData['result'][0]['kode_eselon2'];
-                            } else {
-                                dd('Request to endpoint unit kerja failed.');
-                            }
-                        } catch (\Exception $e) {
-                            dd('Error: ' . $e->getMessage());
-                        }
 
-                        $user = User::create([
-                            'user_nip' => $data['data']['user_info']['user_nip'],
-                            'name' => $data['data']['user_info']['name'],
-                            'phone' => $data['data']['user_info']['nomor_hp'],
-                            'email' => $data['data']['user_info']['email'],
-                            'jabatan' => $data['data']['user_info']['jabatan'],
-                            'kode_unit' => $kode_eselon2,
-                            'key_sort_unit' => $data['data']['user_info']['key_sort_unit'],
-                            'nama_unit' => $data['data']['user_info']['namaunit']
-                        ]);
-                        $role = Role::where('id', 3)->first();
-                        if ($role) {
-                            $user->assignRole($role);
-                        } else {
-                            dd('Role not found');
-                        }
+                    if (!$user) {
+                        $user = createUser($data['data']['user_info']);
                     }
 
-                    // Cek apakah nomor HP kosong/null
-                    if (empty($data['data']['user_info']['nomor_hp']) || empty($user->phone)) {
-                        // Set session untuk menampilkan form input nomor WA
+                    if (empty($user->phone)) {
                         session(['show_form_no_wa' => true]);
                     }
 
                     // Skip pengecekan jadwal_kap_tahunan jika session show_form_no_wa true
                     if (!session()->has('show_form_no_wa')) {
-                        $now = Carbon::now();
-                        $jadwalData = DB::table('jadwal_kap_tahunan')
-                            ->where('tanggal_mulai', '<=', $now)
-                            ->where('tanggal_selesai', '>=', $now)
-                            ->first();
-
-                        if ($jadwalData) {
-                            session()->flash('login_success', true);
-                            session(['jadwal_kap_tahunan' => $jadwalData]);
-                        }
+                        setJadwalKapSession();
                     }
 
                     if (env('IS_SEND_OTP', false)) {
-                        $otp = rand(100000, 999999);
-                        $otpExpiration = env('EXPIRED_OTP', 3);
-                        Cache::put('otp_' . $user->id, $otp, now()->addMinutes($otpExpiration));
-                        Mail::to($user->email)->send(new SendOtpMail($otp));
-                        session(['otp_user_id' => $user->id]);
-                        session(['otp_email' => $user->email]);
+                        sendOtp($user);
                         return null;
                     }
 
-                    if ($request->filled('remember')) {
-                        Auth::login($user, true);
-                    } else {
-                        Auth::login($user);
-                    }
-
+                    Auth::login($user, $request->filled('remember'));
                     return $user;
                 }
 
-                throw ValidationException::withMessages([
-                    Fortify::username() => [trans('auth.failed')],
-                ]);
+                throw ValidationException::withMessages([Fortify::username() => [trans('auth.failed')]]);
             } else {
-                $user = User::where('name', $request->username)->first();
-                if (!$user) {
-                    $user = User::create([
-                        'user_nip' => generateRandomNip(),
-                        'name' =>  $request->username,
-                        'phone' =>  '-',
-                        'email' => generateRandomEmail(),
-                        'jabatan' =>  '-',
-                        'nama_unit' =>  '-'
-                    ]);
-                    $role = Role::where('id', 1)->first();
-                    if ($role) {
-                        $user->assignRole($role);
-                    } else {
-                        dd('Role not found');
-                    }
-                }
-                return $user;
+                return handleDefaultUser($request);
             }
         });
 
@@ -183,4 +116,101 @@ function generateRandomEmail()
 function generateRandomNip()
 {
     return str_pad(mt_rand(1, 999999), 6, '0', STR_PAD_LEFT);
+}
+
+function createUser($userInfo)
+{
+    try {
+        $nip_lama = $userInfo['user_nip'];
+        $response = Http::get(config('stara.map_endpoint') . '/v2/pegawai/sima/atlas', [
+            'api_token' => config('stara.map_api_token_employee'),
+            's_nip' => $nip_lama
+        ]);
+
+        if ($response->successful()) {
+            $unitKerjaData = $response->json();
+            $kode_eselon2 = $unitKerjaData['result'][0]['kode_eselon2'];
+        } else {
+            throw new \Exception('Request to endpoint unit kerja failed.');
+        }
+
+        $user = User::create([
+            'user_nip' => $userInfo['user_nip'],
+            'name' => $userInfo['name'],
+            'phone' => $userInfo['nomor_hp'] ?? '',
+            'email' => $userInfo['email'],
+            'jabatan' => $userInfo['jabatan'],
+            'kode_unit' => $kode_eselon2,
+            'key_sort_unit' => $userInfo['key_sort_unit'],
+            'nama_unit' => $userInfo['namaunit'],
+        ]);
+
+        assignRole($user, 3);
+        return $user;
+    } catch (\Exception $e) {
+        report($e);
+        abort(500, 'Error creating user: ' . $e->getMessage());
+    }
+}
+
+/**
+ * Method untuk mengatur session jadwal_kap_tahunan.
+ */
+function setJadwalKapSession()
+{
+    $now = Carbon::now();
+    $jadwalData = DB::table('jadwal_kap_tahunan')
+        ->where('tanggal_mulai', '<=', $now)
+        ->where('tanggal_selesai', '>=', $now)
+        ->first();
+
+    if ($jadwalData) {
+        session()->flash('login_success', true);
+        session(['jadwal_kap_tahunan' => $jadwalData]);
+    }
+}
+
+/**
+ * Method untuk mengirim OTP ke user.
+ */
+function sendOtp($user)
+{
+    $otp = rand(100000, 999999);
+    $otpExpiration = env('EXPIRED_OTP', 3);
+    Cache::put('otp_' . $user->id, $otp, now()->addMinutes($otpExpiration));
+    Mail::to($user->email)->send(new SendOtpMail($otp));
+    session(['otp_user_id' => $user->id, 'otp_email' => $user->email]);
+}
+
+/**
+ * Method untuk handle user default jika Stara tidak diaktifkan.
+ */
+function handleDefaultUser($request)
+{
+    $user = User::firstOrCreate(
+        ['name' => $request->username],
+        [
+            'user_nip' => generateRandomNip(),
+            'phone' => '-',
+            'email' => generateRandomEmail(),
+            'jabatan' => '-',
+            'nama_unit' => '-'
+        ]
+    );
+
+    assignRole($user, 1);
+    return $user;
+}
+
+/**
+ * Method untuk assign role ke user.
+ */
+function assignRole($user, $roleId)
+{
+    $role = Role::find($roleId);
+    if ($role) {
+        $user->assignRole($role);
+    } else {
+        abort(500, 'Role not found');
+    }
 }

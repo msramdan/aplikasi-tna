@@ -9,8 +9,9 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Permission\Models\Role;
-use Auth;
 use Image;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -172,7 +173,6 @@ class UserController extends Controller
         return redirect()->route('users.index');
     }
 
-
     public function destroy(User $user)
     {
         if ($user->avatar != null && file_exists($oldAvatar = public_path($this->avatarPath . $user->avatar))) {
@@ -183,5 +183,33 @@ class UserController extends Controller
 
         Alert::toast('The user was deleted successfully.', 'success');
         return redirect()->route('users.index');
+    }
+
+    public function updateNoWa(Request $request)
+    {
+        // Validasi input
+        $request->validate([
+            'no_wa' => 'required|numeric|digits_between:10,15',
+        ], [
+            'no_wa.required' => 'Nomor WhatsApp harus diisi.',
+            'no_wa.numeric' => 'Nomor WhatsApp hanya boleh berisi angka.',
+            'no_wa.digits_between' => 'Nomor WhatsApp harus memiliki panjang antara 10 hingga 15 digit.',
+        ]);
+
+        // Ambil user yang sedang login
+        $user = Auth::user();
+
+        // Update nomor WhatsApp
+        $user->phone = $request->input('no_wa');
+        $user->save();
+
+        // Hapus session yang menunjukkan form untuk input nomor WA
+        session()->forget('show_form_no_wa');
+
+        // Tampilkan notifikasi berhasil
+        Alert::toast('Nomor WhatsApp berhasil diperbarui.', 'success');
+
+        // Redirect kembali ke halaman sebelumnya
+        return redirect()->back();
     }
 }

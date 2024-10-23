@@ -8,7 +8,6 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalScannerLabel">Scanner QR Kode Pembelajaran</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div id="camera-scanner" style="width: 100%;"></div> <!-- Area kamera untuk scanning -->
@@ -25,12 +24,11 @@
         <div class="container-fluid">
 
             <div class="modal fade" id="announcementModal" tabindex="-1" aria-labelledby="announcementModalLabel"
-                aria-hidden="true" data-bs-backdrop="static">
+                aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="announcementModalLabel">Pengumuman</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <p style="text-align: justify">
@@ -79,23 +77,33 @@
             </div>
 
             <div class="modal fade" id="modalInputNoWa" tabindex="-1" aria-labelledby="modalInputNoWaLabel"
-                aria-hidden="true" data-bs-backdrop="static">
+                aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="modalInputNoWaLabel">Form Input No WhatsApp</h5>
-                        </div>
-                        <div class="modal-body">
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-success">Submit</button>
-                        </div>
+                        <form id="formNoWa" action="{{ route('update.no.wa') }}" method="POST">
+                            @csrf
+                            <div class="modal-body">
+                                <div class="alert alert-info" role="alert">
+                                    Sebelum Anda dapat melanjutkan penggunaan aplikasi Interna, mohon lengkapi nomor
+                                    WhatsApp aktif Anda.
+                                    Nomor ini akan digunakan untuk mengirimkan notifikasi terkait proses pengajuan KAP
+                                    ketika ada pemberitahuan chatbox.
+                                    Terima kasih atas perhatian dan kerja samanya.
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputNoWa">Nomor WhatsApp</label>
+                                    <input type="text" class="form-control" id="inputNoWa" required autocomplete="off"
+                                        name="no_wa" placeholder="Masukkan nomor WhatsApp">
+                                    <small id="waError" class="text-danger" style="display:none;"></small>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success">Submit</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
-
-
 
             <div class="row">
                 <div class="col-md-12 mb-2">
@@ -278,6 +286,17 @@
             @if (session('login_success'))
                 var announcementModal = new bootstrap.Modal(document.getElementById('announcementModal'));
                 announcementModal.show();
+
+                // Event listener untuk elemen DOM, bukan instance modal Bootstrap
+                document.getElementById('announcementModal').addEventListener('hidden.bs.modal', function() {
+                    fetch('{{ route('clear-session', ['key' => 'login_success']) }}', {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Content-Type': 'application/json',
+                        },
+                    });
+                });
             @endif
         });
 
@@ -285,7 +304,54 @@
             @if (session('show_form_no_wa'))
                 var modalInputNoWa = new bootstrap.Modal(document.getElementById('modalInputNoWa'));
                 modalInputNoWa.show();
+
+                // Event listener untuk elemen DOM, bukan instance modal Bootstrap
+                document.getElementById('modalInputNoWa').addEventListener('hidden.bs.modal', function() {
+                    fetch('{{ route('clear-session', ['key' => 'show_form_no_wa']) }}', {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Content-Type': 'application/json',
+                        },
+                    });
+                });
             @endif
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#formNoWa').on('submit', function(e) {
+                var noWa = $('#inputNoWa').val();
+                var waError = $('#waError');
+                var isValid = true;
+                var errorMessage = "";
+
+                // Periksa apakah nomor WhatsApp dimulai dengan "62"
+                if (!noWa.startsWith('62')) {
+                    isValid = false;
+                    errorMessage = "Nomor WhatsApp harus diawali dengan '62'.";
+                }
+
+                // Periksa apakah nomor hanya terdiri dari angka
+                if (!/^\d+$/.test(noWa)) {
+                    isValid = false;
+                    errorMessage = "Nomor WhatsApp hanya boleh berisi angka.";
+                }
+
+                // Periksa apakah panjang nomor sesuai (minimal 10 digit, maksimal 15 digit)
+                if (noWa.length < 10 || noWa.length > 15) {
+                    isValid = false;
+                    errorMessage = "Nomor WhatsApp harus memiliki panjang antara 10 hingga 15 digit.";
+                }
+
+                if (!isValid) {
+                    e.preventDefault(); // Hentikan pengiriman form
+                    waError.text(errorMessage).show(); // Tampilkan pesan error
+                } else {
+                    waError.hide(); // Sembunyikan pesan error jika valid
+                }
+            });
         });
     </script>
 
