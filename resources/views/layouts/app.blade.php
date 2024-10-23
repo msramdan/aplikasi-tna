@@ -21,52 +21,6 @@
                         </button>
                     </div>
                     <div class="d-flex align-items-center">
-                        {{-- <div class="dropdown ms-1 topbar-head-dropdown header-item">
-                            @switch(app()->getLocale())
-                                @case('id')
-                                    <button type="button"
-                                        class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle shadow-none"
-                                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <img src="{{ asset('/material/assets/images/flags/indonesia.png') }}"
-                                            alt="Header Language" height="20" class="rounded">
-                                    </button>
-                                @break
-
-                                @case('en')
-                                    <button type="button"
-                                        class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle shadow-none"
-                                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <img src="{{ asset('/material/assets/images/flags/us.svg') }}" alt="Header Language"
-                                            height="20" class="rounded">
-                                    </button>
-                                @break
-
-                                @default
-                            @endswitch
-                            <div class="dropdown-menu media-list dropdown-menu-end" style="">
-                                <a href="{{ route('localization.switch', ['language' => 'id']) }}"
-                                    class="dropdown-item media">
-                                    <div class="media-body">
-                                        <h6 class="media-heading">
-                                            <img src="{{ asset('material/assets/images/flags/indonesia.png') }}"
-                                                alt="" class="me-2 rounded" height="18" />
-                                            <span class="align-middle">Indonesia</span>
-                                        </h6>
-                                    </div>
-                                </a>
-                                <a href="{{ route('localization.switch', ['language' => 'en']) }}"
-                                    class="dropdown-item media">
-                                    <div class="media-body">
-                                        <h6 class="media-heading">
-                                            <img src="{{ asset('material/assets/images/flags/us.svg') }}"
-                                                class="me-2 rounded" height="18" alt="" />
-                                            <span class="align-middle">English</span>
-                                        </h6>
-                                    </div>
-                                </a>
-                            </div>
-                        </div> --}}
-
                         <div class="ms-1 header-item  d-sm-flex">
                             <button type="button"
                                 class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle shadow-none"
@@ -81,51 +35,83 @@
                                 <i class='bx bx-moon fs-22'></i>
                             </button>
                         </div>
-
                         @php
+                            use Carbon\Carbon;
+
+                            // Menghitung jumlah nomenklatur pembelajaran dengan status 'Pending'
                             $pendingCount = DB::table('nomenklatur_pembelajaran')->where('status', 'Pending')->count();
 
+                            // Mengambil 5 nomenklatur pembelajaran terbaru dengan status 'Pending'
                             $latestPending = DB::table('nomenklatur_pembelajaran')
                                 ->where('status', 'Pending')
                                 ->orderBy('created_at', 'desc')
                                 ->limit(5)
                                 ->get();
+
+                            // Menghitung jumlah notifikasi untuk user yang sedang login
+                            $userId = Auth::id(); // Mengambil ID pengguna yang sedang login
+                            $notificationCount = DB::table('notifications')->where('user_id', $userId)->count();
+
+                            // Mengambil 5 notifikasi terbaru untuk user yang sedang login
+                            $latestNotifications = DB::table('notifications')
+                                ->where('user_id', $userId)
+                                ->orderBy('created_at', 'desc')
+                                ->limit(5)
+                                ->get();
                         @endphp
 
-                        @can('nomenklatur pembelajaran edit')
-                            <div class="dropdown topbar-head-dropdown ms-1 header-item" id="notificationDropdown">
-                                <button type="button"
-                                    class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle shadow-none"
-                                    id="page-header-notifications-dropdown" data-bs-toggle="dropdown"
-                                    data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
-                                    <i class='bx bx-bell fs-22'></i>
+                        <div class="dropdown topbar-head-dropdown ms-1 header-item" id="notificationDropdown">
+                            <button type="button"
+                                class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle shadow-none"
+                                id="page-header-notifications-dropdown" data-bs-toggle="dropdown"
+                                data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
+                                <i class='bx bx-bell fs-22'></i>
+                                @can('nomenklatur pembelajaran edit')
                                     <span
-                                        class="position-absolute topbar-badge fs-10 translate-middle badge rounded-pill bg-danger">{{ $pendingCount }}<span
+                                        class="position-absolute topbar-badge fs-10 translate-middle badge rounded-pill bg-danger">{{ $pendingCount + $notificationCount }}<span
                                             class="visually-hidden">unread messages</span></span>
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
-                                    aria-labelledby="page-header-notifications-dropdown">
-                                    <div class="dropdown-head bg-primary bg-pattern rounded-top">
-                                        <div class="p-3">
-                                            <div class="row align-items-center">
-                                                <div class="col">
-                                                    <h6 class="m-0 fs-16 fw-semibold text-white"> Pemberitahuan </h6>
-                                                </div>
+                                @else
+                                    <span
+                                        class="position-absolute topbar-badge fs-10 translate-middle badge rounded-pill bg-danger">{{ $notificationCount }}<span
+                                            class="visually-hidden">unread messages</span></span>
+                                @endcan
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
+                                aria-labelledby="page-header-notifications-dropdown">
+                                <div class="dropdown-head bg-primary bg-pattern rounded-top">
+                                    <div class="p-3">
+                                        <div class="row align-items-center">
+                                            <div class="col">
+                                                <h6 class="m-0 fs-16 fw-semibold text-white"> Pemberitahuan </h6>
                                             </div>
                                         </div>
-                                        <div class="px-2 pt-2">
-                                            <ul class="nav nav-tabs dropdown-tabs nav-tabs-custom" data-dropdown-tabs="true"
-                                                id="notificationItemsTab" role="tablist">
+                                    </div>
+                                    <div class="px-2 pt-2">
+                                        <ul class="nav nav-tabs dropdown-tabs nav-tabs-custom" data-dropdown-tabs="true"
+                                            id="notificationItemsTab" role="tablist">
+                                            @can('nomenklatur pembelajaran edit')
                                                 <li class="nav-item waves-effect waves-light">
                                                     <a class="nav-link active" data-bs-toggle="tab" href="#all-noti-tab"
                                                         role="tab" aria-selected="true">
-                                                        Usulan Nomenklatur
+                                                        Usulan Nomenklatur <span
+                                                            class="badge rounded-pill bg-danger">{{ $pendingCount }}</span>
                                                     </a>
                                                 </li>
-                                            </ul>
-                                        </div>
+                                            @endcan
+                                            <li class="nav-item waves-effect waves-light">
+                                                <a class="nav-link" data-bs-toggle="tab" href="#notification-tab"
+                                                    role="tab" aria-selected="false">
+                                                    Notifikasi
+                                                    <span
+                                                        class="badge rounded-pill bg-danger">{{ $notificationCount }}</span>
+                                                </a>
+                                            </li>
+
+                                        </ul>
                                     </div>
-                                    <div class="tab-content position-relative" id="notificationItemsTabContent">
+                                </div>
+                                <div class="tab-content position-relative" id="notificationItemsTabContent">
+                                    @can('nomenklatur pembelajaran edit')
                                         <div class="tab-pane fade show active py-2 ps-2" id="all-noti-tab" role="tabpanel">
                                             <div data-simplebar style="max-height: 300px;" class="pe-2">
                                                 @foreach ($latestPending as $item)
@@ -155,10 +141,39 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    @endcan
+                                    <div class="tab-pane fade py-2 ps-2" id="notification-tab" role="tabpanel">
+                                        <div data-simplebar style="max-height: 300px;" class="pe-2">
+                                            @foreach ($latestNotifications as $notification)
+                                                <div
+                                                    class="text-reset notification-item d-block dropdown-item position-relative">
+                                                    <div class="d-flex">
+                                                        <div class="avatar-xs me-3 flex-shrink-0">
+                                                            <i class="fa fa-bell text-info fa-2x"
+                                                                aria-hidden="true"></i>
+                                                        </div>
+                                                        <div class="flex-grow-1">
+                                                            <h6 class="mt-0 mb-2 lh-base">
+                                                                {{ $notification->message }}
+                                                                <!-- Ganti dengan kolom pesan dari tabel notifications -->
+                                                            </h6>
+                                                            <small
+                                                                class="text-muted">{{ \Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}</small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                            <div class="my-3 text-center view-all">
+                                                <a href=""
+                                                    class="btn btn-soft-success waves-effect waves-light">Lihat Semua
+                                                    Notifikasi<i class="ri-arrow-right-line align-middle"></i></a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        @endcan
+                        </div>
+
 
                         <div class="dropdown ms-sm-3 header-item topbar-user">
                             <button type="button" class="btn shadow-none" id="page-header-user-dropdown"
