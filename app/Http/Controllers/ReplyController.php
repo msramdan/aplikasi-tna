@@ -88,6 +88,14 @@ class ReplyController extends Controller
 
                     // Looping data users di sini dan send notif
                     foreach ($users as $user) {
+                        // insert ke table notification
+                        DB::table('notifications')->insert([
+                            'user_id' => $user->id,
+                            'message' => $pesan,
+                            'is_read' => false,
+                            'created_at' => now(),
+                            'updated_at' => now(),
+                        ]);
                         if (!empty($user->phone)) { // Pastikan nomor telepon tidak kosong
                             $notificationSent = send($user->phone, $pesan);
                             if (!$notificationSent) {
