@@ -45,6 +45,9 @@ class UserController extends Controller
                 ->addColumn('role', function ($row) {
                     return $row->getRoleNames()->toArray() !== [] ? $row->getRoleNames()[0] : '-';
                 })
+                ->addColumn('phone', function ($row) {
+                    return $row->phone ? $row->phone  : '-';
+                })
                 ->addColumn('avatar', function ($row) {
                     if ($row->avatar == null) {
                         return 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($row->email))) . '&s=500';

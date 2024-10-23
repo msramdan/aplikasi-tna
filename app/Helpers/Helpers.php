@@ -167,3 +167,42 @@ function syncData($pengajuanKap)
 
     return false;
 }
+
+if (!function_exists('send')) {
+    function send($nomor_hp, $pesan)
+    {
+        $curl = curl_init();
+        $waktu_kirim = date('Y-m-d H:i');
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://pusdiklatwas.bpkp.go.id/api/v1/blast',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_SSL_VERIFYHOST => 0,
+            CURLOPT_SSL_VERIFYPEER => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => array(
+                'title' => 'judul',
+                'waktu_kirim' => $waktu_kirim,
+                'target' => $nomor_hp,
+                'pesan' => $pesan,
+                'source_id' => '3'
+            ),
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: Basic Ymxhc3Q6MTdhMTRhZWM5NDIxOTU1YWI4ZWUxNTAyNTZhNDFlNjM=',
+                'Cookie: 1957209d56ac83d65350372f6e1145ac=ld1k1afetclqdv8oh9o9j1qpp1'
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        $decoded_json = json_decode($response, false);
+
+        curl_close($curl);
+
+        return ($decoded_json && $decoded_json->status === "success");
+    }
+}

@@ -39,6 +39,7 @@
                                             <th>{{ trans('users/index.avatar') }}</th>
                                             <th>{{ trans('users/index.name') }}</th>
                                             <th>{{ trans('users/index.role') }}</th>
+                                            <th>No Wa</th>
                                             <th>{{ trans('users/index.email') }}</th>
                                             <th>Kode unit</th>
                                             <th>Key sort unit</th>
@@ -83,6 +84,10 @@
             {
                 data: 'role',
                 name: 'role'
+            },
+            {
+                data: 'phone',
+                name: 'phone'
             },
             {
                 data: 'email',

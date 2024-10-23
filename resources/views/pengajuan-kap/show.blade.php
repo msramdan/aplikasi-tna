@@ -680,7 +680,7 @@
 
                             <div class="wizard-content">
                                 @foreach ($logReviews as $index => $log)
-                                    <div class="content {{ $log->step == $pengajuanKap->current_step  ? 'active' : '' }}">
+                                    <div class="content {{ $log->step == $pengajuanKap->current_step ? 'active' : '' }}">
                                         <br>
                                         <h2>{{ $log->remark }}</h2>
                                         <div class="form-group">
@@ -691,7 +691,8 @@
                                                 @elseif ($log->status == 'Rejected')
                                                     <span class="badge bg-danger">Ditolak</span>
                                                 @elseif ($log->status == 'Revision')
-                                                    <span class="badge" style="background-color: #6c757d; color: white;">Revisi</span>
+                                                    <span class="badge"
+                                                        style="background-color: #6c757d; color: white;">Revisi</span>
                                                 @else
                                                     -
                                                 @endif
@@ -721,7 +722,10 @@
                                                             : $reply->message;
 
                                                         // Fetch the user data based on the user name
-                                                        $user = \App\Models\User::where('name', $reply->user_name)->first();
+                                                        $user = \App\Models\User::where(
+                                                            'name',
+                                                            $reply->user_name,
+                                                        )->first();
                                                         $defaultAvatar = asset('path/to/default/avatar.jpg'); // Set your default avatar path here
                                                         $avatarPath = $defaultAvatar; // Default to the default avatar
 
@@ -729,24 +733,33 @@
                                                             // If user exists, check for avatar
                                                             $avatarPath = $user->avatar
                                                                 ? asset('uploads/images/avatars/' . $user->avatar)
-                                                                : 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($user->email))) . '?s=500';
+                                                                : 'https://www.gravatar.com/avatar/' .
+                                                                    md5(strtolower(trim($user->email))) .
+                                                                    '?s=500';
                                                         }
                                                     @endphp
 
                                                     <div class="reply-item mb-2 d-flex">
                                                         <!-- Avatar -->
                                                         <div class="user-avatar">
-                                                            <img src="{{ $avatarPath }}" alt="User Avatar" class="avatar-img">
+                                                            <img src="{{ $avatarPath }}" alt="User Avatar"
+                                                                class="avatar-img">
                                                         </div>
 
                                                         <!-- Pesan Balasan -->
                                                         <div class="reply-content">
                                                             <strong>{{ $reply->user_name }}:</strong>
-                                                            <span class="short-message" id="short-message-{{ $reply->id }}">{{ $shortMessage }}</span>
-                                                            <span class="full-message" id="full-message-{{ $reply->id }}" style="display: none;">{{ $reply->message }}</span>
+                                                            <span class="short-message"
+                                                                id="short-message-{{ $reply->id }}">{{ $shortMessage }}</span>
+                                                            <span class="full-message"
+                                                                id="full-message-{{ $reply->id }}"
+                                                                style="display: none;">{{ $reply->message }}</span>
 
                                                             @if ($isLong)
-                                                                <a href="javascript:void(0)" class="text-primary" id="toggle-link-{{ $reply->id }}" onclick="toggleMessage({{ $reply->id }})">Baca Selengkapnya</a>
+                                                                <a href="javascript:void(0)" class="text-primary"
+                                                                    id="toggle-link-{{ $reply->id }}"
+                                                                    onclick="toggleMessage({{ $reply->id }})">Baca
+                                                                    Selengkapnya</a>
                                                             @endif
                                                             <br>
                                                             <small>{{ $reply->created_at }}</small>
@@ -756,11 +769,12 @@
                                             </div>
 
                                             @if ($pengajuanKap->current_step == $log->step && $log->status !== 'Approved')
-                                            <div class="input-group mt-2">
-                                                <textarea id="reply-input-{{ $log->id }}" class="form-control reply-textarea" placeholder="Ketik balasan..."></textarea>
-                                                <button type="button" class="btn btn-primary" onclick="submitReply({{ $log->id }})">Kirim</button>
-                                            </div>
-                                        @endif
+                                                <div class="input-group mt-2">
+                                                    <textarea id="reply-input-{{ $log->id }}" class="form-control reply-textarea" placeholder="Ketik balasan..."></textarea>
+                                                    <button type="button" class="btn btn-primary"
+                                                        onclick="submitReply({{ $log->id }})">Kirim</button>
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
                                 @endforeach
@@ -1103,7 +1117,7 @@
     @endsection
 
     @push('js')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.all.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.all.min.js"></script>
         <script>
             function toggleMessage(replyId) {
                 const shortMessage = document.getElementById(`short-message-${replyId}`);
@@ -1139,8 +1153,10 @@
                     type: 'POST',
                     data: {
                         log_review_id: logReviewId,
+                        kode_pembelajaran: '{{ $pengajuanKap->kode_pembelajaran }}',
                         message: message,
-                        _token: '{{ csrf_token() }}' // Include CSRF token for security
+                        full_url: window.location.href, // Mendapatkan URL penuh dari browser
+                        _token: '{{ csrf_token() }}' // Sertakan CSRF token untuk keamanan
                     },
                     success: function(reply) {
                         Swal.fire({
