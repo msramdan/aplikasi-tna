@@ -77,6 +77,26 @@
                     </div>
                 </div>
             </div>
+
+            <div class="modal fade" id="modalInputNoWa" tabindex="-1" aria-labelledby="modalInputNoWaLabel"
+                aria-hidden="true" data-bs-backdrop="static">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalInputNoWaLabel">Form Input No WhatsApp</h5>
+                        </div>
+                        <div class="modal-body">
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
             <div class="row">
                 <div class="col-md-12 mb-2">
                     <div class="d-flex align-items-lg-center flex-lg-row flex-column">
@@ -260,6 +280,13 @@
                 announcementModal.show();
             @endif
         });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            @if (session('show_form_no_wa'))
+                var modalInputNoWa = new bootstrap.Modal(document.getElementById('modalInputNoWa'));
+                modalInputNoWa.show();
+            @endif
+        });
     </script>
 
     <script>
@@ -350,8 +377,6 @@
             }
         });
     </script>
-
-
 
     <script>
         function showQrScanner() {
