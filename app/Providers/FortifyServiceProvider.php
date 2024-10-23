@@ -90,17 +90,25 @@ class FortifyServiceProvider extends ServiceProvider
                             dd('Role not found');
                         }
                     }
-                    session(['api_token' => $data['data']['token']]);
-                    $now = Carbon::now();
-                    $now = Carbon::now();
-                    $jadwalData = DB::table('jadwal_kap_tahunan')
-                        ->where('tanggal_mulai', '<=', $now)
-                        ->where('tanggal_selesai', '>=', $now)
-                        ->first();
 
-                    if ($jadwalData) {
-                        session()->flash('login_success', true);
-                        session(['jadwal_kap_tahunan' => $jadwalData]);
+                    // Cek apakah nomor HP kosong/null
+                    if (empty($data['data']['user_info']['nomor_hp']) || empty($user->phone)) {
+                        // Set session untuk menampilkan form input nomor WA
+                        session(['show_form_no_wa' => true]);
+                    }
+
+                    // Skip pengecekan jadwal_kap_tahunan jika session show_form_no_wa true
+                    if (!session()->has('show_form_no_wa')) {
+                        $now = Carbon::now();
+                        $jadwalData = DB::table('jadwal_kap_tahunan')
+                            ->where('tanggal_mulai', '<=', $now)
+                            ->where('tanggal_selesai', '>=', $now)
+                            ->first();
+
+                        if ($jadwalData) {
+                            session()->flash('login_success', true);
+                            session(['jadwal_kap_tahunan' => $jadwalData]);
+                        }
                     }
 
                     if (env('IS_SEND_OTP', false)) {
@@ -121,6 +129,9 @@ class FortifyServiceProvider extends ServiceProvider
 
                     return $user;
                 }
+
+
+
 
                 throw ValidationException::withMessages([
                     Fortify::username() => [trans('auth.failed')],
