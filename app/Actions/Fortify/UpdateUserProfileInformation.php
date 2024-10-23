@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
 use Image;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class UpdateUserProfileInformation implements UpdatesUserProfileInformation
 {
@@ -28,9 +29,9 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
     {
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
-            'no_hp' => ['required', 'numeric', function ($attribute, $value, $fail) {
+            'phone' => ['required', 'numeric', function ($attribute, $value, $fail) {
                 if (substr($value, 0, 2) != '62') {
-                    $fail('No HP Must be start with 62');
+                    $fail('No WA Must be start with 62');
                 }
             }],
             'email' => [
@@ -72,9 +73,10 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             $user->forceFill([
                 'name' => $input['name'],
                 'email' => $input['email'],
-                'no_hp' => $input['no_hp'],
+                'phone' => $input['phone'],
             ])->save();
         }
+        Alert::toast('Data profile berhasil di update', 'success');
     }
 
     /**
