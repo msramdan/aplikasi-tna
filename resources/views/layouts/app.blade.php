@@ -99,7 +99,7 @@
                                                 </li>
                                             @endcan
                                             <li class="nav-item waves-effect waves-light">
-                                                <a class="nav-link" data-bs-toggle="tab" href="#notification-tab"
+                                                <a class="nav-link @cannot('nomenklatur pembelajaran edit') active @endcannot" data-bs-toggle="tab" href="#notification-tab"
                                                     role="tab" aria-selected="false">
                                                     Notifikasi
                                                     <span
@@ -142,7 +142,7 @@
                                             </div>
                                         </div>
                                     @endcan
-                                    <div class="tab-pane fade py-2 ps-2" id="notification-tab" role="tabpanel">
+                                    <div class="tab-pane fade @cannot('nomenklatur pembelajaran edit') show active @endcannot  py-2 ps-2" id="notification-tab" role="tabpanel">
                                         <div data-simplebar style="max-height: 300px;" class="pe-2">
                                             @foreach ($latestNotifications as $notification)
                                                 <div
