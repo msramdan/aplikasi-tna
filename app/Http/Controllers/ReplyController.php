@@ -19,6 +19,7 @@ class ReplyController extends Controller
 
         $replyId = DB::table('log_review_pengajuan_kap_replies')->insertGetId([
             'log_review_pengajuan_kap_id' => $request->log_review_id,
+            'user_id' => Auth::id(),
             'user_name' => Auth::user()->name,
             'message' => $request->message,
             'created_at' => now(),
