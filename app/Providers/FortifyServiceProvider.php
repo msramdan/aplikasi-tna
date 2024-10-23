@@ -35,9 +35,16 @@ class FortifyServiceProvider extends ServiceProvider
     public function boot()
     {
         Fortify::authenticateUsing(function (Request $request) {
+            // Bersihkan session yang mungkin tersisa dari login sebelumnya
+            session()->forget([
+                'login_success',
+                'show_form_no_wa',
+                'jadwal_kap_tahunan',
+                'otp_user_id',
+                'otp_email'
+            ]);
             if (config('stara.is_hit')) {
                 $userId = session('otp_user_id');
-                session()->forget('otp_user_id');
                 if ($userId) {
                     Cache::forget('otp_' . $userId);
                 }
@@ -129,9 +136,6 @@ class FortifyServiceProvider extends ServiceProvider
 
                     return $user;
                 }
-
-
-
 
                 throw ValidationException::withMessages([
                     Fortify::username() => [trans('auth.failed')],
