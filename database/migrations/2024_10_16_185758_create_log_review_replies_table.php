@@ -13,6 +13,10 @@ return new class extends Migration
         Schema::create('log_review_pengajuan_kap_replies', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('log_review_pengajuan_kap_id');
+
+            // Tambahkan kolom user_id
+            $table->unsignedBigInteger('user_id')->nullable();
+
             $table->string('user_name');
             $table->text('message');
             $table->timestamps();
@@ -21,6 +25,11 @@ return new class extends Migration
             $table->foreign('log_review_pengajuan_kap_id', 'fk_log_review_kap_id')
                 ->references('id')->on('log_review_pengajuan_kap')
                 ->onDelete('cascade');
+
+            // Tambahkan foreign key untuk user_id, mengizinkan null on delete
+            $table->foreign('user_id', 'fk_user_id')
+                ->references('id')->on('users')
+                ->onDelete('set null');
         });
     }
 

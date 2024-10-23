@@ -1154,6 +1154,8 @@
                     data: {
                         log_review_id: logReviewId,
                         kode_pembelajaran: '{{ $pengajuanKap->kode_pembelajaran }}',
+                        user_created: '{{ $pengajuanKap->user_created }}',
+                        current_step_remark: '{{ $currentStepRemark }}',
                         message: message,
                         full_url: window.location.href, // Mendapatkan URL penuh dari browser
                         _token: '{{ csrf_token() }}' // Sertakan CSRF token untuk keamanan

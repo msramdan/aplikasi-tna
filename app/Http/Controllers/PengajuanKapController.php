@@ -1165,6 +1165,7 @@ class PengajuanKapController extends Controller
         $currentStepRemark = isset($pengajuanKap->current_step) && $pengajuanKap->current_step > 0 && $pengajuanKap->current_step <= count($steps)
             ? $steps[$pengajuanKap->current_step - 1]
             : '-';
+
         $userHasAccess = DB::table('config_step_review')
             ->where('remark', $currentStepRemark)
             ->where('user_review_id', Auth::id())
@@ -1248,6 +1249,7 @@ class PengajuanKapController extends Controller
             'metode_data' => isset($metode_data) ? $metode_data : null,
             'diklatType_data' => isset($diklatType_data) ? $diklatType_data : null,
             'diklatLocation_data' => isset($diklatLocation_data) ? $diklatLocation_data : null,
+            'currentStepRemark' => $currentStepRemark
         ]);
     }
 

@@ -28,7 +28,6 @@ class ReplyController extends Controller
         $reply = DB::table('log_review_pengajuan_kap_replies')->where('id', $replyId)->first();
 
         if ($reply) {
-            $nomor_hp = '083874731480';
             $namaUser = Auth::user()->name;
             // Batasi pesan hingga 100 karakter
             $limitedMessage = Str::limit($request->message, 100, '...');
@@ -36,10 +35,64 @@ class ReplyController extends Controller
             $pesan = "{$namaUser} telah memberikan komentar pada pengajuan KAP dengan kode {$request->kode_pembelajaran}: \"_" . $limitedMessage . "_\". Untuk informasi lebih lanjut, silakan kunjungi tautan berikut: {$request->full_url}";
 
             if (env('SEND_NOTIFICATIONS', false)) {
+                // get data user user
                 try {
-                    $notificationSent = send($nomor_hp, $pesan);
-                    if (!$notificationSent) {
-                        self::sendTelegramNotification('Failed to send WA notification to ' . $nomor_hp);
+                    $request->user_created;
+
+                    // Get data user config step
+                    $userReviewIds = DB::table('config_step_review')
+                        ->where('remark', $request->current_step_remark)
+                        ->pluck('user_review_id')
+                        ->toArray();
+
+                    // Get data log_review_pengajuan_kap_replies
+                    $repliesUserIds = DB::table('log_review_pengajuan_kap_replies')
+                        ->where('log_review_pengajuan_kap_id', $request->log_review_id)
+                        ->whereNotNull('user_id')
+                        ->where('user_id', '!=', '')
+                        ->groupBy('user_id')
+                        ->pluck('user_id')
+                        ->toArray();
+
+                    // Gabungkan kedua array dan pastikan unik
+                    $combinedUserIds = array_unique(array_merge($userReviewIds, $repliesUserIds));
+
+                    // Ambil ID pengguna yang sedang login
+                    $loggedInUserId = Auth::id(); // Mendapatkan ID pengguna yang sedang login
+
+                    // Jika user_created tidak null dan tidak sama dengan user yang login
+                    if ($request->user_created !== null && $request->user_created !== '' && (int)$request->user_created !== $loggedInUserId) {
+                        $combinedUserIds[] = (int)$request->user_created; // Pastikan ini bertipe integer
+                    }
+
+                    // Hapus ID pengguna yang sedang login dari combinedUserIds jika ada
+                    $combinedUserIds = array_filter($combinedUserIds, function ($userId) use ($loggedInUserId) {
+                        return $userId !== $loggedInUserId;
+                    });
+
+                    // Jika combinedUserIds kosong, hanya ambil user_created jika ada
+                    if (empty($combinedUserIds)) {
+                        if ($request->user_created !== null && $request->user_created !== '' && (int)$request->user_created !== $loggedInUserId) {
+                            $combinedUserIds[] = (int)$request->user_created; // Pastikan ini bertipe integer
+                        }
+                    }
+
+                    // Ambil ID pengguna yang sesuai dari combinedUserIds jika tidak kosong
+                    $users = [];
+                    if (!empty($combinedUserIds)) {
+                        $users = DB::table('users')
+                            ->whereIn('id', $combinedUserIds)
+                            ->get();
+                    }
+
+                    // Looping data users di sini dan send notif
+                    foreach ($users as $user) {
+                        if (!empty($user->phone)) { // Pastikan nomor telepon tidak kosong
+                            $notificationSent = send($user->phone, $pesan);
+                            if (!$notificationSent) {
+                                self::sendTelegramNotification('Failed to send WA notification to ' . $user->phone);
+                            }
+                        }
                     }
                 } catch (\Exception $e) {
                     \Log::error('Failed to send notification: ' . $e->getMessage());
@@ -49,6 +102,7 @@ class ReplyController extends Controller
         } else {
             return response()->json(['error' => 'Failed to create reply'], 500);
         }
+
         return response()->json($reply);
     }
 
