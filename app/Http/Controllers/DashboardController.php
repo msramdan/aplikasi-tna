@@ -14,24 +14,23 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
+        // Menghitung total user
         $totalUser = DB::table('users')->count();
 
+        // Mengambil data lokasi dari API eksternal
         $endpoint_pusdiklatwap = config('stara.endpoint_pusdiklatwap');
         $api_key_pusdiklatwap = config('stara.api_token_pusdiklatwap');
         $totalLokasi = callApiPusdiklatwas($endpoint_pusdiklatwap . '/diklatLocation', [
             'api_key' => $api_key_pusdiklatwap
         ]);
 
-        if (is_array($totalLokasi)) {
-            $countTotalLokasi = count($totalLokasi);
-        } else {
-            $countTotalLokasi = 0;
-        }
+        // Menghitung total lokasi
+        $countTotalLokasi = is_array($totalLokasi) ? count($totalLokasi) : 0;
 
-        // Daftar status default yang ingin kamu tampilkan
+        // Daftar status default yang ingin ditampilkan
         $defaultStatuses = ['Pending', 'Revision', 'Process', 'Approved', 'Rejected'];
 
-        // Query data dari database
+        // Query data status dari database
         $data = DB::table('pengajuan_kap')
             ->select('status_pengajuan', DB::raw('count(*) as total'))
             ->groupBy('status_pengajuan')
@@ -49,11 +48,36 @@ class DashboardController extends Controller
         $labels = array_keys($statusData); // Mengambil semua status
         $totals = array_values($statusData); // Mengambil total data per status
 
+        // Query untuk mengambil data berdasarkan institusi_sumber (BPKP dan Non BPKP) dan tahun
+        $pengajuanData = DB::table('pengajuan_kap')
+            ->select(
+                'tahun',
+                DB::raw('SUM(CASE WHEN institusi_sumber = "BPKP" THEN 1 ELSE 0 END) as totalBPKP'),
+                DB::raw('SUM(CASE WHEN institusi_sumber = "Non BPKP" THEN 1 ELSE 0 END) as totalNonBPKP')
+            )
+            ->groupBy('tahun')
+            ->get();
+
+        // Inisialisasi array untuk labels (tahun) dan total untuk BPKP dan Non BPKP
+        $labelsTahun = [];
+        $totalsBPKP = [];
+        $totalsNonBPKP = [];
+
+        // Isi array dengan data dari query
+        foreach ($pengajuanData as $row) {
+            $labelsTahun[] = $row->tahun;
+            $totalsBPKP[] = $row->totalBPKP;
+            $totalsNonBPKP[] = $row->totalNonBPKP;
+        }
+
         return view('dashboard', [
             'totalUser' => $totalUser,
             'totalLokasi' => $countTotalLokasi,
-            'labels' => $labels,
-            'totals' => $totals
+            'labels' => $labels, // Labels untuk chart status
+            'totals' => $totals, // Totals untuk chart status
+            'labelsTahun' => $labelsTahun, // Labels (tahun) untuk chart BPKP/Non BPKP
+            'totalsBPKP' => $totalsBPKP, // Totals BPKP berdasarkan tahun
+            'totalsNonBPKP' => $totalsNonBPKP // Totals Non BPKP berdasarkan tahun
         ]);
     }
 }

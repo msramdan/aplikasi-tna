@@ -404,26 +404,31 @@
     </script>
 
     <script>
+        // Data untuk chart berdasarkan institusi_sumber
+        var labelsTahun = @json($labelsTahun); // Mengambil tahun
+        var totalsBPKP = @json($totalsBPKP); // Mengambil data BPKP
+        var totalsNonBPKP = @json($totalsNonBPKP); // Mengambil data Non BPKP
+
         const ctx2 = document.getElementById('myChart2').getContext('2d');
         const myChart2 = new Chart(ctx2, {
             type: 'line',
             data: {
-                labels: ['2023', '2024', '2025', '2026'], // Label tahun
+                labels: labelsTahun, // Labels (tahun)
                 datasets: [{
                         label: 'BPKP',
-                        data: [4, 8, 12, 5], // Data untuk BPKP
+                        data: totalsBPKP, // Data BPKP
                         borderColor: 'rgba(75, 192, 192, 1)',
                         backgroundColor: 'rgba(75, 192, 192, 0.2)',
                         borderWidth: 1,
-                        fill: true, // Mengisi area di bawah garis
+                        fill: true,
                     },
                     {
                         label: 'Non BPKP',
-                        data: [2, 3, 10, 15], // Data untuk Non BPKP
+                        data: totalsNonBPKP, // Data Non BPKP
                         borderColor: 'rgba(255, 99, 132, 1)',
                         backgroundColor: 'rgba(255, 99, 132, 0.2)',
                         borderWidth: 1,
-                        fill: true, // Mengisi area di bawah garis
+                        fill: true,
                     }
                 ]
             },
