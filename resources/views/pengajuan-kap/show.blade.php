@@ -1153,6 +1153,7 @@
                     type: 'POST',
                     data: {
                         log_review_id: logReviewId,
+                        pengajuan_kap_id: '{{ $pengajuanKap->id }}',
                         kode_pembelajaran: '{{ $pengajuanKap->kode_pembelajaran }}',
                         user_created: '{{ $pengajuanKap->user_created }}',
                         current_step_remark: '{{ $currentStepRemark }}',

@@ -1116,6 +1116,9 @@ class PengajuanKapController extends Controller
 
     public function show($id, $is_bpkp, $frekuensi)
     {
+        DB::table('notifications')
+            ->where('pengajuan_kap_id', $id)
+            ->update(['is_read' => 1]);
 
         $pengajuanKap = DB::table('pengajuan_kap')
             ->select(

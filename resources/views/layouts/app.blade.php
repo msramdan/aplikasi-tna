@@ -50,13 +50,23 @@
 
                             // Menghitung jumlah notifikasi untuk user yang sedang login
                             $userId = Auth::id(); // Mengambil ID pengguna yang sedang login
-                            $notificationCount = DB::table('notifications')->where('user_id', $userId)->count();
-
-                            // Mengambil 5 notifikasi terbaru untuk user yang sedang login
-                            $latestNotifications = DB::table('notifications')
+                            $notificationCount = DB::table('notifications')
                                 ->where('user_id', $userId)
-                                ->orderBy('created_at', 'desc')
-                                ->limit(5)
+                                ->where('is_read', 0)
+                                ->count();
+
+                            // Mengambil 15 notifikasi terbaru yang belum dibaca untuk user yang sedang login
+                            $latestNotifications = DB::table('notifications')
+                                ->join('pengajuan_kap', 'notifications.pengajuan_kap_id', '=', 'pengajuan_kap.id') // Join dengan tabel pengajuan_kap
+                                ->where('notifications.user_id', $userId)
+                                ->where('notifications.is_read', 0)
+                                ->orderBy('notifications.created_at', 'desc')
+                                ->limit(15)
+                                ->select(
+                                    'notifications.*',
+                                    'pengajuan_kap.institusi_sumber',
+                                    'pengajuan_kap.frekuensi_pelaksanaan',
+                                ) // Mengambil kolom yang dibutuhkan
                                 ->get();
                         @endphp
 
@@ -99,8 +109,9 @@
                                                 </li>
                                             @endcan
                                             <li class="nav-item waves-effect waves-light">
-                                                <a class="nav-link @cannot('nomenklatur pembelajaran edit') active @endcannot" data-bs-toggle="tab" href="#notification-tab"
-                                                    role="tab" aria-selected="false">
+                                                <a class="nav-link @cannot('nomenklatur pembelajaran edit') active @endcannot"
+                                                    data-bs-toggle="tab" href="#notification-tab" role="tab"
+                                                    aria-selected="false">
                                                     Notifikasi
                                                     <span
                                                         class="badge rounded-pill bg-danger">{{ $notificationCount }}</span>
@@ -142,7 +153,8 @@
                                             </div>
                                         </div>
                                     @endcan
-                                    <div class="tab-pane fade @cannot('nomenklatur pembelajaran edit') show active @endcannot  py-2 ps-2" id="notification-tab" role="tabpanel">
+                                    <div class="tab-pane fade @cannot('nomenklatur pembelajaran edit') show active @endcannot  py-2 ps-2"
+                                        id="notification-tab" role="tabpanel">
                                         <div data-simplebar style="max-height: 300px;" class="pe-2">
                                             @foreach ($latestNotifications as $notification)
                                                 <div
@@ -153,21 +165,27 @@
                                                                 aria-hidden="true"></i>
                                                         </div>
                                                         <div class="flex-grow-1">
-                                                            <h6 class="mt-0 mb-2 lh-base">
-                                                                {{ $notification->message }}
-                                                                <!-- Ganti dengan kolom pesan dari tabel notifications -->
-                                                            </h6>
-                                                            <small
-                                                                class="text-muted">{{ \Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}</small>
+                                                            <a href="{{ route('pengajuan-kap.show', [
+                                                                'id' => $notification->id,
+                                                                'is_bpkp' => $notification->institusi_sumber,
+                                                                'frekuensi' => $notification->frekuensi_pelaksanaan,
+                                                            ]) }}"
+                                                                class="stretched-link">
+                                                                <h6 class="mt-0 mb-2 lh-base">
+                                                                    {{ $notification->message }}
+                                                                </h6>
+                                                                <small
+                                                                    class="text-muted">{{ \Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}</small>
+                                                            </a>
                                                         </div>
                                                     </div>
                                                 </div>
                                             @endforeach
-                                            <div class="my-3 text-center view-all">
+                                            {{-- <div class="my-3 text-center view-all">
                                                 <a href=""
                                                     class="btn btn-soft-success waves-effect waves-light">Lihat Semua
                                                     Notifikasi<i class="ri-arrow-right-line align-middle"></i></a>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div>
                                 </div>

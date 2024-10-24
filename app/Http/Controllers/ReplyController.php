@@ -93,6 +93,7 @@ class ReplyController extends Controller
                         DB::table('notifications')->insert([
                             'user_id' => $user->id,
                             'message' => $pesanNotif,
+                            'pengajuan_kap_id' => $request->pengajuan_kap_id,
                             'is_read' => false,
                             'created_at' => now(),
                             'updated_at' => now(),
