@@ -1117,8 +1117,9 @@ class PengajuanKapController extends Controller
     public function show($id, $is_bpkp, $frekuensi)
     {
         DB::table('notifications')
-            ->where('pengajuan_kap_id', $id)
-            ->update(['is_read' => 1]);
+            ->where('user_id', auth()->id()) // Menggunakan user ID dari user yang sedang login
+            ->where('pengajuan_kap_id', $id) // Kondisi pengajuan_kap_id
+            ->update(['is_read' => 1]); // Mengubah is_read menjadi 1 (true)
 
         $pengajuanKap = DB::table('pengajuan_kap')
             ->select(
