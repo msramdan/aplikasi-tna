@@ -252,7 +252,7 @@
                                         <div class="ms-auto">
                                             <select id="filterTahun" class="form-select form-select-sm"
                                                 style="width: auto;">
-                                                <option value="All">Semua Tahun</option>
+                                                <option value="" disabled>Filter Tahun</option>
                                                 @php
                                                     $startYear = 2023;
                                                     $currentYear = date('Y');
