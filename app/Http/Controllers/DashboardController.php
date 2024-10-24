@@ -69,9 +69,6 @@ class DashboardController extends Controller
                 DB::raw('SUM(CASE WHEN institusi_sumber = "BPKP" THEN 1 ELSE 0 END) as totalBPKP'),
                 DB::raw('SUM(CASE WHEN institusi_sumber = "Non BPKP" THEN 1 ELSE 0 END) as totalNonBPKP')
             )
-            ->when($tahunSelected, function ($query) use ($tahunSelected) {
-                return $query->where('tahun', $tahunSelected);
-            })
             ->groupBy('tahun')
             ->get();
 
