@@ -34,6 +34,7 @@ class ReplyController extends Controller
             $limitedMessage = Str::limit($request->message, 100, '...');
 
             $pesan = "{$namaUser} telah memberikan komentar pada pengajuan KAP dengan kode {$request->kode_pembelajaran}: \"_" . $limitedMessage . "_\". Untuk informasi lebih lanjut, silakan kunjungi tautan berikut: {$request->full_url}";
+            $pesanNotif = "{$namaUser} telah memberikan komentar pada pengajuan KAP dengan kode {$request->kode_pembelajaran}";
 
             if (env('SEND_NOTIFICATIONS', false)) {
                 // get data user user
@@ -91,7 +92,7 @@ class ReplyController extends Controller
                         // insert ke table notification
                         DB::table('notifications')->insert([
                             'user_id' => $user->id,
-                            'message' => $pesan,
+                            'message' => $pesanNotif,
                             'is_read' => false,
                             'created_at' => now(),
                             'updated_at' => now(),
