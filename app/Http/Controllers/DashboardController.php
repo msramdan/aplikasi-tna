@@ -27,12 +27,26 @@ class DashboardController extends Controller
         // Menghitung total lokasi
         $countTotalLokasi = is_array($totalLokasi) ? count($totalLokasi) : 0;
 
+        // Mengambil tahun yang dipilih dari query string
+        $tahunSelected = $request->query('tahun');
+        if ($tahunSelected != null) {
+            $tahun = $tahunSelected;
+        } else {
+            $jadwalKapTahunan = DB::table('jadwal_kap_tahunan')
+                ->orderBy('id', 'desc')
+                ->first();
+            $tahun = $jadwalKapTahunan ? $jadwalKapTahunan->tahun : date('Y');
+        }
+
         // Daftar status default yang ingin ditampilkan
         $defaultStatuses = ['Pending', 'Revision', 'Process', 'Approved', 'Rejected'];
 
-        // Query data status dari database
+        // Query data status dari database dengan filter tahun
         $data = DB::table('pengajuan_kap')
             ->select('status_pengajuan', DB::raw('count(*) as total'))
+            ->when($tahun, function ($query) use ($tahun) {
+                return $query->where('tahun', $tahun);
+            })
             ->groupBy('status_pengajuan')
             ->get();
 
@@ -55,6 +69,9 @@ class DashboardController extends Controller
                 DB::raw('SUM(CASE WHEN institusi_sumber = "BPKP" THEN 1 ELSE 0 END) as totalBPKP'),
                 DB::raw('SUM(CASE WHEN institusi_sumber = "Non BPKP" THEN 1 ELSE 0 END) as totalNonBPKP')
             )
+            ->when($tahunSelected, function ($query) use ($tahunSelected) {
+                return $query->where('tahun', $tahunSelected);
+            })
             ->groupBy('tahun')
             ->get();
 
@@ -71,6 +88,7 @@ class DashboardController extends Controller
         }
 
         return view('dashboard', [
+            'year' => $tahun,
             'totalUser' => $totalUser,
             'totalLokasi' => $countTotalLokasi,
             'labels' => $labels, // Labels untuk chart status

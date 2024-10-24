@@ -244,8 +244,28 @@
                                     <div class="card-header align-items-center d-flex">
                                         <h4 class="card-title mb-0 flex-grow-1">
                                             <a href="" role="button" class="text-dark"
-                                                id="btn_wo_by_type_modal">Pengusulan Pembelajaran Berdasarkan Status</a>
+                                                id="btn_wo_by_type_modal">
+                                                Pengusulan Pembelajaran Berdasarkan Status
+                                            </a>
                                         </h4>
+
+                                        <div class="ms-auto">
+                                            <select id="filterTahun" class="form-select form-select-sm"
+                                                style="width: auto;">
+                                                <option value="All">Semua Tahun</option>
+                                                @php
+                                                    $startYear = 2023;
+                                                    $currentYear = date('Y');
+                                                    $endYear = $currentYear + 2;
+                                                @endphp
+                                                @foreach (range($startYear, $endYear) as $yearOption)
+                                                    <option value="{{ $yearOption }}"
+                                                        {{ $yearOption == $year ? 'selected' : '' }}>
+                                                        {{ $yearOption }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
                                     <div class="card-body"
                                         style="display: flex; justify-content: center; align-items: center;">
@@ -253,6 +273,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-xl-6 col-md-6">
                                 <div class="card" style="height: 500px">
                                     <div class="card-header align-items-center d-flex">
@@ -400,6 +421,23 @@
                     }
                 }
             }
+        });
+
+        // Event listener untuk filter tahun
+        $('#filterTahun').change(function() {
+            var selectedYear = $(this).val(); // Ambil nilai tahun yang dipilih
+            var url = new URL(window.location.href); // Ambil URL saat ini
+
+            // Hapus parameter tahun yang ada (jika ada)
+            url.searchParams.delete('tahun');
+
+            // Tambahkan parameter tahun baru
+            if (selectedYear !== 'All') {
+                url.searchParams.append('tahun', selectedYear);
+            }
+
+            // Redirect ke URL baru
+            window.location.href = url.toString();
         });
     </script>
 
