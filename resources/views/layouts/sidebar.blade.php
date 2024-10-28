@@ -11,13 +11,13 @@
             </li>
             @canany(['kompetensi view', 'rumpun pembelajaran view', 'topik view', 'lokasi view'])
                 <li class="nav-item">
-                    <a class="nav-link menu-link {{ request()->routeIs('kompetensi*', 'rumpun-pembelajaran*', 'topik*','lokasi*') ? 'active' : '' }}"
+                    <a class="nav-link menu-link {{ request()->routeIs('kompetensi*', 'rumpun-pembelajaran*', 'topik*', 'lokasi*') ? 'active' : '' }}"
                         href="#sidebarMasterData" data-bs-toggle="collapse" role="button"
-                        aria-expanded="{{ request()->routeIs('kompetensi*', 'rumpun-pembelajaran*', 'topik*','lokasi*') ? 'true' : 'false' }}"
+                        aria-expanded="{{ request()->routeIs('kompetensi*', 'rumpun-pembelajaran*', 'topik*', 'lokasi*') ? 'true' : 'false' }}"
                         aria-controls="sidebarMasterData">
                         <i class="fa fa-list"></i> <span data-key="t-forms">Master Data</span>
                     </a>
-                    <div class="collapse menu-dropdown {{ request()->routeIs('kompetensi*', 'rumpun-pembelajaran*', 'topik*','lokasi*') ? 'show' : '' }}"
+                    <div class="collapse menu-dropdown {{ request()->routeIs('kompetensi*', 'rumpun-pembelajaran*', 'topik*', 'lokasi*') ? 'show' : '' }}"
                         id="sidebarMasterData">
                         <ul class="nav nav-sm flex-column">
                             @can('kompetensi view')
@@ -63,48 +63,83 @@
                     <div class="collapse menu-dropdown {{ request()->routeIs('tagging-pembelajaran-kompetensi*', 'tagging-kompetensi-ik*') ? 'show' : '' }}"
                         id="sidebarMultilevel">
                         <ul class="nav nav-sm flex-column">
-                            @can('tagging pembelajaran kompetensi view')
-                                <li class="nav-item">
-                                    <a href="{{ route('tagging-pembelajaran-kompetensi.index') }}"
-                                        class="nav-link {{ request()->routeIs('tagging-pembelajaran-kompetensi*') ? 'active' : '' }}"
-                                        data-key="t-level-1.1">{{ __('sidebar.learning_competency_tag') }}</a>
-                                </li>
-                            @endcan
-                            @can('tagging kompetensi ik view')
-                                <li class="nav-item">
-                                    <a href="#taggingKompetensiIk"
-                                        class="nav-link {{ request()->routeIs('tagging-kompetensi-ik*') ? 'active' : '' }}"
-                                        data-bs-toggle="collapse" role="button"
-                                        aria-expanded="{{ request()->routeIs('tagging-kompetensi-ik*') ? 'true' : 'false' }}"
-                                        aria-controls="taggingKompetensiIk"
-                                        data-key="t-level-1.2">{{ __('sidebar.competency_ik_tag') }}</a>
-                                    <div class="collapse menu-dropdown {{ request()->routeIs('tagging-kompetensi-ik*') ? 'show' : '' }}"
-                                        id="taggingKompetensiIk">
-                                        <ul class="nav nav-sm flex-column">
-                                            <li class="nav-item">
-                                                <a href="{{ route('tagging-kompetensi-ik', ['type' => 'renstra']) }}"
-                                                    class="nav-link {{ (request()->segment(1) === 'tagging-kompetensi-ik' && request()->segment(2) === 'renstra') || (request()->segment(1) === 'tagging-kompetensi-ik' && request()->segment(3) === 'renstra') ? 'active' : '' }}"
-                                                    data-key="t-level-2.1">{{ __('sidebar.renstra') }}</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a href="{{ route('tagging-kompetensi-ik', ['type' => 'app']) }}"
-                                                    class="nav-link {{ (request()->segment(1) === 'tagging-kompetensi-ik' && request()->segment(2) === 'app') || (request()->segment(1) === 'tagging-kompetensi-ik' && request()->segment(3) === 'app') ? 'active' : '' }}"
-                                                    data-key="t-level-2.1">{{ __('sidebar.app') }}</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a href="{{ route('tagging-kompetensi-ik', ['type' => 'apep']) }}"
-                                                    class="nav-link {{ (request()->segment(1) === 'tagging-kompetensi-ik' && request()->segment(2) === 'apep') || (request()->segment(1) === 'tagging-kompetensi-ik' && request()->segment(3) === 'apep') ? 'active' : '' }}"
-                                                    data-key="t-level-2.1">{{ __('sidebar.apep') }}</a>
-                                            </li>
-                                            {{-- <li class="nav-item">
-                                                <a href="{{ route('tagging-kompetensi-ik', ['type' => 'apip']) }}"
-                                                    class="nav-link {{ (request()->segment(1) === 'tagging-kompetensi-ik' && request()->segment(2) === 'apip') || (request()->segment(1) === 'tagging-kompetensi-ik' && request()->segment(3) === 'apip') ? 'active' : '' }}"
-                                                    data-key="t-level-2.1">{{ __('sidebar.apip') }}</a>
-                                            </li> --}}
-                                        </ul>
-                                    </div>
-                                </li>
-                            @endcan
+                            @if (env('REVERSE_TAGGING', false) === false)
+                                @can('tagging pembelajaran kompetensi view')
+                                    <li class="nav-item">
+                                        <a href="{{ route('tagging-pembelajaran-kompetensi.index') }}"
+                                            class="nav-link {{ request()->routeIs('tagging-pembelajaran-kompetensi*') ? 'active' : '' }}"
+                                            data-key="t-level-1.1">{{ __('sidebar.learning_competency_tag') }}</a>
+                                    </li>
+                                @endcan
+                                @can('tagging kompetensi ik view')
+                                    <li class="nav-item">
+                                        <a href="#taggingKompetensiIk"
+                                            class="nav-link {{ request()->routeIs('tagging-kompetensi-ik*') ? 'active' : '' }}"
+                                            data-bs-toggle="collapse" role="button"
+                                            aria-expanded="{{ request()->routeIs('tagging-kompetensi-ik*') ? 'true' : 'false' }}"
+                                            aria-controls="taggingKompetensiIk"
+                                            data-key="t-level-1.2">{{ __('sidebar.competency_ik_tag') }}</a>
+                                        <div class="collapse menu-dropdown {{ request()->routeIs('tagging-kompetensi-ik*') ? 'show' : '' }}"
+                                            id="taggingKompetensiIk">
+                                            <ul class="nav nav-sm flex-column">
+                                                <li class="nav-item">
+                                                    <a href="{{ route('tagging-kompetensi-ik', ['type' => 'renstra']) }}"
+                                                        class="nav-link {{ (request()->segment(1) === 'tagging-kompetensi-ik' && request()->segment(2) === 'renstra') || (request()->segment(1) === 'tagging-kompetensi-ik' && request()->segment(3) === 'renstra') ? 'active' : '' }}"
+                                                        data-key="t-level-2.1">{{ __('sidebar.renstra') }}</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="{{ route('tagging-kompetensi-ik', ['type' => 'app']) }}"
+                                                        class="nav-link {{ (request()->segment(1) === 'tagging-kompetensi-ik' && request()->segment(2) === 'app') || (request()->segment(1) === 'tagging-kompetensi-ik' && request()->segment(3) === 'app') ? 'active' : '' }}"
+                                                        data-key="t-level-2.1">{{ __('sidebar.app') }}</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="{{ route('tagging-kompetensi-ik', ['type' => 'apep']) }}"
+                                                        class="nav-link {{ (request()->segment(1) === 'tagging-kompetensi-ik' && request()->segment(2) === 'apep') || (request()->segment(1) === 'tagging-kompetensi-ik' && request()->segment(3) === 'apep') ? 'active' : '' }}"
+                                                        data-key="t-level-2.1">{{ __('sidebar.apep') }}</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                @endcan
+                            @else
+                                @can('tagging pembelajaran kompetensi view')
+                                    <li class="nav-item">
+                                        <a href="#taggingKompetensiIk"
+                                            class="nav-link {{ request()->routeIs('tagging-kompetensi-ik*') ? 'active' : '' }}"
+                                            data-bs-toggle="collapse" role="button"
+                                            aria-expanded="{{ request()->routeIs('tagging-kompetensi-ik*') ? 'true' : 'false' }}"
+                                            aria-controls="taggingKompetensiIk" data-key="t-level-1.2">Tag IK & Kompetensi</a>
+                                        <div class="collapse menu-dropdown {{ request()->routeIs('tagging-kompetensi-ik*') ? 'show' : '' }}"
+                                            id="taggingKompetensiIk">
+                                            <ul class="nav nav-sm flex-column">
+                                                <li class="nav-item">
+                                                    <a href="{{ route('tagging-kompetensi-ik', ['type' => 'renstra']) }}"
+                                                        class="nav-link {{ (request()->segment(1) === 'tagging-kompetensi-ik' && request()->segment(2) === 'renstra') || (request()->segment(1) === 'tagging-kompetensi-ik' && request()->segment(3) === 'renstra') ? 'active' : '' }}"
+                                                        data-key="t-level-2.1">{{ __('sidebar.renstra') }}</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="{{ route('tagging-kompetensi-ik', ['type' => 'app']) }}"
+                                                        class="nav-link {{ (request()->segment(1) === 'tagging-kompetensi-ik' && request()->segment(2) === 'app') || (request()->segment(1) === 'tagging-kompetensi-ik' && request()->segment(3) === 'app') ? 'active' : '' }}"
+                                                        data-key="t-level-2.1">{{ __('sidebar.app') }}</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="{{ route('tagging-kompetensi-ik', ['type' => 'apep']) }}"
+                                                        class="nav-link {{ (request()->segment(1) === 'tagging-kompetensi-ik' && request()->segment(2) === 'apep') || (request()->segment(1) === 'tagging-kompetensi-ik' && request()->segment(3) === 'apep') ? 'active' : '' }}"
+                                                        data-key="t-level-2.1">{{ __('sidebar.apep') }}</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                @endcan
+
+                                @can('tagging kompetensi ik view')
+                                    <li class="nav-item">
+                                        <a href="{{ route('tagging-pembelajaran-kompetensi.index') }}"
+                                            class="nav-link {{ request()->routeIs('tagging-pembelajaran-kompetensi*') ? 'active' : '' }}"
+                                            data-key="t-level-1.1"> Tag Kompetensi & Pembelajaran</a>
+                                    </li>
+                                @endcan
+                            @endif
                         </ul>
                     </div>
                 </li>
@@ -250,12 +285,12 @@
                                 </li>
                             @endcan
                             @can('pengumuman view')
-                            <li class="nav-item">
-                                <a href="{{ route('pengumuman.index') }}"
-                                    class="nav-link {{ request()->routeIs('pengumuman*') ? 'active' : '' }}"
-                                    data-key="t-basic-elements">Pengumuman</a>
-                            </li>
-                        @endcan
+                                <li class="nav-item">
+                                    <a href="{{ route('pengumuman.index') }}"
+                                        class="nav-link {{ request()->routeIs('pengumuman*') ? 'active' : '' }}"
+                                        data-key="t-basic-elements">Pengumuman</a>
+                                </li>
+                            @endcan
                             @can('activity log view')
                                 <li class="nav-item">
                                     <a href="{{ route('activity-log.index') }}"
