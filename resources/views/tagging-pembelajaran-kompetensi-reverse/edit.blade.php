@@ -16,7 +16,7 @@
                                 </li>
                                 <li class="breadcrumb-item">
                                     <a
-                                        href="{{ route('tagging-pembelajaran-kompetensi.index') }}">Tagging kompetensi pembelajaran</a>
+                                        href="{{ route('tagging-kompetensi-pembelajaran.index') }}">Tagging kompetensi pembelajaran</a>
                                 </li>
                                 <li class="breadcrumb-item active" aria-current="page">
                                     {{ __('tagging-pembelajaran-kompetensi/edit.edit') }}
@@ -42,7 +42,7 @@
                     <div class="card">
                         <div class="card-body">
                             <form method="POST"
-                                action="{{ route('tagging-pembelajaran-kompetensi.update', ['id' => $kompetensi->id]) }}"
+                                action="{{ route('tagging-kompetensi-pembelajaran.update', ['id' => $kompetensi->id]) }}"
                                 onsubmit="selectAllAssigned()">
                                 @csrf
                                 @method('POST')
@@ -51,8 +51,8 @@
                                         <input type="text" id="search-available" class="form-control mb-2"
                                             placeholder="{{ __('tagging-pembelajaran-kompetensi/edit.search_available') }}">
                                         <select id="available" class="form-control" multiple size="20">
-                                            @foreach ($availableItems as $id => $nama_topik)
-                                                <option value="{{ $id }}">{{ $nama_topik }}</option>
+                                            @foreach ($availableItems as $id => $nama_kompetensi)
+                                                <option value="{{ $id }}">{{ $nama_kompetensi }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -68,8 +68,8 @@
                                             placeholder="{{ __('tagging-pembelajaran-kompetensi/edit.search_assigned') }}">
                                         <select id="assigned" class="form-control @error('message') is-invalid @enderror"
                                             multiple size="20" name="assigned[]">
-                                            @foreach ($assignedItems as $id => $nama_topik)
-                                                <option value="{{ $id }}">{{ $nama_topik }}</option>
+                                            @foreach ($assignedItems as $id => $nama_kompetensi)
+                                                <option value="{{ $id }}">{{ $nama_kompetensi }}</option>
                                             @endforeach
                                         </select>
                                         @error('message')
@@ -79,7 +79,7 @@
                                     </div>
                                 </div>
                                 <div class="mt-3">
-                                    <a href="{{ route('tagging-pembelajaran-kompetensi.index') }}"
+                                    <a href="{{ route('tagging-kompetensi-pembelajaran.index') }}"
                                         class="btn btn-secondary">
                                         <i class="mdi mdi-arrow-left-thin"></i> {{ __('tagging-pembelajaran-kompetensi/edit.back') }}
                                     </a>

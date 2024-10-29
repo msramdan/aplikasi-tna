@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('Tagging Kompetensi - IK ') . strtoupper(Request::segment(2)))
+@section('title', __('tagging-pembelajaran-kompetensi/index.title'))
 
 @push('css')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
@@ -15,7 +15,6 @@
             width: 100%;
             height: 100%;
             background: rgba(255, 255, 255, 0.8);
-            /* Transparan white background */
             z-index: 1000;
             text-align: center;
         }
@@ -66,17 +65,17 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Import Tagging Kompetensi - IK </h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Import tagging kompetensi - pembelajaran</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form method="POST" action="{{ route('importTaggingKompetensiIk', ['type' => request()->segment(2)]) }}"
+                <form method="POST" action="{{ route('importTaggingKompetensiPembelajaran') }}"
                     enctype="multipart/form-data">
                     <div class="modal-body">
                         @csrf
                         <div class="mb-3">
-                            <input type="file" class="form-control" id="import_tagging_kompetensi_ik"
-                                name="import_tagging_kompetensi_ik" aria-describedby="import_tagging_kompetensi_ik"
-                                accept=".xlsx" required>
+                            <input type="file" class="form-control" id="import_tagging_pembelajaran_kompetensi"
+                                name="import_tagging_pembelajaran_kompetensi"
+                                aria-describedby="import_tagging_pembelajaran_kompetensi" accept=".xlsx" required>
                             <div id="downloadFormat" class="form-text">
                                 <a href="#">
                                     <i class="fa fa-download" aria-hidden="true"></i>
@@ -100,9 +99,7 @@
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tagging Kompetensi - IK
-                        {{ strtoupper(Request::segment(2)) }}</h5>
-
+                    <h5 class="modal-title" id="exampleModalLabel">TAGGING KOMPETENSI PEMBELAJARAN</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <hr>
@@ -120,7 +117,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary"
+                        data-bs-dismiss="modal">{{ __('tagging-pembelajaran-kompetensi/index.close') }}</button>
                 </div>
             </div>
         </div>
@@ -140,16 +138,15 @@
                 @endif
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">{{ __('Tagging Kompetensi - IK ') }}{{ strtoupper(Request::segment(2)) }}</h4>
-
+                        <h4 class="mb-sm-0">Tagging kompetensi pembelajaran</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="/panel">Dashboard</a></li>
+                                <li class="breadcrumb-item"><a
+                                        href="/panel">{{ __('tagging-pembelajaran-kompetensi/index.dashboard') }}</a></li>
                                 <li class="breadcrumb-item active">
-                                    {{ __('Tagging Kompetensi - IK ') }}{{ strtoupper(Request::segment(2)) }}</li>
+                                    Tagging kompetensi pembelajaran</li>
                             </ol>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -161,10 +158,8 @@
                                 data-bs-target="#exampleModal">
                                 <i class='fa fa-upload'></i> Import data
                             </button>
-
                             <button id="btnExport" class="btn btn-success">
-                                <i class='fas fa-file-excel'></i>
-                                {{ __('Export data') }}
+                                <i class='fas fa-file-excel'></i> Export data
                             </button>
                         </div>
 
@@ -174,9 +169,9 @@
                                     <thead class="table-dark">
                                         <tr>
                                             <th>#</th>
-                                            <th>{{ __('Kompetensi') }}</th>
-                                            <th>{{ __('Tagging IK') }} {{ strtoupper(Request::segment(2)) }}</th>
-                                            <th>{{ __('Action') }}</th>
+                                            <th>Kompetensi</th>
+                                            <th>Tagging Pembelajaran</th>
+                                            <th>{{ __('tagging-pembelajaran-kompetensi/index.action') }}</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -192,16 +187,10 @@
 @push('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.all.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $('.select2-form').select2();
-        });
-    </script>
-    <script>
-        var type = window.location.pathname.split('/')[2];
         $('#data-table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('tagging-kompetensi-ik', ['type' => ':type']) }}".replace(':type', type),
+            ajax: "{{ route('tagging-kompetensi-pembelajaran.index') }}",
             columns: [{
                     data: 'DT_RowIndex',
                     name: 'DT_RowIndex',
@@ -223,27 +212,22 @@
                     searchable: false
                 }
             ],
-
             drawCallback: function() {
                 $('.btn-detail-tagging').click(function() {
                     var id = $(this).data('id');
-                    var nama_kompetensi = $(this).data('nama_kompetensi');
-                    var type = $(this).data('type');
-
+                    var kompetensi = $(this).data('kompetensi');
                     var csrfToken = $('meta[name="csrf-token"]').attr('content');
                     $('#loading-overlay').show();
                     $.ajax({
                         type: "GET",
-                        url: '{{ route('detailTaggingKompetensiIk') }}',
+                        url: '{{ route('detailTaggingKompetensiPembelajaran') }}',
                         data: {
                             id: id,
-                            type: type,
                             _token: csrfToken
                         },
                         success: function(response) {
                             $('#loading-overlay').hide();
 
-                            // Cek apakah response success bernilai false
                             if (!response.success) {
                                 Swal.fire({
                                     icon: 'warning',
@@ -254,25 +238,23 @@
                             }
 
                             $('#modalDetailTagging').modal('show');
-                            $('#modalKompetensi').text(nama_kompetensi);
+                            $('#modalKompetensi').text(kompetensi);
 
-                            // Mendefinisikan variabel untuk menyimpan HTML tabel
                             var tableHtml =
                                 '<div class="table-responsive p-1"><table class="table table-striped">';
                             tableHtml += '<thead>';
                             tableHtml += '<tr>';
-                            tableHtml += '<th>No</th>'; // Kolom untuk nomor urut
-                            tableHtml += '<th>Indikator kinerja</th>';
+                            tableHtml += '<th>No</th>';
+                            tableHtml +=
+                                '<th>Pembelajaran</th>';
                             tableHtml += '</tr>';
                             tableHtml += '</thead>';
                             tableHtml += '<tbody></div>';
 
-                            // Iterasi melalui data dan membangun baris-baris tabel
                             $.each(response.data, function(index, item) {
                                 tableHtml += '<tr>';
-                                tableHtml += '<td>' + (index + 1) +
-                                    '</td>'; // Menampilkan nomor urut
-                                tableHtml += '<td>' + item.indikator_kinerja +
+                                tableHtml += '<td>' + (index + 1) + '</td>';
+                                tableHtml += '<td>' + item.nama_topik +
                                     '</td>';
                                 tableHtml += '</tr>';
                             });
@@ -280,26 +262,23 @@
                             tableHtml += '</tbody>';
                             tableHtml += '</table>';
 
-                            // Menambahkan HTML tabel ke dalam modal body
                             $('.modal-body-detail').html(tableHtml);
                         },
                         error: function(error) {
                             $('#loading-overlay').hide();
                             Swal.fire({
                                 icon: 'error',
-                                title: 'Error',
-                                text: 'Terjadi kesalahan saat mengambil data.',
+                                title: '{{ __('tagging-pembelajaran-kompetensi/index.error_title') }}',
+                                text: '{{ __('tagging-pembelajaran-kompetensi/index.error_message') }}',
                             });
                             console.error('Error:', error);
                         },
                     });
                 });
             }
-
         });
     </script>
-
-    {{-- Export data --}}
+    {{-- export data --}}
     <script>
         $(document).on('click', '#btnExport', function(event) {
             event.preventDefault();
@@ -307,12 +286,12 @@
         });
 
         var exportData = function() {
-            var type = window.location.pathname.split('/')[2];
+            var url = '/exportTagKompetensiPembelajaran';
             $.ajax({
-                url: "{{ route('export-tagging-kompetensi-ik', ['type' => ':type']) }}".replace(':type', type),
+                url: url,
                 type: 'GET',
                 headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 },
                 data: {},
                 xhrFields: {
@@ -320,8 +299,8 @@
                 },
                 beforeSend: function() {
                     Swal.fire({
-                        title: '{{ __('topik/index.please_wait') }}',
-                        html: '{{ __('topik/index.exporting_data') }}',
+                        title: '{{ __('tagging-pembelajaran-kompetensi/index.please_wait') }}',
+                        html: '{{ __('tagging-pembelajaran-kompetensi/index.exporting') }}',
                         allowOutsideClick: false,
                         onBeforeOpen: () => {
                             Swal.showLoading()
@@ -331,18 +310,16 @@
                 success: function(data) {
                     var link = document.createElement('a');
                     link.href = window.URL.createObjectURL(data);
-                    var nameFile = 'tagging_kompetensi_indikator_kerja_' + type + '.xlsx';
-                    console.log(nameFile);
+                    var nameFile = 'tagging_pembelajaran_kompetensi.xlsx';
                     link.download = nameFile;
                     link.click();
                     swal.close();
                 },
                 error: function(data) {
-                    console.log(data);
                     Swal.fire({
                         icon: 'error',
-                        title: "{{ __('topik/index.export_failed') }}",
-                        text: "{{ __('topik/index.check_data') }}",
+                        title: '{{ __('tagging-pembelajaran-kompetensi/index.export_failed_title') }}',
+                        text: '{{ __('tagging-pembelajaran-kompetensi/index.export_failed_message') }}',
                         allowOutsideClick: false,
                     });
                 }
@@ -358,10 +335,9 @@
         });
 
         var downloadFormat = function() {
-            var type = window.location.pathname.split('/')[2];
+            var url = '../download-format-tagging-kompetensi-pembelajaran';
             $.ajax({
-                url: "{{ route('download-format-tagging-kompetensi-ik', ['type' => ':type']) }}".replace(
-                    ':type', type),
+                url: url,
                 type: 'GET',
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -384,7 +360,7 @@
                 success: function(data) {
                     var link = document.createElement('a');
                     link.href = window.URL.createObjectURL(data);
-                    var nameFile = 'format_import_tagging_kompetensi_indikator_kerja_' + type + '.xlsx';
+                    var nameFile = 'format_import_tagging_pembelajaran_kompetensi.xlsx'
                     link.download = nameFile;
                     link.click();
                     swal.close()

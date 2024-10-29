@@ -1,6 +1,5 @@
 @extends('layouts.app')
-
-@section('title', __('tagging-pembelajaran-kompetensi/edit.title'))
+@section('title', __('Edit Kompetensi - IK ') . $type)
 
 @section('content')
     <div class="page-content">
@@ -8,7 +7,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">Tagging kompetensi pembelajaran</h4>
+                        <h4 class="mb-sm-0">{{ __('Tagging Kompetensi - IK ') }}{{ $type }}</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item">
@@ -16,10 +15,10 @@
                                 </li>
                                 <li class="breadcrumb-item">
                                     <a
-                                        href="{{ route('tagging-pembelajaran-kompetensi.index') }}">Tagging kompetensi pembelajaran</a>
+                                        href="{{ route('tagging-pembelajaran-kompetensi.index') }}">{{ __('Tagging Kompetensi - IK ') }}{{ $type }}</a>
                                 </li>
                                 <li class="breadcrumb-item active" aria-current="page">
-                                    {{ __('tagging-pembelajaran-kompetensi/edit.edit') }}
+                                    {{ __('Edit') }}
                                 </li>
                             </ol>
                         </div>
@@ -42,17 +41,25 @@
                     <div class="card">
                         <div class="card-body">
                             <form method="POST"
-                                action="{{ route('tagging-pembelajaran-kompetensi.update', ['id' => $kompetensi->id]) }}"
+                                action="{{ route('tagging-kompetensi-ik.update', ['id' => $kompetensi->id, 'type' => $type]) }}"
                                 onsubmit="selectAllAssigned()">
                                 @csrf
                                 @method('POST')
                                 <div class="row">
                                     <div class="col-md-5">
                                         <input type="text" id="search-available" class="form-control mb-2"
-                                            placeholder="{{ __('tagging-pembelajaran-kompetensi/edit.search_available') }}">
+                                            placeholder="Search for available">
                                         <select id="available" class="form-control" multiple size="20">
-                                            @foreach ($availableItems as $id => $nama_topik)
-                                                <option value="{{ $id }}">{{ $nama_topik }}</option>
+                                            @foreach ($availableItems as $item)
+                                                @if ($type === 'renstra')
+                                                    <option value="{{ $item['indikator_kinerja'] }}">
+                                                        {{ $item['indikator_kinerja'] }}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $item['nama_topik'] }}">
+                                                        {{ $item['nama_topik'] }}
+                                                    </option>
+                                                @endif
                                             @endforeach
                                         </select>
                                     </div>
@@ -65,11 +72,11 @@
                                     <div class="col-md-5">
                                         <input type="text" id="search-assigned"
                                             class="form-control mb-2 @error('message') is-invalid @enderror"
-                                            placeholder="{{ __('tagging-pembelajaran-kompetensi/edit.search_assigned') }}">
+                                            placeholder="Search for assigned">
                                         <select id="assigned" class="form-control @error('message') is-invalid @enderror"
                                             multiple size="20" name="assigned[]">
-                                            @foreach ($assignedItems as $id => $nama_topik)
-                                                <option value="{{ $id }}">{{ $nama_topik }}</option>
+                                            @foreach ($assignedItems as $id => $indikator_kinerja)
+                                                <option value="{{ $indikator_kinerja }}">{{ $indikator_kinerja }}</option>
                                             @endforeach
                                         </select>
                                         @error('message')
@@ -79,12 +86,12 @@
                                     </div>
                                 </div>
                                 <div class="mt-3">
-                                    <a href="{{ route('tagging-pembelajaran-kompetensi.index') }}"
+                                    <a href="{{ route('tagging-kompetensi-ik', ['type' => $type]) }}"
                                         class="btn btn-secondary">
-                                        <i class="mdi mdi-arrow-left-thin"></i> {{ __('tagging-pembelajaran-kompetensi/edit.back') }}
+                                        <i class="fa fa-arrow-left" aria-hidden="true"></i> {{ __('Kembali') }}
                                     </a>
                                     <button type="submit" class="btn btn-primary">
-                                        <i class="mdi mdi-content-save"></i> {{ __('tagging-pembelajaran-kompetensi/edit.update') }}
+                                        <i class="mdi mdi-content-save"></i> {{ __('Update') }}
                                     </button>
                                 </div>
                             </form>

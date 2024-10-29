@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('Tagging Kompetensi - IK ') . strtoupper(Request::segment(2)))
+@section('title', __('Tagging IK - Kompetensi  ') . strtoupper(Request::segment(2)))
 
 @push('css')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
@@ -66,7 +66,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Import Tagging Kompetensi - IK </h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Import Tagging IK - Kompetensi </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form method="POST" action="{{ route('importTaggingKompetensiIk', ['type' => request()->segment(2)]) }}"
@@ -100,7 +100,7 @@
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tagging Kompetensi - IK
+                    <h5 class="modal-title" id="exampleModalLabel">Tagging IK- Kompetensi
                         {{ strtoupper(Request::segment(2)) }}</h5>
 
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -140,13 +140,13 @@
                 @endif
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">{{ __('Tagging Kompetensi - IK ') }}{{ strtoupper(Request::segment(2)) }}</h4>
+                        <h4 class="mb-sm-0">{{ __('Tagging IK - Kompetensi  ') }}{{ strtoupper(Request::segment(2)) }}</h4>
 
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="/panel">Dashboard</a></li>
                                 <li class="breadcrumb-item active">
-                                    {{ __('Tagging Kompetensi - IK ') }}{{ strtoupper(Request::segment(2)) }}</li>
+                                    {{ __('Tagging IK - Kompetensi  ') }}{{ strtoupper(Request::segment(2)) }}</li>
                             </ol>
                         </div>
 
@@ -156,7 +156,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card">
-                        <div class="card-header">
+                        {{-- <div class="card-header">
                             <button type="button" class="btn btn-warning" data-bs-toggle="modal"
                                 data-bs-target="#exampleModal">
                                 <i class='fa fa-upload'></i> Import data
@@ -166,7 +166,7 @@
                                 <i class='fas fa-file-excel'></i>
                                 {{ __('Export data') }}
                             </button>
-                        </div>
+                        </div> --}}
 
                         <div class="card-body">
                             <div class="table-responsive p-1">
