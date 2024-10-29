@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ExportTaggingPembelakaranKompetensiReverse;
 use App\FormatImport\GenerateTaggingPembelajaranKompetensiMultiSheetReverse;
-use App\Imports\ImportTaggingMultiSheet;
+use App\Imports\ImportTaggingMultiSheetReverse;
 use App\Http\Requests\ImportTaggingPembelajaranKompetensiRequest;
 use Yajra\DataTables\Facades\DataTables;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -169,7 +169,6 @@ class TaggingPembelajaranKompetensiReverseController extends Controller
         }
     }
 
-
     public function exportTagKompetensiPembelajaran()
     {
         $date = date('d-m-Y');
@@ -186,8 +185,8 @@ class TaggingPembelajaranKompetensiReverseController extends Controller
 
     public function importTaggingKompetensiPembelajaran(ImportTaggingPembelajaranKompetensiRequest $request)
     {
-        Excel::import(new ImportTaggingMultiSheet, $request->file('import_tagging_pembelajaran_kompetensi'));
-        Alert::toast('Tagging pembelajaran - kompetensi has been successfully imported.', 'success');
+        Excel::import(new ImportTaggingMultiSheetReverse, $request->file('import_tagging_pembelajaran_kompetensi'));
+        Alert::toast('Tagging kompetensi - kompetensi has been successfully imported.', 'success');
         return back();
     }
 }
