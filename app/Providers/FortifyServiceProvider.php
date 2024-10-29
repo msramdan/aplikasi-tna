@@ -86,6 +86,7 @@ class FortifyServiceProvider extends ServiceProvider
                     }
 
                     Auth::login($user, $request->filled('remember'));
+                    session(['api_token' => $data['data']['token']]);
                     return $user;
                 }
 

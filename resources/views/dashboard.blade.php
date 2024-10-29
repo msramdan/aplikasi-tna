@@ -527,7 +527,7 @@
             data: {
                 labels: @json($labelsTanggal),
                 datasets: [{
-                    label: 'BPKP',
+                    label: 'Visitor',
                     data: @json($totalVisitor),
                     borderColor: 'rgba(75, 192, 192, 1)',
                     backgroundColor: 'rgba(75, 192, 192, 0.2)',

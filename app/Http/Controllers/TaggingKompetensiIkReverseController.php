@@ -54,7 +54,6 @@ class TaggingKompetensiIkReverseController extends Controller
                 ->rawColumns(['jumlah_tagging', 'action'])
                 ->toJson();
         }
-
         return view('tagging-kompetensi-ik-reverse.index');
     }
 

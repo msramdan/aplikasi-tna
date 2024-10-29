@@ -174,8 +174,8 @@
                                     <thead class="table-dark">
                                         <tr>
                                             <th>#</th>
-                                            <th>{{ __('Kompetensi') }}</th>
-                                            <th>{{ __('Tagging IK') }} {{ strtoupper(Request::segment(2)) }}</th>
+                                            <th>{{ __('IK') }} {{ strtoupper(Request::segment(2)) }}</th>
+                                            <th>{{ __('Tagging Kompetensi') }}</th>
                                             <th>{{ __('Action') }}</th>
                                         </tr>
                                     </thead>

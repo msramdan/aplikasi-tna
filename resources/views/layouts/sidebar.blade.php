@@ -123,13 +123,6 @@
                                     </li>
                                 @endcan
                             @else
-                                @can('tagging kompetensi ik view')
-                                    <li class="nav-item">
-                                        <a href="{{ route('tagging-kompetensi-pembelajaran.index') }}"
-                                            class="nav-link {{ request()->routeIs('tagging-kompetensi-pembelajaran*') ? 'active' : '' }}"
-                                            data-key="t-level-1.1">Tag Kompetensi & Pembelajaran</a>
-                                    </li>
-                                @endcan
                                 @can('tagging pembelajaran kompetensi view')
                                     <li class="nav-item">
                                         <a href="#taggingKompetensiIk"
@@ -157,6 +150,13 @@
                                                 </li>
                                             </ul>
                                         </div>
+                                    </li>
+                                @endcan
+                                @can('tagging kompetensi ik view')
+                                    <li class="nav-item">
+                                        <a href="{{ route('tagging-kompetensi-pembelajaran.index') }}"
+                                            class="nav-link {{ request()->routeIs('tagging-kompetensi-pembelajaran*') ? 'active' : '' }}"
+                                            data-key="t-level-1.1">Tag Kompetensi & Pembelajaran</a>
                                     </li>
                                 @endcan
                             @endif
