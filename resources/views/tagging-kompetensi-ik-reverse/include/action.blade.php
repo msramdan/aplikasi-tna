@@ -3,13 +3,13 @@
         data-nama_kompetensi="{{ $model->nama_kompetensi }}" data-type="{{ request()->segment(2) }}"><i
             class="mdi mdi-format-list-bulleted"></i></button>
     @can('tagging kompetensi ik edit')
-        <a href="{{ route('tagging-kompetensi-ik.setting', ['id' => $model->id, 'type' => request()->segment(2)]) }}"
+        <a href="{{ route('tagging-ik-kompetensi.setting', ['id' => $model->id, 'type' => request()->segment(2)]) }}"
             class="btn btn-success btn-sm">
             <i class="fa fa-tag"></i>
         </a>
     @endcan
     @can('tagging kompetensi ik delete')
-        <form action="{{ route('tagging-kompetensi-ik.destroy', ['id' => $model->id, 'type' => request()->segment(2)]) }}"
+        <form action="{{ route('tagging-ik-kompetensi.destroy', ['id' => $model->id, 'type' => request()->segment(2)]) }}"
             method="post" class="d-inline" onsubmit="return confirm('Are you sure to delete this record?')">
             @csrf
             @method('delete')

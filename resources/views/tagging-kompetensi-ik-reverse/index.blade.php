@@ -69,7 +69,7 @@
                     <h5 class="modal-title" id="exampleModalLabel">Import Tagging IK - Kompetensi </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form method="POST" action="{{ route('importTaggingKompetensiIk', ['type' => request()->segment(2)]) }}"
+                <form method="POST" action="{{ route('importTaggingIkKompetensi', ['type' => request()->segment(2)]) }}"
                     enctype="multipart/form-data">
                     <div class="modal-body">
                         @csrf
@@ -201,7 +201,7 @@
         $('#data-table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('tagging-kompetensi-ik', ['type' => ':type']) }}".replace(':type', type),
+            ajax: "{{ route('tagging-ik-kompetensi', ['type' => ':type']) }}".replace(':type', type),
             columns: [{
                     data: 'DT_RowIndex',
                     name: 'DT_RowIndex',
@@ -234,7 +234,7 @@
                     $('#loading-overlay').show();
                     $.ajax({
                         type: "GET",
-                        url: '{{ route('detailTaggingKompetensiIk') }}',
+                        url: '{{ route('detailTaggingIkKompetensi') }}',
                         data: {
                             id: id,
                             type: type,
@@ -309,7 +309,7 @@
         var exportData = function() {
             var type = window.location.pathname.split('/')[2];
             $.ajax({
-                url: "{{ route('export-tagging-kompetensi-ik', ['type' => ':type']) }}".replace(':type', type),
+                url: "{{ route('export-tagging-ik-kompetensi', ['type' => ':type']) }}".replace(':type', type),
                 type: 'GET',
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -360,7 +360,7 @@
         var downloadFormat = function() {
             var type = window.location.pathname.split('/')[2];
             $.ajax({
-                url: "{{ route('download-format-tagging-kompetensi-ik', ['type' => ':type']) }}".replace(
+                url: "{{ route('download-format-tagging-ik-kompetensi', ['type' => ':type']) }}".replace(
                     ':type', type),
                 type: 'GET',
                 headers: {

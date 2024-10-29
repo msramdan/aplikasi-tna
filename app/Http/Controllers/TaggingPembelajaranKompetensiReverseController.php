@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\ExportTaggingPembelakaranKompetensi;
-use App\FormatImport\GenerateTaggingPembelajaranKompetensiMultiSheet;
+use App\Exports\ExportTaggingPembelakaranKompetensiReverse;
+use App\FormatImport\GenerateTaggingPembelajaranKompetensiMultiSheetReverse;
 use App\Imports\ImportTaggingMultiSheet;
 use App\Http\Requests\ImportTaggingPembelajaranKompetensiRequest;
 use Yajra\DataTables\Facades\DataTables;
@@ -173,15 +173,15 @@ class TaggingPembelajaranKompetensiReverseController extends Controller
     public function exportTagKompetensiPembelajaran()
     {
         $date = date('d-m-Y');
-        $nameFile = 'tagging_pembelajaran_kompetensi ' . $date;
-        return Excel::download(new ExportTaggingPembelakaranKompetensi(), $nameFile . '.xlsx');
+        $nameFile = 'tagging_kompetensi_pembelajaran ' . $date;
+        return Excel::download(new ExportTaggingPembelakaranKompetensiReverse(), $nameFile . '.xlsx');
     }
 
     public function formatImport()
     {
         $date = date('d-m-Y');
-        $nameFile = 'format_import_tagging_pembelajaran_kompetensi' . $date;
-        return Excel::download(new GenerateTaggingPembelajaranKompetensiMultiSheet(), $nameFile . '.xlsx');
+        $nameFile = 'format_import_tagging_kompetensi_pembelajaran' . $date;
+        return Excel::download(new GenerateTaggingPembelajaranKompetensiMultiSheetReverse(), $nameFile . '.xlsx');
     }
 
     public function importTaggingKompetensiPembelajaran(ImportTaggingPembelajaranKompetensiRequest $request)

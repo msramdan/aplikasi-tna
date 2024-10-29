@@ -310,7 +310,7 @@
                 success: function(data) {
                     var link = document.createElement('a');
                     link.href = window.URL.createObjectURL(data);
-                    var nameFile = 'tagging_pembelajaran_kompetensi.xlsx';
+                    var nameFile = 'tagging_kompetensi_pembelajaran.xlsx';
                     link.download = nameFile;
                     link.click();
                     swal.close();
@@ -360,7 +360,7 @@
                 success: function(data) {
                     var link = document.createElement('a');
                     link.href = window.URL.createObjectURL(data);
-                    var nameFile = 'format_import_tagging_pembelajaran_kompetensi.xlsx'
+                    var nameFile = 'format_import_tagging_kompetensi_pembelajaran.xlsx'
                     link.download = nameFile;
                     link.click();
                     swal.close()
