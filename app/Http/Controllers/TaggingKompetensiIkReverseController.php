@@ -27,28 +27,45 @@ class TaggingKompetensiIkReverseController extends Controller
     public function index($type)
     {
         if (request()->ajax()) {
-            $taggingKompetensiIk = DB::table('kompetensi')
-                ->leftJoin('tagging_kompetensi_ik', function ($join) use ($type) {
-                    $join->on('kompetensi.id', '=', 'tagging_kompetensi_ik.kompetensi_id')
-                        ->where('tagging_kompetensi_ik.type', '=', $type);
-                })
-                ->select(
-                    'kompetensi.id as id',
-                    'kompetensi.nama_kompetensi as nama_kompetensi',
-                    DB::raw('COUNT(tagging_kompetensi_ik.id) as jumlah_tagging'),
-                    DB::raw('MIN(tagging_kompetensi_ik.id) as tagging_kompetensi_ik_id')
-                )
-                ->where('kompetensi.is_apip', '!=', 'Yes') // Tambahkan kondisi where di sini
-                ->groupBy('kompetensi.id')
-                ->get();
-            return DataTables::of($taggingKompetensiIk)
+
+            $token = session('api_token');
+            if (!$token) {
+                return redirect()->back()->with('error', 'User is not authenticated.');
+            }
+
+            $endpoints = [
+                'renstra' => '/simaren/ref-indikator-kinerja-es2',
+                'app'     => '/simaren/ref-topik-app',
+                'apep'    => '/simaren/ref-topik-apep',
+            ];
+
+            if (!array_key_exists($type, $endpoints)) {
+                return redirect()->back()->with('error', 'Invalid type provided.');
+            }
+
+
+            $endpoint = config('stara.endpoint') . $endpoints[$type];
+
+            $response = Http::withToken($token)->get($endpoint);
+            if (!$response->successful()) {
+                return redirect()->back()->with('error', 'Failed to retrieve data from the API.');
+            }
+            $apiData = $response->json();
+            $apiItems = $apiData['data'] ?? [];
+            return DataTables::of($apiItems)
                 ->addIndexColumn()
-                ->addColumn('jumlah_tagging', function ($row) {
-                    if ($row->jumlah_tagging > 0) {
-                        return '<span class="badge badge-label bg-info badge-width"><i class="mdi mdi-circle-medium"></i>' . $row->jumlah_tagging . ' Tagging</span>';
+                ->addColumn('indikator_kinerja', function ($row)  use ($type) {
+                    if ($type == 'renstra') {
+                        return $row['indikator_kinerja'] ? $row['indikator_kinerja'] : '-';
                     } else {
-                        return '<span class="badge badge-label bg-danger badge-width"><i class="mdi mdi-circle-medium"></i>0 Tagging</span>';
+                        return $row['nama_topik'] ? $row['nama_topik'] : '-';
                     }
+                })
+                ->addColumn('type', function () use ($type) {
+                    return $type;
+                })
+                ->addColumn('jumlah_tagging', function ($row) {
+                    return 0;
                 })
                 ->addColumn('action', 'tagging-kompetensi-ik-reverse.include.action')
                 ->rawColumns(['jumlah_tagging', 'action'])
@@ -56,10 +73,10 @@ class TaggingKompetensiIkReverseController extends Controller
         }
         return view('tagging-kompetensi-ik-reverse.index');
     }
-
-    public function settingTagging($id, $type)
+    public function settingTagging($indikator_kinerja, $type)
     {
-        $kompetensi = DB::table('kompetensi')->where('id', $id)->first();
+        $indikator_kinerja = str_replace('-', '/', $indikator_kinerja);
+        $kompetensi = DB::table('kompetensi')->where('id', $indikator_kinerja)->first();
         if (!$kompetensi) {
             return redirect()->back()->with('error', 'Kompetensi tidak ditemukan.');
         }
@@ -167,33 +184,26 @@ class TaggingKompetensiIkReverseController extends Controller
         return redirect('tagging-kompetensi-ik-reverse/' . $type);
     }
 
-    public function destroy($id, $type)
+    public function destroy($indikator_kinerja, $type)
     {
-        $kompetensi = DB::table('tagging_kompetensi_ik')
-            ->where('kompetensi_id', $id)
-            ->where('type', $type)
-            ->first();
-
-        if (!$kompetensi) {
-            Alert::toast('Record not found.', 'error');
-            return back();
-        }
+        $indikator_kinerja = str_replace('-', '/', $indikator_kinerja);
         DB::table('tagging_kompetensi_ik')
-            ->where('kompetensi_id', $id)
+            ->where('indikator_kinerja', $indikator_kinerja)
             ->where('type', $type)
             ->delete();
+
         Alert::toast('Tagging deleted successfully', 'success');
         return back();
     }
 
-    public function detailTaggingKompetensiIk(Request $request)
+    public function detailTaggingIkKompetensi(Request $request)
     {
-        $id = $request->id;
+        $indikator_kinerja = $request->indikator_kinerja;
         $type = $request->type;
         try {
             $dataTagging = DB::table('tagging_kompetensi_ik')
                 ->join('kompetensi', 'tagging_kompetensi_ik.kompetensi_id', '=', 'kompetensi.id')
-                ->where('tagging_kompetensi_ik.kompetensi_id', $id)
+                ->where('tagging_kompetensi_ik.indikator_kinerja', $indikator_kinerja)
                 ->where('tagging_kompetensi_ik.type', $type)
                 ->select('tagging_kompetensi_ik.*', 'kompetensi.nama_kompetensi')
                 ->get();

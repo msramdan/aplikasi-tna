@@ -248,7 +248,7 @@
                                 Swal.fire({
                                     icon: 'warning',
                                     title: 'Alert',
-                                    text: response.message,
+                                    text: `Tagging kompetensi - IK ${type} tidak ditemukan`,
                                 });
                                 return;
                             }

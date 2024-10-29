@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('Tagging IK - Kompetensi  ') . strtoupper(Request::segment(2)))
+@section('title', __('Tagging IK - Kompetensi ') . strtoupper(Request::segment(2)))
 
 @push('css')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
@@ -111,8 +111,8 @@
                     <table class="table" style="text-align: justify">
                         <tbody>
                             <tr>
-                                <th scope="row"><b>Kompetensi</b></th>
-                                <td><span id="modalKompetensi"></span></td>
+                                <th scope="row"><b>Indikator Kinerja</b></th>
+                                <td><span id="modalIndikatorKinerja"></span></td>
                             </tr>
                         </tbody>
                     </table>
@@ -156,7 +156,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card">
-                        {{-- <div class="card-header">
+                        <div class="card-header">
                             <button type="button" class="btn btn-warning" data-bs-toggle="modal"
                                 data-bs-target="#exampleModal">
                                 <i class='fa fa-upload'></i> Import data
@@ -166,7 +166,7 @@
                                 <i class='fas fa-file-excel'></i>
                                 {{ __('Export data') }}
                             </button>
-                        </div> --}}
+                        </div>
 
                         <div class="card-body">
                             <div class="table-responsive p-1">
@@ -209,8 +209,8 @@
                     searchable: false
                 },
                 {
-                    data: 'nama_kompetensi',
-                    name: 'nama_kompetensi'
+                    data: 'indikator_kinerja',
+                    name: 'indikator_kinerja'
                 },
                 {
                     data: 'jumlah_tagging',
@@ -226,8 +226,7 @@
 
             drawCallback: function() {
                 $('.btn-detail-tagging').click(function() {
-                    var id = $(this).data('id');
-                    var nama_kompetensi = $(this).data('nama_kompetensi');
+                    var indikator_kinerja = $(this).data('indikator_kinerja');
                     var type = $(this).data('type');
 
                     var csrfToken = $('meta[name="csrf-token"]').attr('content');
@@ -236,7 +235,7 @@
                         type: "GET",
                         url: '{{ route('detailTaggingIkKompetensi') }}',
                         data: {
-                            id: id,
+                            indikator_kinerja: indikator_kinerja,
                             type: type,
                             _token: csrfToken
                         },
@@ -248,13 +247,13 @@
                                 Swal.fire({
                                     icon: 'warning',
                                     title: 'Alert',
-                                    text: response.message,
+                                    text: `Tagging IK ${type} - kompetensi tidak ditemukan`,
                                 });
                                 return;
                             }
 
                             $('#modalDetailTagging').modal('show');
-                            $('#modalKompetensi').text(nama_kompetensi);
+                            $('#modalIndikatorKinerja').text(indikator_kinerja);
 
                             // Mendefinisikan variabel untuk menyimpan HTML tabel
                             var tableHtml =
@@ -272,7 +271,7 @@
                                 tableHtml += '<tr>';
                                 tableHtml += '<td>' + (index + 1) +
                                     '</td>'; // Menampilkan nomor urut
-                                tableHtml += '<td>' + item.indikator_kinerja +
+                                tableHtml += '<td>' + item.nama_kompetensi +
                                     '</td>';
                                 tableHtml += '</tr>';
                             });

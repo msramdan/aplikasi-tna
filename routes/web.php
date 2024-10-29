@@ -128,8 +128,8 @@ Route::middleware(['auth', 'web', 'check.maintenance'])->group(function () {
         // reverse
         Route::controller(TaggingKompetensiIkReverseController::class)->group(function () {
             Route::get('/tagging-ik-kompetensi/{type}', 'index')->name('tagging-ik-kompetensi');
-            Route::get('/tagging-ik-kompetensi/{id}/{type}', 'settingTagging')->name('tagging-ik-kompetensi.setting');
-            Route::delete('/tagging-ik-kompetensi/{id}/{type}', 'destroy')->name('tagging-ik-kompetensi.destroy');
+            Route::get('/tagging-ik-kompetensi/{indikator_kinerja}/{type}', 'settingTagging')->name('tagging-ik-kompetensi.setting');
+            Route::delete('/tagging-ik-kompetensi/{indikator_kinerja}/{type}', 'destroy')->name('tagging-ik-kompetensi.destroy');
             Route::post('/tagging-ik-kompetensi/update/{id}/{type}', 'updateTagging')->name('tagging-ik-kompetensi.update');
             Route::get('/detailTaggingIkKompetensi', 'detailTaggingIkKompetensi')->name('detailTaggingIkKompetensi');
             Route::get('/export-tagging-ik-kompetensi/{type}', 'exportTagKompetensiIk')->name('export-tagging-ik-kompetensi');
