@@ -288,6 +288,25 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="col-xl-12 col-md-12">
+                                <div class="card" style="height: 500px">
+                                    <div class="card-header align-items-center d-flex">
+                                        <h4 class="card-title mb-0 flex-grow-1">
+                                            Grafik Pengunjung Aplikasi Interna
+                                        </h4>
+                                        <div class="ms-auto">
+                                            <input type="month" id="tahunVisitor" class="form-control"
+                                                aria-label="Filter Bulan dan Tahun" value="{{ $tahunVisitor }}">
+                                        </div>
+                                    </div>
+                                    <div class="card-body"
+                                        style="display: flex; justify-content: center; align-items: center;">
+                                        <canvas id="myChart3"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -439,6 +458,20 @@
             // Redirect ke URL baru
             window.location.href = url.toString();
         });
+
+        $('#tahunVisitor').change(function() {
+            var selectedMonthYear = $(this).val(); // Get the selected month-year
+            var url = new URL(window.location.href); // Get current URL
+
+            // Remove any existing `tahunVisitor` parameter
+            url.searchParams.delete('tahunVisitor');
+
+            // Add the new `tahunVisitor` parameter
+            url.searchParams.append('tahunVisitor', selectedMonthYear);
+
+            // Redirect to the updated URL
+            window.location.href = url.toString();
+        });
     </script>
 
     <script>
@@ -469,6 +502,38 @@
                         fill: true,
                     }
                 ]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                },
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+
+    <script>
+        const ctx3 = document.getElementById('myChart3').getContext('2d');
+        const myChart3 = new Chart(ctx3, {
+            type: 'line',
+            data: {
+                labels: @json($labelsTanggal),
+                datasets: [{
+                    label: 'BPKP',
+                    data: @json($totalVisitor),
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderWidth: 1,
+                    // fill: true,
+                }, ]
             },
             options: {
                 plugins: {

@@ -84,15 +84,60 @@ class DashboardController extends Controller
             $totalsNonBPKP[] = $row->totalNonBPKP;
         }
 
+        // Get the selected month and year for visitor filtering
+        $tahunVisitorSelected = $request->query('tahunVisitor');
+        if ($tahunVisitorSelected != null) {
+            $tahunVisitor = $tahunVisitorSelected;
+        } else {
+            $currentYear = date('Y');
+            $currentMonth = date('m');
+            $tahunVisitor = $currentYear . '-' . $currentMonth;
+        }
+
+        // Split year and month for the query
+        [$selectedYear, $selectedMonth] = explode('-', $tahunVisitor);
+
+        // Get the number of days in the selected month
+        $isCurrentMonth = ($selectedYear == date('Y') && $selectedMonth == date('m'));
+        $daysInMonth = $isCurrentMonth ? date('d') : date('t', strtotime("$selectedYear-$selectedMonth-01"));
+
+        // Initialize labelsTanggal with all dates of the month (in Y-m-d format for querying)
+        $dates = [];
+        for ($day = 1; $day <= $daysInMonth; $day++) {
+            $dates[] = sprintf('%04d-%02d-%02d', $selectedYear, $selectedMonth, $day);
+        }
+
+        // Query daily visitor count based on `log_auth` and `Login` event within the selected month and year
+        $visitorData = DB::table('activity_log')
+            ->select(DB::raw('DATE(created_at) as date'), DB::raw('COUNT(*) as total'))
+            ->where('log_name', 'log_auth')
+            ->where('event', 'Login')
+            ->whereYear('created_at', $selectedYear)
+            ->whereMonth('created_at', $selectedMonth)
+            ->groupBy(DB::raw('DATE(created_at)'))
+            ->pluck('total', 'date'); // Pluck results to get an associative array [date => total]
+
+        // Fill totalVisitor array with login counts, defaulting to 0 where no data exists
+        $totalVisitor = [];
+        $labelsTanggal = [];
+        foreach ($dates as $date) {
+            $labelsTanggal[] = date('d-m-Y', strtotime($date)); // Convert to DD-MM-YYYY for chart display
+            $totalVisitor[] = $visitorData[$date] ?? 0; // Use query result or default to 0
+        }
+
+
         return view('dashboard', [
             'year' => $tahun,
             'totalUser' => $totalUser,
             'totalLokasi' => $countTotalLokasi,
-            'labels' => $labels, // Labels untuk chart status
-            'totals' => $totals, // Totals untuk chart status
-            'labelsTahun' => $labelsTahun, // Labels (tahun) untuk chart BPKP/Non BPKP
-            'totalsBPKP' => $totalsBPKP, // Totals BPKP berdasarkan tahun
-            'totalsNonBPKP' => $totalsNonBPKP // Totals Non BPKP berdasarkan tahun
+            'labels' => $labels,
+            'totals' => $totals,
+            'labelsTahun' => $labelsTahun,
+            'totalsBPKP' => $totalsBPKP,
+            'totalsNonBPKP' => $totalsNonBPKP,
+            'tahunVisitor' => $tahunVisitor,
+            'labelsTanggal' => $labelsTanggal,
+            'totalVisitor' => $totalVisitor,
         ]);
     }
 }
