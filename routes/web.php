@@ -123,27 +123,32 @@ Route::middleware(['auth', 'web', 'check.maintenance'])->group(function () {
             Route::post('/importTaggingPembelajaranKompetensi', 'importTaggingPembelajaranKompetensi')->name('importTaggingPembelajaranKompetensi');
         });
     }
-    Route::controller(TaggingKompetensiIkController::class)->group(function () {
-        Route::get('/tagging-kompetensi-ik/{type}', 'index')->name('tagging-kompetensi-ik');
-        Route::get('/tagging-kompetensi-ik/{id}/{type}', 'settingTagging')->name('tagging-kompetensi-ik.setting');
-        Route::delete('/tagging-kompetensi-ik/{id}/{type}', 'destroy')->name('tagging-kompetensi-ik.destroy');
-        Route::post('/tagging-kompetensi-ik/update/{id}/{type}', 'updateTagging')->name('tagging-kompetensi-ik.update');
-        Route::get('/detailTaggingKompetensiIk', 'detailTaggingKompetensiIk')->name('detailTaggingKompetensiIk');
-        Route::get('/export-tagging-kompetensi-ik/{type}', 'exportTagKompetensiIk')->name('export-tagging-kompetensi-ik');
-        Route::get('/download-format-tagging-kompetensi-ik/{type}', 'formatImport')->name('download-format-tagging-kompetensi-ik');
-        Route::post('/importTaggingKompetensiIk/{type}', 'importTaggingKompetensiIk')->name('importTaggingKompetensiIk');
-    });
-    // reverse
-    Route::controller(TaggingKompetensiIkReverseController::class)->group(function () {
-        Route::get('/tagging-ik-kompetensi/{type}', 'index')->name('tagging-ik-kompetensi');
-        Route::get('/tagging-ik-kompetensi/{id}/{type}', 'settingTagging')->name('tagging-ik-kompetensi.setting');
-        Route::delete('/tagging-ik-kompetensi/{id}/{type}', 'destroy')->name('tagging-ik-kompetensi.destroy');
-        Route::post('/tagging-ik-kompetensi/update/{id}/{type}', 'updateTagging')->name('tagging-ik-kompetensi.update');
-        Route::get('/detailTaggingKompetensiIk', 'detailTaggingKompetensiIk')->name('detailTaggingKompetensiIk');
-        Route::get('/export-tagging-ik-kompetensi/{type}', 'exportTagKompetensiIk')->name('export-tagging-ik-kompetensi');
-        Route::get('/download-format-tagging-ik-kompetensi/{type}', 'formatImport')->name('download-format-tagging-ik-kompetensi');
-        Route::post('/importTaggingKompetensiIk/{type}', 'importTaggingKompetensiIk')->name('importTaggingKompetensiIk');
-    });
+
+    if (env('REVERSE_TAGGING', false)) {
+        // reverse
+        Route::controller(TaggingKompetensiIkReverseController::class)->group(function () {
+            Route::get('/tagging-ik-kompetensi/{type}', 'index')->name('tagging-ik-kompetensi');
+            Route::get('/tagging-ik-kompetensi/{id}/{type}', 'settingTagging')->name('tagging-ik-kompetensi.setting');
+            Route::delete('/tagging-ik-kompetensi/{id}/{type}', 'destroy')->name('tagging-ik-kompetensi.destroy');
+            Route::post('/tagging-ik-kompetensi/update/{id}/{type}', 'updateTagging')->name('tagging-ik-kompetensi.update');
+            Route::get('/detailTaggingIkKompetensi', 'detailTaggingIkKompetensi')->name('detailTaggingIkKompetensi');
+            Route::get('/export-tagging-ik-kompetensi/{type}', 'exportTagKompetensiIk')->name('export-tagging-ik-kompetensi');
+            Route::get('/download-format-tagging-ik-kompetensi/{type}', 'formatImport')->name('download-format-tagging-ik-kompetensi');
+            Route::post('/importTaggingIkKompetensi/{type}', 'importTaggingIkKompetensi')->name('importTaggingIkKompetensi');
+        });
+    } else {
+        // Standard routes
+        Route::controller(TaggingKompetensiIkController::class)->group(function () {
+            Route::get('/tagging-kompetensi-ik/{type}', 'index')->name('tagging-kompetensi-ik');
+            Route::get('/tagging-kompetensi-ik/{id}/{type}', 'settingTagging')->name('tagging-kompetensi-ik.setting');
+            Route::delete('/tagging-kompetensi-ik/{id}/{type}', 'destroy')->name('tagging-kompetensi-ik.destroy');
+            Route::post('/tagging-kompetensi-ik/update/{id}/{type}', 'updateTagging')->name('tagging-kompetensi-ik.update');
+            Route::get('/detailTaggingKompetensiIk', 'detailTaggingKompetensiIk')->name('detailTaggingKompetensiIk');
+            Route::get('/export-tagging-kompetensi-ik/{type}', 'exportTagKompetensiIk')->name('export-tagging-kompetensi-ik');
+            Route::get('/download-format-tagging-kompetensi-ik/{type}', 'formatImport')->name('download-format-tagging-kompetensi-ik');
+            Route::post('/importTaggingKompetensiIk/{type}', 'importTaggingKompetensiIk')->name('importTaggingKompetensiIk');
+        });
+    }
     Route::controller(ActivityLogController::class)->group(function () {
         Route::get('/activity-log', 'index')->name('activity-log.index');
     });
