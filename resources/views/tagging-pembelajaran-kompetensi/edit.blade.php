@@ -31,8 +31,8 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="alert alert-primary" role="alert">
-                                <b>Kompetensi :</b><br>
-                                {{ $kompetensi->nama_kompetensi }}
+                                <b>Pembelajaran :</b><br>
+                                {{ $topik->nama_topik }}
                             </div>
                         </div>
                     </div>
@@ -42,7 +42,7 @@
                     <div class="card">
                         <div class="card-body">
                             <form method="POST"
-                                action="{{ route('tagging-pembelajaran-kompetensi.update', ['id' => $kompetensi->id]) }}"
+                                action="{{ route('tagging-pembelajaran-kompetensi.update', ['id' => $topik->id]) }}"
                                 onsubmit="selectAllAssigned()">
                                 @csrf
                                 @method('POST')
