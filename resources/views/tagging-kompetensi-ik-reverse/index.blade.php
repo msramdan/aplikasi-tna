@@ -100,8 +100,9 @@
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tagging IK- Kompetensi
-                        {{ strtoupper(Request::segment(2)) }}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Tagging IK {{ strtoupper(Request::segment(2)) }} -
+                        Kompetensi
+                    </h5>
 
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -140,13 +141,12 @@
                 @endif
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">{{ __('Tagging IK - Kompetensi  ') }}{{ strtoupper(Request::segment(2)) }}</h4>
+                        <h4 class="mb-sm-0">Tagging IK {{ strtoupper(Request::segment(2)) }} - Kompetensi </h4>
 
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="/panel">Dashboard</a></li>
-                                <li class="breadcrumb-item active">
-                                    {{ __('Tagging IK - Kompetensi  ') }}{{ strtoupper(Request::segment(2)) }}</li>
+                                <li class="breadcrumb-item active">Tagging IK {{ strtoupper(Request::segment(2)) }} - Kompetensi</li>
                             </ol>
                         </div>
 
@@ -261,7 +261,7 @@
                             tableHtml += '<thead>';
                             tableHtml += '<tr>';
                             tableHtml += '<th>No</th>'; // Kolom untuk nomor urut
-                            tableHtml += '<th>Indikator kinerja</th>';
+                            tableHtml += '<th>Kompetensi</th>';
                             tableHtml += '</tr>';
                             tableHtml += '</thead>';
                             tableHtml += '<tbody></div>';
@@ -330,7 +330,7 @@
                 success: function(data) {
                     var link = document.createElement('a');
                     link.href = window.URL.createObjectURL(data);
-                    var nameFile = 'tagging_kompetensi_indikator_kerja_' + type + '.xlsx';
+                    var nameFile = 'tagging_indikator_kerja_' + type + '_kompetensi.xlsx';
                     console.log(nameFile);
                     link.download = nameFile;
                     link.click();
@@ -383,7 +383,7 @@
                 success: function(data) {
                     var link = document.createElement('a');
                     link.href = window.URL.createObjectURL(data);
-                    var nameFile = 'format_import_tagging_kompetensi_indikator_kerja_' + type + '.xlsx';
+                    var nameFile = 'format_import_tagging_indikator_kerja_' + type + '_kompetensi.xlsx';
                     link.download = nameFile;
                     link.click();
                     swal.close()

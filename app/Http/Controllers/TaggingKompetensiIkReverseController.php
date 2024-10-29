@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\ExportTaggingKompetensiIk;
-use App\FormatImport\GenerateTaggingKompetensiIkMultiSheet;
+use App\Exports\ExportTaggingKompetensiIkReverse;
+use App\FormatImport\GenerateTaggingKompetensiIkMultiSheetReverse;
 use App\Http\Requests\ImportTaggingKompetensiIkRequest;
 use App\Imports\ImportTaggingIkMultiSheet;
 use Yajra\DataTables\Facades\DataTables;
@@ -220,15 +220,15 @@ class TaggingKompetensiIkReverseController extends Controller
     public function exportTagKompetensiIk($type)
     {
         $date = date('d-m-Y');
-        $nameFile = 'tagging_kompetensi_indikator_kerja_' . $type . '_' . $date;
-        return Excel::download(new ExportTaggingKompetensiIk($type), $nameFile . '.xlsx');
+        $nameFile = 'tagging_indikator_kerja_kompetensi_' . $type . '_' . $date;
+        return Excel::download(new ExportTaggingKompetensiIkReverse($type), $nameFile . '.xlsx');
     }
 
     public function formatImport($type)
     {
         $date = date('d-m-Y');
-        $nameFile = 'format_import_tagging_kompetensi_ik_' . $type . '' . $date;
-        return Excel::download(new GenerateTaggingKompetensiIkMultiSheet($type), $nameFile . '.xlsx');
+        $nameFile = 'format_import_tagging_ik_kompetensi_' . $type . '' . $date;
+        return Excel::download(new GenerateTaggingKompetensiIkMultiSheetReverse($type), $nameFile . '.xlsx');
     }
 
     public function importTaggingKompetensiIk(ImportTaggingKompetensiIkRequest $request, $type)
