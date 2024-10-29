@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\ExportTaggingKompetensiIkReverse;
 use App\FormatImport\GenerateTaggingKompetensiIkMultiSheetReverse;
 use App\Http\Requests\ImportTaggingKompetensiIkRequest;
-use App\Imports\ImportTaggingIkMultiSheet;
+use App\Imports\ImportTaggingIkMultiSheetReverse;
 use Yajra\DataTables\Facades\DataTables;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\DB;
@@ -231,10 +231,10 @@ class TaggingKompetensiIkReverseController extends Controller
         return Excel::download(new GenerateTaggingKompetensiIkMultiSheetReverse($type), $nameFile . '.xlsx');
     }
 
-    public function importTaggingKompetensiIk(ImportTaggingKompetensiIkRequest $request, $type)
+    public function importTaggingIkKompetensi(ImportTaggingKompetensiIkRequest $request, $type)
     {
-        Excel::import(new ImportTaggingIkMultiSheet($type), $request->file('import_tagging_kompetensi_ik'));
-        Alert::toast('Tagging kompetensi - IK has been successfully imported.', 'success');
+        Excel::import(new ImportTaggingIkMultiSheetReverse($type), $request->file('import_tagging_kompetensi_ik'));
+        Alert::toast('Tagging IK - Kompetensi has been successfully imported.', 'success');
         return back();
     }
 }
