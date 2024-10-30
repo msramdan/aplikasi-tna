@@ -73,62 +73,28 @@ class TaggingKompetensiIkReverseController extends Controller
         }
         return view('tagging-kompetensi-ik-reverse.index');
     }
+
     public function settingTagging($indikator_kinerja, $type)
     {
         $indikator_kinerja = str_replace('-', '/', $indikator_kinerja);
-        $kompetensi = DB::table('kompetensi')->where('id', $indikator_kinerja)->first();
-        if (!$kompetensi) {
-            return redirect()->back()->with('error', 'Kompetensi tidak ditemukan.');
-        }
 
         $assignedItems = DB::table('tagging_kompetensi_ik')
             ->join('kompetensi', 'tagging_kompetensi_ik.kompetensi_id', '=', 'kompetensi.id')
-            ->where('tagging_kompetensi_ik.kompetensi_id', $kompetensi->id)
+            ->where('tagging_kompetensi_ik.indikator_kinerja', $indikator_kinerja)
             ->where('tagging_kompetensi_ik.type', $type)
-            ->pluck('tagging_kompetensi_ik.indikator_kinerja')
-            ->toArray();
+            ->pluck('kompetensi.nama_kompetensi', 'kompetensi.id');
 
-        $token = session('api_token');
-        if (!$token) {
-            return redirect()->back()->with('error', 'User is not authenticated.');
-        }
+        $availableItems = DB::table('kompetensi')
+            ->whereNotIn('id', $assignedItems->keys())
+            ->pluck('nama_kompetensi', 'id');
 
-        $endpoints = [
-            'renstra' => '/simaren/ref-indikator-kinerja-es2',
-            'app'     => '/simaren/ref-topik-app',
-            'apep'    => '/simaren/ref-topik-apep',
-        ];
-
-        if (!array_key_exists($type, $endpoints)) {
-            return redirect()->back()->with('error', 'Invalid type provided.');
-        }
-
-        $endpoint = config('stara.endpoint') . $endpoints[$type];
-
-        $response = Http::withToken($token)->get($endpoint);
-        if (!$response->successful()) {
-            return redirect()->back()->with('error', 'Failed to retrieve data from the API.');
-        }
-
-        $apiData = $response->json();
-        $apiItems = $apiData['data'] ?? [];
-
-        $availableItems = array_filter($apiItems, function ($item) use ($assignedItems, $type) {
-            foreach ($assignedItems as $assignedItem) {
-                $searchField = $type === 'renstra' ? 'indikator_kinerja' : 'nama_topik';
-                if (strpos($item[$searchField], $assignedItem) !== false) {
-                    return false;
-                }
-            }
-            return true;
-        });
-
-        return view('tagging-kompetensi-ik-reverse.edit', compact('kompetensi', 'assignedItems', 'availableItems', 'type'));
+        return view('tagging-kompetensi-ik-reverse.edit', compact('indikator_kinerja', 'assignedItems', 'availableItems', 'type'));
     }
 
-    public function updateTagging(Request $request, $id, $type)
+    public function updateTagging(Request $request, $indikator_kinerja, $type)
     {
         try {
+            $indikator_kinerja = str_replace('-', '/', $indikator_kinerja);
             // Validate the request
             $request->validate([
                 'assigned' => 'required|array'
@@ -139,14 +105,15 @@ class TaggingKompetensiIkReverseController extends Controller
 
             // Get current assigned kompetensi IDs from the database
             $currentAssignedKompetensiIds = DB::table('tagging_kompetensi_ik')
-                ->where('kompetensi_id', $id)
+                ->where('indikator_kinerja', $indikator_kinerja)
                 ->where('type', $type)
-                ->pluck('indikator_kinerja')
+                ->pluck('kompetensi_id')
                 ->toArray();
+
+
 
             // Make sure $currentAssignedKompetensiIds is an array
             $currentAssignedKompetensiIds = is_array($currentAssignedKompetensiIds) ? $currentAssignedKompetensiIds : [];
-
             // Determine which kompetensi IDs to add
             $toAdd = array_diff($newAssignedKompetensiIds, $currentAssignedKompetensiIds);
             // Determine which kompetensi IDs to remove
@@ -158,9 +125,9 @@ class TaggingKompetensiIkReverseController extends Controller
             // Add new kompetensi IDs
             foreach ($toAdd as $kompetensiId) {
                 DB::table('tagging_kompetensi_ik')->insert([
-                    'kompetensi_id' => $id,
+                    'kompetensi_id' => $kompetensiId,
                     'type' => $type,
-                    'indikator_kinerja' => $kompetensiId,
+                    'indikator_kinerja' => $indikator_kinerja,
                     'created_at' => now(),
                     'updated_at' => now()
                 ]);
@@ -168,9 +135,9 @@ class TaggingKompetensiIkReverseController extends Controller
 
             // Remove deselected kompetensi IDs
             DB::table('tagging_kompetensi_ik')
-                ->where('kompetensi_id', $id)
+                ->where('indikator_kinerja', $indikator_kinerja)
                 ->where('type', $type)
-                ->whereIn('indikator_kinerja', $toRemove)
+                ->whereIn('kompetensi_id', $toRemove)
                 ->delete();
 
             // Commit transaction
@@ -181,7 +148,7 @@ class TaggingKompetensiIkReverseController extends Controller
             Alert::toast('The tagging was updated failed.', 'error');
             return back()->withErrors(['message' => $e->getMessage()]);
         }
-        return redirect('tagging-kompetensi-ik-reverse/' . $type);
+        return redirect('tagging-ik-kompetensi/' . $type);
     }
 
     public function destroy($indikator_kinerja, $type)

@@ -15,7 +15,7 @@
                                 </li>
                                 <li class="breadcrumb-item">
                                     <a
-                                        href="{{ route('tagging-pembelajaran-kompetensi.index') }}">{{ __('Tagging Kompetensi - IK ') }}{{ $type }}</a>
+                                        href="{{ route('tagging-kompetensi-ik') }}">{{ __('Tagging Kompetensi - IK ') }}{{ $type }}</a>
                                 </li>
                                 <li class="breadcrumb-item active" aria-current="page">
                                     {{ __('Edit') }}

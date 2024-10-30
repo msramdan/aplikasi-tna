@@ -7,15 +7,15 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">{{ __('Tagging Kompetensi - IK ') }}{{ $type }}</h4>
+                        <h4 class="mb-sm-0">Tagging IK {{ $type }} - Kompetensi</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item">
                                     <a href="/panel">Dashboard</a>
                                 </li>
                                 <li class="breadcrumb-item">
-                                    <a
-                                        href="{{ route('tagging-pembelajaran-kompetensi.index') }}">{{ __('Tagging Kompetensi - IK ') }}{{ $type }}</a>
+                                    <a href="{{ route('tagging-ik-kompetensi', ['type' => $type]) }}">Tagging IK
+                                        {{ $type }} - Kompetensi</a>
                                 </li>
                                 <li class="breadcrumb-item active" aria-current="page">
                                     {{ __('Edit') }}
@@ -30,8 +30,8 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="alert alert-primary" role="alert">
-                                <b>Kompetensi :</b><br>
-                                {{ $kompetensi->nama_kompetensi }}
+                                <b>Indikator Kinerja :</b><br>
+                                {{ $indikator_kinerja }}
                             </div>
                         </div>
                     </div>
@@ -41,7 +41,7 @@
                     <div class="card">
                         <div class="card-body">
                             <form method="POST"
-                                action="{{ route('tagging-kompetensi-ik.update', ['id' => $kompetensi->id, 'type' => $type]) }}"
+                                action="{{ route('tagging-ik-kompetensi.update', ['indikator_kinerja' => str_replace('/', '-', $indikator_kinerja), 'type' => $type]) }}"
                                 onsubmit="selectAllAssigned()">
                                 @csrf
                                 @method('POST')
@@ -50,16 +50,8 @@
                                         <input type="text" id="search-available" class="form-control mb-2"
                                             placeholder="Search for available">
                                         <select id="available" class="form-control" multiple size="20">
-                                            @foreach ($availableItems as $item)
-                                                @if ($type === 'renstra')
-                                                    <option value="{{ $item['indikator_kinerja'] }}">
-                                                        {{ $item['indikator_kinerja'] }}
-                                                    </option>
-                                                @else
-                                                    <option value="{{ $item['nama_topik'] }}">
-                                                        {{ $item['nama_topik'] }}
-                                                    </option>
-                                                @endif
+                                            @foreach ($availableItems as $id => $nama_kompetensi)
+                                                <option value="{{ $id }}">{{ $nama_kompetensi }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -75,8 +67,8 @@
                                             placeholder="Search for assigned">
                                         <select id="assigned" class="form-control @error('message') is-invalid @enderror"
                                             multiple size="20" name="assigned[]">
-                                            @foreach ($assignedItems as $id => $indikator_kinerja)
-                                                <option value="{{ $indikator_kinerja }}">{{ $indikator_kinerja }}</option>
+                                            @foreach ($assignedItems as $id => $nama_kompetensi)
+                                                <option value="{{ $id }}">{{ $nama_kompetensi }}</option>
                                             @endforeach
                                         </select>
                                         @error('message')
@@ -86,7 +78,7 @@
                                     </div>
                                 </div>
                                 <div class="mt-3">
-                                    <a href="{{ route('tagging-kompetensi-ik', ['type' => $type]) }}"
+                                    <a href="{{ route('tagging-ik-kompetensi', ['type' => $type]) }}"
                                         class="btn btn-secondary">
                                         <i class="fa fa-arrow-left" aria-hidden="true"></i> {{ __('Kembali') }}
                                     </a>
