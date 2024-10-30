@@ -26,52 +26,54 @@ class TaggingKompetensiIkReverseController extends Controller
 
     public function index($type)
     {
-        if (request()->ajax()) {
-
-            $token = session('api_token');
-            if (!$token) {
-                return redirect()->back()->with('error', 'User is not authenticated.');
-            }
-
-            $endpoints = [
-                'renstra' => '/simaren/ref-indikator-kinerja-es2',
-                'app'     => '/simaren/ref-topik-app',
-                'apep'    => '/simaren/ref-topik-apep',
-            ];
-
-            if (!array_key_exists($type, $endpoints)) {
-                return redirect()->back()->with('error', 'Invalid type provided.');
-            }
-
-
-            $endpoint = config('stara.endpoint') . $endpoints[$type];
-
-            $response = Http::withToken($token)->get($endpoint);
-            if (!$response->successful()) {
-                return redirect()->back()->with('error', 'Failed to retrieve data from the API.');
-            }
-            $apiData = $response->json();
-            $apiItems = $apiData['data'] ?? [];
-            return DataTables::of($apiItems)
-                ->addIndexColumn()
-                ->addColumn('indikator_kinerja', function ($row)  use ($type) {
-                    if ($type == 'renstra') {
-                        return $row['indikator_kinerja'] ? $row['indikator_kinerja'] : '-';
-                    } else {
-                        return $row['nama_topik'] ? $row['nama_topik'] : '-';
-                    }
-                })
-                ->addColumn('type', function () use ($type) {
-                    return $type;
-                })
-                ->addColumn('jumlah_tagging', function ($row) {
-                    return 0;
-                })
-                ->addColumn('action', 'tagging-kompetensi-ik-reverse.include.action')
-                ->rawColumns(['jumlah_tagging', 'action'])
-                ->toJson();
+        if (!request()->ajax()) {
+            return view('tagging-kompetensi-ik-reverse.index');
         }
-        return view('tagging-kompetensi-ik-reverse.index');
+
+        $token = session('api_token');
+        if (!$token) {
+            return redirect()->back()->with('error', 'User is not authenticated.');
+        }
+
+        $endpoints = [
+            'renstra' => '/simaren/ref-indikator-kinerja-es2',
+            'app'     => '/simaren/ref-topik-app',
+            'apep'    => '/simaren/ref-topik-apep',
+        ];
+
+        if (!isset($endpoints[$type])) {
+            return redirect()->back()->with('error', 'Invalid type provided.');
+        }
+
+        $endpoint = config('stara.endpoint') . $endpoints[$type];
+        $response = Http::withToken($token)->get($endpoint);
+
+        if (!$response->successful()) {
+            return redirect()->back()->with('error', 'Failed to retrieve data from the API.');
+        }
+
+        $apiItems = $response->json()['data'] ?? [];
+
+        // Query ke tabel tagging_kompetensi_ik dengan groupBy indikator_kinerja dan type
+        $taggingCounts = DB::table('tagging_kompetensi_ik')
+            ->select('indikator_kinerja', DB::raw('count(*) as total'))
+            ->where('type', $type)
+            ->groupBy('indikator_kinerja')
+            ->pluck('total', 'indikator_kinerja');
+
+        return DataTables::of($apiItems)
+            ->addIndexColumn()
+            ->addColumn('indikator_kinerja', fn($row) => $type == 'renstra' ? ($row['indikator_kinerja'] ?? '-') : ($row['nama_topik'] ?? '-'))
+            ->addColumn('type', fn() => $type)
+            ->addColumn('jumlah_tagging', function ($row) use ($taggingCounts, $type) {
+                $key = $type == 'renstra' ? $row['indikator_kinerja'] ?? '-' : $row['nama_topik'] ?? '-';
+                $count = $taggingCounts[$key] ?? 0;
+                $badgeClass = $count > 0 ? 'bg-info' : 'bg-danger';
+                return "<span class=\"badge badge-label $badgeClass badge-width\"><i class=\"mdi mdi-circle-medium\"></i>$count Tagging</span>";
+            })
+            ->addColumn('action', 'tagging-kompetensi-ik-reverse.include.action')
+            ->rawColumns(['jumlah_tagging', 'action'])
+            ->toJson();
     }
 
     public function settingTagging($indikator_kinerja, $type)
