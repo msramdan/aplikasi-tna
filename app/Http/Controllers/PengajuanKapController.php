@@ -1136,6 +1136,10 @@ class PengajuanKapController extends Controller
             ->where('pengajuan_kap.institusi_sumber', '=', $is_bpkp)
             ->where('pengajuan_kap.frekuensi_pelaksanaan', '=', $frekuensi)
             ->first();
+        // Cek apakah data pengajuan_kap ditemukan
+        if (!$pengajuanKap) {
+            return redirect()->route('not-found'); // Atur route ke halaman Not Found
+        }
 
         $logReviews = DB::table('log_review_pengajuan_kap')
             ->select(
