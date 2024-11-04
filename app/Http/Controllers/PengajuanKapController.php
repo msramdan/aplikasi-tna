@@ -40,19 +40,21 @@ class PengajuanKapController extends Controller
                     'pengajuan_kap.*',
                     'users.name as user_name',
                     'users.nama_unit',
-                    'kompetensi.nama_kompetensi',
+                    DB::raw('GROUP_CONCAT(CONCAT("<li>", kompetensi.nama_kompetensi, "</li>")) as nama_kompetensi'), // Format as <li> items
                     'topik.nama_topik',
                     'log_review_pengajuan_kap.remark'
                 )
                 ->leftJoin('users', 'pengajuan_kap.user_created', '=', 'users.id')
-                ->leftJoin('kompetensi', 'pengajuan_kap.kompetensi_id', '=', 'kompetensi.id')
                 ->leftJoin('topik', 'pengajuan_kap.topik_id', '=', 'topik.id')
+                ->leftJoin('pengajuan_kap_gap_kompetensi', 'pengajuan_kap.id', '=', 'pengajuan_kap_gap_kompetensi.pengajuan_kap_id')
+                ->leftJoin('kompetensi', 'pengajuan_kap_gap_kompetensi.kompetensi_id', '=', 'kompetensi.id')
                 ->join('log_review_pengajuan_kap', function ($join) {
                     $join->on('pengajuan_kap.id', '=', 'log_review_pengajuan_kap.pengajuan_kap_id')
                         ->whereColumn('log_review_pengajuan_kap.step', 'pengajuan_kap.current_step');
                 })
                 ->where('pengajuan_kap.institusi_sumber', '=', $is_bpkp)
-                ->where('pengajuan_kap.frekuensi_pelaksanaan', '=', $frekuensi);
+                ->where('pengajuan_kap.frekuensi_pelaksanaan', '=', $frekuensi)
+                ->groupBy('pengajuan_kap.id', 'users.name', 'users.nama_unit', 'topik.nama_topik', 'log_review_pengajuan_kap.remark');
 
             // Filter based on tahun
             if (isset($tahun) && !empty($tahun) && $tahun != 'All') {
@@ -91,6 +93,10 @@ class PengajuanKapController extends Controller
                 ->addColumn('remark', function ($row) {
                     return $row->remark;
                 })
+                ->addColumn('nama_kompetensi', function ($row) {
+                    $kompetensiList = explode(',', $row->nama_kompetensi);
+                    return '<ul>' . implode('', $kompetensiList) . '</ul>';
+                })
                 ->addColumn('status_pengajuan', function ($row) {
                     if ($row->status_pengajuan == 'Pending') {
                         return '<button style="width:90px" class="btn btn-gray btn-sm btn-block"><i class="fa fa-clock" aria-hidden="true"></i> Pending</button>';
@@ -124,9 +130,10 @@ class PengajuanKapController extends Controller
                     }
                 })
                 ->addColumn('action', 'pengajuan-kap.include.action')
-                ->rawColumns(['status_pengajuan', 'action', 'prioritas_pembelajaran'])
+                ->rawColumns(['status_pengajuan', 'action', 'prioritas_pembelajaran', 'nama_kompetensi'])
                 ->toJson();
         }
+
 
         $topiks = DB::table('topik')->get();
         $units = DB::table('users')

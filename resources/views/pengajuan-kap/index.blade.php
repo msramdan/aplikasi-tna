@@ -232,9 +232,9 @@
                                             @endif
                                             <th>#</th>
                                             <th>{{ __('Kode') }}</th>
-                                            @if ($is_bpkp == 'BPKP')
+                                            {{-- @if ($is_bpkp == 'BPKP')
                                                 <th>{{ __('Indikator kinerja') }}</th>
-                                            @endif
+                                            @endif --}}
                                             <th>{{ __('Kompetensi') }}</th>
                                             <th>{{ __('Program pembelajaran') }}</th>
                                             <th>{{ __('Judul') }}</th>
@@ -361,14 +361,10 @@
                 data: 'kode_pembelajaran',
                 name: 'kode_pembelajaran'
             },
-            @if ($is_bpkp == 'BPKP')
-                {
-                    data: 'indikator_kinerja',
-                    name: 'indikator_kinerja'
-                },
-            @endif {
+
+            {
                 data: 'nama_kompetensi',
-                name: 'kompetensi.nama_kompetensi'
+                name: 'nama_kompetensi'
             },
             {
                 data: 'nama_topik',
