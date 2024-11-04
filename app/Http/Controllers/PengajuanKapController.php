@@ -376,7 +376,7 @@ class PengajuanKapController extends Controller
             ->where('pengajuan_kap_id', $id)
             ->get()
             ->toArray(); // Dapatkan data dalam bentuk array
-        $gap_kompetensi_pengajuan_kap = DB::table('gap_kompetensi_pengajuan_kap')
+        $pengajuan_kap_gap_kompetensi = DB::table('pengajuan_kap_gap_kompetensi')
             ->where('pengajuan_kap_id', $id)
             ->first();
 
@@ -462,7 +462,7 @@ class PengajuanKapController extends Controller
             'metode_data' => $metode_data,
             'diklatType_data' => $diklatType_data,
             'diklatLocation_data' => $diklatLocation_data,
-            'gap_kompetensi_pengajuan_kap' => $gap_kompetensi_pengajuan_kap,
+            'pengajuan_kap_gap_kompetensi' => $pengajuan_kap_gap_kompetensi,
             'topikOptions' => $topikOptions,
             'tahun' => $pengajuanKap->tahun,
             'usedPrioritas' => $usedPrioritas,
@@ -556,7 +556,7 @@ class PengajuanKapController extends Controller
             ->where('pengajuan_kap_id', $id)
             ->get()
             ->toArray(); // Dapatkan data dalam bentuk array
-        $gap_kompetensi_pengajuan_kap = DB::table('gap_kompetensi_pengajuan_kap')
+        $pengajuan_kap_gap_kompetensi = DB::table('pengajuan_kap_gap_kompetensi')
             ->where('pengajuan_kap_id', $id)
             ->first();
 
@@ -642,7 +642,7 @@ class PengajuanKapController extends Controller
             'metode_data' => $metode_data,
             'diklatType_data' => $diklatType_data,
             'diklatLocation_data' => $diklatLocation_data,
-            'gap_kompetensi_pengajuan_kap' => $gap_kompetensi_pengajuan_kap,
+            'pengajuan_kap_gap_kompetensi' => $pengajuan_kap_gap_kompetensi,
             'topikOptions' => $topikOptions,
             'tahun' => $tahun,
             'usedPrioritas' => $usedPrioritas,
@@ -653,7 +653,6 @@ class PengajuanKapController extends Controller
 
     public function store(Request $request, $is_bpkp, $frekuensi)
     {
-        dd($request);
         $validatedData = $request->validate([
             'jenis_program' => 'required|in:Renstra,APP,APEP,APIP',
             'indikator_kinerja' => 'nullable|array',
@@ -749,9 +748,9 @@ class PengajuanKapController extends Controller
                 'institusi_sumber' => $is_bpkp,
                 'jenis_program' => $validatedData['jenis_program'],
                 'frekuensi_pelaksanaan' => $frekuensi,
-                'indikator_kinerja' => isset($validatedData['indikator_kinerja']) ? $validatedData['indikator_kinerja'] : null,
+                'indikator_kinerja' => null,
                 'referensi_indikator_kinerja' => isset($validatedData['referensi_indikator_kinerja']) ? $validatedData['referensi_indikator_kinerja'] : null,
-                'kompetensi_id' => isset($validatedData['kompetensi_id']) ? $validatedData['kompetensi_id'] : null,
+                'kompetensi_id' => null,
                 'topik_id' => $validatedData['topik_id'],
                 'judul' => $validatedData['judul'],
                 'arahan_pimpinan' => $validatedData['arahan_pimpinan'],
@@ -830,16 +829,37 @@ class PengajuanKapController extends Controller
                     'updated_at' => now(),
                 ]);
             }
-            // insert table gap_kompetensi_pengajuan_kap
-            DB::table('gap_kompetensi_pengajuan_kap')->insert([
-                'pengajuan_kap_id' => $pengajuanKapId,
-                'total_pegawai' => $request->total_pegawai ?? 0,
-                'pegawai_kompeten' => $request->pegawai_kompeten ?? 0,
-                'pegawai_belum_kompeten' => $request->pegawai_belum_kompeten ?? 0,
-                'persentase_kompetensi' => $request->persentase_kompetensi ?? 0,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+            // insert table pengajuan_kap_indikator_kinerja
+            $dataIndikator = [];
+            foreach ($request->indikator_kinerja as $indikator) {
+                $dataIndikator[] = [
+                    'pengajuan_kap_id' => $pengajuanKapId,
+                    'indikator_kinerja' => $indikator,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+            }
+
+            // Insert all records at once
+            DB::table('pengajuan_kap_indikator_kinerja')->insert($dataIndikator);
+
+            // insert table pengajuan_kap_gap_kompetensi
+            $dataGapKompetensi = [];
+            foreach ($request->kompetensi_id as $index => $kompetensiId) {
+                $dataGapKompetensi[] = [
+                    'pengajuan_kap_id' => $pengajuanKapId,
+                    'kompetensi_id' => $kompetensiId,
+                    'total_pegawai' => $request->total_employees[$index],
+                    'pegawai_kompeten' => $request->count_100[$index],
+                    'pegawai_belum_kompeten' => $request->count_less_than_100[$index],
+                    'persentase_kompetensi' => $request->average_persentase[$index],
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+            }
+
+            // Insert all records at once
+            DB::table('pengajuan_kap_gap_kompetensi')->insert($dataGapKompetensi);
 
             foreach ($validatedData['indikator_keberhasilan'] as $index => $row) {
                 DB::table('indikator_keberhasilan_kap')->insert([
@@ -1055,11 +1075,11 @@ class PengajuanKapController extends Controller
             ]);
         }
 
-        // insert table gap_kompetensi_pengajuan_kap
-        DB::table('gap_kompetensi_pengajuan_kap')
+        // insert table pengajuan_kap_gap_kompetensi
+        DB::table('pengajuan_kap_gap_kompetensi')
             ->where('pengajuan_kap_id', $id)
             ->delete();
-        DB::table('gap_kompetensi_pengajuan_kap')->insert([
+        DB::table('pengajuan_kap_gap_kompetensi')->insert([
             'pengajuan_kap_id' => $id,
             'total_pegawai' => $request->total_pegawai ?? 0,
             'pegawai_kompeten' => $request->pegawai_kompeten ?? 0,
@@ -1179,7 +1199,7 @@ class PengajuanKapController extends Controller
             ->where('remark', $currentStepRemark)
             ->where('user_review_id', Auth::id())
             ->exists();
-        $gap_kompetensi_pengajuan_kap = DB::table('gap_kompetensi_pengajuan_kap')
+        $pengajuan_kap_gap_kompetensi = DB::table('pengajuan_kap_gap_kompetensi')
             ->where('pengajuan_kap_id', $id)
             ->first();
 
@@ -1253,7 +1273,7 @@ class PengajuanKapController extends Controller
             'frekuensi' => $frekuensi,
             'currentStepRemark' => $currentStepRemark,
             'userHasAccess' => $userHasAccess,
-            'gap_kompetensi_pengajuan_kap' => $gap_kompetensi_pengajuan_kap,
+            'pengajuan_kap_gap_kompetensi' => $pengajuan_kap_gap_kompetensi,
             'jalur_pembelajaran' => isset($jalur_pembelajaran) ? $jalur_pembelajaran : null,
             'metode_data' => isset($metode_data) ? $metode_data : null,
             'diklatType_data' => isset($diklatType_data) ? $diklatType_data : null,
@@ -1549,7 +1569,7 @@ class PengajuanKapController extends Controller
             ->where('waktu_pelaksanaan.pengajuan_kap_id', $id)
             ->select('waktu_pelaksanaan.*')
             ->get();
-        $gap_kompetensi_pengajuan_kap = DB::table('gap_kompetensi_pengajuan_kap')
+        $pengajuan_kap_gap_kompetensi = DB::table('pengajuan_kap_gap_kompetensi')
             ->where('pengajuan_kap_id', $id)
             ->first();
 
@@ -1561,7 +1581,7 @@ class PengajuanKapController extends Controller
             'waktu_pelaksanaan' => $waktu_pelaksanaan,
             'is_bpkp' => $is_bpkp,
             'frekuensi' => $frekuensi,
-            'gap_kompetensi_pengajuan_kap' => $gap_kompetensi_pengajuan_kap
+            'pengajuan_kap_gap_kompetensi' => $pengajuan_kap_gap_kompetensi
         ]);
         $namePdf = $pengajuanKap->kode_pembelajaran . '_' . $pengajuanKap->user_name . '.pdf';
         return $pdf->stream($namePdf);

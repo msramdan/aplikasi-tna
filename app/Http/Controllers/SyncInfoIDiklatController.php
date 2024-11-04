@@ -158,7 +158,7 @@ class SyncInfoIDiklatController extends Controller
             ->where('remark', $currentStepRemark)
             ->where('user_review_id', Auth::id())
             ->exists();
-        $gap_kompetensi_pengajuan_kap = DB::table('gap_kompetensi_pengajuan_kap')
+        $pengajuan_kap_gap_kompetensi = DB::table('pengajuan_kap_gap_kompetensi')
             ->where('pengajuan_kap_id', $id)
             ->first();
 
@@ -170,7 +170,7 @@ class SyncInfoIDiklatController extends Controller
             'waktu_pelaksanaan' => $waktu_pelaksanaan,
             'currentStepRemark' => $currentStepRemark,
             'userHasAccess' => $userHasAccess,
-            'gap_kompetensi_pengajuan_kap' => $gap_kompetensi_pengajuan_kap
+            'pengajuan_kap_gap_kompetensi' => $pengajuan_kap_gap_kompetensi
         ]);
     }
 
@@ -209,7 +209,7 @@ class SyncInfoIDiklatController extends Controller
             ->where('waktu_pelaksanaan.pengajuan_kap_id', $id)
             ->select('waktu_pelaksanaan.*')
             ->get();
-        $gap_kompetensi_pengajuan_kap = DB::table('gap_kompetensi_pengajuan_kap')
+        $pengajuan_kap_gap_kompetensi = DB::table('pengajuan_kap_gap_kompetensi')
             ->where('pengajuan_kap_id', $id)
             ->first();
 
@@ -219,7 +219,7 @@ class SyncInfoIDiklatController extends Controller
             'level_evaluasi_instrumen_kap' => $level_evaluasi_instrumen_kap,
             'indikator_keberhasilan_kap' => $indikator_keberhasilan_kap,
             'waktu_pelaksanaan' => $waktu_pelaksanaan,
-            'gap_kompetensi_pengajuan_kap' => $gap_kompetensi_pengajuan_kap
+            'pengajuan_kap_gap_kompetensi' => $pengajuan_kap_gap_kompetensi
         ]);
         $namePdf = $pengajuanKap->kode_pembelajaran . '_' . $pengajuanKap->user_name . '.pdf';
         return $pdf->stream($namePdf);

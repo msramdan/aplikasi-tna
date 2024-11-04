@@ -110,16 +110,16 @@
 
                     <input type="hidden" name="total_pegawai" id="total_pegawai" class="form-control" required
                         readonly
-                        value="{{ isset($pengajuanKap) ? $gap_kompetensi_pengajuan_kap->total_pegawai : old('total_pegawai') }}" />
+                        value="{{ isset($pengajuanKap) ? $pengajuan_kap_gap_kompetensi->total_pegawai : old('total_pegawai') }}" />
                     <input type="hidden" name="pegawai_kompeten" id="pegawai_kompeten" class="form-control"
                         required readonly
-                        value="{{ isset($pengajuanKap) ? $gap_kompetensi_pengajuan_kap->pegawai_kompeten : old('pegawai_kompeten') }}" />
+                        value="{{ isset($pengajuanKap) ? $pengajuan_kap_gap_kompetensi->pegawai_kompeten : old('pegawai_kompeten') }}" />
                     <input type="hidden" name="pegawai_belum_kompeten" id="pegawai_belum_kompeten"
                         class="form-control" required readonly
-                        value="{{ isset($pengajuanKap) ? $gap_kompetensi_pengajuan_kap->pegawai_belum_kompeten : old('pegawai_belum_kompeten') }}" />
+                        value="{{ isset($pengajuanKap) ? $pengajuan_kap_gap_kompetensi->pegawai_belum_kompeten : old('pegawai_belum_kompeten') }}" />
                     <input type="hidden" name="persentase_kompetensi" id="persentase_kompetensi"
                         class="form-control" required readonly
-                        value="{{ isset($pengajuanKap) ? $gap_kompetensi_pengajuan_kap->persentase_kompetensi : old('persentase_kompetensi') }}" />
+                        value="{{ isset($pengajuanKap) ? $pengajuan_kap_gap_kompetensi->persentase_kompetensi : old('persentase_kompetensi') }}" />
 
                         <div class="form-group row mb-3">
                             <label for="topik_id" class="col-sm-3 col-form-label">

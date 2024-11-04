@@ -122,7 +122,7 @@ class PengajuanKapApiController extends Controller
     // Helper method to fetch gap kompetensi pengajuan kap
     private function fetchGapKompetensi($pengajuanKapId)
     {
-        return DB::table('gap_kompetensi_pengajuan_kap')
+        return DB::table('pengajuan_kap_gap_kompetensi')
             ->where('pengajuan_kap_id', $pengajuanKapId)
             ->first();
     }

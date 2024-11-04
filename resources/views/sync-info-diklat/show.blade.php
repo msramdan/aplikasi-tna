@@ -262,7 +262,7 @@
                                         <tr>
                                             <td class="fw-bold">{{ __('Kompetensi') }}</td>
                                             <td>{{ $pengajuanKap->nama_kompetensi ?: '-' }}
-                                                @if (isset($gap_kompetensi_pengajuan_kap))
+                                                @if (isset($pengajuan_kap_gap_kompetensi))
                                                     <table class="table table-bordered table-sm">
                                                         <thead>
                                                             <tr>
@@ -277,15 +277,15 @@
                                                         <tbody>
                                                             <tr>
                                                                 <td class="text-center">
-                                                                    {{ $gap_kompetensi_pengajuan_kap->total_pegawai }}</td>
+                                                                    {{ $pengajuan_kap_gap_kompetensi->total_pegawai }}</td>
                                                                 <td class="text-center">
-                                                                    {{ $gap_kompetensi_pengajuan_kap->pegawai_kompeten }}
+                                                                    {{ $pengajuan_kap_gap_kompetensi->pegawai_kompeten }}
                                                                 </td>
                                                                 <td class="text-center">
-                                                                    {{ $gap_kompetensi_pengajuan_kap->pegawai_belum_kompeten }}
+                                                                    {{ $pengajuan_kap_gap_kompetensi->pegawai_belum_kompeten }}
                                                                 </td>
                                                                 <td class="text-center">
-                                                                    {{ $gap_kompetensi_pengajuan_kap->persentase_kompetensi }}
+                                                                    {{ $pengajuan_kap_gap_kompetensi->persentase_kompetensi }}
                                                                     %</td>
                                                             </tr>
                                                         </tbody>

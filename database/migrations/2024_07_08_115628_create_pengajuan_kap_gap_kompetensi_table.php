@@ -8,9 +8,10 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('gap_kompetensi_pengajuan_kap', function (Blueprint $table) {
+        Schema::create('pengajuan_kap_gap_kompetensi', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('pengajuan_kap_id');
+            $table->foreignId('kompetensi_id')->nullable()->constrained('kompetensi')->cascadeOnUpdate()->nullOnDelete();
             $table->integer('total_pegawai')->nullable();
             $table->integer('pegawai_kompeten')->nullable();
             $table->integer('pegawai_belum_kompeten')->nullable();
@@ -22,10 +23,10 @@ return new class extends Migration
 
     public function down()
     {
-        Schema::table('gap_kompetensi_pengajuan_kap', function (Blueprint $table) {
+        Schema::table('pengajuan_kap_gap_kompetensi', function (Blueprint $table) {
             $table->dropForeign(['pengajuan_kap_id']);
         });
 
-        Schema::dropIfExists('gap_kompetensi_pengajuan_kap');
+        Schema::dropIfExists('pengajuan_kap_gap_kompetensi');
     }
 };

@@ -363,7 +363,6 @@
             $('#jenis_program').change(function() {
                 $('#selectedIndicatorsTable tbody').empty();
                 $('#selectedCompetenciesTable tbody').empty();
-                $(' tbody').empty();
                 if (!hideForm) {
                     $('#topik_id').html(options_temp);
                     $('#judul').val('');
@@ -634,7 +633,6 @@
                         <i class="fa fa-trash"></i>
                     </button>
                 </td>
-
             </tr>`
                     );
                     selectedCompetencies.push(kompetensi_id);

@@ -123,7 +123,7 @@
                 <td style="vertical-align: top;">{{ __('Kompetensi') }}</td>
                 <td style="vertical-align: top;">:</td>
                 <td style="vertical-align: top;">{{ $pengajuanKap->nama_kompetensi }}
-                    @if (isset($gap_kompetensi_pengajuan_kap))
+                    @if (isset($pengajuan_kap_gap_kompetensi))
                         <table style="width: 450px; border-collapse: collapse;">
                             <thead>
                                 <tr>
@@ -142,15 +142,15 @@
                             <tbody>
                                 <tr>
                                     <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: center">
-                                        {{ $gap_kompetensi_pengajuan_kap->total_pegawai }}</td>
+                                        {{ $pengajuan_kap_gap_kompetensi->total_pegawai }}</td>
                                     <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: center">
-                                        {{ $gap_kompetensi_pengajuan_kap->pegawai_kompeten }}
+                                        {{ $pengajuan_kap_gap_kompetensi->pegawai_kompeten }}
                                     </td>
                                     <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: center">
-                                        {{ $gap_kompetensi_pengajuan_kap->pegawai_belum_kompeten }}
+                                        {{ $pengajuan_kap_gap_kompetensi->pegawai_belum_kompeten }}
                                     </td>
                                     <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: center">
-                                        {{ $gap_kompetensi_pengajuan_kap->persentase_kompetensi }}
+                                        {{ $pengajuan_kap_gap_kompetensi->persentase_kompetensi }}
                                         %</td>
                                 </tr>
                             </tbody>
