@@ -511,11 +511,14 @@
                     selectedIndicators.push(indikator);
                 }
                 $('#indikatorModal').modal('hide');
+                // console.log(selectedIndicators);
             });
 
             $(document).on('click', '.deleteRow', function() {
-                var indikator = $(this).closest('tr').find('td:first').text();
-                selectedIndicators = selectedIndicators.filter(item => item !== indikator);
+                var indikator = $(this).closest('tr').find('td:first').text().trim();
+
+                // Filter out the selected indikator from the array
+                selectedIndicators = selectedIndicators.filter(item => item.trim() !== indikator);
 
                 // Remove the row from the table
                 $(this).closest('tr').remove();
@@ -523,11 +526,14 @@
                 // Clear selected competencies
                 selectedCompetencies = [];
                 $('#selectedCompetenciesTable tbody').empty();
+
+                // Enable or disable the "Pilih" button based on array length
                 if (selectedIndicators.length === 0) {
                     $('#pilihButtonKompetensi').prop('disabled', true);
                 } else {
                     $('#pilihButtonKompetensi').prop('disabled', false);
                 }
+                // console.log(selectedIndicators);
             });
 
             $('#pilihButtonKompetensi').click(function() {
@@ -537,7 +543,6 @@
                 }
 
                 $('#loading-overlay').show();
-                console.log(selectedIndicators);
                 $.ajax({
                     url: '{{ route('getKompetensiSupportIK') }}',
                     type: 'GET',
@@ -609,6 +614,7 @@
                     }
                 });
             });
+
             $(document).on('click', '.pilihKompetensi', function() {
                 var kompetensi = $(this).data('kompetensi');
                 var kompetensi_id = $(this).data('id');
@@ -619,7 +625,6 @@
                 if ($('#selectedCompetenciesTable tbody tr td:contains("' + kompetensi + '")').length ===
                     0 &&
                     !selectedCompetencies.includes(kompetensi_id)) {
-
                     $('#selectedCompetenciesTable tbody').append(
                         `<tr>
                 <td>${kompetensi}
@@ -641,8 +646,6 @@
                 $('#kompetensiModal').modal('hide');
             });
 
-
-
             $(document).on('click', '.deleteRowCompetency', function() {
                 var kompetensi = $(this).closest('tr').find('td:first').text();
                 var kompetensi_id = $(this).data('id') || $(this).closest('tr').data('id');
@@ -656,7 +659,7 @@
                     $('#topik_id').html(options_temp);
                     return;
                 }
-                console.log(selectedCompetencies);
+                // console.log(selectedCompetencies);
                 $.ajax({
                     url: '{{ route('getTopikSupportKompetensi') }}',
                     type: 'GET',

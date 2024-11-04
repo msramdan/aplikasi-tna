@@ -10,6 +10,7 @@
             color: white;
             border-color: gray;
         }
+
         #loading-overlay {
             display: none;
             position: fixed;
@@ -21,6 +22,7 @@
             z-index: 1000;
             text-align: center;
         }
+
         .loading-spinner {
             position: absolute;
             top: 50%;
@@ -33,6 +35,7 @@
             height: 40px;
             animation: spin 1s linear infinite;
         }
+
         @keyframes spin {
             0% {
                 transform: rotate(0deg);
@@ -42,10 +45,12 @@
                 transform: rotate(360deg);
             }
         }
+
         .select2-container--default .select2-selection--multiple {
             height: 70px;
             overflow-y: auto;
         }
+
         .badge-width {
             display: inline-block;
             width: 120px;
@@ -232,9 +237,9 @@
                                             @endif
                                             <th>#</th>
                                             <th>{{ __('Kode') }}</th>
-                                            {{-- @if ($is_bpkp == 'BPKP')
+                                            @if ($is_bpkp == 'BPKP')
                                                 <th>{{ __('Indikator kinerja') }}</th>
-                                            @endif --}}
+                                            @endif
                                             <th>{{ __('Kompetensi') }}</th>
                                             <th>{{ __('Program pembelajaran') }}</th>
                                             <th>{{ __('Judul') }}</th>
@@ -361,8 +366,12 @@
                 data: 'kode_pembelajaran',
                 name: 'kode_pembelajaran'
             },
-
-            {
+            @if ($is_bpkp == 'BPKP')
+                {
+                    data: 'indikator_kinerja',
+                    name: 'indikator_kinerja'
+                },
+            @endif {
                 data: 'nama_kompetensi',
                 name: 'nama_kompetensi'
             },

@@ -356,44 +356,45 @@
 
                                         <tr>
                                             <td class="fw-bold">{{ __('Indikator Kinerja') }}</td>
-                                            <td>{{ $pengajuanKap->indikator_kinerja ?: '-' }}</td>
+                                            <td>
+                                                @foreach ($pengajuan_kap_indikator_kinerja as $indikatorKinerja)
+                                                    - {{ $indikatorKinerja->indikator_kinerja ?: '-' }} <br>
+                                                @endforeach
+                                            </td>
                                         </tr>
 
                                         <tr>
                                             <td class="fw-bold">{{ __('Kompetensi') }}</td>
-                                            <td>{{ $pengajuanKap->nama_kompetensi ?: '-' }}
-                                                @if (isset($pengajuan_kap_gap_kompetensi))
-                                                    <table class="table table-bordered table-sm">
-                                                        <thead>
+                                            <td>
+                                        <tr>
+                                            <td class="fw-bold">{{ __('Kompetensi') }}</td>
+                                            <td>
+                                                <table class="table table-bordered table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>{{ __('Nama Kompetensi') }}</th>
+                                                            <th>{{ __('Total Pegawai') }}</th>
+                                                            <th>{{ __('Pegawai Kompeten') }}</th>
+                                                            <th>{{ __('Pegawai Belum Kompeten') }}</th>
+                                                            <th>{{ __('Persentase Kompetensi') }}</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($pengajuan_kap_gap_kompetensi as $data)
                                                             <tr>
-                                                                <th scope="col" class="text-center">Total pegawai</th>
-                                                                <th scope="col" class="text-center">Pegawai kompeten
-                                                                </th>
-                                                                <th scope="col" class="text-center">Pegawai belum
-                                                                    kompeten</th>
-                                                                <th scope="col" class="text-center">Persentase
-                                                                    kompetensi
-                                                                </th>
+                                                                <td>{{ $data->nama_kompetensi }}</td>
+                                                                <td>{{ $data->total_pegawai ?: '-' }}</td>
+                                                                <td>{{ $data->pegawai_kompeten ?: '-' }}</td>
+                                                                <td>{{ $data->pegawai_belum_kompeten ?: '-' }}</td>
+                                                                <td>{{ $data->persentase_kompetensi ?: '-' }}%</td>
                                                             </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td class="text-center">
-                                                                    {{ $pengajuan_kap_gap_kompetensi->total_pegawai }}</td>
-                                                                <td class="text-center">
-                                                                    {{ $pengajuan_kap_gap_kompetensi->pegawai_kompeten }}
-                                                                </td>
-                                                                <td class="text-center">
-                                                                    {{ $pengajuan_kap_gap_kompetensi->pegawai_belum_kompeten }}
-                                                                </td>
-                                                                <td class="text-center">
-                                                                    {{ $pengajuan_kap_gap_kompetensi->persentase_kompetensi }}
-                                                                    %</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                @endif
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
                                             </td>
+                                        </tr>
+
+                                        </td>
                                         </tr>
                                         <tr>
                                             <td class="fw-bold">{{ __('Program pembelajaran') }}</td>

@@ -125,14 +125,15 @@
                             </label>
                             <div class="col-sm-6">
                                 <div class="input-group mb-2">
-                                    <button type="button" id="pilihButton" class="input-group-text btn btn-success"  style="width: 180px;">
+                                    <button type="button" id="pilihButton" class="input-group-text btn btn-success"
+                                        style="width: 180px;">
                                         <i class="fa fa-search"></i> Cari Indikator Kinerja
                                     </button>
                                 </div>
                                 <div class="table-responsive">
-                                    <table class="table table-bordered" id="selectedIndicatorsTable">
+                                    <table class="table table-striped" id="selectedIndicatorsTable">
                                         <thead>
-                                            <tr>
+                                            <tr class="table-success">
                                                 <th>Indikator Kinerja</th>
                                                 <th style="width: 50px; text-align: center;">Aksi</th>
                                             </tr>
@@ -165,14 +166,15 @@
 
                             <div class="col-sm-6">
                                 <div class="input-group mb-2">
-                                    <button type="button" id="pilihButtonKompetensi" class="input-group-text btn btn-success" style="width: 180px;">
+                                    <button type="button" id="pilihButtonKompetensi"
+                                        class="input-group-text btn btn-success" style="width: 180px;">
                                         <i class="fa fa-search"></i> Cari Kompetensi
                                     </button>
                                 </div>
                                 <div class="table-responsive">
-                                    <table class="table table-bordered" id="selectedCompetenciesTable">
+                                    <table class="table table-striped" id="selectedCompetenciesTable">
                                         <thead>
-                                            <tr>
+                                            <tr class="table-success">
                                                 <th>Kompetensi</th>
                                                 <th style="width: 50px; text-align: center;">Aksi</th>
                                             </tr>
@@ -703,8 +705,7 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label for="sasaran_peserta"
-                            class="col-sm-3 col-form-label">{{ __('Sasaran Peserta') }}<span
+                        <label for="sasaran_peserta" class="col-sm-3 col-form-label">{{ __('Sasaran Peserta') }}<span
                                 style="color: red">*</span></label>
                         <div class="col-sm-6">
                             <textarea name="sasaran_peserta" id="sasaran_peserta" required

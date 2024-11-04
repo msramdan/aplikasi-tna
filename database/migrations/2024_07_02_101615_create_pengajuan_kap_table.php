@@ -15,8 +15,6 @@ return new class extends Migration
             $table->enum('institusi_sumber', ['BPKP', 'Non BPKP']);
             $table->enum('jenis_program', ['Renstra', 'APP', 'APEP', 'APIP']);
             $table->enum('frekuensi_pelaksanaan', ['Tahunan', 'Insidentil']);
-            $table->text('indikator_kinerja')->nullable();
-            $table->foreignId('kompetensi_id')->nullable()->constrained('kompetensi')->cascadeOnUpdate()->nullOnDelete();
             $table->foreignId('topik_id')->nullable()->constrained('topik')->cascadeOnUpdate()->nullOnDelete();
             $table->text('judul')->nullable(); // kaldikdesc
             $table->text('arahan_pimpinan');

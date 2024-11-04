@@ -40,7 +40,8 @@ class PengajuanKapController extends Controller
                     'pengajuan_kap.*',
                     'users.name as user_name',
                     'users.nama_unit',
-                    DB::raw('GROUP_CONCAT(CONCAT("<li>", kompetensi.nama_kompetensi, "</li>")) as nama_kompetensi'), // Format as <li> items
+                    DB::raw('GROUP_CONCAT(DISTINCT CONCAT("<li>", kompetensi.nama_kompetensi, "</li>")) as nama_kompetensi'),
+                    DB::raw('GROUP_CONCAT(DISTINCT CONCAT("<li>", pengajuan_kap_indikator_kinerja.indikator_kinerja, "</li>")) as nama_indikator'),
                     'topik.nama_topik',
                     'log_review_pengajuan_kap.remark'
                 )
@@ -48,6 +49,7 @@ class PengajuanKapController extends Controller
                 ->leftJoin('topik', 'pengajuan_kap.topik_id', '=', 'topik.id')
                 ->leftJoin('pengajuan_kap_gap_kompetensi', 'pengajuan_kap.id', '=', 'pengajuan_kap_gap_kompetensi.pengajuan_kap_id')
                 ->leftJoin('kompetensi', 'pengajuan_kap_gap_kompetensi.kompetensi_id', '=', 'kompetensi.id')
+                ->leftJoin('pengajuan_kap_indikator_kinerja', 'pengajuan_kap.id', '=', 'pengajuan_kap_indikator_kinerja.pengajuan_kap_id')
                 ->join('log_review_pengajuan_kap', function ($join) {
                     $join->on('pengajuan_kap.id', '=', 'log_review_pengajuan_kap.pengajuan_kap_id')
                         ->whereColumn('log_review_pengajuan_kap.step', 'pengajuan_kap.current_step');
@@ -55,6 +57,8 @@ class PengajuanKapController extends Controller
                 ->where('pengajuan_kap.institusi_sumber', '=', $is_bpkp)
                 ->where('pengajuan_kap.frekuensi_pelaksanaan', '=', $frekuensi)
                 ->groupBy('pengajuan_kap.id', 'users.name', 'users.nama_unit', 'topik.nama_topik', 'log_review_pengajuan_kap.remark');
+
+
 
             // Filter based on tahun
             if (isset($tahun) && !empty($tahun) && $tahun != 'All') {
@@ -97,6 +101,11 @@ class PengajuanKapController extends Controller
                     $kompetensiList = explode(',', $row->nama_kompetensi);
                     return '<ul>' . implode('', $kompetensiList) . '</ul>';
                 })
+
+                ->addColumn('indikator_kinerja', function ($row) {
+                    $indikatorKinerjaList = explode(',', $row->nama_indikator);
+                    return '<ul>' . implode('', $indikatorKinerjaList) . '</ul>';
+                })
                 ->addColumn('status_pengajuan', function ($row) {
                     if ($row->status_pengajuan == 'Pending') {
                         return '<button style="width:90px" class="btn btn-gray btn-sm btn-block"><i class="fa fa-clock" aria-hidden="true"></i> Pending</button>';
@@ -130,7 +139,7 @@ class PengajuanKapController extends Controller
                     }
                 })
                 ->addColumn('action', 'pengajuan-kap.include.action')
-                ->rawColumns(['status_pengajuan', 'action', 'prioritas_pembelajaran', 'nama_kompetensi'])
+                ->rawColumns(['status_pengajuan', 'action', 'prioritas_pembelajaran', 'nama_kompetensi', 'indikator_kinerja'])
                 ->toJson();
         }
 
@@ -755,9 +764,7 @@ class PengajuanKapController extends Controller
                 'institusi_sumber' => $is_bpkp,
                 'jenis_program' => $validatedData['jenis_program'],
                 'frekuensi_pelaksanaan' => $frekuensi,
-                'indikator_kinerja' => null,
                 'referensi_indikator_kinerja' => isset($validatedData['referensi_indikator_kinerja']) ? $validatedData['referensi_indikator_kinerja'] : null,
-                'kompetensi_id' => null,
                 'topik_id' => $validatedData['topik_id'],
                 'judul' => $validatedData['judul'],
                 'arahan_pimpinan' => $validatedData['arahan_pimpinan'],
@@ -1154,11 +1161,9 @@ class PengajuanKapController extends Controller
                 'pengajuan_kap.*',
                 'users.name as user_name',
                 'users.nama_unit as nama_unit',
-                'kompetensi.nama_kompetensi',
                 'topik.nama_topik'
             )
             ->leftJoin('users', 'pengajuan_kap.user_created', '=', 'users.id')
-            ->leftJoin('kompetensi', 'pengajuan_kap.kompetensi_id', '=', 'kompetensi.id')
             ->leftJoin('topik', 'pengajuan_kap.topik_id', '=', 'topik.id')
             ->where('pengajuan_kap.id', '=', $id)
             ->where('pengajuan_kap.institusi_sumber', '=', $is_bpkp)
@@ -1179,6 +1184,17 @@ class PengajuanKapController extends Controller
             ->orderBy('log_review_pengajuan_kap.step')
             ->get();
 
+        $pengajuan_kap_indikator_kinerja = DB::table('pengajuan_kap_indikator_kinerja')
+            ->where('pengajuan_kap_id', $id)
+            ->get();
+        $pengajuan_kap_gap_kompetensi = DB::table('pengajuan_kap_gap_kompetensi')
+            ->join('kompetensi', 'pengajuan_kap_gap_kompetensi.kompetensi_id', '=', 'kompetensi.id')
+            ->where('pengajuan_kap_gap_kompetensi.pengajuan_kap_id', $id)
+            ->select(
+                'pengajuan_kap_gap_kompetensi.*',
+                'kompetensi.nama_kompetensi'
+            )
+            ->get();
         $level_evaluasi_instrumen_kap = DB::table('level_evaluasi_instrumen_kap')
             ->where('pengajuan_kap_id', $id)
             ->get();
@@ -1206,9 +1222,6 @@ class PengajuanKapController extends Controller
             ->where('remark', $currentStepRemark)
             ->where('user_review_id', Auth::id())
             ->exists();
-        $pengajuan_kap_gap_kompetensi = DB::table('pengajuan_kap_gap_kompetensi')
-            ->where('pengajuan_kap_id', $id)
-            ->first();
 
         if ($pengajuanKap->current_step == 2) {
 
@@ -1280,12 +1293,13 @@ class PengajuanKapController extends Controller
             'frekuensi' => $frekuensi,
             'currentStepRemark' => $currentStepRemark,
             'userHasAccess' => $userHasAccess,
-            'pengajuan_kap_gap_kompetensi' => $pengajuan_kap_gap_kompetensi,
             'jalur_pembelajaran' => isset($jalur_pembelajaran) ? $jalur_pembelajaran : null,
             'metode_data' => isset($metode_data) ? $metode_data : null,
             'diklatType_data' => isset($diklatType_data) ? $diklatType_data : null,
             'diklatLocation_data' => isset($diklatLocation_data) ? $diklatLocation_data : null,
-            'currentStepRemark' => $currentStepRemark
+            'currentStepRemark' => $currentStepRemark,
+            'pengajuan_kap_indikator_kinerja' => $pengajuan_kap_indikator_kinerja,
+            'pengajuan_kap_gap_kompetensi' => $pengajuan_kap_gap_kompetensi
         ]);
     }
 
@@ -1545,11 +1559,9 @@ class PengajuanKapController extends Controller
                 'pengajuan_kap.*',
                 'users.name as user_name',
                 'users.nama_unit as nama_unit',
-                'kompetensi.nama_kompetensi',
                 'topik.nama_topik'
             )
             ->leftJoin('users', 'pengajuan_kap.user_created', '=', 'users.id')
-            ->leftJoin('kompetensi', 'pengajuan_kap.kompetensi_id', '=', 'kompetensi.id')
             ->leftJoin('topik', 'pengajuan_kap.topik_id', '=', 'topik.id')
             ->where('pengajuan_kap.id', '=', $id)
             ->where('pengajuan_kap.institusi_sumber', '=', $is_bpkp)
@@ -1576,9 +1588,17 @@ class PengajuanKapController extends Controller
             ->where('waktu_pelaksanaan.pengajuan_kap_id', $id)
             ->select('waktu_pelaksanaan.*')
             ->get();
-        $pengajuan_kap_gap_kompetensi = DB::table('pengajuan_kap_gap_kompetensi')
+        $pengajuan_kap_indikator_kinerja = DB::table('pengajuan_kap_indikator_kinerja')
             ->where('pengajuan_kap_id', $id)
-            ->first();
+            ->get();
+        $pengajuan_kap_gap_kompetensi = DB::table('pengajuan_kap_gap_kompetensi')
+            ->join('kompetensi', 'pengajuan_kap_gap_kompetensi.kompetensi_id', '=', 'kompetensi.id')
+            ->where('pengajuan_kap_gap_kompetensi.pengajuan_kap_id', $id)
+            ->select(
+                'pengajuan_kap_gap_kompetensi.*',
+                'kompetensi.nama_kompetensi'
+            )
+            ->get();
 
         $pdf = PDF::loadview('pengajuan-kap.pdf', [
             'pengajuanKap' => $pengajuanKap,
@@ -1588,7 +1608,8 @@ class PengajuanKapController extends Controller
             'waktu_pelaksanaan' => $waktu_pelaksanaan,
             'is_bpkp' => $is_bpkp,
             'frekuensi' => $frekuensi,
-            'pengajuan_kap_gap_kompetensi' => $pengajuan_kap_gap_kompetensi
+            'pengajuan_kap_gap_kompetensi' => $pengajuan_kap_gap_kompetensi,
+            'pengajuan_kap_indikator_kinerja' => $pengajuan_kap_indikator_kinerja
         ]);
         $namePdf = $pengajuanKap->kode_pembelajaran . '_' . $pengajuanKap->user_name . '.pdf';
         return $pdf->stream($namePdf);
