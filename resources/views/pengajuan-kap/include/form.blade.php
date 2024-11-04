@@ -118,22 +118,28 @@
                             </div>
                         </div>
                     </div>
-
                     @if (!$hideForm)
-                        <div class="form-group row mb-3">
-                            <label for="indikator_kinerja" class="col-sm-3 col-form-label">Indikator Kinerja <span
-                                    style="color: red">*</span></label>
+                        <div class="form-group row mb-2">
+                            <label for="search_indikator_kinerja" class="col-sm-3 col-form-label">
+                                Indikator Kinerja <span style="color: red">*</span>
+                            </label>
                             <div class="col-sm-6">
-                                <div class="input-group">
-                                    <input type="text" name="indikator_kinerja" id="indikator_kinerja"
-                                        class="form-control" required readonly
-                                        value="{{ isset($pengajuanKap) ? $pengajuanKap->indikator_kinerja : old('indikator_kinerja') }} " />
-                                    <button type="button" id="pilihButton" class="input-group-text btn btn-success">
-                                        Pilih
+                                <div class="input-group mb-2">
+                                    <button type="button" id="pilihButton" class="input-group-text btn btn-success"  style="width: 180px;">
+                                        <i class="fa fa-search"></i> Cari Indikator Kinerja
                                     </button>
-                                    <div class="invalid-feedback">
-                                        Mohon diisi Indikator Kinerja.
-                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="selectedIndicatorsTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Indikator Kinerja</th>
+                                                <th style="width: 50px; text-align: center;">Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -154,43 +160,30 @@
 
                     @if (!$hideForm)
                         <div class="form-group row mb-3">
-                            <label for="kompetensi_id" class="col-sm-3 col-form-label">Kompetensi <span
+                            <label class="col-sm-3 col-form-label">Kompetensi <span
                                     style="color: red">*</span></label>
+
                             <div class="col-sm-6">
-                                <div class="input-group">
-                                    <input type="text"
-                                        value="{{ isset($pengajuanKap) ? $pengajuanKap->nama_kompetensi : old('nama_kompetensi') }}"
-                                        name="kompetensi_text" id="kompetensi_text" class="form-control" required
-                                        readonly />
-                                    <input type="hidden"
-                                        value="{{ isset($pengajuanKap) ? $pengajuanKap->kompetensi_id : old('kompetensi_id') }}"
-                                        name="kompetensi_id" id="kompetensi_id" class="form-control" required
-                                        readonly />
-                                    <button type="button" id="pilihButtonKompetensi"
-                                        class="input-group-text btn btn-success">
-                                        Pilih
+                                <div class="input-group mb-2">
+                                    <button type="button" id="pilihButtonKompetensi" class="input-group-text btn btn-success" style="width: 180px;">
+                                        <i class="fa fa-search"></i> Cari Kompetensi
                                     </button>
-                                    <div class="invalid-feedback">
-                                        Mohon untuk pilih Kompetensi
-                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="selectedCompetenciesTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Kompetensi</th>
+                                                <th style="width: 50px; text-align: center;">Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     @endif
-
-                    <input type="hidden" name="total_pegawai" id="total_pegawai" class="form-control" required
-                        readonly
-                        value="{{ isset($pengajuanKap) ? $gap_kompetensi_pengajuan_kap->total_pegawai : old('total_pegawai') }}" />
-                    <input type="hidden" name="pegawai_kompeten" id="pegawai_kompeten" class="form-control"
-                        required readonly
-                        value="{{ isset($pengajuanKap) ? $gap_kompetensi_pengajuan_kap->pegawai_kompeten : old('pegawai_kompeten') }}" />
-                    <input type="hidden" name="pegawai_belum_kompeten" id="pegawai_belum_kompeten"
-                        class="form-control" required readonly
-                        value="{{ isset($pengajuanKap) ? $gap_kompetensi_pengajuan_kap->pegawai_belum_kompeten : old('pegawai_belum_kompeten') }}" />
-                    <input type="hidden" name="persentase_kompetensi" id="persentase_kompetensi"
-                        class="form-control" required readonly
-                        value="{{ isset($pengajuanKap) ? $gap_kompetensi_pengajuan_kap->persentase_kompetensi : old('persentase_kompetensi') }}" />
-
                     <div class="form-group row mb-3">
                         <label for="topik_id" class="col-sm-3 col-form-label">
                             {{ __('Program pembelajaran') }} <span style="color: red">*</span>

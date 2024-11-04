@@ -10,7 +10,6 @@
             color: white;
             border-color: gray;
         }
-
         #loading-overlay {
             display: none;
             position: fixed;
@@ -19,11 +18,9 @@
             width: 100%;
             height: 100%;
             background: rgba(255, 255, 255, 0.8);
-            /* Transparan white background */
             z-index: 1000;
             text-align: center;
         }
-
         .loading-spinner {
             position: absolute;
             top: 50%;
@@ -36,7 +33,6 @@
             height: 40px;
             animation: spin 1s linear infinite;
         }
-
         @keyframes spin {
             0% {
                 transform: rotate(0deg);
@@ -46,25 +42,16 @@
                 transform: rotate(360deg);
             }
         }
-
         .select2-container--default .select2-selection--multiple {
             height: 70px;
-            /* Sesuaikan tinggi sesuai kebutuhan */
             overflow-y: auto;
-            /* Tambahkan overflow agar bisa scroll jika opsi banyak */
         }
-
         .badge-width {
             display: inline-block;
-            /* Memastikan span memiliki lebar tetap */
             width: 120px;
-            /* Atur lebar sesuai kebutuhan */
             text-align: center;
-            /* Untuk memastikan teks berada di tengah */
             font-size: 0.9em;
-            /* Ukuran font lebih kecil */
             line-height: 1.5;
-            /* Mengatur tinggi garis untuk vertikal center */
         }
     </style>
 
@@ -126,10 +113,8 @@
                             @endif
                         </div>
 
-
                         <div class="card-body">
                             <div class="row">
-
                                 <div class="col-md-3">
                                     <div class="input-group mb-2">
                                         <select name="topik" id="topik"

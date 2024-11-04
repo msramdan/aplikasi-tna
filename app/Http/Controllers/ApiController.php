@@ -66,91 +66,95 @@ class ApiController extends Controller
         $keySortUnit = Auth::user()->key_sort_unit;
 
         try {
+            // Receive indikator values as an array
             $indikator = $request->input('indikator');
+
+            // Check if indikator is present and is an array
+            if (!is_array($indikator) || empty($indikator)) {
+                return response()->json(['message' => 'Invalid or missing indikator'], 400);
+            }
+
+            // Query to find competencies shared across selected IK
             $data = DB::table('tagging_kompetensi_ik')
                 ->join('kompetensi', 'tagging_kompetensi_ik.kompetensi_id', '=', 'kompetensi.id')
-                ->where('tagging_kompetensi_ik.indikator_kinerja', $indikator)
+                ->whereIn('tagging_kompetensi_ik.indikator_kinerja', $indikator)
                 ->select('kompetensi.id as kompetensi_id', 'kompetensi.nama_kompetensi')
+                ->groupBy('kompetensi.id', 'kompetensi.nama_kompetensi')
+                ->havingRaw('COUNT(DISTINCT tagging_kompetensi_ik.indikator_kinerja) = ?', [count($indikator)])
                 ->get();
 
-            $kompetensiIds = $data->pluck('kompetensi_id')->toArray();
-            $kompetensiIds = array_map('strval', $kompetensiIds);
-
-
-            // Check if kompetensiIds is empty
-            if (empty($kompetensiIds)) {
+            if ($data->isEmpty()) {
                 return response()->json([
                     'kompetensi_summary' => [],
                 ]);
             }
-            // Construct the full endpoint URL with the API token
+
+            $kompetensiIds = $data->pluck('kompetensi_id')->map(function ($id) {
+                return (string) $id; // Cast to string
+            })->toArray();
+
+            // Construct the API endpoint
             $endpoint = config('stara.map_endpoint') . '/v1/bursa/get-gap-kompetensi-match?api_token=' . config('stara.map_api_token');
+
             // Send the POST request
             $response = Http::post($endpoint, [
                 'id_kompetensi' => $kompetensiIds,
                 'kode_unit' => $keySortUnit,
             ]);
-
+            // Check API response
             if ($response->failed()) {
+                \Log::error('API call failed', ['response' => $response->body()]);
                 return response()->json(['message' => 'Failed to hit the external API'], 500);
             }
 
             $responseData = $response->json();
-
-            // Extract and process kompetensi_match data
             $kompetensiMatches = collect();
 
+            // Process kompetensi_match data
             foreach ($responseData['result'] as $result) {
                 foreach ($result['kompetensi_match'] as $match) {
                     $kompetensiMatches->push([
                         'id_kompetensi' => $match['id_kompetensi'],
                         'nama_kompetensi' => $match['nama_kompetensi'],
                         'persentase_level_kompetensi' => $match['persentase_level_kompetensi'],
-                        'nama' => $result['nama'], // Extract the employee's name
+                        'nama' => $result['nama'],
                     ]);
                 }
             }
 
-            // Group by kompetensi_id and calculate the required data
+            // Group by kompetensi_id and calculate required data
             $groupedData = $kompetensiMatches->groupBy('id_kompetensi')->map(function ($items) {
-                // Count the number of employees for this kompetensi
-                $totalEmployees = $items->unique('nama')->count();
-
-                // Count how many persentase_level_kompetensi are 100% and less than 100%
-                $count100 = $items->where('persentase_level_kompetensi', 100)->count();
-                $countLessThan100 = $items->where('persentase_level_kompetensi', '<', 100)->count();
-
                 return [
                     'kompetensi_id' => $items->first()['id_kompetensi'],
                     'nama_kompetensi' => $items->first()['nama_kompetensi'],
                     'average_persentase' => number_format($items->avg('persentase_level_kompetensi'), 2),
-                    'total_employees' => $totalEmployees,
-                    'count_100' => $count100,
-                    'count_less_than_100' => $countLessThan100
+                    'total_employees' => $items->unique('nama')->count(),
+                    'count_100' => $items->where('persentase_level_kompetensi', 100)->count(),
+                    'count_less_than_100' => $items->where('persentase_level_kompetensi', '<', 100)->count(),
                 ];
             })->values();
-
-            return response()->json([
-                'kompetensi_summary' => $groupedData,
-            ]);
+            return response()->json(['kompetensi_summary' => $groupedData]);
         } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 500);
+            \Log::error('Error in getKompetensiSupportIK', ['error' => $e->getMessage()]);
+            return response()->json(['message' => 'An error occurred while processing your request.'], 500);
         }
     }
 
+
     public function getTopikSupportKompetensi(Request $request)
     {
-        $kompetensiId = $request->input('kompetensi_id');
-
-        if (!$kompetensiId) {
+        $kompetensiIds = $request->input('kompetensi_id'); // Accepting array of kompetensi_ids
+        if (empty($kompetensiIds) || !is_array($kompetensiIds)) {
             return response()->json(['message' => 'Parameter kompetensi_id tidak valid'], 400);
         }
 
         try {
             $data = DB::table('tagging_pembelajaran_kompetensi')
                 ->join('topik', 'tagging_pembelajaran_kompetensi.topik_id', '=', 'topik.id')
-                ->where('tagging_pembelajaran_kompetensi.kompetensi_id', $kompetensiId)
+                ->whereIn('tagging_pembelajaran_kompetensi.kompetensi_id', $kompetensiIds)
                 ->select('topik.id as topik_id', 'topik.nama_topik')
+                ->groupBy('topik.id', 'topik.nama_topik')
+                ->havingRaw('COUNT(DISTINCT tagging_pembelajaran_kompetensi.kompetensi_id) = ?', [count($kompetensiIds)])
                 ->get();
 
             return response()->json(['data' => $data]);
