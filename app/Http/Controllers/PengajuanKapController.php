@@ -331,11 +331,9 @@ class PengajuanKapController extends Controller
             ->select(
                 'pengajuan_kap.*',
                 'users.name as user_name',
-                'kompetensi.nama_kompetensi',
                 'topik.nama_topik'
             )
             ->leftJoin('users', 'pengajuan_kap.user_created', '=', 'users.id')
-            ->leftJoin('kompetensi', 'pengajuan_kap.kompetensi_id', '=', 'kompetensi.id')
             ->leftJoin('topik', 'pengajuan_kap.topik_id', '=', 'topik.id')
             ->where('pengajuan_kap.id', '=', $id)
             ->where('pengajuan_kap.institusi_sumber', '=', $is_bpkp)
@@ -391,10 +389,19 @@ class PengajuanKapController extends Controller
         $waktu_pelaksanaan = DB::table('waktu_pelaksanaan')
             ->where('pengajuan_kap_id', $id)
             ->get()
-            ->toArray(); // Dapatkan data dalam bentuk array
-        $pengajuan_kap_gap_kompetensi = DB::table('pengajuan_kap_gap_kompetensi')
+            ->toArray();
+        $pengajuan_kap_indikator_kinerja = DB::table('pengajuan_kap_indikator_kinerja')
             ->where('pengajuan_kap_id', $id)
-            ->first();
+            ->get();
+        $pengajuan_kap_gap_kompetensi = DB::table('pengajuan_kap_gap_kompetensi')
+            ->join('kompetensi', 'pengajuan_kap_gap_kompetensi.kompetensi_id', '=', 'kompetensi.id')
+            ->where('pengajuan_kap_gap_kompetensi.pengajuan_kap_id', $id)
+            ->select(
+                'pengajuan_kap_gap_kompetensi.*',
+                'kompetensi.nama_kompetensi'
+            )
+            ->get();
+        $kompetensiIds = $pengajuan_kap_gap_kompetensi->pluck('kompetensi_id')->toArray();
 
         $endpoint_pusdiklatwap = config('stara.endpoint_pusdiklatwap');
         $api_key_pusdiklatwap = config('stara.api_token_pusdiklatwap');
@@ -462,8 +469,10 @@ class PengajuanKapController extends Controller
         } else {
             $topikOptions = DB::table('tagging_pembelajaran_kompetensi')
                 ->join('topik', 'tagging_pembelajaran_kompetensi.topik_id', '=', 'topik.id')
+                ->whereIn('tagging_pembelajaran_kompetensi.kompetensi_id', $kompetensiIds)
                 ->select('topik.id', 'topik.nama_topik')
-                ->where('tagging_pembelajaran_kompetensi.kompetensi_id', $pengajuanKap->kompetensi_id)
+                ->groupBy('topik.id', 'topik.nama_topik')
+                ->havingRaw('COUNT(DISTINCT tagging_pembelajaran_kompetensi.kompetensi_id) = ?', [count($kompetensiIds)])
                 ->get();
         }
         return view($is_bpkp == 'BPKP' ? 'pengajuan-kap.edit' : 'pengajuan-kap.edit-apip', [
@@ -484,6 +493,8 @@ class PengajuanKapController extends Controller
             'usedPrioritas' => $usedPrioritas,
             'kodePembelajaran' => $kodePembelajaran,
             'hideForm' => $hideForm,
+            'pengajuan_kap_indikator_kinerja' => $pengajuan_kap_indikator_kinerja,
+            'pengajuan_kap_gap_kompetensi' => $pengajuan_kap_gap_kompetensi
         ]);
     }
 
@@ -511,11 +522,9 @@ class PengajuanKapController extends Controller
             ->select(
                 'pengajuan_kap.*',
                 'users.name as user_name',
-                'kompetensi.nama_kompetensi',
                 'topik.nama_topik'
             )
             ->leftJoin('users', 'pengajuan_kap.user_created', '=', 'users.id')
-            ->leftJoin('kompetensi', 'pengajuan_kap.kompetensi_id', '=', 'kompetensi.id')
             ->leftJoin('topik', 'pengajuan_kap.topik_id', '=', 'topik.id')
             ->where('pengajuan_kap.id', '=', $id)
             ->where('pengajuan_kap.institusi_sumber', '=', $is_bpkp)
@@ -572,9 +581,19 @@ class PengajuanKapController extends Controller
             ->where('pengajuan_kap_id', $id)
             ->get()
             ->toArray(); // Dapatkan data dalam bentuk array
-        $pengajuan_kap_gap_kompetensi = DB::table('pengajuan_kap_gap_kompetensi')
+
+        $pengajuan_kap_indikator_kinerja = DB::table('pengajuan_kap_indikator_kinerja')
             ->where('pengajuan_kap_id', $id)
-            ->first();
+            ->get();
+        $pengajuan_kap_gap_kompetensi = DB::table('pengajuan_kap_gap_kompetensi')
+            ->join('kompetensi', 'pengajuan_kap_gap_kompetensi.kompetensi_id', '=', 'kompetensi.id')
+            ->where('pengajuan_kap_gap_kompetensi.pengajuan_kap_id', $id)
+            ->select(
+                'pengajuan_kap_gap_kompetensi.*',
+                'kompetensi.nama_kompetensi'
+            )
+            ->get();
+        $kompetensiIds = $pengajuan_kap_gap_kompetensi->pluck('kompetensi_id')->toArray();
 
         $endpoint_pusdiklatwap = config('stara.endpoint_pusdiklatwap');
         $api_key_pusdiklatwap = config('stara.api_token_pusdiklatwap');
@@ -642,8 +661,10 @@ class PengajuanKapController extends Controller
         } else {
             $topikOptions = DB::table('tagging_pembelajaran_kompetensi')
                 ->join('topik', 'tagging_pembelajaran_kompetensi.topik_id', '=', 'topik.id')
+                ->whereIn('tagging_pembelajaran_kompetensi.kompetensi_id', $kompetensiIds)
                 ->select('topik.id', 'topik.nama_topik')
-                ->where('tagging_pembelajaran_kompetensi.kompetensi_id', $pengajuanKap->kompetensi_id)
+                ->groupBy('topik.id', 'topik.nama_topik')
+                ->havingRaw('COUNT(DISTINCT tagging_pembelajaran_kompetensi.kompetensi_id) = ?', [count($kompetensiIds)])
                 ->get();
         }
         return view($is_bpkp == 'BPKP' ? 'pengajuan-kap.edit' : 'pengajuan-kap.edit-apip', [
@@ -664,6 +685,8 @@ class PengajuanKapController extends Controller
             'usedPrioritas' => $usedPrioritas,
             'kodePembelajaran' => $kodePembelajaran,
             'hideForm' => $hideForm,
+            'pengajuan_kap_indikator_kinerja' => $pengajuan_kap_indikator_kinerja,
+            'pengajuan_kap_gap_kompetensi' => $pengajuan_kap_gap_kompetensi
         ]);
     }
 

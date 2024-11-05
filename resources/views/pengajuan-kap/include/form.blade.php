@@ -197,19 +197,11 @@
                                     name="topik_id" id="topik_id" required>
                                     <option value="" selected disabled>--
                                         {{ __('Select program pembelajaran') }} --</option>
-
                                     @if (isset($pengajuanKap))
                                         @foreach ($topikOptions as $topik)
                                             <option value="{{ $topik->id }}"
                                                 data-nama-topik="{{ $topik->nama_topik }}"
                                                 {{ $topik->id == $pengajuanKap->topik_id ? 'selected' : '' }}>
-                                                {{ $topik->nama_topik }}
-                                            </option>
-                                        @endforeach
-                                    @else
-                                        @foreach ($topikOptions as $topik)
-                                            <option value="{{ $topik->id }}"
-                                                data-nama-topik="{{ $topik->nama_topik }}">
                                                 {{ $topik->nama_topik }}
                                             </option>
                                         @endforeach

@@ -375,24 +375,23 @@
     </script>
     <script>
         $(document).ready(function() {
+            let selectedIndicators = [];
+            let selectedCompetencies = [];
+
             const options_temp = '<option value="" selected disabled>-- Select --</option>';
             $('#pilihButton').prop('disabled', false);
             $('#pilihButtonKompetensi').prop('disabled', false);
             $('#jenis_program').change(function() {
-                $('#indikator_kinerja').val('');
-                $('#kompetensi_id').val('');
-                $('#kompetensi_text').val('');
-                $('#total_pegawai').val('');
-                $('#pegawai_kompeten').val('');
-                $('#pegawai_belum_kompeten').val('');
-                $('#persentase_kompetensi').val('');
-
-                if (!hideForm) { // Gunakan hideForm (bukan $hideForm)
+                $('#selectedIndicatorsTable tbody').empty();
+                $('#selectedCompetenciesTable tbody').empty();
+                if (!hideForm) {
                     $('#topik_id').html(options_temp);
                     $('#judul').val('');
                 }
                 $('#pilihButtonKompetensi').prop('disabled', true);
-
+                selectedIndicators = [];
+                selectedCompetencies = [];
+                var selectedValue = $(this).val();
                 var selectedValue = $(this).val();
                 if (selectedValue !== '') {
                     $('#pilihButton').prop('disabled', false);
@@ -511,16 +510,65 @@
                 });
             });
 
+            $(document).on('click', '.pilihIndikator', function() {
+                var indikator = $(this).data('indikator');
+                if ($('#selectedIndicatorsTable tbody tr td:contains("' + indikator + '")').length === 0 &&
+                    !selectedIndicators.includes(indikator)) {
+
+                    // Append a new row with a hidden input field inside the row itself
+                    $('#selectedIndicatorsTable tbody').append(
+                        `<tr>
+                <td>${indikator}  <input type="hidden" name="indikator_kinerja[]" value="${indikator}"></td>
+                <td style="text-align: center;">
+                    <button type="button" class="btn btn-danger btn-sm deleteRow">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </td>
+
+            </tr>`
+                    );
+
+                    // Add the indikator to the selectedIndicators array to prevent duplicates
+                    selectedIndicators.push(indikator);
+                }
+                $('#indikatorModal').modal('hide');
+                // console.log(selectedIndicators);
+            });
+
+            $(document).on('click', '.deleteRow', function() {
+                var indikator = $(this).closest('tr').find('td:first').text().trim();
+
+                // Filter out the selected indikator from the array
+                selectedIndicators = selectedIndicators.filter(item => item.trim() !== indikator);
+
+                // Remove the row from the table
+                $(this).closest('tr').remove();
+
+                // Clear selected competencies
+                selectedCompetencies = [];
+                $('#selectedCompetenciesTable tbody').empty();
+
+                // Enable or disable the "Pilih" button based on array length
+                if (selectedIndicators.length === 0) {
+                    $('#pilihButtonKompetensi').prop('disabled', true);
+                } else {
+                    $('#pilihButtonKompetensi').prop('disabled', false);
+                }
+                // console.log(selectedIndicators);
+            });
+
             $('#pilihButtonKompetensi').click(function() {
-                var indikator = $('#indikator_kinerja').val();
-                console.log(indikator);
+                if (selectedIndicators.length === 0) {
+                    alert('Silakan pilih setidaknya satu Indikator Kinerja.');
+                    return;
+                }
 
                 $('#loading-overlay').show();
                 $.ajax({
                     url: '{{ route('getKompetensiSupportIK') }}',
                     type: 'GET',
                     data: {
-                        indikator: indikator
+                        indikator: selectedIndicators // Pass array of selected indikator
                     },
                     success: function(response) {
                         if (response.kompetensi_summary.length === 0) {
@@ -539,19 +587,16 @@
                             '<div class="table-responsive"><table id="kompetensiTable" class="table table-sm table-striped" style="font-size:14px"><thead><tr>';
                         var tableBody = '<tbody>';
 
-                        // Update table headers to include the new columns
+                        // Table headers
                         table +=
                             '<th>Kompetensi</th><th>Total pegawai</th><th>Pegawai kompeten</th><th>Pegawai belum kompeten</th><th>Persentase kompetensi</th><th>Aksi</th></tr></thead>';
 
                         $.each(response.kompetensi_summary, function(key, value) {
                             tableBody += '<tr>';
                             tableBody += '<td>' + value.nama_kompetensi + '</td>';
-                            tableBody += '<td>' + value.total_employees +
-                                '</td>'; // Total Karyawan
-                            tableBody += '<td>' + value.count_100 +
-                                '</td>'; // Count 100%
-                            tableBody += '<td>' + value.count_less_than_100 +
-                                '</td>'; // Count < 100%
+                            tableBody += '<td>' + value.total_employees + '</td>';
+                            tableBody += '<td>' + value.count_100 + '</td>';
+                            tableBody += '<td>' + value.count_less_than_100 + '</td>';
                             tableBody += '<td>' + value.average_persentase + '%</td>';
                             tableBody +=
                                 '<td><button type="button" class="btn btn-primary pilihKompetensi btn-sm" ' +
@@ -570,6 +615,8 @@
 
                         table += tableBody + '</tbody></table></div>';
                         modalBody.append(table);
+
+                        // Initialize DataTable for dynamic kompetensi table
                         $('#kompetensiTable').DataTable({
                             responsive: true,
                             paging: true,
@@ -577,6 +624,7 @@
                             ordering: true,
                             info: true
                         });
+
                         $('#kompetensiModal').modal('show');
                         $('#loading-overlay').hide();
                     },
@@ -588,48 +636,56 @@
                 });
             });
 
-            $(document).on('click', '.pilihIndikator', function() {
-                $('#kompetensi_id').html(options_temp);
-                $('#kompetensi_id').val('');
-                $('#kompetensi_text').val('');
-                $('#total_pegawai').val('');
-                $('#pegawai_kompeten').val('');
-                $('#pegawai_belum_kompeten').val('');
-                $('#persentase_kompetensi').val('');
-                $('#topik_id').html(options_temp);
-                $('#judul').val('');
-                var indikator = $(this).data('indikator');
-                $('#indikator_kinerja').val(indikator);
-                console.log(indikator);
-
-                $('#indikatorModal').modal('hide');
-            });
-
             $(document).on('click', '.pilihKompetensi', function() {
-                $('#topik_id').html(options_temp);
-                $('#judul').val('');
                 var kompetensi = $(this).data('kompetensi');
                 var kompetensi_id = $(this).data('id');
                 var total_employees = $(this).data('total-employees');
                 var count_100 = $(this).data('count-100');
                 var count_less_than_100 = $(this).data('count-less-than-100');
                 var average_persentase = $(this).data('average-persentase');
-                getDataTopikSupportKompetensi(kompetensi_id);
-                $('#kompetensi_text').val(kompetensi);
-                $('#kompetensi_id').val(kompetensi_id);
-                $('#total_pegawai').val(total_employees);
-                $('#pegawai_kompeten').val(count_100);
-                $('#pegawai_belum_kompeten').val(count_less_than_100);
-                $('#persentase_kompetensi').val(average_persentase);
+                if ($('#selectedCompetenciesTable tbody tr td:contains("' + kompetensi + '")').length ===
+                    0 &&
+                    !selectedCompetencies.includes(kompetensi_id)) {
+                    $('#selectedCompetenciesTable tbody').append(
+                        `<tr>
+                <td>${kompetensi}
+                <input type="hidden" name="kompetensi_id[]" value="${kompetensi_id}">
+                <input type="hidden" name="total_employees[]" value="${total_employees}">
+                <input type="hidden" name="count_100[]" value="${count_100}">
+                <input type="hidden" name="count_less_than_100[]" value="${count_less_than_100}">
+                <input type="hidden" name="average_persentase[]" value="${average_persentase}"></td>
+                <td style="text-align: center;">
+                    <button type="button" class="btn btn-danger btn-sm deleteRowCompetency" data-id="${kompetensi_id}">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </td>
+            </tr>`
+                    );
+                    selectedCompetencies.push(kompetensi_id);
+                }
+                getDataTopikSupportKompetensi(selectedCompetencies);
                 $('#kompetensiModal').modal('hide');
             });
 
-            function getDataTopikSupportKompetensi(kompetensi_id) {
+            $(document).on('click', '.deleteRowCompetency', function() {
+                var kompetensi = $(this).closest('tr').find('td:first').text();
+                var kompetensi_id = $(this).data('id') || $(this).closest('tr').data('id');
+                selectedCompetencies = selectedCompetencies.filter(item => item !== kompetensi_id);
+                $(this).closest('tr').remove();
+                getDataTopikSupportKompetensi(selectedCompetencies);
+            });
+
+            function getDataTopikSupportKompetensi(selectedCompetencies) {
+                if (selectedCompetencies.length === 0) {
+                    $('#topik_id').html(options_temp);
+                    return;
+                }
+                // console.log(selectedCompetencies);
                 $.ajax({
                     url: '{{ route('getTopikSupportKompetensi') }}',
                     type: 'GET',
                     data: {
-                        kompetensi_id: kompetensi_id
+                        kompetensi_id: selectedCompetencies
                     },
                     beforeSend: function() {
                         $('#topik_id').prop('disabled', true);
