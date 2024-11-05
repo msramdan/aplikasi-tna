@@ -376,8 +376,17 @@
     <script>
         $(document).ready(function() {
             let selectedIndicators = [];
+            $('#selectedIndicatorsTable tbody tr').each(function() {
+                var indikator = $(this).find('input[name="indikator_kinerja[]"]').val();
+                selectedIndicators.push(indikator);
+            });
             let selectedCompetencies = [];
+            $('#selectedCompetenciesTable tbody tr').each(function() {
+                var kompetensi_id = parseInt($(this).find('input[name="kompetensi_id[]"]').val(), 10);
+                selectedCompetencies.push(kompetensi_id);
+            });
 
+            console.log(selectedCompetencies);
             const options_temp = '<option value="" selected disabled>-- Select --</option>';
             $('#pilihButton').prop('disabled', false);
             $('#pilihButtonKompetensi').prop('disabled', false);
@@ -514,8 +523,6 @@
                 var indikator = $(this).data('indikator');
                 if ($('#selectedIndicatorsTable tbody tr td:contains("' + indikator + '")').length === 0 &&
                     !selectedIndicators.includes(indikator)) {
-
-                    // Append a new row with a hidden input field inside the row itself
                     $('#selectedIndicatorsTable tbody').append(
                         `<tr>
                 <td>${indikator}  <input type="hidden" name="indikator_kinerja[]" value="${indikator}"></td>
@@ -668,19 +675,18 @@
             });
 
             $(document).on('click', '.deleteRowCompetency', function() {
-                var kompetensi = $(this).closest('tr').find('td:first').text();
-                var kompetensi_id = $(this).data('id') || $(this).closest('tr').data('id');
-                selectedCompetencies = selectedCompetencies.filter(item => item !== kompetensi_id);
+                var kompetensi_id = parseInt($(this).data('id'), 10);
+                selectedCompetencies = selectedCompetencies.filter(id => id !== kompetensi_id);
                 $(this).closest('tr').remove();
                 getDataTopikSupportKompetensi(selectedCompetencies);
             });
 
             function getDataTopikSupportKompetensi(selectedCompetencies) {
+                console.log(selectedCompetencies);
                 if (selectedCompetencies.length === 0) {
                     $('#topik_id').html(options_temp);
                     return;
                 }
-                // console.log(selectedCompetencies);
                 $.ajax({
                     url: '{{ route('getTopikSupportKompetensi') }}',
                     type: 'GET',

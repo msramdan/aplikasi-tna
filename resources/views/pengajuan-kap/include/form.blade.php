@@ -139,6 +139,21 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @if (isset($pengajuanKap))
+                                                @foreach ($pengajuan_kap_indikator_kinerja as $row)
+                                                    <tr>
+                                                        <td>{{ $row->indikator_kinerja }} <input type="hidden"
+                                                                name="indikator_kinerja[]"
+                                                                value="{{ $row->indikator_kinerja }}"></td>
+                                                        <td style="text-align: center;">
+                                                            <button type="button"
+                                                                class="btn btn-danger btn-sm deleteRow">
+                                                                <i class="fa fa-trash"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
                                         </tbody>
                                     </table>
                                 </div>
@@ -180,6 +195,31 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @if (isset($pengajuanKap))
+                                                @foreach ($pengajuan_kap_gap_kompetensi as $row)
+                                                    <tr>
+                                                        <td>{{ $row->nama_kompetensi }}
+                                                            <input type="hidden" name="kompetensi_id[]"
+                                                                value="{{ $row->kompetensi_id }}">
+                                                            <input type="hidden" name="total_employees[]"
+                                                                value="{{ $row->total_pegawai }}">
+                                                            <input type="hidden" name="count_100[]"
+                                                                value="{{ $row->pegawai_kompeten }}">
+                                                            <input type="hidden" name="count_less_than_100[]"
+                                                                value="{{ $row->pegawai_belum_kompeten }}">
+                                                            <input type="hidden" name="average_persentase[]"
+                                                                value="{{ $row->persentase_kompetensi }}">
+                                                        </td>
+                                                        <td style="text-align: center;">
+                                                            <button type="button"
+                                                                class="btn btn-danger btn-sm deleteRowCompetency"
+                                                                data-id="{{ $row->kompetensi_id }}">
+                                                                <i class="fa fa-trash"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
                                         </tbody>
                                     </table>
                                 </div>
@@ -697,7 +737,8 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label for="sasaran_peserta" class="col-sm-3 col-form-label">{{ __('Sasaran Peserta') }}<span
+                        <label for="sasaran_peserta"
+                            class="col-sm-3 col-form-label">{{ __('Sasaran Peserta') }}<span
                                 style="color: red">*</span></label>
                         <div class="col-sm-6">
                             <textarea name="sasaran_peserta" id="sasaran_peserta" required

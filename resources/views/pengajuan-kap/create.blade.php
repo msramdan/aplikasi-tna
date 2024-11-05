@@ -647,19 +647,18 @@
             });
 
             $(document).on('click', '.deleteRowCompetency', function() {
-                var kompetensi = $(this).closest('tr').find('td:first').text();
-                var kompetensi_id = $(this).data('id') || $(this).closest('tr').data('id');
-                selectedCompetencies = selectedCompetencies.filter(item => item !== kompetensi_id);
+                var kompetensi_id = parseInt($(this).data('id'), 10);
+                selectedCompetencies = selectedCompetencies.filter(id => id !== kompetensi_id);
                 $(this).closest('tr').remove();
                 getDataTopikSupportKompetensi(selectedCompetencies);
             });
 
             function getDataTopikSupportKompetensi(selectedCompetencies) {
+                console.log(selectedCompetencies);
                 if (selectedCompetencies.length === 0) {
                     $('#topik_id').html(options_temp);
                     return;
                 }
-                // console.log(selectedCompetencies);
                 $.ajax({
                     url: '{{ route('getTopikSupportKompetensi') }}',
                     type: 'GET',
