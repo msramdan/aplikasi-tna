@@ -165,12 +165,10 @@
                     $("#smartwizard").smartWizard('fixHeight');
                     return false;
                 }
-                $('#form-laporan').html(''); // Pastikan form-laporan kosong sebelum menambahkan elemen baru
+                $('#form-laporan').html('');
                 var csrf = "{{ csrf_token() }}";
                 $('#form-laporan').append(`<input type="hidden" name="_token" value="${csrf}"/>`);
-                $('#form-laporan').append('<input type="hidden" name="_method" value="PUT"/>'); // Spoofing method PUT
-
-
+                $('#form-laporan').append('<input type="hidden" name="_method" value="PUT"/>');
 
                 var forms = ['form-1', 'form-2', 'form-3'];
                 forms.forEach(formId => {
@@ -202,10 +200,7 @@
         }
 
         function closeModal() {
-            // Reset wizard
             $('#smartwizard').smartWizard("reset");
-
-            // Reset form
             document.getElementById("form-1").reset();
             document.getElementById("form-2").reset();
             document.getElementById("form-3").reset();

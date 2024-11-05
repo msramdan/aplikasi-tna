@@ -151,11 +151,11 @@
                     $("#smartwizard").smartWizard('fixHeight');
                     return false;
                 }
-                $('#form-laporan').html(''); // Pastikan form-laporan kosong sebelum menambahkan elemen baru
+                $('#form-laporan').html('');
 
                 var csrf = "{{ csrf_token() }}";
                 $('#form-laporan').append(`<input type="hidden" name="_token" value="${csrf}"/>`);
-                $('#form-laporan').append('@method('POST')'); // Spoofing metode PUT
+                $('#form-laporan').append('@method('POST')');
 
                 var forms = ['form-1', 'form-2', 'form-3'];
                 forms.forEach(formId => {
