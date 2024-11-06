@@ -1344,7 +1344,6 @@ class PengajuanKapController extends Controller
 
     public function approve(Request $request, $id)
     {
-
         DB::beginTransaction();
         $syncResult = null;
         try {

@@ -263,8 +263,7 @@
                             <span style="color: red">*</span>
                         </label>
                         <div class="col-sm-6">
-                            <textarea name="judul" id="judul" class="form-control @error('judul') is-invalid @enderror" autocomplete="off"
-                                data-bs-toggle="tooltip" title="{{ config('form_tooltips.judul') }}" required rows="2">{{ isset($pengajuanKap) ? $pengajuanKap->judul : old('judul') }}</textarea>
+                            <textarea name="judul" id="judul" class="form-control @error('judul') is-invalid @enderror" autocomplete="off" data-bs-toggle="tooltip" title="{{ config('form_tooltips.judul') }}" required rows="2">{{ isset($pengajuanKap) ? $pengajuanKap->judul : old('judul') }}</textarea>
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Judul Program Pembelajaran
                             </div>

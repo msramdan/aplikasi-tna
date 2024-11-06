@@ -525,6 +525,8 @@
 
                 // Clear selected competencies
                 selectedCompetencies = [];
+                $('#topik_id').html(options_temp);
+                $('#judul').val('');
                 $('#selectedCompetenciesTable tbody').empty();
 
                 // Enable or disable the "Pilih" button based on array length
