@@ -19,7 +19,11 @@
                 <td>{{ $index + 1 }}</td>
                 <td>{{ $row->kode_pembelajaran }}</td>
                 <td>{{ $row->nama_unit }}</td>
-                <td>{{ $row->nama_kompetensi }}</td>
+                <td>
+                    <ul>
+                        {!! $row->nama_kompetensi !!}
+                    </ul>
+                </td>
                 <td>{{ $row->nama_topik }}</td>
                 <td>{{ $row->biayaName }}</td>
                 <td>{{ $row->prioritas_pembelajaran }}</td>
