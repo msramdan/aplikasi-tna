@@ -362,10 +362,6 @@
                                                 @endforeach
                                             </td>
                                         </tr>
-
-                                        <tr>
-                                            <td class="fw-bold">{{ __('Kompetensi') }}</td>
-                                            <td>
                                         <tr>
                                             <td class="fw-bold">{{ __('Kompetensi') }}</td>
                                             <td>
@@ -392,9 +388,6 @@
                                                     </tbody>
                                                 </table>
                                             </td>
-                                        </tr>
-
-                                        </td>
                                         </tr>
                                         <tr>
                                             <td class="fw-bold">{{ __('Program pembelajaran') }}</td>
