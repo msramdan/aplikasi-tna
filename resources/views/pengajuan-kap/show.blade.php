@@ -257,7 +257,6 @@
         </div>
         <div class="container-fluid">
             <div class="row">
-
                 <div class="col-md-7">
                     <div class="card">
                         <div class="card-body">
@@ -512,7 +511,6 @@
                                             </td>
                                         </tr>
                                     </table>
-
                                 </div>
                                 <div class="tab-pane" id="icon-tabpanel-1" role="tabpanel" aria-labelledby="icon-tab-1">
                                     <table class="table table-hover table-striped table-sm">

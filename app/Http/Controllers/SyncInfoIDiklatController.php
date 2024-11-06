@@ -30,18 +30,22 @@ class SyncInfoIDiklatController extends Controller
                 ->select(
                     'pengajuan_kap.*',
                     'users.name as user_name',
-                    'kompetensi.nama_kompetensi',
+                    DB::raw('GROUP_CONCAT(DISTINCT CONCAT("<li>", kompetensi.nama_kompetensi, "</li>")) as nama_kompetensi'),
+                    DB::raw('GROUP_CONCAT(DISTINCT CONCAT("<li>", pengajuan_kap_indikator_kinerja.indikator_kinerja, "</li>")) as nama_indikator'),
                     'topik.nama_topik',
                     'log_review_pengajuan_kap.remark'
                 )
                 ->leftJoin('users', 'pengajuan_kap.user_created', '=', 'users.id')
-                ->leftJoin('kompetensi', 'pengajuan_kap.kompetensi_id', '=', 'kompetensi.id')
                 ->leftJoin('topik', 'pengajuan_kap.topik_id', '=', 'topik.id')
+                ->leftJoin('pengajuan_kap_gap_kompetensi', 'pengajuan_kap.id', '=', 'pengajuan_kap_gap_kompetensi.pengajuan_kap_id')
+                ->leftJoin('kompetensi', 'pengajuan_kap_gap_kompetensi.kompetensi_id', '=', 'kompetensi.id')
+                ->leftJoin('pengajuan_kap_indikator_kinerja', 'pengajuan_kap.id', '=', 'pengajuan_kap_indikator_kinerja.pengajuan_kap_id')
                 ->join('log_review_pengajuan_kap', function ($join) {
                     $join->on('pengajuan_kap.id', '=', 'log_review_pengajuan_kap.pengajuan_kap_id')
                         ->whereColumn('log_review_pengajuan_kap.step', 'pengajuan_kap.current_step');
                 })
-                ->where('pengajuan_kap.status_pengajuan', '=', 'Approved');
+                ->where('pengajuan_kap.status_pengajuan', '=', 'Approved')
+                ->groupBy('pengajuan_kap.id', 'users.name', 'users.nama_unit', 'topik.nama_topik', 'log_review_pengajuan_kap.remark');
 
 
             if (isset($tahun) && !empty($tahun)) {
@@ -73,6 +77,15 @@ class SyncInfoIDiklatController extends Controller
                 ->addColumn('sync_data', function ($row) {
                     return $row->status_sync;
                 })
+                ->addColumn('nama_kompetensi', function ($row) {
+                    $kompetensiList = explode(',', $row->nama_kompetensi);
+                    return '<ul>' . implode('', $kompetensiList) . '</ul>';
+                })
+
+                ->addColumn('indikator_kinerja', function ($row) {
+                    $indikatorKinerjaList = explode(',', $row->nama_indikator);
+                    return '<ul>' . implode('', $indikatorKinerjaList) . '</ul>';
+                })
                 ->addColumn('status_sync', function ($row) {
                     if ($row->status_sync == 'Waiting') {
                         return '<button style="width:90px" class="btn btn-gray btn-sm btn-block"><i class="fa fa-clock" aria-hidden="true"></i> Waiting</button>';
@@ -83,27 +96,20 @@ class SyncInfoIDiklatController extends Controller
                     }
                 })
                 ->addColumn('action', 'sync-info-diklat.include.action')
-                ->rawColumns(['status_sync', 'action'])
+                ->rawColumns(['status_sync', 'action', 'nama_kompetensi', 'indikator_kinerja'])
                 ->toJson();
         }
 
         $topiks = DB::table('topik')->get();
-        $tahun = date('Y');
-        $userId = Auth::id();
-        $reviewRemarks = DB::table('config_step_review')
-            ->where('user_review_id', $userId)
-            ->pluck('remark')
-            ->toArray();
-        $topik = intval($request->query('topik'))  ?? 'All';
-        $sumber_dana = $request->query('sumber_dana') ?? 'All';
-        $curretnStep = intval($request->query('step'))  ?? 'All';
+        $tahunSelected = $request->query('tahun');
+        if ($tahunSelected != null) {
+            $tahun = $tahunSelected;
+        } else {
+            $tahun =  date('Y');
+        }
         return view('sync-info-diklat.index', [
             'year' => $tahun,
-            'reviewRemarks' => $reviewRemarks,
             'topiks' => $topiks,
-            'topik_id' => $topik,
-            'sumberDana' => $sumber_dana,
-            'curretnStep' => $curretnStep
         ]);
     }
 
@@ -113,11 +119,10 @@ class SyncInfoIDiklatController extends Controller
             ->select(
                 'pengajuan_kap.*',
                 'users.name as user_name',
-                'kompetensi.nama_kompetensi',
+                'users.nama_unit as nama_unit',
                 'topik.nama_topik'
             )
             ->leftJoin('users', 'pengajuan_kap.user_created', '=', 'users.id')
-            ->leftJoin('kompetensi', 'pengajuan_kap.kompetensi_id', '=', 'kompetensi.id')
             ->leftJoin('topik', 'pengajuan_kap.topik_id', '=', 'topik.id')
             ->where('pengajuan_kap.id', '=', $id)
             ->first();
@@ -158,9 +163,17 @@ class SyncInfoIDiklatController extends Controller
             ->where('remark', $currentStepRemark)
             ->where('user_review_id', Auth::id())
             ->exists();
-        $pengajuan_kap_gap_kompetensi = DB::table('pengajuan_kap_gap_kompetensi')
+        $pengajuan_kap_indikator_kinerja = DB::table('pengajuan_kap_indikator_kinerja')
             ->where('pengajuan_kap_id', $id)
-            ->first();
+            ->get();
+        $pengajuan_kap_gap_kompetensi = DB::table('pengajuan_kap_gap_kompetensi')
+            ->join('kompetensi', 'pengajuan_kap_gap_kompetensi.kompetensi_id', '=', 'kompetensi.id')
+            ->where('pengajuan_kap_gap_kompetensi.pengajuan_kap_id', $id)
+            ->select(
+                'pengajuan_kap_gap_kompetensi.*',
+                'kompetensi.nama_kompetensi'
+            )
+            ->get();
 
         return view('sync-info-diklat.show', [
             'pengajuanKap' => $pengajuanKap,
@@ -170,6 +183,7 @@ class SyncInfoIDiklatController extends Controller
             'waktu_pelaksanaan' => $waktu_pelaksanaan,
             'currentStepRemark' => $currentStepRemark,
             'userHasAccess' => $userHasAccess,
+            'pengajuan_kap_indikator_kinerja' => $pengajuan_kap_indikator_kinerja,
             'pengajuan_kap_gap_kompetensi' => $pengajuan_kap_gap_kompetensi
         ]);
     }
@@ -180,11 +194,10 @@ class SyncInfoIDiklatController extends Controller
             ->select(
                 'pengajuan_kap.*',
                 'users.name as user_name',
-                'kompetensi.nama_kompetensi',
+                'users.nama_unit as nama_unit',
                 'topik.nama_topik'
             )
             ->leftJoin('users', 'pengajuan_kap.user_created', '=', 'users.id')
-            ->leftJoin('kompetensi', 'pengajuan_kap.kompetensi_id', '=', 'kompetensi.id')
             ->leftJoin('topik', 'pengajuan_kap.topik_id', '=', 'topik.id')
             ->where('pengajuan_kap.id', '=', $id)
             ->first();
@@ -209,16 +222,24 @@ class SyncInfoIDiklatController extends Controller
             ->where('waktu_pelaksanaan.pengajuan_kap_id', $id)
             ->select('waktu_pelaksanaan.*')
             ->get();
-        $pengajuan_kap_gap_kompetensi = DB::table('pengajuan_kap_gap_kompetensi')
+        $pengajuan_kap_indikator_kinerja = DB::table('pengajuan_kap_indikator_kinerja')
             ->where('pengajuan_kap_id', $id)
-            ->first();
-
+            ->get();
+        $pengajuan_kap_gap_kompetensi = DB::table('pengajuan_kap_gap_kompetensi')
+            ->join('kompetensi', 'pengajuan_kap_gap_kompetensi.kompetensi_id', '=', 'kompetensi.id')
+            ->where('pengajuan_kap_gap_kompetensi.pengajuan_kap_id', $id)
+            ->select(
+                'pengajuan_kap_gap_kompetensi.*',
+                'kompetensi.nama_kompetensi'
+            )
+            ->get();
         $pdf = PDF::loadview('sync-info-diklat.pdf', [
             'pengajuanKap' => $pengajuanKap,
             'logReviews' => $logReviews,
             'level_evaluasi_instrumen_kap' => $level_evaluasi_instrumen_kap,
             'indikator_keberhasilan_kap' => $indikator_keberhasilan_kap,
             'waktu_pelaksanaan' => $waktu_pelaksanaan,
+            'pengajuan_kap_indikator_kinerja' => $pengajuan_kap_indikator_kinerja,
             'pengajuan_kap_gap_kompetensi' => $pengajuan_kap_gap_kompetensi
         ]);
         $namePdf = $pengajuanKap->kode_pembelajaran . '_' . $pengajuanKap->user_name . '.pdf';

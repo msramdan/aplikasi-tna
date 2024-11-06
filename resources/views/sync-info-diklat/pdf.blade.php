@@ -93,7 +93,16 @@
                 <td style="vertical-align: top;">:</td>
                 <td style="vertical-align: top;">{{ $pengajuanKap->institusi_sumber }}</td>
             </tr>
-
+            <tr>
+                <td style="vertical-align: top;">{{ __('Unit Pengusul') }}</td>
+                <td style="vertical-align: top;">:</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->nama_unit }}</td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top;">{{ __('Nama Pengusul') }}</td>
+                <td style="vertical-align: top;">:</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->user_name }}</td>
+            </tr>
             <tr>
                 <td style="vertical-align: top;">{{ __('Jenis Program') }}</td>
                 <td style="vertical-align: top;">:</td>
@@ -108,45 +117,48 @@
             <tr>
                 <td style="vertical-align: top;">{{ __('Indikator Kinerja') }}</td>
                 <td style="vertical-align: top;">:</td>
-                <td style="vertical-align: top;">{{ $pengajuanKap->indikator_kinerja }}</td>
+                <td style="vertical-align: top;">
+                    @foreach ($pengajuan_kap_indikator_kinerja as $indikatorKinerja)
+                        - {{ $indikatorKinerja->indikator_kinerja ?: '-' }} <br>
+                    @endforeach
+                </td>
             </tr>
             <tr>
                 <td style="vertical-align: top;">{{ __('Kompetensi') }}</td>
                 <td style="vertical-align: top;">:</td>
-                <td style="vertical-align: top;">{{ $pengajuanKap->nama_kompetensi }}
-                    @if (isset($pengajuan_kap_gap_kompetensi))
-                        <table style="width: 450px; border-collapse: collapse;">
-                            <thead>
+                <td style="vertical-align: top;">
+                    <table style="width: 450px; border-collapse: collapse;">
+                        <thead>
+                            <tr>
+                                <th style="background-color: #f2f2f2; ; padding: 2px;text-align: center;">
+                                    {{ __('Nama Kompetensi') }}</th>
+                                <th style="background-color: #f2f2f2; ; padding: 2px;text-align: center;">
+                                    {{ __('Total Pegawai') }}</th>
+                                <th style="background-color: #f2f2f2; ; padding: 2px;text-align: center;">
+                                    {{ __('Pegawai Kompeten') }}</th>
+                                <th style="background-color: #f2f2f2; ; padding: 2px;text-align: center;">
+                                    {{ __('Pegawai Belum Kompeten') }}</th>
+                                <th style="background-color: #f2f2f2; ; padding: 2px;text-align: center;">
+                                    {{ __('Persentase Kompetensi') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($pengajuan_kap_gap_kompetensi as $data)
                                 <tr>
-                                    <th style="background-color: #f2f2f2; ; padding: 2px;text-align: center;">Total
-                                        pegawai</th>
-                                    <th style="background-color: #f2f2f2; ; padding: 2px;text-align: center;">Pegawai
-                                        kompeten</th>
-                                    <th style="background-color: #f2f2f2; ; padding: 2px;text-align: center;">Pegawai
-                                        belum
-                                        kompeten</th>
-                                    <th style="background-color: #f2f2f2; ; padding: 2px;text-align: center;">Persentase
-                                        kompetensi
-                                    </th>
+                                    <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: center">
+                                        {{ $data->nama_kompetensi }}</td>
+                                    <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: center">
+                                        {{ $data->total_pegawai ?: '-' }}</td>
+                                    <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: center">
+                                        {{ $data->pegawai_kompeten ?: '-' }}</td>
+                                    <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: center">
+                                        {{ $data->pegawai_belum_kompeten ?: '-' }}</td>
+                                    <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: center">
+                                        {{ $data->persentase_kompetensi ?: '-' }}%</td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: center">
-                                        {{ $pengajuan_kap_gap_kompetensi->total_pegawai }}</td>
-                                    <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: center">
-                                        {{ $pengajuan_kap_gap_kompetensi->pegawai_kompeten }}
-                                    </td>
-                                    <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: center">
-                                        {{ $pengajuan_kap_gap_kompetensi->pegawai_belum_kompeten }}
-                                    </td>
-                                    <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: center">
-                                        {{ $pengajuan_kap_gap_kompetensi->persentase_kompetensi }}
-                                        %</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    @endif
+                            @endforeach
+                        </tbody>
+                    </table>
                 </td>
             </tr>
             <tr>
@@ -219,6 +231,39 @@
         <strong>II. Detail Pembelajaran</strong>
         <table style="font-size:12px; padding:15px;line-height:17px">
             <tr>
+                <td style="vertical-align: top;">{{ __('Metode Pembelajaran') }}</td>
+                <td style="vertical-align: top;">:</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->metodeName ?: '-' }}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td>
+                    <table style="width: 450px; border-collapse: collapse;">
+                        <thead>
+                            <tr>
+                                <th style="background-color: #f2f2f2; ; padding: 2px;text-align: left;">
+                                    Pelaksanaan</th>
+                                <th style="background-color: #f2f2f2; ; padding: 2px;text-align: left;">
+                                    Tanggal Mulai</th>
+                                <th style="background-color: #f2f2f2; ; padding: 2px;text-align: left;">
+                                    Tanggal Selesai</th>
+                            </tr>
+                        </thead>
+                        @foreach ($waktu_pelaksanaan as $row)
+                            <tr>
+                                <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: justify">
+                                    {{ $row->remarkMetodeName }}</td>
+                                <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: justify">
+                                    {{ $row->tanggal_mulai }}</td>
+                                <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: justify">
+                                    {{ $row->tanggal_selesai }}</td>
+                            </tr>
+                        @endforeach
+                    </table>
+                </td>
+            </tr>
+            <tr>
                 <td style="vertical-align: top;">{{ __('Lokasi') }}</td>
                 <td style="vertical-align: top;">:</td>
                 <td style="vertical-align: top;">{{ $pengajuanKap->diklatLocName ?: '-' }}</td>
@@ -252,39 +297,6 @@
                 <td style="vertical-align: top;">{{ __('Jenis Pembelajaran') }}</td>
                 <td style="vertical-align: top;">:</td>
                 <td style="vertical-align: top;">{{ $pengajuanKap->diklatTypeName ?: '-' }}</td>
-            </tr>
-            <tr>
-                <td style="vertical-align: top;">{{ __('Metode Pembelajaran') }}</td>
-                <td style="vertical-align: top;">:</td>
-                <td style="vertical-align: top;">{{ $pengajuanKap->metodeName ?: '-' }}</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td>
-                    <table style="width: 450px; border-collapse: collapse;">
-                        <thead>
-                            <tr>
-                                <th style="background-color: #f2f2f2; ; padding: 2px;text-align: left;">
-                                    Pelaksanaan</th>
-                                <th style="background-color: #f2f2f2; ; padding: 2px;text-align: left;">
-                                    Tanggal Mulai</th>
-                                <th style="background-color: #f2f2f2; ; padding: 2px;text-align: left;">
-                                    Tanggal Selesai</th>
-                            </tr>
-                        </thead>
-                        @foreach ($waktu_pelaksanaan as $row)
-                            <tr>
-                                <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: justify">
-                                    {{ $row->remarkMetodeName }}</td>
-                                <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: justify">
-                                    {{ $row->tanggal_mulai }}</td>
-                                <td style="padding: 2px; border-bottom: 1px solid #ddd;text-align: justify">
-                                    {{ $row->tanggal_selesai }}</td>
-                            </tr>
-                        @endforeach
-                    </table>
-                </td>
             </tr>
         </table>
 
@@ -368,7 +380,7 @@
 
         <br>
         <strong>IV. History Review</strong>
-        <table style="font-size:12px; padding:15px;line-height:17px; width:100%;border-collapse: collapse;">
+        <table style="font-size:12px; padding:15px;line-height:17px; width:100%;border: collapse;">
             <thead>
                 <tr>
                     <th style="background-color: #f2f2f2;width:15%;text-align:center">Remark</th>
@@ -381,25 +393,30 @@
             <tbody>
                 @foreach ($logReviews as $log)
                     <tr>
-                        <td style=" border-bottom: 1px solid #ddd;text-align:center">
+                        <td style="border-bottom: 1px solid #ddd;text-align:center">
                             {{ $log->remark }}
                         </td>
-                        <td style=" border-bottom: 1px solid #ddd;text-align:center">
-                            <textarea rows="8" readonly>{{ $log->catatan }}</textarea>
+                        <td style="border-bottom: 1px solid #ddd; text-align:justify; vertical-align: top;">
+                            <p
+                                style="border: 1px solid #ddd; padding:8px; overflow-wrap: break-word; min-height: 40px;">
+                                {{ $log->catatan }}
+                            </p>
                         </td>
-                        <td style=" border-bottom: 1px solid #ddd;text-align:center">{{ $log->user_name ?? '-' }}</td>
-                        <td style=" border-bottom: 1px solid #ddd;text-align:center">{{ $log->status }}</td>
-                        <td style=" border-bottom: 1px solid #ddd;text-align:center">{{ $log->tanggal_review ?? '-' }}
+                        <td style="border-bottom: 1px solid #ddd;text-align:center">{{ $log->user_name ?? '-' }}</td>
+                        <td style="border-bottom: 1px solid #ddd;text-align:center">{{ $log->status }}</td>
+                        <td style="border-bottom: 1px solid #ddd;text-align:center">{{ $log->tanggal_review ?? '-' }}
                         </td>
                     </tr>
                 @endforeach
+
                 <tr>
                     <td colspan="2" style="border: 1px solid #ddd; text-align: center;">
                         Hasil cetak Kerangka Acuan Pembelajaran ini dibuat secara otomatis oleh sistem. Untuk detail
                         Kerangka Acuan Pembelajaran, silakan pindai kode QR.
                     </td>
                     <td colspan="3" style="border: 1px solid #ddd; text-align: center;">
-                        <img loading="lazy" src="https://quickchart.io/qr?text=Here's my text">
+                        <img loading="lazy"
+                            src="https://quickchart.io/qr?text={{ url('/pengajuan-kap/' . $pengajuanKap->id . '/' . $pengajuanKap->institusi_sumber . '/' . $pengajuanKap->frekuensi_pelaksanaan) }}">
                     </td>
                 </tr>
 
