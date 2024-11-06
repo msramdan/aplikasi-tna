@@ -122,6 +122,24 @@
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="input-group mb-2">
+                                        <select name="tahun" id="tahun"
+                                            class="form-control js-example-basic-multiple">
+                                            @php
+                                                $startYear = 2023;
+                                                $currentYear = date('Y');
+                                                $endYear = $currentYear + 2;
+                                            @endphp
+                                            @foreach (range($startYear, $endYear) as $yearOption)
+                                                <option value="{{ $yearOption }}"
+                                                    {{ $yearOption == $year ? 'selected' : '' }}>
+                                                    {{ $yearOption }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group mb-2">
                                         <select name="topik" id="topik"
                                             class="form-control js-example-basic-multiple">
                                             <option value="All">-- All Program pembelajaran --</option>
@@ -757,6 +775,7 @@
             });
         }
     </script>
+
     <script>
         $(document).on('click', '.btn-duplikat', function(e) {
             e.preventDefault(); // Mencegah link default
@@ -778,6 +797,7 @@
             });
         });
     </script>
+
     <script>
         $(document).on('click', '.btn-delete', function(e) {
             e.preventDefault();
