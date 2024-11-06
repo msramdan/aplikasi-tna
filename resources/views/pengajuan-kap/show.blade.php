@@ -518,11 +518,6 @@
                                                 @endif
                                             </td>
                                         </tr>
-
-                                        <tr>
-                                            <td class="fw-bold">{{ __('User created') }}</td>
-                                            <td>{{ $pengajuanKap->user_name ?: '-' }}</td>
-                                        </tr>
                                     </table>
 
                                 </div>
