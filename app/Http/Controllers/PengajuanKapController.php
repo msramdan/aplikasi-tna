@@ -1115,15 +1115,19 @@ class PengajuanKapController extends Controller
             ->where('pengajuan_kap_id', $id)
             ->delete();
         $dataIndikator = [];
-        foreach ($request->indikator_kinerja as $indikator) {
-            $dataIndikator[] = [
-                'pengajuan_kap_id' => $id,
-                'indikator_kinerja' => $indikator,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ];
+        if (isset($request->indikator_kinerja) && is_array($request->indikator_kinerja)) {
+            foreach ($request->indikator_kinerja as $indikator) {
+                $dataIndikator[] = [
+                    'pengajuan_kap_id' => $id,
+                    'indikator_kinerja' => $indikator,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+            }
+            if (!empty($dataIndikator)) {
+                DB::table('pengajuan_kap_indikator_kinerja')->insert($dataIndikator);
+            }
         }
-        DB::table('pengajuan_kap_indikator_kinerja')->insert($dataIndikator);
 
         // insert table pengajuan_kap_gap_kompetensi
         DB::table('pengajuan_kap_gap_kompetensi')

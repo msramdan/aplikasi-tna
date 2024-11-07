@@ -343,6 +343,7 @@
             checkInputs(); // Initial check on page load
         });
     </script>
+
     <script>
         $(document).ready(function() {
             function validateFasilitator() {
@@ -380,8 +381,6 @@
                 var kompetensi_id = parseInt($(this).find('input[name="kompetensi_id[]"]').val(), 10);
                 selectedCompetencies.push(kompetensi_id);
             });
-
-            console.log(selectedCompetencies);
             const options_temp = '<option value="" selected disabled>-- Select --</option>';
             $('#pilihButton').prop('disabled', false);
             $('#pilihButtonKompetensi').prop('disabled', false);
@@ -558,7 +557,6 @@
                 } else {
                     $('#pilihButtonKompetensi').prop('disabled', false);
                 }
-                // console.log(selectedIndicators);
             });
 
             $('#pilihButtonKompetensi').click(function() {
@@ -679,7 +677,7 @@
             });
 
             function getDataTopikSupportKompetensi(selectedCompetencies) {
-                console.log(selectedCompetencies);
+                $('#judul').val('');
                 if (selectedCompetencies.length === 0) {
                     $('#topik_id').html(options_temp);
                     return;
