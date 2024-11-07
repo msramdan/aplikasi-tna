@@ -178,7 +178,6 @@
                         <div class="form-group row mb-3">
                             <label class="col-sm-3 col-form-label">Kompetensi <span
                                     style="color: red">*</span></label>
-
                             <div class="col-sm-6">
                                 <div class="input-group mb-2">
                                     <button type="button" id="pilihButtonKompetensi"

@@ -89,76 +89,90 @@
                         <label for="kompetensi_id" class="col-sm-3 col-form-label">Kompetensi <span
                                 style="color: red">*</span></label>
                         <div class="col-sm-6">
-                            <div class="input-group">
-                                <input type="text"
-                                    value="{{ isset($pengajuanKap) ? $pengajuanKap->nama_kompetensi : old('nama_kompetensi') }}"
-                                    name="kompetensi_text" id="kompetensi_text" class="form-control" required
-                                    readonly />
-                                <input type="hidden"
-                                    value="{{ isset($pengajuanKap) ? $pengajuanKap->kompetensi_id : old('kompetensi_id') }}"
-                                    name="kompetensi_id" id="kompetensi_id" class="form-control" required readonly />
+                            <div class="input-group mb-2">
                                 <button type="button" id="pilihButtonKompetensi"
-                                    class="input-group-text btn btn-success">
-                                    Pilih
+                                    class="input-group-text btn btn-success" style="width: 180px;">
+                                    <i class="fa fa-search"></i> Cari Kompetensi
                                 </button>
-                                <div class="invalid-feedback">
-                                    Mohon untuk pilih Kompetensi
-                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-striped" id="selectedCompetenciesTable">
+                                    <thead>
+                                        <tr class="table-success">
+                                            <th>Kompetensi</th>
+                                            <th style="width: 50px; text-align: center;">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (isset($pengajuanKap))
+                                            @foreach ($pengajuan_kap_gap_kompetensi as $row)
+                                                <tr>
+                                                    <td>{{ $row->nama_kompetensi }}
+                                                        <input type="hidden" name="kompetensi_id[]"
+                                                            value="{{ $row->kompetensi_id }}">
+                                                        <input type="hidden" name="total_employees[]"
+                                                            value="{{ $row->total_pegawai }}">
+                                                        <input type="hidden" name="count_100[]"
+                                                            value="{{ $row->pegawai_kompeten }}">
+                                                        <input type="hidden" name="count_less_than_100[]"
+                                                            value="{{ $row->pegawai_belum_kompeten }}">
+                                                        <input type="hidden" name="average_persentase[]"
+                                                            value="{{ $row->persentase_kompetensi }}">
+                                                    </td>
+                                                    <td style="text-align: center;">
+                                                        <button type="button"
+                                                            class="btn btn-danger btn-sm deleteRowCompetency"
+                                                            data-id="{{ $row->kompetensi_id }}">
+                                                            <i class="fa fa-trash"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
 
-                    <input type="hidden" name="total_pegawai" id="total_pegawai" class="form-control" required
-                        readonly
-                        value="{{ isset($pengajuanKap) ? $pengajuan_kap_gap_kompetensi->total_pegawai : old('total_pegawai') }}" />
-                    <input type="hidden" name="pegawai_kompeten" id="pegawai_kompeten" class="form-control"
-                        required readonly
-                        value="{{ isset($pengajuanKap) ? $pengajuan_kap_gap_kompetensi->pegawai_kompeten : old('pegawai_kompeten') }}" />
-                    <input type="hidden" name="pegawai_belum_kompeten" id="pegawai_belum_kompeten"
-                        class="form-control" required readonly
-                        value="{{ isset($pengajuanKap) ? $pengajuan_kap_gap_kompetensi->pegawai_belum_kompeten : old('pegawai_belum_kompeten') }}" />
-                    <input type="hidden" name="persentase_kompetensi" id="persentase_kompetensi"
-                        class="form-control" required readonly
-                        value="{{ isset($pengajuanKap) ? $pengajuan_kap_gap_kompetensi->persentase_kompetensi : old('persentase_kompetensi') }}" />
-
-                        <div class="form-group row mb-3">
-                            <label for="topik_id" class="col-sm-3 col-form-label">
-                                {{ __('Program pembelajaran') }} <span style="color: red">*</span>
-                            </label>
-                            <div class="col-sm-6">
-                                <div class="d-flex">
-                                    <select
-                                        class="form-control  js-example-basic-multiple  @error('topik_id') is-invalid @enderror"
-                                        name="topik_id" id="topik_id" required>
-                                        <option value="" selected disabled>--
-                                            {{ __('Select program pembelajaran') }} --</option>
-                                        @if (isset($pengajuanKap))
-                                            @foreach ($topikOptions as $topik)
-                                                <option value="{{ $topik->id }}"
-                                                    data-nama-topik="{{ $topik->nama_topik }}"
-                                                    {{ $topik->id == $pengajuanKap->topik_id ? 'selected' : '' }}>
-                                                    {{ $topik->nama_topik }}
-                                                </option>
-                                            @endforeach
-                                        @else
-                                            @foreach ($topikOptions as $topik)
-                                                <option value="{{ $topik->id }}"
-                                                    data-nama-topik="{{ $topik->nama_topik }}">
-                                                    {{ $topik->nama_topik }}
-                                                </option>
-                                            @endforeach
-                                        @endif
-                                    </select>
-                                    <button type="button" id="usulanButton" class="btn btn-danger ms-2"
-                                        data-bs-toggle="modal" data-bs-target="#usulanModal">
-                                        <i class="fa fa-plus" aria-hidden="true"></i>
-                                    </button>
-                                    <div class="invalid-feedback">
-                                        Mohon untuk pilih Program pembelajaran
-                                    </div>
+                    <div class="form-group row mb-3">
+                        <label for="topik_id" class="col-sm-3 col-form-label">
+                            {{ __('Program pembelajaran') }} <span style="color: red">*</span>
+                        </label>
+                        <div class="col-sm-6">
+                            <div class="d-flex">
+                                <select
+                                    class="form-control  js-example-basic-multiple  @error('topik_id') is-invalid @enderror"
+                                    name="topik_id" id="topik_id" required>
+                                    <option value="" selected disabled>--
+                                        {{ __('Select program pembelajaran') }} --</option>
+                                    @if (isset($pengajuanKap))
+                                        @foreach ($topikOptions as $topik)
+                                            <option value="{{ $topik->id }}"
+                                                data-nama-topik="{{ $topik->nama_topik }}"
+                                                {{ $topik->id == $pengajuanKap->topik_id ? 'selected' : '' }}>
+                                                {{ $topik->nama_topik }}
+                                            </option>
+                                        @endforeach
+                                    @else
+                                        @foreach ($topikOptions as $topik)
+                                            <option value="{{ $topik->id }}"
+                                                data-nama-topik="{{ $topik->nama_topik }}">
+                                                {{ $topik->nama_topik }}
+                                            </option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                                <button type="button" id="usulanButton" class="btn btn-danger ms-2"
+                                    data-bs-toggle="modal" data-bs-target="#usulanModal">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                </button>
+                                <div class="invalid-feedback">
+                                    Mohon untuk pilih Program pembelajaran
                                 </div>
                             </div>
                         </div>
+                    </div>
 
                     <div class="form-group row mb-3">
                         <label class="col-sm-3 col-form-label" for="judul">{{ __('Judul Program Pembelajaran') }}
@@ -465,17 +479,16 @@
                         </div>
                     </div>
 
-
                     <div class="form-group row mb-3">
                         <label class="col-sm-3 col-form-label" for="kelas">{{ __('Jumlah Kelas') }}<span
                                 style="color: red">*</span></label>
                         <div class="col-sm-6">
                             <div class="input-group">
                                 <input type="number" name="kelas" id="kelas" required
-                                class="form-control @error('kelas') is-invalid @enderror"
-                                value="{{ isset($pengajuanKap) ? $pengajuanKap->kelas : old('kelas') }}"
-                                autocomplete="off" data-bs-toggle="tooltip"
-                                title="{{ config('form_tooltips.kelas') }}" />
+                                    class="form-control @error('kelas') is-invalid @enderror"
+                                    value="{{ isset($pengajuanKap) ? $pengajuanKap->kelas : old('kelas') }}"
+                                    autocomplete="off" data-bs-toggle="tooltip"
+                                    title="{{ config('form_tooltips.kelas') }}" />
                                 <label class="input-group-text" for="inputGroupFile02">Kelas</label>
                                 <div class="invalid-feedback">
                                     Mohon untuk diisi Jumlah Kelas

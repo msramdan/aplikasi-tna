@@ -656,7 +656,7 @@
             });
 
             function getDataTopikSupportKompetensi(selectedCompetencies) {
-                console.log(selectedCompetencies);
+                $('#judul').val('');
                 if (selectedCompetencies.length === 0) {
                     $('#topik_id').html(options_temp);
                     return;

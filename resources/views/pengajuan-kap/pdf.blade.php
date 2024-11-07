@@ -114,15 +114,18 @@
                 <td style="vertical-align: top;">:</td>
                 <td style="vertical-align: top;">{{ $pengajuanKap->frekuensi_pelaksanaan }}</td>
             </tr>
-            <tr>
-                <td style="vertical-align: top;">{{ __('Indikator Kinerja') }}</td>
-                <td style="vertical-align: top;">:</td>
-                <td style="vertical-align: top;">
-                    @foreach ($pengajuan_kap_indikator_kinerja as $indikatorKinerja)
-                        - {{ $indikatorKinerja->indikator_kinerja ?: '-' }} <br>
-                    @endforeach
-                </td>
-            </tr>
+
+            @if ($pengajuanKap->institusi_sumber == 'BPKP')
+                <tr>
+                    <td style="vertical-align: top;">{{ __('Indikator Kinerja') }}</td>
+                    <td style="vertical-align: top;">:</td>
+                    <td style="vertical-align: top;">
+                        @foreach ($pengajuan_kap_indikator_kinerja as $indikatorKinerja)
+                            - {{ $indikatorKinerja->indikator_kinerja ?: '-' }} <br>
+                        @endforeach
+                    </td>
+                </tr>
+            @endif
             <tr>
                 <td style="vertical-align: top;">{{ __('Kompetensi') }}</td>
                 <td style="vertical-align: top;">:</td>
