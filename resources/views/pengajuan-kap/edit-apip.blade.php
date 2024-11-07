@@ -189,7 +189,12 @@
                     var fieldValue = $(`#${field}`).val();
                     $('#form-laporan').append(`<input type="hidden" name="${field}" value="${fieldValue}"/>`);
                 });
-                $('#form-laporan').append('@method('PUT')');
+                var currentRouteName = "{{ Route::currentRouteName() }}";
+                if (currentRouteName == 'pengajuan-kap.edit') {
+                    $('#form-laporan').append('@method('PUT')');
+                } else if (currentRouteName == 'pengajuan-kap.duplikat') {
+                    $('#form-laporan').append('@method('POST')');
+                }
                 $('#form-laporan').submit();
             }
         }

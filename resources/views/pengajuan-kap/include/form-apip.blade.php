@@ -224,14 +224,40 @@
                                         $prioritasValue = "Prioritas $i";
                                         $isUsed = in_array($prioritasValue, $usedPrioritas);
                                         $kodePemb = $isUsed ? $kodePembelajaran[$prioritasValue] : '';
+
+                                        // Cek nama route saat ini
+                                        $currentRouteName = Route::currentRouteName();
+
+                                        // Default nilai isSelected untuk semua route
+                                        $isSelected = false;
+
+                                        if ($currentRouteName == 'pengajuan-kap.edit') {
+                                            // Logika di route 'pengajuan-kap.edit'
+                                            $isSelected =
+                                                (isset($pengajuanKap) &&
+                                                    $pengajuanKap->prioritas_pembelajaran == $prioritasValue) ||
+                                                old('prioritas_pembelajaran') == $prioritasValue;
+                                        } elseif ($currentRouteName == 'pengajuan-kap.duplikat') {
+                                            // Logika di route 'pengajuan-kap.duplikat', tidak ada yang terpilih
+                                            $isSelected = false;
+                                        }
+
+                                        // Disabled jika prioritas sudah digunakan atau di route 'pengajuan-kap.duplikat' untuk prioritas dari $pengajuanKap
+                                        $isDisabled =
+                                            ($isUsed &&
+                                                (!isset($pengajuanKap) ||
+                                                    $pengajuanKap->prioritas_pembelajaran != $prioritasValue)) ||
+                                            ($currentRouteName == 'pengajuan-kap.duplikat' &&
+                                                isset($pengajuanKap) &&
+                                                $pengajuanKap->prioritas_pembelajaran == $prioritasValue);
                                     @endphp
-                                    <option value="{{ $prioritasValue }}"
-                                        {{ (isset($pengajuanKap) && $pengajuanKap->prioritas_pembelajaran == $prioritasValue) || old('prioritas_pembelajaran') == $prioritasValue ? 'selected' : '' }}
-                                        {{ $isUsed && (!isset($pengajuanKap) || $pengajuanKap->prioritas_pembelajaran != $prioritasValue) ? 'disabled' : '' }}>
+                                    <option value="{{ $prioritasValue }}" {{ $isSelected ? 'selected' : '' }}
+                                        {{ $isDisabled ? 'disabled' : '' }}>
                                         {{ $prioritasValue }} {{ $kodePemb ? ' - Kode: ' . $kodePemb : '' }}
                                     </option>
                                 @endfor
                             </select>
+
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Prioritas Pembelajaran
                             </div>
