@@ -21,14 +21,15 @@ class SettingApp extends Model
         'logo',
         'favicon',
         'is_maintenance',
-        'otomatis_sync_info_diklat'
+        'otomatis_sync_info_diklat',
+        'reverse_atur_tagging'
     ];
 
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
             ->useLogName('log_setting_app')
-            ->logOnly(['aplication_name', 'logo', 'favicon','is_maintenance','otomatis_sync_info_diklat'])
+            ->logOnly(['aplication_name', 'logo', 'favicon','is_maintenance','otomatis_sync_info_diklat','reverse_atur_tagging'])
             ->logOnlyDirty()
             ->dontSubmitEmptyLogs();
     }

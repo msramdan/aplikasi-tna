@@ -31,9 +31,8 @@ use App\Http\Controllers\{
     TaggingPembelajaranKompetensiReverseController
 };
 use App\Http\Controllers\Auth\OtpController;
-
-
 use App\Http\Controllers\ErrorController;
+use App\Models\SettingApp;
 
 Route::get('/not-found', [ErrorController::class, 'notFound'])->name('not-found');
 Route::get('/un-authorized', [ErrorController::class, 'unAuthorized'])->name('un-authorized');
@@ -98,7 +97,8 @@ Route::middleware(['auth', 'web', 'check.maintenance'])->group(function () {
     });
 
     Route::resource('jadwal-kap-tahunan', JadwalKapTahunanController::class);
-    if (env('REVERSE_TAGGING', false)) {
+    $reverseTagging = SettingApp::findOrFail(1)->reverse_atur_tagging === 'Yes';
+    if ($reverseTagging) {
         // Reverse routes
         Route::controller(TaggingPembelajaranKompetensiReverseController::class)->group(function () {
             Route::get('/tagging-kompetensi-pembelajaran', 'index')->name('tagging-kompetensi-pembelajaran.index');
@@ -124,7 +124,7 @@ Route::middleware(['auth', 'web', 'check.maintenance'])->group(function () {
         });
     }
 
-    if (env('REVERSE_TAGGING', false)) {
+    if ($reverseTagging) {
         // reverse
         Route::controller(TaggingKompetensiIkReverseController::class)->group(function () {
             Route::get('/tagging-ik-kompetensi/{type}', 'index')->name('tagging-ik-kompetensi');

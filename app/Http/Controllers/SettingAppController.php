@@ -55,6 +55,7 @@ class SettingAppController extends Controller
             'aplication_name' => $request->aplication_name,
             'is_maintenance' => $request->is_maintenance,
             'otomatis_sync_info_diklat' => $request->otomatis_sync_info_diklat,
+            'reverse_atur_tagging' => $request->reverse_atur_tagging
         ]);
 
         Alert::toast('The settingApp was updated successfully.', 'success');

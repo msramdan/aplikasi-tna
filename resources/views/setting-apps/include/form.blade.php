@@ -81,6 +81,40 @@
                     </span>
                 @enderror
             </div>
+
+            <div class="col-md-12 mb-3">
+                <label for="reverse_atur_tagging">Reverse Atur Tagging</label>
+                <select class="form-control js-example-basic-multiple @error('reverse_atur_tagging') is-invalid @enderror" name="reverse_atur_tagging"
+                    id="reverse_atur_tagging" required>
+                    <option value="" selected disabled>-- Pilih --</option>
+                    <option value="Yes"
+                        {{ isset($settingApp) && $settingApp->reverse_atur_tagging == 'Yes' ? 'selected' : (old('reverse_atur_tagging') == 'Yes' ? 'selected' : '') }}>
+                        Yes</option>
+                    <option value="No"
+                        {{ isset($settingApp) && $settingApp->reverse_atur_tagging == 'No' ? 'selected' : (old('reverse_atur_tagging') == 'No' ? 'selected' : '') }}>
+                        No</option>
+                </select>
+                @error('reverse_atur_tagging')
+                    <span class="text-danger">
+                        {{ $message }}
+                    </span>
+                @enderror
+
+                <div id="reverse-info" class="col-md-12 mb-3" style="display: none;">
+                    <div id="yes-info" style="display: none;">
+                        <ul>
+                            <li>Tagging IK & Kompetensi</li>
+                            <li>Tagging Kompetensi & Pembelajaran</li>
+                        </ul>
+                    </div>
+                    <div id="no-info" style="display: none;">
+                        <ul>
+                            <li>Tagging Pembelajaran & Kompetensi</li>
+                            <li>Tagging Kompetensi & IK</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

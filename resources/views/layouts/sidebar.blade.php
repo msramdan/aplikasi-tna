@@ -53,10 +53,9 @@
                 </li>
             @endcanany
             @canany(['tagging pembelajaran kompetensi view', 'tagging kompetensi ik view'])
-
                 <li class="nav-item">
                     <a class="nav-link menu-link
-                    {{ env('REVERSE_TAGGING', false)
+                    {{ getReverseTagging()
                         ? (request()->routeIs('tagging-ik-kompetensi*') || request()->routeIs('tagging-kompetensi-pembelajaran*')
                             ? 'active'
                             : '')
@@ -64,7 +63,7 @@
                             ? 'active'
                             : '') }}"
                         href="#sidebarMultilevel" data-bs-toggle="collapse" role="button"
-                        aria-expanded="{{ env('REVERSE_TAGGING', false)
+                        aria-expanded="{{ getReverseTagging()
                             ? (request()->routeIs('tagging-ik-kompetensi*') || request()->routeIs('tagging-kompetensi-pembelajaran*')
                                 ? 'true'
                                 : 'false')
@@ -75,7 +74,7 @@
                         <i class="fa fa-tag"></i> <span data-key="t-multi-level">{{ __('sidebar.setting_tagging') }}</span>
                     </a>
                     <div class="collapse menu-dropdown
-                    {{ env('REVERSE_TAGGING', false)
+                    {{ getReverseTagging()
                         ? (request()->routeIs('tagging-ik-kompetensi*') || request()->routeIs('tagging-kompetensi-pembelajaran*')
                             ? 'show'
                             : '')
@@ -84,7 +83,7 @@
                             : '') }}"
                         id="sidebarMultilevel">
                         <ul class="nav nav-sm flex-column">
-                            @if (!env('REVERSE_TAGGING', false))
+                            @if (!getReverseTagging())
                                 @can('tagging pembelajaran kompetensi view')
                                     <li class="nav-item">
                                         <a href="{{ route('tagging-pembelajaran-kompetensi.index') }}"

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('favicon', 200);
             $table->enum('is_maintenance', ['Yes', 'No']);
             $table->enum('otomatis_sync_info_diklat', ['Yes', 'No']);
+            $table->enum('reverse_atur_tagging', ['Yes', 'No']);
             $table->timestamps();
         });
     }

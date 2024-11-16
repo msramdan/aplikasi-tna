@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\SettingApp;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -204,5 +205,12 @@ if (!function_exists('send')) {
         curl_close($curl);
 
         return ($decoded_json && $decoded_json->status === "success");
+    }
+}
+
+if (!function_exists('getReverseTagging')) {
+    function getReverseTagging()
+    {
+        return SettingApp::findOrFail(1)->reverse_atur_tagging === 'Yes';
     }
 }

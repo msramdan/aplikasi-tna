@@ -26,7 +26,8 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            <form action="{{ route('setting-apps.update', $settingApp->id) }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('setting-apps.update', $settingApp->id) }}" method="POST"
+                                enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
 
@@ -48,4 +49,39 @@
             color: #000 !important;
         }
     </style>
+@endpush
+@push('js')
+<script>
+    $(document).ready(function() {
+        // Menangani perubahan pada dropdown reverse_atur_tagging
+        $('#reverse_atur_tagging').change(function() {
+            // Ambil nilai yang dipilih (Yes atau No)
+            var selectedValue = $(this).val();
+
+            // Sembunyikan semua informasi terlebih dahulu
+            $('#yes-info').hide();
+            $('#no-info').hide();
+
+            // Tampilkan informasi yang sesuai dengan nilai yang dipilih
+            if (selectedValue === 'Yes') {
+                $('#yes-info').show();
+            } else if (selectedValue === 'No') {
+                $('#no-info').show();
+            }
+
+            // Tampilkan div reverse-info setelah memilih
+            $('#reverse-info').show();
+        });
+
+        // Menampilkan informasi berdasarkan nilai default ketika halaman pertama kali dimuat
+        var initialValue = $('#reverse_atur_tagging').val();
+        if (initialValue === 'Yes') {
+            $('#yes-info').show();
+            $('#reverse-info').show();
+        } else if (initialValue === 'No') {
+            $('#no-info').show();
+            $('#reverse-info').show();
+        }
+    });
+</script>
 @endpush

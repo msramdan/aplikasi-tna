@@ -811,6 +811,28 @@
                     }
                 }
             }
+
+            $('input[type="date"]').on('change', function() {
+                var startDateInput = $(this).closest('.row').find('input[name$="_start"]');
+                var endDateInput = $(this).closest('.row').find('input[name$="_end"]');
+
+                if (startDateInput.length > 0 && endDateInput.length > 0) {
+                    var startDate = startDateInput.val();
+                    var endDate = endDateInput.val();
+
+                    if (startDate && endDate && new Date(endDate) < new Date(startDate)) {
+                        alert('Tanggal selesai tidak boleh lebih kecil dari tanggal mulai.');
+                        endDateInput.val(''); // Clear invalid end date
+                    }
+
+                    // Disable dates in end date input that are before start date
+                    if (startDate) {
+                        endDateInput.attr('min', startDate);
+                    } else {
+                        endDateInput.removeAttr('min');
+                    }
+                }
+            });
         });
     </script>
 
