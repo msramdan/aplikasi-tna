@@ -40,6 +40,7 @@ class PengajuanKapController extends Controller
                     'pengajuan_kap.*',
                     'users.name as user_name',
                     'users.nama_unit',
+                    'users.kode_unit',
                     DB::raw('GROUP_CONCAT(DISTINCT CONCAT("<li>", kompetensi.nama_kompetensi, "</li>")) as nama_kompetensi'),
                     DB::raw('GROUP_CONCAT(DISTINCT CONCAT("<li>", pengajuan_kap_indikator_kinerja.indikator_kinerja, "</li>")) as nama_indikator'),
                     'topik.nama_topik',

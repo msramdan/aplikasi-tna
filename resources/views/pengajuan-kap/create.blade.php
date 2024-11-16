@@ -741,7 +741,7 @@
                 var value = $(this).val();
                 $('#additional_fields').show();
 
-                // Reset values and hide fields, except for remark_1, remark_2, and remark_3
+                // Reset values and hide fields, except for remark fields
                 $('#tatap_muka_fields').hide().find('input:not([name="remark_1"])').val('').removeAttr(
                     'required');
                 $('#hybrid_fields').hide().find('input:not([name="remark_2"], [name="remark_3"])').val('')
@@ -762,6 +762,29 @@
                     $('#elearning_fields').show().find(
                         'input[name="elearning_start"], input[name="elearning_end"]').attr('required',
                         true);
+                }
+            });
+
+            // Add validation for end date to be greater than or equal to start date
+            $('input[type="date"]').on('change', function() {
+                var startDateInput = $(this).closest('.row').find('input[name$="_start"]');
+                var endDateInput = $(this).closest('.row').find('input[name$="_end"]');
+
+                if (startDateInput.length > 0 && endDateInput.length > 0) {
+                    var startDate = startDateInput.val();
+                    var endDate = endDateInput.val();
+
+                    if (startDate && endDate && new Date(endDate) < new Date(startDate)) {
+                        alert('Tanggal selesai tidak boleh lebih kecil dari tanggal mulai.');
+                        endDateInput.val(''); // Clear invalid end date
+                    }
+
+                    // Disable dates in end date input that are before start date
+                    if (startDate) {
+                        endDateInput.attr('min', startDate);
+                    } else {
+                        endDateInput.removeAttr('min');
+                    }
                 }
             });
         });

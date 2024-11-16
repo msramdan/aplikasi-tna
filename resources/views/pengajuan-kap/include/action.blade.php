@@ -39,7 +39,7 @@
                 </a>
             @endif
         @endcan
-        @if (Auth::id() == $model->user_created)
+        @if (Auth::user()->kode_unit == $model->kode_unit)
             <a title="Duplikat Pengajuan KAP"
                 href="{{ route('pengajuan-kap.duplikat', [
                     'id' => $model->id,

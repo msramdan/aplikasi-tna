@@ -49,6 +49,7 @@ class ExportPengajuanKap implements FromView, ShouldAutoSize, WithEvents, WithTi
                 'users.name as user_name',
                 'users.nama_unit',
                 DB::raw('GROUP_CONCAT(DISTINCT CONCAT("<li>", kompetensi.nama_kompetensi, "</li>")) as nama_kompetensi'),
+                DB::raw('GROUP_CONCAT(DISTINCT CONCAT("<li>", pengajuan_kap_indikator_kinerja.indikator_kinerja, "</li>")) as nama_indikator'),
                 'topik.nama_topik',
                 'log_review_pengajuan_kap.remark'
             )
@@ -56,6 +57,7 @@ class ExportPengajuanKap implements FromView, ShouldAutoSize, WithEvents, WithTi
             ->leftJoin('topik', 'pengajuan_kap.topik_id', '=', 'topik.id')
             ->leftJoin('pengajuan_kap_gap_kompetensi', 'pengajuan_kap.id', '=', 'pengajuan_kap_gap_kompetensi.pengajuan_kap_id')
             ->leftJoin('kompetensi', 'pengajuan_kap_gap_kompetensi.kompetensi_id', '=', 'kompetensi.id')
+            ->leftJoin('pengajuan_kap_indikator_kinerja', 'pengajuan_kap.id', '=', 'pengajuan_kap_indikator_kinerja.pengajuan_kap_id')
             ->join('log_review_pengajuan_kap', function ($join) {
                 $join->on('pengajuan_kap.id', '=', 'log_review_pengajuan_kap.pengajuan_kap_id')
                     ->whereColumn('log_review_pengajuan_kap.step', 'pengajuan_kap.current_step');
@@ -63,7 +65,6 @@ class ExportPengajuanKap implements FromView, ShouldAutoSize, WithEvents, WithTi
             ->where('pengajuan_kap.institusi_sumber', '=', $this->is_bpkp)
             ->where('pengajuan_kap.frekuensi_pelaksanaan', '=', $this->frekuensi)
             ->groupBy('pengajuan_kap.id', 'users.name', 'users.nama_unit', 'topik.nama_topik', 'log_review_pengajuan_kap.remark');
-
 
         // Filter based on tahun
         if (isset($this->tahun) && !empty($this->tahun) && $this->tahun != 'All') {
@@ -106,7 +107,7 @@ class ExportPengajuanKap implements FromView, ShouldAutoSize, WithEvents, WithTi
     {
         return [
             AfterSheet::class    => function (AfterSheet $event) {
-                $cellRange = 'A1:J1';
+                $cellRange = 'A1:K1';
                 $event->sheet->getStyle($cellRange)->applyFromArray([
                     'borders' => [
                         'allBorders' => [
