@@ -182,7 +182,7 @@
                     'topik_id', 'bentuk_pembelajaran',
                     'jalur_pembelajaran', 'model_pembelajaran', 'diklatLocID',
                     'metodeID', 'penyelenggara_pembelajaran', 'prioritas_pembelajaran', 'diklatLocID', 'diklatTypeID',
-                    'peserta_pembelajaran'
+                    'peserta_pembelajaran','sertifikat'
                 ];
 
                 inputFields.forEach(field => {

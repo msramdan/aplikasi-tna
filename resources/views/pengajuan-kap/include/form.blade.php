@@ -831,16 +831,27 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label for="sertifikat" class="col-sm-3 col-form-label">{{ __('Sertifikat') }}<span
+                        <label for="sertifikat"
+                            class="col-sm-3 col-form-label">{{ __('Sertifikat') }}<span
                                 style="color: red">*</span></label>
                         <div class="col-sm-6">
-                            <input type="text" name="sertifikat" id="sertifikat" required
-                                class="form-control @error('sertifikat') is-invalid @enderror"
-                                value="{{ isset($pengajuanKap) ? $pengajuanKap->sertifikat : old('sertifikat') }}"
-                                autocomplete="off" data-bs-toggle="tooltip"
-                                title="{{ config('form_tooltips.sertifikat') }}" />
+                            <select required class="form-control  @error('sertifikat') is-invalid @enderror"
+                                name="sertifikat" id="sertifikat">
+                                <option value="" selected disabled>-- {{ __('Select sertifikat') }}
+                                    --
+                                </option>
+                                <option value="Sertifikat mengikuti pembelajaran"
+                                    {{ isset($pengajuanKap) && $pengajuanKap->sertifikat == 'Sertifikat mengikuti pembelajaran' ? 'selected' : (old('sertifikat') == 'Sertifikat mengikuti pembelajaran' ? 'selected' : '') }}>
+                                    Sertifikat mengikuti pembelajaran</option>
+                                <option value="Sertifikat Kompetensi"
+                                    {{ isset($pengajuanKap) && $pengajuanKap->sertifikat == 'Sertifikat Kompetensi' ? 'selected' : (old('sertifikat') == 'Sertifikat Kompetensi' ? 'selected' : '') }}>
+                                    Sertifikat Kompetensi</option>
+                                <option value="Sertifikat Profesi"
+                                    {{ isset($pengajuanKap) && $pengajuanKap->sertifikat == 'Sertifikat Profesi' ? 'selected' : (old('sertifikat') == 'Sertifikat Profesi' ? 'selected' : '') }}>
+                                    Sertifikat Profesi</option>
+                            </select>
                             <div class="invalid-feedback">
-                                Mohon untuk diisi Sertifikat
+                                Mohon untuk pilih sertifikat
                             </div>
                         </div>
                     </div>
