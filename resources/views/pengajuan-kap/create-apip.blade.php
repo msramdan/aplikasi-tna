@@ -309,9 +309,9 @@
                     }
                 });
 
-                // Check level_evaluasi_instrumen inputs
-                $('input[name="level_evaluasi_instrumen[]"]').each(function() {
-                    if ($(this).val() !== '') {
+                // Check level_evaluasi_instrumen selects
+                $('select[name="level_evaluasi_instrumen[]"]').each(function() {
+                    if ($(this).val() !== '') { // Ignore if value is empty
                         allLevelEvaluasiEmpty = false;
                         return false; // Break out of the loop
                     }
@@ -326,14 +326,15 @@
 
                 // Set required attribute for level_evaluasi_instrumen
                 if (allLevelEvaluasiEmpty) {
-                    $('input[name="level_evaluasi_instrumen[]"]').attr('required', 'required');
+                    $('select[name="level_evaluasi_instrumen[]"]').attr('required', 'required');
                 } else {
-                    $('input[name="level_evaluasi_instrumen[]"]').removeAttr('required');
+                    $('select[name="level_evaluasi_instrumen[]"]').removeAttr('required');
                 }
             }
 
-            // Monitor changes on both input types
-            $('input[name="indikator_keberhasilan[]"], input[name="level_evaluasi_instrumen[]"]').on('input',
+            // Monitor changes on both input and select elements
+            $('input[name="indikator_keberhasilan[]"], select[name="level_evaluasi_instrumen[]"]').on(
+                'input change',
                 function() {
                     checkInputs();
                 });
@@ -341,6 +342,7 @@
             checkInputs(); // Initial check on page load
         });
     </script>
+
     <script>
         $(document).ready(function() {
             function validateFasilitator() {
