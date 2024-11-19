@@ -262,7 +262,8 @@
                             <span style="color: red">*</span>
                         </label>
                         <div class="col-sm-6">
-                            <textarea name="judul" id="judul" class="form-control @error('judul') is-invalid @enderror" autocomplete="off" data-bs-toggle="tooltip" title="{{ config('form_tooltips.judul') }}" required rows="2">{{ isset($pengajuanKap) ? $pengajuanKap->judul : old('judul') }}</textarea>
+                            <textarea name="judul" id="judul" class="form-control @error('judul') is-invalid @enderror" autocomplete="off"
+                                data-bs-toggle="tooltip" title="{{ config('form_tooltips.judul') }}" required rows="2">{{ isset($pengajuanKap) ? $pengajuanKap->judul : old('judul') }}</textarea>
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Judul Program Pembelajaran
                             </div>
@@ -831,8 +832,7 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label for="sertifikat"
-                            class="col-sm-3 col-form-label">{{ __('Sertifikat') }}<span
+                        <label for="sertifikat" class="col-sm-3 col-form-label">{{ __('Sertifikat') }}<span
                                 style="color: red">*</span></label>
                         <div class="col-sm-6">
                             <select required class="form-control  @error('sertifikat') is-invalid @enderror"
@@ -861,7 +861,7 @@
                             class="col-sm-3 col-form-label">{{ __('Level Evaluasi dan Instrumennya') }}<span
                                 style="color: red">*</span></label>
                         <div class="col-sm-6">
-                            <table class="table table-bordered table-sm text-center">
+                            <table class="table table-bordered table-sm text-center" id="level-evaluasi-table">
                                 <thead style="background-color: #cbccce">
                                     <tr>
                                         <th>Level</th>
@@ -869,35 +869,47 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if (isset($pengajuanKap))
-                                        @foreach ($level_evaluasi_instrumen_kap as $level)
-                                            <tr>
-                                                <td>{{ $level->level }}</td>
-                                                <td>
-                                                    <input type="hidden" name="no_level[]"
-                                                        value="{{ $level->level }}" autocomplete="off"
-                                                        class="form-control @error('no_level') is-invalid @enderror" />
-                                                    <input type="text" name="level_evaluasi_instrumen[]"
-                                                        value="{{ $level->keterangan }}" autocomplete="off"
-                                                        class="form-control @error('level_evaluasi_instrumen') is-invalid @enderror" />
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    @else
-                                        @for ($i = 1; $i <= 5; $i++)
-                                            <tr>
-                                                <td>{{ $i }}</td>
-                                                <td>
-                                                    <input type="hidden" name="no_level[]"
-                                                        value="{{ $i }}" autocomplete="off"
-                                                        class="form-control @error('no_level') is-invalid @enderror" />
-                                                    <input type="text" name="level_evaluasi_instrumen[]"
-                                                        autocomplete="off"
-                                                        class="form-control @error('level_evaluasi_instrumen') is-invalid @enderror" />
-                                                </td>
-                                            </tr>
-                                        @endfor
-                                    @endif
+                                    @php
+                                        $options = [
+                                            1 => ['Evaluasi atas penyelenggaraan, materi, dan instruktur pelatihan'],
+                                            2 => [
+                                                'Pretest dan Post-Test',
+                                                'Project',
+                                                'Ujian Praktik',
+                                                'Ujian kedinasan',
+                                                'Uji Kompetensi',
+                                            ],
+                                            3 => [
+                                                'Evaluasi dampak pembelajaran terhadap perilaku alumni (kemampuan berbagi dan implementasi keilmuan, motivasi, dan kepercayaan diri)',
+                                            ],
+                                            4 => ['Evaluasi dampak pembelajaran terhadap kinerja organisasi'],
+                                            5 => ['Return on Training Investment (RoTI)']
+                                        ];
+                                    @endphp
+
+                                    @foreach ($level_evaluasi_instrumen_kap ?? range(1, 5) as $level)
+                                        @php
+                                            $levelNumber = is_object($level) ? $level->level : $level;
+                                            $selectedKeterangan = is_object($level) ? $level->keterangan : null;
+                                        @endphp
+                                        <tr>
+                                            <td>{{ $levelNumber }}</td>
+                                            <td>
+                                                <input type="hidden" name="no_level[]"
+                                                    value="{{ $levelNumber }}" />
+                                                <select name="level_evaluasi_instrumen[]"
+                                                    class="form-control @error('level_evaluasi_instrumen') is-invalid @enderror">
+                                                    <option value="">-- Pilih --</option>
+                                                    @foreach ($options[$levelNumber] as $option)
+                                                        <option value="{{ $option }}"
+                                                            {{ $selectedKeterangan === $option ? 'selected' : '' }}>
+                                                            {{ $option }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

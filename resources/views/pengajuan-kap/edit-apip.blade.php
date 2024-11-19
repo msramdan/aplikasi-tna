@@ -175,6 +175,11 @@
                 forms.forEach(formId => {
                     var formElements = document.getElementById(formId).elements;
                     [...formElements].forEach(item => {
+                        if (
+                            item.name === "level_evaluasi_instrumen[]" ||
+                            item.name === "no_level[]"
+                        ) return;
+
                         $('#form-laporan').append(item.cloneNode(true));
                     });
                 });
@@ -182,13 +187,27 @@
                     'topik_id', 'bentuk_pembelajaran',
                     'jalur_pembelajaran', 'model_pembelajaran', 'diklatLocID',
                     'metodeID', 'penyelenggara_pembelajaran', 'prioritas_pembelajaran', 'diklatLocID', 'diklatTypeID',
-                    'peserta_pembelajaran','sertifikat'
+                    'peserta_pembelajaran', 'sertifikat'
                 ];
 
                 inputFields.forEach(field => {
                     var fieldValue = $(`#${field}`).val();
                     $('#form-laporan').append(`<input type="hidden" name="${field}" value="${fieldValue}"/>`);
                 });
+                // Tambahkan elemen level-evaluasi-table secara manual
+                $('#level-evaluasi-table select[name="level_evaluasi_instrumen[]"]').each(function(index, element) {
+                    var value = $(element).val();
+                    var level = $(element).closest('tr').find('input[name="no_level[]"]').val(); // Ambil no_level
+                    if (value || level) {
+                        $('#form-laporan').append(
+                            `<input type="hidden" name="level_evaluasi_instrumen[]" value="${value || ''}"/>`
+                        );
+                        $('#form-laporan').append(
+                            `<input type="hidden" name="no_level[]" value="${level || ''}"/>`
+                        );
+                    }
+                });
+
                 var currentRouteName = "{{ Route::currentRouteName() }}";
                 if (currentRouteName == 'pengajuan-kap.edit') {
                     $('#form-laporan').append('@method('PUT')');
