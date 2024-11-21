@@ -757,10 +757,10 @@ class PengajuanKapController extends Controller
             $lastKodePembelajaran = substr($lastPengajuan->kode_pembelajaran, -3);
 
             // Ubah menjadi bilangan bulat untuk memastikan operasi matematika berjalan dengan benar
-            $newNoUrut = sprintf('%03d', (int)$lastKodePembelajaran + 1);
+            $newNoUrut = sprintf('%04d', (int)$lastKodePembelajaran + 1);
         } else {
             // Jika tidak ada data sebelumnya, mulai dari '001'
-            $newNoUrut = '001';
+            $newNoUrut = '0001';
         }
 
         // Gabungkan tahun, topikId, dan newNoUrut
