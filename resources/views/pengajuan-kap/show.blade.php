@@ -792,7 +792,15 @@
                             @method('PUT')
                             <div class="form-step form-step-1">
                                 <div class="alert alert-info" role="alert">
-                                    Detail Pembelajaran
+                                    1. Konteks Pembelajaran
+                                </div>
+                                <button type="button" class="btn btn-info btn-next">Next <i
+                                        class="fa fa-arrow-right"></i></button>
+                            </div>
+
+                            <div class="form-step form-step-2" style="display: none;">
+                                <div class="alert alert-info" role="alert">
+                                    2. Detail Pembelajaran
                                 </div>
                                 <div class="mb-3">
                                     <label for="diklatLocID" class="form-label">{{ __('Lokasi') }}</label>
@@ -821,9 +829,16 @@
 
                                 <div class="mb-3">
                                     <label class="form-label" for="kelas">{{ __('Jumlah Kelas') }}</label>
-                                    <input type="number" name="kelas" id="kelas" class="form-control" required
-                                        value="{{ isset($pengajuanKap) ? $pengajuanKap->kelas : '' }}"
-                                        placeholder="{{ __('Jumlah Kelas') }}" />
+                                    <div class="col-sm-12">
+                                        <div class="input-group">
+                                            <input type="number" name="kelas" id="kelas" required
+                                                class="form-control @error('kelas') is-invalid @enderror"
+                                                value="{{ isset($pengajuanKap) ? $pengajuanKap->kelas : old('kelas') }}"
+                                                autocomplete="off" data-bs-toggle="tooltip"
+                                                title="{{ config('form_tooltips.kelas') }}" />
+                                            <label class="input-group-text" for="inputGroupFile02">Kelas</label>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="mb-3">
@@ -886,13 +901,15 @@
                                     <input type="hidden" name="diklatTypeName" id="diklatTypeName"
                                         value="{{ isset($pengajuanKap) ? $pengajuanKap->diklatTypeName : '' }}">
                                 </div>
+                                <button type="button" class="btn btn-info btn-prev"> <i class="fa fa-arrow-left"></i>
+                                    Previous</button>
                                 <button type="button" class="btn btn-info btn-next">Next <i
                                         class="fa fa-arrow-right"></i></button>
                             </div>
 
-                            <div class="form-step form-step-2" style="display: none;">
+                            <div class="form-step form-step-3" style="display: none;">
                                 <div class="alert alert-info" role="alert">
-                                    Peserta dan Fasilitator
+                                    3. Peserta dan Fasilitator
                                 </div>
 
                                 <div class="mb-3">
@@ -1050,9 +1067,9 @@
                                         class="fa fa-arrow-right"></i></button>
                             </div>
 
-                            <div class="form-step form-step-3" style="display: none;">
+                            <div class="form-step form-step-4" style="display: none;">
                                 <div class="alert alert-info" role="alert">
-                                    Catatan
+                                    4. Catatan
                                 </div>
 
                                 <div class="mb-3">
@@ -1228,7 +1245,7 @@
                     });
 
                     // Additional validation for the table and checkboxes (step 2)
-                    if (step === 2) {
+                    if (step === 3) {
                         // Validation for the evaluation table
                         let filledSelects = 0;
 
