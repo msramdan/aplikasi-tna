@@ -1397,10 +1397,10 @@ class PengajuanKapController extends Controller
                 $fasilitator_pembelajaran_json = !empty($request->input('fasilitator_pembelajaran'))
                     ? json_encode($request->input('fasilitator_pembelajaran'))
                     : null;
-
+                $currentStepUpdate = ($maxStep !== $currentStep) ? $currentStep + 1 : $currentStep;
                 $status_pengajuan = ($maxStep === $currentStep) ? 'Approved' : 'Process';
                 $updateData = [
-                    'current_step' => $currentStep + 1,
+                    'current_step' =>  $currentStepUpdate,
                     'status_pengajuan' => $status_pengajuan,
                     'updated_at' => Carbon::now(),
                     'diklatLocID' => $request->diklatLocID,
