@@ -1275,63 +1275,59 @@ class PengajuanKapController extends Controller
             ->where('user_review_id', Auth::id())
             ->exists();
 
-        if ($pengajuanKap->current_step == 2) {
+        $endpoint_pusdiklatwap = config('stara.endpoint_pusdiklatwap');
+        $api_key_pusdiklatwap = config('stara.api_token_pusdiklatwap');
 
+        // Call API for metode
+        $metode_data = callApiPusdiklatwas($endpoint_pusdiklatwap . '/metode', [
+            'api_key' => $api_key_pusdiklatwap
+        ]);
 
-            $endpoint_pusdiklatwap = config('stara.endpoint_pusdiklatwap');
-            $api_key_pusdiklatwap = config('stara.api_token_pusdiklatwap');
-
-            // Call API for metode
-            $metode_data = callApiPusdiklatwas($endpoint_pusdiklatwap . '/metode', [
-                'api_key' => $api_key_pusdiklatwap
-            ]);
-
-            if (isset($metode_data['error'])) {
-                Alert::error('Error', $metode_data['error']);
-                return redirect()->back();
-            }
-
-            // Call API for diklatType
-            $diklatType_data = callApiPusdiklatwas($endpoint_pusdiklatwap . '/diklatType', [
-                'api_key' => $api_key_pusdiklatwap
-            ]);
-
-            if (isset($diklatType_data['error'])) {
-                Alert::error('Error', $diklatType_data['error']);
-                return redirect()->back();
-            }
-
-            // Call API for diklatLocation
-            $diklatLocation_data = callApiPusdiklatwas($endpoint_pusdiklatwap . '/diklatLocation', [
-                'api_key' => $api_key_pusdiklatwap
-            ]);
-
-            if (isset($diklatLocation_data['error'])) {
-                Alert::error('Error', $diklatLocation_data['error']);
-                return redirect()->back();
-            }
-
-            $jalur_pembelajaran = [
-                'Pelatihan',
-                'Seminar/konferensi/sarasehan',
-                'Kursus',
-                'Lokakarya (workshop)',
-                'Belajar mandiri',
-                'Coaching',
-                'Mentoring',
-                'Bimbingan teknis',
-                'Sosialisasi',
-                'Detasering (secondment)',
-                'Job shadowing',
-                'Outbond',
-                'Benchmarking',
-                'Pertukaran PNS',
-                'Community of practices',
-                'Pelatihan di kantor sendiri',
-                'Library cafe',
-                'Magang/praktik kerja'
-            ];
+        if (isset($metode_data['error'])) {
+            Alert::error('Error', $metode_data['error']);
+            return redirect()->back();
         }
+
+        // Call API for diklatType
+        $diklatType_data = callApiPusdiklatwas($endpoint_pusdiklatwap . '/diklatType', [
+            'api_key' => $api_key_pusdiklatwap
+        ]);
+
+        if (isset($diklatType_data['error'])) {
+            Alert::error('Error', $diklatType_data['error']);
+            return redirect()->back();
+        }
+
+        // Call API for diklatLocation
+        $diklatLocation_data = callApiPusdiklatwas($endpoint_pusdiklatwap . '/diklatLocation', [
+            'api_key' => $api_key_pusdiklatwap
+        ]);
+
+        if (isset($diklatLocation_data['error'])) {
+            Alert::error('Error', $diklatLocation_data['error']);
+            return redirect()->back();
+        }
+
+        $jalur_pembelajaran = [
+            'Pelatihan',
+            'Seminar/konferensi/sarasehan',
+            'Kursus',
+            'Lokakarya (workshop)',
+            'Belajar mandiri',
+            'Coaching',
+            'Mentoring',
+            'Bimbingan teknis',
+            'Sosialisasi',
+            'Detasering (secondment)',
+            'Job shadowing',
+            'Outbond',
+            'Benchmarking',
+            'Pertukaran PNS',
+            'Community of practices',
+            'Pelatihan di kantor sendiri',
+            'Library cafe',
+            'Magang/praktik kerja'
+        ];
         $fasilitator_selected = json_decode($pengajuanKap->fasilitator_pembelajaran, true) ?? [];
 
         return view('pengajuan-kap.show', [
@@ -1360,19 +1356,15 @@ class PengajuanKapController extends Controller
         DB::beginTransaction();
         $syncResult = null;
         try {
-            // Retrieve the PengajuanKap record by its ID
             $pengajuanKap = DB::table('pengajuan_kap')->find($id);
 
-            // Check for the current_step in PengajuanKap
             $currentStep = $pengajuanKap->current_step;
 
-            // Query the log_review_pengajuan_kap table for the first matching record
             $logReview = DB::table('log_review_pengajuan_kap')
                 ->where('pengajuan_kap_id', $id)
                 ->where('step', $currentStep)
                 ->first();
 
-            // If a matching log review is found, update its fields
             if ($logReview) {
                 DB::table('log_review_pengajuan_kap')
                     ->where('id', $logReview->id)
@@ -1385,26 +1377,14 @@ class PengajuanKapController extends Controller
                         'updated_at' => Carbon::now(),
                     ]);
 
-                // After updating log review, get the maximum step from log_review_pengajuan_kap
                 $maxStep = DB::table('log_review_pengajuan_kap')
                     ->where('pengajuan_kap_id', $id)
                     ->max('step');
 
-                // Update logic based on the maximum step found
                 if ($maxStep === $currentStep) {
-
-                    DB::table('pengajuan_kap')
-                        ->where('id', $id)
-                        ->update([
-                            'status_pengajuan' => 'Approved',
-                            'updated_at' => Carbon::now(),
-                        ]);
-
-                    if (setting_web()->otomatis_sync_info_diklat == 'Yes') {
+                    if (setting_web()->otomatis_sync_info_diklat === 'Yes') {
                         $syncResult = syncData($pengajuanKap);
                         $statusSync = $syncResult ? 'Success' : 'Failed';
-
-                        // Update status_sync based on sync result
                         DB::table('pengajuan_kap')
                             ->where('id', $id)
                             ->update([
@@ -1412,72 +1392,64 @@ class PengajuanKapController extends Controller
                                 'updated_at' => Carbon::now(),
                             ]);
                     }
-                } else {
-                    $fasilitator_pembelajaran = $request->input('fasilitator_pembelajaran');
-                    $fasilitator_pembelajaran_json = empty($fasilitator_pembelajaran) ? null : json_encode($fasilitator_pembelajaran);
+                }
 
-                    if ($currentStep == "2" || $currentStep == 2) {
-                        DB::table('pengajuan_kap')
-                            ->where('id', $id)
-                            ->update([
-                                'current_step' => $currentStep + 1,
-                                'status_pengajuan' => 'Process',
-                                'updated_at' => Carbon::now(),
-                                'diklatLocID' => $request->diklatLocID,
-                                'diklatLocName' => $request->diklatLocName,
-                                'detail_lokasi' => $request->detail_lokasi,
-                                'kelas' => $request->kelas,
-                                'bentuk_pembelajaran' => $request->bentuk_pembelajaran,
-                                'jalur_pembelajaran' => $request->jalur_pembelajaran,
-                                'model_pembelajaran' => $request->model_pembelajaran,
-                                'diklatTypeID' => $request->diklatTypeID,
-                                'diklatTypeName' => $request->diklatTypeName,
-                                'peserta_pembelajaran' => $request->peserta_pembelajaran,
-                                'sasaran_peserta' => $request->sasaran_peserta,
-                                'kriteria_peserta' => $request->kriteria_peserta,
-                                'aktivitas_prapembelajaran' => $request->aktivitas_prapembelajaran,
-                                'penyelenggara_pembelajaran' => $request->penyelenggara_pembelajaran,
-                                'sertifikat' => $request->sertifikat,
-                                'fasilitator_pembelajaran' => $fasilitator_pembelajaran_json
-                            ]);
-                    } else {
-                        DB::table('pengajuan_kap')
-                            ->where('id', $id)
-                            ->update([
-                                'current_step' => $currentStep + 1,
-                                'status_pengajuan' => 'Process',
-                                'updated_at' => Carbon::now(),
-                            ]);
-                    }
+                $fasilitator_pembelajaran_json = !empty($request->input('fasilitator_pembelajaran'))
+                    ? json_encode($request->input('fasilitator_pembelajaran'))
+                    : null;
 
-                    if (isset($request->no_level) && isset($request->level_evaluasi_instrumen)) {
-                        foreach ($request->no_level as $index => $level) {
-                            // Pastikan bahwa array level_evaluasi_instrumen memiliki index yang sesuai
-                            if (isset($request->level_evaluasi_instrumen[$index])) {
-                                // Periksa apakah data sudah ada di database
-                                $existingRecord = DB::table('level_evaluasi_instrumen_kap')
-                                    ->where('pengajuan_kap_id', $id)
-                                    ->where('level', $level)
-                                    ->first();
+                $status_pengajuan = ($maxStep === $currentStep) ? 'Approved' : 'Process';
+                $updateData = [
+                    'current_step' => $currentStep + 1,
+                    'status_pengajuan' => $status_pengajuan,
+                    'updated_at' => Carbon::now(),
+                    'diklatLocID' => $request->diklatLocID,
+                    'diklatLocName' => $request->diklatLocName,
+                    'detail_lokasi' => $request->detail_lokasi,
+                    'kelas' => $request->kelas,
+                    'bentuk_pembelajaran' => $request->bentuk_pembelajaran,
+                    'jalur_pembelajaran' => $request->jalur_pembelajaran,
+                    'model_pembelajaran' => $request->model_pembelajaran,
+                    'diklatTypeID' => $request->diklatTypeID,
+                    'diklatTypeName' => $request->diklatTypeName,
+                    'peserta_pembelajaran' => $request->peserta_pembelajaran,
+                    'sasaran_peserta' => $request->sasaran_peserta,
+                    'kriteria_peserta' => $request->kriteria_peserta,
+                    'aktivitas_prapembelajaran' => $request->aktivitas_prapembelajaran,
+                    'penyelenggara_pembelajaran' => $request->penyelenggara_pembelajaran,
+                    'sertifikat' => $request->sertifikat,
+                    'fasilitator_pembelajaran' => $fasilitator_pembelajaran_json,
+                ];
+                DB::table('pengajuan_kap')->where('id', $id)->update($updateData);
 
-                                if ($existingRecord) {
-                                    // Jika ada, lakukan update
-                                    DB::table('level_evaluasi_instrumen_kap')
-                                        ->where('id', $existingRecord->id)
-                                        ->update([
-                                            'keterangan' => $request->level_evaluasi_instrumen[$index],
-                                            'updated_at' => now(),
-                                        ]);
-                                } else {
-                                    // Jika tidak ada, lakukan insert
-                                    DB::table('level_evaluasi_instrumen_kap')->insert([
-                                        'pengajuan_kap_id' => $id,
-                                        'level' => $level,
-                                        'keterangan' => $request->level_evaluasi_instrumen[$index],
-                                        'created_at' => now(),
-                                        'updated_at' => now(),
+                if (!empty($request->no_level) && !empty($request->level_evaluasi_instrumen)) {
+                    foreach ($request->no_level as $index => $level) {
+                        if (isset($request->level_evaluasi_instrumen[$index])) {
+                            $levelEvaluasiInstrumen = $request->level_evaluasi_instrumen[$index];
+
+                            // Cek apakah data sudah ada
+                            $existingRecord = DB::table('level_evaluasi_instrumen_kap')
+                                ->where('pengajuan_kap_id', $id)
+                                ->where('level', $level)
+                                ->first();
+
+                            if ($existingRecord) {
+                                // Update jika sudah ada
+                                DB::table('level_evaluasi_instrumen_kap')
+                                    ->where('id', $existingRecord->id)
+                                    ->update([
+                                        'keterangan' => $levelEvaluasiInstrumen,
+                                        'updated_at' => Carbon::now(),
                                     ]);
-                                }
+                            } else {
+                                // Insert jika belum ada
+                                DB::table('level_evaluasi_instrumen_kap')->insert([
+                                    'pengajuan_kap_id' => $id,
+                                    'level' => $level,
+                                    'keterangan' => $levelEvaluasiInstrumen,
+                                    'created_at' => Carbon::now(),
+                                    'updated_at' => Carbon::now(),
+                                ]);
                             }
                         }
                     }
@@ -1485,7 +1457,6 @@ class PengajuanKapController extends Controller
             }
             DB::commit();
             if ($syncResult === null) {
-                // Sync was not attempted
                 Alert::toast('Pengajuan Kap berhasil disetujui.', 'success');
             } else if (!$syncResult) {
                 Alert::toast('Pengajuan Kap disetujui, namun gagal sync dengan Info Diklat', 'warning');

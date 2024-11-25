@@ -851,9 +851,9 @@
                                 <option value="Sertifikat Kompetensi"
                                     {{ isset($pengajuanKap) && $pengajuanKap->sertifikat == 'Sertifikat Kompetensi' ? 'selected' : (old('sertifikat') == 'Sertifikat Kompetensi' ? 'selected' : '') }}>
                                     Sertifikat Kompetensi</option>
-                                <option value="Sertifikat Profesi"
-                                    {{ isset($pengajuanKap) && $pengajuanKap->sertifikat == 'Sertifikat Profesi' ? 'selected' : (old('sertifikat') == 'Sertifikat Profesi' ? 'selected' : '') }}>
-                                    Sertifikat Profesi</option>
+                                <option value="Sertifikat Profesi"
+                                    {{ isset($pengajuanKap) && $pengajuanKap->sertifikat == 'Sertifikat Profesi' ? 'selected' : (old('sertifikat') == 'Sertifikat Profesi' ? 'selected' : '') }}>
+                                    Sertifikat Profesi</option>
                             </select>
                             <div class="invalid-feedback">
                                 Mohon untuk pilih sertifikat

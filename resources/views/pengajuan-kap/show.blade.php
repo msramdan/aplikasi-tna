@@ -790,262 +790,280 @@
                             method="POST">
                             @csrf
                             @method('PUT')
-                            @if ($pengajuanKap->current_step == 2)
-                                <div class="form-step form-step-1">
-                                    <div class="alert alert-info" role="alert">
-                                        Detail Pembelajaran
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="diklatLocID" class="form-label">{{ __('Lokasi') }}</label>
-                                        <select class="form-control" name="diklatLocID" id="diklatLocID" required>
-                                            <option value="" disabled>-- Pilih --</option>
-                                            @foreach ($diklatLocation_data as $lokasi)
-                                                <option value="{{ $lokasi['diklatLocID'] }}"
-                                                    data-diklatlocname="{{ $lokasi['diklatLocName'] }}"
-                                                    {{ isset($pengajuanKap) && $pengajuanKap->diklatLocID == $lokasi['diklatLocID'] ? 'selected' : '' }}>
-                                                    {{ $lokasi['diklatLocName'] }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        <input type="hidden" name="diklatLocName" id="diklatLocName"
-                                            value="{{ isset($pengajuanKap) ? $pengajuanKap->diklatLocName : '' }}">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label class="form-label"
-                                            for="detail_lokasi">{{ __('Tempat / Alamat Rinci') }}</label>
-                                        <input type="text" name="detail_lokasi" id="detail_lokasi" required
-                                            class="form-control"
-                                            value="{{ isset($pengajuanKap) ? $pengajuanKap->detail_lokasi : '' }}"
-                                            placeholder="{{ __('Tempat / Alamat Rinci') }}" />
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label class="form-label" for="kelas">{{ __('Jumlah Kelas') }}</label>
-                                        <input type="number" name="kelas" id="kelas" class="form-control"
-                                            required value="{{ isset($pengajuanKap) ? $pengajuanKap->kelas : '' }}"
-                                            placeholder="{{ __('Jumlah Kelas') }}" />
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="bentuk_pembelajaran"
-                                            class="form-label">{{ __('Bentuk Pembelajaran') }}</label>
-                                        <select class="form-control" name="bentuk_pembelajaran" id="bentuk_pembelajaran"
-                                            required>
-                                            <option value="" disabled>-- Pilih --</option>
-                                            <option value="Klasikal"
-                                                {{ isset($pengajuanKap) && $pengajuanKap->bentuk_pembelajaran == 'Klasikal' ? 'selected' : '' }}>
-                                                Klasikal</option>
-                                            <option value="Nonklasikal"
-                                                {{ isset($pengajuanKap) && $pengajuanKap->bentuk_pembelajaran == 'Nonklasikal' ? 'selected' : '' }}>
-                                                Nonklasikal</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="jalur_pembelajaran"
-                                            class="form-label">{{ __('Jalur Pembelajaran') }}</label>
-                                        <select class="form-control" name="jalur_pembelajaran" id="jalur_pembelajaran"
-                                            required>
-                                            <option value="" disabled>-- Pilih --</option>
-                                            @foreach ($jalur_pembelajaran as $row)
-                                                <option value="{{ $row }}"
-                                                    {{ isset($pengajuanKap) && $pengajuanKap->jalur_pembelajaran == $row ? 'selected' : '' }}>
-                                                    {{ $row }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="model_pembelajaran"
-                                            class="form-label">{{ __('Model Pembelajaran') }}</label>
-                                        <select class="form-control" required name="model_pembelajaran"
-                                            id="model_pembelajaran">
-                                            <option value="" disabled>-- Pilih --</option>
-                                            @foreach (['Pembelajaran terstruktur', 'Pembelajaran kolaboratif', 'Pembelajaran di tempat kerja', 'Pembelajaran terintegrasi'] as $model)
-                                                <option value="{{ $model }}"
-                                                    {{ isset($pengajuanKap) && $pengajuanKap->model_pembelajaran == $model ? 'selected' : '' }}>
-                                                    {{ $model }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="diklatTypeID"
-                                            class="form-label">{{ __('Jenis Pembelajaran') }}</label>
-                                        <select class="form-control" name="diklatTypeID" id="diklatTypeID" required>
-                                            <option value="" disabled>-- Pilih --</option>
-                                            @foreach ($diklatType_data as $jenis)
-                                                <option value="{{ $jenis['diklatTypeID'] }}"
-                                                    data-diklattypename="{{ $jenis['diklatTypeName'] }}"
-                                                    {{ isset($pengajuanKap) && $pengajuanKap->diklatTypeID == $jenis['diklatTypeID'] ? 'selected' : '' }}>
-                                                    {{ $jenis['diklatTypeName'] }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        <input type="hidden" name="diklatTypeName" id="diklatTypeName"
-                                            value="{{ isset($pengajuanKap) ? $pengajuanKap->diklatTypeName : '' }}">
-                                    </div>
-                                    <button type="button" class="btn btn-info btn-next">Next <i
-                                            class="fa fa-arrow-right"></i></button>
+                            <div class="form-step form-step-1">
+                                <div class="alert alert-info" role="alert">
+                                    Detail Pembelajaran
                                 </div>
-
-                                <div class="form-step form-step-2" style="display: none;">
-                                    <div class="alert alert-info" role="alert">
-                                        Peserta dan Fasilitator
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="peserta_pembelajaran"
-                                            class="form-label">{{ __('Peserta Pembelajaran') }}</label>
-                                        <select class="form-control" name="peserta_pembelajaran" required
-                                            id="peserta_pembelajaran">
-                                            <option value="" disabled>-- Pilih --</option>
-                                            @foreach (['Internal', 'Eksternal', 'Internal dan Eksternal'] as $peserta)
-                                                <option value="{{ $peserta }}"
-                                                    {{ isset($pengajuanKap) && $pengajuanKap->peserta_pembelajaran == $peserta ? 'selected' : '' }}>
-                                                    {{ $peserta }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="sasaran_peserta"
-                                            class="form-label">{{ __('Sasaran Peserta') }}</label>
-                                        <input type="text" name="sasaran_peserta" id="sasaran_peserta" required
-                                            class="form-control"
-                                            value="{{ isset($pengajuanKap) ? $pengajuanKap->sasaran_peserta : '' }}"
-                                            placeholder="{{ __('Sasaran Peserta') }}" />
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="kriteria_peserta"
-                                            class="form-label">{{ __('Kriteria Peserta') }}</label>
-                                        <input type="text" name="kriteria_peserta" id="kriteria_peserta" required
-                                            class="form-control"
-                                            value="{{ isset($pengajuanKap) ? $pengajuanKap->kriteria_peserta : '' }}"
-                                            placeholder="{{ __('Kriteria Peserta') }}" />
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="aktivitas_prapembelajaran"
-                                            class="form-label">{{ __('Aktivitas Prapembelajaran') }}</label>
-                                        <input type="text" name="aktivitas_prapembelajaran" required
-                                            id="aktivitas_prapembelajaran" class="form-control"
-                                            value="{{ isset($pengajuanKap) ? $pengajuanKap->aktivitas_prapembelajaran : '' }}"
-                                            placeholder="{{ __('Aktivitas Prapembelajaran') }}" />
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="penyelenggara_pembelajaran"
-                                            class="form-label">{{ __('Penyelenggara Pembelajaran') }}</label>
-                                        <select class="form-control" name="penyelenggara_pembelajaran" required
-                                            id="penyelenggara_pembelajaran">
-                                            <option value="" disabled>-- Pilih --</option>
-                                            @foreach (['Pusdiklatwas BPKP', 'Unit kerja', 'Lainnya'] as $penyelenggara)
-                                                <option value="{{ $penyelenggara }}"
-                                                    {{ isset($pengajuanKap) && $pengajuanKap->penyelenggara_pembelajaran == $penyelenggara ? 'selected' : '' }}>
-                                                    {{ $penyelenggara }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-
-
-                                    <div class="mb-3">
-                                        <label class="form-label">{{ __('Fasilitator Pembelajaran') }}</label>
-                                        @foreach (['Widyaiswara', 'Instruktur', 'Praktisi', 'Pakar', 'Tutor', 'Coach', 'Mentor', 'Narasumber lainnya'] as $fasilitator)
-                                            <div class="form-check">
-                                                <input class="form-check-input facilitator-checkbox" type="checkbox"
-                                                    name="fasilitator_pembelajaran[]" value="{{ $fasilitator }}"
-                                                    id="invalidCheck_{{ $fasilitator }}"
-                                                    {{ in_array($fasilitator, $fasilitator_selected) ? 'checked' : '' }}>
-                                                <label class="form-check-label" for="invalidCheck_{{ $fasilitator }}">
-                                                    {{ $fasilitator }}
-                                                </label>
-                                            </div>
-                                        @endforeach
-                                        <div class="invalid-feedback d-block" style="display: none;">
-                                            Silakan pilih setidaknya satu fasilitator.
-                                        </div>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="sertifikat" class="form-label">{{ __('Sertifikat') }}</label>
-                                        <input type="text" name="sertifikat" id="sertifikat" class="form-control"
-                                            required value="{{ isset($pengajuanKap) ? $pengajuanKap->sertifikat : '' }}"
-                                            placeholder="{{ __('Sertifikat') }}" />
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="level_evaluasi_instrumen"
-                                            class="form-label">{{ __('Level Evaluasi dan Instrumennya') }}</label>
-                                        <table id="evaluationTable" class="table table-bordered table-sm text-center">
-                                            <thead style="background-color: #cbccce">
-                                                <tr>
-                                                    <th>Level</th>
-                                                    <th>Instrumen</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @for ($i = 1; $i <= 5; $i++)
-                                                    @php
-                                                        // Temukan data keterangan untuk level saat ini
-                                                        $instrumen = $level_evaluasi_instrumen_kap->firstWhere(
-                                                            'level',
-                                                            $i,
-                                                        );
-                                                        $keteranganValue = $instrumen ? $instrumen->keterangan : ''; // Jika ada, ambil nilai keterangan
-                                                    @endphp
-                                                    <tr>
-                                                        <td>{{ $i }}</td>
-                                                        <td>
-                                                            <input type="hidden" name="no_level[]"
-                                                                value="{{ $i }}" class="form-control" />
-                                                            <input type="text" required
-                                                                name="level_evaluasi_instrumen[]" class="form-control"
-                                                                value="{{ $keteranganValue }}" />
-                                                        </td>
-                                                    </tr>
-                                                @endfor
-                                            </tbody>
-                                        </table>
-                                    </div>
-
-
-                                    <button type="button" class="btn btn-info btn-prev"> <i
-                                            class="fa fa-arrow-left"></i>
-                                        Previous</button>
-                                    <button type="button" class="btn btn-info btn-next">Next <i
-                                            class="fa fa-arrow-right"></i></button>
-                                </div>
-
-                                <div class="form-step form-step-3" style="display: none;">
-                                    <div class="alert alert-info" role="alert">
-                                        Catatan
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <textarea class="form-control" id="approveNotes" name="approveNotes" rows="10" required></textarea>
-                                    </div>
-
-                                    <button type="button" class="btn btn-info btn-prev"> <i
-                                            class="fa fa-arrow-left"></i>
-                                        Previous</button>
-                                    <button type="submit" class="btn btn-success"
-                                        style="float: right">{{ __('Submit') }}</button>
-                                </div>
-                            @else
                                 <div class="mb-3">
-                                    <label for="approveNotes" class="form-label">Catatan</label>
-                                    <textarea required class="form-control" id="approveNotes" name="approveNotes" rows="10"></textarea>
+                                    <label for="diklatLocID" class="form-label">{{ __('Lokasi') }}</label>
+                                    <select class="form-control" name="diklatLocID" id="diklatLocID" required>
+                                        <option value="" disabled>-- Pilih --</option>
+                                        @foreach ($diklatLocation_data as $lokasi)
+                                            <option value="{{ $lokasi['diklatLocID'] }}"
+                                                data-diklatlocname="{{ $lokasi['diklatLocName'] }}"
+                                                {{ isset($pengajuanKap) && $pengajuanKap->diklatLocID == $lokasi['diklatLocID'] ? 'selected' : '' }}>
+                                                {{ $lokasi['diklatLocName'] }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <input type="hidden" name="diklatLocName" id="diklatLocName"
+                                        value="{{ isset($pengajuanKap) ? $pengajuanKap->diklatLocName : '' }}">
                                 </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label"
+                                        for="detail_lokasi">{{ __('Tempat / Alamat Rinci') }}</label>
+                                    <input type="text" name="detail_lokasi" id="detail_lokasi" required
+                                        class="form-control"
+                                        value="{{ isset($pengajuanKap) ? $pengajuanKap->detail_lokasi : '' }}"
+                                        placeholder="{{ __('Tempat / Alamat Rinci') }}" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label" for="kelas">{{ __('Jumlah Kelas') }}</label>
+                                    <input type="number" name="kelas" id="kelas" class="form-control" required
+                                        value="{{ isset($pengajuanKap) ? $pengajuanKap->kelas : '' }}"
+                                        placeholder="{{ __('Jumlah Kelas') }}" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="bentuk_pembelajaran"
+                                        class="form-label">{{ __('Bentuk Pembelajaran') }}</label>
+                                    <select class="form-control" name="bentuk_pembelajaran" id="bentuk_pembelajaran"
+                                        required>
+                                        <option value="" disabled>-- Pilih --</option>
+                                        <option value="Klasikal"
+                                            {{ isset($pengajuanKap) && $pengajuanKap->bentuk_pembelajaran == 'Klasikal' ? 'selected' : '' }}>
+                                            Klasikal</option>
+                                        <option value="Nonklasikal"
+                                            {{ isset($pengajuanKap) && $pengajuanKap->bentuk_pembelajaran == 'Nonklasikal' ? 'selected' : '' }}>
+                                            Nonklasikal</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="jalur_pembelajaran"
+                                        class="form-label">{{ __('Jalur Pembelajaran') }}</label>
+                                    <select class="form-control" name="jalur_pembelajaran" id="jalur_pembelajaran"
+                                        required>
+                                        <option value="" disabled>-- Pilih --</option>
+                                        @foreach ($jalur_pembelajaran as $row)
+                                            <option value="{{ $row }}"
+                                                {{ isset($pengajuanKap) && $pengajuanKap->jalur_pembelajaran == $row ? 'selected' : '' }}>
+                                                {{ $row }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="model_pembelajaran"
+                                        class="form-label">{{ __('Model Pembelajaran') }}</label>
+                                    <select class="form-control" required name="model_pembelajaran"
+                                        id="model_pembelajaran">
+                                        <option value="" disabled>-- Pilih --</option>
+                                        @foreach (['Pembelajaran terstruktur', 'Pembelajaran kolaboratif', 'Pembelajaran di tempat kerja', 'Pembelajaran terintegrasi'] as $model)
+                                            <option value="{{ $model }}"
+                                                {{ isset($pengajuanKap) && $pengajuanKap->model_pembelajaran == $model ? 'selected' : '' }}>
+                                                {{ $model }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="diklatTypeID" class="form-label">{{ __('Jenis Pembelajaran') }}</label>
+                                    <select class="form-control" name="diklatTypeID" id="diklatTypeID" required>
+                                        <option value="" disabled>-- Pilih --</option>
+                                        @foreach ($diklatType_data as $jenis)
+                                            <option value="{{ $jenis['diklatTypeID'] }}"
+                                                data-diklattypename="{{ $jenis['diklatTypeName'] }}"
+                                                {{ isset($pengajuanKap) && $pengajuanKap->diklatTypeID == $jenis['diklatTypeID'] ? 'selected' : '' }}>
+                                                {{ $jenis['diklatTypeName'] }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <input type="hidden" name="diklatTypeName" id="diklatTypeName"
+                                        value="{{ isset($pengajuanKap) ? $pengajuanKap->diklatTypeName : '' }}">
+                                </div>
+                                <button type="button" class="btn btn-info btn-next">Next <i
+                                        class="fa fa-arrow-right"></i></button>
+                            </div>
+
+                            <div class="form-step form-step-2" style="display: none;">
+                                <div class="alert alert-info" role="alert">
+                                    Peserta dan Fasilitator
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="peserta_pembelajaran"
+                                        class="form-label">{{ __('Peserta Pembelajaran') }}</label>
+                                    <select class="form-control" name="peserta_pembelajaran" required
+                                        id="peserta_pembelajaran">
+                                        <option value="" disabled>-- Pilih --</option>
+                                        @foreach (['Internal', 'Eksternal', 'Internal dan Eksternal'] as $peserta)
+                                            <option value="{{ $peserta }}"
+                                                {{ isset($pengajuanKap) && $pengajuanKap->peserta_pembelajaran == $peserta ? 'selected' : '' }}>
+                                                {{ $peserta }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="sasaran_peserta" class="form-label">{{ __('Sasaran Peserta') }}</label>
+                                    <input type="text" name="sasaran_peserta" id="sasaran_peserta" required
+                                        class="form-control"
+                                        value="{{ isset($pengajuanKap) ? $pengajuanKap->sasaran_peserta : '' }}"
+                                        placeholder="{{ __('Sasaran Peserta') }}" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="kriteria_peserta"
+                                        class="form-label">{{ __('Kriteria Peserta') }}</label>
+                                    <input type="text" name="kriteria_peserta" id="kriteria_peserta" required
+                                        class="form-control"
+                                        value="{{ isset($pengajuanKap) ? $pengajuanKap->kriteria_peserta : '' }}"
+                                        placeholder="{{ __('Kriteria Peserta') }}" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="aktivitas_prapembelajaran"
+                                        class="form-label">{{ __('Aktivitas Prapembelajaran') }}</label>
+                                    <input type="text" name="aktivitas_prapembelajaran" required
+                                        id="aktivitas_prapembelajaran" class="form-control"
+                                        value="{{ isset($pengajuanKap) ? $pengajuanKap->aktivitas_prapembelajaran : '' }}"
+                                        placeholder="{{ __('Aktivitas Prapembelajaran') }}" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="penyelenggara_pembelajaran"
+                                        class="form-label">{{ __('Penyelenggara Pembelajaran') }}</label>
+                                    <select class="form-control" name="penyelenggara_pembelajaran" required
+                                        id="penyelenggara_pembelajaran">
+                                        <option value="" disabled>-- Pilih --</option>
+                                        @foreach (['Pusdiklatwas BPKP', 'Unit kerja', 'Lainnya'] as $penyelenggara)
+                                            <option value="{{ $penyelenggara }}"
+                                                {{ isset($pengajuanKap) && $pengajuanKap->penyelenggara_pembelajaran == $penyelenggara ? 'selected' : '' }}>
+                                                {{ $penyelenggara }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+
+                                <div class="mb-3">
+                                    <label class="form-label">{{ __('Fasilitator Pembelajaran') }}</label>
+                                    @foreach (['Widyaiswara', 'Instruktur', 'Praktisi', 'Pakar', 'Tutor', 'Coach', 'Mentor', 'Narasumber lainnya'] as $fasilitator)
+                                        <div class="form-check">
+                                            <input class="form-check-input facilitator-checkbox" type="checkbox"
+                                                name="fasilitator_pembelajaran[]" value="{{ $fasilitator }}"
+                                                id="invalidCheck_{{ $fasilitator }}"
+                                                {{ in_array($fasilitator, $fasilitator_selected) ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="invalidCheck_{{ $fasilitator }}">
+                                                {{ $fasilitator }}
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                    <div class="invalid-feedback d-block" style="display: none;">
+                                        Silakan pilih setidaknya satu fasilitator.
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="sertifikat" class="form-label">{{ __('Sertifikat') }}</label>
+                                    <select required class="form-control  @error('sertifikat') is-invalid @enderror"
+                                        name="sertifikat" id="sertifikat">
+                                        <option value="" selected disabled>-- Pilih --</option>
+                                        <option value="Sertifikat mengikuti pembelajaran"
+                                            {{ isset($pengajuanKap) && $pengajuanKap->sertifikat == 'Sertifikat mengikuti pembelajaran' ? 'selected' : (old('sertifikat') == 'Sertifikat mengikuti pembelajaran' ? 'selected' : '') }}>
+                                            Sertifikat mengikuti pembelajaran</option>
+                                        <option value="Sertifikat Kompetensi"
+                                            {{ isset($pengajuanKap) && $pengajuanKap->sertifikat == 'Sertifikat Kompetensi' ? 'selected' : (old('sertifikat') == 'Sertifikat Kompetensi' ? 'selected' : '') }}>
+                                            Sertifikat Kompetensi</option>
+                                        <option value="Sertifikat Profesi"
+                                            {{ isset($pengajuanKap) && $pengajuanKap->sertifikat == 'Sertifikat Profesi' ? 'selected' : (old('sertifikat') == 'Sertifikat Profesi' ? 'selected' : '') }}>
+                                            Sertifikat Profesi</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="level_evaluasi_instrumen"
+                                        class="form-label">{{ __('Level Evaluasi dan Instrumennya') }}</label>
+                                    <table class="table table-bordered table-sm text-center" id="evaluationTable">
+                                        <thead style="background-color: #cbccce">
+                                            <tr>
+                                                <th>Level</th>
+                                                <th>Instrumen</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @php
+                                                $options = [
+                                                    1 => [
+                                                        'Evaluasi atas penyelenggaraan, materi, dan instruktur pelatihan',
+                                                    ],
+                                                    2 => [
+                                                        'Pretest dan Post-Test',
+                                                        'Project',
+                                                        'Ujian Praktik',
+                                                        'Ujian kedinasan',
+                                                        'Uji Kompetensi',
+                                                    ],
+                                                    3 => [
+                                                        'Evaluasi dampak pembelajaran terhadap perilaku alumni (kemampuan berbagi dan implementasi keilmuan, motivasi, dan kepercayaan diri)',
+                                                    ],
+                                                    4 => ['Evaluasi dampak pembelajaran terhadap kinerja organisasi'],
+                                                    5 => ['Return on Training Investment (RoTI)'],
+                                                ];
+                                            @endphp
+
+                                            @foreach ($level_evaluasi_instrumen_kap ?? range(1, 5) as $level)
+                                                @php
+                                                    $levelNumber = is_object($level) ? $level->level : $level;
+                                                    $selectedKeterangan = is_object($level) ? $level->keterangan : null;
+                                                @endphp
+                                                <tr>
+                                                    <td>{{ $levelNumber }}</td>
+                                                    <td>
+                                                        <input type="hidden" name="no_level[]"
+                                                            value="{{ $levelNumber }}" />
+                                                        <select name="level_evaluasi_instrumen[]"
+                                                            class="form-control @error('level_evaluasi_instrumen') is-invalid @enderror">
+                                                            <option value="">-- Pilih --</option>
+                                                            @foreach ($options[$levelNumber] as $option)
+                                                                <option value="{{ $option }}"
+                                                                    {{ $selectedKeterangan === $option ? 'selected' : '' }}>
+                                                                    {{ $option }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <button type="button" class="btn btn-info btn-prev"> <i class="fa fa-arrow-left"></i>
+                                    Previous</button>
+                                <button type="button" class="btn btn-info btn-next">Next <i
+                                        class="fa fa-arrow-right"></i></button>
+                            </div>
+
+                            <div class="form-step form-step-3" style="display: none;">
+                                <div class="alert alert-info" role="alert">
+                                    Catatan
+                                </div>
+
+                                <div class="mb-3">
+                                    <textarea class="form-control" id="approveNotes" name="approveNotes" rows="10" required></textarea>
+                                </div>
+
+                                <button type="button" class="btn btn-info btn-prev"> <i class="fa fa-arrow-left"></i>
+                                    Previous</button>
                                 <button type="submit" class="btn btn-success"
                                     style="float: right">{{ __('Submit') }}</button>
-                            @endif
-
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -1212,23 +1230,24 @@
                     // Additional validation for the table and checkboxes (step 2)
                     if (step === 2) {
                         // Validation for the evaluation table
-                        let filledInputs = 0;
+                        let filledSelects = 0;
 
-                        // Count how many inputs are filled in the table
-                        $('#evaluationTable input[name="level_evaluasi_instrumen[]"]').each(function() {
+                        // Count how many selects have a value in the table
+                        $('#evaluationTable select[name="level_evaluasi_instrumen[]"]').each(function() {
                             if ($(this).val()) {
-                                filledInputs++;
+                                filledSelects++;
                             }
                         });
-                        // If at least one input is filled, remove 'required' from all and remove 'is-invalid' class
-                        if (filledInputs > 0) {
-                            $('#evaluationTable input[name="level_evaluasi_instrumen[]"]').each(function() {
+
+                        // If at least one select has a value, remove 'required' from all and remove 'is-invalid' class
+                        if (filledSelects > 0) {
+                            $('#evaluationTable select[name="level_evaluasi_instrumen[]"]').each(function() {
                                 $(this).prop('required', false).removeClass('is-invalid');
                             });
                         } else {
                             // If none are filled, mark them all as invalid
                             isValid = false;
-                            $('#evaluationTable input[name="level_evaluasi_instrumen[]"]').each(function() {
+                            $('#evaluationTable select[name="level_evaluasi_instrumen[]"]').each(function() {
                                 $(this).prop('required', true).addClass('is-invalid');
                             });
                         }
@@ -1239,6 +1258,8 @@
                                 isAnyCheckboxChecked = true;
                             }
                         });
+
+                        // Validation for facilitator checkboxes
                         if (!isAnyCheckboxChecked) {
                             isValid = false;
                             $('.facilitator-checkbox').addClass('is-invalid');
