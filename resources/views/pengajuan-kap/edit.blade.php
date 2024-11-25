@@ -410,7 +410,8 @@
                 $('#selectedCompetenciesTable tbody').empty();
                 if (!hideForm) {
                     $('#topik_id').html(options_temp);
-                    $('#judul').val('');
+                    $('#keterangan_program_pembelajaran').val('');
+                    $('#finalJudul').html('<b><i>Final Judul:</i></b>');
                 }
                 $('#pilihButtonKompetensi').prop('disabled', true);
                 selectedIndicators = [];
@@ -569,7 +570,8 @@
                 // Clear selected competencies
                 selectedCompetencies = [];
                 $('#topik_id').html(options_temp);
-                $('#judul').val('');
+                $('#keterangan_program_pembelajaran').val('');
+                $('#finalJudul').html('<b><i>Final Judul:</i></b>');
                 $('#selectedCompetenciesTable tbody').empty();
 
                 // Enable or disable the "Pilih" button based on array length
@@ -698,7 +700,8 @@
             });
 
             function getDataTopikSupportKompetensi(selectedCompetencies) {
-                $('#judul').val('');
+                $('#keterangan_program_pembelajaran').val('');
+                $('#finalJudul').html('<b><i>Final Judul:</i></b>');
                 if (selectedCompetencies.length === 0) {
                     $('#topik_id').html(options_temp);
                     return;
@@ -727,16 +730,33 @@
         });
 
         $(document).ready(function() {
-            $('#topik_id').on('change', function() {
-                const selectedOption = $(this).find('option:selected');
-                const namaTopik = selectedOption.data('nama-topik');
-                console.log(namaTopik);
-                if (namaTopik) {
-                    $('#judul').val(namaTopik);
+            const $topikSelect = $('#topik_id');
+            const $keteranganInput = $('#keterangan_program_pembelajaran');
+            const $finalJudul = $('#finalJudul'); // Ambil elemen berdasarkan ID
+
+            // Function to update Final Judul
+            function updateFinalJudul() {
+                const selectedOption = $topikSelect.find('option:selected');
+                const topikNama = selectedOption.data('nama-topik') || ''; // Jika kosong, nilai default ''
+                const keteranganTambahan = $keteranganInput.val() || ''; // Jika kosong, nilai default ''
+
+                // Hanya tampilkan Final Judul jika ada topikNama atau keteranganTambahan
+                if (topikNama || keteranganTambahan) {
+                    $finalJudul.html(`<b><i>Final Judul: "${topikNama} ${keteranganTambahan}"</i></b>`.trim());
                 } else {
-                    $('#judul').val('');
+                    $finalJudul.html(
+                    '<b><i>Final Judul:</i></b>'); // Menampilkan Final Judul tanpa tambahan jika kosong
                 }
-            });
+            }
+
+            // Event listener untuk perubahan di topik_id
+            $topikSelect.on('change', updateFinalJudul);
+
+            // Event listener untuk input tambahan
+            $keteranganInput.on('input', updateFinalJudul);
+
+            // Set nilai awal ketika halaman pertama kali di-load (untuk edit mode)
+            updateFinalJudul();
         });
     </script>
 

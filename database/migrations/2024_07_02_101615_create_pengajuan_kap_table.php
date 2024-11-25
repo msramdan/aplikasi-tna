@@ -16,6 +16,7 @@ return new class extends Migration
             $table->enum('jenis_program', ['Renstra', 'APP', 'APEP', 'APIP']);
             $table->enum('frekuensi_pelaksanaan', ['Tahunan', 'Insidentil']);
             $table->foreignId('topik_id')->nullable()->constrained('topik')->cascadeOnUpdate()->nullOnDelete();
+            $table->text('keterangan_program_pembelajaran')->nullable();
             $table->text('judul')->nullable(); // kaldikdesc
             $table->text('arahan_pimpinan');
             $table->string('tahun', 10); // kaldikYear

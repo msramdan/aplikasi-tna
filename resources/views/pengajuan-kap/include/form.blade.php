@@ -258,14 +258,19 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label class="col-sm-3 col-form-label" for="judul">{{ __('Judul Program Pembelajaran') }}
+                        <label class="col-sm-3 col-form-label" for="keterangan_program_pembelajaran">{{ __('Judul Program Pembelajaran') }}
                             <span style="color: red">*</span>
                         </label>
                         <div class="col-sm-6">
-                            <textarea name="judul" id="judul" class="form-control @error('judul') is-invalid @enderror" autocomplete="off"
-                                data-bs-toggle="tooltip" title="{{ config('form_tooltips.judul') }}" required rows="2">{{ isset($pengajuanKap) ? $pengajuanKap->judul : old('judul') }}</textarea>
+                            <input type="text" name="keterangan_program_pembelajaran"
+                                id="keterangan_program_pembelajaran"
+                                class="form-control @error('keterangan_program_pembelajaran') is-invalid @enderror"
+                                placeholder="Ket. Tambahan" autocomplete="off" data-bs-toggle="tooltip"
+                                title="" required
+                                value="{{ isset($pengajuanKap) ? $pengajuanKap->keterangan_program_pembelajaran : old('keterangan_program_pembelajaran') }}">
+                                <span id="finalJudul"><b><i>Final Judul :</i></b></span>
                             <div class="invalid-feedback">
-                                Mohon untuk diisi Judul Program Pembelajaran
+                                Mohon untuk diisi Ket. Tambahan
                             </div>
                         </div>
                     </div>
@@ -883,7 +888,7 @@
                                                 'Evaluasi dampak pembelajaran terhadap perilaku alumni (kemampuan berbagi dan implementasi keilmuan, motivasi, dan kepercayaan diri)',
                                             ],
                                             4 => ['Evaluasi dampak pembelajaran terhadap kinerja organisasi'],
-                                            5 => ['Return on Training Investment (RoTI)']
+                                            5 => ['Return on Training Investment (RoTI)'],
                                         ];
                                     @endphp
 
