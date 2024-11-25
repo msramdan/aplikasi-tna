@@ -411,6 +411,7 @@
                 if (!hideForm) {
                     $('#topik_id').html(options_temp);
                     $('#keterangan_program_pembelajaran').val('');
+                    $('#judul').val('');
                     $('#finalJudul').html('<b><i>Final Judul:</i></b>');
                 }
                 $('#pilihButtonKompetensi').prop('disabled', true);
@@ -571,6 +572,7 @@
                 selectedCompetencies = [];
                 $('#topik_id').html(options_temp);
                 $('#keterangan_program_pembelajaran').val('');
+                $('#judul').val('');
                 $('#finalJudul').html('<b><i>Final Judul:</i></b>');
                 $('#selectedCompetenciesTable tbody').empty();
 
@@ -701,6 +703,7 @@
 
             function getDataTopikSupportKompetensi(selectedCompetencies) {
                 $('#keterangan_program_pembelajaran').val('');
+                $('#judul').val('');
                 $('#finalJudul').html('<b><i>Final Judul:</i></b>');
                 if (selectedCompetencies.length === 0) {
                     $('#topik_id').html(options_temp);
@@ -733,6 +736,7 @@
             const $topikSelect = $('#topik_id');
             const $keteranganInput = $('#keterangan_program_pembelajaran');
             const $finalJudul = $('#finalJudul'); // Ambil elemen berdasarkan ID
+            const $hiddenJudulInput = $('#judul'); // Ambil input hidden berdasarkan ID
 
             // Function to update Final Judul
             function updateFinalJudul() {
@@ -740,9 +744,13 @@
                 const topikNama = selectedOption.data('nama-topik') || ''; // Jika kosong, nilai default ''
                 const keteranganTambahan = $keteranganInput.val() || ''; // Jika kosong, nilai default ''
 
+                // Update the hidden input value
+                const finalJudulValue = `${topikNama} ${keteranganTambahan}`.trim();
+                $hiddenJudulInput.val(finalJudulValue); // Set value for hidden input
+
                 // Hanya tampilkan Final Judul jika ada topikNama atau keteranganTambahan
                 if (topikNama || keteranganTambahan) {
-                    $finalJudul.html(`<b><i>Final Judul: "${topikNama} ${keteranganTambahan}"</i></b>`.trim());
+                    $finalJudul.html(`<b><i>Final Judul: "${finalJudulValue}"</i></b>`);
                 } else {
                     $finalJudul.html(
                     '<b><i>Final Judul:</i></b>'); // Menampilkan Final Judul tanpa tambahan jika kosong

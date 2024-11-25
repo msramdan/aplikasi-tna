@@ -190,6 +190,8 @@
                         );
                     }
                 });
+                var finalJudulValue = $('#finalJudulInput').val();
+                $('#form-laporan').append(`<input type="hidden" name="final_judul" value="${finalJudulValue}"/>`);
                 $('#form-laporan').submit();
             }
         }
@@ -466,7 +468,9 @@
             });
 
             function getDataTopikSupportKompetensi(selectedCompetencies) {
+                $('#keterangan_program_pembelajaran').val('');
                 $('#judul').val('');
+                $('#finalJudul').html('<b><i>Final Judul:</i></b>');
                 if (selectedCompetencies.length === 0) {
                     $('#topik_id').html(options_temp);
                     return;
@@ -495,16 +499,38 @@
         });
 
         $(document).ready(function() {
-            $('#topik_id').on('change', function() {
-                const selectedOption = $(this).find('option:selected');
-                const namaTopik = selectedOption.data('nama-topik');
+            const $topikSelect = $('#topik_id');
+            const $keteranganInput = $('#keterangan_program_pembelajaran');
+            const $finalJudul = $('#finalJudul'); // Ambil elemen berdasarkan ID
+            const $hiddenJudulInput = $('#judul'); // Ambil input hidden berdasarkan ID
 
-                if (namaTopik) {
-                    $('#judul').val(namaTopik);
+            // Function to update Final Judul
+            function updateFinalJudul() {
+                const selectedOption = $topikSelect.find('option:selected');
+                const topikNama = selectedOption.data('nama-topik') || ''; // Jika kosong, nilai default ''
+                const keteranganTambahan = $keteranganInput.val() || ''; // Jika kosong, nilai default ''
+
+                // Update the hidden input value
+                const finalJudulValue = `${topikNama} ${keteranganTambahan}`.trim();
+                $hiddenJudulInput.val(finalJudulValue); // Set value for hidden input
+
+                // Hanya tampilkan Final Judul jika ada topikNama atau keteranganTambahan
+                if (topikNama || keteranganTambahan) {
+                    $finalJudul.html(`<b><i>Final Judul: "${finalJudulValue}"</i></b>`);
                 } else {
-                    $('#judul').val('');
+                    $finalJudul.html(
+                    '<b><i>Final Judul:</i></b>'); // Menampilkan Final Judul tanpa tambahan jika kosong
                 }
-            });
+            }
+
+            // Event listener untuk perubahan di topik_id
+            $topikSelect.on('change', updateFinalJudul);
+
+            // Event listener untuk input tambahan
+            $keteranganInput.on('input', updateFinalJudul);
+
+            // Set nilai awal ketika halaman pertama kali di-load (untuk edit mode)
+            updateFinalJudul();
         });
     </script>
 

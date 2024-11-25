@@ -256,7 +256,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="form-group row mb-3">
                         <label class="col-sm-3 col-form-label" for="keterangan_program_pembelajaran">{{ __('Judul Program Pembelajaran') }}
                             <span style="color: red">*</span>
@@ -268,7 +267,8 @@
                                 placeholder="Ket. Tambahan" autocomplete="off" data-bs-toggle="tooltip"
                                 title="" required
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->keterangan_program_pembelajaran : old('keterangan_program_pembelajaran') }}">
-                                <span id="finalJudul"><b><i>Final Judul :</i></b></span>
+                            <span id="finalJudul"><b><i>Final Judul :</i></b></span>
+                            <input type="hidden" name="judul" id="judul" value="">
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Ket. Tambahan
                             </div>
