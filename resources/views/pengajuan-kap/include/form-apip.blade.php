@@ -185,7 +185,7 @@
                                 placeholder="Ket. Tambahan" autocomplete="off" data-bs-toggle="tooltip"
                                 title="" required
                                 value="{{ isset($pengajuanKap) ? $pengajuanKap->keterangan_program_pembelajaran : old('keterangan_program_pembelajaran') }}">
-                            <span id="finalJudul"><b><i>Final Judul :</i></b></span>
+                            <span id="finalJudul"><b><i>Judul Final :</i></b></span>
                             <input type="hidden" name="judul" id="judul" value="">
                             <div class="invalid-feedback">
                                 Mohon untuk diisi Ket. Tambahan

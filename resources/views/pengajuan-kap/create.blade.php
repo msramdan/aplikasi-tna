@@ -388,7 +388,7 @@
                     $('#topik_id').html(options_temp);
                     $('#keterangan_program_pembelajaran').val('');
                     $('#judul').val('');
-                    $('#finalJudul').html('<b><i>Final Judul:</i></b>');
+                    $('#finalJudul').html('<b><i>Judul Final:</i></b>');
                 }
 
                 $('#pilihButtonKompetensi').prop('disabled', true);
@@ -551,7 +551,7 @@
                 $('#topik_id').html(options_temp);
                 $('#keterangan_program_pembelajaran').val('');
                 $('#judul').val('');
-                $('#finalJudul').html('<b><i>Final Judul:</i></b>');
+                $('#finalJudul').html('<b><i>Judul Final:</i></b>');
                 $('#selectedCompetenciesTable tbody').empty();
 
                 // Enable or disable the "Pilih" button based on array length
@@ -683,7 +683,7 @@
             function getDataTopikSupportKompetensi(selectedCompetencies) {
                 $('#keterangan_program_pembelajaran').val('');
                 $('#judul').val('');
-                $('#finalJudul').html('<b><i>Final Judul:</i></b>');
+                $('#finalJudul').html('<b><i>Judul Final:</i></b>');
                 if (selectedCompetencies.length === 0) {
                     $('#topik_id').html(options_temp);
                     return;
@@ -730,10 +730,10 @@
 
                 // Hanya tampilkan Final Judul jika ada topikNama atau keteranganTambahan
                 if (topikNama || keteranganTambahan) {
-                    $finalJudul.html(`<b><i>Final Judul: "${finalJudulValue}"</i></b>`);
+                    $finalJudul.html(`<b><i>Judul Final: "${finalJudulValue}"</i></b>`);
                 } else {
                     $finalJudul.html(
-                    '<b><i>Final Judul:</i></b>'); // Menampilkan Final Judul tanpa tambahan jika kosong
+                    '<b><i>Judul Final:</i></b>'); // Menampilkan Final Judul tanpa tambahan jika kosong
                 }
             }
 
