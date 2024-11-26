@@ -70,11 +70,9 @@ class PengajuanKapApiController extends Controller
             ->select(
                 'pengajuan_kap.*',
                 'users.name as user_name',
-                'kompetensi.nama_kompetensi',
                 'topik.nama_topik'
             )
             ->leftJoin('users', 'pengajuan_kap.user_created', '=', 'users.id')
-            ->leftJoin('kompetensi', 'pengajuan_kap.kompetensi_id', '=', 'kompetensi.id')
             ->leftJoin('topik', 'pengajuan_kap.topik_id', '=', 'topik.id')
             ->where('pengajuan_kap.kode_pembelajaran', '=', $kodePembelajaran)
             ->first();
