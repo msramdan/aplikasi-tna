@@ -1247,6 +1247,8 @@ class PengajuanKapController extends Controller
                 'kompetensi.nama_kompetensi'
             )
             ->get();
+        $kompetensiIds = $pengajuan_kap_gap_kompetensi->pluck('kompetensi_id')->toArray();
+
         $level_evaluasi_instrumen_kap = DB::table('level_evaluasi_instrumen_kap')
             ->where('pengajuan_kap_id', $id)
             ->get();
@@ -1330,10 +1332,41 @@ class PengajuanKapController extends Controller
         ];
         $fasilitator_selected = json_decode($pengajuanKap->fasilitator_pembelajaran, true) ?? [];
 
+        if ($is_bpkp === 'BPKP') {
+            $jenis_program = ['Renstra', 'APP', 'APEP'];
+        } elseif ($is_bpkp === 'Non BPKP') {
+            $jenis_program = ['APIP'];
+        } else {
+            $jenis_program = [];
+        }
+
+        $topikOptions = [];
+        // for hidden forn
+        $userUnitKerja = auth()->user()->nama_unit;
+        $unitKerjaWithoutForm = array_map('trim', explode('|', env('WITHOUT_FORM_IK_KOMPETENSI')));
+        $hideForm = in_array($userUnitKerja, $unitKerjaWithoutForm);
+        if ($hideForm) {
+            $topikOptions = DB::table('topik')
+                ->select('topik.id', 'topik.nama_topik')
+                ->get();
+        } else {
+            $topikOptions = DB::table('tagging_pembelajaran_kompetensi')
+                ->join('topik', 'tagging_pembelajaran_kompetensi.topik_id', '=', 'topik.id')
+                ->whereIn('tagging_pembelajaran_kompetensi.kompetensi_id', $kompetensiIds)
+                ->select('topik.id', 'topik.nama_topik')
+                ->groupBy('topik.id', 'topik.nama_topik')
+                ->havingRaw('COUNT(DISTINCT tagging_pembelajaran_kompetensi.kompetensi_id) = ?', [count($kompetensiIds)])
+                ->get();
+        }
+
         return view('pengajuan-kap.show', [
             'pengajuanKap' => $pengajuanKap,
+            'jenis_program' => $jenis_program,
             'fasilitator_selected' => $fasilitator_selected,
             'logReviews' => $logReviews,
+            'topikOptions' => $topikOptions,
+            'tahun' => $pengajuanKap->tahun,
+            'hideForm' => $hideForm,
             'level_evaluasi_instrumen_kap' => $level_evaluasi_instrumen_kap,
             'indikator_keberhasilan_kap' => $indikator_keberhasilan_kap,
             'waktu_pelaksanaan' => $waktu_pelaksanaan,

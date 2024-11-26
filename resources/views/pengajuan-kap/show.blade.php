@@ -794,6 +794,110 @@
                                 <div class="alert alert-info" role="alert">
                                     1. Konteks Pembelajaran
                                 </div>
+
+                                <div class="mb-3">
+                                    <label for="jenis_program" class="form-label">{{ __('Jenis Program') }}</label>
+                                    <select class="form-control  @error('jenis_program') is-invalid @enderror"
+                                        name="jenis_program" id="jenis_program" required>
+                                        <option value="" selected disabled>-- {{ __('Select jenis program') }}
+                                            --
+                                        </option>
+                                        @foreach ($jenis_program as $program)
+                                            <option value="{{ $program }}"
+                                                {{ isset($pengajuanKap) && $pengajuanKap->jenis_program == $program ? 'selected' : (old('jenis_program') == $program ? 'selected' : '') }}>
+                                                {{ $program }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+
+                                <div class="mb-3">
+                                    <label for="referensi_indikator_kinerja"
+                                        class="form-label">{{ __('Indikator Kinerja ' . $tahun) }}</label>
+                                    <textarea name="referensi_indikator_kinerja" id="referensi_indikator_kinerja"
+                                        class="form-control @error('referensi_indikator_kinerja') is-invalid @enderror"
+                                        placeholder="{{ __('Indikator Kinerja ' . $tahun) }}" autocomplete="off" data-bs-toggle="tooltip"
+                                        title="{{ config('form_tooltips.referensi_indikator_kinerja') }}" required rows="2">{{ isset($pengajuanKap) ? $pengajuanKap->referensi_indikator_kinerja : old('referensi_indikator_kinerja') }}</textarea>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="topik_id" class="form-label">
+                                        {{ __('Program pembelajaran') }}
+                                    </label>
+                                    <select class="form-control @error('topik_id') is-invalid @enderror" name="topik_id"
+                                        id="topik_id" required>
+                                        <option value="" selected disabled>--
+                                            {{ __('Select program pembelajaran') }} --</option>
+                                        @if (isset($pengajuanKap))
+                                            @foreach ($topikOptions as $topik)
+                                                <option value="{{ $topik->id }}"
+                                                    data-nama-topik="{{ $topik->nama_topik }}"
+                                                    {{ $topik->id == $pengajuanKap->topik_id ? 'selected' : '' }}>
+                                                    {{ $topik->nama_topik }}
+                                                </option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label"
+                                        for="keterangan_program_pembelajaran">{{ __('Judul Program Pembelajaran') }}
+                                    </label>
+                                    <input type="text" name="keterangan_program_pembelajaran"
+                                        id="keterangan_program_pembelajaran"
+                                        class="form-control @error('keterangan_program_pembelajaran') is-invalid @enderror"
+                                        placeholder="Ket. Tambahan" autocomplete="off" data-bs-toggle="tooltip"
+                                        title="" required
+                                        value="{{ isset($pengajuanKap) ? $pengajuanKap->keterangan_program_pembelajaran : old('keterangan_program_pembelajaran') }}">
+                                    <span id="finalJudul"><b><i>Judul Final :</i></b></span>
+                                    <input type="hidden" name="judul" id="judul" value="">
+                                </div>
+
+
+                                <div>
+                                    <label class="form-label">{{ __('Concern Program Pembelajaran') }}</label>
+                                    <div class="col-sm-6"></div>
+                                </div>
+
+                                <div class="mb-1" style="padding-left: 20px">
+                                    <label for="arahan_pimpinan"
+                                        class="form-label">
+                                        {{ __('A. Arahan pimpinan/isu terkini/dll') }}
+                                    </label>
+                                        <textarea name="arahan_pimpinan" id="arahan_pimpinan"
+                                            class="form-control @error('arahan_pimpinan') is-invalid @enderror" autocomplete="off" data-bs-toggle="tooltip"
+                                            title="{{ config('form_tooltips.arahan_pimpinan') }}" required rows="2">{{ isset($pengajuanKap) ? $pengajuanKap->arahan_pimpinan : old('arahan_pimpinan') }}</textarea>
+
+                                </div>
+                                <div class="mb-1" style="padding-left: 20px">
+                                    <label for="arahan_pimpinan"
+                                        class="form-label">
+                                        {{ __('A. Arahan pimpinan/isu terkini/dll') }}
+                                    </label>
+                                        <textarea name="arahan_pimpinan" id="arahan_pimpinan"
+                                            class="form-control @error('arahan_pimpinan') is-invalid @enderror" autocomplete="off" data-bs-toggle="tooltip"
+                                            title="{{ config('form_tooltips.arahan_pimpinan') }}" required rows="2">{{ isset($pengajuanKap) ? $pengajuanKap->arahan_pimpinan : old('arahan_pimpinan') }}</textarea>
+
+                                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                                 <button type="button" class="btn btn-info btn-next">Next <i
                                         class="fa fa-arrow-right"></i></button>
                             </div>
