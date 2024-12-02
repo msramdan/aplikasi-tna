@@ -116,6 +116,7 @@ class FortifyServiceProvider extends ServiceProvider
                                     'jabatan' => $pegawai['data_terkini']['nama_jenjang_jabatan'],
                                     'kode_unit' => $pegawai['data_terkini']['unit_kerja_id'],
                                     'key_sort_unit' => null,
+                                    'is_bpkp' => 'No',
                                     'nama_unit' => $pegawai['data_terkini']['nama_unit'],
                                 ]);
                                 assignRole($user, 3);
@@ -194,6 +195,7 @@ function createUser($userInfo)
             'kode_unit' => $kode_eselon2,
             'key_sort_unit' => $userInfo['key_sort_unit'],
             'nama_unit' => $userInfo['namaunit'],
+            'is_bpkp' => 'Yes',
         ]);
 
         assignRole($user, 3);

@@ -29,6 +29,7 @@ class User extends Authenticatable
         'nama_unit',
         'kode_unit',
         'key_sort_unit',
+        'is_bpkp',
         'avatar'
     ];
 
