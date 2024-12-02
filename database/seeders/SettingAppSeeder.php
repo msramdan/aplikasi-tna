@@ -16,6 +16,7 @@ class SettingAppSeeder extends Seeder
             'favicon' => '',
             'is_maintenance' => 'No',
             'otomatis_sync_info_diklat' => 'No',
+            'reverse_atur_tagging' => 'Yes',
         ]);
     }
 }

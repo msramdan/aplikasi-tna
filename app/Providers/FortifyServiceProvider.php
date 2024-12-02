@@ -62,7 +62,6 @@ class FortifyServiceProvider extends ServiceProvider
                     'username' => $request->username,
                     'password' => $request->password,
                 ]);
-
                 if ($response->successful()) {
                     $data = $response->json();
                     $user = User::where('user_nip', $data['data']['user_info']['user_nip'])->first();
@@ -88,6 +87,57 @@ class FortifyServiceProvider extends ServiceProvider
                     Auth::login($user, $request->filled('remember'));
                     session(['api_token' => $data['data']['token']]);
                     return $user;
+                } else {
+                    // Hit ke SIBIJAK endpoint jika Stara gagal
+                    $sibijakLoginResponse = Http::post(env('ENDPOINT_SIBIJAK') . '/v1/auth/login', [
+                        'username' => $request->username,
+                        'password' => $request->password,
+                    ]);
+
+                    if ($sibijakLoginResponse->successful()) {
+                        $sibijakData = $sibijakLoginResponse->json();
+                        $token = $sibijakData['token'];
+                        // Hit ke SIBIJAK endpoint /auth/me dengan token dari login
+                        $meResponse = Http::withHeaders([
+                            'Authorization' => 'Bearer ' . $sibijakData['token'],
+                        ])->get(env('ENDPOINT_SIBIJAK') . '/v1/auth/me');
+
+                        if ($meResponse->successful()) {
+                            $meData = $meResponse->json();
+                            $pegawai = $meData['pegawai'];
+
+                            $user = User::where('user_nip', $pegawai['nip'])->first();
+                            if (!$user) {
+                                $user = User::create([
+                                    'name' => $pegawai['nama_lengkap'],
+                                    'user_nip' => $pegawai['nip'],
+                                    'email' => $meData['email'],
+                                    'phone' => $pegawai['nomor_telepon'],
+                                    'jabatan' => $pegawai['data_terkini']['nama_jenjang_jabatan'],
+                                    'kode_unit' => $pegawai['data_terkini']['unit_kerja_id'],
+                                    'key_sort_unit' => null,
+                                    'nama_unit' => $pegawai['data_terkini']['nama_unit'],
+                                ]);
+                                assignRole($user, 3);
+                            }
+
+                            if (empty($user->phone)) {
+                                session(['show_form_no_wa' => true]);
+                            }
+
+                            if (!session()->has('show_form_no_wa')) {
+                                setJadwalKapSession();
+                            }
+
+                            if (env('IS_SEND_OTP', false)) {
+                                sendOtp($user);
+                                return null;
+                            }
+                            Auth::login($user, $request->filled('remember'));
+                            session(['api_token' => $token]);
+                            return $user;
+                        }
+                    }
                 }
 
                 throw ValidationException::withMessages([Fortify::username() => [trans('auth.failed')]]);

@@ -14,7 +14,7 @@ class AddReferensiIndikatorKinerjaToPengajuanKapTable extends Migration
     public function up()
     {
         Schema::table('pengajuan_kap', function (Blueprint $table) {
-            $table->string('referensi_indikator_kinerja')->nullable()->after('indikator_kinerja');
+            $table->string('referensi_indikator_kinerja')->nullable()->after('frekuensi_pelaksanaan');
         });
     }
 
