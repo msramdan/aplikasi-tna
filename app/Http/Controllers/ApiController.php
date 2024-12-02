@@ -166,23 +166,58 @@ class ApiController extends Controller
     public function getKompetensiApip(Request $request)
     {
         try {
-            $kompetensiData = DB::table('kompetensi')
-                ->select('id as id_kompetensi', 'nama_kompetensi')
-                ->where('is_apip', 'Yes')
-                ->get();
+            $apiToken = env('API_TOKEN_SIBIJAK');
+            $baseEndpoint = env('ENDPOINT_SIBIJAK');
+            $url = "{$baseEndpoint}/integrasi/pemenuhan-kompetensi";
+            $ukerId = auth()->user()->kode_unit;
 
-            // Prepare array data with 'target' and 'capaian' as placeholders
-            $data = $kompetensiData->map(function ($item) {
-                return [
-                    'id_kompetensi' => $item->id_kompetensi,
-                    'nama_kompetensi' => $item->nama_kompetensi,
-                    'target' => null,
-                    'capaian' => null,
-                ];
-            });
-            return response()->json(['data' => $data]);
+
+            $response = Http::get($url, [
+                'api_token' => $apiToken,
+                'ukerId' => $ukerId,
+            ]);
+
+            if (!$response->successful()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Failed to fetch data from external API.',
+                ], $response->status());
+            }
+
+            $apiData = $response->json();
+            $kompetensiApi = $apiData['data']['data'] ?? [];
+
+
+            // Step 2: Query kompetensi table using API data
+            $result = [];
+
+            foreach ($kompetensiApi as $item) {
+                $kompetensi = DB::table('kompetensi')
+                    ->select('id as id_kompetensi')
+                    ->where('nama_kompetensi', $item['nama_kompetensi'])
+                    ->first();
+
+                if ($kompetensi) {
+                    $result[] = [
+                        'id_kompetensi' => $kompetensi->id_kompetensi,
+                        'nama_kompetensi' => $item['nama_kompetensi'],
+                        'total_pegawai' => $item['total_pegawai'],
+                        'memenuhi' => $item['memenuhi'],
+                        'belum_memenuhi' => $item['belum_memenuhi'],
+                        'persentase_capaian' => $item['persentase_capaian'],
+                    ];
+                }
+            }
+
+            return response()->json([
+                'status' => true,
+                'data' => $result,
+            ]);
         } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 500);
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage(),
+            ], 500);
         }
     }
 }

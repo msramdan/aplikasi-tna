@@ -381,29 +381,32 @@
                     type: 'GET',
                     data: {},
                     success: function(response) {
+                        console.log(response.status);
+
                         var modalBody = $('#kompetensiModal .modal-body');
                         modalBody.empty();
                         var table =
                             '<div class="table-responsive"><table id="kompetensiTable" class="table table-sm table-striped" style="font-size:14px"><thead><tr>';
                         var tableBody = '<tbody>';
                         table +=
-                            '<th>Kompetensi</th><th>Target</th><th>Capaian</th><th>Aksi</th></tr></thead>';
+                            '<th>Kompetensi</th><th>Total Pegawai</th><th>Memenuhi</th><th>Belum Memenuhi</th><th>Persentase Capaian</th><th>Aksi</th></tr></thead>';
+
                         $.each(response.data, function(key, value) {
                             tableBody += '<tr>';
-                            tableBody += '<td>' + value.nama_kompetensi +
-                                '</td>';
-                            tableBody += '<td>' + (value.target !== null ? value
-                                .target : 'N/A') + '</td>';
-                            tableBody += '<td>' + (value.capaian !== null ? value
-                                .capaian : 'N/A') + '</td>';
+                            tableBody += '<td>' + value.nama_kompetensi + '</td>';
+                            tableBody += '<td>' + value.total_pegawai + '</td>';
+                            tableBody += '<td>' + value.memenuhi + '</td>';
+                            tableBody += '<td>' + value.belum_memenuhi + '</td>';
+                            tableBody += '<td>' + value.persentase_capaian + '%</td>';
                             tableBody +=
                                 '<td><button type="button" class="btn btn-primary pilihKompetensi btn-sm" ' +
                                 'data-kompetensi="' + value.nama_kompetensi + '" ' +
                                 'data-id="' + value.id_kompetensi + '" ' +
-                                'data-target="' + (value.target !== null ? value
-                                    .target : 'N/A') + '" ' +
-                                'data-capaian="' + (value.capaian !== null ? value
-                                    .capaian : 'N/A') + '">' +
+                                'data-total-pegawai="' + value.total_pegawai + '" ' +
+                                'data-memenuhi="' + value.memenuhi + '" ' +
+                                'data-belum-memenuhi="' + value.belum_memenuhi + '" ' +
+                                'data-persentase-capaian="' + value.persentase_capaian +
+                                '">' +
                                 'Pilih</button></td>';
                             tableBody += '</tr>';
                         });
@@ -432,10 +435,10 @@
             $(document).on('click', '.pilihKompetensi', function() {
                 var kompetensi = $(this).data('kompetensi');
                 var kompetensi_id = $(this).data('id');
-                var total_employees = $(this).data('total-employees');
-                var count_100 = $(this).data('count-100');
-                var count_less_than_100 = $(this).data('count-less-than-100');
-                var average_persentase = $(this).data('average-persentase');
+                var total_employees = $(this).data('total-pegawai');
+                var count_100 = $(this).data('memenuhi');
+                var count_less_than_100 = $(this).data('belum-memenuhi');
+                var average_persentase = $(this).data('persentase-capaian');
                 if ($('#selectedCompetenciesTable tbody tr td:contains("' + kompetensi + '")').length ===
                     0 &&
                     !selectedCompetencies.includes(kompetensi_id)) {
@@ -443,10 +446,10 @@
                         `<tr>
                 <td>${kompetensi}
                 <input type="hidden" name="kompetensi_id[]" value="${kompetensi_id}">
-                <input type="hidden" name="total_employees[]" value="0">
-                <input type="hidden" name="count_100[]" value="0">
-                <input type="hidden" name="count_less_than_100[]" value="0">
-                <input type="hidden" name="average_persentase[]" value="0"></td>
+                <input type="hidden" name="total_employees[]" value="${total_employees}">
+                <input type="hidden" name="count_100[]" value="${count_100}">
+                <input type="hidden" name="count_less_than_100[]" value="${count_less_than_100}">
+                <input type="hidden" name="average_persentase[]" value="${average_persentase}"></td>
                 <td style="text-align: center;">
                     <button type="button" class="btn btn-danger btn-sm deleteRowCompetency" data-id="${kompetensi_id}">
                         <i class="fa fa-trash"></i>
@@ -519,7 +522,7 @@
                     $finalJudul.html(`<b><i>Judul Final: "${finalJudulValue}"</i></b>`);
                 } else {
                     $finalJudul.html(
-                    '<b><i>Judul Final:</i></b>'); // Menampilkan Final Judul tanpa tambahan jika kosong
+                        '<b><i>Judul Final:</i></b>'); // Menampilkan Final Judul tanpa tambahan jika kosong
                 }
             }
 
