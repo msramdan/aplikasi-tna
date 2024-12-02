@@ -48,6 +48,9 @@ class UserController extends Controller
                 ->addColumn('phone', function ($row) {
                     return $row->phone ? $row->phone  : '-';
                 })
+                ->addColumn('key_sort_unit', function ($row) {
+                    return $row->key_sort_unit ? $row->key_sort_unit  : '-';
+                })
                 ->addColumn('avatar', function ($row) {
                     if ($row->avatar == null) {
                         return 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($row->email))) . '&s=500';

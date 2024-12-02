@@ -44,6 +44,7 @@
                                             <th>Kode unit</th>
                                             <th>Key sort unit</th>
                                             <th>Unit kerja</th>
+                                            <th>Is BPKP</th>
                                             <th>{{ trans('users/index.action') }}</th>
                                         </tr>
                                     </thead>
@@ -104,6 +105,10 @@
             {
                 data: 'nama_unit',
                 name: 'nama_unit'
+            },
+            {
+                data: 'is_bpkp',
+                name: 'is_bpkp'
             },
             {
                 data: 'action',
