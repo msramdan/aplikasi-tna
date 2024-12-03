@@ -381,8 +381,6 @@
                     type: 'GET',
                     data: {},
                     success: function(response) {
-                        console.log(response.status);
-
                         var modalBody = $('#kompetensiModal .modal-body');
                         modalBody.empty();
                         var table =
@@ -459,6 +457,8 @@
                     );
                     selectedCompetencies.push(kompetensi_id);
                 }
+                console.log(selectedCompetencies);
+
                 getDataTopikSupportKompetensi(selectedCompetencies);
                 $('#kompetensiModal').modal('hide');
             });

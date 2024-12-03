@@ -31,6 +31,7 @@ class TaggingPembelajaranKompetensiReverseController extends Controller
                 ->select(
                     'kompetensi.id as id',
                     'kompetensi.nama_kompetensi',
+                    'kompetensi.is_apip',
                     DB::raw('COUNT(tagging_pembelajaran_kompetensi.id) as jumlah_tagging'),
                     DB::raw('MIN(tagging_pembelajaran_kompetensi.id) as tagging_pembelajaran_kompetensi_id')
                 )
@@ -43,6 +44,13 @@ class TaggingPembelajaranKompetensiReverseController extends Controller
                         return '<span class="badge badge-label bg-info badge-width"><i class="mdi mdi-circle-medium"></i>' . $row->jumlah_tagging . ' Tagging</span>';
                     } else {
                         return '<span class="badge badge-label bg-danger badge-width"><i class="mdi mdi-circle-medium"></i>0 Tagging</span>';
+                    }
+                })
+                ->addColumn('nama_kompetensi', function ($row) {
+                    if ($row->is_apip == 'No') {
+                        return  $row->nama_kompetensi;
+                    } else {
+                        return  $row->nama_kompetensi . ' (Kompetensi APIP)';
                     }
                 })
                 ->addColumn('action', 'tagging-pembelajaran-kompetensi-reverse.include.action')

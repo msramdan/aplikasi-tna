@@ -195,6 +195,7 @@ class ApiController extends Controller
                 $kompetensi = DB::table('kompetensi')
                     ->select('id as id_kompetensi')
                     ->where('nama_kompetensi', $item['nama_kompetensi'])
+                    ->where('is_apip', 'Yes')
                     ->first();
 
                 if ($kompetensi) {

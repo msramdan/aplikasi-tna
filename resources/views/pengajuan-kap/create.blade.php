@@ -534,7 +534,6 @@
                     selectedIndicators.push(indikator);
                 }
                 $('#indikatorModal').modal('hide');
-                // console.log(selectedIndicators);
             });
 
             $(document).on('click', '.deleteRow', function() {
@@ -560,7 +559,6 @@
                 } else {
                     $('#pilihButtonKompetensi').prop('disabled', false);
                 }
-                // console.log(selectedIndicators);
             });
 
             $('#pilihButtonKompetensi').click(function() {
