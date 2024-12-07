@@ -1340,6 +1340,24 @@ class PengajuanKapController extends Controller
             $jenis_program = [];
         }
 
+        $user = Auth::user();
+        $nama_unit = $user->nama_unit;
+        $pengajuanKaps = DB::table('pengajuan_kap')
+        ->select(
+            'pengajuan_kap.*',
+            'users.name as user_name',
+            'pengajuan_kap.prioritas_pembelajaran',
+            'pengajuan_kap.kode_pembelajaran'
+        )
+        ->leftJoin('users', 'pengajuan_kap.user_created', '=', 'users.id')
+        ->where('pengajuan_kap.institusi_sumber', '=', $is_bpkp)
+        ->where('pengajuan_kap.frekuensi_pelaksanaan', '=', $frekuensi)
+        ->where('pengajuan_kap.tahun', '=', $pengajuanKap->tahun)
+        ->where('users.nama_unit', '=', $nama_unit)
+        ->get();
+        $usedPrioritas = $pengajuanKaps->pluck('prioritas_pembelajaran')->toArray();
+        $kodePembelajaran = $pengajuanKaps->pluck('kode_pembelajaran', 'prioritas_pembelajaran')->toArray();
+
         $topikOptions = [];
         // for hidden forn
         $userUnitKerja = auth()->user()->nama_unit;
@@ -1380,7 +1398,9 @@ class PengajuanKapController extends Controller
             'diklatLocation_data' => isset($diklatLocation_data) ? $diklatLocation_data : null,
             'currentStepRemark' => $currentStepRemark,
             'pengajuan_kap_indikator_kinerja' => $pengajuan_kap_indikator_kinerja,
-            'pengajuan_kap_gap_kompetensi' => $pengajuan_kap_gap_kompetensi
+            'pengajuan_kap_gap_kompetensi' => $pengajuan_kap_gap_kompetensi,
+            'usedPrioritas' => $usedPrioritas,
+            'kodePembelajaran' => $kodePembelajaran,
         ]);
     }
 

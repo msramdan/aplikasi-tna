@@ -779,7 +779,7 @@
         <!-- Approve Modal -->
         <div class="modal fade" id="approveModal" tabindex="-1" aria-labelledby="approveModalLabel"
             aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="approveModalLabel">{{ __('Approve Pengusulan Pembelajaran') }}</h5>
@@ -792,15 +792,14 @@
                             @method('PUT')
                             <div class="form-step form-step-1">
                                 <div class="alert alert-info" role="alert">
-                                    1. Konteks Pembelajaran
+                                    <b>1. Konteks Pembelajaran</b>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="jenis_program" class="form-label">{{ __('Jenis Program') }}</label>
-                                    <select class="form-control  @error('jenis_program') is-invalid @enderror"
-                                        name="jenis_program" id="jenis_program" required>
-                                        <option value="" selected disabled>-- {{ __('Select jenis program') }}
-                                            --
+                                    <select class="form-control @error('jenis_program') is-invalid @enderror"
+                                        name="jenis_program" id="jenis_program" required disabled>
+                                        <option value="" selected disabled>-- {{ __('Select jenis program') }} --
                                         </option>
                                         @foreach ($jenis_program as $program)
                                             <option value="{{ $program }}"
@@ -811,6 +810,28 @@
                                     </select>
                                 </div>
 
+                                @if (!$hideForm)
+                                    <div class="mb-3">
+                                        <table class="table table-bordered" id="selectedIndicatorsTable">
+                                            <thead style="background-color: #cbccce">
+                                                <tr>
+                                                    <th>Indikator Kinerja</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (isset($pengajuanKap))
+                                                    @foreach ($pengajuan_kap_indikator_kinerja as $row)
+                                                        <tr>
+                                                            <td>{{ $row->indikator_kinerja }} <input type="hidden"
+                                                                    name="indikator_kinerja[]"
+                                                                    value="{{ $row->indikator_kinerja }}"></td>
+                                                        </tr>
+                                                    @endforeach
+                                                @endif
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                @endif
 
                                 <div class="mb-3">
                                     <label for="referensi_indikator_kinerja"
@@ -820,6 +841,38 @@
                                         placeholder="{{ __('Indikator Kinerja ' . $tahun) }}" autocomplete="off" data-bs-toggle="tooltip"
                                         title="{{ config('form_tooltips.referensi_indikator_kinerja') }}" required rows="2">{{ isset($pengajuanKap) ? $pengajuanKap->referensi_indikator_kinerja : old('referensi_indikator_kinerja') }}</textarea>
                                 </div>
+
+                                @if (!$hideForm)
+                                    <div class="mb-3">
+                                        <table class="table table-bordered" id="selectedCompetenciesTable">
+                                            <thead style="background-color: #cbccce">
+                                                <tr>
+                                                    <th>Kompetensi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (isset($pengajuanKap))
+                                                    @foreach ($pengajuan_kap_gap_kompetensi as $row)
+                                                        <tr>
+                                                            <td>{{ $row->nama_kompetensi }}
+                                                                <input type="hidden" name="kompetensi_id[]"
+                                                                    value="{{ $row->kompetensi_id }}">
+                                                                <input type="hidden" name="total_employees[]"
+                                                                    value="{{ $row->total_pegawai }}">
+                                                                <input type="hidden" name="count_100[]"
+                                                                    value="{{ $row->pegawai_kompeten }}">
+                                                                <input type="hidden" name="count_less_than_100[]"
+                                                                    value="{{ $row->pegawai_belum_kompeten }}">
+                                                                <input type="hidden" name="average_persentase[]"
+                                                                    value="{{ $row->persentase_kompetensi }}">
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                @endif
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                @endif
 
                                 <div class="mb-3">
                                     <label for="topik_id" class="form-label">
@@ -855,48 +908,138 @@
                                     <input type="hidden" name="judul" id="judul" value="">
                                 </div>
 
-
                                 <div>
                                     <label class="form-label">{{ __('Concern Program Pembelajaran') }}</label>
                                     <div class="col-sm-6"></div>
                                 </div>
 
                                 <div class="mb-1" style="padding-left: 20px">
-                                    <label for="arahan_pimpinan"
-                                        class="form-label">
+                                    <label for="arahan_pimpinan" class="form-label">
                                         {{ __('A. Arahan pimpinan/isu terkini/dll') }}
                                     </label>
-                                        <textarea name="arahan_pimpinan" id="arahan_pimpinan"
-                                            class="form-control @error('arahan_pimpinan') is-invalid @enderror" autocomplete="off" data-bs-toggle="tooltip"
-                                            title="{{ config('form_tooltips.arahan_pimpinan') }}" required rows="2">{{ isset($pengajuanKap) ? $pengajuanKap->arahan_pimpinan : old('arahan_pimpinan') }}</textarea>
-
-                                </div>
-                                <div class="mb-1" style="padding-left: 20px">
-                                    <label for="arahan_pimpinan"
-                                        class="form-label">
-                                        {{ __('A. Arahan pimpinan/isu terkini/dll') }}
-                                    </label>
-                                        <textarea name="arahan_pimpinan" id="arahan_pimpinan"
-                                            class="form-control @error('arahan_pimpinan') is-invalid @enderror" autocomplete="off" data-bs-toggle="tooltip"
-                                            title="{{ config('form_tooltips.arahan_pimpinan') }}" required rows="2">{{ isset($pengajuanKap) ? $pengajuanKap->arahan_pimpinan : old('arahan_pimpinan') }}</textarea>
+                                    <textarea name="arahan_pimpinan" id="arahan_pimpinan"
+                                        class="form-control @error('arahan_pimpinan') is-invalid @enderror" autocomplete="off" data-bs-toggle="tooltip"
+                                        title="{{ config('form_tooltips.arahan_pimpinan') }}" required rows="2">{{ isset($pengajuanKap) ? $pengajuanKap->arahan_pimpinan : old('arahan_pimpinan') }}</textarea>
 
                                 </div>
 
+                                <div class="mb-3" style="padding-left: 20px">
+                                    <label for="prioritas_pembelajaran" class="col-sm-3 col-form-label">
+                                        {{ __('B. Prioritas Pembelajaran') }}
+                                    </label>
+                                    <select name="prioritas_pembelajaran" id="prioritas_pembelajaran"
+                                        class="form-control  @error('prioritas_pembelajaran') is-invalid @enderror"
+                                        required>
+                                        <option value="" disabled selected>
+                                            {{ __('-- Select Prioritas Pembelajaran --') }}
+                                        </option>
+                                        @for ($i = 1; $i <= 50; $i++)
+                                            @php
+                                                $prioritasValue = "Prioritas $i";
+                                                $isUsed = in_array($prioritasValue, $usedPrioritas);
+                                                $kodePemb = $isUsed ? $kodePembelajaran[$prioritasValue] : '';
+                                                $currentRouteName = Route::currentRouteName();
+                                                $isSelected = false;
+                                                $isSelected =
+                                                    (isset($pengajuanKap) &&
+                                                        $pengajuanKap->prioritas_pembelajaran == $prioritasValue) ||
+                                                    old('prioritas_pembelajaran') == $prioritasValue;
+                                                $isDisabled =
+                                                    ($isUsed &&
+                                                        (!isset($pengajuanKap) ||
+                                                            $pengajuanKap->prioritas_pembelajaran !=
+                                                                $prioritasValue)) ||
+                                                    ($currentRouteName == 'pengajuan-kap.duplikat' &&
+                                                        isset($pengajuanKap) &&
+                                                        $pengajuanKap->prioritas_pembelajaran == $prioritasValue);
+                                            @endphp
+                                            <option value="{{ $prioritasValue }}" {{ $isSelected ? 'selected' : '' }}
+                                                {{ $isDisabled ? 'disabled' : '' }}>
+                                                {{ $prioritasValue }} {{ $kodePemb ? ' - Kode: ' . $kodePemb : '' }}
+                                            </option>
+                                        @endfor
+                                    </select>
+                                </div>
 
+                                <div class="mb-3">
+                                    <label for="tujuan_program_pembelajaran" class="form-label">
+                                        {{ __('Tujuan Program Pembelajaran') }}
+                                    </label>
+                                    <textarea name="tujuan_program_pembelajaran" id="tujuan_program_pembelajaran"
+                                        class="form-control @error('tujuan_program_pembelajaran') is-invalid @enderror" autocomplete="off"
+                                        data-bs-toggle="tooltip" title="{{ config('form_tooltips.tujuan_program_pembelajaran') }}" required
+                                        rows="2">{{ isset($pengajuanKap) ? $pengajuanKap->tujuan_program_pembelajaran : old('tujuan_program_pembelajaran') }}</textarea>
+                                </div>
 
+                                <div class="mb-3">
+                                    <label for="indikator_keberhasilan" class="form-label">
+                                        {{ __('Indikator Keberhasilan') }}
+                                    </label>
+                                    <table class="table table-bordered table-sm text-center">
+                                        <thead style="background-color: #cbccce">
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Peserta Mampu</th>
+                                            </tr>
+                                        </thead>
 
+                                        <tbody>
+                                            @if (isset($pengajuanKap))
+                                                @foreach ($indikator_keberhasilan_kap as $row)
+                                                    <tr>
+                                                        <td>{{ $loop->index + 1 }}</td>
+                                                        <td>
+                                                            <input type="text" name="indikator_keberhasilan[]"
+                                                                value="{{ $row->indikator_keberhasilan }}"
+                                                                autocomplete="off"
+                                                                class="form-control @error('indikator_keberhasilan') is-invalid @enderror" />
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            @else
+                                                @for ($i = 1; $i <= 10; $i++)
+                                                    <tr>
+                                                        <td>{{ $i }}</td>
+                                                        <td>
+                                                            <input type="text" name="indikator_keberhasilan[]"
+                                                                autocomplete="off"
+                                                                class="form-control @error('indikator_keberhasilan') is-invalid @enderror" />
+                                                        </td>
+                                                    </tr>
+                                                @endfor
+                                            @endif
+                                        </tbody>
+                                    </table>
+                                </div>
 
+                                <div class="mb-3">
+                                    <label for="indikator-dampak-terhadap-kinerja-organisasi" class="form-label">
+                                        {{ __('Indikator Dampak Terhadap Kinerja Organisasi') }}
+                                    </label>
+                                    <textarea name="indikator_dampak_terhadap_kinerja_organisasi" id="indikator-dampak-terhadap-kinerja-organisasi"
+                                        class="form-control @error('indikator_dampak_terhadap_kinerja_organisasi') is-invalid @enderror"
+                                        autocomplete="off" data-bs-toggle="tooltip"
+                                        title="{{ config('form_tooltips.indikator_dampak_terhadap_kinerja_organisasi') }}" required rows="2">{{ isset($pengajuanKap) ? $pengajuanKap->indikator_dampak_terhadap_kinerja_organisasi : old('indikator_dampak_terhadap_kinerja_organisasi') }}</textarea>
+                                </div>
 
+                                <div class="mb-3">
+                                    <label for="skill-group-owner" class="form-label">
+                                        {{ __('Penugasan Yang Terkait Dengan Pembelajaran') }}
+                                    </label>
+                                    <textarea name="penugasan_yang_terkait_dengan_pembelajaran" id="penugasan-yang-terkait-dengan-pembelajaran"
+                                        class="form-control @error('penugasan_yang_terkait_dengan_pembelajaran') is-invalid @enderror" autocomplete="off"
+                                        data-bs-toggle="tooltip" title="{{ config('form_tooltips.penugasan_yang_terkait_dengan_pembelajaran') }}"
+                                        required rows="2">{{ isset($pengajuanKap) ? $pengajuanKap->penugasan_yang_terkait_dengan_pembelajaran : old('penugasan_yang_terkait_dengan_pembelajaran') }}</textarea>
+                                </div>
 
-
-
-
-
-
-
-
-
-
+                                <div class="mb-3">
+                                    <label for="indikator-dampak-terhadap-kinerja-organisasi" class="form-label">
+                                        {{ __('Skill Group Owner') }}
+                                    </label>
+                                    <textarea name="skill_group_owner" id="skill-group-owner"
+                                        class="form-control @error('skill_group_owner') is-invalid @enderror" autocomplete="off"
+                                        data-bs-toggle="tooltip" title="{{ config('form_tooltips.skill_group_owner') }}" required rows="2">{{ isset($pengajuanKap) ? $pengajuanKap->skill_group_owner : old('skill_group_owner') }}</textarea>
+                                </div>
 
                                 <button type="button" class="btn btn-info btn-next">Next <i
                                         class="fa fa-arrow-right"></i></button>
@@ -904,7 +1047,7 @@
 
                             <div class="form-step form-step-2" style="display: none;">
                                 <div class="alert alert-info" role="alert">
-                                    2. Detail Pembelajaran
+                                    <b>2. Detail Pembelajaran</b>
                                 </div>
                                 <div class="mb-3">
                                     <label for="diklatLocID" class="form-label">{{ __('Lokasi') }}</label>
@@ -1013,7 +1156,7 @@
 
                             <div class="form-step form-step-3" style="display: none;">
                                 <div class="alert alert-info" role="alert">
-                                    3. Peserta dan Fasilitator
+                                    <b>3. Peserta dan Fasilitator</b>
                                 </div>
 
                                 <div class="mb-3">
@@ -1173,7 +1316,7 @@
 
                             <div class="form-step form-step-4" style="display: none;">
                                 <div class="alert alert-info" role="alert">
-                                    4. Catatan
+                                    <b>4. Catatan</b>
                                 </div>
 
                                 <div class="mb-3">
@@ -1307,6 +1450,7 @@
                 });
             }
         </script>
+
         <script>
             // Fungsi untuk memperbesar textarea secara otomatis
             document.querySelectorAll('.reply-textarea').forEach(function(textarea) {
@@ -1326,6 +1470,7 @@
                 });
             });
         </script>
+
         <script>
             $(document).ready(function() {
                 let currentStep = 1;
@@ -1436,6 +1581,43 @@
                     updateDiklatLocName();
                 });
                 updateDiklatLocName();
+            });
+        </script>
+
+        <script>
+            $(document).ready(function() {
+                const $topikSelect = $('#topik_id');
+                const $keteranganInput = $('#keterangan_program_pembelajaran');
+                const $finalJudul = $('#finalJudul'); // Ambil elemen berdasarkan ID
+                const $hiddenJudulInput = $('#judul'); // Ambil input hidden berdasarkan ID
+
+                // Function to update Final Judul
+                function updateFinalJudul() {
+                    const selectedOption = $topikSelect.find('option:selected');
+                    const topikNama = selectedOption.data('nama-topik') || ''; // Jika kosong, nilai default ''
+                    const keteranganTambahan = $keteranganInput.val() || ''; // Jika kosong, nilai default ''
+
+                    // Update the hidden input value
+                    const finalJudulValue = `${topikNama} ${keteranganTambahan}`.trim();
+                    $hiddenJudulInput.val(finalJudulValue); // Set value for hidden input
+
+                    // Hanya tampilkan Final Judul jika ada topikNama atau keteranganTambahan
+                    if (topikNama || keteranganTambahan) {
+                        $finalJudul.html(`<b><i>Final Judul: "${finalJudulValue}"</i></b>`);
+                    } else {
+                        $finalJudul.html(
+                            '<b><i>Final Judul:</i></b>'); // Menampilkan Final Judul tanpa tambahan jika kosong
+                    }
+                }
+
+                // Event listener untuk perubahan di topik_id
+                $topikSelect.on('change', updateFinalJudul);
+
+                // Event listener untuk input tambahan
+                $keteranganInput.on('input', updateFinalJudul);
+
+                // Set nilai awal ketika halaman pertama kali di-load (untuk edit mode)
+                updateFinalJudul();
             });
         </script>
     @endpush

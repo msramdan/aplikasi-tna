@@ -132,8 +132,8 @@
                                 </div>
                                 <div class="table-responsive">
                                     <table class="table table-striped" id="selectedIndicatorsTable">
-                                        <thead>
-                                            <tr class="table-success">
+                                        <thead style="background-color: #cbccce">
+                                            <tr>
                                                 <th>Indikator Kinerja</th>
                                                 <th style="width: 50px; text-align: center;">Aksi</th>
                                             </tr>
@@ -187,8 +187,8 @@
                                 </div>
                                 <div class="table-responsive">
                                     <table class="table table-striped" id="selectedCompetenciesTable">
-                                        <thead>
-                                            <tr class="table-success">
+                                        <thead style="background-color: #cbccce">
+                                            <tr>
                                                 <th>Kompetensi</th>
                                                 <th style="width: 50px; text-align: center;">Aksi</th>
                                             </tr>
@@ -369,7 +369,7 @@
 
                     <div class="form-group row mb-3">
                         <label class="col-sm-3 col-form-label"
-                            for="tujuan_program_pembelajaran">{{ __('Indikator Keberhasilan') }} <span
+                            for="indikator_keberhasilan">{{ __('Indikator Keberhasilan') }} <span
                                 style="color: red">*</span></label>
                         <div class="col-sm-6">
                             <table class="table table-bordered table-sm text-center">

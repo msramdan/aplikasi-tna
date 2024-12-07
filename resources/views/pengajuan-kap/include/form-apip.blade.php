@@ -97,8 +97,8 @@
                             </div>
                             <div class="table-responsive">
                                 <table class="table table-striped" id="selectedCompetenciesTable">
-                                    <thead>
-                                        <tr class="table-success">
+                                    <thead style="background-color: #cbccce">
+                                        <tr>
                                             <th>Kompetensi</th>
                                             <th style="width: 50px; text-align: center;">Aksi</th>
                                         </tr>
