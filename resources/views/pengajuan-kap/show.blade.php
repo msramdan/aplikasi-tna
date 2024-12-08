@@ -795,52 +795,56 @@
                                     <b>1. Konteks Pembelajaran</b>
                                 </div>
 
-                                <div class="mb-3">
-                                    <label for="jenis_program" class="form-label">{{ __('Jenis Program') }}</label>
-                                    <select class="form-control @error('jenis_program') is-invalid @enderror"
-                                        name="jenis_program" id="jenis_program" required disabled>
-                                        <option value="" selected disabled>-- {{ __('Select jenis program') }} --
-                                        </option>
-                                        @foreach ($jenis_program as $program)
-                                            <option value="{{ $program }}"
-                                                {{ isset($pengajuanKap) && $pengajuanKap->jenis_program == $program ? 'selected' : (old('jenis_program') == $program ? 'selected' : '') }}>
-                                                {{ $program }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                @if (!$hideForm)
+                                @if ($is_bpkp == 'BPKP')
                                     <div class="mb-3">
-                                        <table class="table table-bordered" id="selectedIndicatorsTable">
-                                            <thead style="background-color: #cbccce">
-                                                <tr>
-                                                    <th>Indikator Kinerja</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @if (isset($pengajuanKap))
-                                                    @foreach ($pengajuan_kap_indikator_kinerja as $row)
-                                                        <tr>
-                                                            <td>{{ $row->indikator_kinerja }} <input type="hidden"
-                                                                    name="indikator_kinerja[]"
-                                                                    value="{{ $row->indikator_kinerja }}"></td>
-                                                        </tr>
-                                                    @endforeach
-                                                @endif
-                                            </tbody>
-                                        </table>
+                                        <label for="jenis_program" class="form-label">{{ __('Jenis Program') }}</label>
+                                        <select class="form-control @error('jenis_program') is-invalid @enderror"
+                                            name="jenis_program" id="jenis_program" required disabled>
+                                            <option value="" selected disabled>-- {{ __('Select jenis program') }}
+                                                --
+                                            </option>
+                                            @foreach ($jenis_program as $program)
+                                                <option value="{{ $program }}"
+                                                    {{ isset($pengajuanKap) && $pengajuanKap->jenis_program == $program ? 'selected' : (old('jenis_program') == $program ? 'selected' : '') }}>
+                                                    {{ $program }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
-                                @endif
 
-                                <div class="mb-3">
-                                    <label for="referensi_indikator_kinerja"
-                                        class="form-label">{{ __('Indikator Kinerja ' . $tahun) }}</label>
-                                    <textarea name="referensi_indikator_kinerja" id="referensi_indikator_kinerja"
-                                        class="form-control @error('referensi_indikator_kinerja') is-invalid @enderror"
-                                        placeholder="{{ __('Indikator Kinerja ' . $tahun) }}" autocomplete="off" data-bs-toggle="tooltip"
-                                        title="{{ config('form_tooltips.referensi_indikator_kinerja') }}" required rows="2">{{ isset($pengajuanKap) ? $pengajuanKap->referensi_indikator_kinerja : old('referensi_indikator_kinerja') }}</textarea>
-                                </div>
+                                    @if (!$hideForm)
+                                        <div class="mb-3">
+                                            <table class="table table-bordered" id="selectedIndicatorsTable">
+                                                <thead style="background-color: #cbccce">
+                                                    <tr>
+                                                        <th>Indikator Kinerja</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (isset($pengajuanKap))
+                                                        @foreach ($pengajuan_kap_indikator_kinerja as $row)
+                                                            <tr>
+                                                                <td>{{ $row->indikator_kinerja }} <input type="hidden"
+                                                                        name="indikator_kinerja[]"
+                                                                        value="{{ $row->indikator_kinerja }}"></td>
+                                                            </tr>
+                                                        @endforeach
+                                                    @endif
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    @endif
+
+                                    <div class="mb-3">
+                                        <label for="referensi_indikator_kinerja"
+                                            class="form-label">{{ __('Indikator Kinerja ' . $tahun) }}</label>
+                                        <textarea name="referensi_indikator_kinerja" id="referensi_indikator_kinerja"
+                                            class="form-control @error('referensi_indikator_kinerja') is-invalid @enderror"
+                                            placeholder="{{ __('Indikator Kinerja ' . $tahun) }}" autocomplete="off" data-bs-toggle="tooltip"
+                                            title="{{ config('form_tooltips.referensi_indikator_kinerja') }}" required rows="2">{{ isset($pengajuanKap) ? $pengajuanKap->referensi_indikator_kinerja : old('referensi_indikator_kinerja') }}</textarea>
+                                    </div>
+
+                                @endif
 
                                 @if (!$hideForm)
                                     <div class="mb-3">
