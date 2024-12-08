@@ -1407,8 +1407,6 @@ class PengajuanKapController extends Controller
 
     public function approve(Request $request, $id)
     {
-        dd($request);
-
         DB::beginTransaction();
         $syncResult = null;
         try {
@@ -1456,6 +1454,16 @@ class PengajuanKapController extends Controller
                 $currentStepUpdate = ($maxStep !== $currentStep) ? $currentStep + 1 : $currentStep;
                 $status_pengajuan = ($maxStep === $currentStep) ? 'Approved' : 'Process';
                 $updateData = [
+                    'topik_id' =>  $request->topik_id,
+                    'judul' =>  $request->judul,
+                    'arahan_pimpinan' =>  $request->arahan_pimpinan,
+                    'prioritas_pembelajaran' =>  $request->prioritas_pembelajaran,
+                    'tujuan_program_pembelajaran' =>  $request->tujuan_program_pembelajaran,
+                    'indikator_dampak_terhadap_kinerja_organisasi' =>  $request->indikator_dampak_terhadap_kinerja_organisasi,
+                    'penugasan_yang_terkait_dengan_pembelajaran' =>  $request->penugasan_yang_terkait_dengan_pembelajaran,
+                    'skill_group_owner' =>  $request->skill_group_owner,
+                    'metodeID' =>  $request->metodeID,
+                    'metodeName' =>  $request->metodeName,
                     'current_step' =>  $currentStepUpdate,
                     'status_pengajuan' => $status_pengajuan,
                     'updated_at' => Carbon::now(),
@@ -1477,6 +1485,63 @@ class PengajuanKapController extends Controller
                     'fasilitator_pembelajaran' => $fasilitator_pembelajaran_json,
                 ];
                 DB::table('pengajuan_kap')->where('id', $id)->update($updateData);
+
+                $metodeID = $request->metodeID;
+                DB::table('waktu_pelaksanaan')
+                    ->where('pengajuan_kap_id', $id)
+                    ->delete();
+                if ($metodeID === '1') {
+                    DB::table('waktu_pelaksanaan')->insert([
+                        'pengajuan_kap_id' => $id,
+                        'remarkMetodeName' => $request->remark_1,
+                        'tanggal_mulai' => $request->tatap_muka_start,
+                        'tanggal_selesai' => $request->tatap_muka_end,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+                } elseif ($metodeID === '2') {
+                    // Insert E-Learning data
+                    DB::table('waktu_pelaksanaan')->insert([
+                        'pengajuan_kap_id' => $id,
+                        'remarkMetodeName' => $request->remark_2,
+                        'tanggal_mulai' => $request->hybrid_elearning_start,
+                        'tanggal_selesai' => $request->hybrid_elearning_end,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+
+                    // Insert Tatap Muka data
+                    DB::table('waktu_pelaksanaan')->insert([
+                        'pengajuan_kap_id' => $id,
+                        'remarkMetodeName' => $request->remark_3,
+                        'tanggal_mulai' => $request->hybrid_tatap_muka_start,
+                        'tanggal_selesai' => $request->hybrid_tatap_muka_end,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+                } else {
+                    DB::table('waktu_pelaksanaan')->insert([
+                        'pengajuan_kap_id' => $id,
+                        'remarkMetodeName' => $request->remark_4,
+                        'tanggal_mulai' => $request->elearning_start,
+                        'tanggal_selesai' => $request->elearning_end,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+                }
+
+                // insert indikator_keberhasilan_kap
+                DB::table('indikator_keberhasilan_kap')
+                    ->where('pengajuan_kap_id', $id)
+                    ->delete();
+                foreach ($request->indikator_keberhasilan as $index => $row) {
+                    DB::table('indikator_keberhasilan_kap')->insert([
+                        'pengajuan_kap_id' => $id,
+                        'indikator_keberhasilan' => $row,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+                }
 
                 if (!empty($request->no_level) && !empty($request->level_evaluasi_instrumen)) {
                     foreach ($request->no_level as $index => $level) {
