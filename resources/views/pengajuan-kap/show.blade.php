@@ -1049,6 +1049,96 @@
                                 <div class="alert alert-info" role="alert">
                                     <b>2. Detail Pembelajaran</b>
                                 </div>
+
+                                <div class="mb-3">
+                                    <label for="metodeID" class="form-label">{{ __('Metode Pembelajaran') }}</label>
+                                    <select class="form-control @error('metodeID') is-invalid @enderror" name="metodeID"
+                                        id="metodeID" required>
+                                        <option value="" selected disabled>--
+                                            {{ __('Select metode pembelajaran') }} --
+                                        </option>
+                                        @foreach ($metode_data as $metode)
+                                            <option value="{{ $metode['metodeID'] }}"
+                                                data-metode-name="{{ $metode['metodeName'] }}"
+                                                {{ isset($pengajuanKap) && $pengajuanKap->metodeID == $metode['metodeID'] ? 'selected' : (old('metodeID') == $metode['metodeID'] ? 'selected' : '') }}>
+                                                {{ $metode['metodeName'] }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <input type="hidden" name="metodeName" id="metodeName"
+                                        value="{{ isset($pengajuanKap) ? $pengajuanKap->metodeName : old('metodeName') }}">
+                                </div>
+
+                                <div class="form-group row mb-3" id="additional_fields" style="display: none;">
+                                    <label class="col-sm-3 col-form-label"></label>
+                                    <!-- Tatap Muka Fields -->
+                                    <div id="tatap_muka_fields" style="display: none;">
+                                        <label>Tanggal Tatap Muka:</label>
+                                        <div class="row">
+                                            <input type="hidden" name="remark_1" class="form-control"
+                                                value="Tatap Muka">
+                                            <div class="col-sm-6">
+                                                <input type="date" name="tatap_muka_start" class="form-control"
+                                                    required placeholder="Mulai">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input type="date" name="tatap_muka_end" class="form-control"
+                                                    placeholder="Selesai">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Hybrid Fields -->
+                                    <div id="hybrid_fields" style="display: none;">
+                                        <label>Tanggal E-Learning:</label>
+                                        <div class="row">
+                                            <input type="hidden" name="remark_2" class="form-control"
+                                                value="E-Learning">
+                                            <div class="col-sm-6">
+                                                <input type="date" name="hybrid_elearning_start" class="form-control"
+                                                    placeholder="Mulai">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input type="date" name="hybrid_elearning_end" class="form-control"
+                                                    placeholder="Selesai">
+                                            </div>
+                                        </div>
+                                        <label>Tanggal Tatap Muka:</label>
+                                        <div class="row mb-2">
+                                            <input type="hidden" name="remark_3" class="form-control"
+                                                value="Tatap Muka">
+                                            <div class="col-sm-6">
+                                                <input type="date" name="hybrid_tatap_muka_start" class="form-control"
+                                                    placeholder="Mulai">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input type="date" name="hybrid_tatap_muka_end" class="form-control"
+                                                    placeholder="Selesai">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- E-Learning Fields -->
+                                    <div id="elearning_fields" style="display: none;">
+                                        <label>Tanggal E-Learning:</label>
+                                        <div class="row">
+                                            <input type="hidden" name="remark_4" class="form-control"
+                                                value="E-Learning">
+                                            <div class="col-sm-6">
+                                                <input type="date" name="elearning_start" class="form-control"
+                                                    placeholder="Mulai">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input type="date" name="elearning_end" class="form-control"
+                                                    placeholder="Selesai">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
                                 <div class="mb-3">
                                     <label for="diklatLocID" class="form-label">{{ __('Lokasi') }}</label>
                                     <select class="form-control" name="diklatLocID" id="diklatLocID" required>
@@ -1618,6 +1708,82 @@
 
                 // Set nilai awal ketika halaman pertama kali di-load (untuk edit mode)
                 updateFinalJudul();
+            });
+        </script>
+        <script>
+            // Ambil data waktu_pelaksanaan dari controller
+            var waktuPelaksanaanData = {!! $waktuPelaksanaanData !!};
+        </script>
+        <script>
+            $(document).ready(function() {
+                // Saat halaman pertama kali di-load, cek metodeID yang ada
+                var metodeID = $('#metodeID').val(); // Ambil value dari metodeID yang disimpan di form
+                handleMetodeFields(metodeID); // Jalankan fungsi untuk menampilkan fields sesuai metode yang ada
+
+                // Event listener untuk handle change pada metodeID
+                $('#metodeID').on('change', function() {
+                    var metodeID = $(this).val();
+                    handleMetodeFields(metodeID); // Panggil fungsi handleMetodeFields saat ada perubahan metode
+                });
+
+                // Fungsi untuk menampilkan dan mengisi field sesuai metode yang dipilih
+                function handleMetodeFields(metodeID) {
+                    var pengajuanMetodeID = "{{ $pengajuanKap->metodeID }}";
+                    $('#additional_fields').show();
+                    $('#tatap_muka_fields').hide().find('input:not([name="remark_1"])').val('').removeAttr('required');
+                    $('#hybrid_fields').hide().find('input:not([name="remark_2"], [name="remark_3"])').val('')
+                        .removeAttr('required');
+                    $('#elearning_fields').hide().find('input:not([name="remark_4"])').val('').removeAttr('required');
+                    if (metodeID == '1') {
+                        $('#tatap_muka_fields').show().find(
+                            'input[name="tatap_muka_start"], input[name="tatap_muka_end"]').attr('required', true);
+                        if (waktuPelaksanaanData.length > 0 && pengajuanMetodeID == '1') {
+                            $('input[name="tatap_muka_start"]').val(waktuPelaksanaanData[0].tanggal_mulai);
+                            $('input[name="tatap_muka_end"]').val(waktuPelaksanaanData[0].tanggal_selesai);
+                        }
+                    } else if (metodeID == '2') {
+                        $('#hybrid_fields').show().find(
+                            'input[name="hybrid_elearning_start"], input[name="hybrid_elearning_end"], input[name="hybrid_tatap_muka_start"], input[name="hybrid_tatap_muka_end"]'
+                        ).attr('required', true);
+                        if (waktuPelaksanaanData.length > 0 && pengajuanMetodeID == '2') {
+                            $('input[name="hybrid_elearning_start"]').val(waktuPelaksanaanData[0].tanggal_mulai);
+                            $('input[name="hybrid_elearning_end"]').val(waktuPelaksanaanData[0].tanggal_selesai);
+                            $('input[name="hybrid_tatap_muka_start"]').val(waktuPelaksanaanData[1]?.tanggal_mulai ||
+                                '');
+                            $('input[name="hybrid_tatap_muka_end"]').val(waktuPelaksanaanData[1]?.tanggal_selesai ||
+                                '');
+                        }
+                    } else if (metodeID == '4') {
+                        $('#elearning_fields').show().find(
+                            'input[name="elearning_start"], input[name="elearning_end"]').attr('required', true);
+                        if (waktuPelaksanaanData.length > 0 && pengajuanMetodeID == '4') {
+                            $('input[name="elearning_start"]').val(waktuPelaksanaanData[0].tanggal_mulai);
+                            $('input[name="elearning_end"]').val(waktuPelaksanaanData[0].tanggal_selesai);
+                        }
+                    }
+                }
+
+                $('input[type="date"]').on('change', function() {
+                    var startDateInput = $(this).closest('.row').find('input[name$="_start"]');
+                    var endDateInput = $(this).closest('.row').find('input[name$="_end"]');
+
+                    if (startDateInput.length > 0 && endDateInput.length > 0) {
+                        var startDate = startDateInput.val();
+                        var endDate = endDateInput.val();
+
+                        if (startDate && endDate && new Date(endDate) < new Date(startDate)) {
+                            alert('Tanggal selesai tidak boleh lebih kecil dari tanggal mulai.');
+                            endDateInput.val(''); // Clear invalid end date
+                        }
+
+                        // Disable dates in end date input that are before start date
+                        if (startDate) {
+                            endDateInput.attr('min', startDate);
+                        } else {
+                            endDateInput.removeAttr('min');
+                        }
+                    }
+                });
             });
         </script>
     @endpush

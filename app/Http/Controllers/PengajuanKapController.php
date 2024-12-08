@@ -1343,18 +1343,18 @@ class PengajuanKapController extends Controller
         $user = Auth::user();
         $nama_unit = $user->nama_unit;
         $pengajuanKaps = DB::table('pengajuan_kap')
-        ->select(
-            'pengajuan_kap.*',
-            'users.name as user_name',
-            'pengajuan_kap.prioritas_pembelajaran',
-            'pengajuan_kap.kode_pembelajaran'
-        )
-        ->leftJoin('users', 'pengajuan_kap.user_created', '=', 'users.id')
-        ->where('pengajuan_kap.institusi_sumber', '=', $is_bpkp)
-        ->where('pengajuan_kap.frekuensi_pelaksanaan', '=', $frekuensi)
-        ->where('pengajuan_kap.tahun', '=', $pengajuanKap->tahun)
-        ->where('users.nama_unit', '=', $nama_unit)
-        ->get();
+            ->select(
+                'pengajuan_kap.*',
+                'users.name as user_name',
+                'pengajuan_kap.prioritas_pembelajaran',
+                'pengajuan_kap.kode_pembelajaran'
+            )
+            ->leftJoin('users', 'pengajuan_kap.user_created', '=', 'users.id')
+            ->where('pengajuan_kap.institusi_sumber', '=', $is_bpkp)
+            ->where('pengajuan_kap.frekuensi_pelaksanaan', '=', $frekuensi)
+            ->where('pengajuan_kap.tahun', '=', $pengajuanKap->tahun)
+            ->where('users.nama_unit', '=', $nama_unit)
+            ->get();
         $usedPrioritas = $pengajuanKaps->pluck('prioritas_pembelajaran')->toArray();
         $kodePembelajaran = $pengajuanKaps->pluck('kode_pembelajaran', 'prioritas_pembelajaran')->toArray();
 
@@ -1401,11 +1401,14 @@ class PengajuanKapController extends Controller
             'pengajuan_kap_gap_kompetensi' => $pengajuan_kap_gap_kompetensi,
             'usedPrioritas' => $usedPrioritas,
             'kodePembelajaran' => $kodePembelajaran,
+            'waktuPelaksanaanData' => json_encode($waktu_pelaksanaan),
         ]);
     }
 
     public function approve(Request $request, $id)
     {
+        dd($request);
+
         DB::beginTransaction();
         $syncResult = null;
         try {
