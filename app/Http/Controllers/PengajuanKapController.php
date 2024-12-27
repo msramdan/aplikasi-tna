@@ -296,7 +296,6 @@ class PengajuanKapController extends Controller
 
         // Ambil prioritas yang sudah digunakan beserta kode_pembelajaran
         $usedPrioritas = $pengajuanKaps
-            ->where('tanggal_created', '>', '2024-12-19 00:00:00')
             ->pluck('prioritas_pembelajaran')
             ->toArray();
         $kodePembelajaran = $pengajuanKaps->pluck('kode_pembelajaran', 'prioritas_pembelajaran')->toArray();
@@ -458,7 +457,6 @@ class PengajuanKapController extends Controller
             ->get();
 
         $usedPrioritas = $pengajuanKaps
-            ->where('tanggal_created', '>', '2024-12-19 00:00:00')
             ->pluck('prioritas_pembelajaran')
             ->toArray();
         $kodePembelajaran = $pengajuanKaps->pluck('kode_pembelajaran', 'prioritas_pembelajaran')->toArray();
