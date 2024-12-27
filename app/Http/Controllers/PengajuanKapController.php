@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use PDF;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ExportPengajuanKap;
+use App\Models\PengajuanKap;
 use Illuminate\Support\Facades\Route;
 
 
@@ -121,8 +122,10 @@ class PengajuanKapController extends Controller
                     }
                 })
                 ->addColumn('prioritas_pembelajaran', function ($row) {
+                    if (is_null($row->prioritas_pembelajaran)) {
+                        return '-';
+                    }
                     $prioritas = (int) preg_replace('/[^0-9]/', '', $row->prioritas_pembelajaran);
-
                     if ($prioritas > 0 && $prioritas <= 5) {
                         return '<span class="badge badge-label bg-danger badge-width"><i class="mdi mdi-circle-medium"></i> ' . $row->prioritas_pembelajaran . '</span>'; // Danger
                     } elseif ($prioritas > 5 && $prioritas <= 10) {
@@ -2041,6 +2044,73 @@ class PengajuanKapController extends Controller
             ]);
         } else {
             return response()->json(['exists' => false]);
+        }
+    }
+
+    public function fetchPrioritas(Request $request)
+    {
+        $id = $request->input('id');
+
+        // Ambil data pengajuan terkait
+        $pengajuan = DB::table('pengajuan_kap')->where('id', $id)->first();
+
+        if (!$pengajuan) {
+            return response()->json([
+                'error' => 'Data pengajuan tidak ditemukan',
+            ], 404);
+        }
+
+        // Parameter untuk query
+        $is_bpkp = $pengajuan->institusi_sumber;
+        $frekuensi = $pengajuan->frekuensi_pelaksanaan;
+        $tahun = $pengajuan->tahun;
+
+        // Ambil nama_unit dari user yang sedang login
+        $user = Auth::user();
+        $nama_unit = $user->nama_unit;
+
+        // Query untuk mendapatkan prioritas dan kode pembelajaran
+        $pengajuanKaps = DB::table('pengajuan_kap')
+            ->select('pengajuan_kap.prioritas_pembelajaran', 'pengajuan_kap.kode_pembelajaran')
+            ->leftJoin('users', 'pengajuan_kap.user_created', '=', 'users.id')
+            ->where('pengajuan_kap.institusi_sumber', '=', $is_bpkp)
+            ->where('pengajuan_kap.frekuensi_pelaksanaan', '=', $frekuensi)
+            ->where('pengajuan_kap.tahun', '=', $tahun)
+            ->where('users.nama_unit', '=', $nama_unit)
+            ->get();
+
+        // Ambil prioritas yang sudah digunakan dan kode pembelajaran
+        $usedPrioritas = $pengajuanKaps->pluck('prioritas_pembelajaran')->toArray();
+        $kodePembelajaran = $pengajuanKaps->pluck('kode_pembelajaran', 'prioritas_pembelajaran')->toArray();
+
+        return response()->json([
+            'usedPrioritas' => $usedPrioritas,
+            'kodePembelajaran' => $kodePembelajaran,
+        ]);
+    }
+
+    public function updatePrioritas(Request $request)
+    {
+        // Validasi input
+        $request->validate([
+            'id' => 'required|integer|exists:pengajuan_kap,id',
+            'prioritas_pembelajaran' => 'required|string|max:255',
+        ]);
+
+        $id = $request->input('id');
+        $prioritasPembelajaran = $request->input('prioritas_pembelajaran');
+
+        try {
+            // Update prioritas_pembelajaran menggunakan Query Builder
+            DB::table('pengajuan_kap')
+                ->where('id', $id)
+                ->update(['prioritas_pembelajaran' => $prioritasPembelajaran]);
+
+            // Set flash session untuk sukses
+            return redirect()->back()->with('success_update_prioritas', 'Prioritas pembelajaran berhasil diperbarui.');
+        } catch (\Exception $e) {
+            // Set flash session untuk error
+            return redirect()->back()->with('gagal', 'Gagal memperbarui prioritas pembelajaran: ' . $e->getMessage());
         }
     }
 }

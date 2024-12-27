@@ -177,6 +177,11 @@ Route::middleware(['auth', 'web', 'check.maintenance'])->group(function () {
         Route::get('/exportPengajuanKap', 'exportPengajuanKap')->name('exportPengajuanKap');
         Route::get('/check-pengajuan-kap/{qrCode}', 'check')->name('check-pengajuan-kap');
     });
+
+    Route::get('/pengajuan-kap/fetch-prioritas', [PengajuanKapController::class, 'fetchPrioritas'])->name('pengajuan-kap.fetch-prioritas');
+    Route::post('/pengajuan-kap/update-prioritas', [PengajuanKapController::class, 'updatePrioritas'])
+        ->name('pengajuan-kap.update-prioritas');
+
     Route::post('/replies', [ReplyController::class, 'store'])->name('replies.store');
     Route::controller(SyncInfoIDiklatController::class)->group(function () {
         Route::get('/sync-info-diklat', 'index')->name('sync-info-diklat.index');
