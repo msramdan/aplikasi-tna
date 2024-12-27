@@ -1,19 +1,23 @@
-# Menggunakan image PHP 8.1.5 dengan Nginx dan ekstensi yang dibutuhkan
 FROM php:8.1.5-fpm
 
-# Install ekstensi yang diperlukan oleh Laravel
-RUN apt-get update && apt-get install -y libpng-dev libjpeg-dev libfreetype6-dev libmcrypt-dev libxml2-dev zip git && \
-    docker-php-ext-configure gd --with-freetype --with-jpeg && \
-    docker-php-ext-install gd pdo pdo_mysql
+# Install extensions and dependencies
+RUN apt-get update && apt-get install -y \
+    zip unzip curl libpng-dev libjpeg-dev libfreetype6-dev libonig-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install pdo pdo_mysql mbstring gd
 
 # Install Composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Set working directory
-WORKDIR /var/www/html
+WORKDIR /var/www
 
-# Copy file aplikasi ke dalam container
-COPY ./app /var/www/html
+# Copy application files
+COPY . .
 
-# Set permission agar file aplikasi dapat dijalankan
-RUN chown -R www-data:www-data /var/www/html
+# Set permissions
+RUN chown -R www-data:www-data /var/www \
+    && chmod -R 755 /var/www
+
+EXPOSE 9000
+CMD ["php-fpm"]
