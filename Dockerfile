@@ -1,35 +1,37 @@
-# Gunakan image Ubuntu
-FROM ubuntu:latest
+# Gunakan base image Ubuntu
+FROM ubuntu:22.04
 
 # Install dependencies
 RUN apt-get update && apt-get install -y \
-    php-cli php-mbstring php-xml php-bcmath php-curl php-zip unzip curl git \
-    nginx supervisor composer mysql-client && \
-    apt-get clean
+    curl \
+    zip \
+    unzip \
+    git \
+    supervisor \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    libzip-dev \
+    default-mysql-client \
+    && apt-get clean
 
-# Install Node.js dan npm
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
-    apt-get install -y nodejs
+# Install PHP dan ekstensi
+RUN apt-get update && apt-get install -y php-cli php-mbstring php-xml php-bcmath php-zip php-curl php-tokenizer php-pdo php-mysql
 
-# Set direktori kerja
-WORKDIR /var/www/html
+# Install Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Salin semua file aplikasi
-COPY . /var/www/html
+# Set working directory
+WORKDIR /var/www
 
-# Install dependensi Laravel
-RUN composer install --optimize-autoloader --no-dev && \
-    npm install && npm run build
+# Salin file Laravel ke container
+COPY . .
 
-# Set permission untuk storage dan cache
-RUN chown -R www-data:www-data /var/www/html && \
-    chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+# Install dependencies Laravel
+RUN composer install --no-scripts --no-dev --prefer-dist
 
-# Salin konfigurasi nginx
-COPY ./nginx.conf /etc/nginx/sites-available/default
+# Set permissions
+RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 
-# Expose port
-EXPOSE 80
-
-# Jalankan nginx dan supervisord
-CMD ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]
+# Jalankan Laravel
+CMD php artisan serve --host=0.0.0.0 --port=8000

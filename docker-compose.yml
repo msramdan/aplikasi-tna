@@ -6,39 +6,18 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: laravel_app
-    volumes:
-      - .:/var/www/html
     ports:
-      - "8080:80"
+      - "8000:8000"
+    volumes:
+      - .:/var/www
     environment:
       - APP_ENV=local
       - APP_DEBUG=true
-      - APP_KEY=
+      - APP_KEY=base64:y4Qx4CL3X+3rrliiTSMYLMAkOdg1mFo3ik/xMDzVybQ=
       - DB_CONNECTION=mysql
-      - DB_HOST=db
-      - DB_PORT=3309
-      - DB_DATABASE=laravel
+      - DB_HOST=192.168.10.36
+      - DB_PORT=3307
+      - DB_DATABASE=db_tna
       - DB_USERNAME=root
-      - DB_PASSWORD=root
-
-  db:
-    image: mysql:8.0
-    container_name: laravel_db
-    ports:
-      - "3309:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: laravel
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root
-    volumes:
-      - db_data:/var/lib/mysql
-
-  redis:
-    image: redis:latest
-    container_name: laravel_redis
-    ports:
-      - "6379:6379"
-
-volumes:
-  db_data:
+      - DB_PASSWORD=Admin9090!
+    depends_on: []
