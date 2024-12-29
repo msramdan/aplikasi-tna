@@ -1,37 +1,39 @@
-# Gunakan base image Ubuntu
-FROM ubuntu:22.04
+# Gunakan image PHP dengan Apache
+FROM php:8.1-apache
 
-# Install dependencies
+# Install ekstensi PHP yang diperlukan
 RUN apt-get update && apt-get install -y \
-    curl \
-    zip \
-    unzip \
-    git \
-    supervisor \
     libpng-dev \
-    libonig-dev \
-    libxml2-dev \
-    libzip-dev \
-    default-mysql-client \
-    && apt-get clean
+    libjpeg-dev \
+    libfreetype6-dev \
+    zip \
+    git \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install gd pdo pdo_mysql
 
-# Install PHP dan ekstensi
-RUN apt-get update && apt-get install -y php-cli php-mbstring php-xml php-bcmath php-zip php-curl php-tokenizer php-pdo php-mysql
+# Aktifkan mod_rewrite Apache
+RUN a2enmod rewrite
+
+# Set folder kerja ke root aplikasi Laravel
+WORKDIR /var/www/html
+
+# Salin file aplikasi Laravel ke container
+COPY . .
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Set working directory
-WORKDIR /var/www
+# Jalankan Composer install untuk menginstal dependensi Laravel
+RUN composer install --no-interaction
 
-# Salin file Laravel ke container
-COPY . .
+# Set izin untuk folder storage dan bootstrap/cache
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Install dependencies Laravel
-RUN composer install --no-scripts --no-dev --prefer-dist
+# Set konfigurasi Apache untuk menjalankan aplikasi Laravel
+COPY ./docker/apache/000-default.conf /etc/apache2/sites-available/000-default.conf
 
-# Set permissions
-RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
+# Ekspose port 80 untuk akses web
+EXPOSE 80
 
-# Jalankan Laravel
-CMD php artisan serve --host=0.0.0.0 --port=8000
+# Perintah untuk menjalankan Apache di background
+CMD ["apache2-foreground"]
