@@ -168,14 +168,26 @@ class ApiController extends Controller
         try {
             $apiToken = env('API_TOKEN_SIBIJAK');
             $baseEndpoint = env('ENDPOINT_SIBIJAK');
-            $url = "{$baseEndpoint}/integrasi/pemenuhan-kompetensi";
-            $ukerId = auth()->user()->kode_unit;
 
+            // Ambil nilai frekuensi dari request
+            $frekuensi = $request->input('frekuensi');
 
-            $response = Http::get($url, [
-                'api_token' => $apiToken,
-                'ukerId' => $ukerId,
-            ]);
+            // Tentukan URL berdasarkan nilai frekuensi
+            if ($frekuensi === 'Tahunan') {
+                $url = "{$baseEndpoint}/integrasi/pemenuhan-kompetensi-summary";
+                $response = Http::get($url, [
+                    'api_token' => $apiToken,
+                ]);
+
+            } else {
+                $ukerId = auth()->user()->kode_unit;
+                $url = "{$baseEndpoint}/integrasi/pemenuhan-kompetensi";
+                $response = Http::get($url, [
+                    'api_token' => $apiToken,
+                    'ukerId' => $ukerId,
+                ]);
+
+            }
 
             if (!$response->successful()) {
                 return response()->json([
@@ -185,8 +197,7 @@ class ApiController extends Controller
             }
 
             $apiData = $response->json();
-            $kompetensiApi = $apiData['data']['data'] ?? [];
-
+            $kompetensiApi = $apiData['data'] ?? [];
 
             // Step 2: Query kompetensi table using API data
             $result = [];
@@ -221,4 +232,5 @@ class ApiController extends Controller
             ], 500);
         }
     }
+
 }

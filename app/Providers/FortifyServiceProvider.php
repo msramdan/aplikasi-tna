@@ -119,7 +119,7 @@ class FortifyServiceProvider extends ServiceProvider
                                     'is_bpkp' => 'No',
                                     'nama_unit' => $pegawai['data_terkini']['nama_unit'],
                                 ]);
-                                assignRole($user, 3);
+                                assignRole($user, 5);
                             }
 
                             if (empty($user->phone)) {

@@ -383,14 +383,16 @@
             let selectedCompetencies = [];
             const options_temp = '<option value="" selected disabled>-- Select --</option>';
             $('#pilihButtonKompetensi').prop('disabled', false);
-
+            const frekuensi = "{{ $frekuensi }}";
             // get data kompetensi APIP yg 6 itu
             $('#pilihButtonKompetensi').click(function() {
                 $('#loading-overlay').show();
                 $.ajax({
                     url: '{{ route('getKompetensiApip') }}',
                     type: 'GET',
-                    data: {},
+                    data: {
+                        frekuensi: frekuensi
+                    },
                     success: function(response) {
                         var modalBody = $('#kompetensiModal .modal-body');
                         modalBody.empty();
