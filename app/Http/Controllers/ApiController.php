@@ -22,7 +22,7 @@ class ApiController extends Controller
                 return response()->json(['message' => 'User is not authenticated.'], 400);
             }
 
-            $tahun = date('Y');
+            $tahun = '2024';
             switch ($jenisProgram) {
                 case 'Renstra':
                     $endpoint = config('stara.endpoint') . '/simaren/indikator-kinerja/es2';

@@ -877,7 +877,7 @@ class PengajuanKapController extends Controller
             }
             // insert table pengajuan_kap_indikator_kinerja
             $dataIndikator = [];
-            if (isset($request->indikator_kinerja) && is_array($request->indikator_kinerja)) {
+            if (!empty($request->indikator_kinerja) && is_array($request->indikator_kinerja)) {
                 foreach ($request->indikator_kinerja as $indikator) {
                     $dataIndikator[] = [
                         'pengajuan_kap_id' => $pengajuanKapId,
@@ -891,21 +891,28 @@ class PengajuanKapController extends Controller
                 }
             }
 
-            // insert table pengajuan_kap_gap_kompetensi
+            // Insert ke tabel pengajuan_kap_gap_kompetensi jika ada data yang valid
             $dataGapKompetensi = [];
-            foreach ($request->kompetensi_id as $index => $kompetensiId) {
-                $dataGapKompetensi[] = [
-                    'pengajuan_kap_id' => $pengajuanKapId,
-                    'kompetensi_id' => $kompetensiId,
-                    'total_pegawai' => $request->total_employees[$index],
-                    'pegawai_kompeten' => $request->count_100[$index],
-                    'pegawai_belum_kompeten' => $request->count_less_than_100[$index],
-                    'persentase_kompetensi' => $request->average_persentase[$index],
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ];
+            if (!empty($request->kompetensi_id) && is_array($request->kompetensi_id)) {
+                foreach ($request->kompetensi_id as $index => $kompetensiId) {
+                    if (isset($request->total_employees[$index], $request->count_100[$index], $request->count_less_than_100[$index], $request->average_persentase[$index])) {
+                        $dataGapKompetensi[] = [
+                            'pengajuan_kap_id' => $pengajuanKapId,
+                            'kompetensi_id' => $kompetensiId,
+                            'total_pegawai' => $request->total_employees[$index],
+                            'pegawai_kompeten' => $request->count_100[$index],
+                            'pegawai_belum_kompeten' => $request->count_less_than_100[$index],
+                            'persentase_kompetensi' => $request->average_persentase[$index],
+                            'created_at' => now(),
+                            'updated_at' => now(),
+                        ];
+                    }
+                }
+                if (!empty($dataGapKompetensi)) {
+                    DB::table('pengajuan_kap_gap_kompetensi')->insert($dataGapKompetensi);
+                }
             }
-            DB::table('pengajuan_kap_gap_kompetensi')->insert($dataGapKompetensi);
+
 
             foreach ($validatedData['indikator_keberhasilan'] as $index => $row) {
                 DB::table('indikator_keberhasilan_kap')->insert([
@@ -1121,12 +1128,13 @@ class PengajuanKapController extends Controller
             ]);
         }
 
-        // insert table pengajuan_kap_indikator_kinerja
-        DB::table('pengajuan_kap_indikator_kinerja')
-            ->where('pengajuan_kap_id', $id)
-            ->delete();
-        $dataIndikator = [];
-        if (isset($request->indikator_kinerja) && is_array($request->indikator_kinerja)) {
+        // Hanya delete dan insert jika ada data indikator_kinerja yang valid
+        if (!empty($request->indikator_kinerja) && is_array($request->indikator_kinerja)) {
+            DB::table('pengajuan_kap_indikator_kinerja')
+                ->where('pengajuan_kap_id', $id)
+                ->delete();
+
+            $dataIndikator = [];
             foreach ($request->indikator_kinerja as $indikator) {
                 $dataIndikator[] = [
                     'pengajuan_kap_id' => $id,
@@ -1135,29 +1143,39 @@ class PengajuanKapController extends Controller
                     'updated_at' => now(),
                 ];
             }
+
             if (!empty($dataIndikator)) {
                 DB::table('pengajuan_kap_indikator_kinerja')->insert($dataIndikator);
             }
         }
 
-        // insert table pengajuan_kap_gap_kompetensi
-        DB::table('pengajuan_kap_gap_kompetensi')
-            ->where('pengajuan_kap_id', $id)
-            ->delete();
-        $dataGapKompetensi = [];
-        foreach ($request->kompetensi_id as $index => $kompetensiId) {
-            $dataGapKompetensi[] = [
-                'pengajuan_kap_id' => $id,
-                'kompetensi_id' => $kompetensiId,
-                'total_pegawai' => $request->total_employees[$index],
-                'pegawai_kompeten' => $request->count_100[$index],
-                'pegawai_belum_kompeten' => $request->count_less_than_100[$index],
-                'persentase_kompetensi' => $request->average_persentase[$index],
-                'created_at' => now(),
-                'updated_at' => now(),
-            ];
+        // Hanya delete dan insert jika ada data kompetensi yang valid
+        if (!empty($request->kompetensi_id) && is_array($request->kompetensi_id)) {
+            DB::table('pengajuan_kap_gap_kompetensi')
+                ->where('pengajuan_kap_id', $id)
+                ->delete();
+
+            $dataGapKompetensi = [];
+            foreach ($request->kompetensi_id as $index => $kompetensiId) {
+                if (isset($request->total_employees[$index], $request->count_100[$index], $request->count_less_than_100[$index], $request->average_persentase[$index])) {
+                    $dataGapKompetensi[] = [
+                        'pengajuan_kap_id' => $id,
+                        'kompetensi_id' => $kompetensiId,
+                        'total_pegawai' => $request->total_employees[$index],
+                        'pegawai_kompeten' => $request->count_100[$index],
+                        'pegawai_belum_kompeten' => $request->count_less_than_100[$index],
+                        'persentase_kompetensi' => $request->average_persentase[$index],
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ];
+                }
+            }
+
+            if (!empty($dataGapKompetensi)) {
+                DB::table('pengajuan_kap_gap_kompetensi')->insert($dataGapKompetensi);
+            }
         }
-        DB::table('pengajuan_kap_gap_kompetensi')->insert($dataGapKompetensi);
+
 
         // insert indikator_keberhasilan_kap
         DB::table('indikator_keberhasilan_kap')

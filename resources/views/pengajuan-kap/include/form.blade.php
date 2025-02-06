@@ -245,6 +245,14 @@
                                             </option>
                                         @endforeach
                                     @endif
+                                    @if ($hideForm)
+                                        @foreach ($topikOptions as $topik)
+                                            <option value="{{ $topik->id }}"
+                                                data-nama-topik="{{ $topik->nama_topik }}">
+                                                {{ $topik->nama_topik }}
+                                            </option>
+                                        @endforeach
+                                    @endif
                                 </select>
                                 <button type="button" id="usulanButton" class="btn btn-danger ms-2"
                                     data-bs-toggle="modal" data-bs-target="#usulanModal">
@@ -257,7 +265,8 @@
                         </div>
                     </div>
                     <div class="form-group row mb-3">
-                        <label class="col-sm-3 col-form-label" for="keterangan_program_pembelajaran">{{ __('Judul Program Pembelajaran') }}
+                        <label class="col-sm-3 col-form-label"
+                            for="keterangan_program_pembelajaran">{{ __('Judul Program Pembelajaran') }}
                             <span style="color: red">*</span>
                         </label>
                         <div class="col-sm-6">
