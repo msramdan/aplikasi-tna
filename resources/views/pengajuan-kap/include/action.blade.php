@@ -1,5 +1,12 @@
 <td>
     <div>
+        @if (Auth::user()->kode_unit == $model->kode_unit && $model->prioritas_pembelajaran == null)
+            <button title="Update Prioritas" class="btn btn-warning btn-sm btn-update-prioritas"
+                data-id="{{ $model->id }}">
+                <i class="fa fa-refresh"></i>
+            </button>
+        @endif
+
         <a title="Cetak Pengajuan KAP" target="_blank"
             href="{{ route('pengajuan-kap.pdf', [
                 'id' => $model->id,

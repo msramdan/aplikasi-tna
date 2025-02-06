@@ -64,6 +64,34 @@
         <div class="loading-spinner"></div>
     </div>
 
+    {{-- Modal Update Prioritas --}}
+    <div class="modal fade" id="updatePrioritasModal" tabindex="-1" aria-labelledby="updatePrioritasModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="updatePrioritasForm" method="POST" action="{{ route('pengajuan-kap.update-prioritas') }}">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="updatePrioritasModalLabel">Update Prioritas Pembelajaran</h5>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="id" id="modalPengajuanId">
+                        <div class="mb-3">
+                            <label for="prioritas_pembelajaran" class="form-label">Prioritas Pembelajaran</label>
+                            <select name="prioritas_pembelajaran" id="prioritas_pembelajaran" class="form-select" required>
+                                <option value="" disabled selected>-- Pilih --</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <div class="page-content">
         <div class="container-fluid">
             <div class="row">
@@ -350,6 +378,29 @@
 
 @push('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.all.min.js"></script>
+    @if (session('success_update_prioritas'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: '{{ session('success_update_prioritas') }}',
+                timer: 3000,
+                showConfirmButton: false
+            });
+        </script>
+    @endif
+
+    @if (session('gagal'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                text: '{{ session('gagal') }}',
+                timer: 3000,
+                showConfirmButton: false
+            });
+        </script>
+    @endif
 
     <script>
         let reviewRemarks = @json($reviewRemarks);
@@ -776,6 +827,7 @@
         }
     </script>
 
+    {{-- Duplikat --}}
     <script>
         $(document).on('click', '.btn-duplikat', function(e) {
             e.preventDefault(); // Mencegah link default
@@ -815,6 +867,41 @@
                 if (result.isConfirmed) {
                     $('#delete-form-' + formId).submit(); // Submit form delete
                 }
+            });
+        });
+    </script>
+
+    {{-- Update Prioritas --}}
+    <script>
+        $(document).on('click', '.btn-update-prioritas', function() {
+            const pengajuanId = $(this).data('id');
+            $('#modalPengajuanId').val(pengajuanId);
+            $('#prioritas_pembelajaran').html('<option value="" disabled selected>Loading...</option>');
+
+            $.ajax({
+                url: '{{ route('pengajuan-kap.fetch-prioritas') }}',
+                method: 'GET',
+                data: {
+                    id: pengajuanId
+                },
+                success: function(response) {
+                    let options =
+                        '<option value="" disabled selected>-- Pilih --</option>';
+                    for (let i = 1; i <= 50; i++) {
+                        const prioritasValue = `Prioritas ${i}`;
+                        const isDisabled = response.usedPrioritas.includes(prioritasValue) ?
+                            'disabled' : '';
+                        const kodePemb = response.kodePembelajaran[prioritasValue] ?
+                            ` - Kode: ${response.kodePembelajaran[prioritasValue]}` : '';
+                        options +=
+                            `<option value="${prioritasValue}" ${isDisabled}>${prioritasValue} ${kodePemb}</option>`;
+                    }
+                    $('#prioritas_pembelajaran').html(options);
+                    $('#updatePrioritasModal').modal('show');
+                },
+                error: function() {
+                    alert('Failed to fetch prioritas. Please try again.');
+                },
             });
         });
     </script>

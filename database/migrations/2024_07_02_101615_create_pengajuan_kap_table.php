@@ -20,7 +20,7 @@ return new class extends Migration
             $table->text('judul')->nullable(); // kaldikdesc
             $table->text('arahan_pimpinan');
             $table->string('tahun', 10); // kaldikYear
-            $table->string('prioritas_pembelajaran', 50);
+            $table->string('prioritas_pembelajaran', 50)->nullable();
             $table->text('tujuan_program_pembelajaran');
             $table->text('indikator_dampak_terhadap_kinerja_organisasi');
             $table->text('penugasan_yang_terkait_dengan_pembelajaran');
