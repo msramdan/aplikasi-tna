@@ -50,6 +50,17 @@
             text-align: justify;
             max-width: 400px;
         }
+
+        .tab-content {
+            overflow: auto !important;
+            min-height: 100%;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .tab-content::-webkit-scrollbar {
+            display: none;
+        }
     </style>
 
     <div id="loading-overlay">
