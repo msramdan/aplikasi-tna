@@ -50,6 +50,17 @@
             text-align: justify;
             max-width: 400px;
         }
+
+        .tab-content {
+            overflow: auto !important;
+            min-height: 100%;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .tab-content::-webkit-scrollbar {
+            display: none;
+        }
     </style>
 
     <div id="loading-overlay">
@@ -123,7 +134,6 @@
     <script src="https://cdn.jsdelivr.net/npm/smartwizard@6/dist/js/jquery.smartWizard.min.js" type="text/javascript">
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.all.min.js"></script>
-    </script>
     {{-- for tooltips --}}
     <script>
         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
@@ -731,7 +741,7 @@
                     $finalJudul.html(`<b><i>Judul Final: "${finalJudulValue}"</i></b>`);
                 } else {
                     $finalJudul.html(
-                    '<b><i>Judul Final:</i></b>'); // Menampilkan Final Judul tanpa tambahan jika kosong
+                        '<b><i>Judul Final:</i></b>'); // Menampilkan Final Judul tanpa tambahan jika kosong
                 }
             }
 

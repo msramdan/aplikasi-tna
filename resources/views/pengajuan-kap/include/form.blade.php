@@ -91,9 +91,9 @@
         </li>
     </ul>
 
-    <div class="tab-content" style="padding-bottom: 20px">
+    <div class="tab-content">
         <p style="color: red; padding:10px">Note : * Wajib diisi</p>
-        <div id="step-1" class="tab-pane" role="tabpanel" aria-labelledby="step-1" style="padding-bottom: 20px">
+        <div id="step-1" class="tab-pane" role="tabpanel" aria-labelledby="step-1" style="padding-bottom: 20px;" >
             <form id="form-1">
                 <input type="hidden" name="tahun" id="tahun" class="form-control"
                     value="{{ $tahun }}" required readonly />
@@ -225,6 +225,7 @@
                             </div>
                         </div>
                     @endif
+
                     <div class="form-group row mb-3">
                         <label for="topik_id" class="col-sm-3 col-form-label">
                             {{ __('Program pembelajaran') }} <span style="color: red">*</span>
@@ -264,6 +265,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="form-group row mb-3">
                         <label class="col-sm-3 col-form-label"
                             for="keterangan_program_pembelajaran">{{ __('Judul Program Pembelajaran') }}
