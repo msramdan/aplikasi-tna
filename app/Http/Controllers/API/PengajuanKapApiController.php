@@ -38,11 +38,12 @@ class PengajuanKapApiController extends Controller
             // Prepare response data
             $data = [
                 'pengajuanKap' => $pengajuanKap,
+                'indikatorKinerja' => $this->fetchIndikatorKinerja($pengajuanKap->id),
+                'gapKompetensiPengajuanKap' => $this->fetchGapKompetensi($pengajuanKap->id),
                 'logReviews' => $this->fetchLogReviews($pengajuanKap->id),
                 'levelEvaluasiInstrumenKap' => $this->fetchLevelEvaluasi($pengajuanKap->id),
                 'indikatorKeberhasilanKap' => $this->fetchIndikatorKeberhasilan($pengajuanKap->id),
-                'waktuPelaksanaan' => $this->fetchWaktuPelaksanaan($pengajuanKap->id),
-                'gapKompetensiPengajuanKap' => $this->fetchGapKompetensi($pengajuanKap->id),
+                'waktuPelaksanaan' => $this->fetchWaktuPelaksanaan($pengajuanKap->id)
             ];
 
             // Return as JSON response
@@ -122,6 +123,13 @@ class PengajuanKapApiController extends Controller
     {
         return DB::table('pengajuan_kap_gap_kompetensi')
             ->where('pengajuan_kap_id', $pengajuanKapId)
-            ->first();
+            ->get();
+    }
+
+    private function fetchIndikatorKinerja($pengajuanKapId)
+    {
+        return DB::table('pengajuan_kap_indikator_kinerja')
+            ->where('pengajuan_kap_id', $pengajuanKapId)
+            ->get();
     }
 }
