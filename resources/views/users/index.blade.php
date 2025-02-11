@@ -84,31 +84,31 @@
             },
             {
                 data: 'role',
-                name: 'role'
+                name: 'roles.name'
             },
             {
                 data: 'phone',
-                name: 'phone'
+                name: 'users.phone'
             },
             {
                 data: 'email',
-                name: 'email'
+                name: 'users.email'
             },
             {
                 data: 'kode_unit',
-                name: 'kode_unit'
+                name: 'users.kode_unit'
             },
             {
                 data: 'key_sort_unit',
-                name: 'key_sort_unit'
+                name: 'users.key_sort_unit'
             },
             {
                 data: 'nama_unit',
-                name: 'nama_unit'
+                name: 'users.nama_unit'
             },
             {
                 data: 'is_bpkp',
-                name: 'is_bpkp'
+                name: 'users.is_bpkp'
             },
             {
                 data: 'action',

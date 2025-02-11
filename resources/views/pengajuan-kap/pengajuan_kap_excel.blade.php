@@ -2,6 +2,7 @@
     <thead>
         <tr>
             <th style="background-color:#D3D3D3">No</th>
+            <th style="background-color:#D3D3D3">Institusi</th>
             <th style="background-color:#D3D3D3">Jenis Program</th>
             <th style="background-color:#D3D3D3">Unit Pengusul</th>
             <th style="background-color:#D3D3D3">Nama Pengusul</th>
@@ -40,6 +41,7 @@
             <tr>
                 <td>{{ $index + 1 }}</td>
                 <td>{{ $row->institusi_sumber }}</td>
+                <td>{{ $row->jenis_program }}</td>
                 <td>{{ $row->nama_unit }}</td>
                 <td>{{ $row->user_name }}</td>
                 <td>{{ $row->frekuensi_pelaksanaan }}</td>

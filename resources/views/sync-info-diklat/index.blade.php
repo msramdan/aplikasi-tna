@@ -181,7 +181,7 @@
             },
             {
                 data: 'nama_topik',
-                name: 'nama_topik'
+                name: 'topik.nama_topik'
             },
             {
                 data: 'biayaName',
