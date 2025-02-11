@@ -10,7 +10,7 @@
     @endcan
     @can('tagging kompetensi ik delete')
         <form action="{{ route('tagging-kompetensi-ik.destroy', ['id' => $model->id, 'type' => request()->segment(2)]) }}"
-            method="post" class="d-inline" onsubmit="return confirm('Are you sure to delete this record?')">
+            method="post" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
             @csrf
             @method('delete')
 

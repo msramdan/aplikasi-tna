@@ -40,7 +40,7 @@ class KalenderPembelajaranController extends Controller
         }
 
         if ($sumber_dana && $sumber_dana != 'All') {
-            $query->where('pengajuan_kap.sumber_dana', $sumber_dana);
+            $query->where('pengajuan_kap.biayaName', $sumber_dana);
         }
 
 
@@ -57,6 +57,7 @@ class KalenderPembelajaranController extends Controller
             'pengajuan_kap.institusi_sumber',
             'pengajuan_kap.jenis_program',
             'pengajuan_kap.frekuensi_pelaksanaan',
+            'pengajuan_kap.biayaName',
             'pengajuan_kap.tujuan_program_pembelajaran',
             'topik.nama_topik'
         )->get();
@@ -67,6 +68,7 @@ class KalenderPembelajaranController extends Controller
                 'institusi_sumber' => $event->institusi_sumber,
                 'jenis_program' => $event->jenis_program,
                 'frekuensi_pelaksanaan' => $event->frekuensi_pelaksanaan,
+                'sumber_dana' => $event->biayaName,
                 'title' => $event->nama_topik,
                 'remarkMetodeName' => $event->remarkMetodeName,
                 'start' => \Carbon\Carbon::parse($event->start)->format('Y-m-d\TH:i:s'),

@@ -90,27 +90,27 @@
                     <table class="table" style="text-align: justify">
                         <tbody>
                             <tr>
-                                <th scope="row">{{ trans('kompetensi/index.kategori_besar') }}</th>
+                                <th scope="row">Kelompok Besae</th>
                                 <td>:</td>
                                 <td><span id="modalDetailKategoriBesar"></span></td>
                             </tr>
                             <tr>
-                                <th scope="row">{{ trans('kompetensi/index.kategori') }}</th>
+                                <th scope="row">Kategori</th>
                                 <td>:</td>
                                 <td><span id="modalDetailKategori"></span></td>
                             </tr>
                             <tr>
-                                <th scope="row">{{ trans('kompetensi/index.akademi') }}</th>
+                                <th scope="row">Akademi</th>
                                 <td>:</td>
                                 <td><span id="modalDetailNamaAkademi"></span></td>
                             </tr>
                             <tr>
-                                <th scope="row">{{ trans('kompetensi/index.nama_kompetensi') }}</th>
+                                <th scope="row">Nama Kompetensi</th>
                                 <td>:</td>
                                 <td><span id="modalDetailKompetensiNama"></span></td>
                             </tr>
                             <tr>
-                                <th scope="row">{{ trans('kompetensi/index.deskripsi_kompetensi') }}</th>
+                                <th scope="row">Kompetensi Dasar</th>
                                 <td>:</td>
                                 <td><span id="modalDetailKompetensiDeskripsi"></span></td>
                             </tr>

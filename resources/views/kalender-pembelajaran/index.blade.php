@@ -173,12 +173,16 @@
                                 <td id="eventJenis"></td>
                             </tr>
                             <tr>
-                                <th scope="row">Frekuensi pelaksanaan</th>
+                                <th scope="row">Frekuensi Pelaksanaan</th>
                                 <td id="eventFrekuensi"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Sumber Dana</th>
+                                <td id="eventSumberDana"></td>
                             </tr>
 
                             <tr>
-                                <th scope="row">Topik pembelajaran</th>
+                                <th scope="row">Topik Pembelajaran</th>
                                 <td id="eventTitle"></td>
                             </tr>
                             <tr>
@@ -284,6 +288,7 @@
                         $('#eventSumber').text(info.event.extendedProps.institusi_sumber);
                         $('#eventJenis').text(info.event.extendedProps.jenis_program);
                         $('#eventFrekuensi').text(info.event.extendedProps.frekuensi_pelaksanaan);
+                        $('#eventSumberDana').text(info.event.extendedProps.sumber_dana);
                         $('#eventTitle').text(info.event.title);
                         $('#eventDateStart').text(moment(info.event.start).format("YYYY-MM-DD"));
                         $('#eventDateEnd').text(moment(info.event.end).subtract(1, 'days').format(

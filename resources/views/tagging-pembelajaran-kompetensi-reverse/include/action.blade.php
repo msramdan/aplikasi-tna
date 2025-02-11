@@ -9,7 +9,7 @@
 
     @can('tagging pembelajaran kompetensi delete')
         <form action="{{ route('tagging-kompetensi-pembelajaran.destroy', $model->id) }}" method="post" class="d-inline"
-            onsubmit="return confirm('{{ __('tagging-kompetensi-pembelajaran/include.confirm_delete') }}')">
+            onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
             @csrf
             @method('delete')
 

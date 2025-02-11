@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'confirm_delete' => 'Are you sure to delete this record?',
+    'confirm_delete' => 'Apakah Anda yakin ingin menghapus data ini?',
 ];
