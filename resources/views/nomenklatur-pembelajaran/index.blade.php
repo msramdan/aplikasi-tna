@@ -71,7 +71,7 @@
                 },
                 {
                     data: 'user_created',
-                    name: 'user_created'
+                    name: 'user_created.name'
                 },
                 {
                     data: 'nama_unit',
