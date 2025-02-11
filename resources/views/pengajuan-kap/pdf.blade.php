@@ -177,6 +177,22 @@
             </tr>
 
             <tr>
+                <td style="vertical-align: top;">{{ __('Concern Program Pembelajaran') }}</td>
+                <td style="vertical-align: top;"></td>
+                <td style="vertical-align: top;"></td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top;"><span style="margin-left: 10px">{{ __('A. Arahan pimpinan/isu terkini/dll') }}</span></td>
+                <td style="vertical-align: top;">:</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->arahan_pimpinan }}</td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top;"><span style="margin-left: 10px">{{ __('B. Prioritas Pembelajaran') }}</span></td>
+                <td style="vertical-align: top;">:</td>
+                <td style="vertical-align: top;">{{ $pengajuanKap->prioritas_pembelajaran }}</td>
+            </tr>
+
+            <tr>
                 <td style="vertical-align: top;">{{ __('Tujuan Program Pembelajaran') }}</td>
                 <td style="vertical-align: top;">:</td>
                 <td style="vertical-align: top;">{{ $pengajuanKap->tujuan_program_pembelajaran }}</td>
@@ -341,15 +357,15 @@
                 <td style="vertical-align: top;">:</td>
                 <td style="vertical-align: top;">
                     @if ($fasilitators !== null && !empty($fasilitators))
-                        @foreach ($fasilitators as $item)
-                            <span class="badge bg-primary" style="vertical-align: top;">{{ $item }}</span>
+                        @foreach ($fasilitators as $index => $item)
+                            {{ $item }}@if (!$loop->last),@endif
                         @endforeach
                     @else
-                        <span class="text-muted">-</span>
+                        -
                     @endif
-
                 </td>
             </tr>
+
             <tr>
                 <td style="vertical-align: top;">{{ __('Sertifikat') }}</td>
                 <td style="vertical-align: top;">:</td>
