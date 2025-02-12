@@ -60,11 +60,11 @@ class RumpunPembelajaranController extends Controller
      */
     public function store(StoreRumpunPembelajaranRequest $request)
     {
-
         RumpunPembelajaran::create($request->validated());
-        Alert::toast('Rumpun pembelajaran was created successfully.', 'success');
+        Alert::toast('Rumpun pembelajaran berhasil dibuat.', 'success');
         return redirect()->route('rumpun-pembelajaran.index');
     }
+
 
     /**
      * Display the specified resource.
@@ -97,12 +97,12 @@ class RumpunPembelajaranController extends Controller
      */
     public function update(UpdateRumpunPembelajaranRequest $request, RumpunPembelajaran $rumpunPembelajaran)
     {
-
         $rumpunPembelajaran->update($request->validated());
-        Alert::toast('Rumpun pembelajaran was updated successfully.', 'success');
+        Alert::toast('Rumpun pembelajaran berhasil diperbarui.', 'success');
         return redirect()
             ->route('rumpun-pembelajaran.index');
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -114,10 +114,10 @@ class RumpunPembelajaranController extends Controller
     {
         try {
             $rumpunPembelajaran->delete();
-            Alert::toast('Rumpun pembelajaran was deleted successfully.', 'success');
+            Alert::toast('Rumpun pembelajaran berhasil dihapus.', 'success');
             return redirect()->route('rumpun-pembelajaran.index');
         } catch (\Throwable $th) {
-            Alert::toast('Rumpun pembelajaran cant be deleted because its related to another table.', 'error');
+            Alert::toast('Rumpun pembelajaran tidak dapat dihapus karena masih terhubung dengan tabel lain.', 'error');
             return redirect()->route('rumpun-pembelajaran.index');
         }
     }

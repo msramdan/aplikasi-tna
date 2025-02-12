@@ -47,7 +47,7 @@ class BackupController extends Controller
         exec($command, $output, $returnVar);
 
         if ($returnVar !== 0) {
-            return response()->json(['error' => 'Failed to backup the database.'], 500);
+            return response()->json(['error' => 'Gagal mencadangkan basis data.'], 500);
         }
 
         // Get the authenticated user

@@ -33,7 +33,7 @@ class KompetensiApiController extends Controller
                     ->toJson();
             } catch (\Exception $e) {
                 return response()->json([
-                    'error' => 'Unable to fetch data from the API',
+                    'error' => 'Tidak dapat mengambil data dari API',
                     'message' => $e->getMessage()
                 ], 500);
             }

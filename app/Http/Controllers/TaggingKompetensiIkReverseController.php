@@ -144,10 +144,10 @@ class TaggingKompetensiIkReverseController extends Controller
 
             // Commit transaction
             DB::commit();
-            Alert::toast('The tagging was updated successfully.', 'success');
+            Alert::toast('Tagging berhasil diperbarui.', 'success');
         } catch (\Exception $e) {
             DB::rollback();
-            Alert::toast('The tagging was updated failed.', 'error');
+            Alert::toast('Tagging gagal diperbarui.', 'error');
             return back()->withErrors(['message' => $e->getMessage()]);
         }
         return redirect('tagging-ik-kompetensi/' . $type);
@@ -160,8 +160,7 @@ class TaggingKompetensiIkReverseController extends Controller
             ->where('indikator_kinerja', $indikator_kinerja)
             ->where('type', $type)
             ->delete();
-
-        Alert::toast('Tagging deleted successfully', 'success');
+        Alert::toast('Tagging berhasil dihapus.', 'success');
         return back();
     }
 
@@ -203,7 +202,7 @@ class TaggingKompetensiIkReverseController extends Controller
     public function importTaggingIkKompetensi(ImportTaggingKompetensiIkRequest $request, $type)
     {
         Excel::import(new ImportTaggingIkMultiSheetReverse($type), $request->file('import_tagging_kompetensi_ik'));
-        Alert::toast('Tagging IK - Kompetensi has been successfully imported.', 'success');
+        Alert::toast('Tagging IK - Kompetensi berhasil diimpor.', 'success');
         return back();
     }
 }

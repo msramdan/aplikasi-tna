@@ -63,7 +63,7 @@ class RoleAndPermissionController extends Controller
 
         $role->givePermissionTo($request->permissions);
 
-        Alert::toast('The role was created successfully.', 'success');
+        Alert::toast('Peran berhasil dibuat.', 'success');
         return redirect()->route('roles.index');
     }
 
@@ -122,8 +122,7 @@ class RoleAndPermissionController extends Controller
                 ->event('updated')
                 ->log("Role {$role->name} permissions updated");
         }
-
-        Alert::toast('The role was updated successfully.', 'success');
+        Alert::toast('Peran berhasil diperbarui.', 'success');
         return redirect()->route('roles.index');
     }
 
@@ -136,14 +135,12 @@ class RoleAndPermissionController extends Controller
     public function destroy(int $id)
     {
         $role = Role::withCount('users')->findOrFail($id);
-
-        // if any user where role.id = $id
         if ($role->users_count < 1) {
             $role->delete();
-            Alert::toast('The role was deleted successfully.', 'success');
+            Alert::toast('Peran berhasil dihapus.', 'success');
             return redirect()->route('roles.index');
         } else {
-            Alert::toast('Can`t delete role.', 'error');
+            Alert::toast('Tidak dapat menghapus peran.', 'error');
             return redirect()->route('roles.index');
         }
     }

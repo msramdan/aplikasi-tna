@@ -72,7 +72,7 @@ class TopikController extends Controller
     public function store(StoreTopikRequest $request)
     {
         Topik::create($request->validated());
-        Alert::toast('The program pembelajaran was created successfully.', 'success');
+        Alert::toast('Program pembelajaran berhasil dibuat.', 'success');
         return redirect()->route('topik.index');
     }
 
@@ -110,7 +110,7 @@ class TopikController extends Controller
     {
 
         $topik->update($request->validated());
-        Alert::toast('The program pembelajaran was updated successfully.', 'success');
+        Alert::toast('Program pembelajaran berhasil diperbarui.', 'success');
         return redirect()
             ->route('topik.index');
     }
@@ -125,10 +125,10 @@ class TopikController extends Controller
     {
         try {
             $topik->delete();
-            Alert::toast('The program pembelajaran was deleted successfully.', 'success');
+            Alert::toast('Program pembelajaran berhasil dihapus.', 'success');
             return redirect()->route('topik.index');
         } catch (\Throwable $th) {
-            Alert::toast('The program pembelajaran cant be deleted because its related to another table.', 'error');
+            Alert::toast('Program pembelajaran tidak dapat dihapus karena masih terhubung dengan tabel lain.', 'error');
             return redirect()->route('topik.index');
         }
     }
@@ -143,7 +143,7 @@ class TopikController extends Controller
     public function importTopik(ImportTopikRequest $request)
     {
         Excel::import(new ImportTopikMultiSheet, $request->file('import_topik'));
-        Alert::toast('Program pembelajaran has been successfully imported.', 'success');
+        Alert::toast('Program pembelajaran berhasil diimpor.', 'success');
         return back();
     }
 

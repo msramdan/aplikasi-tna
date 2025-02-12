@@ -53,7 +53,7 @@ class ApiController extends Controller
                 return response()->json($response->json());
             } else {
                 // Return an error response
-                return response()->json(['message' => 'Failed to fetch data from API'], $response->status());
+                return response()->json(['message' => 'Gagal mengambil data dari API'], $response->status());
             }
         } catch (\Exception $e) {
             // Handle any exceptions
@@ -71,7 +71,7 @@ class ApiController extends Controller
 
             // Check if indikator is present and is an array
             if (!is_array($indikator) || empty($indikator)) {
-                return response()->json(['message' => 'Invalid or missing indikator'], 400);
+                return response()->json(['message' => 'Indikator tidak valid atau hilang'], 400);
             }
 
             // Query to find competencies shared across selected IK
@@ -104,7 +104,7 @@ class ApiController extends Controller
             // Check API response
             if ($response->failed()) {
                 \Log::error('API call failed', ['response' => $response->body()]);
-                return response()->json(['message' => 'Failed to hit the external API'], 500);
+                return response()->json(['message' => 'Gagal mencapai API eksternal'], 500);
             }
 
             $responseData = $response->json();

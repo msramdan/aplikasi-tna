@@ -159,10 +159,10 @@ class TaggingKompetensiIkController extends Controller
 
             // Commit transaction
             DB::commit();
-            Alert::toast('The tagging was updated successfully.', 'success');
+            Alert::toast('Tagging berhasil diperbarui.', 'success');
         } catch (\Exception $e) {
             DB::rollback();
-            Alert::toast('The tagging was updated failed.', 'error');
+            Alert::toast('Tagging gagal diperbarui.', 'error');
             return back()->withErrors(['message' => $e->getMessage()]);
         }
         return redirect('tagging-kompetensi-ik/' . $type);
@@ -176,14 +176,14 @@ class TaggingKompetensiIkController extends Controller
             ->first();
 
         if (!$kompetensi) {
-            Alert::toast('Record not found.', 'error');
+            Alert::toast('Data tidak ditemukan.', 'error');
             return back();
         }
         DB::table('tagging_kompetensi_ik')
             ->where('kompetensi_id', $id)
             ->where('type', $type)
             ->delete();
-        Alert::toast('Tagging deleted successfully', 'success');
+            Alert::toast('Tagging berhasil dihapus.', 'success');
         return back();
     }
 
@@ -225,7 +225,7 @@ class TaggingKompetensiIkController extends Controller
     public function importTaggingKompetensiIk(ImportTaggingKompetensiIkRequest $request, $type)
     {
         Excel::import(new ImportTaggingIkMultiSheet($type), $request->file('import_tagging_kompetensi_ik'));
-        Alert::toast('Tagging kompetensi - IK has been successfully imported.', 'success');
+        Alert::toast('Tagging kompetensi - IK berhasil diimpor.', 'success');
         return back();
     }
 }

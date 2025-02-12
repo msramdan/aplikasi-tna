@@ -14,33 +14,29 @@
                 @enderror
             </div>
             <div class="col-12 mb-3">
-                @if ($settingApp->logo != '' || $settingApp->logo != null)
-                    <img style="width: 180px;" src="{{ Storage::url('public/img/setting_app/') . $settingApp->logo }}" class="">
+                @if ($settingApp->logo)
+                    <img style="width: 180px;" src="{{ Storage::url('public/img/setting_app/') . $settingApp->logo }}">
                     <p style="color: red">* {{ trans('setting-apps/form.change_logo') }}</p>
                 @endif
                 <label class="form-label" for="logo"> {{ trans('setting-apps/form.logo') }}</label>
-                <input type="file" class="form-control @error('logo') is-invalid @enderror" id="logo"
-                    name="logo" onchange="previewImg()" value="{{ $settingApp->logo }}">
+                <input type="file" class="form-control @error('logo') is-invalid @enderror" id="logo" name="logo">
+                <p class="text-muted">* Format yang diperbolehkan: JPG, JPEG, PNG, WEBP</p>
                 @error('logo')
-                    <span class="text-danger">
-                        {{ $message }}
-                    </span>
+                    <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
 
+
             <div class="col-12 mb-3">
-                @if ($settingApp->favicon != '' || $settingApp->favicon != null)
-                    <img style="width:100px;height:90px"
-                        src="{{ Storage::url('public/img/setting_app/') . $settingApp->favicon }}" class="">
+                @if ($settingApp->favicon)
+                    <img style="width:100px;height:90px" src="{{ Storage::url('public/img/setting_app/') . $settingApp->favicon }}">
                     <p style="color: red">* {{ trans('setting-apps/form.change_favicon') }}</p>
                 @endif
                 <label class="form-label" for="favicon"> {{ trans('setting-apps/form.favicon') }}</label>
-                <input type="file" class="form-control @error('favicon') is-invalid @enderror" id="favicon"
-                    name="favicon" onchange="previewImg()" value="{{ $settingApp->favicon }}">
+                <input type="file" class="form-control @error('favicon') is-invalid @enderror" id="favicon" name="favicon">
+                <p class="text-muted">* Format yang diperbolehkan: JPG, JPEG, PNG, WEBP</p>
                 @error('favicon')
-                    <span class="text-danger">
-                        {{ $message }}
-                    </span>
+                    <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
 

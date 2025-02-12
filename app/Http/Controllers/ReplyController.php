@@ -101,17 +101,17 @@ class ReplyController extends Controller
                         if (!empty($user->phone)) { // Pastikan nomor telepon tidak kosong
                             $notificationSent = send($user->phone, $pesan);
                             if (!$notificationSent) {
-                                self::sendTelegramNotification('Failed to send WA notification to ' . $user->phone);
+                                self::sendTelegramNotification('Gagal mengirim notifikasi WA ke ' . $user->phone);
                             }
                         }
                     }
                 } catch (\Exception $e) {
-                    \Log::error('Failed to send notification: ' . $e->getMessage());
-                    self::sendTelegramNotification('Error occurred while sending WA notification: ' . $e->getMessage());
+                    \Log::error('Gagal mengirim notifikasi: ' . $e->getMessage());
+                    self::sendTelegramNotification('Terjadi kesalahan saat mengirim notifikasi WA: ' . $e->getMessage());
                 }
             }
         } else {
-            return response()->json(['error' => 'Failed to create reply'], 500);
+            return response()->json(['error' => 'Gagal membuat balasan'], 500);
         }
 
         return response()->json($reply);

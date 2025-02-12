@@ -32,23 +32,25 @@ class SettingAppController extends Controller
 
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'logo' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'favicon' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:1024',
+        ]);
+
         $setting_app = SettingApp::findOrFail($id);
-        if ($request->file('logo') != null || $request->file('logo') != '') {
+
+        if ($request->hasFile('logo')) {
             Storage::disk('local')->delete('public/img/setting_app/' . $setting_app->logo);
             $logo = $request->file('logo');
             $logo->storeAs('public/img/setting_app', $logo->hashName());
-            $setting_app->update([
-                'logo'     => $logo->hashName(),
-            ]);
+            $setting_app->update(['logo' => $logo->hashName()]);
         }
 
-        if ($request->file('favicon') != null || $request->file('favicon') != '') {
+        if ($request->hasFile('favicon')) {
             Storage::disk('local')->delete('public/img/setting_app/' . $setting_app->favicon);
             $favicon = $request->file('favicon');
             $favicon->storeAs('public/img/setting_app', $favicon->hashName());
-            $setting_app->update([
-                'favicon'     => $favicon->hashName(),
-            ]);
+            $setting_app->update(['favicon' => $favicon->hashName()]);
         }
 
         $setting_app->update([
@@ -58,7 +60,7 @@ class SettingAppController extends Controller
             'reverse_atur_tagging' => $request->reverse_atur_tagging
         ]);
 
-        Alert::toast('The settingApp was updated successfully.', 'success');
+        Alert::toast('Setting aplikasi berhasil diperbarui.', 'success');
         return redirect()->route('setting-apps.index');
     }
 }

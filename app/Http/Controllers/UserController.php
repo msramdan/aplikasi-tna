@@ -95,7 +95,7 @@ class UserController extends Controller
 
         $user->assignRole($request->role);
 
-        Alert::toast('The user was created successfully.', 'success');
+        Alert::toast('Pengguna berhasil dibuat.', 'success');
         return redirect()->route('users.index');
     }
 
@@ -175,7 +175,7 @@ class UserController extends Controller
         // Sync roles
         $user->syncRoles($newRoleNames);
 
-        Alert::toast('The user was updated successfully.', 'success');
+        Alert::toast('Pengguna berhasil diperbarui.', 'success');
         return redirect()->route('users.index');
     }
 
@@ -187,7 +187,7 @@ class UserController extends Controller
 
         $user->delete();
 
-        Alert::toast('The user was deleted successfully.', 'success');
+        Alert::toast('Pengguna berhasil dihapus.', 'success');
         return redirect()->route('users.index');
     }
 

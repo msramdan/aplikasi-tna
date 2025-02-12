@@ -25,7 +25,6 @@ class UpdatePengumumanRequest extends FormRequest
     {
         return [
             'pengumuman' => 'required|string',
-			'is_active' => 'required|in:Yes,No',
         ];
     }
 }

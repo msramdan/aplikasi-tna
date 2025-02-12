@@ -24,7 +24,7 @@ class PengumumanController extends Controller
     {
 
         $pengumuman->update($request->validated());
-        Alert::toast('The pengumuman was updated successfully.', 'success');
+        Alert::toast('Pengumuman berhasil diperbarui.', 'success');
         return redirect()
             ->route('pengumuman.index');
     }

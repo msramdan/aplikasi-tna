@@ -24,11 +24,6 @@ class KompetensiController extends Controller
         $this->middleware('permission:kompetensi delete')->only('destroy');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         if (request()->ajax()) {
@@ -61,11 +56,6 @@ class KompetensiController extends Controller
         return view('kompetensi.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $kelompokBesar = DB::table('kelompok_besar')->get();
@@ -78,22 +68,12 @@ class KompetensiController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreKompetensiRequest $request)
     {
-        // Mulai transaksi database
         DB::beginTransaction();
 
         try {
-            // Buat record untuk Kompetensi
             $kompetensi = Kompetensi::create($request->validated());
-
-            // Buat record untuk setiap detail kompetensi
             $details = [];
             for ($i = 1; $i <= 5; $i++) {
                 $details[] = [
@@ -104,40 +84,21 @@ class KompetensiController extends Controller
                 ];
             }
             DB::table('kompetensi_detail')->insert($details);
-
-            // Commit transaksi jika semuanya berhasil
             DB::commit();
-
-            // Tampilkan pesan sukses
-            Alert::toast('The kompetensi was created successfully.', 'success');
+            Alert::toast('Kompetensi berhasil dibuat.', 'success');
             return redirect()->route('kompetensi.index');
         } catch (\Exception $e) {
-            // Rollback transaksi jika terjadi kesalahan
             DB::rollBack();
-
-            // Tampilkan pesan kesalahan
-            Alert::error('Failed to create kompetensi. Please try again later.');
+            Alert::error('Gagal membuat kompetensi. Silakan coba lagi nanti.');
             return redirect()->back()->withInput();
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Kompetensi  $kompetensi
-     * @return \Illuminate\Http\Response
-     */
     public function show(Kompetensi $kompetensi)
     {
         return view('kompetensi.show', compact('kompetensi'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Kompetensi  $kompetensi
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Kompetensi $kompetensi)
     {
         $kompetensiDetail = DB::table('kompetensi_detail')
@@ -149,19 +110,11 @@ class KompetensiController extends Controller
         return view('kompetensi.edit', compact('kompetensi', 'kompetensiDetail', 'kelompokBesar', 'namaAkademi', 'kategoriKompetensi'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Kompetensi  $kompetensi
-     * @return \Illuminate\Http\Response
-     */
     public function update(UpdateKompetensiRequest $request, Kompetensi $kompetensi)
     {
 
         $kompetensi = $kompetensi->update($request->validated());
 
-        // Update data pada tabel kompetensi_detail
         foreach ($request->kompetensi_detail_id as $index => $detailId) {
             DB::table('kompetensi_detail')
                 ->where('id', $detailId)
@@ -171,7 +124,7 @@ class KompetensiController extends Controller
                 ]);
         }
 
-        Alert::toast('The kompetensi was updated successfully.', 'success');
+        Alert::toast('Kompetensi berhasil diperbarui.', 'success');
         return redirect()
             ->route('kompetensi.index');
     }
@@ -186,10 +139,10 @@ class KompetensiController extends Controller
     {
         try {
             $kompetensi->delete();
-            Alert::toast('The kompetensi was deleted successfully.', 'success');
+            Alert::toast('Kompetensi berhasil dihapus.', 'success');
             return redirect()->route('kompetensi.index');
         } catch (\Throwable $th) {
-            Alert::toast('The kompetensi cant be deleted because its related to another table.', 'error');
+            Alert::toast('Kompetensi tidak dapat dihapus karena masih terhubung dengan tabel lain.', 'error');
             return redirect()->route('kompetensi.index');
         }
     }

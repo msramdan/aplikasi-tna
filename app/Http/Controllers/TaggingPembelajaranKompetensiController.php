@@ -118,10 +118,10 @@ class TaggingPembelajaranKompetensiController extends Controller
 
             // Commit transaction
             DB::commit();
-            Alert::toast('The tagging was updated successfully.', 'success');
+            Alert::toast('Tagging berhasil diperbarui.', 'success');
         } catch (\Exception $e) {
             DB::rollback();
-            Alert::toast('The tagging was updated failed.', 'error');
+            Alert::toast('Tagging gagal diperbarui.', 'error');
             return back()->withErrors(['message' => $e->getMessage()]);
         }
 
@@ -138,7 +138,7 @@ class TaggingPembelajaranKompetensiController extends Controller
             return back();
         }
         DB::table('tagging_pembelajaran_kompetensi')->where('topik_id', $id)->delete();
-        Alert::toast('Tagging deleted successfully.', 'success');
+        Alert::toast('Tagging berhasil dihapus.', 'success');
         return back();
     }
 
@@ -179,7 +179,7 @@ class TaggingPembelajaranKompetensiController extends Controller
     public function importTaggingPembelajaranKompetensi(ImportTaggingPembelajaranKompetensiRequest $request)
     {
         Excel::import(new ImportTaggingMultiSheet, $request->file('import_tagging_pembelajaran_kompetensi'));
-        Alert::toast('Tagging pembelajaran - kompetensi has been successfully imported.', 'success');
+        Alert::toast('Tagging pembelajaran - kompetensi berhasil diimpor.', 'success');
         return back();
     }
 

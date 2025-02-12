@@ -22,7 +22,6 @@
 
     <div class="page-content">
         <div class="container-fluid">
-
             <div class="modal fade" id="announcementModal" tabindex="-1" aria-labelledby="announcementModalLabel"
                 aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
                 <div class="modal-dialog">
