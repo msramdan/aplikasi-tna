@@ -27,7 +27,7 @@
         </a>
         @can('pengajuan kap edit')
             @if (
-                $model->current_step < 5 &&
+                // $model->current_step < 5 &&
                     !in_array($model->status_pengajuan, ['Rejected', 'Approved']) &&
                     $model->user_created == Auth::id())
                 <a title="Edit Pengajuan KAP"

@@ -1481,6 +1481,8 @@ class PengajuanKapController extends Controller
                 $updateData = [
                     'topik_id' =>  $request->topik_id,
                     'judul' =>  $request->judul,
+                    'referensi_indikator_kinerja' =>  $request->referensi_indikator_kinerja,
+                    'keterangan_program_pembelajaran' =>  $request->keterangan_program_pembelajaran,
                     'arahan_pimpinan' =>  $request->arahan_pimpinan,
                     'prioritas_pembelajaran' =>  $request->prioritas_pembelajaran,
                     'tujuan_program_pembelajaran' =>  $request->tujuan_program_pembelajaran,
