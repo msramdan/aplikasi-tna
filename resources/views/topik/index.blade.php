@@ -104,21 +104,25 @@
 
                 <div class="col-sm-12">
                     <div class="card">
-                        @can('topik create')
-                            <div class="card-header">
+
+                        <div class="card-header">
+                            @can('topik create')
                                 <a href="{{ route('topik.create') }}" class="btn btn-md btn-primary">
                                     <i class="mdi mdi-plus"></i> Tambah program pembelajaran
                                 </a>
+                            @endcan
+                            @can('topik import')
                                 <button type="button" class="btn btn-warning" data-bs-toggle="modal"
                                     data-bs-target="#exampleModal">
                                     <i class='fa fa-upload'></i> {{ __('topik/index.import') }}
                                 </button>
+                            @endcan
+                            @can('topik export')
                                 <button id="btnExport" class="btn btn-success">
                                     <i class='fas fa-file-excel'></i> {{ __('topik/index.export') }}
                                 </button>
-                            </div>
-                        @endcan
-
+                            @endcan
+                        </div>
                         <div class="card-body">
                             <div class="table-responsive p-1">
                                 <table class="table table-striped" id="data-table">
