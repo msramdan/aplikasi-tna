@@ -188,7 +188,7 @@ return [
         ['group' => 'nomenklatur pembelajaran', 'access' => ['nomenklatur pembelajaran view', 'nomenklatur pembelajaran edit']],
         ['group' => 'setting apps', 'access' => ['setting app view', 'setting app edit']],
         ['group' => 'pengumumen', 'access' => ['pengumuman view','pengumuman edit']],
-        ['group' => 'kompetensi', 'access' => ['kompetensi view', 'kompetensi create']],
+        ['group' => 'kompetensi', 'access' => ['kompetensi view', 'kompetensi create','kompetensi import','kompetensi export']],
         ['group' => 'activity log', 'access' => ['activity log view']],
         ['group' => 'lokasi', 'access' => ['lokasi view']],
         ['group' => 'backup database', 'access' => ['backup database view']],

@@ -156,19 +156,21 @@
 
                 <div class="col-sm-12">
                     <div class="card">
-                        @can('kompetensi create')
-                            <div class="card-header">
+                        <div class="card-header">
+                            @can('kompetensi import')
                                 <button type="button" class="btn btn-warning" data-bs-toggle="modal"
                                     data-bs-target="#exampleModal">
                                     <i class='fa fa-upload'></i>
-                                Import data
+                                    Import data
                                 </button>
+                            @endcan
+                            @can('kompetensi export')
                                 <button id="btnExport" class="btn btn-success">
                                     <i class='fas fa-file-excel'></i>
                                     Export data
                                 </button>
-                            </div>
-                        @endcan
+                            @endcan
+                        </div>
                         <div class="card-body">
                             <div class="table-responsive p-1">
                                 <table class="table table-striped" id="data-table">
