@@ -157,15 +157,19 @@
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="card-header">
-                            <button type="button" class="btn btn-warning" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">
-                                <i class='fa fa-upload'></i> Import data
-                            </button>
+                            @can('tagging kompetensi ik import')
+                                <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal">
+                                    <i class='fa fa-upload'></i> Import data
+                                </button>
+                            @endcan
 
-                            <button id="btnExport" class="btn btn-success">
-                                <i class='fas fa-file-excel'></i>
-                                {{ __('Export data') }}
-                            </button>
+                            @can('tagging kompetensi ik export')
+                                <button id="btnExport" class="btn btn-success">
+                                    <i class='fas fa-file-excel'></i>
+                                    {{ __('Export data') }}
+                                </button>
+                            @endcan
                         </div>
 
                         <div class="card-body">

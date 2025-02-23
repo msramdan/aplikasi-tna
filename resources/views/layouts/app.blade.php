@@ -166,7 +166,7 @@
                                                         </div>
                                                         <div class="flex-grow-1">
                                                             <a href="{{ route('pengajuan-kap.show', [
-                                                                'id' => $notification->id,
+                                                                'id' => $notification->pengajuan_kap_id,
                                                                 'is_bpkp' => $notification->institusi_sumber,
                                                                 'frekuensi' => $notification->frekuensi_pelaksanaan,
                                                             ]) }}"
@@ -181,11 +181,6 @@
                                                     </div>
                                                 </div>
                                             @endforeach
-                                            {{-- <div class="my-3 text-center view-all">
-                                                <a href=""
-                                                    class="btn btn-soft-success waves-effect waves-light">Lihat Semua
-                                                    Notifikasi<i class="ri-arrow-right-line align-middle"></i></a>
-                                            </div> --}}
                                         </div>
                                     </div>
                                 </div>

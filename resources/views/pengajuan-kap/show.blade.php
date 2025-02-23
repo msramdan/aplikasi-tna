@@ -692,8 +692,6 @@
                                         <!-- Bagian balasan -->
                                         <div class="reply-section mt-3">
                                             <h5>Chat:</h5>
-
-                                            <!-- Query langsung ke tabel replies -->
                                             @php
                                                 $replies = \DB::table('log_review_pengajuan_kap_replies')
                                                     ->where('log_review_pengajuan_kap_id', $log->id)

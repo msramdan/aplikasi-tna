@@ -178,8 +178,8 @@ return [
                 'role & permission delete',
             ]
         ],
-        ['group' => 'tagging pembelajaran kompetensi', 'access' => ['tagging pembelajaran kompetensi view', 'tagging pembelajaran kompetensi edit', 'tagging pembelajaran kompetensi delete']],
-        ['group' => 'tagging kompetensi ik', 'access' => ['tagging kompetensi ik view', 'tagging kompetensi ik edit', 'tagging kompetensi ik delete']],
+        ['group' => 'tagging pembelajaran kompetensi', 'access' => ['tagging pembelajaran kompetensi view', 'tagging pembelajaran kompetensi edit', 'tagging pembelajaran kompetensi delete','tagging pembelajaran kompetensi import','tagging pembelajaran kompetensi export']],
+        ['group' => 'tagging kompetensi ik', 'access' => ['tagging kompetensi ik view', 'tagging kompetensi ik edit', 'tagging kompetensi ik delete', 'tagging kompetensi ik import', 'tagging kompetensi ik export']],
         ['group' => 'rumpun pembelajaran', 'access' => ['rumpun pembelajaran view', 'rumpun pembelajaran create', 'rumpun pembelajaran edit', 'rumpun pembelajaran delete']],
         ['group' => 'topik', 'access' => ['topik view', 'topik create', 'topik edit', 'topik delete']],
         ['group' => 'jadwal kap tahunan', 'access' => ['jadwal kap tahunan view', 'jadwal kap tahunan create', 'jadwal kap tahunan edit', 'jadwal kap tahunan delete']],
