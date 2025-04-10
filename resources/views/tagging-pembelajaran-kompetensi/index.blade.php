@@ -128,13 +128,14 @@
     <div class="page-content">
         <div class="container-fluid">
             <div class="row">
-                @if (count($errors) > 0)
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <strong>{{ __('topik/index.failed') }}</strong>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <strong>Gagal!</strong>
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
                     </div>
                 @endif
                 <div class="col-12">
