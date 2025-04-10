@@ -753,8 +753,22 @@
                                                     </div>
                                                 @endforeach
                                             </div>
+                                            @php
+                                                $user = auth()->user();
+                                                $userId = $user->id;
 
-                                            @if ($pengajuanKap->current_step == $log->step && $log->status !== 'Approved')
+                                                $userReviewIds = DB::table('config_step_review')
+                                                    ->where('remark', $currentStepRemark)
+                                                    ->pluck('user_review_id')
+                                                    ->toArray();
+                                            @endphp
+
+                                            @if (
+                                                $pengajuanKap->current_step == $log->step &&
+                                                    $log->status !== 'Approved' &&
+                                                    ($user->nama_unit == $pengajuanKap->nama_unit ||
+                                                        $user->name == $pengajuanKap->user_name ||
+                                                        in_array($userId, $userReviewIds)))
                                                 <div class="input-group mt-2">
                                                     <textarea id="reply-input-{{ $log->id }}" class="form-control reply-textarea" placeholder="Ketik balasan..."></textarea>
                                                     <button type="button" class="btn btn-primary"
@@ -765,8 +779,6 @@
                                     </div>
                                 @endforeach
                             </div>
-
-
 
                         </div>
                     </div>
