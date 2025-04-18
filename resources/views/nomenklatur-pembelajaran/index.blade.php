@@ -63,7 +63,7 @@
                 },
                 {
                     data: 'rumpun_pembelajaran',
-                    name: 'rumpun_pembelajaran'
+                    name: 'rumpun_pembelajaran.rumpun_pembelajaran'
                 },
                 {
                     data: 'nama_topik',
