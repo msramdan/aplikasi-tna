@@ -90,7 +90,7 @@
                     <table class="table" style="text-align: justify">
                         <tbody>
                             <tr>
-                                <th scope="row">Kelompok Besae</th>
+                                <th scope="row">Kelompok Besar</th>
                                 <td>:</td>
                                 <td><span id="modalDetailKategoriBesar"></span></td>
                             </tr>

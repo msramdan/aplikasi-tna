@@ -130,7 +130,7 @@
                 <div class="col">
                     <div class="h-100">
                         <div class="row">
-                            <div class="col-xl-3 col-md-6">
+                            <div class="col-xl-6 col-md-6">
                                 <div class="card card-animate">
                                     <div class="card-body">
                                         <div class="d-flex align-items-center">
@@ -156,7 +156,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xl-3 col-md-6">
+                            {{-- <div class="col-xl-3 col-md-6">
                                 <div class="card card-animate">
                                     <div class="card-body">
                                         <div class="d-flex align-items-center">
@@ -207,8 +207,8 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
+                            </div> --}}
+                            <div class="col-xl-6 col-md-6">
                                 <div class="card card-animate">
                                     <div class="card-body">
                                         <div class="d-flex align-items-center">

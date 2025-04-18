@@ -53,15 +53,17 @@ class TaggingKompetensiIkReverseController extends Controller
         }
 
         $apiItems = $response->json()['data'] ?? [];
+        $filteredItems = array_filter($apiItems, function ($item) {
+            return !empty($item['indikator_kinerja']);
+        });
 
-        // Query ke tabel tagging_kompetensi_ik dengan groupBy indikator_kinerja dan type
         $taggingCounts = DB::table('tagging_kompetensi_ik')
             ->select('indikator_kinerja', DB::raw('count(*) as total'))
             ->where('type', $type)
             ->groupBy('indikator_kinerja')
             ->pluck('total', 'indikator_kinerja');
 
-        return DataTables::of($apiItems)
+        return DataTables::of($filteredItems)
             ->addIndexColumn()
             ->addColumn('indikator_kinerja', fn($row) => $type == 'renstra' ? ($row['indikator_kinerja'] ?? '-') : ($row['nama_topik'] ?? '-'))
             ->addColumn('type', fn() => $type)
