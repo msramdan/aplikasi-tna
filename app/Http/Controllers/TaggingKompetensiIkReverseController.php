@@ -26,7 +26,6 @@ class TaggingKompetensiIkReverseController extends Controller
 
     public function index($type)
     {
-
         if (!request()->ajax()) {
             return view('tagging-kompetensi-ik-reverse.index');
         }
@@ -60,20 +59,29 @@ class TaggingKompetensiIkReverseController extends Controller
             });
         }
 
+        // Fungsi untuk normalisasi string
+        $normalizeString = function ($string) {
+            return trim(strtolower(preg_replace('/\s+/', ' ', $string)));
+        };
 
+        // Ambil dan normalisasi tagging count
         $taggingCounts = DB::table('tagging_kompetensi_ik')
             ->select('indikator_kinerja', DB::raw('count(*) as total'))
             ->where('type', $type)
             ->groupBy('indikator_kinerja')
-            ->pluck('total', 'indikator_kinerja');
+            ->get()
+            ->mapWithKeys(function ($item) use ($normalizeString) {
+                return [$normalizeString($item->indikator_kinerja) => $item->total];
+            });
 
         return DataTables::of($apiItems)
             ->addIndexColumn()
             ->addColumn('indikator_kinerja', fn($row) => $type == 'renstra' ? ($row['indikator_kinerja'] ?? '-') : ($row['nama_topik'] ?? '-'))
             ->addColumn('type', fn() => $type)
-            ->addColumn('jumlah_tagging', function ($row) use ($taggingCounts, $type) {
+            ->addColumn('jumlah_tagging', function ($row) use ($taggingCounts, $type, $normalizeString) {
                 $key = $type == 'renstra' ? $row['indikator_kinerja'] ?? '-' : $row['nama_topik'] ?? '-';
-                $count = $taggingCounts[$key] ?? 0;
+                $normalizedKey = $normalizeString($key);
+                $count = $taggingCounts[$normalizedKey] ?? 0;
                 $badgeClass = $count > 0 ? 'bg-info' : 'bg-danger';
                 return "<span class=\"badge badge-label $badgeClass badge-width\"><i class=\"mdi mdi-circle-medium\"></i>$count Tagging</span>";
             })
