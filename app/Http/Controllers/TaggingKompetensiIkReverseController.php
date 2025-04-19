@@ -26,6 +26,7 @@ class TaggingKompetensiIkReverseController extends Controller
 
     public function index($type)
     {
+
         if (!request()->ajax()) {
             return view('tagging-kompetensi-ik-reverse.index');
         }
@@ -53,9 +54,12 @@ class TaggingKompetensiIkReverseController extends Controller
         }
 
         $apiItems = $response->json()['data'] ?? [];
-        $filteredItems = array_filter($apiItems, function ($item) {
-            return !empty($item['indikator_kinerja']);
-        });
+        if ($type == 'renstra') {
+            $apiItems = array_filter($apiItems, function ($item) {
+                return !empty($item['indikator_kinerja']);
+            });
+        }
+
 
         $taggingCounts = DB::table('tagging_kompetensi_ik')
             ->select('indikator_kinerja', DB::raw('count(*) as total'))
@@ -63,7 +67,7 @@ class TaggingKompetensiIkReverseController extends Controller
             ->groupBy('indikator_kinerja')
             ->pluck('total', 'indikator_kinerja');
 
-        return DataTables::of($filteredItems)
+        return DataTables::of($apiItems)
             ->addIndexColumn()
             ->addColumn('indikator_kinerja', fn($row) => $type == 'renstra' ? ($row['indikator_kinerja'] ?? '-') : ($row['nama_topik'] ?? '-'))
             ->addColumn('type', fn() => $type)
